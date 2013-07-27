@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-27T16:29:27+09:00</updated>
+  <updated>2013-07-27T16:57:09+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Customize Octopress - CSS 변경하기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/2013/07/27/customize-octopress-css-byeongyeonghagi/"/>
+    <link href="http://SanghyukChun.github.io/blog/2013/07/27/4/"/>
     <updated>2013-07-27T16:17:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/2013/07/27/customize-octopress-css-byeongyeonghagi</id>
+    <id>http://SanghyukChun.github.io/blog/2013/07/27/4</id>
     <content type="html"><![CDATA[<p>평일에는 조금 바빴고 주말을 맞아 블로그를 다시 Customize하고자 간단하게 Document를 훑어보고 당장 Twitter Bootstrap을 적용시켰다. 한가지 당황했던 점은 Bootstrap이 2에서 3으로 version up 되면서 docs페이지가 완전히 정전 상태.. 그냥 급하게 Bootstrap team blog에서 다운받아서 소스만 붙여 넣었다. 나중에 version 3으로 업그레이드 되면 바꿔줘야 할 것 같은 부분이다. (근데 About Me 실컷 Bootstrap CSS Customizing하고 필요없는거 다 지우고 comon.css로 몰아놓고 1주일도 안되서 ver.3이라니.. deploy완전히 끝나면 훑어보고 마음에 들면 About Me를 통채로 들어내야 할수도;;)</p>
 
 
@@ -38,9 +38,9 @@ body {
   
   <entry>
     <title type="html"><![CDATA[Octopress 설치하고 포스팅하기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/2013/07/25/octoprs-seolcihago-poseutinghagi/"/>
+    <link href="http://SanghyukChun.github.io/blog/2013/07/25/2/"/>
     <updated>2013-07-25T20:00:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/2013/07/25/octoprs-seolcihago-poseutinghagi</id>
+    <id>http://SanghyukChun.github.io/blog/2013/07/25/2</id>
     <content type="html"><![CDATA[<p>블로그를 설치하면서 했던 작업들을 간단하게 기록 겸 정리해서 올려본다.</p>
 
 
@@ -150,9 +150,9 @@ categories:
   
   <entry>
     <title type="html"><![CDATA[Octopress와 함께하는 첫 번째 post]]></title>
-    <link href="http://SanghyukChun.github.io/blog/2013/07/25/octopresswa-hamggehaneun-ceos-jjae-post/"/>
+    <link href="http://SanghyukChun.github.io/blog/2013/07/25/1/"/>
     <updated>2013-07-25T18:49:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/2013/07/25/octopresswa-hamggehaneun-ceos-jjae-post</id>
+    <id>http://SanghyukChun.github.io/blog/2013/07/25/1</id>
     <content type="html"><![CDATA[<p>Blog를 참 많이도 옮기는 것 같다. 맨 처음 네이버 블로그, 야심차게 옮겼던 티스토리, 워드프레스.. 그리고 지금 옮기게 된 Octopress까지..</p>
 
 
