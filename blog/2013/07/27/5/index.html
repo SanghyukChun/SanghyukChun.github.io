@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Bootstrap - SanghyukChun's Blog</title>
+  <title>Script와 함께하는 Bundle exec~ - SanghyukChun's Blog</title>
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Category: Bootstrap">
+  <meta name="description" content="진짜 rails 개발할 때 제일 귀찮았던 것이 rake를 하려고만 하면 버전이 안맞아서 bundle exec를 붙여줘야 했던 점. 물론 강제로 내가 버전을 낮추면 되지만 왜 굳이 잘 쓰고 있는 rake의 버전을 낮추냐는 마인드로 계속 썼었다. 그게 가능했던 이유는 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://SanghyukChun.github.ioblog/categories/bootstrap">
+  <link rel="canonical" href="http://SanghyukChun.github.io/blog/2013/07/27/5">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="SanghyukChun's Blog" type="application/atom+xml">
@@ -64,35 +64,109 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Bootstrap</h1>
+    
+      <h1 class="entry-title">Script와 함께하는 Bundle Exec~</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-27T17:15:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
-
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/07/27/4/">Customize Octopress - CSS 변경하기</a></h1>
-<time datetime="2013-07-27T16:17:00+09:00" pubdate><span class='month'>Jul</span> <span class='day'>27</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/bootstrap/'>Bootstrap</a>, <a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a></span>
-</footer>
+<div class="entry-content"><p>진짜 rails 개발할 때 제일 귀찮았던 것이 rake를 하려고만 하면 버전이 안맞아서 bundle exec를 붙여줘야 했던 점. 물론 강제로 내가 버전을 낮추면 되지만 왜 굳이 잘 쓰고 있는 rake의 버전을 낮추냐는 마인드로 계속 썼었다. 그게 가능했던 이유는 사실 rails 개발할 때 rake는 생각보다 그렇게 빈번하게 쓰지 않는다. 주로 <code>rails s</code>(혹은 <code>rails server</code>) 아니면 가끔 디버깅 용 <code>rails c</code>(혹은 <code>rails console</code>)을 쓰고는 했는데 이녀석들은 거의 출근해서 실행시키면 거의 퇴근할 때 까지 다시 실행시킬 일 없이 쭉 실행된다 -_-;; 근데 블로깅을 하니깐 이게 죄다 rake다. Rakefile을 바꿔버리는 방법도 있지만 굉장히 귀찮기 때문에 그냥 그런 귀찮은 짓을 하느니.. 뭐 그래서 그냥 일일이 치고 있다 하하..</p>
 
 
-</article>
+<p>근데 이것도 한 두번이지.. 게다가 이건 포스트 쓸 때는 물론이고 preview 심지어 deploy까지 죄다 rake를 때려야 한다. 포스트 하나 당 최소 세번 -_-;;; 결국 안되겠다 싶어서 deploy.sh라는 녀석을 만들기로 결정</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>bundle exec rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<p>이게 끝이다. 그리고 deploy할 때마다 이름 묻는게 너무 귀찮아서 (password는 그러려니 한다. 맘에 안들면 ssh키를 쓰면 되는데 귀찮아서 -_-; 근데 조만간 쓰게 될 듯) remote origin의 url을 https에서 ssh로 바꿔버렸다.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>음.. 바꾸고 나서 아직 deploy를 안해봤는데 이 포스트가 잘 올라가면 성공이고 안되면 다른 해법을 찾아야 한다 이런.</p>
+
+
+<p>아무튼 귀찮은 것은 질색이기 때문에 좀 여러 방면에서 편하게 블로깅을 할 수 있는 툴들이나 스크립트를 많이 쓰게 될 것 같은 스멜~</p>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-27T17:15:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/development/'>Development</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/blog/2013/07/27/5/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/blog/2013/07/27/5/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/07/27/4/" title="Previous Post: Customize Octopress - CSS 변경하기">&laquo; Customize Octopress - CSS 변경하기</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>

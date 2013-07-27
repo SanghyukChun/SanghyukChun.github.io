@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-27T16:57:09+09:00</updated>
+  <updated>2013-07-27T17:22:27+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Script와 함께하는 Bundle exec~]]></title>
+    <link href="http://SanghyukChun.github.io/blog/2013/07/27/5/"/>
+    <updated>2013-07-27T17:15:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/blog/2013/07/27/5</id>
+    <content type="html"><![CDATA[<p>진짜 rails 개발할 때 제일 귀찮았던 것이 rake를 하려고만 하면 버전이 안맞아서 bundle exec를 붙여줘야 했던 점. 물론 강제로 내가 버전을 낮추면 되지만 왜 굳이 잘 쓰고 있는 rake의 버전을 낮추냐는 마인드로 계속 썼었다. 그게 가능했던 이유는 사실 rails 개발할 때 rake는 생각보다 그렇게 빈번하게 쓰지 않는다. 주로 <code>rails s</code>(혹은 <code>rails server</code>) 아니면 가끔 디버깅 용 <code>rails c</code>(혹은 <code>rails console</code>)을 쓰고는 했는데 이녀석들은 거의 출근해서 실행시키면 거의 퇴근할 때 까지 다시 실행시킬 일 없이 쭉 실행된다 -_-;; 근데 블로깅을 하니깐 이게 죄다 rake다. Rakefile을 바꿔버리는 방법도 있지만 굉장히 귀찮기 때문에 그냥 그런 귀찮은 짓을 하느니.. 뭐 그래서 그냥 일일이 치고 있다 하하..</p>
+
+
+<p>근데 이것도 한 두번이지.. 게다가 이건 포스트 쓸 때는 물론이고 preview 심지어 deploy까지 죄다 rake를 때려야 한다. 포스트 하나 당 최소 세번 -_-;;; 결국 안되겠다 싶어서 deploy.sh라는 녀석을 만들기로 결정</p>
+
+
+<p>```</p>
+
+<h1>!/bin/bash</h1>
+
+<p>bundle exec rake deploy
+```</p>
+
+<p>이게 끝이다. 그리고 deploy할 때마다 이름 묻는게 너무 귀찮아서 (password는 그러려니 한다. 맘에 안들면 ssh키를 쓰면 되는데 귀찮아서 -_-; 근데 조만간 쓰게 될 듯) remote origin의 url을 https에서 ssh로 바꿔버렸다.</p>
+
+
+<p><code>
+git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git
+</code></p>
+
+<p>음.. 바꾸고 나서 아직 deploy를 안해봤는데 이 포스트가 잘 올라가면 성공이고 안되면 다른 해법을 찾아야 한다 이런.</p>
+
+
+<p>아무튼 귀찮은 것은 질색이기 때문에 좀 여러 방면에서 편하게 블로깅을 할 수 있는 툴들이나 스크립트를 많이 쓰게 될 것 같은 스멜~</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Customize Octopress - CSS 변경하기]]></title>
