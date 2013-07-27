@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Facebook | SanghyukChun's Blog]]></title>
+  <link href="http://SanghyukChun.github.io/blog/categories/facebook/atom.xml" rel="self"/>
+  <link href="http://SanghyukChun.github.io/"/>
+  <updated>2013-07-28T02:32:33+09:00</updated>
+  <id>http://SanghyukChun.github.io/</id>
+  <author>
+    <name><![CDATA[Sanghyuk Chun]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress에 facebook comments 추가하기]]></title>
+    <link href="http://SanghyukChun.github.io/blog/7/"/>
+    <updated>2013-07-28T01:38:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/blog/7</id>
+    <content type="html"><![CDATA[<p>원래는 바로 레이아웃 뜯어고친 얘기를 적을 생각이었지만 페북 코멘트로 삽질을 하고나니 이것 부터 기록하는 편이 더 나을 것 같다.. 일단 당연히 Octopress는 정적 html 페이지이니 Octopress자체가 comment를 관리하는 것은 불가능하다. 때문에 iframe으로 만들어진 social plugin이 필요한 것이고.. 사실 Disqus를 사용하면 세팅도 할 필요없이 간단하게 처리가 가능하다. 하지만 Disqus는 여러 단점이 존재하고, 무엇보다 내가 쓸 줄 모른다 -_-; 그리고 한국에서 쓰는 걸 본 적이 없음. 차라리 페북이나 트위터 댓글을 만드는 편이 훨씬 나을 것 같아서 개발 경험이 있는 페이스북 댓글로 가기로 했다.</p>
+
+
+<p>페이스북 댓글을 만들기 위해서는 먼저 app id가 필요하다. 자신의 <a href="https://developers.facebook.com/apps">App관리 페이지</a>에서 앱을 추가하고 app id만 받아오면 된다. 이 id가 있어야 페이스북 자바스크립트 API를 사용 가능하기 때문에 꼭 만들어줘야한다. (즉, 앱 이름을 제외한 나머지 옵션은 건드릴 필요가 없다)</p>
+
+
+<p>원래 <a href="https://developers.facebook.com/docs/reference/plugins/comments/">facebook document</a>에서 <a class="tip" title="facebook comment에서 설정할 수 있는 값은 크기와 light, dark뿐">자동 생성한 코드</a>를 이용했기 때문에 id를 전부 하드코딩했었는데 <a href="http://blog.grambo.me.uk/blog/2012/02/20/adding-facebook-comments-to-octopress/">좋은 포스트</a>를 발견해서 새로운 좋은 방법을 알아냈다. 일단 받아온 앱 id를 _config.yml에 추가하자.</p>
+
+
+<p><code>
+facebook_app_id = 12341234
+</code></p>
+
+<p><a href="https://developers.facebook.com/docs/reference/plugins/comments/">위에서 링크한 document</a>를 보면 알 수 있겠지만, body에서 script를 사용하여 API를 사용할 수 있도록 만들어주는 코드가 필요하고, 실제 코멘트를 추가할 위치에 fb_comments라는 div를 생성해야한다. 이게 사실 짱짱 귀찮은데 이유는 Comment를 추가해야하는 곳이 page랑 post 두개이기 때문 -_-; 거기다가 나는 이상하게 조건문이 잘 안먹어서 열이 뻗쳐서 그냥 if문도 날려버렸다. 내 코딩의 문제겠지만 오랫만에 레일즈 스타일로 html고치려니깐 뭔가 답답해서..</p>
+
+
+<p>아무튼 그렇게 하고나서 <code>source/_include/post/facebook_comment.html</code>이라는 녀석을 만들어서 아래의 코드를 추가해주자</p>
+
+
+<p>```</p>
+
+<div class="fb-comments" data-href="http://SanghyukChun.github.ioblog/categories/facebook/atom.xml" data-width="470" data-num-posts="10"></div>
+
+
+<p>```</p>
+
+<p>옵션은 본인이 원하는 대로 고쳐도 된다. 이제 <code>source/_layout/page.html</code>과 <code>source/_layout/post.html</code>을 수정하자</p>
+
+
+<p>```
+&#123;&#37; if site.facebook_app_id &#37;&#125;
+  <section></p>
+
+<pre><code>&lt;h1&gt;Comments&lt;/h1&gt;
+&lt;div id="facebook_comments" aria-live="polite"&gt;
+  &amp;#123&amp;#37 include post/facebook_comment.html &amp;#37;&amp;#125;
+&lt;/div&gt;
+</code></pre>
+
+<p>  </section>
+&#123;&#37; endif &#37;&#125;
+```</p>
+
+<p>자 이걸로 끝이다. <a href="http://blog.grambo.me.uk/blog/2012/02/20/adding-facebook-comments-to-octopress/">아까 링크했던 글</a>에서는 head에 meta를 추가해주는데 해도 좋고, 없어도 잘 돌아는간다.</p>
+
+
+<p></p>
+
+<h6>생길 수 있는 문제들</h6>
+
+
+<ul>
+    <li>나처럼 옵션 잘못 걸어서 아예 Comment section자체가 안생김</li>
+    <li>data-href에 http:// 없는 상태로 테스트함 (위와 같이해서 preview 때리면 잘 되야한다)</li>
+    <li>app id나 등등에서 오타가 있음 (그런데 은근 고칠게 많아서 의외로 찾기 힘들다)</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

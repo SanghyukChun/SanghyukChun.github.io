@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Octopress 자잘한 세팅 변경 및 Post용 Script 만들기 Jul 27th, 2013 일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 &hellip;">
+  <meta name="description" content="Octopress에 Facebook Comments 추가하기 Jul 28th, 2013 원래는 바로 레이아웃 뜯어고친 얘기를 적을 생각이었지만 페북 코멘트로 삽질을 하고나니 이것 부터 기록하는 편이 더 나을 것 같다.. 일단 당연히 Octopress는 정적 html &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -25,13 +25,21 @@
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+	<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
 
 
+<script>
+$(function() {
+	$('.tip').attr('data-toggle','tooltip');
+	$('.tip').attr('data-placement','top');
+	$('.tip').tooltip();
+});
+</script>
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -77,6 +85,99 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/7/">Octopress에 Facebook Comments 추가하기</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-28T01:38:00+09:00" pubdate data-updated="true">Jul 28<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>원래는 바로 레이아웃 뜯어고친 얘기를 적을 생각이었지만 페북 코멘트로 삽질을 하고나니 이것 부터 기록하는 편이 더 나을 것 같다.. 일단 당연히 Octopress는 정적 html 페이지이니 Octopress자체가 comment를 관리하는 것은 불가능하다. 때문에 iframe으로 만들어진 social plugin이 필요한 것이고.. 사실 Disqus를 사용하면 세팅도 할 필요없이 간단하게 처리가 가능하다. 하지만 Disqus는 여러 단점이 존재하고, 무엇보다 내가 쓸 줄 모른다 -_-; 그리고 한국에서 쓰는 걸 본 적이 없음. 차라리 페북이나 트위터 댓글을 만드는 편이 훨씬 나을 것 같아서 개발 경험이 있는 페이스북 댓글로 가기로 했다.</p>
+
+
+<p>페이스북 댓글을 만들기 위해서는 먼저 app id가 필요하다. 자신의 <a href="https://developers.facebook.com/apps">App관리 페이지</a>에서 앱을 추가하고 app id만 받아오면 된다. 이 id가 있어야 페이스북 자바스크립트 API를 사용 가능하기 때문에 꼭 만들어줘야한다. (즉, 앱 이름을 제외한 나머지 옵션은 건드릴 필요가 없다)</p>
+
+
+<p>원래 <a href="https://developers.facebook.com/docs/reference/plugins/comments/">facebook document</a>에서 <a class="tip" title="facebook comment에서 설정할 수 있는 값은 크기와 light, dark뿐">자동 생성한 코드</a>를 이용했기 때문에 id를 전부 하드코딩했었는데 <a href="http://blog.grambo.me.uk/blog/2012/02/20/adding-facebook-comments-to-octopress/">좋은 포스트</a>를 발견해서 새로운 좋은 방법을 알아냈다. 일단 받아온 앱 id를 _config.yml에 추가하자.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>facebook_app_id = 12341234</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://developers.facebook.com/docs/reference/plugins/comments/">위에서 링크한 document</a>를 보면 알 수 있겠지만, body에서 script를 사용하여 API를 사용할 수 있도록 만들어주는 코드가 필요하고, 실제 코멘트를 추가할 위치에 fb_comments라는 div를 생성해야한다. 이게 사실 짱짱 귀찮은데 이유는 Comment를 추가해야하는 곳이 page랑 post 두개이기 때문 -_-; 거기다가 나는 이상하게 조건문이 잘 안먹어서 열이 뻗쳐서 그냥 if문도 날려버렸다. 내 코딩의 문제겠지만 오랫만에 레일즈 스타일로 html고치려니깐 뭔가 답답해서..</p>
+
+
+<p>아무튼 그렇게 하고나서 <code>source/_include/post/facebook_comment.html</code>이라는 녀석을 만들어서 아래의 코드를 추가해주자</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;div class="fb-comments" data-href="http://SanghyukChun.github.io/blog/7/" data-width="470" data-num-posts="10"&gt;&lt;/div&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>옵션은 본인이 원하는 대로 고쳐도 된다. 이제 <code>source/_layout/page.html</code>과 <code>source/_layout/post.html</code>을 수정하자</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&#123;&#37; if site.facebook_app_id &#37;&#125;
+</span><span class='line'>  &lt;section&gt;
+</span><span class='line'>    &lt;h1&gt;Comments&lt;/h1&gt;
+</span><span class='line'>    &lt;div id="facebook_comments" aria-live="polite"&gt;
+</span><span class='line'>      &#123&#37 include post/facebook_comment.html &#37;&#125;
+</span><span class='line'>    &lt;/div&gt;
+</span><span class='line'>  &lt;/section&gt;
+</span><span class='line'>&#123;&#37; endif &#37;&#125;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>자 이걸로 끝이다. <a href="http://blog.grambo.me.uk/blog/2012/02/20/adding-facebook-comments-to-octopress/">아까 링크했던 글</a>에서는 head에 meta를 추가해주는데 해도 좋고, 없어도 잘 돌아는간다.</p>
+
+
+<p></p>
+
+<h6>생길 수 있는 문제들</h6>
+
+
+<ul>
+    <li>나처럼 옵션 잘못 걸어서 아예 Comment section자체가 안생김</li>
+    <li>data-href에 http:// 없는 상태로 테스트함 (위와 같이해서 preview 때리면 잘 되야한다)</li>
+    <li>app id나 등등에서 오타가 있음 (그런데 은근 고칠게 많아서 의외로 찾기 힘들다)</li>
+</ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -545,6 +646,10 @@ categories:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/7/">Octopress에 Facebook Comments 추가하기</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/6/">Octopress 자잘한 세팅 변경 및 Post용 Script 만들기</a>
       </li>
     
@@ -558,10 +663,6 @@ categories:
     
       <li class="post">
         <a href="/blog/3/">Machine Learning Week1 - What Is Machine Learning</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2/">Octopress 설치하고 포스팅하기</a>
       </li>
     
   </ul>
