@@ -127,6 +127,19 @@
 
 <p>아 ssh로 바꾸기는 해놨는데 ssh키가 등록이 안되어있어서 결국 도로묵이었다. <a href="https://help.github.com/articles/generating-ssh-keys">https://help.github.com/articles/generating-ssh-keys</a>보고 순서대로 따라서 하니깐 잘 등록 완료. 이제 deploy만 하면 된다~</p>
 
+
+<p>&#8212; 또 추가</p>
+
+
+<p>아 범인을 발견했다. octopress에서 github pages에 대해서는 _deploy 밑에 따로 프로젝트를 관리하는데 나는 그걸 모르고 octopress의 url만 열심히 고치고 있었다 ㅋㅋㅋ blog_directory/_deploy/.git/config 를 고쳐야 한다. 즉, 다시 말해서 위에서 언급한</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>요놈은 root가 아니라 _deploy에서 실행시켜야 한다는 의미!</p>
+
 </div>
   
   
