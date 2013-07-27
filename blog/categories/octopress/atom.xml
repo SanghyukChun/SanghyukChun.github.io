@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-27T20:22:21+09:00</updated>
+  <updated>2013-07-27T23:00:29+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[octopress 자잘한 세팅 변경 및 post용 script 만들기]]></title>
+    <link href="http://SanghyukChun.github.io/blog/6/"/>
+    <updated>2013-07-27T20:13:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/blog/6</id>
+    <content type="html"><![CDATA[<p>일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 octopress랑 같아서 도저히 작업하면서 신경쓰여서 바꿔버렸다. 이건 정말 간단하다. source/ directory바로 밑에 있는 favicon.png만 다른 파일로 바꿔주고 generate하고 deploy하면 끝</p>
+
+
+<p>두번 째로 Permalink. 쉽게 생각하면 포스트의 고유 주소값. 내가 티스토리, 워드프레스로 넘어가면서 가장 불만이었던 점이 이 고유 주소값의 default가 포스트 이름이라는 점. 근데 나는 원래 포스트 이름이 꽤 긴편이고 거기다가 주소에 날짜가 들어가면 정말 우아하지 않다고 생각해서 가장 미니멀리즘하게 포스트 순서대로 하는 것을 좋아한다. 그런데 octopress도 기본 값이 년/월/일/제목 이다.. -_- 그래서 간단하게 바꿔줬는데, _config.yml에 있는 permalink를 /:year/:month/:day/:title에서 /:title로 바꿔주고 markdown 파일 이름을 2013-07-25-1.markdown 이런 식으로 바꿔주면 된다. 어차피 앞에 주소는 rake new_post할 때 해주는거니깐 딱히 고민할 이유는 없다.</p>
+
+
+<p></p>
+
+<p>근데 이렇게 하면 매번 생성할 때 마다 마지막 파일 이름이 뭐였는지 일일이 확인해야해서 굉장히 상당히 엄청 귀찮다. 그래서 아래와 같은 스크립트를 만들었음</p>
+
+
+<p> <br/>
+```</p>
+
+<h1>!/bin/bash</h1>
+
+<p>num=$(ls -l | grep markdown | wc -l)
+bundle exec rake new_post[&ldquo;$((num+1))&rdquo;]
+```</p>
+
+<p>그냥 post.sh라고 이름 붙이고 /source/_post directory바로 밑에 두고 ./post.sh만 돌리면 알아서 순서대로 만들어 준다 굳굳</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Customize Octopress - CSS 변경하기]]></title>
