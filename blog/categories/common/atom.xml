@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Common | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/common/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-27T18:18:19+09:00</updated>
+  <updated>2013-07-27T19:40:34+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Octopress와 함께하는 첫 번째 post]]></title>
-    <link href="http://SanghyukChun.github.io/blog/2013/07/25/1/"/>
+    <link href="http://SanghyukChun.github.io/blog/1/"/>
     <updated>2013-07-25T18:49:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/2013/07/25/1</id>
+    <id>http://SanghyukChun.github.io/blog/1</id>
     <content type="html"><![CDATA[<p>Blog를 참 많이도 옮기는 것 같다. 맨 처음 네이버 블로그, 야심차게 옮겼던 티스토리, 워드프레스.. 그리고 지금 옮기게 된 Octopress까지..</p>
 
 

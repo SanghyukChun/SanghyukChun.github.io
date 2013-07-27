@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-27T18:18:19+09:00</updated>
+  <updated>2013-07-27T19:40:34+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Machine Learning Week1 - What is Machine Learning]]></title>
-    <link href="http://SanghyukChun.github.io/blog/2013/07/27/3/"/>
+    <link href="http://SanghyukChun.github.io/blog/3/"/>
     <updated>2013-07-27T00:14:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/2013/07/27/3</id>
+    <id>http://SanghyukChun.github.io/blog/3</id>
     <content type="html"><![CDATA[<p>최근 Andrew Ng Standford교수의 Coursera <a href="https://class.coursera.org/ml-003/class/index">Machine Learning Course</a>를 수강 중이다. 사실 나는 이미 Machine Learning Coursework을 끝마친 상태이기 때문에 굳이 이 Course를 다시 들을 필요는 없긴 하지만 나의 개념을 다시 다잡고 최근 공부에 있어 슬럼프 비슷한게 찾아왔기 때문에 이 강의를 들으면서 나 자신을 조금 자극할 생각으로 수강하고 있다. 수강을 하면서 목표한 바가 있는데</p>
 
 
