@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Common - SanghyukChun's Blog</title>
+  <title>octopress 자잘한 세팅 변경 및 post용 script 만들기 - SanghyukChun's Blog</title>
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Category: Common">
+  <meta name="description" content="일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 octopress랑 같아서 도저히 작업하면서 신경쓰여서 바꿔버렸다. 이건 정말 간단하다. source/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://SanghyukChun.github.ioblog/categories/common">
+  <link rel="canonical" href="http://SanghyukChun.github.io/blog/6">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="SanghyukChun's Blog" type="application/atom+xml">
@@ -65,35 +65,108 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Common</h1>
+    
+      <h1 class="entry-title">Octopress 자잘한 세팅 변경 및 Post용 Script 만들기</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-27T20:13:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
-
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/1/">Octopress와 함께하는 첫 번째 post</a></h1>
-<time datetime="2013-07-25T18:49:00+09:00" pubdate><span class='month'>Jul</span> <span class='day'>25</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/common/'>Common</a>, <a class='category' href='/blog/categories/development/'>Development</a></span>
-</footer>
+<div class="entry-content"><p>일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 octopress랑 같아서 도저히 작업하면서 신경쓰여서 바꿔버렸다. 이건 정말 간단하다. source/ directory바로 밑에 있는 favicon.png만 다른 파일로 바꿔주고 generate하고 deploy하면 끝</p>
 
 
-</article>
+<p>두번 째로 Permalink. 쉽게 생각하면 포스트의 고유 주소값. 내가 티스토리, 워드프레스로 넘어가면서 가장 불만이었던 점이 이 고유 주소값의 default가 포스트 이름이라는 점. 근데 나는 원래 포스트 이름이 꽤 긴편이고 거기다가 주소에 날짜가 들어가면 정말 우아하지 않다고 생각해서 가장 미니멀리즘하게 포스트 순서대로 하는 것을 좋아한다. 그런데 octopress도 기본 값이 년/월/일/제목 이다.. -_- 그래서 간단하게 바꿔줬는데, _config.yml에 있는 permalink를 /:year/:month/:day/:title에서 /:title로 바꿔주고 markdown 파일 이름을 2013-07-25-1.markdown 이런 식으로 바꿔주면 된다. 어차피 앞에 주소는 rake new_post할 때 해주는거니깐 딱히 고민할 이유는 없다.</p>
+
+
+<p></p>
+
+<p>근데 이렇게 하면 매번 생성할 때 마다 마지막 파일 이름이 뭐였는지 일일이 확인해야해서 굉장히 상당히 엄청 귀찮다. 그래서 아래와 같은 스크립트를 만들었음</p>
+
+
+<p></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>num=$(ls -l | grep markdown | wc -l)
+</span><span class='line'>bundle exec rake new_post["$((num+1))"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>그냥 post.sh라고 이름 붙이고 /source/_post directory바로 밑에 두고 ./post.sh만 돌리면 알아서 순서대로 만들어 준다 굳굳</p>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-27T20:13:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/development-octopress/'>Development Octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/blog/6/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/blog/6/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/5/" title="Previous Post: Script와 함께하는 Bundle exec~">&laquo; Script와 함께하는 Bundle exec~</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
