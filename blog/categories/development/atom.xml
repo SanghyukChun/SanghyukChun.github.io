@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-27T17:22:27+09:00</updated>
+  <updated>2013-07-27T17:49:53+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -42,6 +42,15 @@ git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git
 
 
 <p>아무튼 귀찮은 것은 질색이기 때문에 좀 여러 방면에서 편하게 블로깅을 할 수 있는 툴들이나 스크립트를 많이 쓰게 될 것 같은 스멜~</p>
+
+
+<hr>
+
+
+<p>--- 추가</p>
+
+
+<p>아 ssh로 바꾸기는 해놨는데 ssh키가 등록이 안되어있어서 결국 도로묵이었다. <a href="https://help.github.com/articles/generating-ssh-keys">https://help.github.com/articles/generating-ssh-keys</a>보고 순서대로 따라서 하니깐 잘 등록 완료. 이제 deploy만 하면 된다~</p>
 
 ]]></content>
   </entry>
