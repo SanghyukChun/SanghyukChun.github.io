@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-29T08:18:21+09:00</updated>
+  <updated>2013-07-29T08:51:12+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[2013.07.27]]></title>
-    <link href="http://SanghyukChun.github.io/blog/8/"/>
+    <link href="http://SanghyukChun.github.io/8/"/>
     <updated>2013-07-28T02:36:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/8</id>
+    <id>http://SanghyukChun.github.io/8</id>
     <content type="html"><![CDATA[<p>저번 주에는 <a href="http://sanghyukchun.github.io/aboutMe/">AboutMe</a>에 매진하고 이번 주말에는 내내 블로그를 작업하는 데에 몰두한 것 같다. -프로그래밍은 재미있는 것이다.- 라는 말은 어디까지나 내가 감당할 수 있고 내가 어떻게 할 수 있을지 가늠할 수 있을 때 어울리는 말이 아닐까. 앞으로 내가 나아갈 방향에서 그렇지 않은 프로그래밍이 참 많을텐데 내가 계속 프로그래밍을 하는 것이 맞을까라는 생각이 든다.</p>
 
 
@@ -31,9 +31,9 @@
   
   <entry>
     <title type="html"><![CDATA[Octopress에 facebook comments 추가하기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/7/"/>
+    <link href="http://SanghyukChun.github.io/7/"/>
     <updated>2013-07-28T01:38:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/7</id>
+    <id>http://SanghyukChun.github.io/7</id>
     <content type="html"><![CDATA[<p>원래는 바로 레이아웃 뜯어고친 얘기를 적을 생각이었지만 페북 코멘트로 삽질을 하고나니 이것 부터 기록하는 편이 더 나을 것 같다.. 일단 당연히 Octopress는 정적 html 페이지이니 Octopress자체가 comment를 관리하는 것은 불가능하다. 때문에 iframe으로 만들어진 social plugin이 필요한 것이고.. 사실 Disqus를 사용하면 세팅도 할 필요없이 간단하게 처리가 가능하다. 하지만 Disqus는 여러 단점이 존재하고, 무엇보다 내가 쓸 줄 모른다 -_-; 그리고 한국에서 쓰는 걸 본 적이 없음. 차라리 페북이나 트위터 댓글을 만드는 편이 훨씬 나을 것 같아서 개발 경험이 있는 페이스북 댓글로 가기로 했다.</p>
 
 
@@ -96,9 +96,9 @@ facebook_app_id = 12341234
   
   <entry>
     <title type="html"><![CDATA[octopress 자잘한 세팅 변경 및 post용 script 만들기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/6/"/>
+    <link href="http://SanghyukChun.github.io/6/"/>
     <updated>2013-07-27T20:13:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/6</id>
+    <id>http://SanghyukChun.github.io/6</id>
     <content type="html"><![CDATA[<p>일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 octopress랑 같아서 도저히 작업하면서 신경쓰여서 바꿔버렸다. 이건 정말 간단하다. source/ directory바로 밑에 있는 favicon.png만 다른 파일로 바꿔주고 generate하고 deploy하면 끝</p>
 
 
@@ -126,9 +126,9 @@ bundle exec rake new_post[&ldquo;$((num+1))&rdquo;]
   
   <entry>
     <title type="html"><![CDATA[Customize Octopress - CSS 변경하기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/4/"/>
+    <link href="http://SanghyukChun.github.io/4/"/>
     <updated>2013-07-27T16:17:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/4</id>
+    <id>http://SanghyukChun.github.io/4</id>
     <content type="html"><![CDATA[<p>평일에는 조금 바빴고 주말을 맞아 블로그를 다시 Customize하고자 간단하게 Document를 훑어보고 당장 Twitter Bootstrap을 적용시켰다. 한가지 당황했던 점은 Bootstrap이 2에서 3으로 version up 되면서 docs페이지가 완전히 정전 상태.. 그냥 급하게 Bootstrap team blog에서 다운받아서 소스만 붙여 넣었다. 나중에 version 3으로 업그레이드 되면 바꿔줘야 할 것 같은 부분이다. (근데 About Me 실컷 Bootstrap CSS Customizing하고 필요없는거 다 지우고 comon.css로 몰아놓고 1주일도 안되서 ver.3이라니.. deploy완전히 끝나면 훑어보고 마음에 들면 About Me를 통채로 들어내야 할수도;;)</p>
 
 
@@ -149,9 +149,9 @@ body {
   
   <entry>
     <title type="html"><![CDATA[Octopress 설치하고 포스팅하기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/2/"/>
+    <link href="http://SanghyukChun.github.io/2/"/>
     <updated>2013-07-25T20:00:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/2</id>
+    <id>http://SanghyukChun.github.io/2</id>
     <content type="html"><![CDATA[<p>블로그를 설치하면서 했던 작업들을 간단하게 기록 겸 정리해서 올려본다.</p>
 
 

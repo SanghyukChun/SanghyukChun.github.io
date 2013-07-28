@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-29T08:18:21+09:00</updated>
+  <updated>2013-07-29T08:51:12+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[2013.07.28]]></title>
-    <link href="http://SanghyukChun.github.io/blog/9/"/>
+    <link href="http://SanghyukChun.github.io/9/"/>
     <updated>2013-07-29T04:20:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/9</id>
+    <id>http://SanghyukChun.github.io/9</id>
     <content type="html"><![CDATA[<p>주말이라고 열심히 자기만 하다가 갑자기 막판에 조금 꽂혀서 코딩을 조금 했다. About Me 프로젝트 코딩을 좀 했는데, 개인적으로 github pages를 헤메는 바람에 branch가 살짝 꼬인게 아쉽다. 크게 신경 쓸 부분은 아니지만. 일단 그제 나온 Bootstrap 3을 추가 적용시키고 소소한 markup수정, 내부 컨텐츠 수정을 좀 했다. About Me는 급하게 만든 프로젝트라고는 믿기지 않을 정도로 더 크게 손 댈 것이 없다. 물론 아예 없는 것은 아니지만 그래도 이 상태에서 굳이 Markup을 뜯어고친다거나 css를 크게 고친다거나 (물론 오늘은 bootstrap을 붙이긴 했지만) 성능이 아주 크게 추가되거나 (역시 오늘 bootstrap carousel을 추가시켰지만) 할 건 없는 것 같다. 다만 문제는 컨텐츠인데, 솔직히 내용을 채우기에는 내가 쌓아온 것들이 너무 적어서 뭔가 적을게 많이 없다는 점이 안타깝다. Works를 만들 때 가장 그런 생각을 많이 했는데, 그냥 열심히 하는 것 밖에 답이 없는 것 같다.</p>
 
 
@@ -33,9 +33,9 @@
   
   <entry>
     <title type="html"><![CDATA[2013.07.27]]></title>
-    <link href="http://SanghyukChun.github.io/blog/8/"/>
+    <link href="http://SanghyukChun.github.io/8/"/>
     <updated>2013-07-28T02:36:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/8</id>
+    <id>http://SanghyukChun.github.io/8</id>
     <content type="html"><![CDATA[<p>저번 주에는 <a href="http://sanghyukchun.github.io/aboutMe/">AboutMe</a>에 매진하고 이번 주말에는 내내 블로그를 작업하는 데에 몰두한 것 같다. -프로그래밍은 재미있는 것이다.- 라는 말은 어디까지나 내가 감당할 수 있고 내가 어떻게 할 수 있을지 가늠할 수 있을 때 어울리는 말이 아닐까. 앞으로 내가 나아갈 방향에서 그렇지 않은 프로그래밍이 참 많을텐데 내가 계속 프로그래밍을 하는 것이 맞을까라는 생각이 든다.</p>
 
 
@@ -49,9 +49,9 @@
   
   <entry>
     <title type="html"><![CDATA[Octopress에 facebook comments 추가하기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/7/"/>
+    <link href="http://SanghyukChun.github.io/7/"/>
     <updated>2013-07-28T01:38:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/7</id>
+    <id>http://SanghyukChun.github.io/7</id>
     <content type="html"><![CDATA[<p>원래는 바로 레이아웃 뜯어고친 얘기를 적을 생각이었지만 페북 코멘트로 삽질을 하고나니 이것 부터 기록하는 편이 더 나을 것 같다.. 일단 당연히 Octopress는 정적 html 페이지이니 Octopress자체가 comment를 관리하는 것은 불가능하다. 때문에 iframe으로 만들어진 social plugin이 필요한 것이고.. 사실 Disqus를 사용하면 세팅도 할 필요없이 간단하게 처리가 가능하다. 하지만 Disqus는 여러 단점이 존재하고, 무엇보다 내가 쓸 줄 모른다 -_-; 그리고 한국에서 쓰는 걸 본 적이 없음. 차라리 페북이나 트위터 댓글을 만드는 편이 훨씬 나을 것 같아서 개발 경험이 있는 페이스북 댓글로 가기로 했다.</p>
 
 
@@ -114,9 +114,9 @@ facebook_app_id = 12341234
   
   <entry>
     <title type="html"><![CDATA[octopress 자잘한 세팅 변경 및 post용 script 만들기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/6/"/>
+    <link href="http://SanghyukChun.github.io/6/"/>
     <updated>2013-07-27T20:13:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/6</id>
+    <id>http://SanghyukChun.github.io/6</id>
     <content type="html"><![CDATA[<p>일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 octopress랑 같아서 도저히 작업하면서 신경쓰여서 바꿔버렸다. 이건 정말 간단하다. source/ directory바로 밑에 있는 favicon.png만 다른 파일로 바꿔주고 generate하고 deploy하면 끝</p>
 
 
@@ -144,9 +144,9 @@ bundle exec rake new_post[&ldquo;$((num+1))&rdquo;]
   
   <entry>
     <title type="html"><![CDATA[Script와 함께하는 Bundle exec~]]></title>
-    <link href="http://SanghyukChun.github.io/blog/5/"/>
+    <link href="http://SanghyukChun.github.io/5/"/>
     <updated>2013-07-27T17:15:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/5</id>
+    <id>http://SanghyukChun.github.io/5</id>
     <content type="html"><![CDATA[<p>진짜 rails 개발할 때 제일 귀찮았던 것이 rake를 하려고만 하면 버전이 안맞아서 bundle exec를 붙여줘야 했던 점. 물론 강제로 내가 버전을 낮추면 되지만 왜 굳이 잘 쓰고 있는 rake의 버전을 낮추냐는 마인드로 계속 썼었다. 그게 가능했던 이유는 사실 rails 개발할 때 rake는 생각보다 그렇게 빈번하게 쓰지 않는다. 주로 <code>rails s</code>(혹은 <code>rails server</code>) 아니면 가끔 디버깅 용 <code>rails c</code>(혹은 <code>rails console</code>)을 쓰고는 했는데 이녀석들은 거의 출근해서 실행시키면 거의 퇴근할 때 까지 다시 실행시킬 일 없이 쭉 실행된다 -_-;; 근데 블로깅을 하니깐 이게 죄다 rake다. Rakefile을 바꿔버리는 방법도 있지만 굉장히 귀찮기 때문에 그냥 그런 귀찮은 짓을 하느니.. 뭐 그래서 그냥 일일이 치고 있다 하하..</p>
 
 

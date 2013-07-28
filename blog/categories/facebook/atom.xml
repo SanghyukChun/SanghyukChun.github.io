@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Facebook | SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/facebook/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-29T08:18:21+09:00</updated>
+  <updated>2013-07-29T08:51:12+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Octopress에 facebook comments 추가하기]]></title>
-    <link href="http://SanghyukChun.github.io/blog/7/"/>
+    <link href="http://SanghyukChun.github.io/7/"/>
     <updated>2013-07-28T01:38:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/blog/7</id>
+    <id>http://SanghyukChun.github.io/7</id>
     <content type="html"><![CDATA[<p>원래는 바로 레이아웃 뜯어고친 얘기를 적을 생각이었지만 페북 코멘트로 삽질을 하고나니 이것 부터 기록하는 편이 더 나을 것 같다.. 일단 당연히 Octopress는 정적 html 페이지이니 Octopress자체가 comment를 관리하는 것은 불가능하다. 때문에 iframe으로 만들어진 social plugin이 필요한 것이고.. 사실 Disqus를 사용하면 세팅도 할 필요없이 간단하게 처리가 가능하다. 하지만 Disqus는 여러 단점이 존재하고, 무엇보다 내가 쓸 줄 모른다 -_-; 그리고 한국에서 쓰는 걸 본 적이 없음. 차라리 페북이나 트위터 댓글을 만드는 편이 훨씬 나을 것 같아서 개발 경험이 있는 페이스북 댓글로 가기로 했다.</p>
 
 
