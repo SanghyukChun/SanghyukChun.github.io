@@ -4,7 +4,7 @@
   <title><![CDATA[SanghyukChun's Blog]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-07-29T08:51:12+09:00</updated>
+  <updated>2013-07-30T19:55:02+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2013.07.30]]></title>
+    <link href="http://SanghyukChun.github.io/11/"/>
+    <updated>2013-07-30T19:47:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/11</id>
+		<content type="html"><![CDATA[<p>어제 설정 스크립트를 변경했다가 거의 반나절을 소모했다. 내가 만든 시스템이 아니라면 가급적 건드리지 말아야한다는 사실을 깜빡하고 너무나 과감하게 내가 잘 알지도 못하는 시스템레벨을 변경해버린 것이 화근이었다. 다른 작업을 먼저 끝내고 오늘 다시 살펴보니, 코드 문제는 역시 아니었고 내가 바꾼 스크립트 때문인지 아닌지는 몰라도 하드가 잘못 잡혀있었다. 지금 프로그램은 하드 24개를 설정하는 스크립트가 있는데 이유는 알 수 없지만 sda와 sdb가 바뀌어있어 (라고 추정하고 있어) sdb1에 설정이 잡혀 용량이 부족해 에러가 난 것이었다. 이해할 수 없는 것은 도대체 어째서 sda에 있던 파티션이 sdb가 되었냐는 점. 납득은 안되지만 어쨌든 원인은 알았으니 고치면 된다. 하지만 내가 고치지 말고 왜 이런 이유가 났는지 보고만 해도 충분하겠지.</p>
+
+
+<p>요즘 무기력하고 우울하다. 내가 도대체 왜 이걸 하고 있고 도대체 뭘 하고 있는건지 모르겠다. 내가 하려는 것은 다른 일인데 이 곳에서 이러고 있는 것이 과연 나를 위한 일인가? 난 잘 모르겠다. 그리고 내가 하려는 일도 과연 나에게 잘 맞는 일일 것이라고 자신할 수 있을까? 역시 잘 모르겠다. 혼란스럽기만 하다. 하지만 페르시아의 왕자를 만든 조던 마크너도 모든 성공을 가진 것처럼 보이는 순간에도 계속 고민하고 힘들어했다. 모두 다 자연스러운 일이겠지.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Andrew Ng 교수의 Machine Learning강의 수강 완료]]></title>
