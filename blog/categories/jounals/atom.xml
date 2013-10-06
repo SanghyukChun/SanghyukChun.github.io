@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Jounals | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/jounals/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-09-09T03:11:39+09:00</updated>
+  <updated>2013-10-07T04:46:46+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2013.10.7]]></title>
+    <link href="http://SanghyukChun.github.io/19/"/>
+    <updated>2013-10-07T04:41:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/19</id>
+    <content type="html"><![CDATA[<p>방학 동안 계속하던 연구의 유종의 미를 거두기 위해 (원래 참여할 계획이 아니었던) 논문을 쓰게 된지 이제 대략 1주일이 조금 넘어가는 것 같다. 페이퍼의 데드라인은 이번 주 토요일. 정말 너무너무 바쁜 하루하루가 지속되고 있지만, 아직 학부생이고 대학원에 진학하기 이전에 이런 경험을 할 수 있다는 것은 굉장히 값진 경험이라고 생각된다. 그냥 대충 작성하는 학부 수준의 논문도 아니고 굉장히 높은 수준의 학회에 제출하는 논문을 단시간 안에 작성하면서 배우는 것들은 절대로 무시할 수 있는 양이 아니라고 본다. 대신 그 기간동안 어마어마하게 힘들다는 단점이 분명 존재하는 것 같지만 ㅎㅎ</p>
+
+
+<p>대학원에 들어가게 되면 사수가 있는 지금과는 달리 거의 교수님과 1대1로 프로젝트나 논문을 쓰게 될 것 같은데, 엄청나게 많은 시행착오를 거쳐야 진짜 내 논문을 쓸 수 있을 것 같다. 꼭 석사 때 논문과 프로젝트를 최대한 많이 해볼 수 있도록 해야겠다.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[2013.8.1]]></title>
@@ -63,22 +76,6 @@
 <p></p>
 
 <p>머신러닝 공부는 역시 느리다. 아는 부분이라고 대충대충 넘어가고 결국 머리에도 많이 남지 않는 것 같아서 안타깝다. 조만간 Matlab으로 코딩을 시작해야겠다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013.07.27]]></title>
-    <link href="http://SanghyukChun.github.io/8/"/>
-    <updated>2013-07-28T02:36:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/8</id>
-    <content type="html"><![CDATA[<p>저번 주에는 <a href="http://sanghyukchun.github.io/aboutMe/">AboutMe</a>에 매진하고 이번 주말에는 내내 블로그를 작업하는 데에 몰두한 것 같다. -프로그래밍은 재미있는 것이다.- 라는 말은 어디까지나 내가 감당할 수 있고 내가 어떻게 할 수 있을지 가늠할 수 있을 때 어울리는 말이 아닐까. 앞으로 내가 나아갈 방향에서 그렇지 않은 프로그래밍이 참 많을텐데 내가 계속 프로그래밍을 하는 것이 맞을까라는 생각이 든다.</p>
-
-
-<p>Octopress로 블로그를 만든 것을 살짝 후회하고 있다. 편하게 고치려고 가져온건데 오히려 바닥부터 뜯어고쳐야하는게 많다보니 차라리 처음부터 지킬로 작업하는 것 보다 느린 것 같다. 하지만 일단 커스터마이징만 끝나면 deploy, preview 심지어 new post까지 전부 스크립트로 걸어놨으니 오히려 더 빠르게 진행될 수 있겠지</p>
-
-
-<p>머신러닝 공부 속도는 더디지만 (오늘은 7강까지 밖에 못들었다.) 그래도 얼른 끝내야 내 프로젝트를 진행하고 neural network 강의 등으로 넘어가서 내 자신에 대한 발전이 있을 텐데 자꾸 더디다. 아직까지는 전부 아는 내용이라 사실 정말 빠르게 다 보고 슥슥 넘겨도 괜찮은 정도인데 그 잠깐을 집중하는 것도 못하고 있어서 큰일이다. 하지만 머신러닝 강의가 더딘만큼 블로그와 About Me의 개발 속도는 어마어마한 것을 보면 확실히 이 세상에 모든 것은 trade-off관계인가 보다.</p>
 
 ]]></content>
   </entry>
