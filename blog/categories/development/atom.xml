@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-11-04T03:21:59+09:00</updated>
+  <updated>2013-11-05T19:44:40+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[블로그에서 Latex 수식 사용하기(MathJax)]]></title>
+    <link href="http://SanghyukChun.github.io/25/"/>
+    <updated>2013-11-05T19:26:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/25</id>
+    <content type="html"><![CDATA[<p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/" target="new"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
+
+
+<p>방법은 매우 간단하다. 아래와 같은 코드를 head에 넣으면 끝. </p>
+
+
+<p>```</p>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<p>```</p>
+
+<p>이제 준비는 끝났다. 이제 수식을 넣어보자.</p>
+
+
+<p>사용법은 어렵지 않다. 만약 \( E=mc^2 \)를 쓰고 싶으면 </p>
+
+
+<p><code>
+\( E=mc^2 \)
+</code></p>
+
+<p>라고 적으면 된다. 위에 E=mc^2를 적은 곳에 다른 Latex 문법을 넣으면 다른 수식을 표현할 수 있다.</p>
+
+
+<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292" target="new">블로그에서 수식 표현하기</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[2013.8.1]]></title>
@@ -63,22 +99,6 @@
 <p></p>
 
 <p>머신러닝 공부는 역시 느리다. 아는 부분이라고 대충대충 넘어가고 결국 머리에도 많이 남지 않는 것 같아서 안타깝다. 조만간 Matlab으로 코딩을 시작해야겠다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013.07.27]]></title>
-    <link href="http://SanghyukChun.github.io/8/"/>
-    <updated>2013-07-28T02:36:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/8</id>
-    <content type="html"><![CDATA[<p>저번 주에는 <a href="http://sanghyukchun.github.io/aboutMe/">AboutMe</a>에 매진하고 이번 주말에는 내내 블로그를 작업하는 데에 몰두한 것 같다. -프로그래밍은 재미있는 것이다.- 라는 말은 어디까지나 내가 감당할 수 있고 내가 어떻게 할 수 있을지 가늠할 수 있을 때 어울리는 말이 아닐까. 앞으로 내가 나아갈 방향에서 그렇지 않은 프로그래밍이 참 많을텐데 내가 계속 프로그래밍을 하는 것이 맞을까라는 생각이 든다.</p>
-
-
-<p>Octopress로 블로그를 만든 것을 살짝 후회하고 있다. 편하게 고치려고 가져온건데 오히려 바닥부터 뜯어고쳐야하는게 많다보니 차라리 처음부터 지킬로 작업하는 것 보다 느린 것 같다. 하지만 일단 커스터마이징만 끝나면 deploy, preview 심지어 new post까지 전부 스크립트로 걸어놨으니 오히려 더 빠르게 진행될 수 있겠지</p>
-
-
-<p>머신러닝 공부 속도는 더디지만 (오늘은 7강까지 밖에 못들었다.) 그래도 얼른 끝내야 내 프로젝트를 진행하고 neural network 강의 등으로 넘어가서 내 자신에 대한 발전이 있을 텐데 자꾸 더디다. 아직까지는 전부 아는 내용이라 사실 정말 빠르게 다 보고 슥슥 넘겨도 괜찮은 정도인데 그 잠깐을 집중하는 것도 못하고 있어서 큰일이다. 하지만 머신러닝 강의가 더딘만큼 블로그와 About Me의 개발 속도는 어마어마한 것을 보면 확실히 이 세상에 모든 것은 trade-off관계인가 보다.</p>
 
 ]]></content>
   </entry>
