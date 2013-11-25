@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Common | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/common/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-11-19T22:57:42+09:00</updated>
+  <updated>2013-11-26T00:34:38+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[서버를 구축해보자]]></title>
+    <link href="http://SanghyukChun.github.io/28/"/>
+    <updated>2013-11-26T00:11:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/28</id>
+    <content type="html"><![CDATA[<p>최근 연구실 초기 세팅을 위해서 고군분투하고 있는데, 갑자기 연구실용이 아니라 내 전용 서버를 하나 두면 재미있을 것 같다는 생각이 들었다. 용도는 크게.. 네 가지 정도</p>
+
+
+<ul>
+    <li>내 개인 웹서버 - 간단한 나에 대한 소개 등등을 하는 개인 페이지나 내가 개발하는 웹 어플리케이션을 배포하기 위한 용도.. 대충 아래에 있는 목록 정도를 배포하지 않을까 싶다</li>
+    <ul>
+        <li>현재 <a href="sanghyukchun.github.io/aboutMe" target="new">sanghyukchun.github.io/aboutMe</a>에 있는 내 PR페이지</li>
+        <li>연구를 하고 그 기록을 보관하기 위한 개인 BBS.. 이건 XE 써서 만들면 간단할 것 같다</li>
+        <li>연구 및 개인 스케쥴 관리를 위한 레드마인</li>
+        <li>내가 필요한 내용을 정리하기 위한 개인 Wiki</li>
+        <li>예전부터 생각만 하고 있고 구현은 하고 있지 않은 맛집 DB 및 추천용 웹 어플리케이션</li>
+    </ul>
+    <li>맥 이외의 다른 머신에서도 개발할 수 있기 위한 개인 개발용 서버 (SSH client를 사용해서 접속하는 방식으로..)</li>
+    <li>개인 파일 서버 - 원래는 그냥 SFTP정도로 끝내려고 했지만, 동영상을 저장해서 실시간 스트리밍이 가능한 어플리케이션을 만들어볼까 고민 중이다</li>
+    <li>개인 메일 서버 - 필요하지는 않지만, sanghyuk@sanghyuk.kaist.ac.kr 이나.. 나중에 혹시 다양한 사람들을 위한 웹어플리케이션을 만들 경우에 supports@sanghyuk.kaist.ac.kr 이런 식으로 메일을 만드는 것도 가능하다!</li>
+    <li>개인 메일링 리스트 서버 - 개인적으로 메일링 리스트를 구축해야할 일이 얼마나 있을지는 모르겠지만, 그래도 세팅해두고 메일링 리스트로 관심분야를 정리하면 굉장히 좋을 것 같다는 생각이 든다</li>
+</ul>
+
+
+<p>등을 해보고자 한다.</p>
+
+
+<p>전반적으로 연산 자원을 많이 요구하지 않으니깐 듀얼코어 i3면 충분할 거라고 생각했고 (그리고 듀얼코어가 파워 컨섬션도 적고 발열도 적다), 마찬가지 이유로 RAM도 4GB 한 개만 사기로 했다. 이걸 사는 이유는 그냥 나중에 필요하면 다른 컴퓨터로 옮겨 낄 수도 있고 팔기에도 2GB보다는 4GB가 잘 팔리니깐. 파일 서버를 세팅을 하기는 하겠지만, 아마 TB단위 이상으로 필요할 것 같지는 않고, 만약 필요하다면 요즘 하드 가격도 많이 떨어졌으니 간단하게 확장하면 되니깐 그냥 WD 1TB만 구매하기로 결정. 이 이외의 다른 세팅은 필요없을 것 이라고 판단하고 과감하게 보드도 저렴한 녀석으로 구매했다. 어차피 비싼 보드라는게 결국 포트가 더 많이 들어있거나 더 좋은 성능의 무언가가 들어간 경우 (USB3.0, SPDIF, 예전엔 SATA3등등..) 근데 나는 그냥 랜선만 있으면 된다. 랜카드를 더 박거나 GPU가 필요하지도 않으니 그냥 과감하게 저렴한 녀석으로 결정!</p>
+
+
+<p>그래서 견적이 이렇게 나왔다.</p>
+
+
+<p><img src="/images/post/28-1.png" width="400"></p>
+
+<p>오늘 주문했고 배송도 되었으니 아마 빠르면 내일 오후 늦으면 내일 모레 도착할 것 같다. 조립하기 귀찮아서 조립비도 그냥 낼까 했는데, 부품도 몇 개 없어서 그냥 내가 조립하기로 했다. 정말 금방 끝날 것 같아서..</p>
+
+
+<p>운영체제는 당연히 Ubuntu Server. 예전에는 정말 아무것도 몰라서 Ubuntu Desktop을 깔고 왜 자꾸 에러가 나고 리소스가 부족한지 한숨짓고는 했는데, 이제는 그런 실수는 안하겠지 하하. 13은 너무 버그가 많기도 하고 LTS가 아직 안나온 것 같아서 그냥 12.04LTS로 결정. 이제 서버만 도착하면 될 것 같은데 ㅎㅎ</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[게임은 정말 사회악인가? 한국 게임업계는 정말 반성할 것이 없는가?]]></title>
