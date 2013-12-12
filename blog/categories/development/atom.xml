@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-12-03T01:52:35+09:00</updated>
+  <updated>2013-12-12T20:17:34+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[서버를 구축해보자 - ip 세팅과 유틸 설치]]></title>
+    <link href="http://SanghyukChun.github.io/33/"/>
+    <updated>2013-12-12T01:15:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/33</id>
+    <content type="html"><![CDATA[<p>사실 서버용 컴퓨터를 구매한 것은 벌써 거의 <a href="http://SanghyukChun.github.io/28" target="new">2주도 더 이전에 있었던 일</a>이지만, 근래에 좀 많이 바빠서 이제서야 기본적인 세팅을 하게 되었다. 지난번에 설치한 우분투 서버에 뭔가 문제가 있었는지 장소를 옮겨서 부팅하자마자 OS가 뻗어버리는... 그래서 오늘 다시 다 밀어버리고 처음부터 다시 세팅했다.</p>
+
+
+<p>서버를 설치하면서는 뭐 크게 신경 쓸 만한 옵션은 많이 없긴한데.. 난 개인적으로 내가 관리하는 편이 좋아서 파티션에서 <a href="http://www.fis.unipr.it/pub/linux/redhat/9/en/doc/RH-DOCS/rhl-cg-ko-9/ch-lvm-intro.html" target="new">LVM</a>도 끄고, 자동 업데이트도 끄고.. 유틸도 전부 안깔고 진행했다. 그리고 ip 세팅만 해줬는데, 나는 학교에서 할당 받은 ip만 사용할 수 있는 상황이니깐, 이게 나름 중요하다. 맨 처음 세팅할 때 ip를 입력하게 되면 별로 머리아플 일이 없기는 하지만, 실수로 세팅을 하지 않은 상황이거나 하면... 나중에 설치가 끝난 이후에 /etc/network/interfaces와 /etc/resolv.conf만 고쳐주면 간단하다. 아래는 내 interfaces 파일</p>
+
+
+<p>```</p>
+
+<h1>This file describes the network interfaces available on your system</h1>
+
+<h1>and how to activate them. For more information, see interfaces(5).</h1>
+
+<h1>The loopback network interface</h1>
+
+<p>auto lo
+iface lo inet loopback</p>
+
+<h1>The primary network interface</h1>
+
+<p>auto p2p1
+iface p2p1 inet static
+  address 143.248.53.74
+  netmask 255.255.255.0
+  network 143.248.53.0
+  broadcast 143.248.53.255
+  gateway 143.248.53.1
+  dns-nameservers 8.8.8.8
+  dns-search kaist.ac.kr
+```</p>
+
+<p>이게 맨 처음에 설치할 떄 잡아줬더니 p2p1이라고 잡아줬는데, 평소에는 그냥 따로 추가할 필요없이 아래같은 format으로 적어주면 그만. 이걸 적고 service networking restart를 해주면 dns도 같이 잡힌다. (알아서 resolv.conf가 업데이트 된다.) 이제 인터넷도 끝.</p>
+
+
+<p>이제 유틸을 깔 차례. apt-get으로 설치 가능한 유틸은 대충 깔고... 문제는 아파치, mysql, php등등인데, <a href="http://karasix.blog.me/10090152926" target="new">이거에 관련된 블로그</a>를 찾았다. 별로 어렵지는 않고, 그냥 가끔 헷갈릴 때 보면 괜찮은 듯.</p>
+
+
+<p>지금 아파치를 설치 중인데, APR이 없다고 에러가 뜬다.. <a href="http://stackoverflow.com/questions/9436860/apache-httpd-setup-and-installation">stackoverflow</a>를 보니 <a href="http://apr.apache.org/">APR</a>이란 놈을 깔아야하는 모양. 아 이건 좀 귀찮다. 여기서부터는 내일부터.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[서버를 구축해보자]]></title>
@@ -111,19 +157,6 @@
 
 
 <p>내가 뭔가 contribution을 할 수 있는 일을 해야겠다는 생각이 많이 든다. 지금 하는 일은 내가 과연 얼마나 contribution을 할 수 있을지 솔직히 자신이 없다.. 어제 했던 대화들을 생각해보면 나는 이 곳에서 행복하게 지낼 수 없을 것 같다는 그런 생각이 든다. 하지만 일단은 내가 해야할 일에 집중하는 것이 우선이므로 그런 고민들은 잠시 잊고 있어야지. 이제 내일이면 벌써 8월이라는 사실을 잊으면 안된다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013.07.30]]></title>
-    <link href="http://SanghyukChun.github.io/11/"/>
-    <updated>2013-07-30T19:47:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/11</id>
-    <content type="html"><![CDATA[<p>어제 설정 스크립트를 변경했다가 거의 반나절을 소모했다. 내가 만든 시스템이 아니라면 가급적 건드리지 말아야한다는 사실을 깜빡하고 너무나 과감하게 내가 잘 알지도 못하는 시스템레벨을 변경해버린 것이 화근이었다. 다른 작업을 먼저 끝내고 오늘 다시 살펴보니, 코드 문제는 역시 아니었고 내가 바꾼 스크립트 때문인지 아닌지는 몰라도 하드가 잘못 잡혀있었다. 지금 프로그램은 하드 24개를 설정하는 스크립트가 있는데 이유는 알 수 없지만 sda와 sdb가 바뀌어있어 (라고 추정하고 있어) sdb1에 설정이 잡혀 용량이 부족해 에러가 난 것이었다. 이해할 수 없는 것은 도대체 어째서 sda에 있던 파티션이 sdb가 되었냐는 점. 납득은 안되지만 어쨌든 원인은 알았으니 고치면 된다. 하지만 내가 고치지 말고 왜 이런 이유가 났는지 보고만 해도 충분하겠지.</p>
-
-
-<p>요즘 무기력하고 우울하다. 내가 도대체 왜 이걸 하고 있고 도대체 뭘 하고 있는건지 모르겠다. 내가 하려는 것은 다른 일인데 이 곳에서 이러고 있는 것이 과연 나를 위한 일인가? 난 잘 모르겠다. 그리고 내가 하려는 일도 과연 나에게 잘 맞는 일일 것이라고 자신할 수 있을까? 역시 잘 모르겠다. 혼란스럽기만 하다. 하지만 페르시아의 왕자를 만든 조던 마크너도 모든 성공을 가진 것처럼 보이는 순간에도 계속 고민하고 힘들어했다. 모두 다 자연스러운 일이겠지.</p>
 
 ]]></content>
   </entry>

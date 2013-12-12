@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-12-03T01:52:35+09:00</updated>
+  <updated>2013-12-12T20:17:34+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -119,7 +119,7 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
 <h5>Summary and Questions</h5>
 
 
-<p>마지막으로 <a class="red tip" title="Neighborhood method">NH</a>와 <a class="red tip" title="Matrix factoriztion">MF</a>에 대해 잠시 비교해보자. NM은 local structure를 찾아서 recommendation problem을 풀겠다는 컨셉이고 MF는 global structure를 찾아서 recommendation problem을 풀겠다는 컨셉이다. 당연히 local한 solution보다 global한 structure를 찾는 컨셉이 더 정확할 것이다. 실제로 다른 알고리듬 하나도 없이 MF만 적용을 해봐도 Cinematch에 비해 8% 정도 improved 된 결과를 취할 수가 있게 된다. 하지만 역시 맨 처음 제시되었던 10%를 달성하려면 <a class="red tip" title="Baseline predictor with temporal models"></a>{BP}를 적용한 NH와 MF 둘을 잘 combine해야만 달성이 가능하다.</p>
+<p>마지막으로 <a class="red tip" title="Neighborhood method">NH</a>와 <a class="red tip" title="Matrix factoriztion">MF</a>에 대해 잠시 비교해보자. NM은 local structure를 찾아서 recommendation problem을 풀겠다는 컨셉이고 MF는 global structure를 찾아서 recommendation problem을 풀겠다는 컨셉이다. 당연히 local한 solution보다 global한 structure를 찾는 컨셉이 더 정확할 것이다. 실제로 다른 알고리듬 하나도 없이 MF만 적용을 해봐도 Cinematch에 비해 8% 정도 improved 된 결과를 취할 수가 있게 된다. 하지만 역시 맨 처음 제시되었던 10%를 달성하려면 <a class="red tip" title="Baseline predictor with temporal models">BP</a>를 적용한 NH와 MF 둘을 잘 combine해야만 달성이 가능하다.</p>
 
 
 <p>이런 알고리듬들에 대해서 몇 가지 Further Questions이 있을 수 있을 것이다.</p>
