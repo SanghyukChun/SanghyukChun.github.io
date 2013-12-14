@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="서버를 구축해보자 - Ip 세팅과 유틸 설치 Dec 12th, 2013 사실 서버용 컴퓨터를 구매한 것은 벌써 거의 2주도 더 이전에 있었던 일이지만, 근래에 좀 많이 바빠서 이제서야 기본적인 세팅을 하게 되었다. 지난번에 설치한 우분투 서버에 뭔가 문제가 있었는지 &hellip;">
+  <meta name="description" content="우분투에 Matlab과 JDK 깔기 Dec 14th, 2013 맨 처음 우분투 desktop을 메인 컴퓨터로 사용하겠다고 삽질하던 시절, Matlab 하나 까는 것도 무지막지 고생스러웠던 시절이 있다. 최근 다시 우분투를 메인 컴으로 사용하면서 매트랩 설치에 삽질을 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,66 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/35/">우분투에 Matlab과 JDK 깔기</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-14T23:24:00+09:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>맨 처음 우분투 desktop을 메인 컴퓨터로 사용하겠다고 삽질하던 시절, Matlab 하나 까는 것도 무지막지 고생스러웠던 시절이 있다. 최근 다시 우분투를 메인 컴으로 사용하면서 매트랩 설치에 삽질을 하는 사람이 있을까싶어 이 글을 남겨본다. 기준은 2011B 버전이며, Linux Mac Solaris 호환 버전을 기준으로 한다.</p>
+
+
+<p>맨 처음 파일을 받고 압축을 풀게 되면 (tar.gz파일을 받은 상태라고 가정한다. + 참고로 저는 학교 라이센스를 사용합니다.) 폴더안에 install이라는 파일이 있는 것을 확인할 수 있다. 이 파일은 간단한 shell script인데, chmod로 사용할 수 있도록 바꿔주어야한다.. 거기에다가 이 녀석이 자기 폴더 내부에 있는 java 파일을 사용하는데 이놈이 뭔가 권한이 없는지 에러를 슝슝 뱉는다. 잘못하면 삽질하기 딱 좋은 상황. 그러나 간단하게 아래 명령어 하나로 해결할 수 있다.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chmod -R +x Mathworks_2011B_Linux_Mac_Solaris</span></code></pre></td></tr></table></div></figure>
+
+
+<p>이렇게 한 줄 치고,</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo ./Mathworks_2011B_Linux_Mac_Solaris/install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>하면 깔끔하게 해결된다.</p>
+
+
+<p>+ install sudo로 안하면 파일 생성이 안된다</p>
+
+
+<p>아 그리고 JDK 설치도 삽질하기 딱 좋은데 이건 <a href="http://whatwant.tistory.com/438" target="new">정말 정리가 잘 된 포스트</a>가 있어서 링크로 대체하도록 하겠다.</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -946,66 +1006,6 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/25/">블로그에서 Latex 수식 사용하기(MathJax)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-05T19:26:00+09:00" pubdate data-updated="true">Nov 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/" target="new"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
-
-
-<p>방법은 매우 간단하다. 아래와 같은 코드를 head에 넣으면 끝. </p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>이제 준비는 끝났다. 이제 수식을 넣어보자.</p>
-
-
-<p>사용법은 어렵지 않다. 만약 \( E=mc^2 \)를 쓰고 싶으면 </p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\( E=mc^2 \)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>라고 적으면 된다. 위에 E=mc^2를 적은 곳에 다른 Latex 문법을 넣으면 다른 수식을 표현할 수 있다.</p>
-
-
-<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292" target="new">블로그에서 수식 표현하기</a></p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1022,6 +1022,10 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/35/">우분투에 Matlab과 JDK 깔기</a>
+      </li>
+    
+      <li class="post">
         <a href="/33/">서버를 구축해보자 - Ip 세팅과 유틸 설치</a>
       </li>
     
@@ -1035,10 +1039,6 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
     
       <li class="post">
         <a href="/30/">인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/29/">인터넷 속의 수학 - 개요</a>
       </li>
     
   </ul>

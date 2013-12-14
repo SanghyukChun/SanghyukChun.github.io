@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Math-in-Internet - README</title>
+  <title>우분투에 Matlab과 JDK 깔기 - README</title>
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Category: Math-in-Internet">
+  <meta name="description" content="자칫 잘못하면 삽질하기 딱 좋은 우분투에 Matlab과 JDK를 까는 방법에 대한 글">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://SanghyukChun.github.ioblog/categories/math-in-internet">
+  <link rel="canonical" href="http://SanghyukChun.github.io/35">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
@@ -89,91 +89,119 @@ $(function() {
 </nav>
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Math-in-Internet</h1>
+    
+      <h1 class="entry-title">우분투에 Matlab과 JDK 깔기</h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-14T23:24:00+09:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
-
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1 class="archive-post"><a href="/32/">인터넷 속의 수학 - Can I really reach anyone in 6 steps? (1/2)</a></h1>
-<p>단기강좌 인터넷 속의 수학에서 첫째날 강의인 'Can I really reach anyone in 6 steps?' 의 요약글 2 중 1</p>
-<small class="pull-right"><time datetime="2013-12-03T17:58:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>03</span> <span class='year'>2013</span></time></small>
-
-<footer>
-  <span class="categories"><a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a>, <a class='category' href='/blog/categories/modeling/'>Modeling</a>, <a class='category' href='/blog/categories/network/'>Network</a></span>
-</footer>
-<div class="clear"></div>
-<hr>
+<div class="entry-content"><p>맨 처음 우분투 desktop을 메인 컴퓨터로 사용하겠다고 삽질하던 시절, Matlab 하나 까는 것도 무지막지 고생스러웠던 시절이 있다. 최근 다시 우분투를 메인 컴으로 사용하면서 매트랩 설치에 삽질을 하는 사람이 있을까싶어 이 글을 남겨본다. 기준은 2011B 버전이며, Linux Mac Solaris 호환 버전을 기준으로 한다.</p>
 
 
-</article>
+<p>맨 처음 파일을 받고 압축을 풀게 되면 (tar.gz파일을 받은 상태라고 가정한다. + 참고로 저는 학교 라이센스를 사용합니다.) 폴더안에 install이라는 파일이 있는 것을 확인할 수 있다. 이 파일은 간단한 shell script인데, chmod로 사용할 수 있도록 바꿔주어야한다.. 거기에다가 이 녀석이 자기 폴더 내부에 있는 java 파일을 사용하는데 이놈이 뭔가 권한이 없는지 에러를 슝슝 뱉는다. 잘못하면 삽질하기 딱 좋은 상황. 그러나 간단하게 아래 명령어 하나로 해결할 수 있다.</p>
 
 
-
-<article>
-  
-<h1 class="archive-post"><a href="/31/">인터넷 속의 수학 - How does Netflix recommend movies? (2/2)</a></h1>
-<p>단기강좌 인터넷 속의 수학에서 둘째날 강의인 'How does Netflix recommend movies?' 의 요약글 2 중 2</p>
-<small class="pull-right"><time datetime="2013-12-02T21:43:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>02</span> <span class='year'>2013</span></time></small>
-
-<footer>
-  <span class="categories"><a class='category' href='/blog/categories/big-data/'>Big-Data</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a></span>
-</footer>
-<div class="clear"></div>
-<hr>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chmod -R +x Mathworks_2011B_Linux_Mac_Solaris</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>이렇게 한 줄 치고,</p>
 
 
-
-<article>
-  
-<h1 class="archive-post"><a href="/30/">인터넷 속의 수학 - How does Netflix recommend movies? (1/2)</a></h1>
-<p>단기강좌 인터넷 속의 수학에서 둘째날 강의인 'How does Netflix recommend movies?' 의 요약글 2 중 1</p>
-<small class="pull-right"><time datetime="2013-11-27T15:17:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>27</span> <span class='year'>2013</span></time></small>
-
-<footer>
-  <span class="categories"><a class='category' href='/blog/categories/big-data/'>Big-Data</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a></span>
-</footer>
-<div class="clear"></div>
-<hr>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo ./Mathworks_2011B_Linux_Mac_Solaris/install</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>하면 깔끔하게 해결된다.</p>
 
 
-
-<article>
-  
-<h1 class="archive-post"><a href="/29/">인터넷 속의 수학 - 개요</a></h1>
-<p>2013년 10월 31일, 11월 1일 양일간 진행되었던 단기강좌 인터넷 속의 수학에 대한 전체 개요글</p>
-<small class="pull-right"><time datetime="2013-11-27T15:00:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>27</span> <span class='year'>2013</span></time></small>
-
-<footer>
-  <span class="categories"><a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a></span>
-</footer>
-<div class="clear"></div>
-<hr>
+<p>+ install sudo로 안하면 파일 생성이 안된다</p>
 
 
-</article>
+<p>아 그리고 JDK 설치도 삽질하기 딱 좋은데 이건 <a href="http://whatwant.tistory.com/438" target="new">정말 정리가 잘 된 포스트</a>가 있어서 링크로 대체하도록 하겠다.</p>
 
 </div>
 
+<hr>
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-14T23:24:00+09:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/common/'>Common</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/35/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/35/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/33/" title="Previous Post: 서버를 구축해보자 - ip 세팅과 유틸 설치">&laquo; 서버를 구축해보자 - ip 세팅과 유틸 설치</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
+
+  <section>
+    <h1>Comments</h1>
+    <div id="facebook_comments" aria-live="polite">
+      <div class="fb-comments" data-href="http://SanghyukChun.github.io/35/" data-width="470" data-num-posts="10"></div>
+    </div>
+  </section>
 
 </div>
 

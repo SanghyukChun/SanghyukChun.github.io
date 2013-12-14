@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Common | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/common/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-12-14T23:23:59+09:00</updated>
+  <updated>2013-12-14T23:31:00+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[우분투에 Matlab과 JDK 깔기]]></title>
+    <link href="http://SanghyukChun.github.io/35/"/>
+    <updated>2013-12-14T23:24:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/35</id>
+    <content type="html"><![CDATA[<p>맨 처음 우분투 desktop을 메인 컴퓨터로 사용하겠다고 삽질하던 시절, Matlab 하나 까는 것도 무지막지 고생스러웠던 시절이 있다. 최근 다시 우분투를 메인 컴으로 사용하면서 매트랩 설치에 삽질을 하는 사람이 있을까싶어 이 글을 남겨본다. 기준은 2011B 버전이며, Linux Mac Solaris 호환 버전을 기준으로 한다.</p>
+
+
+<p>맨 처음 파일을 받고 압축을 풀게 되면 (tar.gz파일을 받은 상태라고 가정한다. + 참고로 저는 학교 라이센스를 사용합니다.) 폴더안에 install이라는 파일이 있는 것을 확인할 수 있다. 이 파일은 간단한 shell script인데, chmod로 사용할 수 있도록 바꿔주어야한다.. 거기에다가 이 녀석이 자기 폴더 내부에 있는 java 파일을 사용하는데 이놈이 뭔가 권한이 없는지 에러를 슝슝 뱉는다. 잘못하면 삽질하기 딱 좋은 상황. 그러나 간단하게 아래 명령어 하나로 해결할 수 있다.</p>
+
+
+<p><code>
+chmod -R +x Mathworks_2011B_Linux_Mac_Solaris
+</code></p>
+
+<p>이렇게 한 줄 치고,</p>
+
+
+<p><code>
+sudo ./Mathworks_2011B_Linux_Mac_Solaris/install
+</code></p>
+
+<p>하면 깔끔하게 해결된다.</p>
+
+
+<p>+ install sudo로 안하면 파일 생성이 안된다</p>
+
+
+<p>아 그리고 JDK 설치도 삽질하기 딱 좋은데 이건 <a href="http://whatwant.tistory.com/438" target="new">정말 정리가 잘 된 포스트</a>가 있어서 링크로 대체하도록 하겠다.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[서버를 구축해보자 - ip 세팅과 유틸 설치]]></title>
@@ -152,25 +185,6 @@ iface p2p1 inet static
 
 
 <p>어찌되었건, 간만에 무언가 강연을 듣고 자극이 된 것 같다. '저도 여러분들과 다를바 없는 학부생이었습니다'라는 얘기나, '이민화 교수님의 강연을 듣고 무언가 길을 찾은 것 같았습니다'와 같은 얘기들은 어느새 국내 벤처와 관련된 모든 것들을 너무나 비관적이고 삐딱한 시선으로만 바라보던 나에게 정말 순수하게 열망하던 그 시기의 감정을 조금이나마 불러일으켜준 것 같아서 좋았다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress와 함께하는 첫 번째 post]]></title>
-    <link href="http://SanghyukChun.github.io/1/"/>
-    <updated>2013-07-25T18:49:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/1</id>
-    <content type="html"><![CDATA[<p>Blog를 참 많이도 옮기는 것 같다. 맨 처음 네이버 블로그, 야심차게 옮겼던 티스토리, 워드프레스.. 그리고 지금 옮기게 된 Octopress까지..</p>
-
-
-<p>사실 블로깅도 제대로 많이 안하면서 굳이 Octopress로 옮긴 이유는 사실 그냥 요새 뭔가 만들고 싶은 욕구가 있었고 최근 About Me 작업을 하면서 알게 된 Github Pages로 뭔가를 할 수 없을까라는 생각이 들어서이다. 생각을 해보니 가장 무난하고 많은 것을 시도해 볼 수 있는 것이 블로그라는 생각이 들어서 실제 구현 사례들을 찾아보았고 Octopress라는 재미난 어플리케이션을 발견해 이걸 직접 써보기로 마음 먹었다.</p>
-
-
-<p>요즘 사용하는 머신이 대부분 윈도우이기 때문에 사실 Octopress는 좋은 대안은 아니다. 기본적으로 대부분의 작업이 Terminal에서 일어나야하고 Ruby로 작업된 녀석이기 때문에 윈도우에서 사용하다가는 정말 충격과 공포에 빠질 수가 있다. 하지만 나는 맥이 있으니 맥프로로 작업을 하면 되겠지~ 라는 생각으로, 거기다가 루비는 내 메인 언어 중 하나기도 하니깐 한번 도전해봤다.</p>
-
-
-<p>아직 레이아웃을 바꿔보지는 못 했지만, Octopress로 넘어오면서 가장 기대가 되는 점은 Customizing이다. 사실 티스토리와 워드프레스도 내가 직접 무언가를 만들고 도전해볼 수는 있지만 내가 관리하는 시스템이 아니고 재미가 없달까나. 나는 정말 처음 css부터 뜯어고치는게 재밌는데 말이지. 아무튼 요새 하는 일들이 조금 정리가 되면 블로그 디자인 작업은 바로 시작할 생각이다. 재미있는 블로깅 라이프가 되기를!</p>
 
 ]]></content>
   </entry>
