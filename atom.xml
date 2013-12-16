@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2013-12-14T23:43:25+09:00</updated>
+  <updated>2013-12-16T09:06:54+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,120 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[서버를 구축해보자 - 웹서버 구축 스크립트 만들가]]></title>
+    <link href="http://SanghyukChun.github.io/36/"/>
+    <updated>2013-12-16T08:49:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/36</id>
+		<content type="html"><![CDATA[<p><a href="33" target="new">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고&#8230; 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/" target="new">이음 블로그</a> 참고&#8230; 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
+
+
+<p>일단, apache만 가지고 되는건 거의 없다. 기본적으로 php + mysql 기반으로 굴러가는 모듈이 워낙 많기 때문에 이 녀석들도 깔아주도록하자. 아래와 같은 스크립트를 만들어서 돌리면 편하다</p>
+
+
+<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>apt-get -y install apache2 libapache2-mod-passenger
+</span><span class='line'>apt-get -y install mysql-server mysql-client
+</span><span class='line'>apt-get -y install php5-common php5 libapache2-mod-php5
+</span><span class='line'>apt-get -y install php5-mysql
+</span><span class='line'>apt-get -y install phpmyadmin</span></code></pre></td></tr></table></div></figure>
+
+
+<p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐&#8230; 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html" target="new">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
+
+
+<p>Default</p>
+
+
+<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>&lt;VirtualHost *:80&gt;
+</span><span class='line'>  ServerAdmin webmaster@localhost
+</span><span class='line'>
+</span><span class='line'>  DocumentRoot /var/www
+</span><span class='line'>  &lt;Directory /&gt;
+</span><span class='line'>      Options FollowSymLinks
+</span><span class='line'>      AllowOverride None
+</span><span class='line'>  &lt;/Directory&gt;
+</span><span class='line'>  &lt;Directory /var/www/&gt;
+</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
+</span><span class='line'>      AllowOverride None
+</span><span class='line'>      Order allow,deny
+</span><span class='line'>      allow from all
+</span><span class='line'>  &lt;/Directory&gt;
+</span><span class='line'>  &lt;Directory /var/www/redmine&gt;
+</span><span class='line'>    RailsBaseURI /redmine
+</span><span class='line'>    PassengerResolveSymlinksInDocumentRoot on
+</span><span class='line'>  &lt;/Directory&gt;
+</span><span class='line'>
+</span><span class='line'>  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+</span><span class='line'>  &lt;Directory "/usr/lib/cgi-bin"&gt;
+</span><span class='line'>      AllowOverride None
+</span><span class='line'>      Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+</span><span class='line'>      Order allow,deny
+</span><span class='line'>      Allow from all
+</span><span class='line'>  &lt;/Directory&gt;
+</span><span class='line'>
+</span><span class='line'>  ErrorLog ${APACHE_LOG_DIR}/error.log
+</span><span class='line'>
+</span><span class='line'>  # Possible values include: debug, info, notice, warn, error, crit,
+</span><span class='line'>  # alert, emerg.
+</span><span class='line'>  LogLevel warn
+</span><span class='line'>
+</span><span class='line'>  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</span><span class='line'>&lt;/VirtualHost&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>passenger.conf</p>
+
+
+<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_passenger.c&gt;
+</span><span class='line'>  PassengerDefaultUser www-data
+</span><span class='line'>  PassengerRoot /usr
+</span><span class='line'>  PassengerRuby /usr/bin/ruby
+</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>apt-get install redmine redmine-mysql
+</span><span class='line'>cp passenger.conf /etc/apache2/mods-available/passenger.conf
+</span><span class='line'>ln -s /usr/share/redmine/public /var/www/redmine
+</span><span class='line'>cp default /etc/apache2/sites-available/default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>참 쉽다.. 참고로 이건 전부다 그냥 기본 설정이라 이렇게 한거지, 만약 설정이 되어있는 상태라면 위에 링크한 글대로 하기를 바란다. 혹시나 default설정 싹 날리거나 그러지 말고&#8230; 이제 service apache2 restart를 때려주면 레드마인이 돌아간다 올레</p>
+
+
+<p>음 그리고 이번에는 xe를 깔아보자. BBS 모듈이 필요할 때가 간간히 있기 때문에 xe는 깔아서 손해볼게 없다. (워드프레스도 쓸만하지만 단순 BBS로는 xe가 낫다.) 자 이번에도 스크립트.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>git clone https://github.com/xpressengine/xe-core.git
+</span><span class='line'>mv xe-core /var/www/xe
+</span><span class='line'>chmod 707 -R /var/www/xe
+</span><span class='line'>svn checkout http://xe-board.googlecode.com/svn/trunk/ board
+</span><span class='line'>mv board /var/www/xe/modules/board</span></code></pre></td></tr></table></div></figure>
+
+
+<p>뭐.. 이렇게 하고 ~~/xe 들어가서 설치하면 xe랑 board 모듈까지 설치 끝&#8230; 아 기본 설정인 경우에는 설정-고급-짧은 주소 사용에 아니오를 선택하고 캐시를 리로드해야한다. 이거 몰라서 한 1시간은 삽질했는데.. 이거 싫으면 따로 뭐를 깔아야하길래 그게 더 귀찮아서 그냥 설정을 바꿔줬다.</p>
+
+
+<p>마지막으로 위키를 깔아보자. 위키는 미디아위키를 사용한다.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
+</span><span class='line'>mv core /var/www/wiki
+</span><span class='line'>chmod 707 -R /var/www/wiki</span></code></pre></td></tr></table></div></figure>
+
+
+<p>아 참고로 xe도 wiki도 설치 후에 아파치를 한번 리스타트 해줘야할거다&#8230; 역시 이것도 /wiki로 들어가서 설치를 해주고 나온 php파일을 ftp로 /var/www/wiki에 다시 넣어주면 끝</p>
+
+
+<p></p>
+
+<p>전반적으로 크게 난해한 세팅도 없고.. 애당초 이번에 설치한 녀석들이 꽤 모듈로 잘 나온 놈들을 쓴 거라.. 크게 어렵지 않게 세팅했다. 지금 추가로 해볼까 고민 중인 것들은 개인 레포지토리를 뚫느냐 마느냐. 별로 큰 이득이 없어서 안할 것 같기는 하지만, 그래도 일단 만들어서 손해볼 것도 없고, 공부 삼아서 해볼까 고민 중이다. gui로 웹에서 접근 가능한 녀석을 만들어볼까하는데, 엄청 어려울 것 같지는 않고 그냥 엄청 귀찮을거 같아서 고민이다.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[우분투에 Matlab과 JDK 깔기]]></title>
@@ -962,42 +1076,6 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
 
 
 <p>간만에 굉장히 흥미로운 책이었다. 나는 하드웨어 쪽은 관심을 접은지 오래지만, 그럼에도 하드웨어도 이런 형태의 모험이 가능하다는 점이 가장 흥미로웠고 나도 도전해보고 싶은 생각이 들었다. 생산, 혹은 제조는 사람의 가장 근본적인 욕구 중 하나이다. 글을 쓰는 것도 일종의 Make이고 모든 DIY도 전부 Make이다. 이 책에서는 이러한 Maker들이 마치 소프트웨어가 그러했듯 전체 산업 자체를 바꾸어버릴 것이라고 생각하는데, 그러한 미래가 상당히 기대되고 가능성이 있어보인다는 생각이 들었다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[언어의 정원 - 비가 오면 스쳐가는 아련한 기억]]></title>
-    <link href="http://SanghyukChun.github.io/16/"/>
-    <updated>2013-08-17T02:00:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/16</id>
-		<content type="html"><![CDATA[<p><img src="http://cfile76.uf.daum.net/R678x0/236E244A51F23C710277DC" width="300"></p>
-
-<p>초속 5센치미터, 별을 쫓는 아이의 신카이 마코토가 신작을 들고 나왔다. 빛에 대해 집착에 가까울 정도의 묘사와 배경의 효과 등으로 유명한 에니메이션 작가이다. 뭐 사실 이걸 굳이 의식하고 봤던건 아니고, 예고편을 보았을 때 느껴지는 아련한 느낌 그리고 일본 2D 애니메이션에서만 느껴지는 특유의 느낌이 너무 좋아 보고싶었던 영화이다. 국내 개봉은 상당히 최근에 한 것 같은데, 불행히도 상영관이 많지가 않다. 그래서 집에 올라온 김에 보고 내려가기로 결정하고 심야로 보고 왔다.</p>
-
-
-<h3>비가 오면 스쳐가는 아련한 기억</h3>
-
-
-<p>&#8216;비가 온다. 비가 오는 날은 하늘이 가까워지는 것 같아서 너무 좋다.&#8217; 영화가 시작을 하면서 주인공이 나지막히 독백을 하는 대사이다. 전반적으로 영화 자체가 비 오는날에 대한 얘기이기 때문에 비오는 풍경을 많이 묘사한다. 영상미나 그 영상미를 끌어올리는 적절한 선곡만으로도 충분히 볼 가치가 있는 영화라고 생각한다. 물론 어디까지나 이런 감성을 좋아하는 사람들에게만 한정되는 얘기일수는 있지만. 말로 하는 것 보다는 예고편에 묘사가 잘 되어있으니 유튜브 링크를 추가한다.</p>
-
-
-<iframe width="560" height="315" src="http://SanghyukChun.github.io//www.youtube.com/embed/udDIkl6z8X0" frameborder="0" allowfullscreen></iframe>
-
-
-<p>이 영화는 뭐랄까, 마치 스쳐지나갔지만 어딘가에 남아있는 첫사랑에 대한 아련한 기억같은 느낌의 영화라고 할 수 있다. &#8216;비가 와야지만 만날 수 있는 사람&#8217; 그리고 비록 아주 극적으로 터져오르지는 않지만 처음부터 끝까지 잔잔하게 흘러지나가는 아련한 느낌은 마치 추억하는 그 장소를 지나가면 문득 떠오르는 그런 사랑처럼 은은하게 스며든다. 비가 오면 만날 수 있는 그 사람. 얼마나 아련한가. 보면서 마음이 아픈 장면도 조금 있었고 (하지만 막 미어질듯이 아픈 장면은 아니고 그냥 안쓰러운 정도로 생각하면 된다.) 적절한 감정선을 유지하는 것이 참 좋았다. 만약 이 영화가 애니메이션이 아니라 실사로 촬영이 되었다면 마치 <a href="http://watcha.net/mv/josee-the-tiger-and-the-2003/mmjz01">조제 호랑이 그리고 물고기들</a>과 비슷한 느낌일 것이라는 생각이 든다. 사실 이건 꽤 많은 일본식 러브스토리 영화와 비슷한 구성이고 비슷한 감성이기는 하다. 우리나라처럼 갑작스럽게 터져나오는 그런 느낌이라기보다는 처음부터 끝까지 어떤 묘한 감정을 불러일으킨달까.</p>
-
-
-<h3>그림에 비하여 다소 모자란 스토리</h3>
-
-
-<p>이 영화를 보고 불만을 가지는 사람들은 아마 너무 짧은 상영시간 (1시간이 채 안된다) 그리고 무언가 제대로 끝난 것 같지 않은 전개 등이 불만일 것이다. 분명 그 아름다움에 비하면 스토리 측면이 모자라는 것은 사실이다. 하지만 개인적으로는 오히려 딱 이 정도였기에 좋지않았을까라는 생각이 들었다. 쓸데없는 감정선이 삽입되는 것 보다 은은하게 배어나오는 그 감성이 오히려 더 현실적이고 더 와닿았다는 생각이 들었다. 사실 인물간의 대화가 많지도 않다. 하지만 마찬가지로 그렇기에 더 현실적이라는 생각이 들었고 오히려 너무 과하지 않았다는 생각이 들었다. 처음부터 잔잔하게 깔고 들어가는 복선, 정말 갑작스럽게 밝혀지는 이야기들, 갑자기 과감하게 불량 학생들에게 쳐들어가 신나게 얻어터지고는 &#8216;맥주 먹고 전철에 뛰어들었어요&#8217; 같은 농담을 던지는 것은 싱겁게 끝났다기보다는 우리 모두가 아마 그 순간에는 그렇게 말하지 않았을까라는 생각이 든다. 그리고 우리의 감성이 아니라 일본인의 감성으로 만들었기 때문에 그들의 문화가 녹아있고 그들의 생각이 녹아있는 영화이다. 한국적인 영화의 잣대로만 평가하면 부족할 수 밖에 없는 그런 영화가 아닐까라는 생각이 든다.</p>
-
-
-<h3>애니메이션은 아이들의 것이라는 인식이 너무 싫어</h3>
-
-
-<p>우리나라에는 애니메이션이라하면 아이들의 것이고 어른들이 보기에는 유치하다고 생각한다. 그렇게 생각하고 애니메이션을 안 보는 것은 상관없지만, 아이들을 위한 것이 아닌데 아이들을 데리고 보러 오는 가족들은 줄어들었으면 좋겠다. 이 영화는 확실히 유아를 대상으로 하는 영화가 아니다. 센과 치히로의 행방불명 등은 아이들이 보기에도 무리가 없고 어른들에게도 잔잔한 메시지를 전해주는데에 반해, 이 영화는 지나치게 아이들에게 불친절하다. 비가 오면 스쳐가는 아련한 기억, 추억 그런 감성들을 어루만져주는 영화이지 아이들과 즐겁게 하하호호 하면서 보는 영화는 아닌데 그런 생각을 하고 온 가족들이 정말 많고, 덕분에 상당히 조용하게 감상하고 싶었던 작품을 감상하는데에 몰입도 좀 힘들었고 옆에서 계속 조잘대는 아이들을 보고 있으니 기본적인 예의가 없는 것이 조금 화가 나기도 하더라. 하지만 이건 이미 우리 사회에 깊게 뿌리박힌 편견이고 덕분에 국내 극장 애니메이션 산업도 전부 죽어버리고 일본으로 떠나 외주를 하고 있는 것이 아닌가라는 생각에 씁쓸하더라. 마찬가지의 시선이 게임, 만화 그리고 전반적인 컨텐츠 산업에 퍼져있는 것도 마음아프다. 우리는 언제쯤 우리의 감성으로 쓰여진 우리의 작품을 만나볼 수 있을까</p>
 
 ]]></content>
   </entry>
