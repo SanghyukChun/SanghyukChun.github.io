@@ -131,7 +131,7 @@ $(function() {
 <p>이 숫자는 위와 같이 표현이 되는데, 페르마는 모든 n에 대해서 이 숫자가 소수라는 주장을 하였다. 그러나 100년 뒤 오일러가 이의 반례를 찾아냈다.</p>
 
 
-<p>$$ {F_5} = 2^{2^5} + 1 = 2^32 +1 = 4294967297 = 641 * 6700417 $$</p>
+<p>$$ {F_5} = 2^{2^5} + 1 = 2^{32} +1 = 4294967297 = 641 * 6700417 $$</p>
 
 
 <p>사람이 이를 증명하는 데에 100년이라는 시간이 걸렸지만, 컴퓨터를 사용하면 이 문제는 고작 몇 분안에 끝나는 간단한 문제이다. 이런 문제에서 컴퓨터 혹은 기계를 사용하는 것이 매우 효율적인 것이다. 다시 Machine Learning으로 돌아가보자. Machine Learing algorithm은 주어진 training data에서 특정한 시스템을 만들고 각종 model parameter들을 optimize하여 주어진 training data에 가장 잘 들어맞는 system을 만든다. 이런 과정을 위해서는 이런 optimize problem이 reasonable한 시간 안에 풀 수 있는 문제인지 그렇지 않은 문제인지 반드시 알아야만 한다. 만약 한 문제를 optimize하는데에 엄청 오랜 시간.. 예를 들어서 몇십만년 단위의 시간이 걸린다면 실전에서 사용할 수 없을 것이다.</p>
@@ -208,7 +208,7 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
 이 문제는 P인가? 불행히도 이 문제는 함수 \(f(P,Q)=|R-RQ|^2\) 자체가 convex가 아니기 때문에 Convex optimization problem이 아니며, P역시 아니다. 대신 이 문제를 convex optimization으로 근사하는 방법이 가능하다.</p>
 
 
-<p>첫 번째 방법은 \(minimize |R - PQ|\) 를 \(minimize |R - A|^2 where rank(A) = k… \) 로 바꾸는 것이다. \(|R-A|^2\)은 convex function이기 때문에 convex optimization으로 푸는 것이 가능해 보인다. 그런데 domain인 rank(A) = k가 convex set이 아니기 때문에 이 문제는 불행히도 convex optimization은 아니다. 따라서 이를 가장 유사한 convex optimization problem으로 바꾸면, rank(A) = k라는 조건 대신에 &#8216;sum of singular values of A is at most h&#8217; 라는 조건으로 문제를 풀면 된다. 이는 정확히 같은 조건은 아니고 거의 유사한 조건이다. 이렇게 문제를 non convex optimization에서 convex optimization으로 근사해서 원래 문제의 답을 추측하는 것이 가능한 것이다.</p>
+<p>첫 번째 방법은 \(minimize |R - PQ|\) 를 \(minimize |R - A|^2 \hskip 1em where \hskip 0.3em rank(A) = k… \) 로 바꾸는 것이다. \(|R-A|^2\)은 convex function이기 때문에 convex optimization으로 푸는 것이 가능해 보인다. 그런데 domain인 rank(A) = k가 convex set이 아니기 때문에 이 문제는 불행히도 convex optimization은 아니다. 따라서 이를 가장 유사한 convex optimization problem으로 바꾸면, rank(A) = k라는 조건 대신에 &#8216;sum of singular values of A is at most h&#8217; 라는 조건으로 문제를 풀면 된다. 이는 정확히 같은 조건은 아니고 거의 유사한 조건이다. 이렇게 문제를 non convex optimization에서 convex optimization으로 근사해서 원래 문제의 답을 추측하는 것이 가능한 것이다.</p>
 
 
 <p>또 하나의 방법은 \(minimize_{P,Q} |R-PQ|^2\) 을 푸는 것이다. 이 때 \(f(P,Q) = |R-PQ|^2\)은 convex function은 아니지만, P를 constant로 두면 Q에 대해 convex하고 Q를 constant로 두면 P에 대해 convex해지게 된다. 이를 bi convex라고 하며 둘 모두에 대해 convex하면 joint convex라고 한다. 아무튼 이제 이 방법 두 개를 모두 사용해서 Q를 고정하고 가장 잘 설명하는 P를 찾고, P를 고정하고 가장 잘 설명하는 Q를 찾는 과정을 반복적으로 왔다갔다 하면서 값을 찾는다. 이 방법을 이론적으로 분석하는 것이 엄청 어렵고 힘들어서 논문으로 많이 나오지는 않았지만 실전에서 엄청 많이쓰는 방법이다. 앞서 설명한 방법보다 이 방법이 더 성능도 잘 나온다. 최근 [Sujay et al. 2013] 에서 앞서 언급한 approach보다 이 approach가 좋은지는 모르겠지만 최소한 나쁘지 않다라는 것을 증명하였다고 한다. (구체적으로는 global optima convergence condition for R을 증명하였다고 한다.)</p>
@@ -272,7 +272,7 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
   
   
   
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+    <div class="fb-like" data-send="true" data-width="380" data-show-faces="false"></div>
   
 </div>
 
@@ -292,7 +292,7 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
   <section>
     <h1>Comments</h1>
     <div id="facebook_comments" aria-live="polite">
-      <div class="fb-comments" data-href="http://SanghyukChun.github.io/31/" data-width="470" data-num-posts="10"></div>
+      <div class="fb-comments" data-href="http://SanghyukChun.github.io/31/" data-width="400" data-num-posts="10"></div>
     </div>
   </section>
 
@@ -303,6 +303,10 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/42/">Coursera Neural Networks for Machine Learning Week2 - Backpropagation</a>
+      </li>
     
       <li class="post">
         <a href="/41/">행복에 대한 단상</a>
@@ -318,10 +322,6 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
     
       <li class="post">
         <a href="/38/">LMNN(Large Margin Nearest Neighbors) LMCA(Large Margin Component Anaylsis)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/37/">Distance Metric Learning</a>
       </li>
     
   </ul>
