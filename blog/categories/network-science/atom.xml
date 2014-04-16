@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Network-Science | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/network-science/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-04-17T01:59:30+09:00</updated>
+  <updated>2014-04-17T02:15:10+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -177,7 +177,7 @@
 <ul>
     <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
-    <li>Lecture 3: Measures and Metric</li>
+    <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
     <li>Lecture 4: Random Network</li>
     <li>Lecture 5: Small world Network</li>
     <li>Lecture 6: Scale free Network</li>
@@ -211,7 +211,7 @@
 <ul>
     <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
-    <li>Lecture 3: Measures and Metric</li>
+    <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
     <li>Lecture 4: Random Network</li>
     <li>Lecture 5: Small world Network</li>
     <li>Lecture 6: Scale free Network</li>
