@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Lecture | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/lecture/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-04-17T02:15:10+09:00</updated>
+  <updated>2014-04-17T04:13:50+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,195 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Network Science - Measures and Metric]]></title>
+    <link href="http://SanghyukChun.github.io/49/"/>
+    <updated>2014-04-17T01:59:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/49</id>
+    <content type="html"><![CDATA[<h5>들어가기 전에</h5>
+
+
+<p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
+
+
+<h5>Why we need measures and metric</h5>
+
+
+<p>이건 사실 lecture 내용에는 없는 내용이지만 엄청나게 중요한 내용이라고 내가 판단해서 집어넣은 part이다. 일단 이 lecture에서 다루기만 하는 metric이나 measure들이 엄청나게 많다. 대충 10개는 넘을텐데, 이런 수 많은 것들을 우리가 왜 알아야하느냐? 바로 주어진 임의의 graph를 측정하고 어떤 graph인지 판단할 수 있기 때문이다. 또한 진짜 중요한 목적 중 하나는 어느 vertex가 중요한지 알아내는 것이다. 근데 이 '중요함'이라는 것이 정의하기에 따라 달라지기 때문에 각각의 '중요함'이 무엇인지 정의하는 방법이 달라지게 되고 그렇기 때문에 이 lecture에서 cover하는 measure와 metric이 많은 것이다. 개인적으로는 그냥 closeness, betweeness, clustering coefficient 정도만 cover하고 끝내고 싶지만 나름 중요한 내용이 많아서 일단 최대한 많이 cover를 할 수 있도록 해야겠다. 아무튼 이런 수많은 metric들을 통해 우리가 알고싶은 것은 그래서 어느 vertex가 진짜 중요한 녀석이고, 나중에 다루게 될 dynamic process에서 어느 vertex를 주목해서 그 vertex에 처리를 해야하느냐 등을 하기 위해서 필요한 과정이다. 따라서 목적에 맞게 사용하는 것이 중요하고, 각각의 metric이 어떤 것을 측정하기 위함인지 이해하는 것이 매우 중요한 것이다.</p>
+
+
+<h5>Degree Centrality</h5>
+
+
+<p>가장 먼저 살펴볼 centrality는 degree centrality다. 그냥 이건 얼마나 각각의 node가 많은 vertex와 연결되어있느냐, 혹은 각각의 vertex의 degree는 얼마나 되느냐를 측정하는 centrality에 불과하다. Directed graph같은 경우에는 간단하게 indegree와 outdegree를 합한 형태가 되는데, 상황에 따라 indegree centrality와 outdegree centrality를 define하는 것이 가능하기는 하다. 이 metic은 얼마나 많은 vertex들과 연결이 되어있는지를 알아보는 것으로, 많이 연결되어있다면 혹은 degree가 높다면 그만큼 중요할 것이라는 가정에서부터 나온 centrality이다.</p>
+
+
+<h5>Eigenvector Centrality</h5>
+
+
+<p>또 다른 방법으로는 각각의 vertex가 다른 vertex와 결국 궁극적으로 얼마나 많은 connection을 가지는지를 확인하는 것으로, 간단하게 eigenvector로 표현할 수 있다. 증명과정은 매우 간단하다. 먼저 centrality를 \(x_i '\)으로 정의했을 때 \(x_i ' = \sum_j A_{ij} x_j\) 이므로 \(x' = Ax\)이다. 이 때, 이 과정을 t번 반복하면 \(x(t) = A^t x(0) \)이 된다. 이제 \(x(0) = \sum c_i v_i \) 라고 나타냈을 때, \(x(t) = A^t \sum c_i v_i = \sum c_i j_i ^t v_i \)이고, 따라서 \(x_i ' = k_i^t \sum c_i ( \frac {k_i} {k_1} )^t v_i \)가 된다. v는 eigenvector고 k는 eigenvalue이다. 이 과정을 무한하게 반복하면 \(x(t) -> c_1 k_1^t v_1 \)이 된다. 따라서 이 과정을 통해 우리는 \(Ax = k_1 x\)일 때, centrality를 \(x_i = k_1^{-1} \sum A_{ij} x_j\)로 정의할 수 있다.</p>
+
+
+<h5>Katz Centrality</h5>
+
+
+<p>앞서 살펴본 eigenvector centrality는 directed graph에서 outdegree가 0아고 indegree가 0보다 큰 값이더라도 eigenvector centrality를 계산하면 해당 vertex는 0이라는 값을 가지게 된다는 단점이 있다. Katz centrality는 \(x_i = \alpha \sum_j A_{ij} x_j + \beta\)로 정의된다. 방금 전 eigenvector centrality에서 상수만 곱하고 더해준 형태가 된다. 이때 더해주는 \(\beta\) term으로 인해 기본적으로 모든 vertex가 특정 값 이상의 centrality를 가지도록 bound시키는 효과가 있다.</p>
+
+
+<h5>Page Rank</h5>
+
+
+<p>그러나 결국 Katz centrality도 문제가 있다. 이 경우 many other vertex를 point하는 high katz centrality를 가지는 vertex가 point하는 vertex 역시 높은 katz cent를 가진다는 것이다. 이것이 왜 문제냐, 예를 들어서 구글은 아마 엄청나게 높은 Katz centrality를 가지고 있을 것이다. 그런데 내 블로그나 내 홈페이지는 아마 connection이 매우 적을 것이고 우리는 이 페이지들의 centrality가 낮기를 기대하지만 실제로는 google이 내 page로 향하는 edge를 가지고 있기 때문에 내 page도 centrality가 높아지게 되는 것이다. 이것은 우리가 원하는 결과가 아니기 때문에 수정이 필요하다.</p>
+
+
+<p>Page Rank는 \(x_i = \alpha \sum_j A_{ij} x_j \frac {x_j} {k_j^{out}} + \beta\) 으로 정의된다. (사실 이렇게 정의되는 것은 아니며, page rank는 일종의 ranking algorithm이지만, 여기에서는 이것을 일종의 metric으로 삼으려는 것이므로 일단 이 lecture의 정의를 따라가기로 했다.) 아무튼 outdegree만큼 나눠줌으로써 아까 발생했던 문제를 해결할 수 있다. Google이 가진 outdegree는 엄청나게 높을 것이므로 나를 point하더라도 outdegree로 그 값이 나눠져서 매우 작은 값만 더해질 것이기 때문이다.</p>
+
+
+<h5>Degree, Eigenvector, Katz and Page Rank</h5>
+
+
+<p>간단하게 위의 네 개의 metric을 정리해보면 아래와 같은 결과를 얻게 된다.</p>
+
+
+<p><img src="/images/post/49-1.png" width="350"></p>
+
+<h5>Hub and Authorities</h5>
+
+
+<p>Authority란 무언가 유용한 정보를 가지고 있는 vertex를 뜻하며, Hub란 그런 vertex 중 best를 찾을 수 있는 곳이 어디인지 알려줄 수 있는 vertex들을 의미한다. 이 두가지는 directed network에만 존재하며, 이를 통해 새로운 형태의 metric을 design할 수 있다. 앞서 정의한 바에 따르면 Authorityu centrality x와 Hub centrality y는 다음과 같이 정의된다. \(x_i = \alpha \sum_j A_{ij} y_j\), \(y_i = \beta \sum_j A_{ji} x_j\) 그러면 이것을 matrix 형태로 표현할 수 있는데, \(x = \alpha A y\), \(y = \beta A^\top x\)가 된다. 따라서 \(A A^\top x = \lambda x\), \(A^\top A y = \lambda y\)가 된다. 즉, authority centrality x는 A의 singular vector가 되며 이는 곳 A의 cociation matric C의 eigenvector centrality가 된다.</p>
+
+
+<h5>Closeness Centrality</h5>
+
+
+<p>Closeness Centrality는 매우 중요한 measure 중 하나로, given vertex에서 다른 모든 vertex까지의 shortest path의 mean distance로 정의된다. 이때, distance는 geodesic path, 즉, i에서 j까지의 minimum hop 으로 정의가 된다. 이때 distance를 d라고 하게 되면, i에서 j로 가는 mean geodesic distance는 \(l_i = \frac {1} {n} \sum_j d_{ij}\) 가 되므로 closeness centrality는 \(C_i = \frac {1} {l_i} = \frac {n} {\sum_i d_{ij}}\) 가 된다. 이때, 자기 자신과의 거리는 0이므로 \(C_i ' = \frac {n-1} {\sum_{i \neq j} d_{ij}}\)로 Harmonic mean closeness라는 것을 정의하기도 한다. (큰 차이는 없다.) distance의 평균 값이 높아지려면 vertex가 다른 vertex들과 가까이 모여있는 형태여야 하며, 즉, degree가 높다는 것과는 다른 의미로 중요한 vertex를 의미하는 지표가 된다. (당연히 멀리 떨어질수록 centrality는 작아지며, 연결이 안된 경우는 d가 무한대이므로 0이 된다.) 이 경우 small component에 속한 vertex는 높은 closeness centrality를 가지게 될 것이다.</p>
+
+
+<h5>Betweenness Centrality</h5>
+
+
+<p>Betweenness centrality는 graph에 존재하는 모든 shortest path들에 대해 vertex i가 얼마나 많이 그 path에 속하는지를 나타내는 지표이다. 이 지표는 매우 중요하게 생각할 수 있지만, 안타깝게도 그것을 찾아내는 방법이 매우 어렵다. (아마 NP-Complete로 알고 있다.) 아무튼, 이 값이 중요한 이유는, 실제 flow가 생기는 dynamics를 생각해봤을 때, 진짜 중요한 vertex는 많은 path에 속하는 vertex가 된다. 이런 vertex를 막아서 확산을 막을 수도 있고, 반대로 이 vertex에게 무언가를 확신시키게 하여 다양한 path로 뻗어나가게 하는 것이 가능하기 때문이다. \(x_i = \sum_{st} \frac {n_{st}^i } { g_{st} }  \) 으로 정의가 되며, \(x_i = \frac {1} {n^2} \sum_{st} \frac {n_{st}^i} {g_{st} } \) 으로 noramlized 된 betweenness를 정의할 수 있다.</p>
+
+
+<p>또한 random-walk betweenness라는 것도 정의할 수 있는데, shortest path가 아니라 그냥 random walk를 무지하게 많이 만든 다음에 얼마나 많이 그 안에 count가 되었는지를 측정하는 것이다. 이는 betweenness centrality의 approximation algorithm이 되는데, 실제 network에서 움직이는 모양이 random walk인 경우가 많아서 꽤 괜찮은 근사법이라고 한다.</p>
+
+
+<h5>k-plex and k-components</h5>
+
+
+<p>Clique는 모든 vertex들이 fully connected 되어있는 vertex set을 의미한다. 모든 vertex들끼리 꼭 fully connected되는 것은 아니고 거의 fully connected되는, 구체적으로 얘기했을 때 n개의 vertex가 각각의 관점에서 최소한 n-k개 만큼 연결되어있는 vertex set을 생각할 수 있을 것이다. 이것이 바로 k-plex의 정의가 된다. clique도 좋은 성질을 가지고 있지만, k-plex는 일종의 approximated clique로, 실제 network에서 항상 fully connected된 vertex set만 의미가 있는 것이 아니기 때문에 나름의 의미를 가진다. 또한 k-core라는 것도 정의할 수 있는데, (n-k) plex와 같다. k-core는 간단하게 network pruning을 하는 greedy algorithm을 통해 찾아낼 수 있다.</p>
+
+
+<p>모든 vertex들끼리 적어도 k개의 vertex independent path를 가지는 subset을 k-component라고 한다. 참고로 Component는 단순하게 어떤 path를 통해 다른 구성원에 도달할 수 있으면 그것을 일컬어 component라고 한다. 즉, 이 k-component 안에 있는 임의의 vertex는 마찬가지로 같은 k-component에 존재하는 다른 임의의 vertex로 반드시 갈 수 있다. 대부분의 network backbone은 매우 높은 k를 가지는 k-component라고 한다.</p>
+
+
+<h5>Transitivity and Clustering Coefficient</h5>
+
+
+<p>만약 vertex u와 v, 그리고 w가 서로 모두 연결되어 삼각형을 이루게 된다면 이것을 transitive라고 부른다. 이런 transitive가 정확히 몇 개나 있느냐를 재는 것은 perfect transitivity로 측정하게 되고, partial transitivity라는 것을 통해 u와 v가 연결되고 v와 w가 연결되어있을 때만을 카운트하는, 즉 삼각형에서 edge하나가 빠진형태일 때를 카운트하여 partial rate를 측정할 수도 있다.</p>
+
+
+<p>자 이제 clustering coefficient라는 것을 정의해보자. <a href="http://SanghyukChun.github.io/34">이전에 썼던 글</a>에서 조금 자세히 다뤘던 것으로 기억하는데, 같은 컨셉이다. 얼마나 graph가 뭉쳐있는지를 알아보는 계수로, 정의는 간단하게 삼각형을 이룰 것 같은 vertex set 중에서 실제 삼각형을 이루는 vertex set의 비율로 정의된다. 수식으로 표현하면 다음과 같다.</p>
+
+
+<p>$$ C = \frac {number \ of \ traiangles \times 6} {number \ of \ paths \ of \ length \ 2} $$</p>
+
+
+<p>그런데 이 clustering coefficient를 local하게 아래와 같이 정의할 수 있다. </p>
+
+
+<p>$$ C_i = \frac {number \ of \ pairs \ of \ neighbors \ of \ i \ that \ are \ connected} {number \ of \ pairs \ of \ neighbors \ of \ i} $$</p>
+
+
+<p>즉, 이 local cc는 내 친구와 다른 친구가 서로 친구일 확률을 의미하게 된다. 따라서 degree가 높은 vertex는 낮은 local cc를 가지게 될 확률이 높아지게 된다.</p>
+
+
+<p>또한 Redundancy라는 것을 정의할 수 있는데, 이는 i의 neighbor에서부터 다른 neighbor간의 connection의 평균이 된다. 따라서 이 값은 0보다 크거나 같고 \(k_i -1\)보다는 작거나 같다. Local cc를 redundancy를 사용해 표현할 수 있는데, 다음과 같은 방법으로 나타내게 된다. \(C_i = \frac {\frac {1} {2} k_i R_i} { \frac {1} {2} k_i (k_i - 1) } = \frac {R_i} {k_i -1} \) 따라서 global clustering coefficient는 그냥 local clustering coefficient의 summation이 된다.</p>
+
+
+<h5>Reciprocity</h5>
+
+
+<p>Reciprocity는 directed network에서 length 2짜리 loop이 얼마나 많은지를 의미한다. 즉, 서로가 서로를 point하는 vertex의 개수가 얼마나 되는지를 측정하는 것이다. 이는 곧, 서로가 서로에게 paht가 있다는 의미가 되므로 이전에 살펴봤던바와 같이 이 값을 수식으로 표현하게 되면 \(r = \frac 1 m \sum A_{ij} A_{ji} = \frac 1 m Tr A^2\)이 된다는 사실을 쉽게 알 수 있다.</p>
+
+
+<h5>Structural Balance</h5>
+
+
+<p>만약 edge를 -1과 1의 두 가지로 정의하고, -1은 서로 enemy, +1은 서로 friend라고 해보자. 이런 경우 어떤 loop이 있을 때 해당 loop에 -1인 edge가 짝수개 있으면 stable하고 홀수개 있으면 unstable해진다. (간단하게 삼각형을 그려서 확인해볼 수 있다) 아무튼 이럴 때 -1 인 edge가 짝수개 있는 상태를 structural balance라고 하며, Harary's theorem은 이런 balanced network가 같은 그룹은 positive한 connection만 가지고 다른 그룹끼리는 negative한 connection만 가지는 group들로 divided된다는 것을 증명한다. 대부분의 social network는 이런 balanced한 상황인 경우가 많다고 한다.</p>
+
+
+<h5>Cosine Similarity</h5>
+
+
+<p>Similarity는 서로 다른 graph가 얼마나 비슷한가를 측정하는 척도이다. 즉, 하나의 graph에서 서로 다른 subgraph들끼리 많은 수의 neighbor를 공유하면 높은 값을 가지는 structurally equivalent를 정의할 수 있는데, 우리가 하고 싶은 것은 서로 꼭 같은 vertex를 공유하는 것은 아니더라도 비슷하게 생긴 neighbor를 가지는 상황에서 regularly equivalent를 정의하고 싶은 것이다.</p>
+
+
+<p>그렇다면 문제는 이런 비슷한 정도를 측정하는 것인데, cosine similarity라는 것을 통해 이런 것을 측정할 수 있다. cosine은 간단하게 vector x와 y의 inner product의 normalization된 형태로 계산이 가능하다. 따라서 cosine similairy는 adjacency matrix의 column vector혹은 row vector들을 inner product하여 그 값을 비교하는 것이다. 수식으로 나타내면 아래와 같이 표현된다.</p>
+
+
+<p>$$ \sigma_{ij} = cos \theta = \frac {\sum_k A_{jk} A_{kj} } {\sqrt {\sum_k A_{ik}^2} \sqrt {\sum_k A_{jk}^2} } $$</p>
+
+
+<p>$$ \sigma_{ij} = \frac {\sum_k A_{jk} A_{kj} } {k_i k_j}  = \frac {n_ij} {k_i k_j} $$</p>
+
+
+<p>이때, \(n_ij\)는 vertex i와 j의 common neighbor들의 숫자가 된다.</p>
+
+
+<p>이런 cosine similarity를 통해 Pearson Coefficient라는 것도 정의할 수 있는데, \(r_{ij} = \frac {cov(A_i,A_j)} {\sigma_i \sigma_j} = \frac { \sum_k (A_{ik} - <A_i>) (A_{jk} - <A_j>) } {\sqrt {\sum_k (A_{ik} - <A_i> )^2} \sqrt {\sum_k ( A_{jk} - <A_j> )^2} }\) 가 되며, 이 값은 -1부터 1사이에 존재하게 된다.</p>
+
+
+<p>그 밖에도 Normalized \(n_ij\), Euclidean distance, Normalized Euclidean distance 등의 structural equivalence를 측정하기 위한 방법 들이 존재한다.</p>
+
+
+<p>Similar score \(sigma_{ij}\)는 \(sigma_{ij} = \alpha \sum_{kl} A_{ik} A_{jl} \sigma_{kl}\)로 정의된다. 이때, 자기 자신에게 높은 similarity를 주지 않는다는 문제 가있어서 \(\delta_{ij}\)를 추가하는 수정된 방식이 존재하며 이때 이 similiarity는 \(\sigma = \alpha A \sigma A + I\)로 표현이 된다. 하지만 이 경우도 even length를 가지는 path만 고려할 수 있다. 따라서 이를 또 개선시키기 위해서 \(sigma_{ij} = \alpha \sum_{k} A_{ik} \sigma_{kj} + \delta_{ij}\)로 수정이 가능하다. 이 값은 \(\sigma = \alpha A \sigma + I\)가 되며 iteration을 \(\sigma(0) = 0\)에서부터 시작하면 \(\sigma = \sum_m^\inf ( \alpha A )^m = ( I - \alpha A ) ^{-1}\)이 된다. 그런데 이 경우 degree가 높은 vertex에 높은 similiarity가 가는 상황이 발생하게 된다. 따라서 다시 degree로 나눠주는 term을 넣어서 마지막으로 수정식을 쓰면, \(sigma_{ij} = \frac {\alpha} {k_i} \sum_{k} A_{ik} \sigma_{kj} + \delta_{ij}\), \(\sigma = \alpha D^{-1} A \sigma + I\)가 된다.</p>
+
+
+<h5>Homophily and Assortative Mixing</h5>
+
+
+<p>작성 중</p>
+
+
+<h5>Assotative Mixing by Enumerative Characteristics</h5>
+
+
+<p>작성 중</p>
+
+
+<h5>Assotative Mixing by Scalar Characteristics</h5>
+
+
+<p>작성 중</p>
+
+
+<h5>Assortative Mixing by Degree</h5>
+
+
+<p>작성 중</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="http://SanghyukChun.github.io/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
+    <li>Lecture 4: Random Network</li>
+    <li>Lecture 5: Small world Network</li>
+    <li>Lecture 6: Scale free Network</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Network Science - Graph Theory]]></title>
@@ -391,166 +580,6 @@
 
 
 <p>다만, backpropagation에 대해 중요한 언급이 빠져있어서 첨언을 하자면, backpropagation 은 항상 global optimum으로 converge하지 않기 때문에 언제나 local minimum으로 converge할 가능성이 존재한다. 이는 특히 hidden layer가 많아지면, 혹은 네트워크가 deep해지면 deep해질 수록 더 심해진다. 따라서 initial value를 어떻게 설정하느냐가 매우 민감하다. initial value에 따라 수렴하는 방향이 달라질 수 있기 때문인데, 나중에 배울 Deep belif network에서는 initial value를 미리 pre-training하는 방법으로 이를 극복해낸다.</p>
-
-
-
-
-<h5>Coursera Neural Networks for Machine Learning</h5>
-
-
-<p>다른 요약글들 보기 (<a href="http://SanghyukChun.github.io/blog/categories/cousera-nn/">카테고리로 이동</a>)</p>
-
-
-<ul>
-    <li>Lecture 1: <a href="http://SanghyukChun.github.io/39">Introduction</a></li>
-    <li>Lecture 2: <a href="http://SanghyukChun.github.io/40">The Perceptron learning procedure</a></li>
-    <li>Lecture 3: <a href="http://SanghyukChun.github.io/42">The backpropagation learning proccedure</a></li>
-    <li>Lecture 4: <a href="http://SanghyukChun.github.io/43">Learning feature vectors for words</a></li>
-    <li>Lecture 5: <a href="http://SanghyukChun.github.io/43">Object recognition with neural nets</a></li>
-    <li>Lecture 6: Optimization: How to make the learning go faster</li>
-    <li>Lecture 7: Recurrent neural networks</li>
-    <li>Lecture 8: More recurrent neural networks</li>
-    <li>Lecture 9: Ways to make neural networks generalize better</li>
-    <li>Lecture 10: Combining multiple neural networks to improve generalization</li>
-    <li>Lecture 11: Hopfield nets and Boltzmann machines</li>
-    <li>Lecture 12: Restricted Boltzmann machines (RBMs)</li>
-    <li>Lecture 13: Stacking RBMs to make Deep Belief Nets</li>
-    <li>Lecture 14: Deep neural nets with generative pre-training</li>
-    <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
-    <li>Lecture 16: Recent applications of deep neural nets</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Coursera Neural Networks for Machine Learning Week2 - Perceptron]]></title>
-    <link href="http://SanghyukChun.github.io/40/"/>
-    <updated>2014-03-21T07:21:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/40</id>
-    <content type="html"><![CDATA[<h5>들어가기 전에</h5>
-
-
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 2주차 강의를 요약한 글이다. 첫 주 강의에서 Neural Network란 무엇이며 어떤 종류의 Neural Network들이 있는지 등에 대해 간략하게 다뤘다면, 이 강의에서는 가장 오래된 Neural Network 중 하나인 Perceptron을 설명하는 내용이 주가 된다.</p>
-
-
-<h5>An overview of the main types of neural network architecture</h5>
-
-
-<p><a href="http://SanghyukChun.github.io/39" target="new">이전 글</a>에서 Neuron들에는 어떤 종류가 있을 수 있는가 다뤘었다. 대충 linear neuron, linear threshold neuron, binary neuron, binary threshold neuron, sigmod neuron 등이 있었다. 그렇다면 neuron들로 구성된 neural network에는 어떤 type들로 구분되는가도 간략하게 알아보도록 해보자.</p>
-
-
-<p>일단 가장 간단한 형태의 network로 Feed-forward neural network가 존재한다. 가장 일반적으로 쓰이고 실제 어플리케이션에 적용되는 neural network들도 대부분이 feed-forward라고 한다. 이 네트워크는 상당히 간단한 구조인데, 첫 번째 layer는 input이며 가장 마지막 layer는 output이다. 그리고 중간의 input과 output으로 관찰되지 않는 영역을 "hidden" layer라고 하는데, 당연히 visuable하지 않으므로 (우리가 직접 관측하는 영역이 아니므로) hidden이라고 불리는 것이다. 만약 hidden layer가 하나보다 많이 존재한다면 이 network는 "deep" neural network라고 불린다.</p>
-
-
-<p><img src="/images/post/40-1.png" width="350"></p>
-
-<p>위의 그림이 Feed-forward neural network의 간단한 예시이다. (이 그림은 Hinton 교수의 slide에서 가져왔다.)</p>
-
-
-<p>이보다 조금 더 복잡한 network로는 Recurrent network라는 것이 존재한다. "Recurrent"라는 이름이 붙은 이유는 graph에 cycle이 존재하기 때문인데, 이 말인 즉슨, 이 network에서는 arrow를 계속 따라가다보면 어느 순간 같은 장소를 계속 돌고 있을 수도 있다는 의미이다. 당연히 일반적인 방법으로 이것을 학습하는 것은 매우 복잡한 일이고 어려운 일이다. 그럼에도 일단 이 네트워크는 가장 "biologically" 현실적인 네트워크라고 한다.</p>
-
-
-<p><img src="/images/post/40-2.png" width="200"></p>
-
-<p>위와 같이 directed cycle이 존재하는 경우 recurrent network라고 하는데, 이 방법을 사용해서 sequential data를 modeling할 수 있다고 한다. 그런 행위가 가능한 근본적인 이유는 이 방법 자체가 일종의 시간 축으로 very deep한 network로 치환이 가능하기 때문이다. 그림으로 보면 아래와 같은 형태가 된다.</p>
-
-
-<p><img src="/images/post/40-3.png" width="250"></p>
-
-<p>자 다시 위의 그림을 보면서 차근차근 설명하자면, 위의 그림은 매 시간마다 하나의 hidden layer를 가지는 네트워크이며, 각 hidden layer는 그 다음 hidden layer에 무언가 information을 주는 형태이다. 즉, 자기 자신이 자기 자신에게 정보를 주는 cycle이 존재하는 형태이며, 매 시간마다 input과 output이 존재한다고 생각할 수 있다. 이런 이유로 recurrent network를 이런 형태의 network로 치환하여 생각할 수 있는 것이다. 당연히 실제로 학습하기는 무지하게 어렵지만, 실제 이런 network가 계속 연구가 되고 있으며 2011년 Ilya Sutskever의 연구에서 이런 형태의 network를 사용해 wikipedia의 단어들을 학습해 자동으로 sentence를 generate하는 모듈을 만들어서 실행시킨 결과, 다음과 같은 문장을 얻었다고 한다.</p>
-
-
-<p>In 1974 Northern Denver had been overshadowed by CNL, and several Irish intelligence agencies in the Mediterranean region. However, on the Victoria, Kings Hebrew stated that Charles decided to escape during an alliance. The mansion house was completed in 1882, the second in its bridge are omitted, while closing is the proton reticulum composed below it aims, such that it is the blurring of appearing on any well-paid type of box printer.</p>
-
-
-<p>물론, 완전한 형태의 영어는 아니지만, 매 순간 단 하나의 단어만을 generate한 결과임에도 불구하고 엄청나게 뛰어난 성능을 보이고 있음을 알 수 있다. 일반적으로 이런 sentance generate을 위한 모델은 무지무지 복잡하고 여러 단어를 동시에 학습하거나 생성하거나 하는 등의 과정을 거치는데 이 논문에서는 오직 단어를 하나씩만 생성했음에도 꽤 그럴듯한 영어가 나왔다는 점이 고무적이라는 것이다.</p>
-
-
-<p>마지막으로 Symmetrically connected network가 있다. 이 network는 recurrent network의 special한 case라고 보아도 무방한데, 간단히 말하자면 이전의 neural network들은 모두 directed graph였지만, 이 symmetrically connected network는 undirected graph이다. 즉, 각 layer간에 symmetric한 edge, 다시 말하자면 양 방향으로 서로 같은 weight를 가지게 된다는 의미이다. 이런 network는 energy function이라는 것을 도입하면 recurrent network보다 훨씬 분석하기가 용이하며, performance도 powerful하다. 만약 hidden unit이 없다면 Hopfield network라고 부르며, hidden layer가 존재하면 Boltzmann machine 이라 부르는데, 이 녀석은 나중에 언젠가 다루게 될 Deep network에서 이 Boltzmann machine을 restrict시킨 형태인 Restricted Boltzmann Machine (RBM)을 설명할 때 다시 한 번 자세하게 다룰 예정이다. (Coursera lecture로 따지면 거의 맨 끝 즈음이다.)</p>
-
-
-<h5>Perceptrons: The first generation of neural networks</h5>
-
-
-<p>자, 어쨌거나 2주차 강의의 핵심은 바로 perceptron이다. 이 녀석은 가장 오래된 neural network 중 하나이며, 특정 상황에서는 정말 outperform한 결과를 보여주지만 그 한계가 분명한 알고리듬이다. 1690년대 Frank Rosenblatt에 의해 제안된 알고리듬으로 Artificial neural network을 태동하게 한 알고리듬이지만, 그 한계가 너무나 명백하여 한 동안 neural network 연구 자체가 이뤄지지 않게 한 원인이 되기도 한다. 1969년 Minsky가 perceptron이 linear가 아니면 아무것도 할 수 없다는 것을 증명했는데 (단적인 예로, xor조차 학습하지 못한다) 당시 multi layer perceptron에도 이 방식이 적용될 것이라 다소 과도한 추측을 하는 바람에 neural network 연구 자체가 한 동안 메일 스트림이 아니었다. 아무튼, perceptron은 엄청 간단한 feed-forward network의 일종이다. 무지무지 간단하게 그림 하나로 표현하면 아래와 같다 (그림은 google image에서 찾은 그림..)</p>
-
-
-<p><img src="/images/post/40-4.png" width="600"></p>
-
-<p>하나하나 간단하게 설명해보자. 일단 input layer가 있다. 맨 아래 \(x_o\)는 \(x_n\)의 오타로 추정된다. 맨 위의 1은 bias를 위한 term이다. 이전 글에서 bias에 대해 설명한 것을 기억하는지? input과 weight를 linear combination 형태로 정리하고 나서 거기에 상수 항으로 더해지는 값이 bias이다. 즉, input과 상관없이 늘 더해지는 값으로, \(b = 1 \times w_o\) 라고 봐도 무방한 것이다. 아무튼, 지금은 간단하게 input layer에서 원래 input vector x와 bias term 1을 weight vector와 곱한 형태인 \(z = \sum_i w_i x_i\)를 계산했다고 간단하게 생각해보자. perceptron의 decision rule은 간단한데, 방금 계산한 값이 어떤 threshold를 넘으면 값을 activate, 넘지 못하면 값을 deactive 시키는 것이다. 간단하게 얘기하면 perceptron에서는 binary threshold neuron을 사용하는 것이다. 이 threshold를 결정하는 것은? 바로 bias가 그 역할을 하게 된다. 그러므로 이 알고리듬에서 "learning"하는 것은 weight와 bias가 될 것이다. 음.. 뭔가 간단하게 bias는 무시하고 weight만 학습하는 방법은 없을까? 앞에서 bias를 weight로 간단하게 치환한 방법을 사용하면 이렇게 문제를 간단하게 만드는 것이 가능해진다. 원래 input vector에 value 1을 추가하여 마치 input vector가 하나 더 있고, 그 component에 대한 weight가 존재하는 것처럼 trick을 쓰는 것이 가능해진다. 따라서 bias도 weight와 같은 방법으로 자연스럽게 learning할 수 있게 되고, 더 이상 threshold에 대해 고민할 필요가 없어진다!</p>
-
-
-<p>perceptron이 weight를 학습하는 방법도 매우 간단하다. input vector가 들어왔을 때, 현재 weight로 맞는 값이 나온다면 weight는 update되지 않는다. (\(w_{t+1} = w_t\)) 만약 1이 나와야하는데 0이 나온다면 weight vector에 input vector를 더해준다. (\(w_{t+1} = w_t + v\)) 만약 0이 나와야하는데 1이 나온다면 weight vector에서 input vector를 더해주는 방식으로 weight를 update한다. (\(w_{t+1} = w_t - v\))</p>
-
-
-<p>조금 더 잘 describe해보자면, input x에 대해서 output(label) y는 다음과 같은 수식으로 표현된다 -아래 수식에서는 편의를 위해 y = {-1,1} 이라고 하자-</p>
-
-
-<p>$$ y = sign( \sum_{i=0}^n w_i x_i ) \hskip 1em where, x_0 = 1 \hskip 0.3em and \hskip 0.3em w_0 = -b$$</p>
-
-
-<p>즉, label y는 vector w와 x의 inner product로 나타낼 수 있으며 이 때 bias b는 \(x_0 = 1\), \(w_0 = -b\)라는 형태로 간단한 weight vector와 input vector의 linear combination으로 표현할 수 있게 되는 것이다. 이 때 update rule은 다음과 같다</p>
-
-
-<p>$$ w_{t+1} = w_t + y_n x_n, \hskip 1em when \hskip 0.3em misclassified $$</p>
-
-
-<p>misclassified가 발생했을 때만 update가 일어나며, update rule은 원래 y와 x를 곱해서 원래 vector에 더해주는 것이다. 즉, 1이 나와야하는데 -1이 나왔다면 w에 +x를 취해주고, -1이 나와야하는데 1이 나왔다면 w에 -x를 취해주는 것이다. 그리고 step을 진행시키면서 (t가 점점 증가하면서) misclassified point가 발견될 때 마다 이 알고리듬을 반복한다. 이렇게 설명하면 조금 더 깔끔하게 수식적으로 설명이 가능해진다.</p>
-
-
-<h5>A geometrical view of perceptrons</h5>
-
-
-<p>위와 같은 update rule이 선택되는 이유는 무엇인가? 왜 하필이면 input vector를 합해야할까? 이런 질문들은 모두 geometric하게 해석할 수 있다. feature가 n개일 때, input vector와 weight vector는 some n-dimensional vectors이므로, 이 vector들이 존재하는 vector space를 정의하는 것이 가능해지기 때문이다. 여기에서는 weight space라는 새로운 형태의 space를 정의해서 perceptron을 해석할 것이다. 따라서 원래 수식과 대조하여 생각해보면 우리가 궁극적으로 찾고자하는 truth weight vector는 올바른 answer에 대한 어떤 hyperplane일 것이라는 것도 충분히 추측할 수 있다. 무슨 소리냐하면, input vector와 weight vector의 inner product의 sign이 y를 결정한다는 의미는, 곧 그 내각이 90도보다 크냐 작으냐로 생각할 수 있고 (물론 n-dimensional vector에서는 각도 개념이 정의하기 나름이지만) 아마도 대부분의 input vector들에 대해서 올바른 label을 가지게 하는 어떤 hyperplane이 우리가 찾고자하는 궁극적인 weight vector들이라는 것이다. 그림으로 설명해보자.</p>
-
-
-<p><img src="/images/post/40-5.png" width="600"></p>
-
-<p>위의 그림에서 correct answer가 1이라면 input vector와 weight vector의 inner product를 구했을 때 올바른 값이 나오기 위해서는 당연히 초록색 vector이어야한다는 사실을 알 수 있을 것이다. 이유는 위에서 언급했듯 사이각이 90도 보다 작은 두 벡터의 inner product는 언제나 0보다 크기 때문이다. 따라서 input vector에 orthogonal한 plane을 그리고, 그 plane을 기준으로 weight vector가 올바른 곳에 존재하는지 그렇지 않은지 간단하게 알 수 있을 것이다. 다음에는 correct answer가 0인 경우 (-1인 경우)를 살펴보자. 이 경우에는 두 벡터의 사이 각이 90도보다 커야하므로, input vector에 orthogonal한 plane의 반대 부분이 올바른 weight vector의 위치가 됨을 알 수 있다. 그렇다면 올바르지 않은 (misclassified된) weight vector를 올바른 영역으로 옮기기 위해서 어떤 행동을 취할 수 있을까? 조금만 생각해보면 정말 간단한 vector sum으로 hyperplane의 반대쪽으로 보낼 수 있다는 것을 알 수 있다. 왼쪽 상황에서는 빨간 벡터를 초록 벡터로 만들기 위해서 간단하게 빨간 벡터에 파란 벡터를 대해주면 되고 (\(w_{t+1} = w_t + v\)) 오른쪽 경우는 빼주면 된다 (\(w_{t+1} = w_t - v\)). 이런 이유로 벡터를 더하고 빼는 것 만으로 weight가 '개선'되었다고 할 수 있는 것이다. 만약 weight들이 올바르게 learning되었다면 우리는 아래와 같은 결과를 얻게 될 것이다.</p>
-
-
-<p><img src="/images/post/40-6.png" width="300"></p>
-
-<p>즉, 올바른 weight는 서로 다른 input vector들이 모두 well-classified되게하는 어떤 vector임을 알 수 있다. Training을 하면서, 우리가 찾아내는 값은 바로 가장 올바른 weight vector를 찾는 것이며, 위의 그림에서 볼 수 있듯 우리는 space 위에 여러 hyperplane을 그릴 수 있고, 이를 이용하여 good weight들이 위치하는 hypercone을 그릴 수 있다. 재미있는 점은, 이 cone위의 vector는 convex하다는 것이다 (그 어떤 벡터 두 개를 골라도 그 중간에 존재하는 모든 벡터들이 cone안에 존재한다) 즉, 우리가 만약 이 문제를 convex하게 해결한다면 항상 우리는 global optimum값을 찾을 수 있게 되는 것이다.</p>
-
-
-<h5>Why the learning works</h5>
-
-
-<p>위에서 geometric view로 perceptron을 서술하였으니, 이번에는 도대체 왜 이런 알고리듬이 작동하는지 알아보도록 해보자. 사실 엄밀한 수학적 증명이 강의에 나오지 않기 때문에 복잡한 증명은 생략하고, 간단하게 그림으로 설명해보도록 하겠다. 일단 아래 그림을 보면서 진행해보도록하자.</p>
-
-
-<p><img src="/images/post/40-7.png" width="500"></p>
-
-<p>아래 그림의 상황은 current weight vector와 any feasible한 weight vector 사이의 거리 \(d_a^2+d_b^2\)을 고려해보도록 하자. 만약 이런 상황에서 perceptron이 misclassified된다면, learning 알고리듬이 current vector를 조금 더 feasible한 weight vecotr에 가까워지도록 움직여줄 것이다. 하지만 문제가 생기는데, 거의 plane에 근접하게 있는 point를 생각해보자. 이 그림에서는 노란색 점이 그것이다. 이 점은 분명 조금 더 "feasible vector"에 가깝게 움직여질 필요성이 있지만, 노란색 점은 이미 feasible region 위에 위치하기 때문에 아무리 알고리듬이 running하더라도 절대로 feasible point 근처로 옮겨지지 않는 것이다. 이런 문제점을 해결하기 위해서 'margin'이라는 컨셉이 도입된다.</p>
-
-
-<p><img src="/images/post/40-8.png" width="300"></p>
-
-<p>위의 그림에는 margin이라는 것이 표현되어 있는데, 이 margin은 feasible한 weight vector를 조금 더 strict하게 정해주는 역할이다. 즉, feasible region을 plane에서 margin 보다 더 멀리 떨어진 위치로 정의하고, 이 region안에 존재하는 vector를  "generously feasible"한 weight vecotr로 정의하는 것이다. 즉, 이제는 노란색 vector가 margin보다 더 조금 떨어져 있기 때문에 더 이상 "feasible"한 vector가 아니므로 perceptron algorithm을 사용하여 이 벡터를 옮기는 것이 가능해지는 것이다.</p>
-
-
-<p>이런 가정하에, 이 알고리듬이 converge한다는 것이 증명가능하다고 하는데, 구체적인 증명과정은 강의에 설명되어있지는 않고, 간단한 아이디어만 서술되어있다. 그 아이디어는 크게 세 개인데, perceptron이 feasible region에 존재하지 않는 weight vector를 update하고, update마다 missclassified vector와 feasible vector사이의 distnace가 감소되는 방향으로 update가 될 것이다. 또한 이 거리는 매 번 최소한 input vector의 lenght의 제곱근만큼은 감소한다는 것이다. 따라서 유한한 숫자의 iteration안에 weight vector가 반드시 feasible region안에 위치하게 된다는 것이다. 물론 이 모든 것은 그러한 feasible region이 존재하는 경우에만 동작하는 것은 당연할 것이다.</p>
-
-
-<h5 id="what-perceptrons-cant-do">What perceptrons can't do</h5>
-
-
-<p>하지만 perceptron은 너무나도 명확한 한계점이 존재한다. input vector가 binary이기 때문에 모든 input을 binary feature로 바꾸어야한다는 점도 문제이지만, 가장 큰 문제는 linearly separable하지 않은 dataset들은 learning할 수가 없다는 것이다. 엄청나게 간단한 예를 살펴보도록하자. xor은 binary 연산의 가장 기본적인 연산 중 하나이다. 두 값이 같으면 0, 다르면 1을 return하는 것인데, 이를 2차원 평면에 포함하면 아래와 같은 상황이 되어버린다.</p>
-
-
-<p><img src="/images/post/40-9.png" width="300"></p>
-
-<p>초록색 label이 된 점들이 output이 0인 점들, 빨간색 점들은 ouput이 1인 점들이다. 당연하게도, 이 점들을 구분할 수 있는 '단 하나의' plane은 존재하지 않는다. 단순히 이 결과만 보더라도 perceptron이 얼마나 제한적인 상황에 대해서만 동작하는지 분명하게 알 수 있다. 또한 perceptron의 decision making은 summation으로 이루어지기 때문에, 만약 n 차원 벡터의 패턴이 아래와 같으면 구분이 불가능한 것이다</p>
-
-
-<p><img src="/images/post/40-10.png" width="300"></p>
-
-<p>pattern A는 점들의 set이 1, 1, 2로 존재해야하고, pattern B는 2, 2로 존재해야하는데 둘 다 합이 4이기 때문에 perceptron으로는 이를 구분하는 것이 불가능하다.</p>
-
-
-<p>이렇듯 perceptron은 그 한계가 너무나 명확하다. 그러나 이는 single layer perceptron에 한정된 문제이지 neural network 전체의 문제는 아니다. 이를 해결하는 방법은 생각보다 간단한데, 바로 hidden unit을 learning하는 것이다. multiple hidden layer는 neural network가 더 이상 linear하지 않고 non-linear하게 해주는 역할을 하는데, non-linear해지기 때문에 learning하기가 힘들어지지만, 만약 learning이 가능하다면 그 만큼 powerful해지는 것이다. 그렇다면 이런 net을 learning하는 것은 가능할까? 결론부터 얘기하자면 엄청나게 어렵다. 때문에 이에 대한 연구가 활발히 이루어지고 있으며 꽤 성공적인 결과들이 존재한다. 또한 hidden layer의 weights를 learning하는 것은 feature를 learning하는 것과 같아지기 때문에 더 이상 feature에 대한 문제도 없어지고, 여러모로 hidden unit을 learning하면 그 한계를 깰 수 있는 network가 될 수 있는 것이다.</p>
 
 
 
