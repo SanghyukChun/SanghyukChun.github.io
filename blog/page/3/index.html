@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="캐시버타이징, 당신이 지갑을 열어야 하는 101가지 이유 Nov 19th, 2013 사람들은 흔히 멋진 광고, 작품성있는 광고에 열광하고는 한다. 하지만 그런 광고가 정말 좋은 광고일까? 잠깐 좋은 광고란 무엇인지에 대해 생각해보고 넘어가보자. 광고란 무엇일까? &hellip;">
+  <meta name="description" content="서버를 구축해보자 Nov 26th, 2013 최근 연구실 초기 세팅을 위해서 고군분투하고 있는데, 갑자기 연구실용이 아니라 내 전용 서버를 하나 두면 재미있을 것 같다는 생각이 들었다. 용도는 크게.. 네 가지 정도 내 개인 웹서버 - 간단한 나에 대한 소개 등등을 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,76 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/28/">서버를 구축해보자</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-26T00:11:00+09:00" pubdate data-updated="true">Nov 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>최근 연구실 초기 세팅을 위해서 고군분투하고 있는데, 갑자기 연구실용이 아니라 내 전용 서버를 하나 두면 재미있을 것 같다는 생각이 들었다. 용도는 크게.. 네 가지 정도</p>
+
+
+<ul>
+    <li>내 개인 웹서버 - 간단한 나에 대한 소개 등등을 하는 개인 페이지나 내가 개발하는 웹 어플리케이션을 배포하기 위한 용도.. 대충 아래에 있는 목록 정도를 배포하지 않을까 싶다</li>
+    <ul>
+        <li>현재 <a href="sanghyukchun.github.io/aboutMe" target="new">sanghyukchun.github.io/aboutMe</a>에 있는 내 PR페이지</li>
+        <li>연구를 하고 그 기록을 보관하기 위한 개인 BBS.. 이건 XE 써서 만들면 간단할 것 같다</li>
+        <li>연구 및 개인 스케쥴 관리를 위한 레드마인</li>
+        <li>내가 필요한 내용을 정리하기 위한 개인 Wiki</li>
+        <li>예전부터 생각만 하고 있고 구현은 하고 있지 않은 맛집 DB 및 추천용 웹 어플리케이션</li>
+    </ul>
+    <li>맥 이외의 다른 머신에서도 개발할 수 있기 위한 개인 개발용 서버 (SSH client를 사용해서 접속하는 방식으로..)</li>
+    <li>개인 파일 서버 - 원래는 그냥 SFTP정도로 끝내려고 했지만, 동영상을 저장해서 실시간 스트리밍이 가능한 어플리케이션을 만들어볼까 고민 중이다</li>
+    <li>개인 메일 서버 - 필요하지는 않지만, sanghyuk@sanghyuk.kaist.ac.kr 이나.. 나중에 혹시 다양한 사람들을 위한 웹어플리케이션을 만들 경우에 supports@sanghyuk.kaist.ac.kr 이런 식으로 메일을 만드는 것도 가능하다!</li>
+    <li>개인 메일링 리스트 서버 - 개인적으로 메일링 리스트를 구축해야할 일이 얼마나 있을지는 모르겠지만, 그래도 세팅해두고 메일링 리스트로 관심분야를 정리하면 굉장히 좋을 것 같다는 생각이 든다</li>
+</ul>
+
+
+<p>등을 해보고자 한다.</p>
+
+
+<p>전반적으로 연산 자원을 많이 요구하지 않으니깐 듀얼코어 i3면 충분할 거라고 생각했고 (그리고 듀얼코어가 파워 컨섬션도 적고 발열도 적다), 마찬가지 이유로 RAM도 4GB 한 개만 사기로 했다. 이걸 사는 이유는 그냥 나중에 필요하면 다른 컴퓨터로 옮겨 낄 수도 있고 팔기에도 2GB보다는 4GB가 잘 팔리니깐. 파일 서버를 세팅을 하기는 하겠지만, 아마 TB단위 이상으로 필요할 것 같지는 않고, 만약 필요하다면 요즘 하드 가격도 많이 떨어졌으니 간단하게 확장하면 되니깐 그냥 WD 1TB만 구매하기로 결정. 이 이외의 다른 세팅은 필요없을 것 이라고 판단하고 과감하게 보드도 저렴한 녀석으로 구매했다. 어차피 비싼 보드라는게 결국 포트가 더 많이 들어있거나 더 좋은 성능의 무언가가 들어간 경우 (USB3.0, SPDIF, 예전엔 SATA3등등..) 근데 나는 그냥 랜선만 있으면 된다. 랜카드를 더 박거나 GPU가 필요하지도 않으니 그냥 과감하게 저렴한 녀석으로 결정!</p>
+
+
+<p>그래서 견적이 이렇게 나왔다.</p>
+
+
+<p><img src="/images/post/28-1.png" width="400"></p>
+
+<p>오늘 주문했고 배송도 되었으니 아마 빠르면 내일 오후 늦으면 내일 모레 도착할 것 같다. 조립하기 귀찮아서 조립비도 그냥 낼까 했는데, 부품도 몇 개 없어서 그냥 내가 조립하기로 했다. 정말 금방 끝날 것 같아서..</p>
+
+
+<p>운영체제는 당연히 Ubuntu Server. 예전에는 정말 아무것도 몰라서 Ubuntu Desktop을 깔고 왜 자꾸 에러가 나고 리소스가 부족한지 한숨짓고는 했는데, 이제는 그런 실수는 안하겠지 하하. 13은 너무 버그가 많기도 하고 LTS가 아직 안나온 것 같아서 그냥 12.04LTS로 결정. 이제 서버만 도착하면 될 것 같은데 ㅎㅎ</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -652,98 +722,6 @@ $(function() {
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/18/">10년차 힙덕이 본 Control 대란</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-04T16:20:00+09:00" pubdate data-updated="true">Sep 4<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>대략 2004년부터 힙합을 듣기 시작했으니 나름 10년가까이 힙합을 들었다고 할 수 있겠다. 오랜 기간 힙합을 듣다보니 꽤 Deep 하게 들었고 한국 힙합에 한정하여 어느 정도는 전문가라고 스스로를 지칭해도 부끄러움이 없을 정도가 되었다. 그런 나에게도 지난 Control 대란은 꽤 흥미로웠다. 근래는 힙합보다는 다른 장르를 더 집중하여 듣다보니 다른 사람들이 그러하듯 나 역시 E-Sens의 개코 디스에 (사실 아메바 컬쳐 디스라고 보아야하지만) 이번 사건(?)에 관심을 가지게 되었다. 일단 간단하게 왜 이런 일이 일어났는지 살펴보자면, 발단은 켄드릭 라마의 디스곡 Control Freestyle이었다.</p>
-
-
-<iframe width="420" height="315" src="//www.youtube.com/embed/SaMreUKk5Fk" frameborder="0" allowfullscreen></iframe>
-
-
-<p>정확히 말하면 켄드릭 라마 곡은 아니고 Big Sean의 곡에 피쳐링한 Verse가 대박이었는데, 이게 그냥 냅다 거의 대부분의 미국의 힙합 뮤지션들에게 &#8216;예전의 정신은 어디가고 다 트렌디한 것만 따라가면서 음악을 하고 있지 않다&#8217; 뭐 이런식으로 광역 도발을 해버렸다. 실제로 많은 뮤지션들이 이름이 가사에서 &#8216;언급&#8217;되었다.</p>
-
-
-<p><img src="http://postfiles16.naver.net/20130908_15/drunkenflow_1378570680816vBzCt_JPEG/CYMERA_20130908_011147.jpg?type=w2" alt="켄드릭 라마"></p>
-
-<p>출처는 <a href="http://blog.naver.com/PostView.nhn?blogId=drunkenflow&logNo=120197751622" target="new">여기</a>. 아무튼 정말 장난아닌 디스가 나온 것. 그래서 미국 쪽에서 꽤 후끈해지고 서로 디스전이 좀 오고갔다. 이건 나도 잘 몰라서 hiphople쪽 자료를 퍼왔다. 관심있으면 이 링크로 이후 주고 받은 디스곡을 들어보면 될 것 같음 <a href="http://hiphople.com/freeboard/954132">http://hiphople.com/freeboard/954132</a> 아무튼 이제 이걸 보고 스윙즈가 감명을 받아 한국 힙합을 모두까기인형 모드로 광역 도발을 시전했는데&#8230;</p>
-
-
-<iframe width="420" height="315" src="//www.youtube.com/embed/2ozXM5rInT8" frameborder="0" allowfullscreen></iframe>
-
-
-<p>&#8230;정말 못했다. 스윙즈가 원래 좀 편차가 큰 편이긴 하지만 이건 너무 실망스러워서 각종 커뮤니티에서도 &#8216;이건 도대체 왜 한거지;;&#8217; 이런 분위기였다. 무엇보다 레코딩이 최악이다. 마스터링을 빡시게는 안하더라도 최소한의 믹싱이랑 사운드 손질은 했어야했는데 듣기가 너무 힘들 정도..</p>
-
-
-<iframe width="420" height="315" src="//www.youtube.com/embed/RNzPZdeqAUE" frameborder="0" allowfullscreen></iframe>
-
-
-<p>그래서 나온 몇 개의 &#8216;답가&#8217; 중 하나이다. 나중에 King Swings part2에서도 언급했던 테이크원의 디스곡.. 그 밖에도 야수, 어글리덕, Deep Flow 등이 Control에 가사를 썼지만&#8230;</p>
-
-
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F106746120"></iframe>
-
-
-<p>그렇다 그 분의 등장. E-Sens가 현재 한국 힙합에서 제일 거대하고 영향력이 거대하다고 할 수 있는 아메바 컬쳐를 디스하며 폭풍의 핵으로 떠올랐다. 그런데 여기에서 이제 이 디스전의 성향이 조금 바뀌기 시작했다. 원래 디스라는 것은 Disrespect, 즉 그냥 내가 상대방을 respect하지 않는 다는 것이고 그것을 랩으로 표현하고 당신이 내 생각에 동의하지 않는다면 랩으로 대응해라! 이런게 디스다. (물론 east west나눠서 싸울 때는 총질도 하면서 살벌하게 했지만 2pac과 bigge가 죽고 나서 더 이상 그런 분위기는 아니다.) 그런데 이 곡을 기점으로 모든 곡이 다 폭로전으로 바뀌어버렸다. 사실 그래서 개코가 굳이 대응을 하지 않아도 되었으나, 개코가 맞디스곡을 들고 나왔다.</p>
-
-
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F106911540"></iframe>
-
-
-<p>E-Sens 디스의 주 내용은 아메바 컬쳐에서 느꼈던 각종 불합리함 그리고 &#8216;10억 계약&#8217;이 주 내용이다. 즉, 내가 당신을 disrepect한다는 것이 아니라 자신이 겪은 불합리한 것을 폭로하는 분위기&#8230; 만약 이게 사실이 아니거나 E-Sens가 다소 피해망상으로 과장해서 느낀 것이라면 이건 그냥 바로 법정 대응을 해버리면 그만이다. 그런데 개코는 이렇게 다시 음악으로 E-Sens에게 대답을 해주었다. 나는 사실 이 장면이 제일 멋지고 감동적이었는데, 사실 이건 법정에서 해야할 얘기이지 디스곡으로 할 얘기는 아닌데 그걸 또 굳이 디스곡으로 맞받아쳤다는 것. 회사를 운영하는 사람이 아니라 정말 힙합을 하는 랩퍼로 존경할 가치가 있다는 생각이 들었다.</p>
-
-
-<p></p>
-
-<p>완전 뜨겁게 달아오른 힙합판은 Swings의 part2와 Simon D의 가세, E-Sens의 두 번째 디스곡 true story 등으로 후끈해졌지만, 본질 자체가 폭로전으로 변질되어버렸기 때문에 다소 아쉽기는 했다. 그래도 정말 이렇게까지 힙합판이 난리가 난 것이 처음이기 때문에 나름 재미있는 한 주를 보낼 수 있었던 것 같다. 대중적으로 관심을 받지는 못했지만 정말 대박이라고 생각하는 세 곡을 링크하자면, 데드피와 Sunday 2pm이 있다.</p>
-
-
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F106836946"></iframe>
-
-
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F106874460"></iframe>
-
-
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F107154710"></iframe>
-
-
-<p>먼저 뎊피는 랩도 쩔고 내용도 좋지만 이미 다들 실명 언급하고 치부 까기에 혈안이 된 상태였기 때문에 이슈화가 못되었고, 아웃사이더에게 분이 쌓일대로 쌓인 Sunday 2pm의 두 명이 조인트를 까는 두 곡은 정말 랩을 잘했다. 개코가 랩퍼로써 반격한 것에 비해 계속 침묵하고 있는 아웃사이더는 참 대조적이다.</p>
-
-
-<p>원래 하려던 말은 개코가 참 멋지다는 말, 그리고 힙합이 이렇게 전국적으로 관심을 받는 것이 재미있다는 것이었는데 쓰다보니 영 사족이 많아진 글이다. 아무튼 본질이 변했고 폭로전으로 바뀐 것은 아쉽지만 힙합 10년 가까이 들으면서 이렇게 모든 국민이 전국적으로 힙합에 관심을 가지고 힙합에 대해 얘기하게 되었다는 사실 자체가 예전보다 힙합이 많은 사람들에게 사랑받고 있다는 의미 같아 기쁘다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -762,6 +740,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/48/">Network Science - Graph Theory</a>
+      </li>
+    
+      <li class="post">
         <a href="/47/">Network Science - Introduction</a>
       </li>
     
@@ -775,10 +757,6 @@ $(function() {
     
       <li class="post">
         <a href="/44/">BIG 2014 (2014/4/7 ~ 2014/4/8)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/43/">Coursera Neural Networks for Machine Learning Week4 & 5 - Applications</a>
       </li>
     
   </ul>

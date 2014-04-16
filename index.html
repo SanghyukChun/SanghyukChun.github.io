@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Network Science - Introduction Apr 16th, 2014 Network Science에 처음 관심을 가지게 된 계기는 인터넷 속의 수학에서 들었던 lecture였다. 내가 예전에 관심있었던 부분 중 하나가 소셜 네트워크, 혹은 다른 형태의 &hellip;">
+  <meta name="description" content="Network Science - Graph Theory Apr 16th, 2014 들어가기 전에 이 글은 2014년 KAIST Network Science 수업 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,6 +96,206 @@ $(function() {
       
   <header>
     
+      <h1 class="entry-title"><a href="/48/">Network Science - Graph Theory</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-16T19:39:00+09:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h5>들어가기 전에</h5>
+
+
+<p>이 글은 <a href="/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
+
+
+<h5>Network and Graph</h5>
+
+
+<p>Network 혹은 Graph는 vertex와 그 vertex를 잇는 edge로 구성되어있는 일종의 collection이다. vertex와 edge는 node와 link라고 하기도 한다. 인터넷, 전력망, Citation network, social network 등을 예로 들 수 있으며, 요즘 내가 공부하고 있는 <a href="/blog/categories/neural-network/">artificial neural network</a> 역시 neuron과 synapse로 이루어진 graph이다. 보통 Graph는 mathematical하게 \(G = (V,E)\)로 표현이 된다. V는 vertex를 의미하며 E는 edge를 의미한다. 또한 일반적으로 n과 m이라는 notation도 사용하는데, n은 vertex의 개수, m은 edge의 개수이다. 이때 graph의 종류는 크게 두 가지가 있다. 하나는 directed graph이며 또 하나는 undirected graph이다. directed graph는 edge에 direction이 존재하여 한 vertex에서 다른 vertex를 point하는 형태가 되며, undirected graph는 edge에 특정한 direction이 존재하지 않는다. 또한 directed graph 중 Acyclic directed network 혹은 directed acyclic graph (보통 DAG라고 부른다) 라는 graph가 있는데, 이 그래프는 이름 그대로 cycle이 없는 graph를 얘기하며, 즉, 한 vertex에서 edge를 따라 이동했을 때 그 어떤 vertex, 그 어떤 path를 선택하더라도 자기 자신으로 돌아오지 않는 graph를 의미한다. 또한 graph의 edge는 weight라는 것을 가지고 있는데, 이 값은 edge의 고유한 값으로, 상황에 따라 다르게 해석이 된다. 예를 들어서 internet edge에서는 data flow의 양을 의미하기도 하고, social network에서는 얼마나 두 사람 간의 contact가 많냐 등으로 해석할 수도 있고, 단순한 geometric graph에서는 weight가 두 vertex간의 거리를 뜻하기도 한다. 렉쳐노트에는 weight가 non-negative라고 표현이 되어있지만, 실제 문제들에서는 edge가 negative weight를 가지는 경우도 많다. 물론 이런 경우 계산이 좀 복잡해진다.</p>
+
+
+<h5>Adjacency Matrix</h5>
+
+
+<p>그런데 이런 graph를 실제 분석하기 위해서는 어떻게 해야할까? 아래와 같은 그래프를 예로 들어보자.</p>
+
+
+<p><img src="/images/post/48-1.png" width="200"></p>
+
+<p>이 그래프는 간단한 undirected graph이며, 1,2가 연결되어 있고 2,3이 연결되어 있고&#8230;. 등등등이 연결되어있는 그래프이다. 그런데 우리가 어떤 그래프를 서술할 때에 있어서 항상 이렇게 일일이 어느 node와 어느 node가 연결되어있는지 명시해야할까? 이런 표현을 간단히 하기 위하여 Adjacent matrix라는 것이 도입된다. 이 matrix는 \(A_{ij} = weight \ of \ edge \ from \ vertex \ j \ to \ i\) 로 표현이 된다. 당연히 두 vertex간에 edge가 없으면, 혹은 연결되어있지 않으면 그 값은 0이 된다. 즉, 위의 그래프는 아래와 같은 matrix로 간단하게 표현이 가능하다.</p>
+
+
+<p><img src="/images/post/48-2.png" width="200"></p>
+
+<p>당연히 undirected graph는 이 adjacent matrix가 symmetric하며, self-edge가 없는 graph는 \(A_{ii} = 0\) 이다.</p>
+
+
+<p>또한 위에서 설명했었던 DAG를 adjacency matrix로 표현하면 재미있는 일이 벌어지는데, without loss of generality, 항상 DAG는 triangular matrix로 표현이 된다. Why? 왜냐하면, 아주 간단한 이유인데, DAG에서 어떤 path를 고르더라도 반드시 그 path는 cycle이 아니다. 즉, 다시 자기 자신으로 돌아오지 않기 때문에, 결국에는 outgoing edge가 없는 vertex에 도달하게 될 수 밖에 없다. (당연하다) 그러므로 반드시 최소한 하나 이상의 out degree가 0인 vertex에 도달하게 되고 (degree는 아래에서 더 자세히 설명) 이 말은 곧, column 중 하나는 반드시 zero-vector여야 한다는 소리이다. 이때 만약 out degree가 0인 vertex를 제거해보면 (이에 해당하는 edge도 제거하면) 그 zero vector를 pointing했던 vertex 역시 마찬가지 이유로 outdegree가 0인 vertex가 될 것이다. 이런 식으로 하나하나 제거해나가보면 결국, 반드시 triangular matrix로만 표현이 된다는 것을 알 수 있다. 또한 이런 triangular matrix의 eigenvalue는 diagonal element 들인데, DAG는 cycle이 없기 때문에 모든 diagonal element가 0이 되고 따라서 모든 eigenvalue는 0이 된다. 즉, 어떤 주어진 graph가 DAG인지 아닌지 여부를 판단하기 위해서는 간단하게 모든 eigenvalue들이 0이 되는지만 확인하면 되는 것이다.</p>
+
+
+<h5>Cocitation and Bibliographic Coupling</h5>
+
+
+<p>Cocitation이란 directed graph의 vertex i와 j를 동시에 point하고 있는 vertex들의 개수를 의미한다. 간단하게 &#8216;co-citation&#8217;이라는 단어 자체가 같이 citation한다는 의미이므로 그 의미 그대로 이해하면 된다. 그런데 이런 경우, 앞서 설명했던 adjacency matrix로 cocitation matrix를 표현하는 것이 가능하다. 그 이유는 vertex i,j를 동시에 point하는 k는 \(A_{ik} A_{jk} = 1\) 이라는 식을 만족하기 때문이다. 따라서 모든 점들에 대해 이런 과정을 반복해보면 \(C_{ij} = \sum_k^n A_{ik} A_{jk} = \sum_k^n A_{ik} A_{kj}^\top \)라는 것을 알 수 있고, 이는 곧 \(C = A A^\top\) 라는 것을 알 수 있다. 이 경우 임의의 matrix와 그 matrix의 transpose를 곱하면 그 결과는 항상 symmetric하다는 것이 잘 알려져 있다. 따라서 이 matrix는 symmetric하다. 이 결과는 당연하다고 할 수 있는데, i와 j에 대해 그 순서가 바뀐다고 해서 citation하고 있는 vertex가 달라지지는 않을 것이기 때문에 항상 \(C_{ij} = C_{ji}\)라는 것을 알 수 있다. 그리고 graph가 symmetric하다는 것은 이 graph가 undirected graph라는 것을 의미하게 된다. 그리고 이 graph는 weighted graph인데, 이 weight는 얼마나 많은 co-citation이 존재하는지를 indicate하는 숫자가 된다. 그리고 \(C_{ii}\) 는 vertex i를 point하는 모든 edge의 개수를 의미한다.</p>
+
+
+<p>Cociation이라는 것을 정의했으니 그 반대 방향을 생각할 수 있을 것이다. 즉, i와 j가 동시에 point하고 있는 vertex들의 개수를 생각해볼 수 있는데, 이 것을 Bibliographic Coupling이라 한다. 위와 같은 방법으로 유도를 해보면 \(B = A^\top A\) 라는 사실을 알 수 있다. 마찬가지로 이 graph도 symmetric하며 따라서 이 graph도 undirected graph다. 또한 마찬가지로 이 graph는 weighted graph이며 그 weight는 얼마나 많은 vertex를 동시에 같이 point하고 있느냐를 의미한다. 마지막으로 \(B_{ii}\) 는 vertex i가 point하는 모든 vertex의 개수를 의미한다.</p>
+
+
+<p>이 두 가지 matrix는 directed graph에서의 search algorithm에 사용될 수 있다고 한다.</p>
+
+
+<h5>Bipartite Network</h5>
+
+
+<p>Hypergraph라는 것이 존재한다. Hyperedge라는게 존재하는 graph를 의미하는데, 이 hyperedge는 하나의 edge가 2개 보다 많은 vertex에 연결되어있는 edge를 의미한다. 이런 hypergraph를 표현하는 방법 중 하나는 bipartite graph를 사용하는 것이다. Bipartite graph는 vertex를 두 그룹으로 나누어 그룹 안에는 edge가 존재하지 않고, 모든 edge가 그룹 사이에서만 존재하는 graph를 의미한다. 즉, 아래 그림에서 까만점을 원래 hypergraph의 vertex, 하연점을 edge로 생각하면 우리가 일반적으로 알고 있는 graph로 hypergraph를 표현할 수 있는 것이다.</p>
+
+
+<p><img src="/images/post/48-3.png" width="500"></p>
+
+<p>이런 bipartite matrix에는 incidence matrix라는 것이 존재하는데, 아래 그림과 같이 정의된다.</p>
+
+
+<p><img src="/images/post/48-4.png" width="600"></p>
+
+<p>이 incidence matrix B는 projection을 위해 사용하는 것이 가능하다. 이때 projection은 edge들끼리 같은 vertex를 가지고 있는지 여부, 혹은 그 반대로 vertex끼리 같은 edge를 가지고 있는지 여부로 새로운 형태의 그래프를 그리는 것을 의미하며 아래에 그 간단한 예시가 나와있다.</p>
+
+
+<p><img src="/images/post/48-5.png" width="300"></p>
+
+<p>이때, i와 j가 같은 group k에 존재한다고 했을 때 우리는 \(B_{ki} B_{kj} = 1\)이라는 것을 알 수 있다. 따라서 i와 j가 몇 개의 같은 그룹에 속해있는지를 indicate하는 P는 \(P_{ij} = \sum B_{ki} B_{kj} = \sum B_{ik}^\top B_{kj} \) 이며, 따라서 \(P = B^\top B\) 라는 것을 알 수 있고, \(P_{ii} = \sum B_{ki}^2 = \sum B_{ki}\) 라는 것을 알 수 있다. 따라서 \(P_{ii}\)는 vertex i가 속해있는 모든 group의 개수를 의미하게 된다.</p>
+
+
+<h5>Tree and Planer Network</h5>
+
+
+<p>Tree는 connected, undirected network의 일종으로, closed loop이 존재하지 않는 graph를 의미한다. 이 경우, 다시 말해서 parent가 단 하나만 존재하는 graph가 tree이며, 이 때문에 그 어떤 vertex pair를 고르더라도 그 사이를 연결하는 optimal path는 단 하나밖에 존재하지 않는다. 또한 n개의 vertex를 가지고 있는 tree의 edge개수는 반드시 n-1개이다.</p>
+
+
+<p>Planar network는 서로 교차하는 edge가 하나도 없게 그릴 수 있는 graph를 의미한다. tree도 planar graph의 일종이다. 이런 planar graph는 반드시 4-coloring 보다 많은 색을 칠하는 것이 불가능하다는 것이 이론적으로 증명되어있다. Coloring problem은 graph를 any adjacent vertex pair가 서로 같은 색을 가지지 않도록 색을 칠해주는 문제인데, 4-coloring이라는 것은 4가지 색으로 색칠을 한다는 의미이다. 즉, planar graph에서 5-color problem은 반드시 풀 수 없는 문제이다.</p>
+
+
+<p>그런데 일반적인 graph가 planar인지 아닌지 어떻게 판단할 수 있을까? <a href="http://en.wikipedia.org/wiki/Kuratowski's_theorem" target="new">Kuratowski&#8217;s theorem</a>이라는 것이 있다. 모든 non-planar graph는 적어도 한 개 이상의 subgraph가 K5혹은 UG의 expansion이라는 theorem인데, 이를 통해 우리는 간단히 graph의 subdivision을 구해서 이 graph가 planar인지 아닌지 여부를 판단할 수 있다.</p>
+
+
+<h5>Degree</h5>
+
+
+<p>Degree는 vertex i와 연결된 모든 edge의 개수를 의미한다. notation은 \(k_i\)로 표현되며, \(k_i = \sum_j^n A_{ij}\) 이며, \(m = \frac {1} {2} \sum_i^n k_i = \frac {1} {2} \sum_{ij} A_{ij}\) 라는 것을 알 수 있다. degree의 평균은 c로 표현하는데, \(1 \over n \sum_i^n k_i\) 이며, 이 값은 곧 \(c = 2m \over n\)이다.</p>
+
+
+<p>이에 대해 density 혹은 connectance라는 것을 정의할 수 있는데, 이것은 전체 존재 가능한 edge와 실제 존재하는 edge의 비율을 의미한다. 이 때 n개의 vertex가 있을 때 존재 가능한 edge의 개수는 단순히 n choose 2이므로 density \(\rho\)는 \(\rho = \frac {m} {\binom {n}{2}} = \frac {2m} {n(n-1)} = \frac {c} {n-1}\)으로 정의할 수 있다. 따라서 만약 dense한 graph는 n이 발산했을때 density가 constant일 것이고, sparse graph는 n이 발산하면 이 값이 0이 될 것이다. 이 방법을 사용해서 우리에게 주어진 graph가 densy한지 혹은 sparse한지 알 수 있는 것이다.</p>
+
+
+<p>그리고 마지막으로 indegree와 outdegree라는 것이 있는데, 이것은 edge의 방향이 존재하는 directed graph에서만 정의되는 값으로, 당연히 indegree는 vertex i가 point하는 vertex의 개수고 outdegree는 vertex i를 point하는 vertex의 개수를 의미한다. 앞서 값을 살펴봤던 k(degree), m(edge number), c(density)를 살펴보면 아래와 같은 결과를 얻게 된다.</p>
+
+
+<p>$$ k_i^{in} = \sum_j^n A_{ij}, \ k_j^{out} = \sum_i^{out} A_{ij} $$</p>
+
+
+<p>$$ m = \sum_i^n k_i^{in} =  \sum_j^n k_j^{out} =  = \sum_{ij} A_{ij} $$</p>
+
+
+<p>$$ c_{in} = \frac {1} n \sum_i^n k_i^{in} = \frac 1 n \sum_j^n k_j^{out} = c_{out} $$</p>
+
+
+<p>$$ c = \frac {m} {n} $$</p>
+
+
+<h5>Path and component</h5>
+
+
+<p>Path는 모든 consecutive pair가 서로 connected edge의 sequence로 나태어지는 vertex들의 sequence를 의미한다. 즉, 주어진 vertex set을 순서대로 살펴보게되면 각 consecutive vertex pair 사이에는 edge가 존재하는 vertex set을 path라고 하는 것이다. 그냥 우리가 알고 있는 그 path를 수학적으로 정의한 것에 불과하니 넘어가도 그만이다. Path의 길이는 이 lecture는 path기 traversed한 edge의 개수로 정의하는데, 개수가 아니라 그 edge들의 weight들의 summation으로 일반적으로 정의한다.</p>
+
+
+<p>아무튼 이 lecture에서 정의한대로 path의 length를 정의했을 때 주어진 graph에서 length가 r인 path의 개수는 어떻게 찾을 수 있을까? Adjacent matrix에서 \(A_{ik} A_{kj}\)를 계산하게 되면 k를 경유하는 i에서 j로 가는 모든 path의 개수가 나오게 된다. 이 사실로 부터 다음과 같은 결론을 유추해낼 수 있다. 아래에서 U는 orthogonal matrix of eigenvector를 의미하고 \(k_i\)는 i번째로 큰 eigenvalue를 의미한다. (간단한 eigenvector decomposition이다)</p>
+
+
+<p>$$ N_{ij}^r = |A^r|_{ij} $$</p>
+
+
+<p>$$ L_r = \sum_i^n |A^r|_{ij} = Tr A^r = Tr(UK^r U^\top )$$</p>
+
+
+<p>$$  = Tr(U^\top U K^r) = Tr K^r = \sum_i k_i^r $$</p>
+
+
+<p>Geodesic path라는 것이 있는데, shortest path의 일종이다. 이때 shortest path를 weight의 sum이 아니라 단순히 hop의 개수만 세는 방식으로 계산하는 것이다. 일반적으로 graph의 diameter를 측정한다고 했을 때는 이 값을 사용한다.</p>
+
+
+<p>Eulerian path라는 것도 있는데, 모든 edge를 정확히 한번만 visit할 수 있는 path를 의미하며, Hamiltonian path는 모든 vertex를 한 번씩 visit하는 path를 의미한다. Euler path는 이전에 <a href="/blog/categories/math-in-internet" target="new">인터넷 속의 수학</a>에서 설명했었던 <a href="/32">쾨르히스베르크 다리 문제</a>를 풀 때 사용할 수 있다. 이 path는 job sequencing, garbage collection, parallel programming등에 사용할 수 있지만 이 path를 찾는 방법은 NP-complete이기 때문에 빠른 시간 안에 찾을 수는 없고 보통 approximation algorithm을 사용하게 된다.</p>
+
+
+<p>component는 graph의 subgraph를 의미한다. 이 때 component 안의 vertex를 모두 visit하는 path가 최소한 하나 이상 존재해야한다. out-component는 특정 vertex A에서 시작해 도달 가능한 vertex들의 set이며, in-component는 vertex A로 도달 가능한 path를 가지는 vertex들의 set이다.</p>
+
+
+<p>Independent 혹은 disjoint path라는 것도 정의할 수 있는데, edge independent는 두 개의 path가 서로 공유하는 edge가 없는 경우이며, 당연히 vertex independent는 공유하는 vertex가 없는 경우를 의미한다. vertex indep이면 edge indep하지만 그 반대는 항상 성립하는 것은 아니다. 이 때 given vertex pair 사이에 존재하는 모든 independent path의 개수를 connectivity로 정의할 수 있다. 이 값은 두 vertex가 얼마나 많은 connectivity를 가지고 있는지, 혹은 그 둘 사이의 bottleneck이 얼마나 될지를 판단할 수 있는 지표가 된다.</p>
+
+
+<h5>Cut sets</h5>
+
+
+<p>cut set은 그에 속하는 vertex 혹은 edge등을 제거했을 때 특정한 vertex들의 pair가 disconnected되는 set을 의미한다. 또한 minimum cut set은 그런 cut set 중에서 가장 작은 element를 가지는 cut set을 의미한다.</p>
+
+
+<p>Menger&#8217;s Theorem에 따르면, given pair of vertices의 minimum vertex cut set의 크기는 같은 pair의 connectivity와 같다고 한다.</p>
+
+
+<p>또한 두 vertex사이의 max flow라는 것을 edge-independent path의 개수 곱하기 capacity로 정의할 수 있는데, 이런 max flow를 정의했을 때, max-flow/min-cut theorem에 따르면 vertex pair의 maximum flow는 항상 minimum cut set와 single path의 capacity의 곱과 같다고 한다. 이때 undirected graph에 대해서 edge connectivity와 minimum edge cut set의 size와 maximum flow의 크기가 같다는 것이 증명될 수 있다.</p>
+
+
+<h5>Graph Laplacian</h5>
+
+
+<p>어떤 commodity 혹은 substance의 flow가 어떤 비율로 흘러가느냐에 따라 Diffusion이라는 것을 정의할 수 있다. 약간 복잡한 얘기인데, 약간 불필요해보이기도 하고 복잡해서 <a href="http://en.wikipedia.org/wiki/Laplacian_matrix#Random_walks_on_graphs" target="new">링크</a>로 대체하겠다. 링크에서도 나오듯 결국에는 Random walk를 정의하기 위해서 나온 개념으로 보이므로 생략하도록 하겠다.</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: Measures and Metric</li>
+    <li>Lecture 4: Random Network</li>
+    <li>Lecture 5: Small world Network</li>
+    <li>Lecture 6: Scale free Network</li>
+</ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/47/">Network Science - Introduction</a></h1>
     
     
@@ -119,7 +319,7 @@ $(function() {
   </header>
 
 
-  <div class="entry-content"><p>Network Science에 처음 관심을 가지게 된 계기는 <a href="/blog/categories/math-in-internet">인터넷 속의 수학</a>에서 들었던 lecture였다. 내가 예전에 관심있었던 부분 중 하나가 소셜 네트워크, 혹은 다른 형태의 네트워크를 이해하고 그 네트워크를 더 효율적으로 개선시키거나 혹은 그 네트워크에서 무언가 우리가 새로운 방식의 BM을 창출해내는 것이었는데, Network Science는 이런 네트워크들을 이론적으로 이해하고 다양한 모델링 방법과 분석 방법을 제시한다는 점에서 관심이 갔었다. 그러던 중 학교에서 이런 수업이 개설되었기에 수강하게 되었다. 이 수업은 크게 봤을 때 3부분인데, 첫 번째 부분은 네트워크에 대한 기초적인 얘기들과 기본적인 Graph theory 영역이고 두 번째는 기본적인 네트워크 모델링이며 마지막은 네트워크에서 발생하는 Dynamic process에 대한 내용이다. 텍스트북은 Newman의 Networks - An Introduction, Lewis의 Network Science, 그리고 마지막으로 Barrat의 Dynamical Processes on Complex networks 총 세 권이다.</p>
+  <div class="entry-content"><p>Network Science에 처음 관심을 가지게 된 계기는 <a href="/blog/categories/math-in-internet" target="new">인터넷 속의 수학</a>에서 들었던 lecture였다. 내가 예전에 관심있었던 부분 중 하나가 소셜 네트워크, 혹은 다른 형태의 네트워크를 이해하고 그 네트워크를 더 효율적으로 개선시키거나 혹은 그 네트워크에서 무언가 우리가 새로운 방식의 BM을 창출해내는 것이었는데, Network Science는 이런 네트워크들을 이론적으로 이해하고 다양한 모델링 방법과 분석 방법을 제시한다는 점에서 관심이 갔었다. 그러던 중 학교에서 이런 수업이 개설되었기에 수강하게 되었다. 이 수업은 크게 봤을 때 3부분인데, 첫 번째 부분은 네트워크에 대한 기초적인 얘기들과 기본적인 Graph theory 영역이고 두 번째는 기본적인 네트워크 모델링이며 마지막은 네트워크에서 발생하는 Dynamic process에 대한 내용이다. 텍스트북은 Newman의 Networks - An Introduction, Lewis의 Network Science, 그리고 마지막으로 Barrat의 Dynamical Processes on Complex networks 총 세 권이다.</p>
 
 
 <p>네트워크의 종류는 정말 정말 많은데, 그냥 대부분의 관계도가 네트워크로 구성이 가능하고, network science를 사용해 분석이 가능하다. 예를 들어서 논문을 서로 refer하는 citation network를 분석할 수도 있고, 실제 사람들의 social network를 분석하거나 전력망 (power grid)을 네트워크로 생각해 문제를 푸는 것도 가능하다. Web도 hyper link와 page로 이루어진 network고, P2P역시 네트워크이다. 질병 역시 감염자와 비감염자로 판단할 수 있는 네트워크이고 Traffic 역시 네트워크이다.</p>
@@ -133,12 +333,12 @@ $(function() {
 <h5>KAIST Network Science</h5>
 
 
-<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/">카테고리로 이동</a>)</p>
+<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
 
 
 <ul>
-    <li>Lecture 1: <a href="/47">Introduction</a></li>
-    <li>Lecture 2: <a href="/48">Graph Theory</a></li>
+    <li>Lecture 1: <a href="/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: Measures and Metric</li>
     <li>Lecture 4: Random Network</li>
     <li>Lecture 5: Small world Network</li>
@@ -1409,171 +1609,6 @@ End of technical program of Day 2<strong> </strong>
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/38/">LMNN(Large Margin Nearest Neighbors) LMCA(Large Margin Component Anaylsis)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-03T15:21:00+09:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>KNN은 machine learning에서 general하게 많이 쓰이는 알고리듬이다. 이 알고리듬은 아이디어도 매우 간단하고 구현하기도 간단하고 성능도 어느 정도 이상 나오는 꽤나 훌륭한 알고리듬이기 때문이다. <a href="/37" target="new">이전 글</a>에서 distance metric learning의 대략적인 컨셉을 설명했었고, 그 중에서도 optimization을 통해 metric을 learning하는 category에 대해 간략하게 언급했었다. 이 글에서는 그런 알고리듬 중에서 LMNN (Large Margin Nearest Neighbors) 그리고 이 방법의 단점을 보완한 LMCA (Large Margin Component Analysis) 라는 알고리듬을 소개할 것이다.</p>
-
-
-<h5>LMNN - Introduction</h5>
-
-
-<p>먼저 LMNN이라는 아이디어는 2006년 <a class="red tip" title="Advances in Neural Information Processing Systems">NIPS</a>에 발표된 Distance metric learning for large margin nearest neighbor classification이라는 논문에 소개된 기법이다. 이 알고리듬은 distance metric learning에 대해 설명했던 <a href="/37" target="new">이전 글</a>에 잠깐 언급했던 Mahalanobis Metric을 직접 학습하는 알고리듬이다. 이 Metric은 지난 번에 설명했기 때문에 자세한 설명은 생략하도록 하겠다.</p>
-
-
-<p>이 논문에서는 거리가 제곱근 형태가 아니라 제곱 들의 합으로 표현을 했다. 즉, Mahalanobis Metric을 \(D(\vec x_i , \vec x_j )=(\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j )\) 꼴로 표현하게 된다. 혹은 \(D(\vec x_i , \vec x_j )= ||L(\vec x_i - \vec x_j)||^2 \)으로 표현된다.</p>
-
-
-<h5>LMNN - Cost function</h5>
-
-
-<p>이 방법의 핵심 아이디어는, 위에서 표현한 Metric을 평가하는 Cost function을 design하고 이 function을 minimize시키는 Metric을 찾아내는 것이다. 매우 간단한 컨셉이고, 만약 운이 좋아서 optimization 문제가 반드시 하나의 global solution으로 수렴한다는 것이 보장만 된다면 가장 최고의 성능을 낼 수 있을 것이라는 것은 자명한 일이다. (<a href="/31/" target="new">이전에 작성한 글</a>에서 이러한 좋은 문제 중 하나인 convex optimization에 대해 간략하게 언급했었다.) 자, 그러면 이 논문에서 Cost function을 어떻게 정의했는지 한 번 알아보자.</p>
-
-
-<p>$$ \varepsilon (\mathbf L ) = \sum_{ij} \eta_{ij} ||L(\vec x_i - \vec x_j)||^2 + c \sum_{ijl} \eta_{ij} (1-y_{il}) h[ 1 + ||L(\vec x_i - \vec x_j)||^2 - ||L(\vec x_i - \vec x_l)||^2 ] $$</p>
-
-
-<p>이때, 각 notation이 의미하는 바는 아래와 같다</p>
-
-
-<p></p>
-
-<ol>
-    <li>\({(\vec x_i , y_i )}_{i=1}^n\): training set을 의미한다. 벡터 x는 input data를, scalar y는 label을 의미한다. (binary class가 아니어도 상관없다.)</li>
-    <li>\(\eta_{ij}\): \(\vec x_j\)가 \(\vec x_i\)의 target neighbor인가 아닌가를 나타내는 binary variable. 맨 처음 learning할 때 고정되는 값이며 알고리듬이 돌아가는 동안 변하지 않는 값이다.</li>
-    <li>\(y_{ij}\): label \(y_i\)와 \(y_j\)가 서로 일치하는가 하지 않는가를 나타내는 binary variable이다. 역시 변하지 않는다.</li>
-    <li>h(x): hinge function으로, 간단하게 표현하면 \(h(x) = max(0,x) \)이다. 즉, 0보다 작으면 0, 아니면 원래 값을 취하는 함수이다.</li>
-    <li>c: 0보다 큰 임의의 상수로, 끌어당기는 term과 밀어내는 term사이의 trade-off를 조정한다. 보통 cross validation으로 결정한다.</li>
-    <li>Target neighbor: 임의의 \(x_i\)와 같은 label을 가진 데이터들 중에서 가장 가까운 k개의 데이터들을 의미하며 k는 사용자가 세팅할 수 있다</li>
-</ol>
-
-
-<p>뭔가 복잡해보이지만, 일단 간단하게 설명하자면 앞의 항은 같은 label끼리 서로 끌어오는 term이고, 뒷 항은 서로 다른 label끼리 밀어내는 term이다. 이유는 간단한데, 먼저 앞과 뒷항 모두 포함되어있는 \(\eta_{ij}\)는 i와 j가 서로 target data일 때만 해당 항을 남기고, 아니면 0으로 만들어버리기 때문에 이 모든 연산은 target neighbor들에 대해서만 진행이 되게 된다. 따라서 앞의 항은 target neighbor들끼리의 거리를 의미하므로, 이 값을 minimization한다는 것은 서로 같은 label들끼리 최대한 가깝게 모아준다는 의미와 같게 되는 것이다. 그럼 오른쪽 항은? 이 항은 잘 보면 summation factor가 i,j,l인데, 일단 먼저 target neighbor i와 j에 대해서 이와는 다른 label을 가진 (\((1-y_{il})\)가 0이 되지 않는) l들에 대해서 최대한 그 거리를 멀어지게 하도록 하는 항이다. 이 값은 사실 그냥 나온 값이 아니라 아래 식을 통해서 나오게 된 값이다.</p>
-
-
-<p>$$ d(\vec x_i , \vec x_j) + 1 \le d(\vec x_i , \vec x_l) $$</p>
-
-
-<h5>LMNN - Optimization</h5>
-
-
-<p>위의 식에 대해서 간단히 언급을 하자면, 모든 i와 j들에 대해서, label이 다른 l과의 거리보다 label이 같은 데이터들끼리의 거리가 무조건 1만큼은 작아야한다는 식이다. 이 식을 살짝 전개하면 원래 cost function의 오른쪽 항과 같은 모양을 얻을 수 있을 것이다.</p>
-
-
-<p>자! 이제 cost function을 정의했으니 optimize를 해보자. 근데 문제가 하나 있는데, 이 cost function은 <a class="red tip" title="Convex Optimization은 solution이 무조건 하나다. 나중에 블로그에서 자세하게 다뤄보도록 하겠다.">convex</a>가 아니다. 때문에 L에 대해 문제를 해결했을 때 정확한 global minimum을 찾을 수가 없게 된다. 하지만 이 논문은 아주 간단하게 이 문제를 convex 문제로 바꾸게 된다. convex 문제 중에서 semidefinite programming이라는 문제가 있는데 (간단하게 SDP라고 한다) 이 문제는 &#8216;어떤 조건&#8217;을 가장 잘 만족하는 positive semidefinite matrix를 찾는 문제이다. 이 문제에 대해 언급하면 포스트가 너무 길어지니 <a href="http://en.wikipedia.org/wiki/Semidefinite_programming" target="new">위키 링크</a>로 대체하도록 하겠다.</p>
-
-
-<p>그러면 이 문제를 어떻게 SDP로 바꿀 수 있을까? 해결법은 Metric을 L로 표현하는 대신에 M으로 표현하고, 이 M에 대해 문제를 푸는 것이다. 이렇게 표현하게 되면 문제가 아래와 같이 변하게 되며 이는 SDP로 간단하게 해결할 수 있는 문제가 된다.</p>
-
-
-<p>$$ \mathbf {Minimize} \sum_{ij} \eta_{ij} (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) + c \sum_{ij} \eta_{ij} (1-y_{il}) \xi_{ijl} \ \mathbf {subject} \ \mathbf {to:} $$</p>
-
-
-<p style="margin-left:15%"> (1) \( (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) - (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) \geq 1- \xi_{ijl} \)</p>
-
-
-<p style="margin-left:15%"> (2) \( \xi_{ijl} \geq 0 \)</p>
-
-
-<p style="margin-left:15%"> (3) \( \mathbf M \succeq 0 \)</p>
-
-
-<p>여기에서 \(\xi_{ij}\)는 slack variable로, 이전 식의 hinge function과 완전히 같은 동작을 하도록 &#8220;mimick&#8221;을 하는 변수이다. 이 문제는 앞에서 언급한 SDP로 해결할 수 있는 format이기 때문에 이제 이 문제를 해결해서 적절한 \(\mathbf M\)을 찾아내면 우리가 찾고자하는 적절한 Metric을 찾을 수 있게 되는 것이다.</p>
-
-
-<h5>LMNN - Result</h5>
-
-
-<p>자 이제 LMNN의 실제 performance를 measure해보자. 참고로 이 알고리듬은 저자가 직접 버전관리하는 소스코드가 존재한다. <a href="http://www.cse.wustl.edu/~kilian/code/code.html" target="new">링크</a>에서 간단하게 다운로드 받을 수 있다. 이 Metric learning이 well-working하는지 판단하기 위해서 이 논문에서는 총 4개의 알고리듬을 비교한다. (1) Euclidean distance를 사용하는 기존의 KNN (2) Optimization을 통해 얻은 Metric을 사용해 Mahaloanobis distance를 사용한 KNN (3) 앞에서 얻은 Metric을 계산할 때 사용한 Cost function을 가장 최소화시키는 label을 고르는 Energy-based classification (4) Multiclass SVM 이렇게 총 네가지 알고리듬을 사용한다. 그런데, 만약 dimension이 높은 경우에는 위의 Optimization식이 Overfitting이 될 위험성이 존재한다. 따라서 이를 방지하기 위하여 feature가 많은 문제는 PCA를 사용하여 dimension을 낮추는 작업을 하게 되는데, 이 문제가 결국 다음에 설명할 LMCA의 Motive가 된다. 아무튼 이런 방법을 사용하여 얻은 결과는 아래 표와 같다.</p>
-
-
-<p><img src="/images/post/38-1.png" width="600"></p>
-
-<p>대체로 Energy-based classification이 가장 좋은 결과를 보이는 것을 알 수 있으며, 이 논문의 방법을 통해 계산한 Metric이 분명 기존의 다른 방법들보다 더 나은 방법을 제시한다고 할 수 있을 것이다. 그러나 이 방법의 근본적인 문제점이라면 Optimization으로 Metric을 구하기 때문에 Overfitting문제에 매우 취약하다는 것이며, 특히 dimension이 높고 sample개수가 적으면 이 문제가 매우매우 심각해진다. 다만, face, hand-write letter, spoken letter 등등 매우 다양한 데이터셋에 전부 개선된 performance를 보이는 것은 충분히 고무적인 결과라고 할 수 있을 것이다.</p>
-
-
-<h5>LMCA - Motivation</h5>
-
-
-<p>하지만, Feature가 1000단위가 넘어가는 high dimension 상황에서는 문제가 발생할 수 있다. 기본적으로 Optimization 문제라는 것은 언제나 Overfitting issue에서 벗어날 수 없다. 특히 LMNN이 정의한 Optimization문제는 정사각행렬 M을 학습해야하므로, dimension이 높아질수록 Optimization을 통해 찾아내야하는 항이 제곱 스케일로 늘어난다. 즉, 당장 차원이 100단위만 넘어도 찾아내야하는 항의 수가 10000개가 넘어가게 된다는 의미이다. 따라서 우리가 실제 이 문제를 적용하는 경우에, 어쩔 수 없이 dimension reduction technology를 사용할 수 밖에 없어진다. LMNN 논문에서는 PCA를 사용하여 dimension을 낮춘 이후에 Optimization문제를 풀게 되는데, 이 PCA라는 것이 물론 좋고 많은 사람들이 사용하는 dimesion reduction 방법이지만, 이 방법으로 인해 발생하는 오차가 매우 크고 실제로 더 좋은 performance를 낼 수 있음에도 불구하고 그 성능이 크게 저하되는 요인이 된다는 것이 LMCA의 Motivation이다. 실제로 PCA를 사용하게되면 Dominant한 term을 뽑아내기는 하지만 그 dimension이 낮아지거나 혹은 기존에 가지고 있는 input vector들이 bais가 된 경우에는 좋은 결과를 얻지 못할수도 있기 때문에 이 문제는 꽤나 큰 문제가 될 수 있다.</p>
-
-
-<h5>LMCA - Idea</h5>
-
-
-<p>그렇다면 어떻게 PCA등의 별다른 dimension reduction technology없이 Overfitting 문제를 해결할 수 있을까? 사실 이 논문에서 주장하는 내용은 매우 간단하다. 이전 논문인 LMNN에서 찾고자하는 Metric인 L이 dimension을 변화시키기 않는 transformation이었던 것에 반해, LMCA에서는 L을 원래 차원 D에서 더 낮은 차원 d로 보내는 L을 찾겠다는 것이다. 하지만 여기에서 문제가 생긴다. Full rank가 아닌 \( \mathbf M = \mathbf L^top \mathbf L\) 은 이제 더 이상 Semidefinite programming문제가 아니게 된다. 이유는 원래 SDP 문제에서 rank = d라는 조건이 추가되기 때문인데, 이렇게 되면 M이 convex domain이 아니게 되기 때문에 더 이상 이 문제가 convex problem이 아니게 되고, 따라서 이 문제는 더 이상 global optimum으로 수렴하지 않는다!</p>
-
-
-<p>그렇다면 해결책은 없는 것일까? 이 논문에서는 그냥 원래 non convex인 L에 대한 cost function을 그냥 gradient descent method를 사용하여 optimize시킨다. 물론 이렇게 계산된 값은 local optimum이다. 때문에 LMNN이 무조건 global solution을 찾았던 것과 비해서 매우 performance가 떨어질 것 같지만, 저자들은 다음과 같은 2가지 장점이 있기 때문에 오히려 이 방법이 더 performance가 높다고 주장한다. 첫째, 원래 Full rank M을 찾을 때는 unknown component들이 D by D만큼 존재했었지만, 지금은 차원을 더 낮추었기 때문에 찾아야하는 값이 더 적어진다. 마치 Matrix completion의 장점과 비슷한 것이다. 둘째, 원래 LMNN은 Optimization을 할 때 parameter들이 굉장히 많은데 이런 여러 요소 없이 바로 Optimization이 가능해진다는 것이다. 물론 당연히 이 논리의 기본 가정은 high dimension data에 PCA를 사용해 low dimension으로 만들었을 때 이미 information loss가 많이 발생하거나 이미 tranining data에 overfitting되기 때문에 성능에 무조건적인 저하를 불러일으키게 되기 때문에 Optimization을 PCA를 사용하지 않은 Full dimension에 대해서 실행했다는 가정 하에 성립할 것이다.</p>
-
-
-<h5>LMCA - Results</h5>
-
-
-<p>그렇다면 결과를 한 번 확인해보자.</p>
-
-
-<p><img src="/images/post/38-2.png" width="600"></p>
-
-<p>위의 그림은 high dimension dataset에 대한 것이고 아래 결과는 low dimension dataset에 대한 결과이다. 아무래도 high dimension에서는 저자들이 주장한 대로 LMNN에 비해 결과가 많이 개선된 것을 확인할 수 있다. (이 그림에서는 kernelized된&#8230; 즉 non-linear method 역시 함께 evaluation된 결과이기 때문에 LMNN과 비교해야할 대상은 linear method이다) 하지만 low dimension에 대해서는 항상 더 높은 것 만은 아니며, 일부 경우에 대해서는 LMNN이 더 좋은 결과를 보임을 알 수 있다. 즉, 이 방법은 overfitting issue가 발생했을 때 global optimum은 아니지만 그와 유사한 (그러나 절대 같다고 하거나 그와 유사하다고 할 수도 없는) local optimum을 찾는 방법이기 때문에, overfitting issue가 적은 low dimension에서는 LMNN보다 성능이 떨어질 수도 있는 것이다.</p>
-
-
-<h5>Non-linear LMNN, LMCA</h5>
-
-
-<p>지금까지 언급한 방법들은 모두 &#8216;linear&#8217;한 transformation을 찾는 문제였다. 하지만 세상에는 엄청나게 많은 non-linear metric이 존재하며, 분명 linear보다 성능이 더 좋은 non-linear metric을 찾을 수 있을 것이라고 생각할 수 있다. 그렇다면 이 논문들에서 과연 그런 방법을 다루지 않을까? 일단 LMNN은 NIPS에 제출된 원래 논문에는 non-linear problem이 언급이 되어있지않지만, 나중에 GB-LMNN (Gradient Boost LMNN)이라는 방법을 소개하며, 이 방법의 powerful함은 LMNN code에서 직접 확인할 수 있을 것이다. 이 방법은 Gradient Boost라는 방법을 사용하여 non-linear metric을 찾아내는데, 문제는 이 방법이 non-convex하다. 따라서 초기값에 따라서 그 결과가 상이하게 달라지게 되는데, 해당 논문에서는 LMNN을 통해 학습한 L을 초기값으로 사용하여 Optimum값을 찾는 아이디어를 제시해 L의 성능을 개선시킨다고 명시되어있다. 분명 Optimize를 시키기 때문에 본래 값보다는 더 좋은 값으로 수렴할 것이며 성능도 어느정도 올라갈 것이라고 예측이 가능할 것이다. Gradient boost는 regression tree라는 것을 학습하여 non-linear transformation을 찾아내는데, 이 tree의 node개수나 level등등을 어떻게 학습시킬 것이냐에 따라 그 running time과 overfitting issue가 결정되는 듯 하다. 더 자세한 점은 해당 논문을 읽어보기를 권한다.</p>
-
-
-<p>또한 LMCA는 원 논문에 non-linear method까지 언급이 되어있다. 본래 아이디어 자체가 그냥 gradient descent를 사용해서 local optimum L을 찾는 문제이기 때문에 kernel에 대해서도 이 문제를 동일하게 풀 수 있는 듯하다. 다만 그 update rule을 어떻게 결정하느냐의 문제가 있는지 논문에서 cost function의 gradient방향으로 내려가는 것이 올바른 update rule이라는 것을 Lemma를 증명해놓았다. 아무튼 당연한 얘기지만 이 방법이 linear method보다 그 결과가 좋다. 자세한 점은 마찬가지로 해당 논문을 참고하길 바란다.</p>
-
-
-<h5>Conclusion</h5>
-
-
-<p>KNN은 엄청 직관적인 method이지만 분명 powerful하고 easy to implement한 방법이다. 또한 이론적으로 그 bound가 가장 optimal한 case에 bayes risk와 같다는 것이 증명이 되어있기 때문에 사실 굉장히 좋은 방법이라고 할 수 있다. 그러나 실제 우리가 이 방법을 적용하는 대부분의 상황에서는 metric learning이 performance에 크게 영향을 끼칠 수 밖에 없다. LMNN과 LMCA는 Optimization problem을 solve함으로써 상당히 좋은 결과를 얻어낼 수 있는 좋은 Metric learning알고리듬이라고 할 수 있다. 물론 이 방법들에는 overfitting issue가 존재하고, 이 때문에 적절한 상황이 아닌 경우에 특히 high dimension, low sample problem에서 well working하지 않는다는 단점이 존재하기는 한다. 하지만 저자가 구현한 implement하기 좋은 matlab code도 존재하고, 여러모로 괜찮은 방법이 아닌가 하는 생각이 든다.</p>
-
-
-<p>References</p>
-
-
-<ul>
-    <li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006) .InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li>
-    <li>Torresani, L., & Lee, K. (2007). Large margin component analysis. Advances in Neural Information Processing</li>
-    <li><a href="http://www1.cse.wustl.edu/~xuzx/research/publications/gb-lmnn.pdf" target="new">Kedem, D., Xu, Z., & Weinberger, K. (n.d.). Gradient Boosted Large Margin Nearest Neighbors</a></li>   
-</ul>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1590,6 +1625,10 @@ End of technical program of Day 2<strong> </strong>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/48/">Network Science - Graph Theory</a>
+      </li>
+    
+      <li class="post">
         <a href="/47/">Network Science - Introduction</a>
       </li>
     
@@ -1603,10 +1642,6 @@ End of technical program of Day 2<strong> </strong>
     
       <li class="post">
         <a href="/44/">BIG 2014 (2014/4/7 ~ 2014/4/8)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/43/">Coursera Neural Networks for Machine Learning Week4 & 5 - Applications</a>
       </li>
     
   </ul>
