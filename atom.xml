@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-04-17T04:13:50+09:00</updated>
+  <updated>2014-04-22T23:03:33+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,154 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Network Science - Random Network]]></title>
+    <link href="http://SanghyukChun.github.io/50/"/>
+    <updated>2014-04-22T11:37:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/50</id>
+		<content type="html"><![CDATA[<h5 id="50-1-before">들어가기 전에</h5>
+
+
+<p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 가장 기초적인 Network modeling 중 하나인 random network에 대해 다룬다.</p>
+
+
+<h5 id="50-2-why">Why we need network model?</h5>
+
+
+<p>이 글을 포함해 3개의 강의는 모두 네트워크 모델링과 관련된 내용이다. 이 글은 random network, 그리고 다음 글은 순서대로 small world network, 그리고 그 다음은 scale free network에 대해 다루게 된다. 이런 네트워크 모델링을 우리는 왜 알아야할까. 사실 이유는 간단하다. 그냥 네트워크를 사용해 무언가를 분석하는 것이 매우 어렵기 때문이다. 예를 들어서 우리는 실제 social network가 어떻게 구성되어있는지 알지못한다. 만약 우리가 실제 네트워크와 매우 유사한, 그러나 훨씬 간단한 형태의 모델을 만들게 된다면 해당 네트워크에서 발생하게 될 일들을 쉽게 예측할 수 있을 것이다. 이 글에서 다루게 되는 random network는 그러한 네트워크 모델링 중에서 가장 간단한 모델 중 하나이다.</p>
+
+
+<h5 id="50-3-random-graph">Random Graph</h5>
+
+
+<p>Random graph란 어떤 fixed parameter를 가지는 stochastic 모델이다. Notation은 \(G(n,p)\) 로 적게 되는데, n은 vertex의 개수, p는 각각의 vertex pair들이 서로 edge를 가질 independent probability를 의미한다. 즉, 이 network는 확률 p로 인해 edge가 생성되므로 매번 새로 generate할 때 마다 그 결과가 달라지는 stochastic model인 것이다. 따라서 우리가 n개의 vertex와 m개의 edge를 가지는 임의의 network \(G(n,m) \)를 얻게 될 확률은 \(P(G) = p^m (1-p) ^ { {n \choose 2} - m} \) 로 얻을 수 있다. 이러한 모델을 맨 처음 수학적으로 이를 분석했던 사람들의 이름을 따서 Erdös-Rényi model 이라고도 하고 그 degree와 edge의 distribution이 Poisson혹은 Bernoulli 분포를 따르기 때문에 Poisson random graph 혹은 Bernoulli random graph라고 하기도 한다.</p>
+
+
+<h5 id="50-4-meanedgedegree">Mean Edge and Mean Degree in Random Graph</h5>
+
+
+<p>아런 Random graph에서 n과 p가 주어졌을 때, graph가 generate가 될 때마다 항상 edge의 개수는 달라지지만, 이것이 특정 확률을 따르기 때문에 평균 edge의 개수를 계산하는 것이 가능하다. 계산하기 전에 간단하게 생각하면 n개의 vertex에 존재하는 모든 pair들 중 확률 p로 edge를 가지기 때문에 평균 edge의 개수는 모든 pair의 개수에서 edge가 존재할 확률인 p를 곱한 \( {n \choose k} p\) 가 될 것이다. 그렇다면 정말 그런지 확인해보도록 하자. 그러면 먼저 m개의 edge를 가지는 임의의 Graph \(G(m)\) 이 generate될 확률을 구해보자. 이 갚은 바로 위에서 edge가 m개인 graph \(G(m)\) 하나가 표현될 확률을 계산했으므로, 이런 graph의 개수를 count한 후 간단하게 이를 summation하면된다.</p>
+
+
+<p>$$ P(m) = { {n \choose 2}  \choose m} p^m (1-p)^{ {n \choose 2} - m} $$</p>
+
+
+<p>위에서 우리는 m에 대한 확률 분포를 구했기 때문에 m의 평균 값은 간단하게 \(\sum_m mP(m)\) 으로 계산할 수 있다. 그런데 \(m\)의 확률 분호 \(P(m)\)은 \(n\)이 \({n \choose m}\) 이고 \(k\)가 \(m\)인 binomial distribution이다. 또한 우리는 binomial distribution의 mean value가 단순하게 \(np\) 임을 알고 있으므로 평균 값은 아래와 같이 계산할 수 있다. 이에 대한 자세한 설명은 <a href="http://en.wikipedia.org/wiki/Binomial_distribution" target="new">위키피디아 링크</a>로 대체한다.</p>
+
+
+<p>$$ \bar m = \sum_{m=0}^{n \choose 2} m P(m) = {n \choose 2} p $$</p>
+
+
+<p>이 결과는 우리가 처음 예측한 값과 정확히 일치한다.</p>
+
+
+<p>그러면 이제 degree의 평균 값을 구해보자. 그 이전에 이번에는 mean degree가 얼마일지 간단하게 생각해보자. 이때 mean degree라는 것은 결국 한 vertex에서 가지는 평균 edge의 개수를 의미하기 때문에 평균 edge개수인 \({n \choose k}p\)를 vertex pair 개수인 \(n \over 2\)로 나눠준 값인 \((n-1)p\) 가 될 것이라고 예측할 수 있다. 그렇다면 실제로 계산해보자. <a href="http://SanghyukChun.github.io/48#48-7-degree">이전 글</a>에서 이미 우리가 유도했던 것처럼 edge가 \(m\)개 있는 graph의 mean degree는 \(2m \over n\)으로 구할 수 있다. 따라서 평균 degree는 위에서 우리가 edge의 평균 개수를 구한 것 처럼 간단히 구할 수 있다.</p>
+
+
+<p>$$ \bar k = \sum_{m=0}^{n \choose k} {2m \over n} P(m) = {2 \over n} {n \choose 2} p = (n-1)p $$</p>
+
+
+<p>역시 처음에 예측한 값과 일치한다. 참고로 random graph에서 평균 degree는 \(c\)라는 notation으로 표기가 되며, 따라서 \(c=(n-1)p\)이다.</p>
+
+
+<h5 id="50-5-degreedist">Degree Distribution</h5>
+
+
+<p>그렇다면 이번에는 degree의 distribution을 알아보자. 평균 degree의 개수도 물론 중요하지만 실제 degree가 어떻게 분포하고 있는지를 아는 것도 매우 중요하다. 왜냐하면 결국 network의 특성을 이해하기 위해서는 개별 node들이 얼만큼 다른 node들과 연결되어있는지 알아야하며, 이 결과가 네트워크에 어떤 결과를 불러올지 파악하는 것이 매우 중요하기 때문이다. 그렇다면 먼저 간단하게 하나의 vertex가 \(k\)개의 다른 vertex와 연결되어있는 상황이 발생할 확률을 계산해보자. 이때, 당연히 전체 vertex 개수는 \(n\)개 이므로 \(k\)개의 vertex와 연결되어있는 vertex는 나머지 \(n-1-k\) vertex와 연결되어있지 않다. 따라서 임의의 vertex가 \(k\)개의 vertex와 연결되어있을 확률 \(p_k\)는 아래와 같이 계산된다.</p>
+
+
+<p>$$ p_k = { n-1 \choose k } p^k (1-p)^{n-1-k} $$</p>
+
+
+<p>이 결과는 또 binomial distribution이다. 즉, \(G(n,p)\)의 degree distribution은 binomial distribution이라는 것을 알 수 있다. 하지만 이 식은 간단한 근사식을 통해서 더 간단하게 표현하는 것이 가능하다. 대부분의 경우 우리가 관심이 있는 영역은 \(n\)이 엄청나게 큰 network이므로 이런 상황에서 앞 부분의 combination을 근사하고, 그 다음에는 뒷 부분의 \((1-p)^{n-1-k}\)의 log 값을 근사 시켜보자.</p>
+
+
+<p>먼저 \(n-1 \choose k\)를 근사한 결과는 \({n-1 \choose k} = {(n-1)! \over (n-1-k)! k!} \simeq {(n-1)^k \over k!}\) 이다. 이 근사식은 그냥 매우 간단한 근사식이므로 설명을 생략하도록 하겠다. 그렇다면 이제 다음으로 확률의 맨 뒷부분을 근사해보자. 이 값은 먼저 log를 취한 후 log를 근사하여 그 값을 계산한다.</p>
+
+
+<p>$$ \ln[(1-p)^{n-1-k}] = (n-1-k) \ln ( 1- \frac {c} {n-1}) \simeq -(n-1-k) { c \over n-1} \simeq -c $$</p>
+
+
+<p>이 근사식에서 첫 번째 계산식은 \(p = { c \over n-1} \)이라는 이전의 결과를 사용한 것이고 근사하는 부분은 <a href="http://en.wikipedia.org/wiki/Natural_logarithm#Derivative.2C_Taylor_series" target="new">log의 taylor expansion</a>이 \(\ln(x) = (x-1) - {(x-1)^2 \over 2} + {(x-1)^3 \over 3} - &#8230;\) 라는 것을 사용한 것이다. 그 다음 근사는 당연히 n이 k보다 엄청 크다고 가정한 것이다. 자 그 결과는 놀랍게도 \(\ln[(1-p)^{n-1-k}] \simeq -c\) 이다. 즉, \((1-p)^{n-1-k} \simeq e^{-c}\) 라는 사실을 알 수 있다.</p>
+
+
+<p>자 이제 모든 결과를 종합해보면 n이 엄청나게 큰 상황에서 다음과 같은 결과를 얻는다</p>
+
+
+<p>$$ p_k \simeq {(n-1)^k \over k!} p^k e^{-c} ={ (n-1)^k \over k!} ({c \over n-1})^k e^{-c} \simeq e^{-c} {c^k \over k!}$$</p>
+
+
+<p>자, 우리는 n이 매우 크다는 조건 하나를 사용해 근사를 한 결과 Poisson distribution을 얻게 되었다. 즉, n이 매우 큰 \(G(n,p)\)에서 degree distribution은 poisson distribution을 가진다는 사실을 알 수 있다. (사실 글의 처음에서도 말했던 것 처럼 이런 이유로 random network라는 이름은 사실 poisson random graph의 준말이다.)</p>
+
+
+<h5 id="50-6-cluster">Cluster and giant Component</h5>
+
+
+<p>자 그러면 이제 또 중요한 measurement 중 하나인 clustering coefficient를 계산해보자. Random Graph에서 \(c\)는 평균 degree를 의미하기 때문에 이 글에서 clustering coefficient는 \(C\)로 표기될 것이다. 이 clustering coefficent는 내가 이웃한 vertex 두 개가 서로 연결되어있을 확률을 의미한다. 그런데 우리의 graph \(G(n,p)\)의 임의의 vertex pair가 서로 연결되어있을 확률은 언제나 \(c \over n-1 \)이다. 따라서 clustering coefficient \(C\)는 \(c \over n-1 \) 라는 사실을 아주 간단하게 알 수 있다. 즉, 이 식에 따르면 \(n \to \infty\) 가 되고 \(c\)의 값이 fixed 되어있는 graph에서의 \(C\)는 0으로 수렴한다는 사실을 알 수 있다. 그러나 실제 네트워크에서 관찰되는 결과는 mean degree가 fixed되어있더라도 clustering coeficient의 값이 여전히 크게 유지가 된다는 것이다. 이런 특성 때문에 바로 다음 글에서 설명하게 될 small world network의 필요성이 대두된다.</p>
+
+
+<p>아무튼 단순히 clustering coefficient만 계산하는 것은 크게 와닿지 않는다. 구체적으로 이 네트워크에서 giant component라는 것이 존재할 확률이나 실제 존재했을 때 어떤 형태로 존재할지를 예측해보자. 여기에서 giant component란 문자 그대로 네트워크 상에서 존재하는 가장 largest한 component라고 보면 된다. (Component에 대한 설명은 <a href="http://SanghyukChun.github.io/48#48-8-path" taget="new">이전 글</a> 참고) Simple하게 \(p=0\)이면 모든 graph가 disjoint되어있고 giant component라는 것은 존재하지 않는다. 반면 \(p=1\)이면 모든 vertex가 연결되어있고 graph는 vertex의 개수가 \(n\)인 오직 하나의 componet를 가지게 된다. 자 그러면 이제 \(p\)가 0에서 1사이의 값일 때를 생각해보자. 이런 상황에서 giant component가 존재한다고 가정하고, 이 component에 포함되는 vertex의 개수를 \(n_{gc}\) 라고 하자. 이렇다고 가정을 하게 되면 임의의 fraction of nodes가 giant component에 포함이 되지 않을 확률을 \(u\)라고 하면 우리는 이 값이 \(u=1-{n_{gc} \over n}\) 이라는 사실을 알 수 있다. (당연히 \(n_{gc} = n(1-u)\) 이다.) 그렇다면 이제 이 u를 통해 giant component를 분석해보도록 하자.</p>
+
+
+<p>먼저 임의의 vertex \(i\)가 이런 GC에 포함된다고 가정해보자. 그렇다면 이 vertex \(i\)는 vertex \(j\)라는 vertex를 거쳐 GC에 연결되어야한다고 했을 때, \(i\)가 GC에 포함이 되지 않을 확률은 (1) \(i\)와 \(j\)가 연결되어있지 않다: \(1-p\) (2) \(i\)와 \(j\)가 연결되어있으나 \(j\)가 GC에 연결되어있지 않다: \(pu\) 이렇게 총 두 가지 경우 임을 알 수 있다. 따라서 임의의 vertex \(i\)가 임의의 다른 vertex \(j\)를 거쳐 GC에 포함되지 않을 확률은 \(1-p+pu\)이고, 다른 모든 vertex에 대해 이를 확장해보면 다른 vertex가 \(n-1\)개 있으므로 이 확률은 \({(1-p+pu)}^{n-1}\) 임을 알 수 있다. 그런데 이 값은 결국 한 vertex가 GC에 포함될 확률 \(u\)와 같다. 따라서 \(u={(1-p+pu)}^{n-1}\) 이라는 사실을 알 수 있다.</p>
+
+
+<p>자, 그러면 \(p={c \over n-1}\) 이므로 위의 식에 대입하고, log를 근사시키면 아래와 같은 결과를 얻게 된다.</p>
+
+
+<p>$$ \ln u= (n-1) \ln {\left(1-{c \over n-1} (1-u) \right)} \simeq -(n-1) {c \over n-1} (1-u) = -c (1-u) $$</p>
+
+
+<p>따라서 \(u=e^{-c(1-u)}\) 라는 사실을 알 수 있다. 이때 giant component 안에 들어있는 vertex의 개수의 비율을 \(S=1-u={n_{gc} \over n}\) 이라고 정의한다면 식은 이 식은 아래와 같이 적을 수 있다.</p>
+
+
+<p>$$ S=1-e^{-cS} $$</p>
+
+
+<p>작성중</p>
+
+
+<p>CLuster Size Distibution은 </p>
+
+
+<h5 id="50-7-smallcomponent">Small Componets</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="50-8-path">Path Length</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="50-9-problems">Random Graph의 문제점</h5>
+
+
+<p>작성중</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="http://SanghyukChun.github.io/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
+    <li>Lecture 5: Small world Network</li>
+    <li>Lecture 6: Scale free Network</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Network Science - Measures and Metric]]></title>
@@ -24,7 +172,7 @@
 <p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
 
 
-<h5>Why we need measures and metric</h5>
+<h5>Why we need measures and metric?</h5>
 
 
 <p>이건 사실 lecture 내용에는 없는 내용이지만 엄청나게 중요한 내용이라고 내가 판단해서 집어넣은 part이다. 일단 이 lecture에서 다루기만 하는 metric이나 measure들이 엄청나게 많다. 대충 10개는 넘을텐데, 이런 수 많은 것들을 우리가 왜 알아야하느냐? 바로 주어진 임의의 graph를 측정하고 어떤 graph인지 판단할 수 있기 때문이다. 또한 진짜 중요한 목적 중 하나는 어느 vertex가 중요한지 알아내는 것이다. 근데 이 &#8216;중요함&#8217;이라는 것이 정의하기에 따라 달라지기 때문에 각각의 &#8216;중요함&#8217;이 무엇인지 정의하는 방법이 달라지게 되고 그렇기 때문에 이 lecture에서 cover하는 measure와 metric이 많은 것이다. 개인적으로는 그냥 closeness, betweeness, clustering coefficient 정도만 cover하고 끝내고 싶지만 나름 중요한 내용이 많아서 일단 최대한 많이 cover를 할 수 있도록 해야겠다. 아무튼 이런 수많은 metric들을 통해 우리가 알고싶은 것은 그래서 어느 vertex가 진짜 중요한 녀석이고, 나중에 다루게 될 dynamic process에서 어느 vertex를 주목해서 그 vertex에 처리를 해야하느냐 등을 하기 위해서 필요한 과정이다. 따라서 목적에 맞게 사용하는 것이 중요하고, 각각의 metric이 어떤 것을 측정하기 위함인지 이해하는 것이 매우 중요한 것이다.</p>
@@ -194,7 +342,7 @@
     <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: Random Network</li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
     <li>Lecture 5: Small world Network</li>
     <li>Lecture 6: Scale free Network</li>
 </ul>
@@ -207,19 +355,19 @@
     <link href="http://SanghyukChun.github.io/48/"/>
     <updated>2014-04-16T19:39:00+09:00</updated>
     <id>http://SanghyukChun.github.io/48</id>
-		<content type="html"><![CDATA[<h5>들어가기 전에</h5>
+		<content type="html"><![CDATA[<h5 id="48-1-before">들어가기 전에</h5>
 
 
 <p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
 
 
-<h5>Network and Graph</h5>
+<h5 id="48-2-networkandgraph">Network and Graph</h5>
 
 
 <p>Network 혹은 Graph는 vertex와 그 vertex를 잇는 edge로 구성되어있는 일종의 collection이다. vertex와 edge는 node와 link라고 하기도 한다. 인터넷, 전력망, Citation network, social network 등을 예로 들 수 있으며, 요즘 내가 공부하고 있는 <a href="http://SanghyukChun.github.io/blog/categories/neural-network/">artificial neural network</a> 역시 neuron과 synapse로 이루어진 graph이다. 보통 Graph는 mathematical하게 \(G = (V,E)\)로 표현이 된다. V는 vertex를 의미하며 E는 edge를 의미한다. 또한 일반적으로 n과 m이라는 notation도 사용하는데, n은 vertex의 개수, m은 edge의 개수이다. 이때 graph의 종류는 크게 두 가지가 있다. 하나는 directed graph이며 또 하나는 undirected graph이다. directed graph는 edge에 direction이 존재하여 한 vertex에서 다른 vertex를 point하는 형태가 되며, undirected graph는 edge에 특정한 direction이 존재하지 않는다. 또한 directed graph 중 Acyclic directed network 혹은 directed acyclic graph (보통 DAG라고 부른다) 라는 graph가 있는데, 이 그래프는 이름 그대로 cycle이 없는 graph를 얘기하며, 즉, 한 vertex에서 edge를 따라 이동했을 때 그 어떤 vertex, 그 어떤 path를 선택하더라도 자기 자신으로 돌아오지 않는 graph를 의미한다. 또한 graph의 edge는 weight라는 것을 가지고 있는데, 이 값은 edge의 고유한 값으로, 상황에 따라 다르게 해석이 된다. 예를 들어서 internet edge에서는 data flow의 양을 의미하기도 하고, social network에서는 얼마나 두 사람 간의 contact가 많냐 등으로 해석할 수도 있고, 단순한 geometric graph에서는 weight가 두 vertex간의 거리를 뜻하기도 한다. 렉쳐노트에는 weight가 non-negative라고 표현이 되어있지만, 실제 문제들에서는 edge가 negative weight를 가지는 경우도 많다. 물론 이런 경우 계산이 좀 복잡해진다.</p>
 
 
-<h5>Adjacency Matrix</h5>
+<h5 id="48-3-adjacencymatrix">Adjacency Matrix</h5>
 
 
 <p>그런데 이런 graph를 실제 분석하기 위해서는 어떻게 해야할까? 아래와 같은 그래프를 예로 들어보자.</p>
@@ -238,7 +386,7 @@
 <p>또한 위에서 설명했었던 DAG를 adjacency matrix로 표현하면 재미있는 일이 벌어지는데, without loss of generality, 항상 DAG는 triangular matrix로 표현이 된다. Why? 왜냐하면, 아주 간단한 이유인데, DAG에서 어떤 path를 고르더라도 반드시 그 path는 cycle이 아니다. 즉, 다시 자기 자신으로 돌아오지 않기 때문에, 결국에는 outgoing edge가 없는 vertex에 도달하게 될 수 밖에 없다. (당연하다) 그러므로 반드시 최소한 하나 이상의 out degree가 0인 vertex에 도달하게 되고 (degree는 아래에서 더 자세히 설명) 이 말은 곧, column 중 하나는 반드시 zero-vector여야 한다는 소리이다. 이때 만약 out degree가 0인 vertex를 제거해보면 (이에 해당하는 edge도 제거하면) 그 zero vector를 pointing했던 vertex 역시 마찬가지 이유로 outdegree가 0인 vertex가 될 것이다. 이런 식으로 하나하나 제거해나가보면 결국, 반드시 triangular matrix로만 표현이 된다는 것을 알 수 있다. 또한 이런 triangular matrix의 eigenvalue는 diagonal element 들인데, DAG는 cycle이 없기 때문에 모든 diagonal element가 0이 되고 따라서 모든 eigenvalue는 0이 된다. 즉, 어떤 주어진 graph가 DAG인지 아닌지 여부를 판단하기 위해서는 간단하게 모든 eigenvalue들이 0이 되는지만 확인하면 되는 것이다.</p>
 
 
-<h5>Cocitation and Bibliographic Coupling</h5>
+<h5 id="48-4-cocitation">Cocitation and Bibliographic Coupling</h5>
 
 
 <p>Cocitation이란 directed graph의 vertex i와 j를 동시에 point하고 있는 vertex들의 개수를 의미한다. 간단하게 &#8216;co-citation&#8217;이라는 단어 자체가 같이 citation한다는 의미이므로 그 의미 그대로 이해하면 된다. 그런데 이런 경우, 앞서 설명했던 adjacency matrix로 cocitation matrix를 표현하는 것이 가능하다. 그 이유는 vertex i,j를 동시에 point하는 k는 \(A_{ik} A_{jk} = 1\) 이라는 식을 만족하기 때문이다. 따라서 모든 점들에 대해 이런 과정을 반복해보면 \(C_{ij} = \sum_k^n A_{ik} A_{jk} = \sum_k^n A_{ik} A_{kj}^\top \)라는 것을 알 수 있고, 이는 곧 \(C = A A^\top\) 라는 것을 알 수 있다. 이 경우 임의의 matrix와 그 matrix의 transpose를 곱하면 그 결과는 항상 symmetric하다는 것이 잘 알려져 있다. 따라서 이 matrix는 symmetric하다. 이 결과는 당연하다고 할 수 있는데, i와 j에 대해 그 순서가 바뀐다고 해서 citation하고 있는 vertex가 달라지지는 않을 것이기 때문에 항상 \(C_{ij} = C_{ji}\)라는 것을 알 수 있다. 그리고 graph가 symmetric하다는 것은 이 graph가 undirected graph라는 것을 의미하게 된다. 그리고 이 graph는 weighted graph인데, 이 weight는 얼마나 많은 co-citation이 존재하는지를 indicate하는 숫자가 된다. 그리고 \(C_{ii}\) 는 vertex i를 point하는 모든 edge의 개수를 의미한다.</p>
@@ -250,7 +398,7 @@
 <p>이 두 가지 matrix는 directed graph에서의 search algorithm에 사용될 수 있다고 한다.</p>
 
 
-<h5>Bipartite Network</h5>
+<h5 id="48-5-bipartite">Bipartite Network</h5>
 
 
 <p>Hypergraph라는 것이 존재한다. Hyperedge라는게 존재하는 graph를 의미하는데, 이 hyperedge는 하나의 edge가 2개 보다 많은 vertex에 연결되어있는 edge를 의미한다. 이런 hypergraph를 표현하는 방법 중 하나는 bipartite graph를 사용하는 것이다. Bipartite graph는 vertex를 두 그룹으로 나누어 그룹 안에는 edge가 존재하지 않고, 모든 edge가 그룹 사이에서만 존재하는 graph를 의미한다. 즉, 아래 그림에서 까만점을 원래 hypergraph의 vertex, 하연점을 edge로 생각하면 우리가 일반적으로 알고 있는 graph로 hypergraph를 표현할 수 있는 것이다.</p>
@@ -271,7 +419,7 @@
 <p>이때, i와 j가 같은 group k에 존재한다고 했을 때 우리는 \(B_{ki} B_{kj} = 1\)이라는 것을 알 수 있다. 따라서 i와 j가 몇 개의 같은 그룹에 속해있는지를 indicate하는 P는 \(P_{ij} = \sum B_{ki} B_{kj} = \sum B_{ik}^\top B_{kj} \) 이며, 따라서 \(P = B^\top B\) 라는 것을 알 수 있고, \(P_{ii} = \sum B_{ki}^2 = \sum B_{ki}\) 라는 것을 알 수 있다. 따라서 \(P_{ii}\)는 vertex i가 속해있는 모든 group의 개수를 의미하게 된다.</p>
 
 
-<h5>Tree and Planer Network</h5>
+<h5 id="48-6-tree">Tree and Planer Network</h5>
 
 
 <p>Tree는 connected, undirected network의 일종으로, closed loop이 존재하지 않는 graph를 의미한다. 이 경우, 다시 말해서 parent가 단 하나만 존재하는 graph가 tree이며, 이 때문에 그 어떤 vertex pair를 고르더라도 그 사이를 연결하는 optimal path는 단 하나밖에 존재하지 않는다. 또한 n개의 vertex를 가지고 있는 tree의 edge개수는 반드시 n-1개이다.</p>
@@ -283,7 +431,7 @@
 <p>그런데 일반적인 graph가 planar인지 아닌지 어떻게 판단할 수 있을까? <a href="http://en.wikipedia.org/wiki/Kuratowski's_theorem" target="new">Kuratowski&#8217;s theorem</a>이라는 것이 있다. 모든 non-planar graph는 적어도 한 개 이상의 subgraph가 K5혹은 UG의 expansion이라는 theorem인데, 이를 통해 우리는 간단히 graph의 subdivision을 구해서 이 graph가 planar인지 아닌지 여부를 판단할 수 있다.</p>
 
 
-<h5>Degree</h5>
+<h5 id="48-7-degree">Degree</h5>
 
 
 <p>Degree는 vertex i와 연결된 모든 edge의 개수를 의미한다. notation은 \(k_i\)로 표현되며, \(k_i = \sum_j^n A_{ij}\) 이며, \(m = \frac {1} {2} \sum_i^n k_i = \frac {1} {2} \sum_{ij} A_{ij}\) 라는 것을 알 수 있다. degree의 평균은 c로 표현하는데, \(1 \over n \sum_i^n k_i\) 이며, 이 값은 곧 \(c = 2m \over n\)이다.</p>
@@ -307,7 +455,7 @@
 <p>$$ c = \frac {m} {n} $$</p>
 
 
-<h5>Path and component</h5>
+<h5 id="48-8-path">Path and component</h5>
 
 
 <p>Path는 모든 consecutive pair가 서로 connected edge의 sequence로 나태어지는 vertex들의 sequence를 의미한다. 즉, 주어진 vertex set을 순서대로 살펴보게되면 각 consecutive vertex pair 사이에는 edge가 존재하는 vertex set을 path라고 하는 것이다. 그냥 우리가 알고 있는 그 path를 수학적으로 정의한 것에 불과하니 넘어가도 그만이다. Path의 길이는 이 lecture는 path기 traversed한 edge의 개수로 정의하는데, 개수가 아니라 그 edge들의 weight들의 summation으로 일반적으로 정의한다.</p>
@@ -337,7 +485,7 @@
 <p>Independent 혹은 disjoint path라는 것도 정의할 수 있는데, edge independent는 두 개의 path가 서로 공유하는 edge가 없는 경우이며, 당연히 vertex independent는 공유하는 vertex가 없는 경우를 의미한다. vertex indep이면 edge indep하지만 그 반대는 항상 성립하는 것은 아니다. 이 때 given vertex pair 사이에 존재하는 모든 independent path의 개수를 connectivity로 정의할 수 있다. 이 값은 두 vertex가 얼마나 많은 connectivity를 가지고 있는지, 혹은 그 둘 사이의 bottleneck이 얼마나 될지를 판단할 수 있는 지표가 된다.</p>
 
 
-<h5>Cut sets</h5>
+<h5 id="48-9-cutset">Cut sets</h5>
 
 
 <p>cut set은 그에 속하는 vertex 혹은 edge등을 제거했을 때 특정한 vertex들의 pair가 disconnected되는 set을 의미한다. 또한 minimum cut set은 그런 cut set 중에서 가장 작은 element를 가지는 cut set을 의미한다.</p>
@@ -349,7 +497,7 @@
 <p>또한 두 vertex사이의 max flow라는 것을 edge-independent path의 개수 곱하기 capacity로 정의할 수 있는데, 이런 max flow를 정의했을 때, max-flow/min-cut theorem에 따르면 vertex pair의 maximum flow는 항상 minimum cut set와 single path의 capacity의 곱과 같다고 한다. 이때 undirected graph에 대해서 edge connectivity와 minimum edge cut set의 size와 maximum flow의 크기가 같다는 것이 증명될 수 있다.</p>
 
 
-<h5>Graph Laplacian</h5>
+<h5 id="48-10-laplacian">Graph Laplacian</h5>
 
 
 <p>어떤 commodity 혹은 substance의 flow가 어떤 비율로 흘러가느냐에 따라 Diffusion이라는 것을 정의할 수 있다. 약간 복잡한 얘기인데, 약간 불필요해보이기도 하고 복잡해서 <a href="http://en.wikipedia.org/wiki/Laplacian_matrix#Random_walks_on_graphs" target="new">링크</a>로 대체하겠다. 링크에서도 나오듯 결국에는 Random walk를 정의하기 위해서 나온 개념으로 보이므로 생략하도록 하겠다.</p>
@@ -367,7 +515,7 @@
     <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: Random Network</li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
     <li>Lecture 5: Small world Network</li>
     <li>Lecture 6: Scale free Network</li>
 </ul>
@@ -401,7 +549,7 @@
     <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: Random Network</li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
     <li>Lecture 5: Small world Network</li>
     <li>Lecture 6: Scale free Network</li>
 </ul>
@@ -493,7 +641,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[BIG 2014 - 1일차 세션들]]></title>
+    <title type="html"><![CDATA[BIG 2014 세션들]]></title>
     <link href="http://SanghyukChun.github.io/45/"/>
     <updated>2014-04-09T10:45:00+09:00</updated>
     <id>http://SanghyukChun.github.io/45</id>
@@ -2113,85 +2261,6 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
 
 <p>등의 question 들이 있을 수 있으며 이와 관련된 많은 연구가 활발하게 진행되고 있다고 한다.</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[인터넷 속의 수학 - How does Netflix recommend movies? (1/2)]]></title>
-    <link href="http://SanghyukChun.github.io/30/"/>
-    <updated>2013-11-27T15:17:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/30</id>
-		<content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
-
-
-<h5>Introduction</h5>
-
-
-<p>Netflix라는 미국의 DVD rental 업체가 있다. <a href="http://SanghyukChun.github.io/21" target="new">이전 포스트</a>에서 다뤘던 기업 중에 하나인데, 다시 한번 간략하게 설명을 하자면 Netflix는 미국의 온라인 DVD rental 업체이다. 1997년 시작한 DVD rental business이며 초기 BM은 간단했다. 한달에 고정적인 비용을 내고 video나 dvd를 빌릴 수 있도록 하며 번거로운 연체료가 없는 모델이었다. 이렇게 하면 return률이 감소하는 단점이 있는데 이런 단점을 새로운 dvd를 빌리려면 다시 return해야 빌릴 수 있는 rule을 만들어 크게 성공하였다. <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788963708041&orderClick=LAH&Kc" target="new">디멘드</a>를 읽어보면 이에 대해서는 자세히 알 수 있을 것이다. 이후 2007년에 <a class="red tip" title="internet 상에서 VOD감상이 가능하도록 하는 서비스">VOD(video on demand)</a> service를 시작하였고, 2008년 9 million이던 user가 VOD 이후 30 million으로 폭증하였다. 현재 미국 traffic 25%는 Netflix VOD 때문에 발생할 정도로 거대한 기업이 되었다. 이렇게 Netflix가 크게 성장하게 된 배경에는 Recommendation system이 존재하는데, Netflix의 추천 시스템은 User prior video history를 기반으로 새 영화를 추천하고 사용자들이 더 다양하고 많은 비디오를 빌려볼 수 있도록 유도하고 있다. 이런 추천시스템은 Amazon, Youtube, GeoLife in MS 등도 적용하고 있는 많은 기업들에게 중요하게 인식되고 있는 시스템이다.</p>
-
-
-<p>잠시 본 글로 넘어가기 이전에 Recommendation, 혹은 추천이라는 문제에 대해서 잠시 생각해보고 넘어가보자. 세상에는 정말 많은 Recommendation problem이 존재한다. 정말 간단한 현실 속의 예를 들어보자면 소개팅을 예를 들 수 있다. 소개팅을 주선해 줄 때 어떤 상대를 소개시켜주는 것이 가장 적절할까? 가만 생각해보면 소개팅을 상대방과 잘 맞을 것으로 예상되는 사람을 &#8216;추천&#8217; 해주는 문제로 변경해서 해결해 볼 수 있다. 예를 들어서 내가 소개팅을 시켜주려는 상대가 이전에 A라는 타입을 좋아했었다면 이번 소개팅에서도 A 타입을 추천해주는 방식으로 문제 해결이 가능한 것이다. 이런 것이 일종의 recommend question이다.</p>
-
-
-<p>스포츠를 좋아하는 사람들을 위해 다른 예시를 들어보자면, 야구에서도 추천 문제로 생각할 수 있는 경우가 존재한다. 예를 들어서 현재 대타를 내세워야하는 상황이라고 생각해보자. 감독이 이런 중요한 순간에 A, B, C 타자 중 어떤 타자로 교체할지 decision making을 하는 것도 일종의 recommend question으로 생각이 가능하다. 예를 들어서 과거 대타 성공률을 기준으로 recommend를 하거나 아니면 출장 경기 기준 혹은 최근 몇 경기 실적 등으로 판단할 수가 있는 것이다.</p>
-
-
-<p>이런 Recommendation problem은 Machine Learning 분야 중 굉장히 각광받고 주목받는 영역 중의 하나이다. 이 글에서는 ML의 컨셉이란 무엇인지에 대해 간략하게 다루고, 이런 recommend problem이 ML에서 어떤 positioning을 지니는지에 대해 얘기를 할 것이다.</p>
-
-
-<h5>Machine Learning</h5>
-
-
-<p>Machine Learning이란 무엇인가? 이 블로그에서 다뤘던 <a href="http://SanghyukChun.github.io/blog/categories/machine-learning" target="new">수 많은 글들</a>이 Machine Learning에 대해 다루고 있지만, 역시 간략하게 다시 언급을 하자면 Machine Learning은 Data로 부터 system을 구성하는 것이라고 할 수 있다. 위키피디아의 설명을 참고하자면 <a href="http://en.wikipedia.org/wiki/Machine_learning" target="new">&#8216;Machine learning, a branch of artificial intelligence, concerns the construction and study of systems that can learn from data.&#8217;</a> 라고 한다.</p>
-
-
-<p>이해를 돕기 위해 사람이 새로운 정보를 습득하는 과정에 대해서 생각해보자. 학교에서 새로운 지식을 배울 때, 우리는 수업과 책을 읽고 정보를 습득한다. 그리고 내가 제대로 배웠는지 판단하기 위해서 시험을 치고 그 결과에 따라서 이 정보를 잘 습득했다, 혹은 그렇지 못했다를 판단할 수 있는 것이다. 이때 공부를 위해서 sample exam을 계속 치면서 자신의 이해도를 판단하고 자신의 공부 방법을 개선해서 더 나은 학습을 하는 것이 가능하다. (시험을 수능, sample exam을 모의고사라고 생각하면 이해가 빠를 것이다)</p>
-
-
-<p>Machine Learning도 크게 다르지 않다. 예를 들어 spam filter를 구성하는 ML algorithm을 작성한다고 생각해보면, 이 algorithm을 사용하는 system은 사용자가 spam mail이라고 report한 기존의 정보들을 습득하고 그 정보를 기반으로 새로운 email이 spam인지 아닌지 판별을 하게 된다. 이때 제대로 판단을 했느냐 하지 못했느냐로 해당 알고리듬이 얼마나 우수한지 판별할 수 있을 것이다. 사람으로 비유를 하자면 이 과정은 수능을 쳐서 자신이 얼마나 공부했는지를 판별하는 과정과 유사하다. 알고리듬의 개선을 위해서 지속적으로 test set을 통해 알고리듬의 변수들을 조정하여 더 나은 알고리듬을 만들어낼 수 있는데, 이 과정은 사람이 모의고사로 공부를 하는 과정과 유사하다.</p>
-
-
-<p>이렇듯 Machine Learning에서 중요한 것은 system을 학습시키는 traing data가 존재하며, 해당 data를 기반으로 system이 구성이 된 이후 training data가 아닌 <a class="red tip" title="test data라고 한다">새로운 data</a>를 사용해 맞는 결과인지 아닌지를 확인하고 이 정보를 feedback해 현재 알고리듬을 개선한다. 즉, tranining data를 사용해서 ML algorithm에서 사용할 model과 rule을 만들고 test data를 사용해 해당 algorithm의 우수성을 판단하고 system을 개선시키는 것이 Machine Learning의 기본 컨셉이다.</p>
-
-
-<p>그렇다면 왜 이제와서 Machine Learning인가? 최근 ML이 꽤 hot한 field로 주목받고 있지만, 사실 ML자체는 컨셉이 처음 나온지 벌써 <a class="red tip" title="처음에는 AI(인공지능)의 해결책으로 제시되었던 컨셉이었다.">2-30년이 된 생각보다 오래된 학문</a>이다. 이런 현상이 일어나게 된 것에는 흔히 말하는 Big data의 등장이 있다. Big data가 등장함으로 인해 ML에서 가장 중요한 data가 그야말로 엄청나게 많아지고 또한 접근성도 좋아지면서 이를 통해 의미있는 무언가를 찾아내기 용이해졌다. 이런 데이터를 통해 새로운 information을 도출할 수 있다면 분명 여러 분야에서 큰 도움이 될 것으로 예상할 수 있을 것이다. 이런 motivation으로 최근 ML이 크게 각광받고 있는 상황이며 흔히 말하는 빅데이터가 사실은 ML을 의미하는 경우도 많다. 이 글에서 얘기하게 될 Netflix는 ML과 Big Data의 가장 훌륭하고 성공적인 realistic한 BM example로 손꼽히고 있다.</p>
-
-
-<h5>Recommendation Problem in Netflix</h5>
-
-
-<p>사용자의 과거 영화 열람 기록을 기반으로 영화를 추천하기 위해서는 이 문제를 풀이가 가능한 형태로 바꾸는 과정이 먼저 필요할 것이다. 여러 방법이 있을 수 있겠지만, 여기에서는 간단한 하나의 Matrix로 문제를 바꾸어서 생각해보자.</p>
-
-
-<p><a align="center" href="http://www.codecogs.com/eqnedit.php?latex=movie.&space;{\begin{matrix}&space;1&space;&&space;2&space;&&space;3&space;&&space;4&space;&&space;5&space;&6&space;&&space;7&space;&&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&&space;5&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;*&space;&&space;2&space;\\&space;*&space;&&space;3&space;&&space;5&space;&&space;1&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;3&space;\\&space;4&space;&&space;1&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;3&space;&&space;2&space;\\&space;5&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;2&space;&&space;3&space;&&space;*&space;&&space;*&space;\\&space;*&space;&&space;2&space;&&space;4&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;1&space;&&space;2&space;\\&space;5&space;&&space;*&space;&&space;*&space;&&space;5&space;&&space;4&space;&*&space;&&space;*&space;&&space;4&space;\\&space;1&space;&&space;*&space;&&space;5&space;&&space;2&space;&&space;3&space;&1&space;&&space;5&space;&&space;3&space;\\&space;*&space;&&space;3&space;&&space;2&space;&&space;1&space;&&space;4&space;&&space;*&space;&&space;*&space;&&space;*&space;\\&space;\end{bmatrix}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?movie.&space;{\begin{matrix}&space;1&space;&&space;2&space;&&space;3&space;&&space;4&space;&&space;5&space;&6&space;&&space;7&space;&&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&&space;5&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;*&space;&&space;2&space;\\&space;*&space;&&space;3&space;&&space;5&space;&&space;1&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;3&space;\\&space;4&space;&&space;1&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;3&space;&&space;2&space;\\&space;5&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;2&space;&&space;3&space;&&space;*&space;&&space;*&space;\\&space;*&space;&&space;2&space;&&space;4&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;1&space;&&space;2&space;\\&space;5&space;&&space;*&space;&&space;*&space;&&space;5&space;&&space;4&space;&*&space;&&space;*&space;&&space;4&space;\\&space;1&space;&&space;*&space;&&space;5&space;&&space;2&space;&&space;3&space;&1&space;&&space;5&space;&&space;3&space;\\&space;*&space;&&space;3&space;&&space;2&space;&&space;1&space;&&space;4&space;&&space;*&space;&&space;*&space;&&space;*&space;\\&space;\end{bmatrix}" title="movie. {\begin{matrix} 1 & 2 & 3 & 4 & 5 &6 & 7 & 8\end{matrix}} \\ \left\{\begin{matrix} user 1 \\ user 2 \\ user3 \\ user4 \\ user5 \\ user6 \\ user7 \\user8\, \end{matrix}\right. \begin{bmatrix} 3 & 5 & * & 4 & 1 &* & * & 2 \\ * & 3 & 5 & 1 & 2 & * & * & 3 \\ 4 & 1 & * & 4 & 1 &* & 3 & 2 \\ 5 & 2 & * & * & 2 & 3 & * & * \\ * & 2 & 4 & 2 & * & * & 1 & 2 \\ 5 & * & * & 5 & 4 &* & * & 4 \\ 1 & * & 5 & 2 & 3 &1 & 5 & 3 \\ * & 3 & 2 & 1 & 4 & * & * & * \\ \end{bmatrix}" /></a></p>
-
-<p>위의 matrix에서 각각의 element는 user가 movie를 rating한 결과를 의미하고 각 column은 하나의 movie를 의미하고 각 raw는 user를 의미한다고 생각해보자. 다시 말해서 맨 처음 element는 1번 user가 1번 영화에 별점을 3점을 줬다는 것을 의미한다고 생각해보자. 마찬가지로 8번 user는 4번 영화에 1점을 준 것이라고 생각할 수 있을 것이다. *은 아직 영화에 평점을 주지 않았다는 것을 의미하고, 우리의 목표는 평점이 주어지지 않은 영화에 user가 과연 평점을 어떻게 매길까를 최대한 결과와 비슷하도록 예측을 하는 것이다. (이 Matrix를 Netflix Matrix라고 하자, 참고로 이 Matrix의 크기는 user가 480,000명, movie가 18,000개 존재하는 엄청나게 큰 Matrix이며 우리가 알고 있는 데이터는 이 중에서 1% 밖에 되지 않는다고 한다.)</p>
-
-
-<p>즉, 영화 recommendation 문제는 일부 element가 소실되어 있는 matrix의 원본을 복원하는 recovery문제로 바꾸어서 생각할 수 있는 것이다. 이제 Unknown data를 알아내기 위해 Machine learning algorithm이 필요한 것이다. 주어진 data pattern에서 알려지지 않은 새로운 데이터를 추측하는 것이니 이 역시 ML문제라고 생각할 수 있는 것이다.</p>
-
-
-<p>당연한 얘기지만 접근 방법은 무수히 많을 것이다. 그렇다면 여기에서 궁금증이 생기는데, 과연 그 수많은 알고리듬 중 어느 알고리듬이 우수한지 어떻게 평가할 수 있을까? 여러 algorithm 중에서 가장 좋은 system을 선택하기 위한 evaluation이 필요한 것이다. 실제 정보와 차이를 기반으로 평가를 할 수도 있지만, 일일이 그렇게 평가하는 것은 꽤 어렵기 떄문에 RMSE(Root Mean Squared Error)를 사용한다. RMSE는 \(\sqrt{MSE} = \sqrt{\frac 1 n \sum_{i=1}^n ( \hat{X_i}-X_i )^2}\) 로 표현이 되는데, 다시 말해서 전체 평균과 각각의 정보가 얼마나 많이 차이가 나는가를 평가하는 것이다. 당연히 RMSE는 작을수록 좋고 이 알고리듬을 evaluation하기 위해서 알고리듬의 결과로 나온 predicted result를 ground truth label과 비교하는 것이다.</p>
-
-
-<h5>Netflix Prize</h5>
-
-
-<p>Netflix는 자체 추천 알고리듬을 이미 가지고 있었지만, Netflix prize라는 것을 만들어서 이미 가지고 있는 알고리듬을 개선시키고자 하였다. 문제는 간단했다. 현재 Netflix의 recommend system의 RMSE를 10% 가량 개선시킬 수 있느냐? 문제가 2006년 10월에 공지되었으니 알고리듬은 그 당시를 기준으로 평가를 하였다. 이 prize를 위해서 1995 ~ 2005년 동안의 data를 사용해 Training set 100 million (책), probe set 1.4 million (문제집), quiz set 1.4 million (모의고사), test set 1.4 million (수능) 만큼의 data를 제공하였는데 이 정도의 데이터는 Personal Computer에서 돌릴 수 있을만큼 정도의 Data set이었다. 개발자들이 자신의 알고리듬을 평가하기 위해 하루에 한 번 정도 (Maximum 1번) Quiz set에 내 algorithm을 적용시켜 RMSE를 알 수도 있었다. ML 기법을 적용시키고 실제 RMSE를 개선시키는 것이 이 상의 목적이었고 상금은 한화로 약 10억원정도의 금액이었다.</p>
-
-
-<p><p>그렇다면 과연 이 문제가 10억 이상의 가치가 있었는가라는 질문이 생길 수 있는데, 결론적으로만 말하면 그렇다고 대답할 수 있다. 일단 RMSE의 값을 0.01만 감소시켜도 top 10 recommendation이 달라질 정도로 이 값을 바꾸는 것은 실제 Netflix에 크게 영향을 미칠 수 있다. 또한 문제가 10억원을 내걸 정도로 꽤나 어려운 문제였는데, 이 문제가 완전히 풀리는데 3년이라는 시간이 걸렸으니 결코 쉬운 문제는 아니었던 것이다. 본래 Netflix가 가지고 있던 알고리듬은 Cinemath라는 고유 알고리듬이었는데, 이 알고리듬은 벌써 0.9514 RMSE를 가지고 있었다. 이 값의 10%를 개선하려면 RMSE가 0.8563보다 작은 알고리듬을 개발해야하는데, 아무 사전 지식이 없었던 참여자들이 Cinemath를 beating하는 데에 (따라잡는 데에) 겨우 1주일이 걸렸으며, 8.26%를 beating하는 데에도 겨우 10개월이라는 시간이 걸렸다. (team BellKor, 2007) 첫 해에 결국 8.43%의 결과를 달성했으며 이 값만 봐서는 정말 금방 마무리 될 것 처럼 보였으나&hellip; 0.8616까지 도달하는건 1년이 더 걸리고 (2008년) 결국 당시 leading team이던 BellKor와 BigChaos라는 팀이 결합해서 2009년 6월에 10%에 도달할 수 있었다. 여기까지 도달하는 데에 3년이라는 시간이 걸린 셈이다.
-<p>Netflix prize는 총 5000개 이상의 팀이 도전했고 quiz set이 총 44,000 번 test되었다. 가장 먼저 10%를 달성한 팀은 방금전 설명한 BellKor, BigChaos 그리고 Pragmatic Theory 세 팀의 연합 팀이었는데, 10% 달성 이후 30일의 여유 기간에서 Ensemble이라는 다른 팀이 또 10%를 달성하게 되었다. 최종 평가를 위해 알고리듬을 돌려본 결과 두 팀의 RMSE값이 같았는데, BellKor, BigChaos, Pragmatic Thoery 연합팀의 알고리듬이 20분 더 빨라서 결국 상금은 이 팀이 가져가게 되었다.</p>
-<h5>Key ideas in the winner of the prize</h5>
-<p>사실 10%를 달성하기 위한 마지막 1%에는 정말 어마어마한 efforts를 들이부어서 algorithm을 tuning한 결과이다. 하지만 10%의 performance 중 8~9% 정도의 performance improvement를 위해서는 몇 개 안되는 key idea들만을 사용해서 충분히 그 결과를 얻어낼 수 있다. 이 글에서는 크게 두 개의 아이디어를 소개할 예정이다. 하나는 Neighborhood Method이고, 또 하나는 Matrix Factorization이다.</p>
-<p>Neighborhood Method는 각각의 영화들이 얼마나 연관성이 있으며 user끼리는 어떤 연관성이 있는가에 대한 질문에서 시작된 알고리듬이며, 방금 말한 영화 혹은 사용자 간의 유사성을 통해 사용자의 결과를 예측한다. 만약 Machine Learning 중 Clustering에 관심이 있다면 collaborative filtering과 비슷하다고 느낄텐데, 사실 거의 같은 알고리듬이라고 생각하면 된다. 이 알고리듬은 사용자들을 그룹핑하고 (pair를 만들고) 그 그룹 안에 속한 유저가 내린 rating이 다른 user와 얼마나 비슷한지 혹은 다른지 (즉 상관도가 얼마나 있는지) 측정하고 그 측정 값을 기반으로 추천을 하는 알고리듬이다. 즉, 이전에 봤었던 Netflix Matrix에서 비어있는 entry를 그 주변 entry 들의 값을 보고 복구하는 방법이라고 생각할 수 있다.</p>
-<p>컨셉만 놓고 비교하자면 Neighborhood Method가 훨씬 간단하지만 Matrix Factorization는 이보다 더 강력한 성능을 자랑한다. 다른 알고리듬 없이 이 알고리듬만 잘 구현한다면 기존 Netflix의 성능을 8-9% 정도 개선하는 것이 가능하다. 이 알고리듬의 기본 아이디어는 크게 어렵지 않다. 이 알고리듬이 기본적으로 사람들의 type 혹은 class가 생각보다 많지 않다는 것을 가정한다. 즉, drama를 얼마나 좋아하느냐, action을 얼마나 좋아하느냐 등등의 요소들이 각 유저들의 rating을 결정한다는 의미이다. 만약 전체 점수를 S라고 하고 각 factor를 fi 라고 하고 각각의 factor마다 개인이 가지는 가중치를 ai 라고 가정하자. 그리고 전체 n개의 factor가 있다고 한다면, 한 사람이 rating하게 될 점수의 예상치를</p>
-$$ S = \sum_{i}^{n} {a_i * f_i} $$
-<p>로 표현할 수 있을 것이다. 이런 몇 개의 basic classes의 combination으로 user의 rating이 표현이 될 수 있다면, Basic한 몇 개의 요소로 rating이 결정된다 라고 설명할 수도 있으며 약간 수학적으로 설명을 하자면 Netflix Matrix가 몇 안되는 factor들을 통해 표현할 수 있다는 의미가 되므로 Netflix Matrix가 low rank를 가지고 있다라고 표현할 수 있는 것이다. 이 statement가 Matrix Factorization algorithm의 기본 가정이다.</p>
-<img src="http://SanghyukChun.github.io/images/post/30-1.png" width="400">
-<p>이 알고리듬의 목표는 각각의 &lsquo;class i of ratings&rsquo; 를 알아내는 것이다. 이 알고리듬이 실제 의미가 있기 위해서는 Netflix Matrix에서 알고 있는 데이터가 어느 정도 많아야 한다. 실제로 해당 decomposed 된 matrix에 들어있는 entry보다는 많은 데이터를 알고 있어야 하는데, 위의 그림에서 우리는 18,000개의 영화와 480,000명의 유저의 정보를 2개의 class로 표현했으므로 우리가 이미 알고 있는 1%의 정보를 사용하면, 총 48000 * 18000 * 0.01개, 약 8백만개 정도의 데이터를 사용해서 2 * 48000 + 18000 * 2 개, 즉 13만 2천개의 entry를 알아내야 한다. 8백만개의 정보에서 13만 2천개의 정보를 뽑아내는 것은 데이터의 양이 충분하다고 할 수 있을 것이다. 물론 지금은 rank가 2이라고 가정했으므로 2를 곱했고 13만 2천이라는 숫자를 얻게 되었지만, 실제로는 이보다는 더 많은 rank를 가졌다고 가정하고 때문에 더 많은 정보를 알아내야하기는 하지만, 그래도 8백만개에 비하면 충분히 작은 숫자가고 할 수 있을 것이다.</p>
-<p>이 이외에도 다양한 아이디어가 있는데 예를 들어 Implicit feedback 아이디어는 사용자가 영화를 자주 봤음에도 불구하고 rating을 하지 않은 경우에 대해서 Netflix Matrix에 반영되지 않은 implicit한 data까지 사용해서 rating을 예측하는 아이디어이며, Temporal dynamics 아이디어는 Netflix Matrix가 불변하는 static한 Matrix가 아니라 실제로는 사람마다 영화 취향이 바뀔 수 있고 매번 유행하는 영화가 바뀌는 등 temporal하게 봤을 때 dynamic한 matrix라고 가정하고, 시간 축 상에서 entry들이 변화하는 양을 measure하여 이를 rating에 반영하는 아이디어이다. 이 밖에도 다양한 아이디어들이 있고 이런 추가적인 아이디어은 실제 8~9% 이상의 무언가를 달성하기 위한 알고리듬 튜닝에 쓰였다고 한다.</p>
-<p>이상으로 Netflix prize와 실제로 그 목표를 달성한 알고리듬의 brief한 소개를 마치도록 하겠다. 이보다 더 자세한 내용은 두 번째 글에서 다루도록 하겠다</p></p>
 ]]></content>
   </entry>
   

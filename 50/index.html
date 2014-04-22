@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Network Science - Random Network - README</title>
+  <meta name="author" content="Sanghyuk Chun">
+
+  
+  <meta name="description" content="2014년 KAIST Network Science 수업 Random Network 내용 요약">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://SanghyukChun.github.io/50">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+	<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+
+<script>
+$(function() {
+	$('.tip').attr('data-toggle','tooltip');
+	$('.tip').attr('data-placement','top');
+	$('.tip').tooltip();
+});
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42711199-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=182012898639519";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+  
+  <div id="main">
+  	<header role="banner"><hgroup>
+  <h1><a id="blog-title" href="/">README</a>
+  
+    <span>&nbsp;&nbsp; SanghyukChun's Blog</span>
+  
+  </h1>
+</hgroup>
+
+</header>
+  	<nav role="navigation"><ul class="main-navigation list-inline">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="http://sanghyuk.kaist.ac.kr/aboutMe/">About Me</a></li>
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+
+</nav>
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Network Science - Random Network</h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-22T11:37:00+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h5 id="50-1-before">들어가기 전에</h5>
+
+
+<p>이 글은 <a href="/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 가장 기초적인 Network modeling 중 하나인 random network에 대해 다룬다.</p>
+
+
+<h5 id="50-2-why">Why we need network model?</h5>
+
+
+<p>이 글을 포함해 3개의 강의는 모두 네트워크 모델링과 관련된 내용이다. 이 글은 random network, 그리고 다음 글은 순서대로 small world network, 그리고 그 다음은 scale free network에 대해 다루게 된다. 이런 네트워크 모델링을 우리는 왜 알아야할까. 사실 이유는 간단하다. 그냥 네트워크를 사용해 무언가를 분석하는 것이 매우 어렵기 때문이다. 예를 들어서 우리는 실제 social network가 어떻게 구성되어있는지 알지못한다. 만약 우리가 실제 네트워크와 매우 유사한, 그러나 훨씬 간단한 형태의 모델을 만들게 된다면 해당 네트워크에서 발생하게 될 일들을 쉽게 예측할 수 있을 것이다. 이 글에서 다루게 되는 random network는 그러한 네트워크 모델링 중에서 가장 간단한 모델 중 하나이다.</p>
+
+
+<h5 id="50-3-random-graph">Random Graph</h5>
+
+
+<p>Random graph란 어떤 fixed parameter를 가지는 stochastic 모델이다. Notation은 \(G(n,p)\) 로 적게 되는데, n은 vertex의 개수, p는 각각의 vertex pair들이 서로 edge를 가질 independent probability를 의미한다. 즉, 이 network는 확률 p로 인해 edge가 생성되므로 매번 새로 generate할 때 마다 그 결과가 달라지는 stochastic model인 것이다. 따라서 우리가 n개의 vertex와 m개의 edge를 가지는 임의의 network \(G(n,m) \)를 얻게 될 확률은 \(P(G) = p^m (1-p) ^ { {n \choose 2} - m} \) 로 얻을 수 있다. 이러한 모델을 맨 처음 수학적으로 이를 분석했던 사람들의 이름을 따서 Erdös-Rényi model 이라고도 하고 그 degree와 edge의 distribution이 Poisson혹은 Bernoulli 분포를 따르기 때문에 Poisson random graph 혹은 Bernoulli random graph라고 하기도 한다.</p>
+
+
+<h5 id="50-4-meanedgedegree">Mean Edge and Mean Degree in Random Graph</h5>
+
+
+<p>아런 Random graph에서 n과 p가 주어졌을 때, graph가 generate가 될 때마다 항상 edge의 개수는 달라지지만, 이것이 특정 확률을 따르기 때문에 평균 edge의 개수를 계산하는 것이 가능하다. 계산하기 전에 간단하게 생각하면 n개의 vertex에 존재하는 모든 pair들 중 확률 p로 edge를 가지기 때문에 평균 edge의 개수는 모든 pair의 개수에서 edge가 존재할 확률인 p를 곱한 \( {n \choose k} p\) 가 될 것이다. 그렇다면 정말 그런지 확인해보도록 하자. 그러면 먼저 m개의 edge를 가지는 임의의 Graph \(G(m)\) 이 generate될 확률을 구해보자. 이 갚은 바로 위에서 edge가 m개인 graph \(G(m)\) 하나가 표현될 확률을 계산했으므로, 이런 graph의 개수를 count한 후 간단하게 이를 summation하면된다.</p>
+
+
+<p>$$ P(m) = { {n \choose 2}  \choose m} p^m (1-p)^{ {n \choose 2} - m} $$</p>
+
+
+<p>위에서 우리는 m에 대한 확률 분포를 구했기 때문에 m의 평균 값은 간단하게 \(\sum_m mP(m)\) 으로 계산할 수 있다. 그런데 \(m\)의 확률 분호 \(P(m)\)은 \(n\)이 \({n \choose m}\) 이고 \(k\)가 \(m\)인 binomial distribution이다. 또한 우리는 binomial distribution의 mean value가 단순하게 \(np\) 임을 알고 있으므로 평균 값은 아래와 같이 계산할 수 있다. 이에 대한 자세한 설명은 <a href="http://en.wikipedia.org/wiki/Binomial_distribution" target="new">위키피디아 링크</a>로 대체한다.</p>
+
+
+<p>$$ \bar m = \sum_{m=0}^{n \choose 2} m P(m) = {n \choose 2} p $$</p>
+
+
+<p>이 결과는 우리가 처음 예측한 값과 정확히 일치한다.</p>
+
+
+<p>그러면 이제 degree의 평균 값을 구해보자. 그 이전에 이번에는 mean degree가 얼마일지 간단하게 생각해보자. 이때 mean degree라는 것은 결국 한 vertex에서 가지는 평균 edge의 개수를 의미하기 때문에 평균 edge개수인 \({n \choose k}p\)를 vertex pair 개수인 \(n \over 2\)로 나눠준 값인 \((n-1)p\) 가 될 것이라고 예측할 수 있다. 그렇다면 실제로 계산해보자. <a href="/48#48-7-degree">이전 글</a>에서 이미 우리가 유도했던 것처럼 edge가 \(m\)개 있는 graph의 mean degree는 \(2m \over n\)으로 구할 수 있다. 따라서 평균 degree는 위에서 우리가 edge의 평균 개수를 구한 것 처럼 간단히 구할 수 있다.</p>
+
+
+<p>$$ \bar k = \sum_{m=0}^{n \choose k} {2m \over n} P(m) = {2 \over n} {n \choose 2} p = (n-1)p $$</p>
+
+
+<p>역시 처음에 예측한 값과 일치한다. 참고로 random graph에서 평균 degree는 \(c\)라는 notation으로 표기가 되며, 따라서 \(c=(n-1)p\)이다.</p>
+
+
+<h5 id="50-5-degreedist">Degree Distribution</h5>
+
+
+<p>그렇다면 이번에는 degree의 distribution을 알아보자. 평균 degree의 개수도 물론 중요하지만 실제 degree가 어떻게 분포하고 있는지를 아는 것도 매우 중요하다. 왜냐하면 결국 network의 특성을 이해하기 위해서는 개별 node들이 얼만큼 다른 node들과 연결되어있는지 알아야하며, 이 결과가 네트워크에 어떤 결과를 불러올지 파악하는 것이 매우 중요하기 때문이다. 그렇다면 먼저 간단하게 하나의 vertex가 \(k\)개의 다른 vertex와 연결되어있는 상황이 발생할 확률을 계산해보자. 이때, 당연히 전체 vertex 개수는 \(n\)개 이므로 \(k\)개의 vertex와 연결되어있는 vertex는 나머지 \(n-1-k\) vertex와 연결되어있지 않다. 따라서 임의의 vertex가 \(k\)개의 vertex와 연결되어있을 확률 \(p_k\)는 아래와 같이 계산된다.</p>
+
+
+<p>$$ p_k = { n-1 \choose k } p^k (1-p)^{n-1-k} $$</p>
+
+
+<p>이 결과는 또 binomial distribution이다. 즉, \(G(n,p)\)의 degree distribution은 binomial distribution이라는 것을 알 수 있다. 하지만 이 식은 간단한 근사식을 통해서 더 간단하게 표현하는 것이 가능하다. 대부분의 경우 우리가 관심이 있는 영역은 \(n\)이 엄청나게 큰 network이므로 이런 상황에서 앞 부분의 combination을 근사하고, 그 다음에는 뒷 부분의 \((1-p)^{n-1-k}\)의 log 값을 근사 시켜보자.</p>
+
+
+<p>먼저 \(n-1 \choose k\)를 근사한 결과는 \({n-1 \choose k} = {(n-1)! \over (n-1-k)! k!} \simeq {(n-1)^k \over k!}\) 이다. 이 근사식은 그냥 매우 간단한 근사식이므로 설명을 생략하도록 하겠다. 그렇다면 이제 다음으로 확률의 맨 뒷부분을 근사해보자. 이 값은 먼저 log를 취한 후 log를 근사하여 그 값을 계산한다.</p>
+
+
+<p>$$ \ln[(1-p)^{n-1-k}] = (n-1-k) \ln ( 1- \frac {c} {n-1}) \simeq -(n-1-k) { c \over n-1} \simeq -c $$</p>
+
+
+<p>이 근사식에서 첫 번째 계산식은 \(p = { c \over n-1} \)이라는 이전의 결과를 사용한 것이고 근사하는 부분은 <a href="http://en.wikipedia.org/wiki/Natural_logarithm#Derivative.2C_Taylor_series" target="new">log의 taylor expansion</a>이 \(\ln(x) = (x-1) - {(x-1)^2 \over 2} + {(x-1)^3 \over 3} - &#8230;\) 라는 것을 사용한 것이다. 그 다음 근사는 당연히 n이 k보다 엄청 크다고 가정한 것이다. 자 그 결과는 놀랍게도 \(\ln[(1-p)^{n-1-k}] \simeq -c\) 이다. 즉, \((1-p)^{n-1-k} \simeq e^{-c}\) 라는 사실을 알 수 있다.</p>
+
+
+<p>자 이제 모든 결과를 종합해보면 n이 엄청나게 큰 상황에서 다음과 같은 결과를 얻는다</p>
+
+
+<p>$$ p_k \simeq {(n-1)^k \over k!} p^k e^{-c} ={ (n-1)^k \over k!} ({c \over n-1})^k e^{-c} \simeq e^{-c} {c^k \over k!}$$</p>
+
+
+<p>자, 우리는 n이 매우 크다는 조건 하나를 사용해 근사를 한 결과 Poisson distribution을 얻게 되었다. 즉, n이 매우 큰 \(G(n,p)\)에서 degree distribution은 poisson distribution을 가진다는 사실을 알 수 있다. (사실 글의 처음에서도 말했던 것 처럼 이런 이유로 random network라는 이름은 사실 poisson random graph의 준말이다.)</p>
+
+
+<h5 id="50-6-cluster">Cluster and giant Component</h5>
+
+
+<p>자 그러면 이제 또 중요한 measurement 중 하나인 clustering coefficient를 계산해보자. Random Graph에서 \(c\)는 평균 degree를 의미하기 때문에 이 글에서 clustering coefficient는 \(C\)로 표기될 것이다. 이 clustering coefficent는 내가 이웃한 vertex 두 개가 서로 연결되어있을 확률을 의미한다. 그런데 우리의 graph \(G(n,p)\)의 임의의 vertex pair가 서로 연결되어있을 확률은 언제나 \(c \over n-1 \)이다. 따라서 clustering coefficient \(C\)는 \(c \over n-1 \) 라는 사실을 아주 간단하게 알 수 있다. 즉, 이 식에 따르면 \(n \to \infty\) 가 되고 \(c\)의 값이 fixed 되어있는 graph에서의 \(C\)는 0으로 수렴한다는 사실을 알 수 있다. 그러나 실제 네트워크에서 관찰되는 결과는 mean degree가 fixed되어있더라도 clustering coeficient의 값이 여전히 크게 유지가 된다는 것이다. 이런 특성 때문에 바로 다음 글에서 설명하게 될 small world network의 필요성이 대두된다.</p>
+
+
+<p>아무튼 단순히 clustering coefficient만 계산하는 것은 크게 와닿지 않는다. 구체적으로 이 네트워크에서 giant component라는 것이 존재할 확률이나 실제 존재했을 때 어떤 형태로 존재할지를 예측해보자. 여기에서 giant component란 문자 그대로 네트워크 상에서 존재하는 가장 largest한 component라고 보면 된다. (Component에 대한 설명은 <a href="/48#48-8-path" taget="new">이전 글</a> 참고) Simple하게 \(p=0\)이면 모든 graph가 disjoint되어있고 giant component라는 것은 존재하지 않는다. 반면 \(p=1\)이면 모든 vertex가 연결되어있고 graph는 vertex의 개수가 \(n\)인 오직 하나의 componet를 가지게 된다. 자 그러면 이제 \(p\)가 0에서 1사이의 값일 때를 생각해보자. 이런 상황에서 giant component가 존재한다고 가정하고, 이 component에 포함되는 vertex의 개수를 \(n_{gc}\) 라고 하자. 이렇다고 가정을 하게 되면 임의의 fraction of nodes가 giant component에 포함이 되지 않을 확률을 \(u\)라고 하면 우리는 이 값이 \(u=1-{n_{gc} \over n}\) 이라는 사실을 알 수 있다. (당연히 \(n_{gc} = n(1-u)\) 이다.) 그렇다면 이제 이 u를 통해 giant component를 분석해보도록 하자.</p>
+
+
+<p>먼저 임의의 vertex \(i\)가 이런 GC에 포함된다고 가정해보자. 그렇다면 이 vertex \(i\)는 vertex \(j\)라는 vertex를 거쳐 GC에 연결되어야한다고 했을 때, \(i\)가 GC에 포함이 되지 않을 확률은 (1) \(i\)와 \(j\)가 연결되어있지 않다: \(1-p\) (2) \(i\)와 \(j\)가 연결되어있으나 \(j\)가 GC에 연결되어있지 않다: \(pu\) 이렇게 총 두 가지 경우 임을 알 수 있다. 따라서 임의의 vertex \(i\)가 임의의 다른 vertex \(j\)를 거쳐 GC에 포함되지 않을 확률은 \(1-p+pu\)이고, 다른 모든 vertex에 대해 이를 확장해보면 다른 vertex가 \(n-1\)개 있으므로 이 확률은 \({(1-p+pu)}^{n-1}\) 임을 알 수 있다. 그런데 이 값은 결국 한 vertex가 GC에 포함될 확률 \(u\)와 같다. 따라서 \(u={(1-p+pu)}^{n-1}\) 이라는 사실을 알 수 있다.</p>
+
+
+<p>자, 그러면 \(p={c \over n-1}\) 이므로 위의 식에 대입하고, log를 근사시키면 아래와 같은 결과를 얻게 된다.</p>
+
+
+<p>$$ \ln u= (n-1) \ln {\left(1-{c \over n-1} (1-u) \right)} \simeq -(n-1) {c \over n-1} (1-u) = -c (1-u) $$</p>
+
+
+<p>따라서 \(u=e^{-c(1-u)}\) 라는 사실을 알 수 있다. 이때 giant component 안에 들어있는 vertex의 개수의 비율을 \(S=1-u={n_{gc} \over n}\) 이라고 정의한다면 식은 이 식은 아래와 같이 적을 수 있다.</p>
+
+
+<p>$$ S=1-e^{-cS} $$</p>
+
+
+<p>작성중</p>
+
+
+<p>CLuster Size Distibution은 </p>
+
+
+<h5 id="50-7-smallcomponent">Small Componets</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="50-8-path">Path Length</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="50-9-problems">Random Graph의 문제점</h5>
+
+
+<p>작성중</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: <a href="/49" target="new">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="/50" target="new">Random Network</a></li>
+    <li>Lecture 5: Small world Network</li>
+    <li>Lecture 6: Scale free Network</li>
+</ul>
+
+</div>
+
+<hr>
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-22T11:37:00+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/kaist/'>KAIST</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/network-science/'>Network-Science</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/50/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/50/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="380" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/49/" title="Previous Post: Network Science - Measures and Metric">&laquo; Network Science - Measures and Metric</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="facebook_comments" aria-live="polite">
+      <div class="fb-comments" data-href="http://SanghyukChun.github.io/50/" data-width="400" data-num-posts="10"></div>
+    </div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/50/">Network Science - Random Network</a>
+      </li>
+    
+      <li class="post">
+        <a href="/49/">Network Science - Measures and Metric</a>
+      </li>
+    
+      <li class="post">
+        <a href="/48/">Network Science - Graph Theory</a>
+      </li>
+    
+      <li class="post">
+        <a href="/47/">Network Science - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/46/">2014년 1분기 회고</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'SanghyukChun',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Sanghyuk Chun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=182012898639519&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: KAIST | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/kaist/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-04-17T04:13:50+09:00</updated>
+  <updated>2014-04-22T23:03:33+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,154 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Network Science - Random Network]]></title>
+    <link href="http://SanghyukChun.github.io/50/"/>
+    <updated>2014-04-22T11:37:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/50</id>
+    <content type="html"><![CDATA[<h5 id="50-1-before">들어가기 전에</h5>
+
+
+<p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 가장 기초적인 Network modeling 중 하나인 random network에 대해 다룬다.</p>
+
+
+<h5 id="50-2-why">Why we need network model?</h5>
+
+
+<p>이 글을 포함해 3개의 강의는 모두 네트워크 모델링과 관련된 내용이다. 이 글은 random network, 그리고 다음 글은 순서대로 small world network, 그리고 그 다음은 scale free network에 대해 다루게 된다. 이런 네트워크 모델링을 우리는 왜 알아야할까. 사실 이유는 간단하다. 그냥 네트워크를 사용해 무언가를 분석하는 것이 매우 어렵기 때문이다. 예를 들어서 우리는 실제 social network가 어떻게 구성되어있는지 알지못한다. 만약 우리가 실제 네트워크와 매우 유사한, 그러나 훨씬 간단한 형태의 모델을 만들게 된다면 해당 네트워크에서 발생하게 될 일들을 쉽게 예측할 수 있을 것이다. 이 글에서 다루게 되는 random network는 그러한 네트워크 모델링 중에서 가장 간단한 모델 중 하나이다.</p>
+
+
+<h5 id="50-3-random-graph">Random Graph</h5>
+
+
+<p>Random graph란 어떤 fixed parameter를 가지는 stochastic 모델이다. Notation은 \(G(n,p)\) 로 적게 되는데, n은 vertex의 개수, p는 각각의 vertex pair들이 서로 edge를 가질 independent probability를 의미한다. 즉, 이 network는 확률 p로 인해 edge가 생성되므로 매번 새로 generate할 때 마다 그 결과가 달라지는 stochastic model인 것이다. 따라서 우리가 n개의 vertex와 m개의 edge를 가지는 임의의 network \(G(n,m) \)를 얻게 될 확률은 \(P(G) = p^m (1-p) ^ { {n \choose 2} - m} \) 로 얻을 수 있다. 이러한 모델을 맨 처음 수학적으로 이를 분석했던 사람들의 이름을 따서 Erdös-Rényi model 이라고도 하고 그 degree와 edge의 distribution이 Poisson혹은 Bernoulli 분포를 따르기 때문에 Poisson random graph 혹은 Bernoulli random graph라고 하기도 한다.</p>
+
+
+<h5 id="50-4-meanedgedegree">Mean Edge and Mean Degree in Random Graph</h5>
+
+
+<p>아런 Random graph에서 n과 p가 주어졌을 때, graph가 generate가 될 때마다 항상 edge의 개수는 달라지지만, 이것이 특정 확률을 따르기 때문에 평균 edge의 개수를 계산하는 것이 가능하다. 계산하기 전에 간단하게 생각하면 n개의 vertex에 존재하는 모든 pair들 중 확률 p로 edge를 가지기 때문에 평균 edge의 개수는 모든 pair의 개수에서 edge가 존재할 확률인 p를 곱한 \( {n \choose k} p\) 가 될 것이다. 그렇다면 정말 그런지 확인해보도록 하자. 그러면 먼저 m개의 edge를 가지는 임의의 Graph \(G(m)\) 이 generate될 확률을 구해보자. 이 갚은 바로 위에서 edge가 m개인 graph \(G(m)\) 하나가 표현될 확률을 계산했으므로, 이런 graph의 개수를 count한 후 간단하게 이를 summation하면된다.</p>
+
+
+<p>$$ P(m) = { {n \choose 2}  \choose m} p^m (1-p)^{ {n \choose 2} - m} $$</p>
+
+
+<p>위에서 우리는 m에 대한 확률 분포를 구했기 때문에 m의 평균 값은 간단하게 \(\sum_m mP(m)\) 으로 계산할 수 있다. 그런데 \(m\)의 확률 분호 \(P(m)\)은 \(n\)이 \({n \choose m}\) 이고 \(k\)가 \(m\)인 binomial distribution이다. 또한 우리는 binomial distribution의 mean value가 단순하게 \(np\) 임을 알고 있으므로 평균 값은 아래와 같이 계산할 수 있다. 이에 대한 자세한 설명은 <a href="http://en.wikipedia.org/wiki/Binomial_distribution" target="new">위키피디아 링크</a>로 대체한다.</p>
+
+
+<p>$$ \bar m = \sum_{m=0}^{n \choose 2} m P(m) = {n \choose 2} p $$</p>
+
+
+<p>이 결과는 우리가 처음 예측한 값과 정확히 일치한다.</p>
+
+
+<p>그러면 이제 degree의 평균 값을 구해보자. 그 이전에 이번에는 mean degree가 얼마일지 간단하게 생각해보자. 이때 mean degree라는 것은 결국 한 vertex에서 가지는 평균 edge의 개수를 의미하기 때문에 평균 edge개수인 \({n \choose k}p\)를 vertex pair 개수인 \(n \over 2\)로 나눠준 값인 \((n-1)p\) 가 될 것이라고 예측할 수 있다. 그렇다면 실제로 계산해보자. <a href="http://SanghyukChun.github.io/48#48-7-degree">이전 글</a>에서 이미 우리가 유도했던 것처럼 edge가 \(m\)개 있는 graph의 mean degree는 \(2m \over n\)으로 구할 수 있다. 따라서 평균 degree는 위에서 우리가 edge의 평균 개수를 구한 것 처럼 간단히 구할 수 있다.</p>
+
+
+<p>$$ \bar k = \sum_{m=0}^{n \choose k} {2m \over n} P(m) = {2 \over n} {n \choose 2} p = (n-1)p $$</p>
+
+
+<p>역시 처음에 예측한 값과 일치한다. 참고로 random graph에서 평균 degree는 \(c\)라는 notation으로 표기가 되며, 따라서 \(c=(n-1)p\)이다.</p>
+
+
+<h5 id="50-5-degreedist">Degree Distribution</h5>
+
+
+<p>그렇다면 이번에는 degree의 distribution을 알아보자. 평균 degree의 개수도 물론 중요하지만 실제 degree가 어떻게 분포하고 있는지를 아는 것도 매우 중요하다. 왜냐하면 결국 network의 특성을 이해하기 위해서는 개별 node들이 얼만큼 다른 node들과 연결되어있는지 알아야하며, 이 결과가 네트워크에 어떤 결과를 불러올지 파악하는 것이 매우 중요하기 때문이다. 그렇다면 먼저 간단하게 하나의 vertex가 \(k\)개의 다른 vertex와 연결되어있는 상황이 발생할 확률을 계산해보자. 이때, 당연히 전체 vertex 개수는 \(n\)개 이므로 \(k\)개의 vertex와 연결되어있는 vertex는 나머지 \(n-1-k\) vertex와 연결되어있지 않다. 따라서 임의의 vertex가 \(k\)개의 vertex와 연결되어있을 확률 \(p_k\)는 아래와 같이 계산된다.</p>
+
+
+<p>$$ p_k = { n-1 \choose k } p^k (1-p)^{n-1-k} $$</p>
+
+
+<p>이 결과는 또 binomial distribution이다. 즉, \(G(n,p)\)의 degree distribution은 binomial distribution이라는 것을 알 수 있다. 하지만 이 식은 간단한 근사식을 통해서 더 간단하게 표현하는 것이 가능하다. 대부분의 경우 우리가 관심이 있는 영역은 \(n\)이 엄청나게 큰 network이므로 이런 상황에서 앞 부분의 combination을 근사하고, 그 다음에는 뒷 부분의 \((1-p)^{n-1-k}\)의 log 값을 근사 시켜보자.</p>
+
+
+<p>먼저 \(n-1 \choose k\)를 근사한 결과는 \({n-1 \choose k} = {(n-1)! \over (n-1-k)! k!} \simeq {(n-1)^k \over k!}\) 이다. 이 근사식은 그냥 매우 간단한 근사식이므로 설명을 생략하도록 하겠다. 그렇다면 이제 다음으로 확률의 맨 뒷부분을 근사해보자. 이 값은 먼저 log를 취한 후 log를 근사하여 그 값을 계산한다.</p>
+
+
+<p>$$ \ln[(1-p)^{n-1-k}] = (n-1-k) \ln ( 1- \frac {c} {n-1}) \simeq -(n-1-k) { c \over n-1} \simeq -c $$</p>
+
+
+<p>이 근사식에서 첫 번째 계산식은 \(p = { c \over n-1} \)이라는 이전의 결과를 사용한 것이고 근사하는 부분은 <a href="http://en.wikipedia.org/wiki/Natural_logarithm#Derivative.2C_Taylor_series" target="new">log의 taylor expansion</a>이 \(\ln(x) = (x-1) - {(x-1)^2 \over 2} + {(x-1)^3 \over 3} - ...\) 라는 것을 사용한 것이다. 그 다음 근사는 당연히 n이 k보다 엄청 크다고 가정한 것이다. 자 그 결과는 놀랍게도 \(\ln[(1-p)^{n-1-k}] \simeq -c\) 이다. 즉, \((1-p)^{n-1-k} \simeq e^{-c}\) 라는 사실을 알 수 있다.</p>
+
+
+<p>자 이제 모든 결과를 종합해보면 n이 엄청나게 큰 상황에서 다음과 같은 결과를 얻는다</p>
+
+
+<p>$$ p_k \simeq {(n-1)^k \over k!} p^k e^{-c} ={ (n-1)^k \over k!} ({c \over n-1})^k e^{-c} \simeq e^{-c} {c^k \over k!}$$</p>
+
+
+<p>자, 우리는 n이 매우 크다는 조건 하나를 사용해 근사를 한 결과 Poisson distribution을 얻게 되었다. 즉, n이 매우 큰 \(G(n,p)\)에서 degree distribution은 poisson distribution을 가진다는 사실을 알 수 있다. (사실 글의 처음에서도 말했던 것 처럼 이런 이유로 random network라는 이름은 사실 poisson random graph의 준말이다.)</p>
+
+
+<h5 id="50-6-cluster">Cluster and giant Component</h5>
+
+
+<p>자 그러면 이제 또 중요한 measurement 중 하나인 clustering coefficient를 계산해보자. Random Graph에서 \(c\)는 평균 degree를 의미하기 때문에 이 글에서 clustering coefficient는 \(C\)로 표기될 것이다. 이 clustering coefficent는 내가 이웃한 vertex 두 개가 서로 연결되어있을 확률을 의미한다. 그런데 우리의 graph \(G(n,p)\)의 임의의 vertex pair가 서로 연결되어있을 확률은 언제나 \(c \over n-1 \)이다. 따라서 clustering coefficient \(C\)는 \(c \over n-1 \) 라는 사실을 아주 간단하게 알 수 있다. 즉, 이 식에 따르면 \(n \to \infty\) 가 되고 \(c\)의 값이 fixed 되어있는 graph에서의 \(C\)는 0으로 수렴한다는 사실을 알 수 있다. 그러나 실제 네트워크에서 관찰되는 결과는 mean degree가 fixed되어있더라도 clustering coeficient의 값이 여전히 크게 유지가 된다는 것이다. 이런 특성 때문에 바로 다음 글에서 설명하게 될 small world network의 필요성이 대두된다.</p>
+
+
+<p>아무튼 단순히 clustering coefficient만 계산하는 것은 크게 와닿지 않는다. 구체적으로 이 네트워크에서 giant component라는 것이 존재할 확률이나 실제 존재했을 때 어떤 형태로 존재할지를 예측해보자. 여기에서 giant component란 문자 그대로 네트워크 상에서 존재하는 가장 largest한 component라고 보면 된다. (Component에 대한 설명은 <a href="http://SanghyukChun.github.io/48#48-8-path" taget="new">이전 글</a> 참고) Simple하게 \(p=0\)이면 모든 graph가 disjoint되어있고 giant component라는 것은 존재하지 않는다. 반면 \(p=1\)이면 모든 vertex가 연결되어있고 graph는 vertex의 개수가 \(n\)인 오직 하나의 componet를 가지게 된다. 자 그러면 이제 \(p\)가 0에서 1사이의 값일 때를 생각해보자. 이런 상황에서 giant component가 존재한다고 가정하고, 이 component에 포함되는 vertex의 개수를 \(n_{gc}\) 라고 하자. 이렇다고 가정을 하게 되면 임의의 fraction of nodes가 giant component에 포함이 되지 않을 확률을 \(u\)라고 하면 우리는 이 값이 \(u=1-{n_{gc} \over n}\) 이라는 사실을 알 수 있다. (당연히 \(n_{gc} = n(1-u)\) 이다.) 그렇다면 이제 이 u를 통해 giant component를 분석해보도록 하자.</p>
+
+
+<p>먼저 임의의 vertex \(i\)가 이런 GC에 포함된다고 가정해보자. 그렇다면 이 vertex \(i\)는 vertex \(j\)라는 vertex를 거쳐 GC에 연결되어야한다고 했을 때, \(i\)가 GC에 포함이 되지 않을 확률은 (1) \(i\)와 \(j\)가 연결되어있지 않다: \(1-p\) (2) \(i\)와 \(j\)가 연결되어있으나 \(j\)가 GC에 연결되어있지 않다: \(pu\) 이렇게 총 두 가지 경우 임을 알 수 있다. 따라서 임의의 vertex \(i\)가 임의의 다른 vertex \(j\)를 거쳐 GC에 포함되지 않을 확률은 \(1-p+pu\)이고, 다른 모든 vertex에 대해 이를 확장해보면 다른 vertex가 \(n-1\)개 있으므로 이 확률은 \({(1-p+pu)}^{n-1}\) 임을 알 수 있다. 그런데 이 값은 결국 한 vertex가 GC에 포함될 확률 \(u\)와 같다. 따라서 \(u={(1-p+pu)}^{n-1}\) 이라는 사실을 알 수 있다.</p>
+
+
+<p>자, 그러면 \(p={c \over n-1}\) 이므로 위의 식에 대입하고, log를 근사시키면 아래와 같은 결과를 얻게 된다.</p>
+
+
+<p>$$ \ln u= (n-1) \ln {\left(1-{c \over n-1} (1-u) \right)} \simeq -(n-1) {c \over n-1} (1-u) = -c (1-u) $$</p>
+
+
+<p>따라서 \(u=e^{-c(1-u)}\) 라는 사실을 알 수 있다. 이때 giant component 안에 들어있는 vertex의 개수의 비율을 \(S=1-u={n_{gc} \over n}\) 이라고 정의한다면 식은 이 식은 아래와 같이 적을 수 있다.</p>
+
+
+<p>$$ S=1-e^{-cS} $$</p>
+
+
+<p>작성중</p>
+
+
+<p>CLuster Size Distibution은 </p>
+
+
+<h5 id="50-7-smallcomponent">Small Componets</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="50-8-path">Path Length</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="50-9-problems">Random Graph의 문제점</h5>
+
+
+<p>작성중</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="http://SanghyukChun.github.io/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
+    <li>Lecture 5: Small world Network</li>
+    <li>Lecture 6: Scale free Network</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Network Science - Measures and Metric]]></title>
@@ -24,7 +172,7 @@
 <p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
 
 
-<h5>Why we need measures and metric</h5>
+<h5>Why we need measures and metric?</h5>
 
 
 <p>이건 사실 lecture 내용에는 없는 내용이지만 엄청나게 중요한 내용이라고 내가 판단해서 집어넣은 part이다. 일단 이 lecture에서 다루기만 하는 metric이나 measure들이 엄청나게 많다. 대충 10개는 넘을텐데, 이런 수 많은 것들을 우리가 왜 알아야하느냐? 바로 주어진 임의의 graph를 측정하고 어떤 graph인지 판단할 수 있기 때문이다. 또한 진짜 중요한 목적 중 하나는 어느 vertex가 중요한지 알아내는 것이다. 근데 이 '중요함'이라는 것이 정의하기에 따라 달라지기 때문에 각각의 '중요함'이 무엇인지 정의하는 방법이 달라지게 되고 그렇기 때문에 이 lecture에서 cover하는 measure와 metric이 많은 것이다. 개인적으로는 그냥 closeness, betweeness, clustering coefficient 정도만 cover하고 끝내고 싶지만 나름 중요한 내용이 많아서 일단 최대한 많이 cover를 할 수 있도록 해야겠다. 아무튼 이런 수많은 metric들을 통해 우리가 알고싶은 것은 그래서 어느 vertex가 진짜 중요한 녀석이고, 나중에 다루게 될 dynamic process에서 어느 vertex를 주목해서 그 vertex에 처리를 해야하느냐 등을 하기 위해서 필요한 과정이다. 따라서 목적에 맞게 사용하는 것이 중요하고, 각각의 metric이 어떤 것을 측정하기 위함인지 이해하는 것이 매우 중요한 것이다.</p>
@@ -194,7 +342,7 @@
     <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: Random Network</li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
     <li>Lecture 5: Small world Network</li>
     <li>Lecture 6: Scale free Network</li>
 </ul>
@@ -207,19 +355,19 @@
     <link href="http://SanghyukChun.github.io/48/"/>
     <updated>2014-04-16T19:39:00+09:00</updated>
     <id>http://SanghyukChun.github.io/48</id>
-    <content type="html"><![CDATA[<h5>들어가기 전에</h5>
+    <content type="html"><![CDATA[<h5 id="48-1-before">들어가기 전에</h5>
 
 
 <p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
 
 
-<h5>Network and Graph</h5>
+<h5 id="48-2-networkandgraph">Network and Graph</h5>
 
 
 <p>Network 혹은 Graph는 vertex와 그 vertex를 잇는 edge로 구성되어있는 일종의 collection이다. vertex와 edge는 node와 link라고 하기도 한다. 인터넷, 전력망, Citation network, social network 등을 예로 들 수 있으며, 요즘 내가 공부하고 있는 <a href="http://SanghyukChun.github.io/blog/categories/neural-network/">artificial neural network</a> 역시 neuron과 synapse로 이루어진 graph이다. 보통 Graph는 mathematical하게 \(G = (V,E)\)로 표현이 된다. V는 vertex를 의미하며 E는 edge를 의미한다. 또한 일반적으로 n과 m이라는 notation도 사용하는데, n은 vertex의 개수, m은 edge의 개수이다. 이때 graph의 종류는 크게 두 가지가 있다. 하나는 directed graph이며 또 하나는 undirected graph이다. directed graph는 edge에 direction이 존재하여 한 vertex에서 다른 vertex를 point하는 형태가 되며, undirected graph는 edge에 특정한 direction이 존재하지 않는다. 또한 directed graph 중 Acyclic directed network 혹은 directed acyclic graph (보통 DAG라고 부른다) 라는 graph가 있는데, 이 그래프는 이름 그대로 cycle이 없는 graph를 얘기하며, 즉, 한 vertex에서 edge를 따라 이동했을 때 그 어떤 vertex, 그 어떤 path를 선택하더라도 자기 자신으로 돌아오지 않는 graph를 의미한다. 또한 graph의 edge는 weight라는 것을 가지고 있는데, 이 값은 edge의 고유한 값으로, 상황에 따라 다르게 해석이 된다. 예를 들어서 internet edge에서는 data flow의 양을 의미하기도 하고, social network에서는 얼마나 두 사람 간의 contact가 많냐 등으로 해석할 수도 있고, 단순한 geometric graph에서는 weight가 두 vertex간의 거리를 뜻하기도 한다. 렉쳐노트에는 weight가 non-negative라고 표현이 되어있지만, 실제 문제들에서는 edge가 negative weight를 가지는 경우도 많다. 물론 이런 경우 계산이 좀 복잡해진다.</p>
 
 
-<h5>Adjacency Matrix</h5>
+<h5 id="48-3-adjacencymatrix">Adjacency Matrix</h5>
 
 
 <p>그런데 이런 graph를 실제 분석하기 위해서는 어떻게 해야할까? 아래와 같은 그래프를 예로 들어보자.</p>
@@ -238,7 +386,7 @@
 <p>또한 위에서 설명했었던 DAG를 adjacency matrix로 표현하면 재미있는 일이 벌어지는데, without loss of generality, 항상 DAG는 triangular matrix로 표현이 된다. Why? 왜냐하면, 아주 간단한 이유인데, DAG에서 어떤 path를 고르더라도 반드시 그 path는 cycle이 아니다. 즉, 다시 자기 자신으로 돌아오지 않기 때문에, 결국에는 outgoing edge가 없는 vertex에 도달하게 될 수 밖에 없다. (당연하다) 그러므로 반드시 최소한 하나 이상의 out degree가 0인 vertex에 도달하게 되고 (degree는 아래에서 더 자세히 설명) 이 말은 곧, column 중 하나는 반드시 zero-vector여야 한다는 소리이다. 이때 만약 out degree가 0인 vertex를 제거해보면 (이에 해당하는 edge도 제거하면) 그 zero vector를 pointing했던 vertex 역시 마찬가지 이유로 outdegree가 0인 vertex가 될 것이다. 이런 식으로 하나하나 제거해나가보면 결국, 반드시 triangular matrix로만 표현이 된다는 것을 알 수 있다. 또한 이런 triangular matrix의 eigenvalue는 diagonal element 들인데, DAG는 cycle이 없기 때문에 모든 diagonal element가 0이 되고 따라서 모든 eigenvalue는 0이 된다. 즉, 어떤 주어진 graph가 DAG인지 아닌지 여부를 판단하기 위해서는 간단하게 모든 eigenvalue들이 0이 되는지만 확인하면 되는 것이다.</p>
 
 
-<h5>Cocitation and Bibliographic Coupling</h5>
+<h5 id="48-4-cocitation">Cocitation and Bibliographic Coupling</h5>
 
 
 <p>Cocitation이란 directed graph의 vertex i와 j를 동시에 point하고 있는 vertex들의 개수를 의미한다. 간단하게 'co-citation'이라는 단어 자체가 같이 citation한다는 의미이므로 그 의미 그대로 이해하면 된다. 그런데 이런 경우, 앞서 설명했던 adjacency matrix로 cocitation matrix를 표현하는 것이 가능하다. 그 이유는 vertex i,j를 동시에 point하는 k는 \(A_{ik} A_{jk} = 1\) 이라는 식을 만족하기 때문이다. 따라서 모든 점들에 대해 이런 과정을 반복해보면 \(C_{ij} = \sum_k^n A_{ik} A_{jk} = \sum_k^n A_{ik} A_{kj}^\top \)라는 것을 알 수 있고, 이는 곧 \(C = A A^\top\) 라는 것을 알 수 있다. 이 경우 임의의 matrix와 그 matrix의 transpose를 곱하면 그 결과는 항상 symmetric하다는 것이 잘 알려져 있다. 따라서 이 matrix는 symmetric하다. 이 결과는 당연하다고 할 수 있는데, i와 j에 대해 그 순서가 바뀐다고 해서 citation하고 있는 vertex가 달라지지는 않을 것이기 때문에 항상 \(C_{ij} = C_{ji}\)라는 것을 알 수 있다. 그리고 graph가 symmetric하다는 것은 이 graph가 undirected graph라는 것을 의미하게 된다. 그리고 이 graph는 weighted graph인데, 이 weight는 얼마나 많은 co-citation이 존재하는지를 indicate하는 숫자가 된다. 그리고 \(C_{ii}\) 는 vertex i를 point하는 모든 edge의 개수를 의미한다.</p>
@@ -250,7 +398,7 @@
 <p>이 두 가지 matrix는 directed graph에서의 search algorithm에 사용될 수 있다고 한다.</p>
 
 
-<h5>Bipartite Network</h5>
+<h5 id="48-5-bipartite">Bipartite Network</h5>
 
 
 <p>Hypergraph라는 것이 존재한다. Hyperedge라는게 존재하는 graph를 의미하는데, 이 hyperedge는 하나의 edge가 2개 보다 많은 vertex에 연결되어있는 edge를 의미한다. 이런 hypergraph를 표현하는 방법 중 하나는 bipartite graph를 사용하는 것이다. Bipartite graph는 vertex를 두 그룹으로 나누어 그룹 안에는 edge가 존재하지 않고, 모든 edge가 그룹 사이에서만 존재하는 graph를 의미한다. 즉, 아래 그림에서 까만점을 원래 hypergraph의 vertex, 하연점을 edge로 생각하면 우리가 일반적으로 알고 있는 graph로 hypergraph를 표현할 수 있는 것이다.</p>
@@ -271,7 +419,7 @@
 <p>이때, i와 j가 같은 group k에 존재한다고 했을 때 우리는 \(B_{ki} B_{kj} = 1\)이라는 것을 알 수 있다. 따라서 i와 j가 몇 개의 같은 그룹에 속해있는지를 indicate하는 P는 \(P_{ij} = \sum B_{ki} B_{kj} = \sum B_{ik}^\top B_{kj} \) 이며, 따라서 \(P = B^\top B\) 라는 것을 알 수 있고, \(P_{ii} = \sum B_{ki}^2 = \sum B_{ki}\) 라는 것을 알 수 있다. 따라서 \(P_{ii}\)는 vertex i가 속해있는 모든 group의 개수를 의미하게 된다.</p>
 
 
-<h5>Tree and Planer Network</h5>
+<h5 id="48-6-tree">Tree and Planer Network</h5>
 
 
 <p>Tree는 connected, undirected network의 일종으로, closed loop이 존재하지 않는 graph를 의미한다. 이 경우, 다시 말해서 parent가 단 하나만 존재하는 graph가 tree이며, 이 때문에 그 어떤 vertex pair를 고르더라도 그 사이를 연결하는 optimal path는 단 하나밖에 존재하지 않는다. 또한 n개의 vertex를 가지고 있는 tree의 edge개수는 반드시 n-1개이다.</p>
@@ -283,7 +431,7 @@
 <p>그런데 일반적인 graph가 planar인지 아닌지 어떻게 판단할 수 있을까? <a href="http://en.wikipedia.org/wiki/Kuratowski's_theorem" target="new">Kuratowski's theorem</a>이라는 것이 있다. 모든 non-planar graph는 적어도 한 개 이상의 subgraph가 K5혹은 UG의 expansion이라는 theorem인데, 이를 통해 우리는 간단히 graph의 subdivision을 구해서 이 graph가 planar인지 아닌지 여부를 판단할 수 있다.</p>
 
 
-<h5>Degree</h5>
+<h5 id="48-7-degree">Degree</h5>
 
 
 <p>Degree는 vertex i와 연결된 모든 edge의 개수를 의미한다. notation은 \(k_i\)로 표현되며, \(k_i = \sum_j^n A_{ij}\) 이며, \(m = \frac {1} {2} \sum_i^n k_i = \frac {1} {2} \sum_{ij} A_{ij}\) 라는 것을 알 수 있다. degree의 평균은 c로 표현하는데, \(1 \over n \sum_i^n k_i\) 이며, 이 값은 곧 \(c = 2m \over n\)이다.</p>
@@ -307,7 +455,7 @@
 <p>$$ c = \frac {m} {n} $$</p>
 
 
-<h5>Path and component</h5>
+<h5 id="48-8-path">Path and component</h5>
 
 
 <p>Path는 모든 consecutive pair가 서로 connected edge의 sequence로 나태어지는 vertex들의 sequence를 의미한다. 즉, 주어진 vertex set을 순서대로 살펴보게되면 각 consecutive vertex pair 사이에는 edge가 존재하는 vertex set을 path라고 하는 것이다. 그냥 우리가 알고 있는 그 path를 수학적으로 정의한 것에 불과하니 넘어가도 그만이다. Path의 길이는 이 lecture는 path기 traversed한 edge의 개수로 정의하는데, 개수가 아니라 그 edge들의 weight들의 summation으로 일반적으로 정의한다.</p>
@@ -337,7 +485,7 @@
 <p>Independent 혹은 disjoint path라는 것도 정의할 수 있는데, edge independent는 두 개의 path가 서로 공유하는 edge가 없는 경우이며, 당연히 vertex independent는 공유하는 vertex가 없는 경우를 의미한다. vertex indep이면 edge indep하지만 그 반대는 항상 성립하는 것은 아니다. 이 때 given vertex pair 사이에 존재하는 모든 independent path의 개수를 connectivity로 정의할 수 있다. 이 값은 두 vertex가 얼마나 많은 connectivity를 가지고 있는지, 혹은 그 둘 사이의 bottleneck이 얼마나 될지를 판단할 수 있는 지표가 된다.</p>
 
 
-<h5>Cut sets</h5>
+<h5 id="48-9-cutset">Cut sets</h5>
 
 
 <p>cut set은 그에 속하는 vertex 혹은 edge등을 제거했을 때 특정한 vertex들의 pair가 disconnected되는 set을 의미한다. 또한 minimum cut set은 그런 cut set 중에서 가장 작은 element를 가지는 cut set을 의미한다.</p>
@@ -349,7 +497,7 @@
 <p>또한 두 vertex사이의 max flow라는 것을 edge-independent path의 개수 곱하기 capacity로 정의할 수 있는데, 이런 max flow를 정의했을 때, max-flow/min-cut theorem에 따르면 vertex pair의 maximum flow는 항상 minimum cut set와 single path의 capacity의 곱과 같다고 한다. 이때 undirected graph에 대해서 edge connectivity와 minimum edge cut set의 size와 maximum flow의 크기가 같다는 것이 증명될 수 있다.</p>
 
 
-<h5>Graph Laplacian</h5>
+<h5 id="48-10-laplacian">Graph Laplacian</h5>
 
 
 <p>어떤 commodity 혹은 substance의 flow가 어떤 비율로 흘러가느냐에 따라 Diffusion이라는 것을 정의할 수 있다. 약간 복잡한 얘기인데, 약간 불필요해보이기도 하고 복잡해서 <a href="http://en.wikipedia.org/wiki/Laplacian_matrix#Random_walks_on_graphs" target="new">링크</a>로 대체하겠다. 링크에서도 나오듯 결국에는 Random walk를 정의하기 위해서 나온 개념으로 보이므로 생략하도록 하겠다.</p>
@@ -367,7 +515,7 @@
     <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: Random Network</li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
     <li>Lecture 5: Small world Network</li>
     <li>Lecture 6: Scale free Network</li>
 </ul>
@@ -401,7 +549,7 @@
     <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: Random Network</li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
     <li>Lecture 5: Small world Network</li>
     <li>Lecture 6: Scale free Network</li>
 </ul>
