@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>README</title>
+  <meta name="author" content="Sanghyuk Chun">
+
+  
+  <meta name="description" content="Octopress 설치하고 포스팅하기 Jul 25th, 2013 블로그를 설치하면서 했던 작업들을 간단하게 기록 겸 정리해서 올려본다. Github Pages 먼저 Github에서 제공하는 Pages를 사용해 블로그로 사용할 repository를 만들어야한다. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://SanghyukChun.github.io/blog/page/6">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+	<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+
+<script>
+$(function() {
+	$('.tip').attr('data-toggle','tooltip');
+	$('.tip').attr('data-placement','top');
+	$('.tip').tooltip();
+});
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42711199-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=182012898639519";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+  
+  <div id="main">
+  	<header role="banner"><hgroup>
+  <h1><a id="blog-title" href="/">README</a>
+  
+    <span>&nbsp;&nbsp; SanghyukChun's Blog</span>
+  
+  </h1>
+</hgroup>
+
+</header>
+  	<nav role="navigation"><ul class="main-navigation list-inline">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="http://sanghyuk.kaist.ac.kr/aboutMe/">About Me</a></li>
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+
+</nav>
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2/">Octopress 설치하고 포스팅하기</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-25T20:00:00+09:00" pubdate data-updated="true">Jul 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>블로그를 설치하면서 했던 작업들을 간단하게 기록 겸 정리해서 올려본다.</p>
+
+
+<h4>Github Pages</h4>
+
+
+<p>먼저 Github에서 제공하는 Pages를 사용해 블로그로 사용할 repository를 만들어야한다. Github Pages란 github에서 제공하는 일종의 호스팅같은 개념인데 무엇보다 가장 좋은 점은 역시 &#8216;공짜&#8217;라는 것. 전혀 비용도 들지 않고 웹프로그래밍에 익숙한 사람이라면 금방 사용할 수 있을 정도로 아주 손쉽고 간편하다.</p>
+
+
+<p>Github는 당연히 알고 있다고 가정하고, Github Pages를 만드는 과정에 대해서 간략하게 설명하도록 하겠다. 먼저 자신의 이름으로 된 repository를 만들어야한다.</p>
+
+
+<pre>username.github.io</pre>
+
+
+<p>위와 같이 만들면 되고, 나의 경우는 SanghyukChun이 username이니 <code>SanghyukChun.github.io</code> 처럼 만들면 된다. 아주 간단!</p>
+
+
+<p>맨 처음 만들 때 Readme등으로 initialize를 해도 괜찮지만 지금은 일단 하지 말고 그냥 만들어두기만 한다. 원래 이 상태에서 Setting에서 Github Page를 만들고하는 과정이 더 있어야하지만 지금은 Octopress를 Pages Root에 설치한다고 가정했을 때를 기반으로 설명하기 때문에 생략하겠다. Github Pages에 대한 자세한 설명은 <a href="http://pages.github.com/">공식 도큐먼트</a>에서 확인할 수 있다.</p>
+
+
+<h4>Octopress 설치하기</h4>
+
+
+<p>Octopress는 Ruby 기반으로 만들어진 Framework이므로 당연히 Ruby가 필요하다. 나는 이전에 Rails개발을 했었기 때문에 루비도 1.9.3으로 버전업이 되어있고 rvm이나 rake도 전부 최신버전이므로 아무 문제 없이 넘어갔으므로 이 부분에서 문제가 있다면 추가 구글링을 필요로 할 것이다. 이 포스트는 &#8216;당연히&#8217; git도 미리 깔려있고 &#8216;당연히&#8217; Ruby나 기타 rvm이니 rake니 하는 것들도 전부 최신이라 이 부분에서 아무런 문제가 없는 사람들이 이 글을 읽을 것이라고 가정하고 썼으므로 해당 부분에서 문제가 생긴다면 마찬가지로 추가 구글링을 필요로 할 것이다.</p>
+
+
+<p>일단 octopress repository를 clone해야한다. 지금 clone하는 repository는 앞으로 모든 블로그작업을 하게 되는 workspace가 된다. 편한 위치에 받자</p>
+
+
+<pre>git clone git://github.com/imathis/octopress.git octopress</pre>
+
+
+<p>이제 octopress directory로 이동한 후 bundle을 설치한다. rails나 ruby 관련 어플리케이션을 작업했던 분들에게는 친숙한 과정일 듯</p>
+
+
+<pre>gem install bundler
+bundle install
+rake install</pre>
+
+
+<p>여기까지 했으면 이제 거의 끝났다. rake할 때 버전 어쩌고 거린다면 bundle exec를 붙여서 bundle exec rake install로 해주면 된다. 모든 rake에 그렇게 해야하는데 이게 rake 버전이 내가 가진 버전이 더 높아서 그런거니 그냥 그러려니 하고 넘어가면 된다. Rails 개발할 때는 너무 귀찮아서 rake를 bundle exec rake로 key binding해버리고 싶은 욕구까지 들었으니.. ㅎㅎ 마지막으로 지금 가지고 있는 Repository를 아까 생성한 github.io Repository에 remote로 추가해줄 차례이다.</p>
+
+
+<pre>rake setup github_pages</pre>
+
+
+<p>Github계정을 물어볼텐데 간단하게 입력하면 Repository가 관리하는 프로젝트가 Octopress가 관리하고 있는 https://github.com/imathis/octopress 에서 본인의 Repository로 변경되게 된다. 이제 Deploy를 해보자</p>
+
+
+<pre>rake generate
+rake deploy</pre>
+
+
+<p>공식 홈페이지에서는 generate을 하고 deploy를 하라고 되어있는데 굳이 generate를 하지 않아도 괜찮을 것 같다. 아무튼 이러면 이제 github.io에 배포가 된거다. 이제 username.github.io로 접속해보면 본인의 Octopress Blog를 확인할 수 있다.</p>
+
+
+<h4>Octopress로 포스트하기</h4>
+
+
+<p>이제 Post를 작성해보자.</p>
+
+
+<pre>rake new_post</pre>
+
+
+<p>공식 홈에는 rake new_post[&#8220;post name&#8221;]으로도 된다는데 난 에러만 뱉어서 그냥 이렇게 입력하고 그 다음 post이름을 입력한다. 이렇게 하면 source/_post 아래에 markdown문서가 생성된다. 그 파일을 수정하면 된다. sublime ~~~~.markdown으로 들어가면 (별다른 설정이 없다면 sublime ~~~으로 sublime을 못 쓴다. 뒷 문단에 설명해놓았으니 참고하길)</p>
+
+
+<pre>---
+layout: post
+title: "Octopress 설치하고 포스팅하기"
+date: 2013-07-25 20:00
+comments: true
+categories: 
+---</pre>
+
+
+<p>이제 이 파일에서 간단한 설정을 해주고 (<a href="http://octopress.org/docs/blogging/">http://octopress.org/docs/blogging/</a> 참고) &#8212; 바로 아래줄 부터 작성하면 된다. 포스트는 전부 HTML기반으로 작성해야한다. 다시 말해서 그냥 웹에서 작성하듯 작성할 수가 없다는 의미이고 그 귀찮은 html코딩을 매번 해야한다. 다른 방법이 없어보이지는 않는데 지금은 다른 어플리케이션을 찾기도 귀찮고 해서 그냥 편집기로 코딩하고 있다. 따라서 편집기를 하나 마련하는 편이 정신 건강에 좋은데 당연히 강력하게 Sublime Text를 주장하는 바이며, Emmet Package를 설치하여 귀찮은 html코딩을 좀 재밌고 간편하게 하기를 강력 권장한다. 이 녀석을 사용하면 정말 편하다. 특히 <code>&lt;p&gt;&lt;/p&gt;</code> 같은 귀찮기 그지없는 녀석들도 간단하게 p를 입력하고 tab만 입력하면 된다. 오오 아름다운 세상. 터미널에서 작업이 모두 일어나기 때문에 아래 symbolic link를 한번 생성하여 터미널에서도 열 수 있도록 작업하는 편이 덜 귀찮을 것이다.</p>
+
+
+<pre>ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime</pre>
+
+
+<p>한번만 symbolic link를 생성하고나면 terminal에서도 <code>sublime test.txt</code> 와 같은 형태로 sublime실행이 가능하다. 이제 작성만 하면 된다.</p>
+
+
+<p>어느정도 작성이 끝나고 preview가 필요하다고 생각되면 아래의 명령어를 입력한다.</p>
+
+
+<pre>rake preview</pre>
+
+
+<p>localhost:4000에 간단한 웹서버를 띄워준다. 메시지 나오는걸 봐서는 rails기반인듯. rails가 없는 컴퓨터에서 돌아가는지 여부는 확인 안했지만 아마 충분히 가능할 것 같다. 편집을 하다가 변경사항을 저장하면 그 즉시 asset이 reload되서 바로 새로고침으로 확인할 수 있다. 매번 deploy해야하는 자바 뻐큐머겅 ㅗ 두번머겅 ㅗㅗ 어느 정도 편집이 끝났으면 이제 배포를 하자</p>
+
+
+<pre>rake deploy</pre>
+
+
+<p>맨 처음 블로그를 배포했던 그 명령어 그대로 하면 된다. 이제 코드가 github로 push되고 github.io 페이지로 들어가서 배포한 post를 확인하면 끝난다. 이 포스트는 <a href="http://octopress.org/docs/">공식 도큐먼트</a>의 <a href="http://octopress.org/docs/setup/">initial setup</a>, <a href="http://octopress.org/docs/blogging/">blogging basic</a>, <a href="http://octopress.org/docs/deploying/github/">deploying to github pages</a>를 참고하였다.</p>
+
+
+<p>앞으로 블로그 커스터마이징도 하고 세팅도 많이 변경할텐데 변경 사항들은 그때그때 블로그에 포스팅하려한다. 나도 도움이 되고 구글링을 하다가 지친 누군지 모를 그 사람에게도 도움이 되겠지.</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/1/">Octopress와 함께하는 첫 번째 Post</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-25T18:49:00+09:00" pubdate data-updated="true">Jul 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Blog를 참 많이도 옮기는 것 같다. 맨 처음 네이버 블로그, 야심차게 옮겼던 티스토리, 워드프레스.. 그리고 지금 옮기게 된 Octopress까지..</p>
+
+
+<p>사실 블로깅도 제대로 많이 안하면서 굳이 Octopress로 옮긴 이유는 사실 그냥 요새 뭔가 만들고 싶은 욕구가 있었고 최근 About Me 작업을 하면서 알게 된 Github Pages로 뭔가를 할 수 없을까라는 생각이 들어서이다. 생각을 해보니 가장 무난하고 많은 것을 시도해 볼 수 있는 것이 블로그라는 생각이 들어서 실제 구현 사례들을 찾아보았고 Octopress라는 재미난 어플리케이션을 발견해 이걸 직접 써보기로 마음 먹었다.</p>
+
+
+<p>요즘 사용하는 머신이 대부분 윈도우이기 때문에 사실 Octopress는 좋은 대안은 아니다. 기본적으로 대부분의 작업이 Terminal에서 일어나야하고 Ruby로 작업된 녀석이기 때문에 윈도우에서 사용하다가는 정말 충격과 공포에 빠질 수가 있다. 하지만 나는 맥이 있으니 맥프로로 작업을 하면 되겠지~ 라는 생각으로, 거기다가 루비는 내 메인 언어 중 하나기도 하니깐 한번 도전해봤다.</p>
+
+
+<p>아직 레이아웃을 바꿔보지는 못 했지만, Octopress로 넘어오면서 가장 기대가 되는 점은 Customizing이다. 사실 티스토리와 워드프레스도 내가 직접 무언가를 만들고 도전해볼 수는 있지만 내가 관리하는 시스템이 아니고 재미가 없달까나. 나는 정말 처음 css부터 뜯어고치는게 재밌는데 말이지. 아무튼 요새 하는 일들이 조금 정리가 되면 블로그 디자인 작업은 바로 시작할 생각이다. 재미있는 블로깅 라이프가 되기를!</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/5/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<!--
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/52/">Network Science - Scale Free Network (Barabasi-Albert Network)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/51/">Network Science - Small World Network (Watts-Strogztz Network)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/50/">Network Science - Random Network</a>
+      </li>
+    
+      <li class="post">
+        <a href="/49/">Network Science - Measures and Metric</a>
+      </li>
+    
+      <li class="post">
+        <a href="/48/">Network Science - Graph Theory</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'SanghyukChun',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+//&#8211;>
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Sanghyuk Chun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=182012898639519&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

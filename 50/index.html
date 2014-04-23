@@ -209,34 +209,86 @@ $(function() {
 <p>$$ \ln u= (n-1) \ln {\left(1-{c \over n-1} (1-u) \right)} \simeq -(n-1) {c \over n-1} (1-u) = -c (1-u) $$</p>
 
 
-<p>따라서 \(u=e^{-c(1-u)}\) 라는 사실을 알 수 있다. 이때 giant component 안에 들어있는 vertex의 개수의 비율을 \(S=1-u={n_{gc} \over n}\) 이라고 정의한다면 식은 이 식은 아래와 같이 적을 수 있다.</p>
+<p>위의 식을 통해 \(u=e^{-c(1-u)}\) 라는 사실을 알 수 있다. 이때 giant component 안에 들어있는 vertex의 개수의 비율을 \(S=1-u={n_{gc} \over n}\) 이라고 정의한다면 이 식은 아래와 같이 적을 수 있다.</p>
 
 
 <p>$$ S=1-e^{-cS} $$</p>
 
 
-<p>작성중</p>
+<p>이로부터 우리는 Giant component의 크기 자체가 평균 degree에 의해 bound된다는 사실을 알 수 있다. 즉, 어떤 값 \(c\)에 의해 S가 결정된다는 것이다. 그러나 식이 한 번에 풀릴 수 있는 간단한 형태가 아니기 때문에 이 식에서 바로 정확한 S값을 구할 수는 없고, 그 대안으로 graphical solution이 제시된다. 즉, x축이 S의 값이고 y축이 S에 대한 함수의 값인 2차원 그래프를 그리고, \(y=S\)와 \(y=1-e^{-cS}\)의 교점을 구하는 것이다. 이런 두 함수를 그려보게 되면 아래와 같은 결과를 얻게 된다.</p>
 
 
-<p>CLuster Size Distibution은 </p>
+<p><img src="/images/post/50-1.png" width="500"></p>
+
+<p>위의 그래프에서 알 수 있는 사실은, 모든 함수들이 원점에서부터 시작하고 계속 기울기가 감소하는 형태이기 때문에 만약 원점에서 함수의 기울기가 1보다 큰 값이 존재하는 함수가 존재한다면 그 함수는 반드시 원점이 아닌 교점이 존재한다는 사실이다. 이런 교점을 찾아보면, \({d \over dS} (1-e^-{-cS})=1\)이라는 식을 풀어야하며 이 식을 계산해보면 \(ce^{-cS} = 1\)이라는 식을 얻을 수 있다. 즉, S=0인 점에서 기울기는 무조건 \(c\)가 되므로 \(c\)의 값이 1보다 크면 반드시 giant component가 존재하며 그 보다 작으면 giant component가 존재하지 않는 다는 것을 알 수 있다.</p>
 
 
 <h5 id="50-7-smallcomponent">Small Componets</h5>
 
 
-<p>작성중</p>
+<p>이번에는 Giant component에 포함되어있지 않은 Small component에 대해 알아보자. 만약 giant component가 네트워크에 딱 하나만 존재한다고 가정해보자. 그리고 각각의 크기가 \(S_1 n\) \(S_2 n\) 이라고 가정했을 때, \(i\)가 첫 번째 GC에 속하는 vertex, \(j\)가 두 번째 GC에 속하는 vertex일 때, 모든 distinct vertex pair \((i,j)\)의 개수는 간단하게 그 둘을 곱한 \(S_1 S_2 n^2\)일 것이다. 만약 각각의 pair는 \(p\)의 확률로 연결이 되어있거나 \(1-p\)의 확률로 연결되어져있지 않다. 따라서 이 두 개의 GC가 서로 완벽하게 분리되어있을 확률 \(q\)는 다음과 같이 계산할 수 있다</p>
 
 
-<h5 id="50-8-path">Path Length</h5>
+<p>$$ q = (1-p)^{S_1 S_2 n^2} = \left( 1 - {c \over n-1} \right)^{S_1 S_2 n^2} $$</p>
 
 
-<p>작성중</p>
+<p>이때 만약 \(n \to \infty\) 가 된다면, 우리는 아래와 같은 근사식을 구할 수 있다.</p>
 
 
-<h5 id="50-9-problems">Random Graph의 문제점</h5>
+<p>$$ \ln q = S_1 S_2 \lim_{n \to \infty} \left[ n^2 \ln \left( 1 - {c \over n-1} \right) \right] = S_1 S_2 \left[ -c(n+1) + {1 \over 2} c^2 \right] = c S_1 S_2 [-n + ({1 \over 2} c -1) ]$$</p>
 
 
-<p>작성중</p>
+<p>그러면 우리는 남은 상수항을 \(q_0\)라 정의하고, \(q = q_0 e^{-c S_1 S_2 n}\) 이라는 식을 구할 수 있다. 이 식은 너무나 당연하게 \(n \to \infty\) 가 되면 값이 0이된다. 따라서 우리는 \(n\)이 매우 큰 상황에서 두 개의 GC가 존재할 확률이 0이므로 \(n\)이 큰 네트워크는 단 하나의 Giant component를 가지고 있다는 결론을 내릴 수 있다.</p>
+
+
+<p>Random network는 단 하나의 Giant component만을 가지고 있기 때문에, 그에 포함되지 않은 나머지 component들을 모두 small component라고 정의할 수 있을 것이다. 이 때 각각의 small component의 크기를 \(\pi_s\)라고 정의하면 이 값들의 모든 합은 반드시 \(1-S\)이므로 \(\sum_s \pi_s = 1-S\) 라는 식을 얻을 수 있다.</p>
+
+
+<p>본격적으로 small component에 대해 다루기 전에 먼저 small component가 어떤 형태로 구성이 되어있을지 생각해보도록 하자. 정답부터 말하자면, small component는 tree의 형태를 하고 있다. 각각의 small component를 \(s\)개의 vertex를 가지는 tree라고 해보자. 당연히 tree의 edge의 개수는 \(s-1\)일 것이며 이 값은 connected 되어있는 \(s\)의 vertex가 만들어낼 수 edge의 최소 개수이다. 만약 이 최소 개수보다 많은 edge가 단 하나라도 존재할 확률은 \(c \over n-1\)이며, 이런 graph는 반드시 cycle이 생기게 되므로 더 이상 tree가 아니게 되어버린다. 그렇다면 우리가 이 small component가 tree임을 입증하기 위해서는 이런 additional edge가 존재할 확률이 0라는 것을 보이면 된다. tree를 구성하는 edge이외에 추가가 될 수 있는 edge의 개수는 \({s \choose 2} - (s-1) = {1 \over 2} (s-1)(s-2)\)이다. 이를 통해 tree안에 이런 edge가 단 하나라도 존재할 확률은 \({1 \over 2} {c(s-1)(s-2) \over n-1}\) 라는 것을 알 수 있다. 따라서 \(n \to \infty\) 가 되면 이 확률은 0이 되어버린다. 따라서 이 component는 반드시 tree라는 사실을 알 수 있다.</p>
+
+
+<p>이번에는 아래와 같은 상황을 한 번 상상해보자. 왼쪽과 오른쪽은 단 하나의 vertex만 제외하면 완벽하게 같은 Graph이다. 왼쪽 graph는 vertex \(i\)의 neighbor들이 모두 다른 small component에 속해있는 경우이며, 즉, 서로 분리되어있는 subgraph들을 하나로 이어주는 역할을 하고 있다. 오른쪽은 그 \(i\)는 없지만 여전히 서로 같은 확률을 그대로 유지하고 있고 여전히 확률 p를 가지는 random graph 이다.</p>
+
+
+<p><img src="/images/post/50-2.png" width="500"></p>
+
+<p>이런 상황에서 만약 우리가 충분히 큰 \(n\)을 가정했을 때 각각의 subgraph 역시 큰 graph의 특성을 따라갈 것이기 때문에, \(i\)가 없는 오른쪽 그림에서\(i\)의 neighbor \(n_1\)이 size가 \(s_1\)인 small component에 속할 확률은 \(\pi_{s_1}\)로 주어진다는 것을 예측할 수 있다.</p>
+
+
+<p>자 그렇다면 이런 vertex \(i\)가 \(k\)의 degree를 가지고 있었다고 가정해보자. 위의 결과로 인해 vertex \(i\)가 \(s\) 만큼의 크기를 갖는 small component에 속할 확률 \(P(s|k)\)는 이 vertex의 모든 neighbor, 즉 \(k\)개의 neighbor들이 각각 \(s_1\)부터 \(s_k\)까지 속할 확률과 같으며 이 값은 아래와 같이 계산 할 수 있을 것이다.</p>
+
+
+<p>$$ P(S|k) = \sum_{s_1}^infty &#8230; \sum_{s_k}^{\infty} \left[ \Pi_{j=1}^k pi_{s_j} \right] \delta (s-1, \sum_j s_j) $$</p>
+
+
+<p>이때 \(\delta (m,n)\)은 <a href="http://en.wikipedia.org/wiki/Kronecker_delta" target="new">Kronecker delta</a>를 의미하며 이 함수는 간단하게 두 값이 같으면 1 다르면 0을 반환한다. 즉, 이 수식에서 델타의 의미는 모든 \(s_j\)들을 더하면 \(s-1\)이 나와야한다는 것이다. =========== 추가 설명 작성 중 =============</p>
+
+
+<p>============Small component에 대한 추가 설명 작성 중=================</p>
+
+
+<h5 id="50-8-distofcompsize">Complete Distribution of Component Size</h5>
+
+
+<p></p>
+
+
+<h5 id="50-9-path">Path Length</h5>
+
+
+<p>보통 네트워크, 혹은 그래프에서 Diameter, 혹은 지름이라 함은 가장 긴 longest geodesic distance를 의미한다. 이 값은 즉, 임의의 두 vertex를 골랐을 때 가장 짧은 경로의 길이를 의미한다고 보면 된다. Random graph에서 이 값은 어떻게 구할 수 있을까? 먼저 간단하게 임의의 vertex에서 \(s\) 번 이동했을 때 visit할 수 있는 평균 vertex의 개수는 매 진행마다 degree 만큼의 vertex를 추가로 더 갈 수 있으므로 평균 degree들을 \(s\)번 곱한 형태인 \(c^s\)일 것이다. 그리고 우리가 원하는 경로는 가장 짧은 경로를 찾는 것이므로 vertex travel step을 이 visit 가능한 vertex와 전체 vertex의 개수가 같아지는 순간 끝나하면 우리가 원하는 shortest path의 길이를 유추할 수 있게 될 것이다. (정확한 경로는 예측할 수 없지만) 따라서 \(c^s \simeq n\)이 될 것이며 따라서 \(s \simeq {\ln n \over \ln c}\)가 될 것이다. 즉, 놀랍게도 아무리 \(n\)의 값이 급격하게 커지더라도 random graph의 diameter가 증가하는 속도는 \(\log n\) 이라는 것이다. 이 값은 충분히 작은 값으로, 이런 움직임이 실제 네트워크의 움직임과 매우 흡사하다는 것을 실험을 통해서 밝혀졌다.</p>
+
+
+<h5 id="50-10-problems">Random Graph의 문제점</h5>
+
+
+<p>앞서 살펴본 바를 토대로 Random Graph가 가지고 있는 문제점들을 살펴보도록 하자. 먼저 Average path length는 \(\bar l \simeq {\log n \over \log c} \)로 표현이 되며 이것은 곧, random graph는 \(n\)의 값에 비례하여 path length가 늘어나는 것이 아니라 log scale로 증가한다는 것을 알 수 있다. 즉, \(n\)이 매우 크더라도 path는 그에 비해 매우 짧다는 것을 알 수 있다. 이것은 실제 대부분의 네트워크들에서도 나타나는 현상이다. 반면 clustering coefficient는 \(c \over n\)으로 표현이 되며 \(n\)의 값이 증가할 수록 떨어지는 것을 알 수 있는데, 실제 network들이 \(n\)이 커지더라도 높은 clustering coefficient를 유지한다는 점에서 현실과 잘 맞지 않는다는 것을 알 수 있다. 마지막으로 Degree distribution을 살펴보게 되면, random graph에서의 degree distribution은 \(P(k) \simeq e^{-c} {c^k \over k!}\)로 근사가 되는데, 실제 네트워크에서 관측되는 distribution은 \(P(k) \simeq k^{-\gamma}\) 와 같은 power distribution이다. 따라서 이 역시 잘 맞지 않는다는 것을 알 수 있다.</p>
+
+
+<p>Random network는 가장 간단한 network모델이며 수학적으로 잘 증명되었고 쉽게 이해할 수 있는 network모델이다. 그러나 real network와 비교해 잘 맞지 않는 점들이 있기 때문에 우리는 결국 새로운 network model들을 계속 더 공부해야만 하는 것이다.</p>
+
+
+<p>따라서 다음 글은 이와 같은 문제를 일부 해결한 Small world network에 대해 다루게 될 것이다.</p>
 
 
 
@@ -252,8 +304,8 @@ $(function() {
     <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="/49" target="new">Measures and Metric</a></li>
     <li>Lecture 4: <a href="/50" target="new">Random Network</a></li>
-    <li>Lecture 5: Small world Network</li>
-    <li>Lecture 6: Scale free Network</li>
+    <li>Lecture 5: <a href="/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="/52" target="new">Scale free Network</a></li>
 </ul>
 
 </div>
@@ -283,7 +335,7 @@ $(function() {
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/kaist/'>KAIST</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/network-science/'>Network-Science</a>
+    <a class='category' href='/blog/categories/kaist/'>KAIST</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/modeling/'>Modeling</a>, <a class='category' href='/blog/categories/network/'>Network</a>, <a class='category' href='/blog/categories/network-science/'>Network-Science</a>
   
 </span>
 
@@ -306,6 +358,8 @@ $(function() {
         <a class="basic-alignment left" href="/49/" title="Previous Post: Network Science - Measures and Metric">&laquo; Network Science - Measures and Metric</a>
       
       
+        <a class="basic-alignment right" href="/51/" title="Next Post: Network Science - Small World Network (Watts-Strogztz Network)">Network Science - Small World Network (Watts-Strogztz Network) &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -327,6 +381,14 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/52/">Network Science - Scale Free Network (Barabasi-Albert Network)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/51/">Network Science - Small World Network (Watts-Strogztz Network)</a>
+      </li>
+    
+      <li class="post">
         <a href="/50/">Network Science - Random Network</a>
       </li>
     
@@ -336,14 +398,6 @@ $(function() {
     
       <li class="post">
         <a href="/48/">Network Science - Graph Theory</a>
-      </li>
-    
-      <li class="post">
-        <a href="/47/">Network Science - Introduction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/46/">2014년 1분기 회고</a>
       </li>
     
   </ul>

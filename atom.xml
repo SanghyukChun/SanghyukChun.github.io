@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-04-22T23:03:33+09:00</updated>
+  <updated>2014-04-23T18:12:51+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,235 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Network Science - Scale Free Network (Barabasi-Albert Network)]]></title>
+    <link href="http://SanghyukChun.github.io/52/"/>
+    <updated>2014-04-23T15:33:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/52</id>
+		<content type="html"><![CDATA[<h5 id="52-1-before">들어가기 전에</h5>
+
+
+<p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Scale Free Network 내용을 요약한 글이다. 이 렉쳐에서는 Scale Free Network라는 concept에 대해 다루게 된다.</p>
+
+
+<h5 id="52-2-scalefreenetwork">Scale Free Network</h5>
+
+
+<p>작성중</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="http://SanghyukChun.github.io/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
+    <li>Lecture 5: <a href="http://SanghyukChun.github.io/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="http://SanghyukChun.github.io/52" target="new">Scale free Network</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Network Science - Small World Network (Watts-Strogztz Network)]]></title>
+    <link href="http://SanghyukChun.github.io/51/"/>
+    <updated>2014-04-23T13:06:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/51</id>
+		<content type="html"><![CDATA[<h5 id="51-1-before">들어가기 전에</h5>
+
+
+<p>이 글은 <a href="http://SanghyukChun.github.io/47" target="new">2014년 KAIST Network Science 수업</a> 중 Small World Network 내용을 요약한 글이다. 이 렉쳐에서는 Small World Network라는 concept과 실제 그런 컨셉을 적용한 Network model 중 하나인 Watts-Strogztz Network에 대해 다루게 된다.</p>
+
+
+<h5 id="51-2-problemofrandomnetwork">Prolem of Random Network</h5>
+
+
+<p><a href="http://SanghyukChun.github.io/50#50-10-problems" target="new">이전 글</a>에서 다뤘 듯, Random Network는 실제 Network와 맞지 않는 부분이 많이 존재한다. 가장 큰 문제는 degree distribution과 clustering coefficient가 실제 network 분포와 크게 반하다는 점이다. 따라서 이 글에서는 그런 점들을 개선시킨 새로운 컨셉의 네트워크 모델링에 대해서 다루게 될 것이다. 사실 이 Small world network라는 것이 맨 처음 1998년도 논문으로 발표가 되었을 때 그 기반이 되는 Network가 <a href="http://en.wikipedia.org/wiki/Regular_graph" target="new">Regular Network</a>이기 때문에 이런 Regular Network에 대해서도 다룬 이후에 Small World Network를 다루는 것이 맞다고 생각하지만, 실제 강의 내용에서 Regular Network 생략되었기 때문에 나 역시 이 글에서 Regular Network에 대해서는 많이 다루지 않을 생각이다. 참고로 Regular Network는 모든 vertex가 같은 degree를 가지는 Network를 의미하며 k-regular network라고 하면 모든 vertex의 mean degree가 \(k\)라는 의미이다. 그런데 이 lecture에서는 local degree의 값이 \(k\)가 아니라 \(2k\)이며 \(k= {m \over n}\)으로 정의한다. 엄청나게 헷갈리기는 하지만.. 일단 lecture의 notation을 따르도록 하겠다. 즉, 2-regular network는 local degree가 4이며 즉, 각 vertex는 4개의 edge를 가진다. 실제 이 chapter 자체가 2-regular network를 small world network로 바꾸는 Watts-Strogztz Network에 대한 내용이므로 이 점을 꼭 숙지하고 넘어가야한다.</p>
+
+
+<h5 id="51-3-smallworldnetwork">Small World Network</h5>
+
+
+<p>Small world network란 예전 <a href="http://SanghyukChun.github.io/34#34-2-smallworld" target="new">인터넷 속의 수학</a>에서도 간략하게 다뤘던 내용이므로 예전 글을 참고해도 좋을 것 같다. Small World Network란 높은 clustering coefficient를 가지고 있고, 상대적으로 짧은 diameter를 가지고 있으며 entropy가 scalable한 sparse network를 의미한다. 여기에서 여러 가지 용어들이 나오는데, clustering coefficient는 넘어가도 되고, diameter는 network에서 가장 긴 shortest path, 그리고 entrophy는 이 graph를 나타내기 위한 information의 양을 의미한다. 마지막으로 sparse network라는 것은 모든 vertex pair사이에 edge가 존재하는 것이 아니라 edge가 존재하지 않는 vertex pair가 존재한다는 의미이다. Small world network는 regular network와 random network의 중간 정도 쯤 되는 network인데, 역시 이것도 <a href="http://SanghyukChun.github.io/34#34-3-poissonregularnetwork" target="new">이전 글</a>에서 다뤘던 내용이므로 관심이 있다면 간략하게 읽어보기를 권한다. 간단하게 설명하면 Samll world network는 regular network에 적당한 randomness를 추가하여 얻을 수 있기 때문에 이 두 개의 네트워크의 중간 정도라고 표현하는 것이다.</p>
+
+
+<p>사실 이 Small world라는 단어는 Stanley Milgram의 6 degree 실험에서 처음 등장한 것인데, 이 실험에 대한 자세한 설명은 <a href="http://SanghyukChun.github.io/32#32-3-milgramexp" target="new">이전에 적은 글</a>을 참고하기를 바란다. 이 실험의 결론만 얘기하자면 실제 social 네트워크에서는 임의의 vertex pair를 선택했을 때 그 둘 사이를 지르는 가장 짧은 path의 길이가 network의 크기에 비해서 엄청나게 짧다는 것이다. 이 실험에서는 실제 미국 내의 네트워크에서 6개의 step이면 상대방에게 도달할 수 있다는 것을 알 수 있었다. (심지어 shortest path도 아니고 greedy search 였음에도 불구하고) 이 글에서 설명하게 될 Small world network 역시 상대적으로 짧은 diameter를 가지게 되고, clustering coefficient와 closeness centrality도 높다.</p>
+
+
+<h5 id="51-4-wattsstrogatz">Watts-Strogatz Procedure</h5>
+
+
+<p>그러면 이제 small world network를 generate하는 방법에 대해 생각해보자. 이 과정을 Watts-Strogatz Procedure라고 부른다. 이 algorithm은 k-regular network를 small world network로 만드는 알고리듬인데, 주어진 k-regular network의 임의의 \(pm\) 개의 edge를 random하게 rewire를 시킴으로써 얻을 수 있다. 즉, 내가 임의로 regualr network에서 p의 확률로 하나의 edge를 random 한 edge로 바꿔주는 과정을 계속 반복하기만 하면 된다. 이런 과정을 통해 우리는 regular network에 강제적으로 randomness를 주입할 수 있게 되며, \(p\)가 약 1~4% 정도가 되면 small-world effect가 나타난다고 한다. 이 \(p\)의 값 0.01 ~ 0.04를 transition threshold 혹은 crossover point라고 한다.</p>
+
+
+<p>놀라운 사실은, 이렇게 간단한 algorithm을 적용하기만 해도 degree sequence distribution, diameter, average path length 등의 정보가 크게 달라지게 된다. 특히 diameter와 average path length는 아주 조금의 randomness만 주입하게 되어도 그 값이 크게 감소하게 되는데, 이런 극적인 거리 감소 현상을 곧 small-world effect라고 하는 것이다.</p>
+
+
+<p>이런 과정을 통해 얻어지는 Small world network는 아래 그림과 같다. 이 그림은 vertex가 20개 있는 2-regular network를 WS procedure를 사용해 reconstruct한 것으로, p의 값이 점점 올라가면서 그 모양이 바뀌는 모습을 관측한 것이다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/51-1.png" width="600"></p>
+
+<p>자 그런데 지금까지 설명한 방법은 완전히 random procedure이기 때문에 connected graph를 보장할 수 없다. 어떻게 이것을 개선시킬 수 있을까? 간단하게 생각할 수 있는 방법으로는 만약 선택한 edge를 제거했을 때 isolated vertex가 생기는 경우 해당 edge를 바꾸지 않도록 하는 방법이 있을 수 있을 것이다. 2000년도 뉴먼이 제시한 NSWS model에서는 이런 문제를 해결한 새로운 알고리듬을 제시했다고 하는데 <a href="http://arxiv.org/pdf/cond-mat/0001118.pdf" target="new">논문</a>은 찾은 것 같은데 자세히 읽어보지는 못했다.</p>
+
+
+<h5 id="51-5-degreedist">Degree Sequence Distribution</h5>
+
+
+<p>Degree Sequence는 Graph \(G\)의 모든 \(n\) vertex들의 degree value 들의 sequence이며 \(g=[d_1, d_2, d_3, &#8230;, d_n ]\) 과 같이 표현된다. 그리고 이것의 distribution, 즉, degree가 1인 node 들의 비율, 2인 node들의 비율.. 등등을 표현하는 distribution은 \(g&#8217; = [h_1, h_2, h_3, &#8230; h_{max_d}]\) 라고 표현할 수 있다.</p>
+
+
+<p>맨 처음 k-regular network의 모든 vertex들이 가지는 edge의 개수는 \(2k\)이다. 그런데 \(p\)의 확률로 edge가 변경되더라도 결국 평균 edge의 개수, 혹은 connectivity는 \(c=2k\)로 고정될 것이라는 사실을 알 수 있다. 자 이제 \(P_p (c)\)를 degree의 probability distribution이라고 해보자. vertex들의 2k connection 중 k개의 connection은 아직 still untouched 일 것이므로, 이런 상황에서 vertex i의 connectivity는 \(c_i = k+n_i \ n_i \geq 0 \)라는 것을 알 수 있다. 이제 \(n_i \)라는 것도 두 가지 부분으로 나눠 생각할 수 있는데, 먼저 \(n_i^1 \leq k \) 은 \(1-p\)의 확률로 rewire되지 않는 link e들의 개수이고, \(n_i^2 = n_i - n_i^1\) 은 그 반대로 vertex \(i\)에 reconnected된 edge들을 의미한다. 그리고 총 \(N\)개의 vertex가 있다고 했을 때, 임의의 edge가 vertex \(i\)로 rewire될 확률은 \(p \over N \)라는 것도 알 수 있다.</p>
+
+
+<p>그렇다면 우리는 이 사실을 통해 small world network의 degree sequence distribution을 다음과 같은 과정을 통해 얻을 수 있게 된다.</p>
+
+
+<p>$$ P_1 (n_i^1) = {k \choose n_i^1} (1-p)^{n_i^1} p^{k-n_i^1} $$</p>
+
+
+<p>$$ P_2 (n_i^2) = {(kp)^{n_i^2} \over n_i^2 !} e^{-pk} \ for \ large \ N $$</p>
+
+
+<p>$$ P_p (c) = \sum_{n=0}^{min(c-k, k)} {k \choose n} (1-p)^n p^{k-n} {(kp)^{c-k-n} \over (c-k-n)!} e^{-pk} \ c \geq k $$</p>
+
+
+<p>아래 그림은 degree sequence distribution \(P_p (c)\)를 connectivity \(c=2k\)에 대해 표현한 것이다.</p>
+
+
+<p>  <br/>
+<img src="http://SanghyukChun.github.io/images/post/51-2.png" width="600"></p>
+
+<p>이 그림을 통해 우리는 degree sequence distribution이 평균값이 \(\bar c = 2k\)인 Poisson 분포임을 알 수 있다.</p>
+
+
+<p>이번에는 random network와 실제 network data, 그리고 앞서 서명한 과정을 사용해 만들어낸 network의 degree distribution을 비교한 그림을 살펴보자</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/51-3.png" width="600"></p>
+
+<p>이 그림을 통해 우리는 random network보다 small world network가 더 실제 네트워크와 더 비슷하다는 것을 알 수 있다.</p>
+
+
+<h5 id="51-6-entropy">Entropy</h5>
+
+
+<p>앞서 정의했었던 Degree sequence distribution을 사용하면 Graph의 entropy \(I(G)\)를 정의할 수 있는데 이 값은 곧 네트워크를 표현 하기 위한 information의 양을 의미한다. 당연히 Regular Network는 Entropy가 낮고 Random Network는 Entropy가 높다. 다시 말해서 Graph \(G\)의 Entropy는 그 graph의 randomness를 bit로 표현한 값이 되며, 이 randomness는 다시 말해서 degree sequence \(g&#8217;\)으로 다음과 같이 나타낼 수 있다.</p>
+
+
+<p>$$ I(G) = - \sum_{i=1}^{max_d} h_i (\log_2 h_i), \ where \ g&#8217; = [h_1, h_2, h_3, &#8230; h_{max_d}] $$</p>
+
+
+<p>이 값을 확률 2-regular network를 \(p\)의 확률로 edge를 rewire하는 경우에 대해 ploting을 해보면 다음과 같은 결과를 얻을 수 있다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/51-4.png" width="600"></p>
+
+<p>즉, 엔트로피는 확률 \(p\)의 log scale로 증가하게 된다. 또한 entropy의 정의에 따라 이 값은 \(I_{WS} = -\sum_k h(d) \log_2 h(k) \)로도 표현이 된다. 이런 결과들을 통해 우리는 small world network가 scalable하다는 것을 알 수 있는데 왜냐하면 \(p\)가 0이면 엔트로피의 값은 regular network와 같은 0이지만 \(p\)가 증가함에 따라서 우리가 원하는 entropy를 randomness를 조절함으로써 얻을 수 있기 때문이다. 따라서 이런 Small world network는 scalable하다는 것을 알 수 있다. (일단 수업에서 배운대로 정리를 하기는 했지만 이부분은 너무나도 모호하다. 아무래도 네트워크의 scalable의 definition을 추가로 찾아보고 알아봐야 할 것 같다)</p>
+
+
+<h5 id="51-7-entropyvsdensity">Entropy vs Density</h5>
+
+
+<p>k-regular network의 density는 단순하게 \(density = 2 { k \over n }\)으로 계산할 수 있으며, 따라서 우리는 \(k = n {density \over 2}\) 라는 사실을 알 수 있다. 이 값을 통해서 우리는 small world network의 entropy와 density의 관계를 유추할 수 있다. 즉, parameter \(A, B, C\)를 주고 그 값에 대해 \(I_{WS(density)} = A log_2 B(density) - C \) 라는 엔트로피 식을 적을 수 있다. 이 때 \(A, B, C\)를 각각 0.5, 60, 0 이라고 한다면 이 식은 \(I_{WS(density)} = 0.5 log_2 (60(density)) = O(log_2 (density)) = O \left(log_2 \left( \sqrt {k \over n} \right) \right)\) 임을 알 수 있다. 즉, 우리는 entropy가 density에 \(O(\log_2 density)\)의 형태로 표현된다는 것을 알 수 있으며 이 값은 random network의 \(O(density)\)보다 훨씬 덜 가파른 증가율이라는 것을 알 수 있다. 죽, 조금 더 자세히 말하자면 Small world network의 density의 증가률 혹은 rewiring probability의 증가율에 대한 entropy의 증가율은 random network의 그것보다 훨씬 더디게 증가함을 알 수 있다. 이것을 Density에 대해 ploting하게 되면 아래와 같은 결과를 얻게 된다. (일단 3개의 term 중에서 entropy만 보면 된다)</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/51-5.png" width="600"></p>
+
+<p>다시 한번 정리하자면, small world network에서 density와 entropy는 logarithm relationship을 가진다.</p>
+
+
+<h5 id="51-8-nmweq">Newman, Moore, and Watts Equation</h5>
+
+
+<p>먼저 간단한 observation들을 나열해보자. 먼저 rewiring 이 없는 2-regular network는 average path가 \(n \over 4k\)로 표현이 된다. 그리고 바로 전 section에서 본 그림처럼 매우 작은 rewiring probability \(p\)에 대해서 average path length는 매우 빠르게 감소함을 알 수 있다. 그리고 마지막으로 어떤 early point \(p^*\)가 존재해서 이 값보다 작은 rewiring probability를 가진 small world network는 regular에 매우 가깝고 그보다 큰 값을 가지는 네트워크는 random에 더 가깝다. 이 지점을 우리는 crossover, 혹은 transition threshold라고 부르며 이런 현상을 네트워크의 phase transition이라 부른다.</p>
+
+
+<p>Average path length는 \(p=0\)에서 \(n \over 4k\)의 값을 가지며, \(p\)가 증가함에 따라 감소한다. 이때 \(r=2pm\)이라는 값을 정의하면 \(r\)에 대한 path lenth scaling function을 아래와 같이 표현할 수 있다.</p>
+
+
+<p>$$ f(r) = 4 {\tanh^{-1} {r \over \beta} \over \beta }; \ where \beta = \sqrt{r^2 + 4 r} $$</p>
+
+
+<p>또한 average path length는 다음과 같이 표현이 된다.</p>
+
+
+<p>$$ \bar L_{SW} = n {f(r) \over 2k} = {2n \over \beta k} tanh^{-1} {r \over \beta} $$</p>
+
+
+<p>만약 \(n=100, m=200, k=2, density=0.04, p=0.04\)라는 조건을 넣고 이 값을 계산하면 average path length는 11.7이라는 값을 얻을 수 있다.</p>
+
+
+<h5 id="51-9-avgpathlength">Average Path Length</h5>
+
+
+<p>작성중</p>
+
+
+<p>$$ log_2 \bar L(r) = \log_2 \left( {n \over 4k} \right) - q \log_2 r $$</p>
+
+
+<p>$$ \bar L(r) = {n/4k \over r^q }, \ where \ r=pkn $$</p>
+
+
+<p>즉, 이 값들을 통해 우리는 \(p\)가 0이 아닐 때 (0이면 regular network와 같은 값이 된다) 이 평균 path length는 \(\bar L(r) = {n/4k \over (pkn)^q }\) 로 표현된다는 것을 알 수 있다.</p>
+
+
+<h5 id="51-10-clusteringcoefficient">Clustering Coefficient</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="51-11-closness">Closeness Centrality</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="51-12-search">Seach in Small World Network</h5>
+
+
+<p>작성중</p>
+
+
+<h5 id="51-13-conclusion">Conclusion</h5>
+
+
+<p>자 이렇게 small world network에 대해 살펴보았다. Small world Network는 Regular Network에 확률 \(p\) 만큼 randomness를 부여해 만들어지는 graph이며, 이 randomness는 scalable하며, random network와 비교했을 때 훨씬 낮은 entropy를 가진다.또한 이런 small world network의 topology는 매우 높은 clustering coefficient와 closeness를 가지게 된다. 또한 그 크기에 비해 상대적으로 짧은 average path와 diameter를 가지게 된다. (그리고 이 특성 자체가 small world effect를 지칭하는 것이기도 하다) 그리고 small world network에서 가장 좋은 search algorithm은 max-degree search 알고리듬이라는 것도 알 수 있었다.</p>
+
+
+<p>다만, 거의 대부분의 좋은 성질을 가지고 있음에도 불구하고 Small world network 혹은 Watts-Strogatz Model에는 real network와 반하는 특성이 하나 있는데, 바로 degree distribution이다. 일반적인 real network의 degree distribution이 \(P(k) \simeq k^{-\gamma}\)로 표현되는 것에 비해, WS model은 exponetial degree distribution을 가지게 된다. 따라서 이런 문제를 해결하기 위해서 우리는 degree distribution이 power law distribution으로 나타나는 새로운 형태의 network인 scale-free network에 대해 다루게 될 것이다.</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="http://SanghyukChun.github.io/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="http://SanghyukChun.github.io/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
+    <li>Lecture 5: <a href="http://SanghyukChun.github.io/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="http://SanghyukChun.github.io/52" target="new">Scale free Network</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Network Science - Random Network]]></title>
@@ -111,34 +340,86 @@
 <p>$$ \ln u= (n-1) \ln {\left(1-{c \over n-1} (1-u) \right)} \simeq -(n-1) {c \over n-1} (1-u) = -c (1-u) $$</p>
 
 
-<p>따라서 \(u=e^{-c(1-u)}\) 라는 사실을 알 수 있다. 이때 giant component 안에 들어있는 vertex의 개수의 비율을 \(S=1-u={n_{gc} \over n}\) 이라고 정의한다면 식은 이 식은 아래와 같이 적을 수 있다.</p>
+<p>위의 식을 통해 \(u=e^{-c(1-u)}\) 라는 사실을 알 수 있다. 이때 giant component 안에 들어있는 vertex의 개수의 비율을 \(S=1-u={n_{gc} \over n}\) 이라고 정의한다면 이 식은 아래와 같이 적을 수 있다.</p>
 
 
 <p>$$ S=1-e^{-cS} $$</p>
 
 
-<p>작성중</p>
+<p>이로부터 우리는 Giant component의 크기 자체가 평균 degree에 의해 bound된다는 사실을 알 수 있다. 즉, 어떤 값 \(c\)에 의해 S가 결정된다는 것이다. 그러나 식이 한 번에 풀릴 수 있는 간단한 형태가 아니기 때문에 이 식에서 바로 정확한 S값을 구할 수는 없고, 그 대안으로 graphical solution이 제시된다. 즉, x축이 S의 값이고 y축이 S에 대한 함수의 값인 2차원 그래프를 그리고, \(y=S\)와 \(y=1-e^{-cS}\)의 교점을 구하는 것이다. 이런 두 함수를 그려보게 되면 아래와 같은 결과를 얻게 된다.</p>
 
 
-<p>CLuster Size Distibution은 </p>
+<p><img src="http://SanghyukChun.github.io/images/post/50-1.png" width="500"></p>
+
+<p>위의 그래프에서 알 수 있는 사실은, 모든 함수들이 원점에서부터 시작하고 계속 기울기가 감소하는 형태이기 때문에 만약 원점에서 함수의 기울기가 1보다 큰 값이 존재하는 함수가 존재한다면 그 함수는 반드시 원점이 아닌 교점이 존재한다는 사실이다. 이런 교점을 찾아보면, \({d \over dS} (1-e^-{-cS})=1\)이라는 식을 풀어야하며 이 식을 계산해보면 \(ce^{-cS} = 1\)이라는 식을 얻을 수 있다. 즉, S=0인 점에서 기울기는 무조건 \(c\)가 되므로 \(c\)의 값이 1보다 크면 반드시 giant component가 존재하며 그 보다 작으면 giant component가 존재하지 않는 다는 것을 알 수 있다.</p>
 
 
 <h5 id="50-7-smallcomponent">Small Componets</h5>
 
 
-<p>작성중</p>
+<p>이번에는 Giant component에 포함되어있지 않은 Small component에 대해 알아보자. 만약 giant component가 네트워크에 딱 하나만 존재한다고 가정해보자. 그리고 각각의 크기가 \(S_1 n\) \(S_2 n\) 이라고 가정했을 때, \(i\)가 첫 번째 GC에 속하는 vertex, \(j\)가 두 번째 GC에 속하는 vertex일 때, 모든 distinct vertex pair \((i,j)\)의 개수는 간단하게 그 둘을 곱한 \(S_1 S_2 n^2\)일 것이다. 만약 각각의 pair는 \(p\)의 확률로 연결이 되어있거나 \(1-p\)의 확률로 연결되어져있지 않다. 따라서 이 두 개의 GC가 서로 완벽하게 분리되어있을 확률 \(q\)는 다음과 같이 계산할 수 있다</p>
 
 
-<h5 id="50-8-path">Path Length</h5>
+<p>$$ q = (1-p)^{S_1 S_2 n^2} = \left( 1 - {c \over n-1} \right)^{S_1 S_2 n^2} $$</p>
 
 
-<p>작성중</p>
+<p>이때 만약 \(n \to \infty\) 가 된다면, 우리는 아래와 같은 근사식을 구할 수 있다.</p>
 
 
-<h5 id="50-9-problems">Random Graph의 문제점</h5>
+<p>$$ \ln q = S_1 S_2 \lim_{n \to \infty} \left[ n^2 \ln \left( 1 - {c \over n-1} \right) \right] = S_1 S_2 \left[ -c(n+1) + {1 \over 2} c^2 \right] = c S_1 S_2 [-n + ({1 \over 2} c -1) ]$$</p>
 
 
-<p>작성중</p>
+<p>그러면 우리는 남은 상수항을 \(q_0\)라 정의하고, \(q = q_0 e^{-c S_1 S_2 n}\) 이라는 식을 구할 수 있다. 이 식은 너무나 당연하게 \(n \to \infty\) 가 되면 값이 0이된다. 따라서 우리는 \(n\)이 매우 큰 상황에서 두 개의 GC가 존재할 확률이 0이므로 \(n\)이 큰 네트워크는 단 하나의 Giant component를 가지고 있다는 결론을 내릴 수 있다.</p>
+
+
+<p>Random network는 단 하나의 Giant component만을 가지고 있기 때문에, 그에 포함되지 않은 나머지 component들을 모두 small component라고 정의할 수 있을 것이다. 이 때 각각의 small component의 크기를 \(\pi_s\)라고 정의하면 이 값들의 모든 합은 반드시 \(1-S\)이므로 \(\sum_s \pi_s = 1-S\) 라는 식을 얻을 수 있다.</p>
+
+
+<p>본격적으로 small component에 대해 다루기 전에 먼저 small component가 어떤 형태로 구성이 되어있을지 생각해보도록 하자. 정답부터 말하자면, small component는 tree의 형태를 하고 있다. 각각의 small component를 \(s\)개의 vertex를 가지는 tree라고 해보자. 당연히 tree의 edge의 개수는 \(s-1\)일 것이며 이 값은 connected 되어있는 \(s\)의 vertex가 만들어낼 수 edge의 최소 개수이다. 만약 이 최소 개수보다 많은 edge가 단 하나라도 존재할 확률은 \(c \over n-1\)이며, 이런 graph는 반드시 cycle이 생기게 되므로 더 이상 tree가 아니게 되어버린다. 그렇다면 우리가 이 small component가 tree임을 입증하기 위해서는 이런 additional edge가 존재할 확률이 0라는 것을 보이면 된다. tree를 구성하는 edge이외에 추가가 될 수 있는 edge의 개수는 \({s \choose 2} - (s-1) = {1 \over 2} (s-1)(s-2)\)이다. 이를 통해 tree안에 이런 edge가 단 하나라도 존재할 확률은 \({1 \over 2} {c(s-1)(s-2) \over n-1}\) 라는 것을 알 수 있다. 따라서 \(n \to \infty\) 가 되면 이 확률은 0이 되어버린다. 따라서 이 component는 반드시 tree라는 사실을 알 수 있다.</p>
+
+
+<p>이번에는 아래와 같은 상황을 한 번 상상해보자. 왼쪽과 오른쪽은 단 하나의 vertex만 제외하면 완벽하게 같은 Graph이다. 왼쪽 graph는 vertex \(i\)의 neighbor들이 모두 다른 small component에 속해있는 경우이며, 즉, 서로 분리되어있는 subgraph들을 하나로 이어주는 역할을 하고 있다. 오른쪽은 그 \(i\)는 없지만 여전히 서로 같은 확률을 그대로 유지하고 있고 여전히 확률 p를 가지는 random graph 이다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/50-2.png" width="500"></p>
+
+<p>이런 상황에서 만약 우리가 충분히 큰 \(n\)을 가정했을 때 각각의 subgraph 역시 큰 graph의 특성을 따라갈 것이기 때문에, \(i\)가 없는 오른쪽 그림에서\(i\)의 neighbor \(n_1\)이 size가 \(s_1\)인 small component에 속할 확률은 \(\pi_{s_1}\)로 주어진다는 것을 예측할 수 있다.</p>
+
+
+<p>자 그렇다면 이런 vertex \(i\)가 \(k\)의 degree를 가지고 있었다고 가정해보자. 위의 결과로 인해 vertex \(i\)가 \(s\) 만큼의 크기를 갖는 small component에 속할 확률 \(P(s|k)\)는 이 vertex의 모든 neighbor, 즉 \(k\)개의 neighbor들이 각각 \(s_1\)부터 \(s_k\)까지 속할 확률과 같으며 이 값은 아래와 같이 계산 할 수 있을 것이다.</p>
+
+
+<p>$$ P(S|k) = \sum_{s_1}^infty &#8230; \sum_{s_k}^{\infty} \left[ \Pi_{j=1}^k pi_{s_j} \right] \delta (s-1, \sum_j s_j) $$</p>
+
+
+<p>이때 \(\delta (m,n)\)은 <a href="http://en.wikipedia.org/wiki/Kronecker_delta" target="new">Kronecker delta</a>를 의미하며 이 함수는 간단하게 두 값이 같으면 1 다르면 0을 반환한다. 즉, 이 수식에서 델타의 의미는 모든 \(s_j\)들을 더하면 \(s-1\)이 나와야한다는 것이다. =========== 추가 설명 작성 중 =============</p>
+
+
+<p>============Small component에 대한 추가 설명 작성 중=================</p>
+
+
+<h5 id="50-8-distofcompsize">Complete Distribution of Component Size</h5>
+
+
+<p></p>
+
+
+<h5 id="50-9-path">Path Length</h5>
+
+
+<p>보통 네트워크, 혹은 그래프에서 Diameter, 혹은 지름이라 함은 가장 긴 longest geodesic distance를 의미한다. 이 값은 즉, 임의의 두 vertex를 골랐을 때 가장 짧은 경로의 길이를 의미한다고 보면 된다. Random graph에서 이 값은 어떻게 구할 수 있을까? 먼저 간단하게 임의의 vertex에서 \(s\) 번 이동했을 때 visit할 수 있는 평균 vertex의 개수는 매 진행마다 degree 만큼의 vertex를 추가로 더 갈 수 있으므로 평균 degree들을 \(s\)번 곱한 형태인 \(c^s\)일 것이다. 그리고 우리가 원하는 경로는 가장 짧은 경로를 찾는 것이므로 vertex travel step을 이 visit 가능한 vertex와 전체 vertex의 개수가 같아지는 순간 끝나하면 우리가 원하는 shortest path의 길이를 유추할 수 있게 될 것이다. (정확한 경로는 예측할 수 없지만) 따라서 \(c^s \simeq n\)이 될 것이며 따라서 \(s \simeq {\ln n \over \ln c}\)가 될 것이다. 즉, 놀랍게도 아무리 \(n\)의 값이 급격하게 커지더라도 random graph의 diameter가 증가하는 속도는 \(\log n\) 이라는 것이다. 이 값은 충분히 작은 값으로, 이런 움직임이 실제 네트워크의 움직임과 매우 흡사하다는 것을 실험을 통해서 밝혀졌다.</p>
+
+
+<h5 id="50-10-problems">Random Graph의 문제점</h5>
+
+
+<p>앞서 살펴본 바를 토대로 Random Graph가 가지고 있는 문제점들을 살펴보도록 하자. 먼저 Average path length는 \(\bar l \simeq {\log n \over \log c} \)로 표현이 되며 이것은 곧, random graph는 \(n\)의 값에 비례하여 path length가 늘어나는 것이 아니라 log scale로 증가한다는 것을 알 수 있다. 즉, \(n\)이 매우 크더라도 path는 그에 비해 매우 짧다는 것을 알 수 있다. 이것은 실제 대부분의 네트워크들에서도 나타나는 현상이다. 반면 clustering coefficient는 \(c \over n\)으로 표현이 되며 \(n\)의 값이 증가할 수록 떨어지는 것을 알 수 있는데, 실제 network들이 \(n\)이 커지더라도 높은 clustering coefficient를 유지한다는 점에서 현실과 잘 맞지 않는다는 것을 알 수 있다. 마지막으로 Degree distribution을 살펴보게 되면, random graph에서의 degree distribution은 \(P(k) \simeq e^{-c} {c^k \over k!}\)로 근사가 되는데, 실제 네트워크에서 관측되는 distribution은 \(P(k) \simeq k^{-\gamma}\) 와 같은 power distribution이다. 따라서 이 역시 잘 맞지 않는다는 것을 알 수 있다.</p>
+
+
+<p>Random network는 가장 간단한 network모델이며 수학적으로 잘 증명되었고 쉽게 이해할 수 있는 network모델이다. 그러나 real network와 비교해 잘 맞지 않는 점들이 있기 때문에 우리는 결국 새로운 network model들을 계속 더 공부해야만 하는 것이다.</p>
+
+
+<p>따라서 다음 글은 이와 같은 문제를 일부 해결한 Small world network에 대해 다루게 될 것이다.</p>
 
 
 
@@ -154,8 +435,8 @@
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
     <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
-    <li>Lecture 5: Small world Network</li>
-    <li>Lecture 6: Scale free Network</li>
+    <li>Lecture 5: <a href="http://SanghyukChun.github.io/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="http://SanghyukChun.github.io/52" target="new">Scale free Network</a></li>
 </ul>
 
 ]]></content>
@@ -343,8 +624,8 @@
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
     <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
-    <li>Lecture 5: Small world Network</li>
-    <li>Lecture 6: Scale free Network</li>
+    <li>Lecture 5: <a href="http://SanghyukChun.github.io/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="http://SanghyukChun.github.io/52" target="new">Scale free Network</a></li>
 </ul>
 
 ]]></content>
@@ -516,8 +797,8 @@
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
     <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
-    <li>Lecture 5: Small world Network</li>
-    <li>Lecture 6: Scale free Network</li>
+    <li>Lecture 5: <a href="http://SanghyukChun.github.io/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="http://SanghyukChun.github.io/52" target="new">Scale free Network</a></li>
 </ul>
 
 ]]></content>
@@ -550,8 +831,8 @@
     <li>Lecture 2: <a href="http://SanghyukChun.github.io/48" target="new">Graph Theory</a></li>
     <li>Lecture 3: <a href="http://SanghyukChun.github.io/49" target="new">Measures and Metric</a></li>
     <li>Lecture 4: <a href="http://SanghyukChun.github.io/50" target="new">Random Network</a></li>
-    <li>Lecture 5: Small world Network</li>
-    <li>Lecture 6: Scale free Network</li>
+    <li>Lecture 5: <a href="http://SanghyukChun.github.io/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="http://SanghyukChun.github.io/52" target="new">Scale free Network</a></li>
 </ul>
 
 ]]></content>
@@ -1951,7 +2232,7 @@ End of technical program of Day 2<strong> </strong>
 		<content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
 
 
-<h5>Review of last post</h5>
+<h5 id="34-1-review">Review of last post</h5>
 
 
 <p><a href="http://SanghyukChun.github.io/32" target="new">지난 포스트</a>에서는 전반적인 강의의 개요 및 간단한 Network Problem들에 대해 다뤘다. 특히 그 중에서 밀그램의 편지 실험에 대해 다시 한번 살펴보자. 이 실험은 사람과 사람 사이의 사회적 거리를 측정하기 위한 실험이다. 여기에서 사회적 거리 혹은 social distance는 우리가 흔히 &#8216;distance&#8217;라는 컨셉에서 쉽게 생각할 수 있는 유클리언 distance와는 조금 다른 개념인데, 유클리언 distance가 지리적, 공간적인 거리의 개념이라면 social ditance는 내가 이 사람과 얼마나 가까우냐에 대한 얘기이다. 즉, 내가 미국에 유학가있는 친구와 유클리언 거리는 무지막지 멀지만 사회적거리는 엄청 가깝고, 옆 연구실의 학생분들은 유클리언 거리는 매우 가깝지만 안타깝게도 사회적 거리는 엄청 먼 셈이다. 구체적으로 social distance를 정의해보자. 이 값은 social network 위에서 내 node에서 다른 목표 node로 이동할 때 이동해야하는 총 거리를 의미한다. 즉, 밀그럼의 실험에서 실험 참가자들의 평균적인 사회적 거리는 약 5 정도가 되는 것이다. (이전에도 언급했듯, Facebook에서 같은 실험을 해보면 4.74가 나온다.)</p>
@@ -1965,7 +2246,7 @@ End of technical program of Day 2<strong> </strong>
 <p>그리고 실제 네트워크는 뭉침현상(clustering)이 존재한다. 무슨 얘기이냐 하면, 특정 노트들끼리 뭉쳐있을 수 가 있다는 (cluster를 형성한다는) 의미이다. 따라서 밀그럼의 편지 실험에서 아무에게나 마구잡이로 편지를 전달하게 된다면 성공할 확률이 극히 낮아질 수 있다. (내부 cluster안에서만 편지가 빙빙 돌다가 실험이 끝날 수 있다.) 따라서 목표 지점과 현재 위치라는 굉장히 제한된 정보를 가지고 편지를 전달하기 위한 전략이 필요하고, 이를 다시 문제로 바꾸어서 생각해보면, 국지적인 정보만을 가지고 네트워크의 특정 지점에서 다른 특정 지점을 연결하는 가장 짧은 경로를 찾는 social search algorithm을 구현하기 위해서는 단순히 random하게 정보를 전달하는 것이 아니라, 어떤 특정한 rule이 필요하다는 것이다. 몇 가지 아이디어가 있는데, 대표적인 아이디어 중 하나는 사람들끼리의 연결은 그 정도가 같지 않다는 것이다. 즉, 내가 최종적으로 편지를 전달해야하는 사람이 은행가이므로 내 친구 중에서 간호사와 주식거래인이 있을 때 간호사보다는 주식거래인이 은행가와 확률적으로 사회적 거리가 더 짧을 것이라고 예측할 수 있을 것이다. 이런 식으로 특정 rule을 가지고 search를 하는 것이 매우 중요하다.</p>
 
 
-<h5>Small world & Network Modeling</h5>
+<h5 id="34-2-smallworld">Small world & Network Modeling</h5>
 
 
 <p>자, 이제 중요한 개념 몇 개를 다시 정리해보자.</p>
@@ -1987,7 +2268,7 @@ End of technical program of Day 2<strong> </strong>
 <p>근데 문제는 이런 Small world를 (한국어로는 좁은 세상이라고 한다) 수학적으로 모델링하는 것이 쉽지 않다. Power-Law 분포를 가진 네트워크를 앞에서 설명헀었는데, 이 모델을 (푸아송 모델이라고 한다) 적용해서 문제를 바라보게 되면 거리 혹은 지름이 짧다는 점에서 사실적지만, 모든 node가 independent possibility로 연결되어 있어서 뭉침계수가 작다는 점에서는 사실적이지 않다. 다시 뭉침계수를 설명하자면, 이어진 세 마디가 삼각형을 이루고 있을 확률이 뭉침계수이다. 그렇다면 Regular Network는 어떨까? 이 경우는 Clustering coefficient는 크지만 Diameter 역시 크다는 점에서 unrealistic하다. (이를 보완하기 위해서 그 둘을 적절하게 섞은 The Watts-Strogatz-Newman Model이라는 것이 있다. 이에 대해서는 아래에서 자세히 설명하도록 하겠다.)</p>
 
 
-<h5>Poisson Network vs Regular Network</h5>
+<h5 id="34-3-poissonregularnetwork">Poisson Network vs Regular Network</h5>
 
 
 <p>푸아송 네트워크는 각 마디가 power-law distribution을 가지는 p라는 independent possibility로 연결이 되어있는 형태이다. random한 연결이 많기 때문에 diameter가 많다는 것은 충분히 이해할 수 있을 것이다. 그러나 이 경우에는 모든 마디가 p의 확률로 연결이 되기 떄문에, 엄청나게 약한 연결도 &#8216;연결&#8217;이 되기 때문에 cluster coefficient가 \(C=p\)로 작아서 사실적인 네트워크 모델이 될 수 없다. 반면 정규 네트워크는 네트워크 자체가 원형으로 구성되며 자기 자신과 가까운 c명에게 연결하고 있는 형태이다. 이 경우 cluster coefficient는 \(C=\frac {3(c-2)} {4(c-1)}\)로 크지만 (c의 값이 2명 값이 0이고 4면 0.5, 무한대로 가면 0.75가 된다. 이 정도면 엄청나게 높은거다.) diameter가 크기 때문에 사실적인 모형이 아니다. 때문에 이 둘을 적절히 결합한 The Watts-Strogatz-Newman Model이라는 것이 등장하게 되는데, 제일 가까운 c명과 연결이 되어있으면서 (regular network의 성질, 이로 인해 높은 clustering coefficient를 가지는 것이 가능하다.) 또한 특정한 independent possibility p로 random한 node와 link를 가지고 있다. (poisson network의 성질, 이로 인해 낮은 diameter를 가지는 것이 가능하다.) 이 모델은 얼마나 random하게 link를 형성하느냐에 따라 그 네트워크의 topology나, 성질 등이 달라지게 될 것이다. (아래 그림을 보면 이해가 될 것이다.)</p>
@@ -2001,7 +2282,7 @@ End of technical program of Day 2<strong> </strong>
 
 <p><img src="http://www.scholarpedia.org/w/images/9/97/Swlc.png" width="400"></p>
 
-<h5>Fining paths - social search</h5>
+<h5 id="34-4-socialsearch">Fining paths - social search</h5>
 
 
 <p>그러면 이제 다시 local information만을 가지고 global shortest path를 찾는 문제로 돌아가서 생각해보자. 사실 이 문제는 optimization 문제로 치환해서 생각이 가능하지만, 안타깝게도 convex model이 아니기 떄문에 마냥 쉽게 적용하기는 쉽지 않다. 아무튼 다시 본론으로 돌아서, 가장 쉽게 생각할 수 있는 알고리듬은 greedy search algorithm이다. 내 neighbor 중에서 목표 node와 가장 가까울 것으로 생각되는 node로 넘어가고, 그 node에서도 마찬가지 과정을 반복하는 것이다. 하지만 당연한 얘기지만 이 알고리듬은 완벽하지 않다. 쉽게 생각해서, 내가 은행가와 가장 가까울 것이라고 예측한 주식거래인은 그 은행가를 직접적으로 모르지만, 간호사가 알고보니 그 은행가와 고등학교 동문이라 바로 연결이 되는 상황이라면? 이런 경우는 greedy algorithm이 global optima를 보장할 수 없게되는 것이다.</p>
@@ -2015,7 +2296,7 @@ End of technical program of Day 2<strong> </strong>
 <p>그 이외에도 사람 사이의 관계를 tree로 정의하고 social ditance를 tree에서 거쳐야 하는 단계 수로 정의하는 Watts-Dodds-Newman Model이라는 것도 존재한다. 이 모델의 Social distance를 정의하는 두 사람이 서로를 알 확률 \(p_m\)은 \(p_m = K 2^{\alpha m}\) 로 정의가 된다. 이 모델에서 level의 길이는 \(log_2 \frac n g\)로 정의가 되고, 평균적인 최단 거리도 계산이 가능하지만, 식이 꽤 복잡하기도 하고 이 모델의 reference도 찾지 못해 이 포스트에서는 생략을 하도록 하겠다 (직관적인 값이 아니라 이해를 위해 래퍼를 찾아봤는데 나오지 않는다) 아무튼 이 모델의 평균적인 최단거리에 node의 개수가 g이고 전체 사람이 n, a = 1이라는 특수한 경우로 문제를 바꾸어 생각해보면 평균 최단거리는 \(log^2 ( \frac n g )\) 에 비례한다. 특이점이라면, 이 모델은 tree 구조로 생각을 했기 때문에 Hub의 존재는 고려가 되지 않는다는 점이다.</p>
 
 
-<h5>Conclusion</h5>
+<h5 id="34-5-conclusion">Conclusion</h5>
 
 
 <p>degree와 clustering을 동시에 만족하는 Network model은 현재까지는 없기 때문에 높은 clustering을 가지는 random distribution을 만드는 것도 활발한 연구 주제 중 하나라고 한다. 아무튼 network search의 핵심은 단순히 국지적인 정보만을 가지고 있어도 모든 Network에 정보 전파가 가능하다는 것이다. 아직도 연구가 활발히 진행되고 있는 분야이고, 정답도 없는 분야인 만큼 더 공부가 필요한 부분이라고 생각이 들었다. 이 포스트가 잘 이해가 되지 않거나 네트워크라는 것에 대해 흥미가 생긴다면 Linked: The New Science of Networks (Albert-laszlo Barabasi, Jennifer Frangos) 를 참고하면 될 것 같다.</p>
@@ -2069,197 +2350,6 @@ End of technical program of Day 2<strong> </strong>
 
 
 <p>지금 아파치를 설치 중인데, APR이 없다고 에러가 뜬다.. <a href="http://stackoverflow.com/questions/9436860/apache-httpd-setup-and-installation">stackoverflow</a>를 보니 <a href="http://apr.apache.org/">APR</a>이란 놈을 깔아야하는 모양. 아 이건 좀 귀찮다. 여기서부터는 내일부터.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[인터넷 속의 수학 - Can I really reach anyone in 6 steps? (1/2)]]></title>
-    <link href="http://SanghyukChun.github.io/32/"/>
-    <updated>2013-12-03T17:58:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/32</id>
-		<content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
-
-
-<h5>Introduction</h5>
-
-
-<p>흔히 이 세상의 모든 사람들은 나와 6다리 만 건너면 이어져있다고들 말한다. (밀그램의 편지실험) 심지어 나와 상관없어보이는 버락 오바마 대통령도 사회적 거리가 생각보다 가까울 수 있다는 것이다. Facebook의 조사결과에 따르면 Facebook 상에서 연결된 <a href="http://arxiv.org/abs/1111.4570" target="new">다리의 평균값은 4.74</a> 정도라고 한다. 근데, 진짜 정말로 모든 사람들과 6 steps로 연결이 가능할까? 이 글에서는 이런 현상에 대해서 설명하고, 실제 사람과 사람 간의 네트워크가 어떤 식으로 구성되고, 그것을 수학적으로 어떻게 모델링하고 있는지를 다루게 될 것이다.</p>
-
-
-<p>최근 10년 사이 네트워크는 사람들의 생활에 정말 정말 큰 영향을 미치고 있다. 특히 소셜 네트워크 혹은 SNS라고 불리는 새로운 형태의 서비스의 등장으로 인해 사람들과 사람들 사이의 긴밀한 연결이 더 가능해졌다. 이런 네트워크가 파생된 것은 사실 생각보다 역사가 짧은데, 실제 정보를 전달할 때는 전기신호로 보내야하고, 그 신호를 보내는 channel이 굉장히 noisy한데, 과연 이런 nosiy channel로 realistic한 시간 안으로 정보를 온전하게 전달할 수 있을까? 당연히 정보가 손실되면 retransmission을 시도해서 상대편이 정보를 다시 받을 수 있도록 할 수 있지만, 그 반복해서 보내는 retransmission이 실제 의미있는 숫자 이내로 성공할 수 있겠냐는 문제에 대해 아무도 답을 할 수가 없었기 때문에 연구가 지지부진한 상태였다. 그러나 지금으로부터 약 60여년 전 클로이 섀넌이라는 기라성같은 연구자가 noisy한 channel에서 error-free communication이 가능하다는 것을 증명해냈고, 그 이후로 통신학의 급격한 발전이 이루어졌다. 우리가 쓰는 인터넷은 군대 및 연구기관의 &#8216;알파넷&#8217;이라는 통신 기술이 그 전신인데, 이 기술은 전쟁으로 인해 한 기관이 파괴되어도 다른 곳에서 정보를 전송할 수 있도록 분산시킬 용도로 개발되었다고 한다. 지금 우리가 사용하는 스위칭, 패킷 등의 기술도 이때 개발 되었다. 우리가 진짜 &#8216;인터넷&#8217; 이라고 부르는 월드 와이드 웹은 유럽의 입자 가속기 연구서 (CERN)에서 데이터 교환의 용이성을 위해 처음 등장하게 되었다. 그리고 수 많은 사람들의 노력으로 우리가 현재 쓰는 모습의 인터넷 네트워크가 탄생한 것이다.</p>
-
-
-<h5>Network Problems - Graph Theory</h5>
-
-
-<p>앞서 네트워크의 역사에 대해 간략하게 설명했는데, 그렇다면 실제 이런 네트워크를 잘 구성하기 위해서 우리가 풀어야하는 몇 가지 문제점들이 존재한다. 특히 네트워크에 요구되는 사항들을 충족시키려면 네트워크를 잘 이해하는 것이 필요하고 이런 것을 위해 네트워크 과학이라는 분야까지 생겼을 정도로 문제가 생각보다 광대하다. 몇 가지를 꼽아보자면, 좋은 네트워크는 (1) 효율적인 소통을 해야하고, (2) 외부의 공격에 견고하게 방어를 할 수 있어야하고, (3) 복잡성이 낮고 간결해야 한다. 그렇다면 이런 사항들을 충족시키기 위한 몇 가지 문제들을 살펴보자. 최초의 네트워크 문제는 쾨니히스베르크의 다리라고 불리는 문제이다. 누가 처음 만들었는지는 모르고 언제부터 존재했는지는 모르지만, 1735년 오일러가 이를 수학적으로 증명해낸 문제이다. 이 문제에서 부터 사실 네트워크 이론이 나왔다고 해도 과언이 아니다. 문제는 간단하다. 아래의 그림을 보면서 자세히 설명해보자.</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/32-1.png" width="400"></p>
-
-<p>오래전에 프로이센이라는 국가의 <a class="red tip" title="지금의 러시아 칼리닌그라드">쾨니히스베르크</a>라는 자그마한 도시가 하나 있었다. 이 도시의 지식인들이 그냥 도시를 산책하다가 심심했던 모양인지 생각해낸 문제이다. 쾨니히스베르크에는 프레겔 강이 흐르고 있고, 이 강에는 두 개의 큰 섬이 있다. 그리고 이 섬들과 도시의 나머지 부분을 연결하는 7개의 다리가 있다. 이때 7개의 다리들을 한 번만 건너면서 처음 시작한 위치로 돌아오는 길이 있는가 하는 것이 문제이다. (출처: <a class="red tip" title="http://ko.wikipedia.org/wiki/%EC%BE%A8%EB%8B%88%ED%9E%88%EC%8A%A4%EB%B2%A0%EB%A5%B4%ED%81%AC%EC%9D%98_%EB%8B%A4%EB%A6%AC_%EB%AC%B8%EC%A0%9C">위키피디아</a>) 이 문제가 꽤 오랜 기간 동안 풀리지 않은채로 존재하다가 오일러가 이를 엄청나게 간단한 방법을 통해 해결을 해버렸다.</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/32-2.jpg" width="400"></p>
-
-<p>다리와 섬을 위의 그림처럼 &#8216;그래프&#8217;로 표현하게 되면 문제가 엄청나게 쉬워진다. 이 그래프가 한붓그리기가 가능하기 위해서는 엣지가 홀수 개인 노드가 1개만 있어야하는데 이 그림에서 볼 수 있듯 그보다 그런 노드가 많음을 알 수 있다. 오일러의 이 풀이로 인해 &#8216;그래프 이론&#8217;이라는 새로운 분야가 창조되었고, 이는 우리가 풀고싶은 네트워크 문제를 해결하기 위해 필요한 가장 기본적이고 필수적인 분야 중 하나라고 할 수 있을 것이다.</p>
-
-
-<h5>Network Problems - 6 degree of separation</h5>
-
-
-<p>또 다른 실험을 하나 살펴보자. 1967년, 미국의 스탠리 밀그램은 아래와 같은 간단한 실험을 제작했다.</p>
-
-
-<ol>
-   <li>네브래스카 주 오마하라는 작은 도시에 사는 주민 296명에게 메사추세츠 주 보스턴의 은행가로 가는 편지를 전달시키는 것이 이 실험의 목적이다.</li>
-   <li>전달은 반드시 전달자가 직접적으로 친밀한 사람에게만 (first-name basis) 가능하다. 즉, 최종 수신인은 정해져있는 상황에서, 최종 수신인을 모르는 경우에 그 사람을 가장 잘 알만한 자신의 지인들에게 이 편지를 전달하는 것이다.</li>
-   <li>매번 편지가 전달될 때마다 편지에 보내는 사람의 이름과 서명을 첨부하고, 또한 하버드로 엽서를 따로 보내 traking을 용이하게 하였다.</li>
-</ol>
-
-
-<p><p>이 실험은 결국 미국이라는 network에서 지리적, 사회적으로 가장 고립되었을 것이라고 예상되는 두 node로 이동하기 위해서 평균적으로 얼마나 많은 step이 요구되는가를 측정하기 위한 실험이다. 결과는 어땠을까? 10? 20? 100? 아래 그래프가 그 결과이다.<p>
-<img src="http://SanghyukChun.github.io/images/post/32-3.png" width="400">
-<p>당연한 얘기지만 가로축은 얼마나 많은 사람을 거쳤는가를 의미하고, 세로축은 해당 거리에 해당하는 사람이 얼마나 많은가를 의미한다. 이 실험은 총 217개의 편지 중에서 64개의 편지만 최종적으로 도달하게 되었고 (성공확률 약 30%) 평균 거리는 약 5.2이며 중간값은 6이었다. 때문에 이 실험결과를 일컬어 모든 사람들이 6step으로 이어져있다고 해석해 6단계 분리이론이라고도 부르기도 한다. 이 실험이 완벽하지 않고 logic whole이 존재한다고 주장하는 일부 비판적인 시선이 있는 것은 사실이지만, 이 실험은 충분히 의미가 있고, 무엇보다 실제로 이를 실험적으로 증명하는 것을 시도한 첫 번째 실험이라는 점에서 의미가 있다.</p>
-<p>이와 비슷한 다른 예시가 있다. 수학에서 <a href="http://ko.wikipedia.org/wiki/%EC%97%90%EB%A5%B4%EB%90%98%EC%8B%9C_%EC%88%98" target="new">에르도쉬 숫자</a>라는 것이 존재하는데, 이 사람은 엄청나게 많은 공동연구를 진행한 사람이고, 그래서 업적이 뛰어난 사람일수록 이 사람과 공저자를 한 경험이 많다고 한다. 그래서 그 아이디어를 차용해 그 사람이 얼마나 학계에서 권위가 있는지를 측정하는 지표로 쓰이는 것이 이 숫자인데, 에르도쉬 본인은 이 숫자가 0이다. 그리고 에르도쉬와 공저를 한 경험이 있는 연구자의 숫자는 1이다. 만약 내가 직접적으로 에르도쉬와 공저를 하지 않았더라도, 에르도쉬 넘버가 1인 사람과 공저를 한 경우에 내 에르도쉬 넘버는 2가 된다. 즉, 내가 얼마나 에르도쉬라는 사람과 가까운 관계인지를 측정하는 수단인 것이다. 참고로 나는 조만간 에르도쉬 넘버가 3이 될텐데, <a href="https://sites.google.com/site/mijirim/" target="new">내 지도교수님</a>의 <a class="red tip" title="Erdos - Tetali - Shin">에르도쉬 넘버가 2</a>이기 때문이다.</p>
-<p>비슷한 숫자로 케빈베이컨 숫자라는 것이 있는데, 이번에는 논문 공저자라는 다소 strict한 rule이 아니라 영화 배우 케빈베이컨과 같이 영화를 출연한 사람에게 (엑스트라도 포함) 같은 방식으로 숫자를 매기는 것이다. 꽤 재미있는 것은, 미국의 그 어떤 영화배우도 이 배우와 거리가 6이하라고 한다. <a href="http://oracleofbacon.org/" target="new">인터넷 웹사이트</a>도 있다. 사실 케빈 베이컨이 가장 뛰어난 배우이거나 많은 작품을 출연했기 때문이 아니라 그 어떤 배우를 대상으로 하여도 비슷한 결과가 나온다고 한다. (이 사이트에 의하면 평균을 취했을 때 가장 평균 거리가 짧은 배우는 <a href="http://oracleofbacon.org/center_list.php">Harvey Keitel</a>이라고 한다)</p>
-<h5>Mathmetical Approach &ndash; Regular Network</h5>
-<p>자 이게 과연 정말 뜨악스럽고 놀랄만한 일일까? 정말 간단한 수학적 모델로 한 번 검증을 시도해보자. 가정을 하나 해보자. 만약 &lsquo;모든 사람&#8217;이 아는 사람이 딱 10명 씩 있다고 가정해보자. 뭐 어느 정도는 납득해볼만한 가정이지 않은가? (나중에 얘기하겠지만 틀린 얘기다.) 그렇다면 한 단계 더 건너면 10 * 10 = 100, 또 한 단계를 건너면 10 * 10 * 10 = 100, 그리고 만약 내가 6 step 만큼 건너갔을 때 아는 사람의 숫자는 (10<sup>7</sup>), 즉 1000만 명의 사람과 연결이 되어있는 것이다. 이것을 보고 정규 네트워크 (regular network) 라고 부르며, 이렇게 문제를 가정하고 생각하면 생각보다 문제가 간단해진다. 이 방법이 에르도쉬가 문제를 풀이한 방법이다. network 내부에서 node와 node가 연결되는 것은 확률의 문제이고, 만약 모든 사람들이 이 확률을 비슷하게 가지고 있다고 가정하면, 위와 같은 정규 네트워크가 나오게 되는 것이다. (구체적으로는 node가 연결되는 숫자가 정규분포로 나오기 때문에 정규 네트워크라고 한다.) 이 네트워크의 모양은 아래와 같다.</p>
-<img src="http://SanghyukChun.github.io/images/post/32-4.png" width="300">
-<p>근데 정말 세상은 이렇게 구성이 되어있다고 말할 수 있을까? 실제 세상은 과연 정말 정규 네트워크일까? 당연한 얘기지만 그렇지 않다.</p>
-<h5>Mathmetical Approach &ndash; Real Network</h5>
-<p>일단 정규 네트워크는 가정 자체가 글러먹었다. 모든 사람이 평균적으로 같은 숫자의 친구를 가지고 있다? 안타깝게도 사람마다 친구의 숫자가 천차만별이고, 구체적으로 말하자면 사람마다 가지고 있는 node를 형성할 probability나 node가 형성될 기회의 숫자가 차이가 나기 때문에 차이가 발생하게 된다. 특히 실제 모형의 확률은 정규 분포가 아니라 Power-law distribution이라는 것이 실제 연구를 통해서 밝혀졌으며, 이 분포를 따르게 되면 친구의 숫자가 최대 수백에서 수천배까지도 나게 된다. 따라서 이런 네트워크에서는 connection이 한 지점으로 몰리는 Hub가 존재하는데, 이 사실은 모든 node가 같은 connection을 가진다는 정규 네트워크의 가설과는 매우 다르다.</p>
-<img src="http://SanghyukChun.github.io/images/post/32-5.jpeg" width="300">
-<p>Power-law distribution은 위의 그림에서 자세히 확인이 가능하다. 또한 이런 분포로 만들어진 네트워크의 모양은 아래 그림과 같다. Hub가 존재한다는 사실을 다시 한 번 생각해보고 그림을 보면 이해가 잘 될 것이다.</p><br/>
-<img src="http://SanghyukChun.github.io/images/post/32-6.jpg" width="300">
-<img src="http://SanghyukChun.github.io/images/post/32-7.png" width="300">
-<p>이제 이런 경우에 대해서 node당 평균 10개의 connection이 있다고 다시 가정해보자. 비록 평균 connection이 10개가 있더라도, 정규 네트워크와는 다르게, power-law 네트워크는 한 node가 그 connection을 독식할 수도 있다. 즉, 이전에는 10개의 connection을 가진 1000개의 node가 있었다고 해보면, 지금은 그 중 하나의 connection이 모두 한 node에 쏠려 한 node가 1000개의 connection을 가지고 있는 셈이다.</p>
-<p>이런 특이한 모양 (topology라고 한다) 때문에 생기는 특성 중 하나로는 확산의 형태가 다르다는 점이다. 정규 네트워크는 네트워크에서 어떤 무언가가 전파되는 데에 (간단하게 전염병이라고 생각해보자) 모두가 같은 connection을 가지고 있으므로 시간이 오래 걸리거나 일정 threshold를 넘지 못하면 전체 네트워크가 전염되지 않지만, Power-law Network에서는 그 threshold가 비교적 매우 작고, 몇 개의 hub만 감염이 되어도 모든 node가 influence될 수 있는 가능성이 엄청나게 커지는 것이다. 이 특성을 특정 hub를 격리하거나 백신을 투여해 전염병의 효율적 예방을 하는 데에 쓸 수도 있고, 마케팅의 측면에서 소비자 행동양식 변화 혹은 물건 구매 등으로 주변에 영향력이 큰 몇 명의 핵심 사용자들에게 무료로 물건을 나누어주거나 후기를 작성하게하는 등의 마케팅도 가능할 것이다.</p>
-<p>이렇듯 실제 네트워크에서 발생하는 특성들을 사용하면 재미있는 결과가 나오게 된다. 과연 어떤 특성들이 있으며, 수학적으로 어떻게 증명하거나 접근해야하는지, 그리고 마지막으로 이런 특성들을 어떻게 사용할 것인지에 대해서는 다음 포스팅에서 자세히 다루도록 하겠다.</p></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[인터넷 속의 수학 - How does Netflix recommend movies? (2/2)]]></title>
-    <link href="http://SanghyukChun.github.io/31/"/>
-    <updated>2013-12-02T21:43:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/31</id>
-		<content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
-
-
-<h5>Recall: Machine Learning</h5>
-
-
-<p><a href="http://SanghyukChun.github.io/21" target="new">이전의</a> <a href="http://SanghyukChun.github.io/30" target="new">많은</a> <a href="http://SanghyukChun.github.io/blog/categories/machine-learning" target="new">포스트 들</a>에서도 설명했듯이 Machine Learning은 데이터를 통해 새로운 시스템을 만드는 것을 의미한다. 그렇다면 굳이 사람이 아니라 기계가 이런 일을 해야하는 이유가 있을까? 무엇보다 기계는 사람보다 단순 계산을 훨씬 빠르게 할 수 있다. 간단한 예를 하나 들어보자. 페르마 숫자라는 문제가 있다.</p>
-
-
-<p>$$ {F_n} = 2^{2^n} +1 $$</p>
-
-
-<p>이 숫자는 위와 같이 표현이 되는데, 페르마는 모든 n에 대해서 이 숫자가 소수라는 주장을 하였다. 그러나 100년 뒤 오일러가 이의 반례를 찾아냈다.</p>
-
-
-<p>$$ {F_5} = 2^{2^5} + 1 = 2^{32} +1 = 4294967297 = 641 * 6700417 $$</p>
-
-
-<p>사람이 이를 증명하는 데에 100년이라는 시간이 걸렸지만, 컴퓨터를 사용하면 이 문제는 고작 몇 분안에 끝나는 간단한 문제이다. 이런 문제에서 컴퓨터 혹은 기계를 사용하는 것이 매우 효율적인 것이다. 다시 Machine Learning으로 돌아가보자. Machine Learing algorithm은 주어진 training data에서 특정한 시스템을 만들고 각종 model parameter들을 optimize하여 주어진 training data에 가장 잘 들어맞는 system을 만든다. 이런 과정을 위해서는 이런 optimize problem이 reasonable한 시간 안에 풀 수 있는 문제인지 그렇지 않은 문제인지 반드시 알아야만 한다. 만약 한 문제를 optimize하는데에 엄청 오랜 시간.. 예를 들어서 몇십만년 단위의 시간이 걸린다면 실전에서 사용할 수 없을 것이다.</p>
-
-
-<p>과연 컴퓨터로 풀 수 있는 문제란 무엇이 있을까? 컴퓨터는 Turing에 의해 1936년에 처음 제시가 되었고 (Turing Machine) 이 덕분에 지금까지 하드웨어 문제에 불과했던 성능에 관련된 문제가 수학적인 문제로 치환될 수 있었다. 또한 1971년 Computational classes (NP complete) 가 Cook에 의해 define되었다. 여기에서 정의된 P와 NP problem을 사용하면 우리가 처음 제시한 질문: 이 문제를 컴퓨터로 풀 수 있는가? 에 대한 질문에 답을 할 수 있는 것이다.</p>
-
-
-<p>다음에 대한 설명을 하기 전에 먼저 P와 NP problem에 대해 잠시 설명하도록 하겠다. 먼저 P는 금방 문제의 정답을 찾을 수 있는 문제이다. 또한 NP는 해답이 있을 때 이 해답이 맞는지 아닌지 verify할 수 있는 문제를 뜻한다. 예를 들어 어떤 주어진 여러 개의 Path 중에서 특정한 path를 찾는 문제는 P problem이다. 또한 NP problem은 path가 있을 때 그 path를 따라갈 수 있는가에 대한 문제가 되는 것이다. 이 두 개의 문제에 해당하지 않는 문제도 엄청나게 많으며, 재미삼아 말해주자면, P이면 NP인가? 라는 질문은 Seven Millennium Prize Problems 중 하나일 정도로 수학에서 상당히 중요한 영역을 차지하고 있다.</p>
-
-
-<p>P problem의 대표적인 예는 Convex Optimization이다. Convex Optimization은 mimimum value를 찾는 문제 중에서 매우 특수한 경우를 의미하며, 함수가 convex하고 domain 역시 convex한 경우를 의미한다. 간단하게 생각하면 convex와 &#8216;볼록하다&#8217; 가 같은 말이며, convex function이란 모든 구간에서 볼록한 함수를 의미한다. (Convex Optimization에 대해서는 나중에 더 자세한 포스팅으로 설명을 할 수 있도록 하겠다.) 간단히 예를 들어보면</p>
-
-
-<p><img src="http://people.mech.kuleuven.be/~bdemeule/pics/convex.jpg" width="400"></p>
-
-<p>위의 그림에서 왼쪽 함수는 일부 구간에서 볼록하지 않기 때문에 convex하지 않고 오른쪽의 함수는 convex하다. 위의 그림을 보면 알 수 있듯, convex function에서는 local한 minimum value만 찾더라도 global한 mimimum값을 찾을 수 있다. 때문에 Convex optimization은 optimization 중에서도 매우 특수한 경우이며 P, NP problem 중에서 P에 속하는 문제이다. 이를 수식적으로 표현해보면</p>
-
-
-<p>
-$${minimize}\quad{f(x)}$$
-$${subject}\,{to}\,{x} \in D \subseteq {R^n}$$
-</p>
-
-
-<p>으로 표현하는 것이 가능하다. Netflix 알고리듬에서 언급하게 될 3개의 알고리듬 중에서 Baseline predictor와 Matrix factorization 알고리듬에서 이런 Convex Optimization을 활용하게 된다.</p>
-
-
-<h5>Recall: Netflix Recommendation Problem</h5>
-
-
-<p>Netflix problem의 목적은 간단하다. Netflix Matrix라는 user와 movie의 조합으로 이루어진 Matrix에서 아직 알려지지 않은 부분의 값을 유추하는 것이다. 이 문제에 대한 설명은 지난번에 적은 글에 자세히 적혀있으니 생략하도록 하겠다. 그렇다면, 새로운 알고리듬이 더 좋은 알고리듬인지 아닌지 어떻게 판단할 수 있을까? 여러가지 방법이 있을 수 있지만, Netflix에서는 RMSE (Root Mean Squared Error) 를 정의한다. RMSE는 \(\sqrt{MSE} = \sqrt{\frac 1 n \sum_{i=1}^n ( \hat{X_i}-X_i )^2}\)로 표현이 가능하며, 쉽게 생각하면 예측치가 실제 값과 얼마나 차이가 나는지를 측정하는 역할을 한다고 생각하면 간단하다. 즉, Netflix의 Recommendation problem은 Netflix Matrix에서 알려져 있는 entry를 사용해 training set과 problem set을 만들고 RMSE를 계산해서 그 RMSE를 최대한 낮추는 문제인 것이다. 이 글에서는 이런 RMSE의 값을 10% 줄이기 위한 3가지 알고리듬: Baseline Predictor, Neighborhood method, Matrix Factorization에 대해 다루게 될 것이다.</p>
-
-
-<h5>Algorithm 1: Baseline Predictor</h5>
-
-
-<p>첫 번째 알고리듬은 Baseline Predictor이다. 이 알고리듬은 각각의 영화 혹은 사람마다 기본적으로 정해진 Baseline이 존재한다는 가정에서부터 시작된다. 즉, 각각 영화마다 평점이 높은 영화가 있을 수도 있으며. 또 평점을 잘 주는 사람이 있을 수도 있고 짜게 주는 사람도 있을 수 있다. 또한 비교적 popular 한 영화라면 rating이 높을 것이고, 이 사람이 이전에 준 rating의 값의 평균이 낮다면 앞으로 줄 rating의 값 또한 작을 것이라는 가설을 세울 수 있을 것이다. 그렇다면 이런 baseline을 사람에 대한 혹은 영화에 대해서 각각 만들 수 있을 것이며 이를 모으면 vector로 표현하는 것이 가능할 것이다. \(b_i\)를 movie에 대한 baseline, \(b_u\)를 user에 대한 baseline이라고 가정하고, 이 baseline이 높으면 rating을 잘 받는 영화 / 잘 주는 사람 이라고 생각하자. 그렇다면
-$$\hat r_{ui} = {\overline r} + b_u + b_i$$
-로 정의한다면, baseline을 찾는 문제는
-$${minimize}\,\sum {(r_{ui} - \hat r_{ui})^2} $$
-을 만족하는 \(b_u\)와 \(b_i\)를 찾는 문제로 바꿀 수 있다. 그리고 여기에서 가장 중요한 점은 이것이다. 이 문제는 Convex optimization으로 풀 수 있다는 것이다.</p>
-
-
-<p>Baseline Predictor는 기존의 데이터를 가장 잘 설명할 수 있는 model parameter를 찾는 문제이며 성능이 아주 썩 좋은 편은 아니지만 random guessing보다는 훨씬 좋으며 어느 정도의 가중치를 줄 수 있다는 장점이 존재한다. 특히 temporal model과 결합하여 baseline predictor를 사용하면 꽤 강력한 결과를 얻을 수 있는데, Baseline Predictor with Temporal Models는 User의 rating은 day에 dependent할 수 있다는 가정을 깔고 movie의 trend가 시간에 따라 변한다고 가정한다. 그리고 이에 대한 적절한 변수를 시간마다 주고 \(b_u(t),\,b_i(t)\)를 가장 잘 설명할 수 있는 baseline의 값을 찾음으로써 시간에 대한 정보까지 고려할 수 있는 알고리듬을 설계하는 것이 가능한 것이다.</p>
-
-
-<p>그러나, 기본적으로 parameter를 fitting하는 문제이기 때문에 Overfitting problem이 발생할 수 있다. Overfitting problem이란 현재 parameter들이 training data에 너무 optimization되어 오히려 future data에 대해서는 값이 제대로 맞지 않는 경우를 의미한다. 이는 전체 데이터가 아닌 일부의 데이터만 봤기에 생길 수도 있는 문제이며 data에 noise가 끼어 noise까지 fitting이 되었었을 수도 있다. 아무튼 overfitting problem은 현재에 너무 과도하게 집중하면 미래 data를 설명하는 데에 문제가 생길 수 있다는 것을 의미한다. Baseline Predictor에서 Model parameter를 너무 optimize시키면 지금까지의 known data에는 정말 잘 맞지만, test data에서는 error가 엄청 커질 수도 있는 것이다. 이를 막기 위해서 위에서 제시했던 minimzation problem을
-$${minimize}\,\sum {(r_{ui} - \hat r_{ui})^2 + \lambda (\sum_u {b_u}^2 + \sum_i {b_i}^2)} $$
-처럼 \(\lambda\)와 관련된 추가적인 term을 추가한 다음 풀게 된다면, overfitting문제가 어느 정도 해결된다. 여기에서 overfitting을 막기 위해 사용한 \(\lambda\)가 증가하게 되면 점점 test data error가 떨어지다가 어느 정도 지나면 test data error가 다시 increase 된다. 따라서 적절한 \(\lambda\)를 선택하는 것도 매우 중요하다는 것을 알 수 있다.</p>
-
-
-<h5>Algorithm 2: Neighborhood Method</h5>
-
-
-<p>지난 포스트에서도 설명했던 것 처럼 이 알고리듬에서는 각각의 movie마다 movie 간의 유사도 정보를 가지고 있다고 가정하고 각각의 movie i와 j마다 \(d_{ij}\)라는 distance term을 정의하여 그 distance를 통해 얼마나 유사한지를 판별하게 된다. 즉 이 아이디어는 rating을 user가 영화 i를 좋아했으면 j도 좋아하지 않겠느냐.. 라는 idea를 기반으로 measure를 하게 된다. 이 알고리듬에서 distance function은
-$$ d_{ij} = \frac{({r_i} * {r_j})}{(|r_i| * |r_j|)} $$
-위와 같이 정의한다. 이 때 \(r_i\)와 \(r_j\)는 모든 user의 movie rating을 모아둔 vector이다. 즉, \(r_i = [2, 1, 3, 4, &#8230;]\) 등으로 표현된다는 것이다. 이때 임의의 두 vector사이 unknown factor가 다를 수 있으므로 두 vector에서 모두 알고 있는 값들을 모아 reduced form을 구해서 이 값을 계산하게 된다고 한다. distance가 두 벡터의 내적을 2-norm으로 나눈 것으로 정의가 되기 때문에 \(d_{ij}\)는 두 vector 사이 angle에 cosine을 취한 값이 된다. 즉, 두 벡터가 가까우면 가까울 수록 1에 근접해지고 멀어질 수록 값이 작아지게 된다. 즉, 이렇게 거리를 정의함으로써 두 벡터 간의 유사성이 얼마나 되느냐를 측정하는 척도가 될 수 있는 것이다.</p>
-
-
-<p>NH method는 이 알고리듬 자체만 사용하게 되었을 때 결과가 그닥 좋지는 못하다. 그러나 Baseline Predictor랑 같이 결합해서 사용할 수 있으며 Baseline predictor를 계산하고 알고 있는 값과의 error를 계산하고 이 에러 값을 사용해서 NM을 사용하면 훨씬 결과가 좋게 나오게 된다. 이렇게 사용하기 위해서는 \(\hat r_{ui} = \sum \frac {(d_{ij} * r_{ij})} {\sum (d_{ij})}\) 와 같은 형태로 r을 정의하고 predict를 하게 된다. 이 경우 영화의 개수가 많아질수록 연산량이 어마어마하게 늘어나기 때문에 이 알고리듬은 모든 영화에 대해 전부 다 적용하는 것이 아니라 top 50 movie 중에서 i와 similar한 movie를 일부 골라서 적용한다고 한다.</p>
-
-
-<h5>Algorithm 3: Matrix Factorization</h5>
-
-
-<p>만약 알려진 거대한 Matrix가 있을 때 이를 더 작은 Matrix의 multiplication으로 표현할 수 있다면 우리는 더 적은 값을 measure해서 전체 값을 추측할 수 있을 것이다. 이것이 Matrix Factorization의 기본 아이디어이며, 이 알고리듬은 성능이 매우 뛰어나서 다른 알고리즘 없이도 8% 정도까지 개선이 가능하다고 한다.</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/30-1.png" width="400"></p>
-
-<p>우리의 문제에서 각각의 Matrix를 R, P, Q라고 정의하자. 그리고 P와 Q 각각의 row의 개수와 column의 개수를 k라고 하자. 그렇다면 R은 480000 by 18000, P는 48000 by k, Q는 k by 18000 Matrix일 것이며, R = PQ가 될 것이다. 당연히 k의 값이 클 수록 낮은 에러로 원래의 데이터를 복구하기 쉬워지겠지만, k가 커질수록 overfitting issue가 존재하게 될 것이다. 실제로 Netflix에서는 약 20정도의 k를 사용한다고 한다. 당연한 얘기지만 실제로는 P, Q가 존재하지 않을 수도 있다. 따라서 이 문제는 아래와 같이 치환이 가능하다.
-$${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
-이 문제는 P인가? 불행히도 이 문제는 함수 \(f(P,Q)=|R-RQ|^2\) 자체가 convex가 아니기 때문에 Convex optimization problem이 아니며, P역시 아니다. 대신 이 문제를 convex optimization으로 근사하는 방법이 가능하다.</p>
-
-
-<p>첫 번째 방법은 \(minimize |R - PQ|\) 를 \(minimize |R - A|^2 \hskip 1em where \hskip 0.3em rank(A) = k… \) 로 바꾸는 것이다. \(|R-A|^2\)은 convex function이기 때문에 convex optimization으로 푸는 것이 가능해 보인다. 그런데 domain인 rank(A) = k가 convex set이 아니기 때문에 이 문제는 불행히도 convex optimization은 아니다. 따라서 이를 가장 유사한 convex optimization problem으로 바꾸면, rank(A) = k라는 조건 대신에 &#8216;sum of singular values of A is at most h&#8217; 라는 조건으로 문제를 풀면 된다. 이는 정확히 같은 조건은 아니고 거의 유사한 조건이다. 이렇게 문제를 non convex optimization에서 convex optimization으로 근사해서 원래 문제의 답을 추측하는 것이 가능한 것이다.</p>
-
-
-<p>또 하나의 방법은 \(minimize_{P,Q} |R-PQ|^2\) 을 푸는 것이다. 이 때 \(f(P,Q) = |R-PQ|^2\)은 convex function은 아니지만, P를 constant로 두면 Q에 대해 convex하고 Q를 constant로 두면 P에 대해 convex해지게 된다. 이를 bi convex라고 하며 둘 모두에 대해 convex하면 joint convex라고 한다. 아무튼 이제 이 방법 두 개를 모두 사용해서 Q를 고정하고 가장 잘 설명하는 P를 찾고, P를 고정하고 가장 잘 설명하는 Q를 찾는 과정을 반복적으로 왔다갔다 하면서 값을 찾는다. 이 방법을 이론적으로 분석하는 것이 엄청 어렵고 힘들어서 논문으로 많이 나오지는 않았지만 실전에서 엄청 많이쓰는 방법이다. 앞서 설명한 방법보다 이 방법이 더 성능도 잘 나온다. 최근 [Sujay et al. 2013] 에서 앞서 언급한 approach보다 이 approach가 좋은지는 모르겠지만 최소한 나쁘지 않다라는 것을 증명하였다고 한다. (구체적으로는 global optima convergence condition for R을 증명하였다고 한다.)</p>
-
-
-<h5>Summary and Questions</h5>
-
-
-<p>마지막으로 <a class="red tip" title="Neighborhood method">NH</a>와 <a class="red tip" title="Matrix factoriztion">MF</a>에 대해 잠시 비교해보자. NM은 local structure를 찾아서 recommendation problem을 풀겠다는 컨셉이고 MF는 global structure를 찾아서 recommendation problem을 풀겠다는 컨셉이다. 당연히 local한 solution보다 global한 structure를 찾는 컨셉이 더 정확할 것이다. 실제로 다른 알고리듬 하나도 없이 MF만 적용을 해봐도 Cinematch에 비해 8% 정도 improved 된 결과를 취할 수가 있게 된다. 하지만 역시 맨 처음 제시되었던 10%를 달성하려면 <a class="red tip" title="Baseline predictor with temporal models">BP</a>를 적용한 NH와 MF 둘을 잘 combine해야만 달성이 가능하다.</p>
-
-
-<p>이런 알고리듬들에 대해서 몇 가지 Further Questions이 있을 수 있을 것이다.</p>
-
-
-<ul>
-<li> R = PQ를 풀기 위한 R의 entries 숫자는 얼마나 될 것인가</li>
-<li> MF를 더 빠르게 design할 수 있겠느냐, 더 나은 다른 algorithm도 있을 수 있겠느냐..</li>
-<li> NM과 MF를 같이 조합했을 때 왜 결과가 좋은 이유가 무엇이냐, 이론적인, mathematical answer 를 줄 수 있느냐</li>
-</ul>
-
-
-<p>등의 question 들이 있을 수 있으며 이와 관련된 많은 연구가 활발하게 진행되고 있다고 한다.</p>
 
 ]]></content>
   </entry>
