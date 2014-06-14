@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Network-Science | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/network-science/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-04-24T06:08:15+09:00</updated>
+  <updated>2014-06-14T21:10:31+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -507,13 +507,13 @@
 <h5>Eigenvector Centrality</h5>
 
 
-<p>또 다른 방법으로는 각각의 vertex가 다른 vertex와 결국 궁극적으로 얼마나 많은 connection을 가지는지를 확인하는 것으로, 간단하게 eigenvector로 표현할 수 있다. 증명과정은 매우 간단하다. 먼저 centrality를 \(x_i '\)으로 정의했을 때 \(x_i ' = \sum_j A_{ij} x_j\) 이므로 \(x' = Ax\)이다. 이 때, 이 과정을 t번 반복하면 \(x(t) = A^t x(0) \)이 된다. 이제 \(x(0) = \sum c_i v_i \) 라고 나타냈을 때, \(x(t) = A^t \sum c_i v_i = \sum c_i j_i ^t v_i \)이고, 따라서 \(x_i ' = k_i^t \sum c_i ( \frac {k_i} {k_1} )^t v_i \)가 된다. v는 eigenvector고 k는 eigenvalue이다. 이 과정을 무한하게 반복하면 \(x(t) -> c_1 k_1^t v_1 \)이 된다. 따라서 이 과정을 통해 우리는 \(Ax = k_1 x\)일 때, centrality를 \(x_i = k_1^{-1} \sum A_{ij} x_j\)로 정의할 수 있다.</p>
+<p>또 다른 방법으로는 각각의 vertex가 다른 vertex와 결국 궁극적으로 얼마나 많은 connection을 가지는지를 확인하는 것으로, 간단하게 eigenvector로 표현할 수 있다. 증명과정은 매우 간단하다. 먼저 centrality를 \(x_i '\)으로 정의했을 때 \(x_i ' = \sum_j A_{ij} x_j\) 이므로 \(x' = Ax\)이다. 이 때, 이 과정을 t번 반복하면 \(x(t) = A^t x(0) \)이 된다. 이제 \(x(0) = \sum c_i v_i \) 라고 나타냈을 때, \(x(t) = A^t \sum c_i v_i = \sum c_i j_i ^t v_i \)이고, 따라서 \(x_i ' = k_i^t \sum c_i ( \frac {k_i} {k_1} )^t v_i \)가 된다. v는 eigenvector고 k는 eigenvalue이다. 이 과정을 무한하게 반복하면 \(x(t) \to c_1 k_1^t v_1 \)이 된다. 따라서 이 과정을 통해 우리는 \(Ax = k_1 x\)일 때, centrality를 \(x_i = k_1^{-1} \sum A_{ij} x_j\)로 정의할 수 있다.</p>
 
 
 <h5>Katz Centrality</h5>
 
 
-<p>앞서 살펴본 eigenvector centrality는 directed graph에서 outdegree가 0아고 indegree가 0보다 큰 값이더라도 eigenvector centrality를 계산하면 해당 vertex는 0이라는 값을 가지게 된다는 단점이 있다. Katz centrality는 \(x_i = \alpha \sum_j A_{ij} x_j + \beta\)로 정의된다. 방금 전 eigenvector centrality에서 상수만 곱하고 더해준 형태가 된다. 이때 더해주는 \(\beta\) term으로 인해 기본적으로 모든 vertex가 특정 값 이상의 centrality를 가지도록 bound시키는 효과가 있다.</p>
+<p>앞서 살펴본 eigenvector centrality는 directed graph에서 outdegree가 0이고 indegree가 0보다 큰 값이더라도 eigenvector centrality를 계산하면 해당 vertex는 0이라는 값을 가지게 된다는 단점이 있다. Katz centrality는 \(x_i = \alpha \sum_j A_{ij} x_j + \beta\)로 정의된다. 방금 전 eigenvector centrality에서 상수만 곱하고 더해준 형태가 된다. 이때 더해주는 \(\beta\) term으로 인해 기본적으로 모든 vertex가 특정 값 이상의 centrality를 가지도록 bound시키는 효과가 있다.</p>
 
 
 <h5>Page Rank</h5>
@@ -617,7 +617,7 @@
 <p>이때, \(n_ij\)는 vertex i와 j의 common neighbor들의 숫자가 된다.</p>
 
 
-<p>이런 cosine similarity를 통해 Pearson Coefficient라는 것도 정의할 수 있는데, \(r_{ij} = \frac {cov(A_i,A_j)} {\sigma_i \sigma_j} = \frac { \sum_k (A_{ik} - <A_i>) (A_{jk} - <A_j>) } {\sqrt {\sum_k (A_{ik} - <A_i> )^2} \sqrt {\sum_k ( A_{jk} - <A_j> )^2} }\) 가 되며, 이 값은 -1부터 1사이에 존재하게 된다.</p>
+<p>이런 cosine similarity를 통해 Pearson Coefficient라는 것도 정의할 수 있는데, \( r_{ij} = \frac {cov(A_i,A_j)} {\sigma_i \sigma_j} = \frac { \sum_k (A_{ik} - <A_i>) (A_{jk} - <A_j>) } {\sqrt {\sum_k (A_{ik} - <A_i> )^2} \sqrt {\sum_k ( A_{jk} - <A_j> )^2} } \) 가 되며, 이 값은 -1부터 1사이에 존재하게 된다.</p>
 
 
 <p>그 밖에도 Normalized \(n_ij\), Euclidean distance, Normalized Euclidean distance 등의 structural equivalence를 측정하기 위한 방법 들이 존재한다.</p>
@@ -754,7 +754,7 @@
 <h5 id="48-7-degree">Degree</h5>
 
 
-<p>Degree는 vertex i와 연결된 모든 edge의 개수를 의미한다. notation은 \(k_i\)로 표현되며, \(k_i = \sum_j^n A_{ij}\) 이며, \(m = \frac {1} {2} \sum_i^n k_i = \frac {1} {2} \sum_{ij} A_{ij}\) 라는 것을 알 수 있다. degree의 평균은 c로 표현하는데, \(1 \over n \sum_i^n k_i\) 이며, 이 값은 곧 \(c = 2m \over n\)이다.</p>
+<p>Degree는 vertex i와 연결된 모든 edge의 개수를 의미한다. notation은 \(k_i\)로 표현되며, \(k_i = \sum_j^n A_{ij}\) 이며, \(m = \frac {1} {2} \sum_i^n k_i = \frac {1} {2} \sum_{ij} A_{ij}\) 라는 것을 알 수 있다. degree의 평균은 c로 표현하는데, \(1 \over n \sum_i^n k_i\) 이며, 이 값은 곧 \(c = {2m \over n}\)이다.</p>
 
 
 <p>이에 대해 density 혹은 connectance라는 것을 정의할 수 있는데, 이것은 전체 존재 가능한 edge와 실제 존재하는 edge의 비율을 의미한다. 이 때 n개의 vertex가 있을 때 존재 가능한 edge의 개수는 단순히 n choose 2이므로 density \(\rho\)는 \(\rho = \frac {m} {\binom {n}{2}} = \frac {2m} {n(n-1)} = \frac {c} {n-1}\)으로 정의할 수 있다. 따라서 만약 dense한 graph는 n이 발산했을때 density가 constant일 것이고, sparse graph는 n이 발산하면 이 값이 0이 될 것이다. 이 방법을 사용해서 우리에게 주어진 graph가 densy한지 혹은 sparse한지 알 수 있는 것이다.</p>
@@ -766,7 +766,7 @@
 <p>$$ k_i^{in} = \sum_j^n A_{ij}, \ k_j^{out} = \sum_i^{out} A_{ij} $$</p>
 
 
-<p>$$ m = \sum_i^n k_i^{in} =  \sum_j^n k_j^{out} =  = \sum_{ij} A_{ij} $$</p>
+<p>$$ m = \sum_i^n k_i^{in} =  \sum_j^n k_j^{out} = \sum_{ij} A_{ij} $$</p>
 
 
 <p>$$ c_{in} = \frac {1} n \sum_i^n k_i^{in} = \frac 1 n \sum_j^n k_j^{out} = c_{out} $$</p>
