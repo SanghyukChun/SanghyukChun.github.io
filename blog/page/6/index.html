@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Machine Learning Week1 - What Is Machine Learning Jul 27th, 2013 최근 Andrew Ng Standford교수의 Coursera Machine Learning Course를 수강 중이다. 사실 나는 이미 &hellip;">
+  <meta name="description" content="Octopress 자잘한 세팅 변경 및 Post용 Script 만들기 Jul 27th, 2013 일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,198 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/6/">Octopress 자잘한 세팅 변경 및 Post용 Script 만들기</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-27T20:13:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 octopress랑 같아서 도저히 작업하면서 신경쓰여서 바꿔버렸다. 이건 정말 간단하다. source/ directory바로 밑에 있는 favicon.png만 다른 파일로 바꿔주고 generate하고 deploy하면 끝</p>
+
+
+<p>두번 째로 Permalink. 쉽게 생각하면 포스트의 고유 주소값. 내가 티스토리, 워드프레스로 넘어가면서 가장 불만이었던 점이 이 고유 주소값의 default가 포스트 이름이라는 점. 근데 나는 원래 포스트 이름이 꽤 긴편이고 거기다가 주소에 날짜가 들어가면 정말 우아하지 않다고 생각해서 가장 미니멀리즘하게 포스트 순서대로 하는 것을 좋아한다. 그런데 octopress도 기본 값이 년/월/일/제목 이다.. -_- 그래서 간단하게 바꿔줬는데, _config.yml에 있는 permalink를 /:year/:month/:day/:title에서 /:title로 바꿔주고 markdown 파일 이름을 2013-07-25-1.markdown 이런 식으로 바꿔주면 된다. 어차피 앞에 주소는 rake new_post할 때 해주는거니깐 딱히 고민할 이유는 없다.</p>
+
+
+<p></p>
+
+<p>근데 이렇게 하면 매번 생성할 때 마다 마지막 파일 이름이 뭐였는지 일일이 확인해야해서 굉장히 상당히 엄청 귀찮다. 그래서 아래와 같은 스크립트를 만들었음</p>
+
+
+<p></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>num=$(ls -l | grep markdown | wc -l)
+</span><span class='line'>bundle exec rake new_post["$((num+1))"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>그냥 post.sh라고 이름 붙이고 /source/_post directory바로 밑에 두고 ./post.sh만 돌리면 알아서 순서대로 만들어 준다 굳굳</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/5/">Script와 함께하는 Bundle Exec~</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-27T17:15:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>진짜 rails 개발할 때 제일 귀찮았던 것이 rake를 하려고만 하면 버전이 안맞아서 bundle exec를 붙여줘야 했던 점. 물론 강제로 내가 버전을 낮추면 되지만 왜 굳이 잘 쓰고 있는 rake의 버전을 낮추냐는 마인드로 계속 썼었다. 그게 가능했던 이유는 사실 rails 개발할 때 rake는 생각보다 그렇게 빈번하게 쓰지 않는다. 주로 <code>rails s</code>(혹은 <code>rails server</code>) 아니면 가끔 디버깅 용 <code>rails c</code>(혹은 <code>rails console</code>)을 쓰고는 했는데 이녀석들은 거의 출근해서 실행시키면 거의 퇴근할 때 까지 다시 실행시킬 일 없이 쭉 실행된다 -_-;; 근데 블로깅을 하니깐 이게 죄다 rake다. Rakefile을 바꿔버리는 방법도 있지만 굉장히 귀찮기 때문에 그냥 그런 귀찮은 짓을 하느니.. 뭐 그래서 그냥 일일이 치고 있다 하하..</p>
+
+
+<p>근데 이것도 한 두번이지.. 게다가 이건 포스트 쓸 때는 물론이고 preview 심지어 deploy까지 죄다 rake를 때려야 한다. 포스트 하나 당 최소 세번 -_-;;; 결국 안되겠다 싶어서 deploy.sh라는 녀석을 만들기로 결정</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>bundle exec rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<p>이게 끝이다. 그리고 deploy할 때마다 이름 묻는게 너무 귀찮아서 (password는 그러려니 한다. 맘에 안들면 ssh키를 쓰면 되는데 귀찮아서 -_-; 근데 조만간 쓰게 될 듯) remote origin의 url을 https에서 ssh로 바꿔버렸다.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>음.. 바꾸고 나서 아직 deploy를 안해봤는데 이 포스트가 잘 올라가면 성공이고 안되면 다른 해법을 찾아야 한다 이런.</p>
+
+
+<p>아무튼 귀찮은 것은 질색이기 때문에 좀 여러 방면에서 편하게 블로깅을 할 수 있는 툴들이나 스크립트를 많이 쓰게 될 것 같은 스멜~</p>
+
+
+<hr>
+
+
+<p>&#8212; 추가</p>
+
+
+<p>아 ssh로 바꾸기는 해놨는데 ssh키가 등록이 안되어있어서 결국 도로묵이었다. <a href="https://help.github.com/articles/generating-ssh-keys">https://help.github.com/articles/generating-ssh-keys</a>보고 순서대로 따라서 하니깐 잘 등록 완료. 이제 deploy만 하면 된다~</p>
+
+
+<p>&#8212; 또 추가</p>
+
+
+<p>아 범인을 발견했다. octopress에서 github pages에 대해서는 _deploy 밑에 따로 프로젝트를 관리하는데 나는 그걸 모르고 octopress의 url만 열심히 고치고 있었다 ㅋㅋㅋ blog_directory/_deploy/.git/config 를 고쳐야 한다. 즉, 다시 말해서 위에서 언급한</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>요놈은 root가 아니라 _deploy에서 실행시켜야 한다는 의미!</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/4/">Customize Octopress - CSS 변경하기</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-27T16:17:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>평일에는 조금 바빴고 주말을 맞아 블로그를 다시 Customize하고자 간단하게 Document를 훑어보고 당장 Twitter Bootstrap을 적용시켰다. 한가지 당황했던 점은 Bootstrap이 2에서 3으로 version up 되면서 docs페이지가 완전히 정전 상태.. 그냥 급하게 Bootstrap team blog에서 다운받아서 소스만 붙여 넣었다. 나중에 version 3으로 업그레이드 되면 바꿔줘야 할 것 같은 부분이다. (근데 About Me 실컷 Bootstrap CSS Customizing하고 필요없는거 다 지우고 comon.css로 몰아놓고 1주일도 안되서 ver.3이라니.. deploy완전히 끝나면 훑어보고 마음에 들면 About Me를 통채로 들어내야 할수도;;)</p>
+
+
+<p>아무튼, css를 바꾸는 방법은 간단했다. 공식 <a href="http://octopress.org/docs/theme/styles/">document</a>를 보면 <code>sass/custom/_style.scss</code>를 수정하면 된다고 한다. 간단하게 override하라는 의미인데, Bootstrap을 그냥 들어다가 붙이기만 해도 꽤 나름 훌륭한 스타일링이 된다. 내가 Bootstrap을 사랑하는 이유. 다만 폰트가 마음에 들지 않아서 (이상하게 대부분의 사이트가 그러하듯 sarif를 기본 폰트로 지정하면 윈도우 크롬 환경에서 폰트가 깨지는 경우가 종종있다.) 구글 웹폰트에서 나눔고딕코딩으로 적용시커주었다. 굳이 나눔고딕코딩으로 적용한 이유는 아무래도 이 블로그에는 코딩이 많이 들어갈 것 같고 간단하게 문서를 읽기에는 역시 나눔고딕코딩이 괜찮을 것 같아서이다. 방법은 간단하다 <code>sass/custom/_style.scss</code>에 아래처럼만 넣어주면 된다</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+</span><span class='line'>body {
+</span><span class='line'>  font-family: "Nanum Gothic Coding";
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>물론 나는 Bootstrap에 넣은 것이기 때문에 Bootstrap에서 body에 해당하는 부분만 바꾸어 주었다. 추가로 pre, code에 해당하는 부분 등에도 font-family가 설정되어 있어 그 부분도 마찬가지로 수정. 이렇게 처리하면 어렵지 않게 CSS style을 변경할 수 있다. 이제 layout을 뜯어고칠 차례!</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -369,23 +561,23 @@ categories:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/56/">2014년 2분기 회고</a>
+      </li>
+    
+      <li class="post">
+        <a href="/55/">2014 ICML 후기</a>
+      </li>
+    
+      <li class="post">
+        <a href="/54/">The Basic Principles in Deep Neural Networks</a>
+      </li>
+    
+      <li class="post">
         <a href="/53/">나의 창작욕에 대하여</a>
       </li>
     
       <li class="post">
         <a href="/52/">Network Science - Scale Free Network (Barabasi-Albert Network)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/51/">Network Science - Small World Network (Watts-Strogztz Network)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/50/">Network Science - Random Network (Erdös-Rényi Network)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/49/">Network Science - Measures and Metric</a>
       </li>
     
   </ul>

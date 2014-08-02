@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-06-14T21:10:31+09:00</updated>
+  <updated>2014-08-02T18:40:04+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,264 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2014 ICML 후기]]></title>
+    <link href="http://SanghyukChun.github.io/55/"/>
+    <updated>2014-06-26T16:16:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/55</id>
+    <content type="html"><![CDATA[<p>이번에 <a href="icml.cc/2014/" target="new">ICML 2014</a>를 다녀왔다. 내 첫 해외 학회이기도 했고, 처음으로 Machine Learning과 관련된 연구를 하는 사람들의 talk을 듣고, 그 사람들이 직접 하는 일들을 많이 볼 수 있어서 개인적으로 많이 고무된 상태로 학회에 참여했었다. 첫 학회를 다녀온 기념으로 학회에서 내가 느낀 점들을 간단하게 정리해보고자 한다. 대충 보자면 아래 리스트 정도가 될 것 같다.</p>
+
+
+<ul>
+<li>항상 열정을 가지고 있고 열심인 사람들</li>
+<li>어떤 식으로 연구를 해야겠다라는 생각</li>
+<li>Machine Learning이라는 학문의 방대함</li>
+<li>Neural Network와 Deep Learnig의 강세</li>
+<li>Real Industry와 Machine Learning</li>
+</ul>
+
+
+<p>먼저 사람들. 개인적으로 내 자신에게 살짝 아쉬운 점이라면 학회에서 만난 사람들에게 먼저 다가가서 이야기를 걸거나 할 베짱이 많이 없었다는 것이다. 사실 내가 그렇게 사람들에게 먼저 다가가고 얘기를 나누기에는 내가 알고 있는 지식이 많이 부족함에도 원인이 있기는 하지만 그래도 다들 같은 분야에 관심을 가지고 (세부 관심사는 조금씩 다를 수 있지만) 나와 비슷한 입장을 가진 사람들도 있을 수 있었을텐데 내가 조금 적극적이지 못했던 부분이 있다. 학기 중에 윤준보교수님 수업에서 학회를 가면 그 사람들과 이야기를 많이 나누어보라는 얘기를 해주셨는데 막상 내게 그런 기회가 생기니 할 수 있는 말이 많이 없더라. 조금 더 정진해서 그런 대화에 두려움이 없을 정도의 지식을 쌓아야할텐데. 그런 개인적인 아쉬움은 잠시 넘겨서 생각을 해보자면, ICML에서 만난 사람들은 정말 열정있는 사람들이었다. 고작 15분에서 20분짜리 talk조차 이해하지 못하고 허덕이고 있는 나와는 다르게, 정말 발표자의 talk을 이해하고 그들과 communication하면서 질문하는 모습이 멋져보였다. 1시간 가까이 되는 invited talk이나 key note talk에서도 많은 부분을 놓치지 않으려 노력하는 모습도 멋졌다고 생각한다. 나도 그런 멋지다고 생각한 모습에 한 단계 더 다가가야할텐데.</p>
+
+
+<p>그리고 그 다음은 역시 연구였다. 내가 대학원생이 되었고, 연구가 나에게 가장 중요한 비중을 차지하게 된 이상, 어떤 연구를 할 것이며 어떻게 연구를 할 것이며.. 혹은 왜 연구를 해야하는 것이냐 등의 물음은 나에게 굉장히 중요한 물음이다. 약간 어느 정도는 간접적으로 그 질문들에 대한 답을 얻을 수 있었던 것 같은데, 어떤 공명감으로 연구를 한다는 느낌보다는 이 문제를 풀어야하겠다는 그런 근본적인 호기심? 같은게 영향을 미치는게 아닌가 싶다. 사실 명확하게 이거다! 싶은 느낌은 잘 들지 않았지만 앞서 말했듯이 다들 열정적으로 임하고 질문 하나하나가 날카롭게 들어가는 모습을 보면서 이런 학회에 publish를 하는 사람들은 어떤 생각으로 다른 사람들의 talk을 듣는지 조금이나마 간접적으로라도 체험할 수 있지 않았나 싶다. 아무튼 진짜 열정적으로 해야한다. 그게 진짜 큰 것 같다.</p>
+
+
+<p>또 학회에서 놀라웠던 점이라면 Machine Learning이라는 분야 자체가 생각보다도 훨씬 더 방대했다는 점이다. 전체 Track이 6개가 parallel 하게 돌아가면서 전체 다 합쳐서 거의 300개 가까이 되는 talk이 진행이 됐으니까.. (<a href="http://icml.cc/2014/index/article/12.htm" target="new">스케쥴</a>) 단순히 accept된 paper만 많은 것이 아니라 각 track의 주제 또한 너무나도 다양하였다. Networks and Graph-Based Learning, Reinforcement Learning, Bayesian Optimization and Gaussian Processes, Supervised Learning, Neural Networks and Deep Learning, Graphical Models, Bandits, Monte Carlo, Statistical Methods, Structured Prediction, Deep Learning and Vision, Matrix Completion and Graphs, Learning Theory, Clustering and Nonparametrics, Active Learning, Optimization, Large-Scale Learning, Latent Variable Models, Online Learning and Planning, Clustering, Metric Learning and Feature Selection, Optimization, Neural Language and Speech, Graphical Models and Approximate Inference, Online Learning, Monte Carlo and Approximate Inference, Method-Of-Moments and Spectral Methods, Boosting and Ensemble Methods, Matrix Factorization, Nonparametric Bayes, Manifolds, Kernel Methods, Unsupervised Learning and Detection, Crowd-Sourcing, Manifolds and Graphs, Regularization and Lasso, Nearest-Neighbors and Large-Scale Learning, Topic Models, Sparsity, Neural Theory and Spectral Methods, Features and Feature Selection, Time Series and Sequences.... 와 진짜 많다. 물론 이 전체를 또 잘 묶으면 더 줄어들 수 있겠지만 그래도 일단 각각의 Track들이 서로 다른 주제를 가지고 이렇게 많이 있다는 사실이 놀라웠다. 글쎄, 그래도 굳이 크게 나누자면, (1) Learning for Graphical Model (2) Traditional Machine Learning Problems (Bayesian, Supervised Learning...), (3) Optimization (4) Monte Carlo (5) Unsupervised Learning (Clustering, Metric Learning...) (6) Neural Network (7) Others 정도가 아닐까. 모르겠다 너무 많고 내가 모르는 분야가 너무 많아서. 아무튼 정말 Machine Learning이 어마어마하게 큰 분야라는 것을 다시 한 번 느끼게 되었다. 나는 저 많은 Track 중에서 어느 분야에 기여를 할 수 있을까?</p>
+
+
+<p>꼭 그런건 아니었지만, 전반적으로 Deep learning 과 관련된 talk들. 심지어 'Deep' 이라는 이름이 들어가기만 해도 컨퍼런스 룸이 터질듯한 것을 볼 수 있었다. 정말 요즘 이게 핫하긴 핫하다. 근데 난 이상하게 정말 Deep learning이 싫은데.. 이유를 잘 모르겠다. 가장 practical하게 powerful해서 그렇겠지? 중국에서 해서 그런지는 모르겠지만 Deep learning세션은 중국인들이 바글바글 몰려서 진짜 산만했었다. 그만큼 가장 핫하다는 뜻이고, 중국인들이 이런 실용적인 것들에 무지 관심이 많다는 것을 느꼈다. 이론쪽보다는 확실히 그런 practical 한 세션에 중국인들이 압도적으로 많았다. Deep learning 관련 시스템 쪽도 사람 엄청 많았고.. 진짜 그야말로 Deep Learning의 시대라고 봐도 무방할 정도. 대단하더라.</p>
+
+
+<p>마찬가지 맥락에서, 굉장히 많은 기업들이 ICML을 찾았다. 구글, Facebook, 아마존, MS, 야후 같은 글로벌 기업은 물론이고 바이두, 알리바바 같은 중국 기업들도 엄청 많았다. 그만큼 머신러닝을 전공한 사람들의 힘이 필요하다는, 그런 사람들에 대한 수요가 확실하구나.. 라는 그런 생각이 들더라. 기업 연구소 특히 MS나 구글 연구소 등에서도 많은 논문들이 나오는걸 보고, 저런 연구소에서 일하는 것도 생각보다는 나쁘지 않을 수도 있다는 그런 생각도 들고 그랬다.</p>
+
+
+<p>ICML에서 여러모로 많은 자극을 받았다. 재미도 있었고. 내년 ICML은 내가 intivation 되서 갔으면 좋겠다! 나도 좋은 논문을 쓸 수 있었으면.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Basic Principles in Deep Neural Networks]]></title>
+    <link href="http://SanghyukChun.github.io/54/"/>
+    <updated>2014-06-17T19:23:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/54</id>
+    <content type="html"><![CDATA[<h5>들어가기 전에</h5>
+
+
+<p>이 포스트는 2014년 6월 16일 카이스트에서 유명한 Yoshua Bengio 교수님 연구실에서 포스트 닥터 과정을 밟고 계신 장민석 박사님의 The Basic Principles in Deep Neural Networks 라는 이름의 semiar를 요약한 내용이다. 내용은 주로 Deep learnining을 supervised learning, unsupervised learning의 관점에서 각각 바라보면서 어떤 컨셉들이고, 어떤 연구들이 진행이 되어있는지 훑어보는 정도의 간단한 내용이었다.</p>
+
+
+<h5>Introduction</h5>
+
+
+<p>Deep learning은 Machine Learning의 분야 중 하나이다. 그렇다면 Machine Learning은 무엇일까? 뭐 이거에 대한 얘기는 워낙 많이 했었고, 조만간 시간이 되면 내가 생각하고 있는 머신러닝에 대해 다시 포스팅을 할 예정이니 생략하도록 하겠다. 일단 이 세미나에서는 간단하게 머신러닝은 모델이 데이터에서 러닝하고 러닝한 데이터를 가지고 들어온 쿼리에 대해 answer하는 것이 머신러닝의 전부다! 라고 얘기해주셨다.</p>
+
+
+<p>그리고 perception이라는 것에 대해서도 설명해주셨는데, 우리말로 하면 '인지' 정도 되겠다. 조금 더 구체적으로 얘기하면 내가 지금 인지하고 있는 물체에 대한 정보를 '안지' 하는 것이다. 즉, 내가 지금 읽고 있는 이 글이 어떤 철자를 가지고 있고 어떤 의미를 가지고 있는가에 대해 판단하는 것 아니면 사진 안에 있는 무언가가 고양이인지 개인지 확인하는 것, '인지'라는 단어가 한국어인지 일본어인지 판단하는 것들이 perception의 한 예라 할 수 있겠다. 우리는, 즉 사람은 이런 과정을 매우 손쉽게 하지만, 실제로 이것은 굉장히 어려운 작업이다. Deep learning이란 결국 사람이 perception을 어떻게 하는가를 기반으로 learning을 해보자라는 컨셉이다. 즉, Human learning에서 motive를 얻는 것인데, 사실 사람이 이런 인지를 한다는 것은 뇌에 의해서 일어나는 현상이며 사실은 물리적으로 매우 간단한 뉴런이라는 것들이 복합적으로 작용하면서 일어나는 것이다. 그렇기 때문에 사람의 뇌를 모방하여 매우 간단한 뉴런이라는 것들을 조합하여 인지 능력을 향상시키는 것이 Neural Network이고, 그것들을 또 폭발적으로 많이 조합한 것이 Deep learning이라 할 수 있겠다.</p>
+
+
+<p>근데 사실 NN은 거의 4-50년 가까이된 무지하게 오래된 분야임 왜 이제와서 핫한가? 에 대한 질문이 있을 수 있다. history를 보면 더 명확해지는데, 아래의 리스트를 한 번 보자.</p>
+
+
+<ul>
+<li>1958 Rosenblatt proposed perceptrons</li>
+<li>1980 Neocognitron (Fukushima, 1980)</li>
+<li>1982 Hopfield network, SOM (Kohonen, 1982), Neural PCA (Oja, 1982)</li>
+<li>1985 Boltzmann machines (Ackley et al., 1985)</li>
+<li>1986 Multilayer perceptrons and backpropagation (Rumelhart et al., 1986) 1988 RBF networks (Broomhead&amp;Lowe, 1988)</li>
+<li>1989 Autoencoders (Baldi&amp;Hornik, 1989), Convolutional network (LeCun, 1989) 1992 Sigmoid belief network (Neal, 1992)</li>
+<li>1993 Sparse coding (Field, 1993)</li>
+</ul>
+
+
+<p>즉 우리가 지금 쓰고 있는 Neural network의 기본적인 연구는 이미 90년대 이전에 다 끝나있었다. 심지어 1995년에 Machine Learning에 어마어마한 연구 결과를 남긴 Vapnik과 Jackel이 10년 뒤인 2005년에 아무도 Neural net을 쓰고 있지 않을 것이라고 내기를 했을 정도니까.. 근데 갑자기 Deep learning이 정말 갑자기 빵! 하고 히트를 쳐버렸다. 그 배경을 보자면, ImageNet이라는 것이 있는데, 그냥 쉽게 생각하면 사진을 주고 어떤 물체인지 인식을 하는 일종의 race 비슷한 것이다. 그런데 그 이전까지 모든 최고의 image recognition 연구하는 사람들이 이뤄놓은 결과가 0.27 ~ 0.30정도 였는데 (아마 27%에서 30% 정도만 틀린다는 의미일 것이다) 갑자기 2012년에 Deep convolutional neural network를 하는 팀이 0.153으로 거의 2배 가까운 성능 향상을 보여주었다. 그리고 그 다음 해에는 상위 20개 팀에서 2개 팀 빼고 전부 Deep learning을 써서 Classification을 했다고 한다. 최고 성능은 또 0.117로 엄청나게 개선되고.</p>
+
+
+<p>그리고 Deep learning을 기본 기술로 사용하는 스타트업도 엄청나게 늘어나고 있고, (<a href="http://techcrunch.com/2014/01/26/google-deepmind/" target="new">Deep learning 기술 회사인 Deep mind M 이상에 인수</a>, <a href="http://techneedle.com/archives/15662" target="new">Captcha 퍼즐 암호 99.8% 성공률로 해석</a>, <a href="http://www.technologyreview.com/news/525586/facebook-creates-software-that-matches-faces-almost-as-well-as-you-do/" target="new">사람의 얼굴 인식 능력을 상회하는 소프트웨어 개발</a>) 심지어 현재 구글이나 애플 등에서 음성 인식에 쓰는 알고리듬이 deep learning이라고 하니, 단순히 학계에서만 붐인 것이 아니라 산업에서도 엄청나게 핫하다고 할 수 있다.</p>
+
+
+<p>아니 근데 그래서 Deep learning이 뭘까? 뭐가 Deep하다는 걸까? 기존 Machine Learning이랑은 무엇이 다를까? 등의 질문이 들 수밖에 없다.</p>
+
+
+<p>기존 머신러닝은 크게 3단계로 이뤄진다. Feature engineering, Learning, Inference. 그렇기 때문에 맨 처음 Feature extraction에서 Data의 Domain knowledge과 general machine learning이 분리가 된다. 즉, 내가 image를 이용해 machine learning을 한다고 해서 Learning 알고리듬이나 Inference에 영향을 주지는 않는다. 그러나 실제로는 inference가 learning에도 영향을 미치고, domain knowledge에도 영향을 미치는 등, 이 세가지는 분리가 되어있지 않다. 그래서 초기 Deep learning은 1a Feature engineering 1b Feature/Representation learning 2. Learning 3. Inference. 이렇게 데이터에서 나온 learnign결과를 접목하여 성능을 개선시키려는 노력에서 부터 시작되었다고 한다. 현재 쓰이는 실제 딥러닝은 1. Jointly learn everything 2. Inference 단 두가지 단계로, 데이터 자체에서 모든 것을 처리하는 것이라고 한다. 아래 그림을 보면 조금 이해가 빠를 것 같다.</p>
+
+
+<p><img src="/images/post/54-1.png" width="500">
+<img src="/images/post/54-2.png" width="500">
+<img src="/images/post/54-3.png" width="500"></p>
+
+<p>세미나 중에 박사님께서 Yoshua Bengio교수님 얘기 중에서 상당히 인상적이라고 했었던 얘기라면서 해줬던 얘기가 "Let the data decides" 였다. 즉, 우리가 데이터에서 피쳐 뽑는데, 좋은 모델을 찾는데에 시간을 쓰지 말고, 처음부터 좋은 머신러닝 모델을 가져와서 데이터에서부터 좋은 결과를 만들어낼 수 있도록 데이터가 알아서 하게 해라.. 뭐 이런 얘기라고 한다.</p>
+
+
+<p>아무도 쓰지 않던 Deep learning 혹은 Neural network를 갑자기 사람들이 많이 쓰는 이유는 결국 사람들이 따로따로 연구하던 PCA, Neural PCA, Probabilistic PCA, Autoencoder, Belief Network, Restricted Boltzmann Machine이 서로 각자의 특수한 케이스이거나 혹은 다른 표현형이라는 것이 알려지면서 결국 한 분야로 수렴하기도 하였고, 이제는 많은 것들이 알려져서 이전에는 learning하기 어려웠던 것들을 쉽게 learning할 수 있다고 한다. 특히 이제 더 이상 non-convex optimization에 대해 두랴워 할 필요가 없다는 것이 가장 큰 이유라고 한다. 또한 inference와 training사이의 interaction에 대해서도 더 많이 이해하고 있으며, 예전보다 computation power가 exponential하게 증가했으며 특히 GPU를 사용하게 되면 정말 계산량이 폭발적으로 늘어난다고 한다.</p>
+
+
+<p><img src="/images/post/54-4.png" width="600"></p>
+
+<p>위의 그림은 각 종과 현재 개발된 NN들의 뉴런 개수를 비교한 것이데 스케일은 log scale이다. 맨 처음 DBN이 나올 때만 해도 편충보다 뉴런이 조금 많고 거머리보다 10배 적었는데, 나중에 AlexNet에서는 개미보다 조금 많고 벌에 비해서 한참 적다. 그리고 여전히 우리는 개구리의 뉴런 개수보다 적은 양의 뉴런만을 가지고 있다. 사람이 가지고 있는 뉴런의 개수만큼 발전을 하려면 아직까지 갈 길이 멀다는 얘기이다. 단순히 뉴런의 개수를 늘릴 수 없는 이유는 역시 시간이 오래걸리기 때문이다. 아직까지도 발전할 여지는 많이 있는 학문이라는 뜻이려나.</p>
+
+
+<h5>Supervised Neural Network</h5>
+
+
+<p>이 부분에서는 neural network로 supervised learning, 특히 classification을 어떻게 푸는지에 대해 얘기가 되며, Multilayer perceptron과 그것의 learning, regularization, 그리고 기타 등등에 대해 다르게 될 것이다.</p>
+
+
+<p>Supervised learning이란 무엇인가. 데이터가 \(D = { (x_1, y_1), (x_2, y_2), ..., (x_N, y_N) }\) 으로 주어졌을 때, 어떤 assumption \(y_n = f^* (x_n) \)을 찾는 것이 supervised learning이라 할 수 있다. 이때, 주어진 데이터는 완벽한 데이터가 아니라 다소 noise가 끼어있다고 가정한다. 또한 이것을 D에 포함되지 않은 데이터에 대해 잘 설명할 수 있는 assumption을 찾는 것이 목표인데 이유는 모든 데이터가 noisy하다고 생각하기 때문이다.</p>
+
+
+<p>Probabilistic view로 보면 Underlying distribution X and Y|X이 존재한다고 했을 때, 데이터는 이 distribution에서부터 만들어지는 것이라 생각할 수 있다. 이때 우리가 찾고자하는 assumption은 \(p(y|x\)가 된다. 마찬가지로 D에 속하지 않은 데이터에 대해서 잘 설명할 수 있는 distribution을 찾는 것이 목적이다.</p>
+
+
+<p>근데 '잘' 설명한다는 것은 무엇일까. 즉, Evaluation and Generalization은 어떻게 하는 것일까. 이건 원래 함수를 f라고 하고 추측한 함수를 f* 라고 했을 때 아래 그림과 같은 방법으로 추측하게 된다. 그런데 이때 이것은 확률적으로 바라봤을 때 KL divergence와 동일하기 때문에 그 아래 그림과 같이 설명할 수도 있다. 보통은 MC approximation (샘플을 막 뽑아서 성능 특정)을 사용해서 우리가 가지고 있는 샘플 중 일부분을 추출해 제외하고 f*를 찾아서 그 에러를 줄이는 방식으로 테스트를 한다.</p>
+
+
+<p><img src="/images/post/54-5.png" width="500"></p>
+
+<p>근데 왜 D가 아닌 D test에 대해 솔루션을 찾을까? 이유는 우리가 가진 resource가 finite하기 때문이다. 만약 시간이 무한하면 우리가 취하고 있는 몬테카를로가 언젠가 진짜 확률로 수렴하겠지만, 우리가 가진 자원이 유한하기 때문에 반드시 샘플 에러가 발생하게 된다. 또한 실제로 이것이 굉장히 큰 문제이기 때문에 우리가 못 봤던 테스트 셋으로 테스트를 하여 성능을 측정하는 것이다.</p>
+
+
+<p></p>
+
+<p>자 뭐 이것의 대표적인 예로는 linear regression혹은 ridge, lasso 등이 있다고 설명을 해줬지만 사실 부연 설명에 불과하므로 패스. 그렇다면 우리가 흔히 말하는 MLP, multilayer perceptron도 이것으로 설명이 가능한데, 아래와 같다.</p>
+
+
+<p><img src="/images/post/54-6.png" width="500"></p>
+
+<p>맨 아래 식은 일종의 cost function에 대한 optimization이다. 그리고 우리는 이런 optimization을 하기 위한 알고리듬으로 gradient descent algorithm을 가지고 있는데, 이 방법의 문제는 모든 데이터에 대해 코스트를 계산하여 step을 진행하기 때문에 너무 느리다는 것이다. 따라서 우리는 수 많은 데이터들 중에서 하나만 골라서 업데이트를 하는 Stochastic Gradient Descent를 사용한다. 하지만 이 경우 Convex가 아니라면 둘이 서로 다른 곳으로 수렴을 하게 된다는 문제점이 발생하지만, 사실 크게 상관없다고 한다.</p>
+
+
+<p>그리고 neural network에서 쓰는 Gradient descent method는 backpropagation이 있다. <a href="http://SanghyukChun.github.io/42" taget="new">이전</a>에 설명했던 컨셉이니 생략하고, 중요한 점만 얘기하면, 이 방법을 쓰면 모든 노드의 derivative를 전부 계산할 필요가 없다는 것이다. 대신 우리는 매우 적은 양의 계산으로 마치 전체의 gradient를 계산한 것과 같은 효과를 얻을 수 있다.</p>
+
+
+<p>여기에서 질문이 하나 나왔는데, 사실 이렇게 할 수 있는 이유는 chain rule을 적용할 수 있기 때문인데 (아까 건 링크 참고) 혹시 그렇다뎐 Hessian을 계산할 수는 없을까라는 질문이 나왔다. 결론적으로 말하자면, 실제 NN에서 Hessian 등의 2nd derivative를 계산하는 것은 매우 expensive하다는 것이며, 구현도 복잡하다고 한다. 대신 H를 직접 구하지 않고 그것의 역수를 계산하는 것들이 있긴 있다고 한다. 그러나 여전히 큰 NN에는 부적합하기 때문에 보통 Gradient를 사용한다고 한다.</p>
+
+
+<p>Regularization &ndash; MAP.
+Prob perspective: find a model M by ML (argmax p(D|M) ), MAP(argmax p(M|D) )
+ML은 bayes rule! 둘을 쉽게 바꿀 수 있다.
+prior distribution이 전체 model의 prob를 scope을 줄여주는 역할을 한다!
+Regularization의 Omega term이 prior 역할을 하는 것.
+NN의 Reg. (1) Weight Decay.
+Prior: 모델은 너무 sharp하지 않다! 모델은 굉장히 smooth 할 것이다. theta_j ~ N(0, (M lambda)^-1 )
+theta = argmin( loss function + lambda sum theta<sup>2</sup> )
+(2) Smoothness and Noise Injection.
+Input space의 굉장히 작은 부분만 관심이 있으니깐 그 부분에만 smooth하게 만들자.
+instance 주변에도 비슷한 값이어야 한다. f(x) <del>~ f(x+e) &lt;=> min sum | d f(x<sup>n</sup>) / dx | ^2
+&lt;=> 근데 이걸 계산하는건 계산할 때 마다 white Gaussian noise를 넣어서 계산하는 것과 동일한 결과를 낸다 1995 Bishop
+(3) Ensemble learning and dropout
+computation이 빨라졌으니까, 한 50개 learning하고 그걸 가지고 ensemble learning하자!
+예전에는 트레이닝이 잘 안되서 잘 안했던건데, 이제는 트레이닝이 잘 되니까 그게 잘 된다
+아이디어: NN을 learning할 때 마다 서로 다른 preprocessing을 하고나서 모아서 averaging 하자 object recognition은 사람보다 성능이 좋음 헐 ㅋㅋ
+(4) dropout.
+하나만 배우면서 exponentially many classifiers를 하자! 힌튼 2012
+매번 feedforward를 할 때마다 random하게 node 를  drop하자.
+수학적으로 얘기하면, lower bound를 optimization을 한다. 하고 안하고는 10</del>20% gain을 늘린다.
+실제로 쓰기에는 너무 variation이 크다. 그래서 실제 classification에 좋은 결과가 안나올 수 있음. 그래서 activation을 절반으로 까는 방식으로!
+결과적으로 0.5를 드랍, 0.5를 까는 것이 general하게 좋은 것으로 보인다.
+다른 식으로 값을 러닝해보자는 아이디어로 해봤더니 값이 전부 0.5로 컨벌지 하더라 헐 ㅋㅋㅋㅋㅋ</p>
+
+<p>Common Recipe for DNN.
+1. User a piecewise linear hidden unit. (Rectifier, Maxout) => max{0,x} h({x1m,, xp}) = max {x1, ,,,,, xp). differentiable하지 않은데? sub gradient랑 비슷하고, 아니면 dropout이랑 비슷하게 생각하면 됨. 계속 NN을 다른 것을 쓴다고 보면 됨. 0이 되었던 애들은 뉴런이 없다고 보고.. 뭐 결국 sub gradient라고 하네요
+2. Preprocess data and choose features carefully. Image: Whitening, Raw, SIFT, HoG, Speech: Raw? Spectrum?, Text: Characters? words? tree?, General: z-Normalization?
+3. User Dropout and other regularization methods
+4. Unsuperviesd Pretraining (Hinton et al 2006) &ndash;> a lot a unlabeled samples. label 데이터 많으면 안해도 된다네요
+5. Carefully search for hyperparameters (Random search, Bayesian optimization..) => greed search 하면 exponential하게 많아서 안됨 ㅠㅠ
+6. Often, deeper the better (이미지 &ndash; 레이어 7개 이상, 스피치 &ndash; 12개, 14개… 막 올라감, 그 이외에는 hyper parameter. 보통 난 2개 부터 시작한다)
+7. Build and ensemble of neural networks
+8. Use GPU. 파워랑 보드 좋은거 사야하고 쿨링 잘하고 전기세 조심하고..</p>
+
+<p>Hessian의 값이 너무 크고, 그러니까 계산하기도 힘들고 저장도 하기 힘들고 그걸 inverse 하는건 더 힘들고!!
+가장 큰 단점은 stochastic method가 없다 한 업데이트가 너무 expensive하다 ㅠㅠ
+그러니깐 2nd order가 좋은건 알고 있고, 진짜 이론적으로 좋지만, in practice, 실제로는 model이 너무 크기 때문에 힘들다 으엉 ㅠㅠ</p>
+
+<p>Domain Knowledge?
+Data Preprocessing and feature extraction… Contrast normalization, Relative coordinate, Bag-of-Words representation.
+NN의 좋은 점. 예를 들어서 SVM은 튜닝할 여지가 거의 없지만, NN은 처음부터 domain knowledge를 적용해서 model을 만들 수 있음.
+ex. Convolutional Neural Network: Translation, Rotation, Temporal, Frequency invariance
+Convolution and Pooling
+Convolution: filter 하나만 가지고 전부 적용하면 된다
+Pooling: local에서 계산한 convolution의 max를 취하고,… 뭐 그래서 구하는 듯
+Convolution layer
+1. Contrast Normalization
+2. Convolution
+3. Pooling
+4. NonLinearity
+Deep CNN: conv layer를 무지하게 쌓고 마지막에 full connection을 이어준다.</p>
+
+<p>Recursive Neural Network (RNN)
+Text: Compositional Structure. Tree 형태가 된다.
+근데 문장에 따라 tree가 달라져 ㅠㅠ
+아이디어: 같은 NN을 모든 tree의 edge에 apply를 한다 ( input NP, VP => S )
+sentence &ndash;> parser로 쪼갬 &ndash;> filter를 NN으로 갈아낌</p>
+
+<p>Unsupervised learning
+Label이 없다!
+DNN을 써서 visualization.</p>
+
+<p>Feature extraction. => without domain knowledge &ndash;> learned feature!!
+Generative Model.
+Underlying diet. X~Pr(D)</p>
+
+<p>Classification, Missing value reconstruction, Denoising, Structured Output Prediction, Outlier Detection.
+Ultimately it comes down to learning a diet of x.</p>
+
+<p>Density/Distribution Estimation.
+Latent Variable Models p(x). Define a parametric form of joint dist. Derive a learning rule for theta.
+RBM. Markov random field 의 특정 케이스.
+Joint distribution, Marginal distribution.. Learning rule Maximum Likelihood.
+Belief Network. Joint distribution은 구할 수 있음. Marginal distribution… 못구함. MLE로 learning. (중요하지 않음)
+NADE. no latent variable h. Joint dist = Marginal dist. condition들을 NN으로 모델링하자. ML. (중요하지 않음)
+Intractability!!!!
+Boltzmann Machine. 다 어려움.
+RBM. Marginal Probability, Posterior Prob를 구할 수 있지만 normalization constant와 conditional prob가 어려움.
+Belief net norm만 없음
+NADE nomr x margi x posterior x. 근데 conditional prob가 잘 안됨. 그리고 퍼포먼스가 안좋다.</p>
+
+<p>GM &ndash; learning to infer
+All we want is to infer the conditional diet of unknown variables.
+Approximate Inference in a Graphical Model. p(x_mis|x_obs) ~~ Q(x_mis|x_obs)
+Methods: Loopy belief propagation, variational inference/message-passing
+Q<sup>k</sup>(x_mis|x_obs) = f(Q<sup>k-1</sup> (x_mis|x_obs) ). => chain 처럼 이을 수 있음</p>
+
+<p>NADE-k. => graphical 하게 시작한 RBM같은 애들은 structure가 고정되는데 얘는 이런 모델을 만들고 싶으면 그냥 만들면 된다
+Lesson!!!
+Do not maximize log-likelihood but minimize actual cost!
+&lt;=> Don’t do what model tells you to do but do what you aim to do.
+… popular science journalists don’t care about GM ㅠㅠ</p>
+
+<p>Manifold learning &ndash; semi supervised learning
+GM이 뜨는 이유는 Pre training은 왜 하는가..? 그냥 하는게 아니다
+Classification이라는 hot한 supervised learning의 task에서도 unlabled data가 performance를 향상시킨다.
+Manifold learning &ndash; New representation
+1. phi should reflect changes along the manifold 2. phi should not change for orthogonal noise
+문제. representation을 어떻게 learnig할 것이며 어떻게 transform할 것이냐
+Solution. Denosing Autoencoder.
+manifold…</p>
+
+<p>Semi-supervised learning in action (1) Layer-wise Pretraining
+manifold를 어떻게 러닝할 것이냐 data를 스트레칭 아웃. 원래 데이터가 구석에 있었는데 representation을 진행할 때 마다 다른empty space를 무시하게..
+각각 pretraining하는 데이터는 label이 있거나 없거나 상관없다. unsupervised learning으로 끝나버린다. hyperparameter의 개수와 sensitivity가 크게 줄어든다.
+visualizaion에 쓴다. manifold embedding and visualization.
+non linear visualization은 non parametic. 새 data가 들어오면 새로 learning해야 함.
+하지만 autoencoder는 parametric model이라 그냥 feed forward만 하면 된다.</p>
+
+<p>What other applications for unsupervised DNN?
+Deep Reinforcement learning.. NN의 input을 state 로 하여 새로운 function을 define
+NLP.. Natural Language is a huge set of variable length sequences of high dim vectors.
+Hugh set. 데이터가 어마어마하지만 실제 set도 커버 못함. 거기에 input까지 variable length ㅠㅠ sequence도 high dim vector 으앙
+시멘틱을 보존하면서 encoding&hellip;</p>
+
+<p>random function은 high dimension local optima가 e로 bound가 된다고 하네요. 많아도 다 비슷한 값을 가진다. 근데 뭐가 문제? flat한 지점이 무지하게 많은겨 (saddle point)
+Saddle point를 벗어나는 방법은? 2nd order method! … 오히려 2nd order를 쓰면 그 지점들에 멈추는 경우가 많음.
+Saddle-Free Newton Method (<a href="http://arxiv.org/pdf/1406.2572.pdf">http://arxiv.org/pdf/1406.2572.pdf</a>)</p>
+
+<p>Deep Neural Network를 보면 Theory가 거의 없다.. 사실 많이 되어있다. 특히 circuit theory, dynamics.. 등으로 할 수 있음
+근데 그 어떤 것도 Rectifier에 대해 분석한게 없다 최근 좀 되고 있음 (<a href="http://arxiv.org/pdf/1402.1869.pdf">http://arxiv.org/pdf/1402.1869.pdf</a>)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Coursera Neural Networks for Machine Learning Week4 & 5 - Applications]]></title>
@@ -371,249 +629,6 @@
     <li>Lecture 14: Deep neural nets with generative pre-training</li>
     <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
     <li>Lecture 16: Recent applications of deep neural nets</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Coursera Neural Networks for Machine Learning Week1 - Neural Network and Machine Learning]]></title>
-    <link href="http://SanghyukChun.github.io/39/"/>
-    <updated>2014-03-17T23:23:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/39</id>
-    <content type="html"><![CDATA[<h5>들어가기 전에</h5>
-
-
-<p>약 반 년 전에 <a href="https://www.coursera.org/" target="new">Coursera</a>에서 <a href="https://class.coursera.org/ml-003/lecture" target="new">Andrew Ng 교수의 Machin Learning Class</a>를 수강한 적이 있다. 사실 당시에 이 course를 수강할 때, 이 course는 introduction course로만 듣고, Geoffrey Hinton 교수의 Neural Network 강의를 들을 생각이었는데, 시간에 쫓기다보니 어느새 나는 석사생이 되었고, 아직도 이 강의를 듣지 못한 상태였다. 그러다가 최근 우연하게 이 강의를 다시 들여다 볼 일이 생기게 되었고, 약 2-3주 동안 이 강의를 듣고 요약글을 꾸준하게 올려 볼 생각이다. <a href="http://SanghyukChun.github.io/10" target="new">예전 글</a>에서 언급했지만, 내가 너무 쉽다고 생각되면 과감하게 중간부터 요약을 관둘 생각이다.</p>
-
-
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 첫 주차 강의를 요약한 글이다. 첫 주차이기 때문에 아주 간단한 introduction course이며, 주로 machine learning과 neural network는 무엇인지 아주 간략하게 설명하는 내용이 주가 된다.</p>
-
-
-<h5>Why do we need machine learning?</h5>
-
-
-<p>사실 이 질문은 물론이고, machine learning이란 무엇인지 내가 <a href="http://SanghyukChun.github.io/3" target="new" class="red tip" title="Machine Learning Week1 - What Is Machine Learning">아주</a> <a href="http://SanghyukChun.github.io/21" target="new" class="red tip" title="빅데이터 이야기: 데이터 수집에서 분석까지">많은</a> <a href="http://SanghyukChun.github.io/30" target="new" class="red tip" title="인터넷 속의 수학 - How Does Netflix Recommend Movies?">글</a>에서 다뤘었기에 자세한 언급은 되도록 피하도록 하겠다. 다만 이 lecture에서는 주로 patterns recognition, anomalies recognition, 그리고 prediction 등의 문제에 집중을 하고 있으며, 특히 image를 classification하는 문제에 focus가 되어있다. 이런 문제의 대표적인 예는 MNIST (hand write letter data base), Face recognition 등이 있다. 실제로 내가 예전에 공부했었던 Neural Network의 대부분은 이런 image process에 focus되어있었다.</p>
-
-
-<h5>What are neural network?</h5>
-
-
-<p>그렇다면 neural network란 무엇인가? 이 질문에 대답하기 이전에 먼저 인간의 뇌가 어떻게 동작하는가에 대해 간략하게 알아보자. 인간의 뇌는 아주 많은 neuron(신경)들로 이루어져 있다. 각 neuron들은 synapse라는 통로를 이용하여 information을 전달하게 되는데, 이런 real human neural network 구조를 아주아주 simplify하면, graph의 형태로 표현이 가능해진다! 즉, 각각의 neuron을 graph의 node, 그리고 synapse를 그 node들을 연결하는 edge로 표현하는 것이다. 여기에서 조금 더 real-likely한 modeling을 하기 위해서 두 가지 factor가 추가된다. 하나는 weight이며 또 하나는 bias이다. 먼저 weight에 대해서 설명을 해보자. 실제 neural network 사이에서 information은 ion이 pumping이 되거나 하는 방식으로 이동하게 된다. 그런데 이 information이 모든 상황에 똑같이 전달되는 것이 아니라, 적절한 학습을 통해서 그 양이 조절이 된다. 즉, 우리가 '컴퓨터'라는 물체가 무엇인지 인지하는 과정에서 우리의 뇌로 들어오는 시각정보를 처리하기 위해서 각각의 신경세포들이 서로 다른 양의 information을 전달하게 된다는 것이다. 예를 들어서 우리가 컴퓨터를 봤을 때 모든 시각 정보를 총 동원해서 이것이 컴퓨터다! 라고 판단하는 것이 아니라 일부 특정한 feature들 (예를 들어서 모니터와 키보드 마우스가 있는 모습)을 보고 내가 지금 보고 있는 것이 컴퓨터라는 결론을 내리 듯, 우리의 neural network는 자연스럽게 synatic weight를 학습함으로써 더 정확하고 빠른 연산 및 분류가 가능하도록 설계가 되어있는 것이다. 이런 synaptic weight는 우리가 '학습'이라고 부른 과정 동안 계속 update가 된다. 그리고 또 하나 bias에 대해 생각해보자. 만약 우리가 데이터 센터에서 근무를 한다면 아마도 상당히 많은 컴퓨터를 보게 될 것이며, 아마도 대충 네모네모하게 생긴 물건들은 컴퓨터일 가능성이 높지 않을까? 반면 내가 지금 등산 중이라면 아마도 내가 본 물체가 컴퓨터일 가능성은 극히 낮을 것이다. 즉, 'input이 어떤 특정 결과에 가까울 것이다'를 indicate하는 factor일 뿐 아니라, 그 정도를 조절하기 위한 값이라고 할 수 있는 것이다. 그렇다면 이런 구조의 장점은 무엇일까? 사람의 뇌에는 자그마치 \(10^{11}\)개의 neuron이 존재한다고 한다. 또한 그 neuron들을 연결하는 link는 약 \(10^{14}\)개가 존재하게 된다. 그야말로 어마어마한 숫자의 신경들이 비록 하나의 computation power는 떨어질지 몰라도 이것들이 하나의 network를 형성하면서 엄청나게 빠른 parellel computation이 가능해지고 엄청나게 빠른 연산이 가능해지는 것이다. 거기에 각 neuron들이 information을 저장하고 있기 때문에 단순히 RAM으로 binary bit를 저장하는 것과는 차원이 다른 용량을 저장할 수 있게 되는 것이다.</p>
-
-
-<p>자 그러면 이제 human neural network가 어떻게 동작하는지 살펴보았다. 그렇다면 이런 뛰어난 model을 어떻게 real field적용할 수 있을까? 우리의 뇌가 그야말로 컴퓨터에 비해 outperformance를 보이는 분야에 이런 아이디어를 적용하면 좀 그 성능이 개선되지 않을까? 그야말로 많은 사람들이 얘기하듯 컴퓨터는 멍청하다. 인간이 만든 system에 정해진 input이 들어는 상황에서는 무엇보다 빠르고 정확한 computation을 보여주지만, 스스로 무언가를 '판단'할 수 없으며, 사람에 비해서 그 유연성이 매우 떨어진다. 때문에 AI를 연구하는 사람들에게 스스로 '학습'하는 machine learning이 새로운 대안으로 제시되고 이 분야가 AI에서부터 시작되었다는 점이 전혀 놀랍지 않은 것이다. 잠시 얘기가 샛길로 빠졌는데, 결국 사람이 컴퓨터에 비해서 엄청 잘 할수 있으며 실제 real field에서 수요가 많은 대표적인 문제가 바로 image processing이다. 컴퓨터는 image를 pixel map으로 밖에 인식할 수가 없다. 즉, 가장 많이 쓰이는 example인 MNIST handwrite database를 보면, 각 이미지는 28 by 28 pixel map이며, 다시 말해서 이미지 하나에 총 784개의 information이 존재한다는 것을 알 수 있다. 이 database는 흑백 사진이니깐 그냥 간단하게 까만 것과 하얀 것으로 구분하면, 총 784개의 binary 값을 component로 가지는 vector로 생각할 수 있을 것이다. 하지만 내가 위에서도 잠깐 언급했던 것 처럼 우리는 절대로 그 시각정보를 전부 활용하여 물체를 인지하지 않는다. 일부 'feature'를 인식해서 내가 지금 보고 있는 것이 무엇인지 판단하게 되는데, 안타깝게도 컴퓨터는 그런 작업이 불가능한 것이다.</p>
-
-
-<p><img src="/images/post/39-1.png" width="300"></p>
-
-<p>위의 사진이 바로 MNIST dataset의 일부분인데, 우리는 바로 각 글씨가 무엇을 의미하는지 바로 인지할 수 있지만, 멍청한 컴퓨터는 이 글씨들을 10개의 digit으로 바로 인지하는 것이 아니라 784 차원의 vector로 인식하게 되는 것이다. 앗 잠깐, 그런데 우리가 '바로' 인지하는 것도 사실 뇌가 연산을 한 결과가 아닌가? 그렇다면 뇌가 어떻게 동작하는지를 '모방'하면 기존의 방법들보다 더 나은 새로운 방법이 나올 수 있지 않을까? 그렇다! 이것이 바로 artifitial neural network의 motivation이다. 인간의 뇌는 엄청나게 빠르고 엄청나게 많은 연산을 자그마치 'parellel'하게 처리한다! 이는 정말 optimal한 system이 아닐 수 없다. 때문에 neural network의 application의 대다수는 이런 vision 문제를 해결하기 위해 사용이 된다.</p>
-
-
-<h5>Some simple models of neurons</h5>
-
-
-<p>이제 neural network의 필요성과 기본적인 구조는 알았으니, 구체적으로 우리가 그것을 구현하기 위한 모델을 만들어보자. 앞서 얘기했듯 우리의 artifitial neural network는 input이 들어오고, 각 graph의 weight와 맨 처음 설정한 bias를 통해 output을 얻어내는 구조이다. 즉, input을 x, weight를 w, bias를 b, output을 y라고 한다면, </p>
-
-
-<p>$$ y = b + \sum_i x_i w_i $$</p>
-
-
-<p>와 같은 식을 얻을 수 있을 것이다. 여기에서 \(x_i\)는 i번 째 input을 의미한다. 즉, MNIST에서 24 by 24, 784개의 input들에 대해서 모든 component들 (각 pixel들)의 값에 weight를 곱하고 그걸 모두 더한 다음 bias를 더해준 결과가 output인 것이다. 매우 간단한 시스템이다. 그렇다면 소제목인 'Some simple models of neurons'은 무슨 의미란 말인가?? 별건 아니고, output을 바로 사용할 것이냐 아니면 무언가 다른 형태로 modeling하여 사용할 것이냐에 대한 문제이다. 앞서 설명한 수식은 neuron들을 계산한 결과가 바로 최종 output이 된다. 그러나 실제로는 이것 말고도 많은 모델들이 존재하는데, 예를 들어서 \(z = b + \sum_i x_i w_i\) 라고 했을 때 y의 값을 z가 0보다 크면 z값을 그대로 사용하고 0보다 작으면 0이라고 할 수도 있을 것이다. 이런 모델을 Rectified Linear Neurons이라고 하며 linear threshold neuron이라고 하기도 한다. 또한 0보다 작으면 0, 0보다 크면 1이 되도록 하는 binary threshold neuron도 생각할 수 있다. 실제로 우리가 사용하게 될 model은 바로 sigmoid neuron이다. Sigmoid function은 매우 간단한데, 다음과 같은 모양이다. \(y = \frac 1 {1+e^{-z}}\) 이런 형태가 되면, z가 양의 방향으로 무한하게 커진다면 아래 항이 1이 되므로 값이 1이 되고, z가 무한하게 음의 방향으로 커진다면 아래 항이 무한하게 발산하게 되어 전체 식의 값이 0이 되는 것이다. 즉, 아래와 같은 모양을 띄게 되는 것이다.</p>
-
-
-<p><img src="/images/post/39-2.png" width="320"></p>
-
-<p>대부분의 경우 우리가 필요한 output은 binary이므로 (0또는 1이므로) 이 함수의 결과가 output의 확률을 나타내는 stochastic binary neuron을 생각하는 것이 가능하다. 즉, \(p(y=1) = \frac 1 {1+e^{-z}}\) 로 표현하고 output의 값을 stochastic하게 예측하는 방법을 사용할 수 있는 것이다. 아마 앞으로 neural network라 하면 이런 stochastic model이 중심이 된다고 생각하면 될 것이다.</p>
-
-
-<h5>A simple example of learning</h5>
-
-
-<p>이 부분은 사실 크게 설명할 것은 많이 없고, 그렇다면 이런 neural network를 실제 이미지 recognition에 어떻게 사용할 것이냐.. 에 대한 부분이다. MNIST를 예로 들면 임의의 784 pixel map이 들어왔을 때 10개의 class (0~9) 중에서 어느 class에 해당하는지 어떻게 예측할 것이고 어떻게 decision을 내릴 것인가! 에 대한 실제 예시를 다루는 것이다. 이미 class가 정해진 이미지들을 가지고 neural network의 weight들을 학습하고, 그 결과를 통해 class를 구분하는 것이다. 한 가지 방법은, neural network를 layer처럼 쌓는다고 생각했을 때 (아래의 첫 번째 그림) 만약 이 network에서 맨 마지막 layer에서 어떤 특정한 shape으로 수렴하도록 만들었을 때 그 수렴한 결과를 이용해 class를 구분할 수 있을 것이다 (마찬가지 아래 두 번째 그림).</p>
-
-
-<p><img src="/images/post/39-3.png" width="400">
-<img src="/images/post/39-4.png" width="600"></p>
-
-<p>이렇게 복잡하게 해야하는 이유는 몇 개의 간단한 알고리듬, 예를 들어서 아래 삐침 글자가 오른쪽으로 뻗으면 '2' 라고 하는 등의 간단한 rule을 각각의 class에 대해 만들어서 이 rule에 의해 determistic하게 결정하는 무지무지 간단한 heuristic algorithm이 아니라 neural network을 쓰는 이유는, 실제 우리가 생각할 수 있는 것보다 엄청나게 많은 variation이 존재하고 (심지어 숫자임에도 불구하고!) 이 때문에 이런 heuristic한 방법으로는 좋은 performance가 나오기 힘들기 때문이다. 특히 MNIST에는 갈겨 쓴 글씨가 많아서 더 그럴지도..</p>
-
-
-<h5>Three types of learning</h5>
-
-
-<p>machine learnig에는 supervised learning, reinforcement learning, unsupervised learning 총 세 가지 큰 범주가 존재한다. 각각에 대한 설명은.. 워낙 많이 했기에 생략하고 (reinforcement learning은 한 적은 없지만, neural network의 main interest가 아니다) 간단하게 설명하면, neural network로 supervised learning을 하는 것이 앞의 절반, 그리고 unsupervised learning을 하는 것이 뒤의 절반이 될 예정이다. 특히 엄청나게 오래되고 old한 neural network가 재조명을 받고 연구가 활발하게 된 가장 큰 이유가 Deep learning 등의 unsupervised learning임을 감안해봤을 때, 매우 기대가 되는 부분이다. (대부분의 교재는 supervised learning에 대해서만 다룬다.)</p>
-
-
-<h5>Conclusion</h5>
-
-
-<p>이 렉쳐는 워낙 intro level이고.. 예전에 중복해서 다룬 개념이 너무 많아서 생략한 내용이 좀 많다. 최대한 자세하게 적으려 노력했지만, 의아한 부분이 있으면 위키피디아 등에 자세히 설명이 되어있으니 그 글들을 참고해주길 바란다.</p>
-
-
-
-
-<h5>Coursera Neural Networks for Machine Learning</h5>
-
-
-<p>다른 요약글들 보기 (<a href="http://SanghyukChun.github.io/blog/categories/cousera-nn/">카테고리로 이동</a>)</p>
-
-
-<ul>
-    <li>Lecture 1: <a href="http://SanghyukChun.github.io/39">Introduction</a></li>
-    <li>Lecture 2: <a href="http://SanghyukChun.github.io/40">The Perceptron learning procedure</a></li>
-    <li>Lecture 3: <a href="http://SanghyukChun.github.io/42">The backpropagation learning proccedure</a></li>
-    <li>Lecture 4: <a href="http://SanghyukChun.github.io/43">Learning feature vectors for words</a></li>
-    <li>Lecture 5: <a href="http://SanghyukChun.github.io/43">Object recognition with neural nets</a></li>
-    <li>Lecture 6: Optimization: How to make the learning go faster</li>
-    <li>Lecture 7: Recurrent neural networks</li>
-    <li>Lecture 8: More recurrent neural networks</li>
-    <li>Lecture 9: Ways to make neural networks generalize better</li>
-    <li>Lecture 10: Combining multiple neural networks to improve generalization</li>
-    <li>Lecture 11: Hopfield nets and Boltzmann machines</li>
-    <li>Lecture 12: Restricted Boltzmann machines (RBMs)</li>
-    <li>Lecture 13: Stacking RBMs to make Deep Belief Nets</li>
-    <li>Lecture 14: Deep neural nets with generative pre-training</li>
-    <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
-    <li>Lecture 16: Recent applications of deep neural nets</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[LMNN(Large Margin Nearest Neighbors) LMCA(Large Margin Component Anaylsis)]]></title>
-    <link href="http://SanghyukChun.github.io/38/"/>
-    <updated>2014-03-03T15:21:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/38</id>
-    <content type="html"><![CDATA[<p>KNN은 machine learning에서 general하게 많이 쓰이는 알고리듬이다. 이 알고리듬은 아이디어도 매우 간단하고 구현하기도 간단하고 성능도 어느 정도 이상 나오는 꽤나 훌륭한 알고리듬이기 때문이다. <a href="http://SanghyukChun.github.io/37" target="new">이전 글</a>에서 distance metric learning의 대략적인 컨셉을 설명했었고, 그 중에서도 optimization을 통해 metric을 learning하는 category에 대해 간략하게 언급했었다. 이 글에서는 그런 알고리듬 중에서 LMNN (Large Margin Nearest Neighbors) 그리고 이 방법의 단점을 보완한 LMCA (Large Margin Component Analysis) 라는 알고리듬을 소개할 것이다.</p>
-
-
-<h5>LMNN - Introduction</h5>
-
-
-<p>먼저 LMNN이라는 아이디어는 2006년 <a class="red tip" title="Advances in Neural Information Processing Systems">NIPS</a>에 발표된 Distance metric learning for large margin nearest neighbor classification이라는 논문에 소개된 기법이다. 이 알고리듬은 distance metric learning에 대해 설명했던 <a href="http://SanghyukChun.github.io/37" target="new">이전 글</a>에 잠깐 언급했던 Mahalanobis Metric을 직접 학습하는 알고리듬이다. 이 Metric은 지난 번에 설명했기 때문에 자세한 설명은 생략하도록 하겠다.</p>
-
-
-<p>이 논문에서는 거리가 제곱근 형태가 아니라 제곱 들의 합으로 표현을 했다. 즉, Mahalanobis Metric을 \(D(\vec x_i , \vec x_j )=(\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j )\) 꼴로 표현하게 된다. 혹은 \(D(\vec x_i , \vec x_j )= ||L(\vec x_i - \vec x_j)||^2 \)으로 표현된다.</p>
-
-
-<h5>LMNN - Cost function</h5>
-
-
-<p>이 방법의 핵심 아이디어는, 위에서 표현한 Metric을 평가하는 Cost function을 design하고 이 function을 minimize시키는 Metric을 찾아내는 것이다. 매우 간단한 컨셉이고, 만약 운이 좋아서 optimization 문제가 반드시 하나의 global solution으로 수렴한다는 것이 보장만 된다면 가장 최고의 성능을 낼 수 있을 것이라는 것은 자명한 일이다. (<a href="http://SanghyukChun.github.io/31/" target="new">이전에 작성한 글</a>에서 이러한 좋은 문제 중 하나인 convex optimization에 대해 간략하게 언급했었다.) 자, 그러면 이 논문에서 Cost function을 어떻게 정의했는지 한 번 알아보자.</p>
-
-
-<p>$$ \varepsilon (\mathbf L ) = \sum_{ij} \eta_{ij} ||L(\vec x_i - \vec x_j)||^2 + c \sum_{ijl} \eta_{ij} (1-y_{il}) h[ 1 + ||L(\vec x_i - \vec x_j)||^2 - ||L(\vec x_i - \vec x_l)||^2 ] $$</p>
-
-
-<p>이때, 각 notation이 의미하는 바는 아래와 같다</p>
-
-
-<p></p>
-
-<ol>
-    <li>\({(\vec x_i , y_i )}_{i=1}^n\): training set을 의미한다. 벡터 x는 input data를, scalar y는 label을 의미한다. (binary class가 아니어도 상관없다.)</li>
-    <li>\(\eta_{ij}\): \(\vec x_j\)가 \(\vec x_i\)의 target neighbor인가 아닌가를 나타내는 binary variable. 맨 처음 learning할 때 고정되는 값이며 알고리듬이 돌아가는 동안 변하지 않는 값이다.</li>
-    <li>\(y_{ij}\): label \(y_i\)와 \(y_j\)가 서로 일치하는가 하지 않는가를 나타내는 binary variable이다. 역시 변하지 않는다.</li>
-    <li>h(x): hinge function으로, 간단하게 표현하면 \(h(x) = max(0,x) \)이다. 즉, 0보다 작으면 0, 아니면 원래 값을 취하는 함수이다.</li>
-    <li>c: 0보다 큰 임의의 상수로, 끌어당기는 term과 밀어내는 term사이의 trade-off를 조정한다. 보통 cross validation으로 결정한다.</li>
-    <li>Target neighbor: 임의의 \(x_i\)와 같은 label을 가진 데이터들 중에서 가장 가까운 k개의 데이터들을 의미하며 k는 사용자가 세팅할 수 있다</li>
-</ol>
-
-
-<p>뭔가 복잡해보이지만, 일단 간단하게 설명하자면 앞의 항은 같은 label끼리 서로 끌어오는 term이고, 뒷 항은 서로 다른 label끼리 밀어내는 term이다. 이유는 간단한데, 먼저 앞과 뒷항 모두 포함되어있는 \(\eta_{ij}\)는 i와 j가 서로 target data일 때만 해당 항을 남기고, 아니면 0으로 만들어버리기 때문에 이 모든 연산은 target neighbor들에 대해서만 진행이 되게 된다. 따라서 앞의 항은 target neighbor들끼리의 거리를 의미하므로, 이 값을 minimization한다는 것은 서로 같은 label들끼리 최대한 가깝게 모아준다는 의미와 같게 되는 것이다. 그럼 오른쪽 항은? 이 항은 잘 보면 summation factor가 i,j,l인데, 일단 먼저 target neighbor i와 j에 대해서 이와는 다른 label을 가진 (\((1-y_{il})\)가 0이 되지 않는) l들에 대해서 최대한 그 거리를 멀어지게 하도록 하는 항이다. 이 값은 사실 그냥 나온 값이 아니라 아래 식을 통해서 나오게 된 값이다.</p>
-
-
-<p>$$ d(\vec x_i , \vec x_j) + 1 \le d(\vec x_i , \vec x_l) $$</p>
-
-
-<h5>LMNN - Optimization</h5>
-
-
-<p>위의 식에 대해서 간단히 언급을 하자면, 모든 i와 j들에 대해서, label이 다른 l과의 거리보다 label이 같은 데이터들끼리의 거리가 무조건 1만큼은 작아야한다는 식이다. 이 식을 살짝 전개하면 원래 cost function의 오른쪽 항과 같은 모양을 얻을 수 있을 것이다.</p>
-
-
-<p>자! 이제 cost function을 정의했으니 optimize를 해보자. 근데 문제가 하나 있는데, 이 cost function은 <a class="red tip" title="Convex Optimization은 solution이 무조건 하나다. 나중에 블로그에서 자세하게 다뤄보도록 하겠다.">convex</a>가 아니다. 때문에 L에 대해 문제를 해결했을 때 정확한 global minimum을 찾을 수가 없게 된다. 하지만 이 논문은 아주 간단하게 이 문제를 convex 문제로 바꾸게 된다. convex 문제 중에서 semidefinite programming이라는 문제가 있는데 (간단하게 SDP라고 한다) 이 문제는 '어떤 조건'을 가장 잘 만족하는 positive semidefinite matrix를 찾는 문제이다. 이 문제에 대해 언급하면 포스트가 너무 길어지니 <a href="http://en.wikipedia.org/wiki/Semidefinite_programming" target="new">위키 링크</a>로 대체하도록 하겠다.</p>
-
-
-<p>그러면 이 문제를 어떻게 SDP로 바꿀 수 있을까? 해결법은 Metric을 L로 표현하는 대신에 M으로 표현하고, 이 M에 대해 문제를 푸는 것이다. 이렇게 표현하게 되면 문제가 아래와 같이 변하게 되며 이는 SDP로 간단하게 해결할 수 있는 문제가 된다.</p>
-
-
-<p>$$ \mathbf {Minimize} \sum_{ij} \eta_{ij} (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) + c \sum_{ij} \eta_{ij} (1-y_{il}) \xi_{ijl} \ \mathbf {subject} \ \mathbf {to:} $$</p>
-
-
-<p style="margin-left:15%"> (1) \( (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) - (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) \geq 1- \xi_{ijl} \)</p>
-
-
-<p style="margin-left:15%"> (2) \( \xi_{ijl} \geq 0 \)</p>
-
-
-<p style="margin-left:15%"> (3) \( \mathbf M \succeq 0 \)</p>
-
-
-<p>여기에서 \(\xi_{ij}\)는 slack variable로, 이전 식의 hinge function과 완전히 같은 동작을 하도록 "mimick"을 하는 변수이다. 이 문제는 앞에서 언급한 SDP로 해결할 수 있는 format이기 때문에 이제 이 문제를 해결해서 적절한 \(\mathbf M\)을 찾아내면 우리가 찾고자하는 적절한 Metric을 찾을 수 있게 되는 것이다.</p>
-
-
-<h5>LMNN - Result</h5>
-
-
-<p>자 이제 LMNN의 실제 performance를 measure해보자. 참고로 이 알고리듬은 저자가 직접 버전관리하는 소스코드가 존재한다. <a href="http://www.cse.wustl.edu/~kilian/code/code.html" target="new">링크</a>에서 간단하게 다운로드 받을 수 있다. 이 Metric learning이 well-working하는지 판단하기 위해서 이 논문에서는 총 4개의 알고리듬을 비교한다. (1) Euclidean distance를 사용하는 기존의 KNN (2) Optimization을 통해 얻은 Metric을 사용해 Mahaloanobis distance를 사용한 KNN (3) 앞에서 얻은 Metric을 계산할 때 사용한 Cost function을 가장 최소화시키는 label을 고르는 Energy-based classification (4) Multiclass SVM 이렇게 총 네가지 알고리듬을 사용한다. 그런데, 만약 dimension이 높은 경우에는 위의 Optimization식이 Overfitting이 될 위험성이 존재한다. 따라서 이를 방지하기 위하여 feature가 많은 문제는 PCA를 사용하여 dimension을 낮추는 작업을 하게 되는데, 이 문제가 결국 다음에 설명할 LMCA의 Motive가 된다. 아무튼 이런 방법을 사용하여 얻은 결과는 아래 표와 같다.</p>
-
-
-<p><img src="/images/post/38-1.png" width="600"></p>
-
-<p>대체로 Energy-based classification이 가장 좋은 결과를 보이는 것을 알 수 있으며, 이 논문의 방법을 통해 계산한 Metric이 분명 기존의 다른 방법들보다 더 나은 방법을 제시한다고 할 수 있을 것이다. 그러나 이 방법의 근본적인 문제점이라면 Optimization으로 Metric을 구하기 때문에 Overfitting문제에 매우 취약하다는 것이며, 특히 dimension이 높고 sample개수가 적으면 이 문제가 매우매우 심각해진다. 다만, face, hand-write letter, spoken letter 등등 매우 다양한 데이터셋에 전부 개선된 performance를 보이는 것은 충분히 고무적인 결과라고 할 수 있을 것이다.</p>
-
-
-<h5>LMCA - Motivation</h5>
-
-
-<p>하지만, Feature가 1000단위가 넘어가는 high dimension 상황에서는 문제가 발생할 수 있다. 기본적으로 Optimization 문제라는 것은 언제나 Overfitting issue에서 벗어날 수 없다. 특히 LMNN이 정의한 Optimization문제는 정사각행렬 M을 학습해야하므로, dimension이 높아질수록 Optimization을 통해 찾아내야하는 항이 제곱 스케일로 늘어난다. 즉, 당장 차원이 100단위만 넘어도 찾아내야하는 항의 수가 10000개가 넘어가게 된다는 의미이다. 따라서 우리가 실제 이 문제를 적용하는 경우에, 어쩔 수 없이 dimension reduction technology를 사용할 수 밖에 없어진다. LMNN 논문에서는 PCA를 사용하여 dimension을 낮춘 이후에 Optimization문제를 풀게 되는데, 이 PCA라는 것이 물론 좋고 많은 사람들이 사용하는 dimesion reduction 방법이지만, 이 방법으로 인해 발생하는 오차가 매우 크고 실제로 더 좋은 performance를 낼 수 있음에도 불구하고 그 성능이 크게 저하되는 요인이 된다는 것이 LMCA의 Motivation이다. 실제로 PCA를 사용하게되면 Dominant한 term을 뽑아내기는 하지만 그 dimension이 낮아지거나 혹은 기존에 가지고 있는 input vector들이 bais가 된 경우에는 좋은 결과를 얻지 못할수도 있기 때문에 이 문제는 꽤나 큰 문제가 될 수 있다.</p>
-
-
-<h5>LMCA - Idea</h5>
-
-
-<p>그렇다면 어떻게 PCA등의 별다른 dimension reduction technology없이 Overfitting 문제를 해결할 수 있을까? 사실 이 논문에서 주장하는 내용은 매우 간단하다. 이전 논문인 LMNN에서 찾고자하는 Metric인 L이 dimension을 변화시키기 않는 transformation이었던 것에 반해, LMCA에서는 L을 원래 차원 D에서 더 낮은 차원 d로 보내는 L을 찾겠다는 것이다. 하지만 여기에서 문제가 생긴다. Full rank가 아닌 \( \mathbf M = \mathbf L^top \mathbf L\) 은 이제 더 이상 Semidefinite programming문제가 아니게 된다. 이유는 원래 SDP 문제에서 rank = d라는 조건이 추가되기 때문인데, 이렇게 되면 M이 convex domain이 아니게 되기 때문에 더 이상 이 문제가 convex problem이 아니게 되고, 따라서 이 문제는 더 이상 global optimum으로 수렴하지 않는다!</p>
-
-
-<p>그렇다면 해결책은 없는 것일까? 이 논문에서는 그냥 원래 non convex인 L에 대한 cost function을 그냥 gradient descent method를 사용하여 optimize시킨다. 물론 이렇게 계산된 값은 local optimum이다. 때문에 LMNN이 무조건 global solution을 찾았던 것과 비해서 매우 performance가 떨어질 것 같지만, 저자들은 다음과 같은 2가지 장점이 있기 때문에 오히려 이 방법이 더 performance가 높다고 주장한다. 첫째, 원래 Full rank M을 찾을 때는 unknown component들이 D by D만큼 존재했었지만, 지금은 차원을 더 낮추었기 때문에 찾아야하는 값이 더 적어진다. 마치 Matrix completion의 장점과 비슷한 것이다. 둘째, 원래 LMNN은 Optimization을 할 때 parameter들이 굉장히 많은데 이런 여러 요소 없이 바로 Optimization이 가능해진다는 것이다. 물론 당연히 이 논리의 기본 가정은 high dimension data에 PCA를 사용해 low dimension으로 만들었을 때 이미 information loss가 많이 발생하거나 이미 tranining data에 overfitting되기 때문에 성능에 무조건적인 저하를 불러일으키게 되기 때문에 Optimization을 PCA를 사용하지 않은 Full dimension에 대해서 실행했다는 가정 하에 성립할 것이다.</p>
-
-
-<h5>LMCA - Results</h5>
-
-
-<p>그렇다면 결과를 한 번 확인해보자.</p>
-
-
-<p><img src="/images/post/38-2.png" width="600"></p>
-
-<p>위의 그림은 high dimension dataset에 대한 것이고 아래 결과는 low dimension dataset에 대한 결과이다. 아무래도 high dimension에서는 저자들이 주장한 대로 LMNN에 비해 결과가 많이 개선된 것을 확인할 수 있다. (이 그림에서는 kernelized된... 즉 non-linear method 역시 함께 evaluation된 결과이기 때문에 LMNN과 비교해야할 대상은 linear method이다) 하지만 low dimension에 대해서는 항상 더 높은 것 만은 아니며, 일부 경우에 대해서는 LMNN이 더 좋은 결과를 보임을 알 수 있다. 즉, 이 방법은 overfitting issue가 발생했을 때 global optimum은 아니지만 그와 유사한 (그러나 절대 같다고 하거나 그와 유사하다고 할 수도 없는) local optimum을 찾는 방법이기 때문에, overfitting issue가 적은 low dimension에서는 LMNN보다 성능이 떨어질 수도 있는 것이다.</p>
-
-
-<h5>Non-linear LMNN, LMCA</h5>
-
-
-<p>지금까지 언급한 방법들은 모두 'linear'한 transformation을 찾는 문제였다. 하지만 세상에는 엄청나게 많은 non-linear metric이 존재하며, 분명 linear보다 성능이 더 좋은 non-linear metric을 찾을 수 있을 것이라고 생각할 수 있다. 그렇다면 이 논문들에서 과연 그런 방법을 다루지 않을까? 일단 LMNN은 NIPS에 제출된 원래 논문에는 non-linear problem이 언급이 되어있지않지만, 나중에 GB-LMNN (Gradient Boost LMNN)이라는 방법을 소개하며, 이 방법의 powerful함은 LMNN code에서 직접 확인할 수 있을 것이다. 이 방법은 Gradient Boost라는 방법을 사용하여 non-linear metric을 찾아내는데, 문제는 이 방법이 non-convex하다. 따라서 초기값에 따라서 그 결과가 상이하게 달라지게 되는데, 해당 논문에서는 LMNN을 통해 학습한 L을 초기값으로 사용하여 Optimum값을 찾는 아이디어를 제시해 L의 성능을 개선시킨다고 명시되어있다. 분명 Optimize를 시키기 때문에 본래 값보다는 더 좋은 값으로 수렴할 것이며 성능도 어느정도 올라갈 것이라고 예측이 가능할 것이다. Gradient boost는 regression tree라는 것을 학습하여 non-linear transformation을 찾아내는데, 이 tree의 node개수나 level등등을 어떻게 학습시킬 것이냐에 따라 그 running time과 overfitting issue가 결정되는 듯 하다. 더 자세한 점은 해당 논문을 읽어보기를 권한다.</p>
-
-
-<p>또한 LMCA는 원 논문에 non-linear method까지 언급이 되어있다. 본래 아이디어 자체가 그냥 gradient descent를 사용해서 local optimum L을 찾는 문제이기 때문에 kernel에 대해서도 이 문제를 동일하게 풀 수 있는 듯하다. 다만 그 update rule을 어떻게 결정하느냐의 문제가 있는지 논문에서 cost function의 gradient방향으로 내려가는 것이 올바른 update rule이라는 것을 Lemma를 증명해놓았다. 아무튼 당연한 얘기지만 이 방법이 linear method보다 그 결과가 좋다. 자세한 점은 마찬가지로 해당 논문을 참고하길 바란다.</p>
-
-
-<h5>Conclusion</h5>
-
-
-<p>KNN은 엄청 직관적인 method이지만 분명 powerful하고 easy to implement한 방법이다. 또한 이론적으로 그 bound가 가장 optimal한 case에 bayes risk와 같다는 것이 증명이 되어있기 때문에 사실 굉장히 좋은 방법이라고 할 수 있다. 그러나 실제 우리가 이 방법을 적용하는 대부분의 상황에서는 metric learning이 performance에 크게 영향을 끼칠 수 밖에 없다. LMNN과 LMCA는 Optimization problem을 solve함으로써 상당히 좋은 결과를 얻어낼 수 있는 좋은 Metric learning알고리듬이라고 할 수 있다. 물론 이 방법들에는 overfitting issue가 존재하고, 이 때문에 적절한 상황이 아닌 경우에 특히 high dimension, low sample problem에서 well working하지 않는다는 단점이 존재하기는 한다. 하지만 저자가 구현한 implement하기 좋은 matlab code도 존재하고, 여러모로 괜찮은 방법이 아닌가 하는 생각이 든다.</p>
-
-
-<p>References</p>
-
-
-<ul>
-    <li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006) .InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li>
-    <li>Torresani, L., & Lee, K. (2007). Large margin component analysis. Advances in Neural Information Processing</li>
-    <li><a href="http://www1.cse.wustl.edu/~xuzx/research/publications/gb-lmnn.pdf" target="new">Kedem, D., Xu, Z., & Weinberger, K. (n.d.). Gradient Boosted Large Margin Nearest Neighbors</a></li>   
 </ul>
 
 ]]></content>

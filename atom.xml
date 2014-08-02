@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-06-14T21:10:31+09:00</updated>
+  <updated>2014-08-02T18:40:04+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,332 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2014년 2분기 회고]]></title>
+    <link href="http://SanghyukChun.github.io/56/"/>
+    <updated>2014-07-07T22:18:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/56</id>
+		<content type="html"><![CDATA[<p><a href="http://SanghyukChun.github.io/46">지난 글</a>에 이어 2분기 회고를 해보려한다. 원래 하려던 시기보다 조금 늦어지게 되었는데, 다음 회고는 가급적 늦지 않게 할 수 있도록 해야겠다.</p>
+
+
+<p>4월부터 6월까지의 3개월 동안 나는 무엇을 하였는가? 일단 굵직했던 사건부터 적어보자면, 4월 7~8일 BIG 2014, 4월 21~25일 중간고사, 5월 12~14일 오픈랩, 6월 16~20일 기말고사, 그리고 6월 21~26일 ICML, 그리고 그 이후 약간의 베이징 여행. 아이러니하게도 바로 전 회고에서 2분기 동안 가장 중요하게 생각해야하고 가장 조심해야할 것이라 생각했던 work/life 밸런스는 완전히 무너졌고, 더불어 스트레스는 정점을 찍었고, 나는 번아웃 신드롬에 허우적대면서 점점 나 자신을 좀먹어가고 있었다. 4월 초기의 프로젝트 관련 스트레스는 1분기 회고에 이미 반영이 된 부분이니 스킵하도록 하겠다. 나와는 별개로 큰 사건이라면 4월 16일 세월호 사건이 있었고, 대한민국은 &#8216;의리&#8217; 신드롬에 빠졌지만, 관피아, 엔트으리 등의 부정적인 의미로 귀결된 것 같다.</p>
+
+
+<p>사건들, 그리고 느낀 점들. 포멧은 지난 번과 같다. (+,-) [범주] 사건 - 느낀점. 이때 (+)는 나에게 긍정적인 사건, (-)는 부정적인 사건을 뜻한다</p>
+
+
+<ul>
+    <li>(-) [학업] 중간고사 그리고 기말고사 - 언제나 나에게 최고의 스트레스를 주는 폭탄 두 개. 진짜 이번학기 너무 힘들었다. 빨리 끝내고 싶었다</li>
+    <li>(-) [상대적 열등감] 유학 소식들과 &#8216;잘나가는&#8217; 사람들의 소식 - 나는 이렇게 망가져가고 으스러져가고 있는데 승승장구하는 그들의 모습을 보고 있노라니, 내 자신이 초라해서 견딜 수가 없었다.</li>   
+    <li>(-) [건강] 동남아 여행기간 동안 뺀 살이 다시 돌아왔다. 3kg정도 불었음 - 방학 동안 다시 천천히 빼보자.</li>
+    <li>(+) [고등학교 방문] 4월 25일, 중간고사에 완전히 망가진 나는 고등학교 은사님을 뵈러 갔었다 - 그때가 그립지만 그 시절은 다시 돌아오지 않는다. 항상 현재에 후회없는 삶을 살 수 있도록 하자.</li>
+    <li>(-) [연구실] 교수님이 보낸 혼내는 메일 - 처음 받아보는 그런 메일에 당황했었지만, 결국 서로가 커뮤니케이션이 잘 되어야한다는 걸 느낀 것 같다</li>
+    <li>(-) [카이스트] 한 학우의 자살 - 아무리 힘들어도 그러지 말았으면 했는데.. 아무리 힘들어도 이 세상 말고 더 넓은 세상이 있는데</li>
+    <li>(-) [연구실] 교수님과의 대담들 - 교수님이 나에게 negative한 생각을 가지고 있다는 사실이 처음에는 당황스럽고 화가 났지만 시간이 갈수록 화가 나기보다는 마음이 아프고, 나 자신에 대한 무력감과 회의감이 든다</li>
+    <li>(+) [연구실] 오픈랩 - 우리 연구실에 대해 설명하고 다시 학부생의 눈으로 바라보면서 힘들었던 감정들을 많이 추스릴 수 있었다</li>
+    <li>(-) [생활] 주어진 일을 하는 것 만으로도 벅참 - 내가 쓸모 없는 사람은 아닐까, 나는 능력없는.. 그런 사람은 아닐까. 나 자신에게 확신이 많이 없어져간다</li>
+    <li>(-) [학회] 비행기 티켓을 잘못 예매함 - 그냥 한심하다. 더 꼼꼼하게 하고, 생각하고 뭘 해야하는데.. 그냥 답이 없었다.</li>
+    <li>(+) [학업] Open Question에 만족스러운 답을 냄 - 이런 질문에 대해 답을 찾아나가는 과정이 재미있었다. 연구도 잘 할 수 있을 것 같다.</li>
+    <li>(+) [학회] ICML - 학회에서 많은 것들을 느끼고 배울 수 있었다. 자세한 점은 <a href="http://SanghyukChun.github.io/55">이전 글</a> 참고.</li>
+</ul>
+
+
+<p>일기를 쭉 훑어보는데, 아무래도 1분기 회고할 때는 이틀 정도 일기를 읽었지만 지금은 훑어보다보니 조금 표현들이 거칠고 날 것인 것들이 많다. 하지만 그래도 전체적인 큰 그림은 볼 수 있는데, 1분기에는 마이너스 항목들이 많지 않거나 특정 항목이었는데, 2분기에는 전반적으로 분위기가 우울하고 마이너스 쪽으로 치중이 되어있다. 스트레스가 너무 심해서 없던 소화불량도 생기고, 헛구역질에 건강도 악화가 되어버렸다. 힘이 들지만 견뎌보자. 라는 마인드도 한두번이지, 내외적으로 나를 힘들게 하는 요소들이 많아지니 견디기가 힘들더라. 연구실 생활은 즐겁기도 했지만 여러 환경적인 요소들이 나를 힘들게 하는게 많았다. 특히 사람이 적다보니 사람과 사람 간의 과도한 connection, 그러나 communication이 그것을 뒷받침해줬어야 했는데, 그러지 못했고 결국 나에게 최악의 학기가 되었다. 진짜 내가 꼽는 내 최악의 학기는 3학년 2학기, 2학년 1학기, 1학년 2학기 정도가 있는데, 그때 나를 주로 마음고생시키던 요소들과 모습은 다르지만 결국 한 통속인 녀석들이 나를 너무 힘들게 하였다. 이음에서도 그랬고, 2학년 2학기 때도 그랬고 차리리 일이 많은건 스트레스가 아니고 짜증 정도인데, 인간관계에서 오는 스트레스는 나를 무력하게 만들고 진짜 다 그만두고 싶게 만든다. 이제는 그런 생각은 안하지만, 정말 어릴 때는 극단적인 생각을 몇 번씩 헀을 정도로 나를 좌절하게 만든다. 좌절감이 사나이를 키우는 것이라고 하지만, 나는 좌절감에 너무 약한 모양이다.</p>
+
+
+<p>그래, 이 부분은 이 정도로 마무리하자. 2014년 목표는 전반적으로 깨진지 오래니까, 간단하게 6월까지 세웠던 목표를 확인해보자.</p>
+
+
+<ol>
+    <li>매 수업마다 요약 노트를 작성한다 - 알고리듬, 빅데이터, 네트워크사이언스, Neural Network</li>
+    <li>매일 식단 일지를 적는다</li>
+    <li>매일 운동한다</li>
+    <li>6월까지 5kg 더 감량한다 (약 매달 2kg 감량)</li>
+    <li>6월까지 10권의 책을 더 읽는다 (약 매주 1권 가량)</li>
+</ol>
+
+
+<p>당연히 1번은 못지켰다. 엄청 많이 놀지도 않았는데, 아니 애당초 놀지도 않고 하루종일 무언가를 했음에도 불구하고 저 내용들을 따로 볼 시간 조차 없었으니까. 2, 3번은 아주 처참하게 깨져버렸다. 다시 방학 때 지켜야지. 당연히 4번도 무너졌다. 5번은 그래도 좀 괜찮은데 총 9권을 읽었으니 대충 맞다고 쳐도 될 것 같다.</p>
+
+
+<p>방학 동안, 그리고 9월까지의 계획은 다음과 같다.</p>
+
+
+<ol>
+    <li>매일 운동하여 방학 전까지 3~4키로 정도 더 감량한다. 지금 내 포인트가 8~9정도에 있는데 포인트를 4~5 까지 내리는게 목표다.</li>
+    <li>3개월 동안 책 15권을 더 읽는다. 방학도 껴있으니 불가능할 것 같지는 않다.</li>
+    <li>Bishop 책을 한 번 전부 다 읽는다</li>
+    <li>확률 책을 한 번 전부 다 읽는다</li>
+    <li>선대 책을 한 번 다 읽는다</li>
+</ol>
+
+
+<p>이외에도 공부해야할 내용은 많지만, 이 다섯가지만 잘 지켜도 충분할 것 같다. 특히 3,4,5는 꼭 지킬 수 있도록 해보자. 방학 시작하고나서 너무 바쁘기는 한데, 내가 조금 더 노력하면 못할 것도 없겠지.</p>
+
+
+<p>다음 회고는 지금처럼 아파하고 힘들어하는 회고가 아니었음싶다.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[2014 ICML 후기]]></title>
+    <link href="http://SanghyukChun.github.io/55/"/>
+    <updated>2014-06-26T16:16:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/55</id>
+		<content type="html"><![CDATA[<p>이번에 <a href="icml.cc/2014/" target="new">ICML 2014</a>를 다녀왔다. 내 첫 해외 학회이기도 했고, 처음으로 Machine Learning과 관련된 연구를 하는 사람들의 talk을 듣고, 그 사람들이 직접 하는 일들을 많이 볼 수 있어서 개인적으로 많이 고무된 상태로 학회에 참여했었다. 첫 학회를 다녀온 기념으로 학회에서 내가 느낀 점들을 간단하게 정리해보고자 한다. 대충 보자면 아래 리스트 정도가 될 것 같다.</p>
+
+
+<ul>
+<li>항상 열정을 가지고 있고 열심인 사람들</li>
+<li>어떤 식으로 연구를 해야겠다라는 생각</li>
+<li>Machine Learning이라는 학문의 방대함</li>
+<li>Neural Network와 Deep Learnig의 강세</li>
+<li>Real Industry와 Machine Learning</li>
+</ul>
+
+
+<p>먼저 사람들. 개인적으로 내 자신에게 살짝 아쉬운 점이라면 학회에서 만난 사람들에게 먼저 다가가서 이야기를 걸거나 할 베짱이 많이 없었다는 것이다. 사실 내가 그렇게 사람들에게 먼저 다가가고 얘기를 나누기에는 내가 알고 있는 지식이 많이 부족함에도 원인이 있기는 하지만 그래도 다들 같은 분야에 관심을 가지고 (세부 관심사는 조금씩 다를 수 있지만) 나와 비슷한 입장을 가진 사람들도 있을 수 있었을텐데 내가 조금 적극적이지 못했던 부분이 있다. 학기 중에 윤준보교수님 수업에서 학회를 가면 그 사람들과 이야기를 많이 나누어보라는 얘기를 해주셨는데 막상 내게 그런 기회가 생기니 할 수 있는 말이 많이 없더라. 조금 더 정진해서 그런 대화에 두려움이 없을 정도의 지식을 쌓아야할텐데. 그런 개인적인 아쉬움은 잠시 넘겨서 생각을 해보자면, ICML에서 만난 사람들은 정말 열정있는 사람들이었다. 고작 15분에서 20분짜리 talk조차 이해하지 못하고 허덕이고 있는 나와는 다르게, 정말 발표자의 talk을 이해하고 그들과 communication하면서 질문하는 모습이 멋져보였다. 1시간 가까이 되는 invited talk이나 key note talk에서도 많은 부분을 놓치지 않으려 노력하는 모습도 멋졌다고 생각한다. 나도 그런 멋지다고 생각한 모습에 한 단계 더 다가가야할텐데.</p>
+
+
+<p>그리고 그 다음은 역시 연구였다. 내가 대학원생이 되었고, 연구가 나에게 가장 중요한 비중을 차지하게 된 이상, 어떤 연구를 할 것이며 어떻게 연구를 할 것이며.. 혹은 왜 연구를 해야하는 것이냐 등의 물음은 나에게 굉장히 중요한 물음이다. 약간 어느 정도는 간접적으로 그 질문들에 대한 답을 얻을 수 있었던 것 같은데, 어떤 공명감으로 연구를 한다는 느낌보다는 이 문제를 풀어야하겠다는 그런 근본적인 호기심? 같은게 영향을 미치는게 아닌가 싶다. 사실 명확하게 이거다! 싶은 느낌은 잘 들지 않았지만 앞서 말했듯이 다들 열정적으로 임하고 질문 하나하나가 날카롭게 들어가는 모습을 보면서 이런 학회에 publish를 하는 사람들은 어떤 생각으로 다른 사람들의 talk을 듣는지 조금이나마 간접적으로라도 체험할 수 있지 않았나 싶다. 아무튼 진짜 열정적으로 해야한다. 그게 진짜 큰 것 같다.</p>
+
+
+<p>또 학회에서 놀라웠던 점이라면 Machine Learning이라는 분야 자체가 생각보다도 훨씬 더 방대했다는 점이다. 전체 Track이 6개가 parallel 하게 돌아가면서 전체 다 합쳐서 거의 300개 가까이 되는 talk이 진행이 됐으니까.. (<a href="http://icml.cc/2014/index/article/12.htm" target="new">스케쥴</a>) 단순히 accept된 paper만 많은 것이 아니라 각 track의 주제 또한 너무나도 다양하였다. Networks and Graph-Based Learning, Reinforcement Learning, Bayesian Optimization and Gaussian Processes, Supervised Learning, Neural Networks and Deep Learning, Graphical Models, Bandits, Monte Carlo, Statistical Methods, Structured Prediction, Deep Learning and Vision, Matrix Completion and Graphs, Learning Theory, Clustering and Nonparametrics, Active Learning, Optimization, Large-Scale Learning, Latent Variable Models, Online Learning and Planning, Clustering, Metric Learning and Feature Selection, Optimization, Neural Language and Speech, Graphical Models and Approximate Inference, Online Learning, Monte Carlo and Approximate Inference, Method-Of-Moments and Spectral Methods, Boosting and Ensemble Methods, Matrix Factorization, Nonparametric Bayes, Manifolds, Kernel Methods, Unsupervised Learning and Detection, Crowd-Sourcing, Manifolds and Graphs, Regularization and Lasso, Nearest-Neighbors and Large-Scale Learning, Topic Models, Sparsity, Neural Theory and Spectral Methods, Features and Feature Selection, Time Series and Sequences&#8230;. 와 진짜 많다. 물론 이 전체를 또 잘 묶으면 더 줄어들 수 있겠지만 그래도 일단 각각의 Track들이 서로 다른 주제를 가지고 이렇게 많이 있다는 사실이 놀라웠다. 글쎄, 그래도 굳이 크게 나누자면, (1) Learning for Graphical Model (2) Traditional Machine Learning Problems (Bayesian, Supervised Learning&#8230;), (3) Optimization (4) Monte Carlo (5) Unsupervised Learning (Clustering, Metric Learning&#8230;) (6) Neural Network (7) Others 정도가 아닐까. 모르겠다 너무 많고 내가 모르는 분야가 너무 많아서. 아무튼 정말 Machine Learning이 어마어마하게 큰 분야라는 것을 다시 한 번 느끼게 되었다. 나는 저 많은 Track 중에서 어느 분야에 기여를 할 수 있을까?</p>
+
+
+<p>꼭 그런건 아니었지만, 전반적으로 Deep learning 과 관련된 talk들. 심지어 &#8216;Deep&#8217; 이라는 이름이 들어가기만 해도 컨퍼런스 룸이 터질듯한 것을 볼 수 있었다. 정말 요즘 이게 핫하긴 핫하다. 근데 난 이상하게 정말 Deep learning이 싫은데.. 이유를 잘 모르겠다. 가장 practical하게 powerful해서 그렇겠지? 중국에서 해서 그런지는 모르겠지만 Deep learning세션은 중국인들이 바글바글 몰려서 진짜 산만했었다. 그만큼 가장 핫하다는 뜻이고, 중국인들이 이런 실용적인 것들에 무지 관심이 많다는 것을 느꼈다. 이론쪽보다는 확실히 그런 practical 한 세션에 중국인들이 압도적으로 많았다. Deep learning 관련 시스템 쪽도 사람 엄청 많았고.. 진짜 그야말로 Deep Learning의 시대라고 봐도 무방할 정도. 대단하더라.</p>
+
+
+<p>마찬가지 맥락에서, 굉장히 많은 기업들이 ICML을 찾았다. 구글, Facebook, 아마존, MS, 야후 같은 글로벌 기업은 물론이고 바이두, 알리바바 같은 중국 기업들도 엄청 많았다. 그만큼 머신러닝을 전공한 사람들의 힘이 필요하다는, 그런 사람들에 대한 수요가 확실하구나.. 라는 그런 생각이 들더라. 기업 연구소 특히 MS나 구글 연구소 등에서도 많은 논문들이 나오는걸 보고, 저런 연구소에서 일하는 것도 생각보다는 나쁘지 않을 수도 있다는 그런 생각도 들고 그랬다.</p>
+
+
+<p>ICML에서 여러모로 많은 자극을 받았다. 재미도 있었고. 내년 ICML은 내가 intivation 되서 갔으면 좋겠다! 나도 좋은 논문을 쓸 수 있었으면.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Basic Principles in Deep Neural Networks]]></title>
+    <link href="http://SanghyukChun.github.io/54/"/>
+    <updated>2014-06-17T19:23:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/54</id>
+		<content type="html"><![CDATA[<h5>들어가기 전에</h5>
+
+
+<p>이 포스트는 2014년 6월 16일 카이스트에서 유명한 Yoshua Bengio 교수님 연구실에서 포스트 닥터 과정을 밟고 계신 장민석 박사님의 The Basic Principles in Deep Neural Networks 라는 이름의 semiar를 요약한 내용이다. 내용은 주로 Deep learnining을 supervised learning, unsupervised learning의 관점에서 각각 바라보면서 어떤 컨셉들이고, 어떤 연구들이 진행이 되어있는지 훑어보는 정도의 간단한 내용이었다.</p>
+
+
+<h5>Introduction</h5>
+
+
+<p>Deep learning은 Machine Learning의 분야 중 하나이다. 그렇다면 Machine Learning은 무엇일까? 뭐 이거에 대한 얘기는 워낙 많이 했었고, 조만간 시간이 되면 내가 생각하고 있는 머신러닝에 대해 다시 포스팅을 할 예정이니 생략하도록 하겠다. 일단 이 세미나에서는 간단하게 머신러닝은 모델이 데이터에서 러닝하고 러닝한 데이터를 가지고 들어온 쿼리에 대해 answer하는 것이 머신러닝의 전부다! 라고 얘기해주셨다.</p>
+
+
+<p>그리고 perception이라는 것에 대해서도 설명해주셨는데, 우리말로 하면 &#8216;인지&#8217; 정도 되겠다. 조금 더 구체적으로 얘기하면 내가 지금 인지하고 있는 물체에 대한 정보를 &#8216;안지&#8217; 하는 것이다. 즉, 내가 지금 읽고 있는 이 글이 어떤 철자를 가지고 있고 어떤 의미를 가지고 있는가에 대해 판단하는 것 아니면 사진 안에 있는 무언가가 고양이인지 개인지 확인하는 것, &#8216;인지&#8217;라는 단어가 한국어인지 일본어인지 판단하는 것들이 perception의 한 예라 할 수 있겠다. 우리는, 즉 사람은 이런 과정을 매우 손쉽게 하지만, 실제로 이것은 굉장히 어려운 작업이다. Deep learning이란 결국 사람이 perception을 어떻게 하는가를 기반으로 learning을 해보자라는 컨셉이다. 즉, Human learning에서 motive를 얻는 것인데, 사실 사람이 이런 인지를 한다는 것은 뇌에 의해서 일어나는 현상이며 사실은 물리적으로 매우 간단한 뉴런이라는 것들이 복합적으로 작용하면서 일어나는 것이다. 그렇기 때문에 사람의 뇌를 모방하여 매우 간단한 뉴런이라는 것들을 조합하여 인지 능력을 향상시키는 것이 Neural Network이고, 그것들을 또 폭발적으로 많이 조합한 것이 Deep learning이라 할 수 있겠다.</p>
+
+
+<p>근데 사실 NN은 거의 4-50년 가까이된 무지하게 오래된 분야임 왜 이제와서 핫한가? 에 대한 질문이 있을 수 있다. history를 보면 더 명확해지는데, 아래의 리스트를 한 번 보자.</p>
+
+
+<ul>
+<li>1958 Rosenblatt proposed perceptrons</li>
+<li>1980 Neocognitron (Fukushima, 1980)</li>
+<li>1982 Hopfield network, SOM (Kohonen, 1982), Neural PCA (Oja, 1982)</li>
+<li>1985 Boltzmann machines (Ackley et al., 1985)</li>
+<li>1986 Multilayer perceptrons and backpropagation (Rumelhart et al., 1986) 1988 RBF networks (Broomhead&amp;Lowe, 1988)</li>
+<li>1989 Autoencoders (Baldi&amp;Hornik, 1989), Convolutional network (LeCun, 1989) 1992 Sigmoid belief network (Neal, 1992)</li>
+<li>1993 Sparse coding (Field, 1993)</li>
+</ul>
+
+
+<p>즉 우리가 지금 쓰고 있는 Neural network의 기본적인 연구는 이미 90년대 이전에 다 끝나있었다. 심지어 1995년에 Machine Learning에 어마어마한 연구 결과를 남긴 Vapnik과 Jackel이 10년 뒤인 2005년에 아무도 Neural net을 쓰고 있지 않을 것이라고 내기를 했을 정도니까.. 근데 갑자기 Deep learning이 정말 갑자기 빵! 하고 히트를 쳐버렸다. 그 배경을 보자면, ImageNet이라는 것이 있는데, 그냥 쉽게 생각하면 사진을 주고 어떤 물체인지 인식을 하는 일종의 race 비슷한 것이다. 그런데 그 이전까지 모든 최고의 image recognition 연구하는 사람들이 이뤄놓은 결과가 0.27 ~ 0.30정도 였는데 (아마 27%에서 30% 정도만 틀린다는 의미일 것이다) 갑자기 2012년에 Deep convolutional neural network를 하는 팀이 0.153으로 거의 2배 가까운 성능 향상을 보여주었다. 그리고 그 다음 해에는 상위 20개 팀에서 2개 팀 빼고 전부 Deep learning을 써서 Classification을 했다고 한다. 최고 성능은 또 0.117로 엄청나게 개선되고.</p>
+
+
+<p>그리고 Deep learning을 기본 기술로 사용하는 스타트업도 엄청나게 늘어나고 있고, (<a href="http://techcrunch.com/2014/01/26/google-deepmind/" target="new">Deep learning 기술 회사인 Deep mind M 이상에 인수</a>, <a href="http://techneedle.com/archives/15662" target="new">Captcha 퍼즐 암호 99.8% 성공률로 해석</a>, <a href="http://www.technologyreview.com/news/525586/facebook-creates-software-that-matches-faces-almost-as-well-as-you-do/" target="new">사람의 얼굴 인식 능력을 상회하는 소프트웨어 개발</a>) 심지어 현재 구글이나 애플 등에서 음성 인식에 쓰는 알고리듬이 deep learning이라고 하니, 단순히 학계에서만 붐인 것이 아니라 산업에서도 엄청나게 핫하다고 할 수 있다.</p>
+
+
+<p>아니 근데 그래서 Deep learning이 뭘까? 뭐가 Deep하다는 걸까? 기존 Machine Learning이랑은 무엇이 다를까? 등의 질문이 들 수밖에 없다.</p>
+
+
+<p>기존 머신러닝은 크게 3단계로 이뤄진다. Feature engineering, Learning, Inference. 그렇기 때문에 맨 처음 Feature extraction에서 Data의 Domain knowledge과 general machine learning이 분리가 된다. 즉, 내가 image를 이용해 machine learning을 한다고 해서 Learning 알고리듬이나 Inference에 영향을 주지는 않는다. 그러나 실제로는 inference가 learning에도 영향을 미치고, domain knowledge에도 영향을 미치는 등, 이 세가지는 분리가 되어있지 않다. 그래서 초기 Deep learning은 1a Feature engineering 1b Feature/Representation learning 2. Learning 3. Inference. 이렇게 데이터에서 나온 learnign결과를 접목하여 성능을 개선시키려는 노력에서 부터 시작되었다고 한다. 현재 쓰이는 실제 딥러닝은 1. Jointly learn everything 2. Inference 단 두가지 단계로, 데이터 자체에서 모든 것을 처리하는 것이라고 한다. 아래 그림을 보면 조금 이해가 빠를 것 같다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/54-1.png" width="500">
+<img src="http://SanghyukChun.github.io/images/post/54-2.png" width="500">
+<img src="http://SanghyukChun.github.io/images/post/54-3.png" width="500"></p>
+
+<p>세미나 중에 박사님께서 Yoshua Bengio교수님 얘기 중에서 상당히 인상적이라고 했었던 얘기라면서 해줬던 얘기가 &#8220;Let the data decides&#8221; 였다. 즉, 우리가 데이터에서 피쳐 뽑는데, 좋은 모델을 찾는데에 시간을 쓰지 말고, 처음부터 좋은 머신러닝 모델을 가져와서 데이터에서부터 좋은 결과를 만들어낼 수 있도록 데이터가 알아서 하게 해라.. 뭐 이런 얘기라고 한다.</p>
+
+
+<p>아무도 쓰지 않던 Deep learning 혹은 Neural network를 갑자기 사람들이 많이 쓰는 이유는 결국 사람들이 따로따로 연구하던 PCA, Neural PCA, Probabilistic PCA, Autoencoder, Belief Network, Restricted Boltzmann Machine이 서로 각자의 특수한 케이스이거나 혹은 다른 표현형이라는 것이 알려지면서 결국 한 분야로 수렴하기도 하였고, 이제는 많은 것들이 알려져서 이전에는 learning하기 어려웠던 것들을 쉽게 learning할 수 있다고 한다. 특히 이제 더 이상 non-convex optimization에 대해 두랴워 할 필요가 없다는 것이 가장 큰 이유라고 한다. 또한 inference와 training사이의 interaction에 대해서도 더 많이 이해하고 있으며, 예전보다 computation power가 exponential하게 증가했으며 특히 GPU를 사용하게 되면 정말 계산량이 폭발적으로 늘어난다고 한다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/54-4.png" width="600"></p>
+
+<p>위의 그림은 각 종과 현재 개발된 NN들의 뉴런 개수를 비교한 것이데 스케일은 log scale이다. 맨 처음 DBN이 나올 때만 해도 편충보다 뉴런이 조금 많고 거머리보다 10배 적었는데, 나중에 AlexNet에서는 개미보다 조금 많고 벌에 비해서 한참 적다. 그리고 여전히 우리는 개구리의 뉴런 개수보다 적은 양의 뉴런만을 가지고 있다. 사람이 가지고 있는 뉴런의 개수만큼 발전을 하려면 아직까지 갈 길이 멀다는 얘기이다. 단순히 뉴런의 개수를 늘릴 수 없는 이유는 역시 시간이 오래걸리기 때문이다. 아직까지도 발전할 여지는 많이 있는 학문이라는 뜻이려나.</p>
+
+
+<h5>Supervised Neural Network</h5>
+
+
+<p>이 부분에서는 neural network로 supervised learning, 특히 classification을 어떻게 푸는지에 대해 얘기가 되며, Multilayer perceptron과 그것의 learning, regularization, 그리고 기타 등등에 대해 다르게 될 것이다.</p>
+
+
+<p>Supervised learning이란 무엇인가. 데이터가 \(D = { (x_1, y_1), (x_2, y_2), &#8230;, (x_N, y_N) }\) 으로 주어졌을 때, 어떤 assumption \(y_n = f^* (x_n) \)을 찾는 것이 supervised learning이라 할 수 있다. 이때, 주어진 데이터는 완벽한 데이터가 아니라 다소 noise가 끼어있다고 가정한다. 또한 이것을 D에 포함되지 않은 데이터에 대해 잘 설명할 수 있는 assumption을 찾는 것이 목표인데 이유는 모든 데이터가 noisy하다고 생각하기 때문이다.</p>
+
+
+<p>Probabilistic view로 보면 Underlying distribution X and Y|X이 존재한다고 했을 때, 데이터는 이 distribution에서부터 만들어지는 것이라 생각할 수 있다. 이때 우리가 찾고자하는 assumption은 \(p(y|x\)가 된다. 마찬가지로 D에 속하지 않은 데이터에 대해서 잘 설명할 수 있는 distribution을 찾는 것이 목적이다.</p>
+
+
+<p>근데 &#8216;잘&#8217; 설명한다는 것은 무엇일까. 즉, Evaluation and Generalization은 어떻게 하는 것일까. 이건 원래 함수를 f라고 하고 추측한 함수를 f* 라고 했을 때 아래 그림과 같은 방법으로 추측하게 된다. 그런데 이때 이것은 확률적으로 바라봤을 때 KL divergence와 동일하기 때문에 그 아래 그림과 같이 설명할 수도 있다. 보통은 MC approximation (샘플을 막 뽑아서 성능 특정)을 사용해서 우리가 가지고 있는 샘플 중 일부분을 추출해 제외하고 f*를 찾아서 그 에러를 줄이는 방식으로 테스트를 한다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/54-5.png" width="500"></p>
+
+<p>근데 왜 D가 아닌 D test에 대해 솔루션을 찾을까? 이유는 우리가 가진 resource가 finite하기 때문이다. 만약 시간이 무한하면 우리가 취하고 있는 몬테카를로가 언젠가 진짜 확률로 수렴하겠지만, 우리가 가진 자원이 유한하기 때문에 반드시 샘플 에러가 발생하게 된다. 또한 실제로 이것이 굉장히 큰 문제이기 때문에 우리가 못 봤던 테스트 셋으로 테스트를 하여 성능을 측정하는 것이다.</p>
+
+
+<p></p>
+
+<p>자 뭐 이것의 대표적인 예로는 linear regression혹은 ridge, lasso 등이 있다고 설명을 해줬지만 사실 부연 설명에 불과하므로 패스. 그렇다면 우리가 흔히 말하는 MLP, multilayer perceptron도 이것으로 설명이 가능한데, 아래와 같다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/54-6.png" width="500"></p>
+
+<p>맨 아래 식은 일종의 cost function에 대한 optimization이다. 그리고 우리는 이런 optimization을 하기 위한 알고리듬으로 gradient descent algorithm을 가지고 있는데, 이 방법의 문제는 모든 데이터에 대해 코스트를 계산하여 step을 진행하기 때문에 너무 느리다는 것이다. 따라서 우리는 수 많은 데이터들 중에서 하나만 골라서 업데이트를 하는 Stochastic Gradient Descent를 사용한다. 하지만 이 경우 Convex가 아니라면 둘이 서로 다른 곳으로 수렴을 하게 된다는 문제점이 발생하지만, 사실 크게 상관없다고 한다.</p>
+
+
+<p>그리고 neural network에서 쓰는 Gradient descent method는 backpropagation이 있다. <a href="http://SanghyukChun.github.io/42" taget="new">이전</a>에 설명했던 컨셉이니 생략하고, 중요한 점만 얘기하면, 이 방법을 쓰면 모든 노드의 derivative를 전부 계산할 필요가 없다는 것이다. 대신 우리는 매우 적은 양의 계산으로 마치 전체의 gradient를 계산한 것과 같은 효과를 얻을 수 있다.</p>
+
+
+<p>여기에서 질문이 하나 나왔는데, 사실 이렇게 할 수 있는 이유는 chain rule을 적용할 수 있기 때문인데 (아까 건 링크 참고) 혹시 그렇다뎐 Hessian을 계산할 수는 없을까라는 질문이 나왔다. 결론적으로 말하자면, 실제 NN에서 Hessian 등의 2nd derivative를 계산하는 것은 매우 expensive하다는 것이며, 구현도 복잡하다고 한다. 대신 H를 직접 구하지 않고 그것의 역수를 계산하는 것들이 있긴 있다고 한다. 그러나 여전히 큰 NN에는 부적합하기 때문에 보통 Gradient를 사용한다고 한다.</p>
+
+
+<p>Regularization &ndash; MAP.
+Prob perspective: find a model M by ML (argmax p(D|M) ), MAP(argmax p(M|D) )
+ML은 bayes rule! 둘을 쉽게 바꿀 수 있다.
+prior distribution이 전체 model의 prob를 scope을 줄여주는 역할을 한다!
+Regularization의 Omega term이 prior 역할을 하는 것.
+NN의 Reg. (1) Weight Decay.
+Prior: 모델은 너무 sharp하지 않다! 모델은 굉장히 smooth 할 것이다. theta_j ~ N(0, (M lambda)^-1 )
+theta = argmin( loss function + lambda sum theta<sup>2</sup> )
+(2) Smoothness and Noise Injection.
+Input space의 굉장히 작은 부분만 관심이 있으니깐 그 부분에만 smooth하게 만들자.
+instance 주변에도 비슷한 값이어야 한다. f(x) <del>~ f(x+e) &lt;=> min sum | d f(x<sup>n</sup>) / dx | ^2
+&lt;=> 근데 이걸 계산하는건 계산할 때 마다 white Gaussian noise를 넣어서 계산하는 것과 동일한 결과를 낸다 1995 Bishop
+(3) Ensemble learning and dropout
+computation이 빨라졌으니까, 한 50개 learning하고 그걸 가지고 ensemble learning하자!
+예전에는 트레이닝이 잘 안되서 잘 안했던건데, 이제는 트레이닝이 잘 되니까 그게 잘 된다
+아이디어: NN을 learning할 때 마다 서로 다른 preprocessing을 하고나서 모아서 averaging 하자 object recognition은 사람보다 성능이 좋음 헐 ㅋㅋ
+(4) dropout.
+하나만 배우면서 exponentially many classifiers를 하자! 힌튼 2012
+매번 feedforward를 할 때마다 random하게 node 를  drop하자.
+수학적으로 얘기하면, lower bound를 optimization을 한다. 하고 안하고는 10</del>20% gain을 늘린다.
+실제로 쓰기에는 너무 variation이 크다. 그래서 실제 classification에 좋은 결과가 안나올 수 있음. 그래서 activation을 절반으로 까는 방식으로!
+결과적으로 0.5를 드랍, 0.5를 까는 것이 general하게 좋은 것으로 보인다.
+다른 식으로 값을 러닝해보자는 아이디어로 해봤더니 값이 전부 0.5로 컨벌지 하더라 헐 ㅋㅋㅋㅋㅋ</p>
+
+<p>Common Recipe for DNN.
+1. User a piecewise linear hidden unit. (Rectifier, Maxout) => max{0,x} h({x1m,, xp}) = max {x1, ,,,,, xp). differentiable하지 않은데? sub gradient랑 비슷하고, 아니면 dropout이랑 비슷하게 생각하면 됨. 계속 NN을 다른 것을 쓴다고 보면 됨. 0이 되었던 애들은 뉴런이 없다고 보고.. 뭐 결국 sub gradient라고 하네요
+2. Preprocess data and choose features carefully. Image: Whitening, Raw, SIFT, HoG, Speech: Raw? Spectrum?, Text: Characters? words? tree?, General: z-Normalization?
+3. User Dropout and other regularization methods
+4. Unsuperviesd Pretraining (Hinton et al 2006) &ndash;> a lot a unlabeled samples. label 데이터 많으면 안해도 된다네요
+5. Carefully search for hyperparameters (Random search, Bayesian optimization..) => greed search 하면 exponential하게 많아서 안됨 ㅠㅠ
+6. Often, deeper the better (이미지 &ndash; 레이어 7개 이상, 스피치 &ndash; 12개, 14개… 막 올라감, 그 이외에는 hyper parameter. 보통 난 2개 부터 시작한다)
+7. Build and ensemble of neural networks
+8. Use GPU. 파워랑 보드 좋은거 사야하고 쿨링 잘하고 전기세 조심하고..</p>
+
+<p>Hessian의 값이 너무 크고, 그러니까 계산하기도 힘들고 저장도 하기 힘들고 그걸 inverse 하는건 더 힘들고!!
+가장 큰 단점은 stochastic method가 없다 한 업데이트가 너무 expensive하다 ㅠㅠ
+그러니깐 2nd order가 좋은건 알고 있고, 진짜 이론적으로 좋지만, in practice, 실제로는 model이 너무 크기 때문에 힘들다 으엉 ㅠㅠ</p>
+
+<p>Domain Knowledge?
+Data Preprocessing and feature extraction… Contrast normalization, Relative coordinate, Bag-of-Words representation.
+NN의 좋은 점. 예를 들어서 SVM은 튜닝할 여지가 거의 없지만, NN은 처음부터 domain knowledge를 적용해서 model을 만들 수 있음.
+ex. Convolutional Neural Network: Translation, Rotation, Temporal, Frequency invariance
+Convolution and Pooling
+Convolution: filter 하나만 가지고 전부 적용하면 된다
+Pooling: local에서 계산한 convolution의 max를 취하고,… 뭐 그래서 구하는 듯
+Convolution layer
+1. Contrast Normalization
+2. Convolution
+3. Pooling
+4. NonLinearity
+Deep CNN: conv layer를 무지하게 쌓고 마지막에 full connection을 이어준다.</p>
+
+<p>Recursive Neural Network (RNN)
+Text: Compositional Structure. Tree 형태가 된다.
+근데 문장에 따라 tree가 달라져 ㅠㅠ
+아이디어: 같은 NN을 모든 tree의 edge에 apply를 한다 ( input NP, VP => S )
+sentence &ndash;> parser로 쪼갬 &ndash;> filter를 NN으로 갈아낌</p>
+
+<p>Unsupervised learning
+Label이 없다!
+DNN을 써서 visualization.</p>
+
+<p>Feature extraction. => without domain knowledge &ndash;> learned feature!!
+Generative Model.
+Underlying diet. X~Pr(D)</p>
+
+<p>Classification, Missing value reconstruction, Denoising, Structured Output Prediction, Outlier Detection.
+Ultimately it comes down to learning a diet of x.</p>
+
+<p>Density/Distribution Estimation.
+Latent Variable Models p(x). Define a parametric form of joint dist. Derive a learning rule for theta.
+RBM. Markov random field 의 특정 케이스.
+Joint distribution, Marginal distribution.. Learning rule Maximum Likelihood.
+Belief Network. Joint distribution은 구할 수 있음. Marginal distribution… 못구함. MLE로 learning. (중요하지 않음)
+NADE. no latent variable h. Joint dist = Marginal dist. condition들을 NN으로 모델링하자. ML. (중요하지 않음)
+Intractability!!!!
+Boltzmann Machine. 다 어려움.
+RBM. Marginal Probability, Posterior Prob를 구할 수 있지만 normalization constant와 conditional prob가 어려움.
+Belief net norm만 없음
+NADE nomr x margi x posterior x. 근데 conditional prob가 잘 안됨. 그리고 퍼포먼스가 안좋다.</p>
+
+<p>GM &ndash; learning to infer
+All we want is to infer the conditional diet of unknown variables.
+Approximate Inference in a Graphical Model. p(x_mis|x_obs) ~~ Q(x_mis|x_obs)
+Methods: Loopy belief propagation, variational inference/message-passing
+Q<sup>k</sup>(x_mis|x_obs) = f(Q<sup>k-1</sup> (x_mis|x_obs) ). => chain 처럼 이을 수 있음</p>
+
+<p>NADE-k. => graphical 하게 시작한 RBM같은 애들은 structure가 고정되는데 얘는 이런 모델을 만들고 싶으면 그냥 만들면 된다
+Lesson!!!
+Do not maximize log-likelihood but minimize actual cost!
+&lt;=> Don’t do what model tells you to do but do what you aim to do.
+… popular science journalists don’t care about GM ㅠㅠ</p>
+
+<p>Manifold learning &ndash; semi supervised learning
+GM이 뜨는 이유는 Pre training은 왜 하는가..? 그냥 하는게 아니다
+Classification이라는 hot한 supervised learning의 task에서도 unlabled data가 performance를 향상시킨다.
+Manifold learning &ndash; New representation
+1. phi should reflect changes along the manifold 2. phi should not change for orthogonal noise
+문제. representation을 어떻게 learnig할 것이며 어떻게 transform할 것이냐
+Solution. Denosing Autoencoder.
+manifold…</p>
+
+<p>Semi-supervised learning in action (1) Layer-wise Pretraining
+manifold를 어떻게 러닝할 것이냐 data를 스트레칭 아웃. 원래 데이터가 구석에 있었는데 representation을 진행할 때 마다 다른empty space를 무시하게..
+각각 pretraining하는 데이터는 label이 있거나 없거나 상관없다. unsupervised learning으로 끝나버린다. hyperparameter의 개수와 sensitivity가 크게 줄어든다.
+visualizaion에 쓴다. manifold embedding and visualization.
+non linear visualization은 non parametic. 새 data가 들어오면 새로 learning해야 함.
+하지만 autoencoder는 parametric model이라 그냥 feed forward만 하면 된다.</p>
+
+<p>What other applications for unsupervised DNN?
+Deep Reinforcement learning.. NN의 input을 state 로 하여 새로운 function을 define
+NLP.. Natural Language is a huge set of variable length sequences of high dim vectors.
+Hugh set. 데이터가 어마어마하지만 실제 set도 커버 못함. 거기에 input까지 variable length ㅠㅠ sequence도 high dim vector 으앙
+시멘틱을 보존하면서 encoding&hellip;</p>
+
+<p>random function은 high dimension local optima가 e로 bound가 된다고 하네요. 많아도 다 비슷한 값을 가진다. 근데 뭐가 문제? flat한 지점이 무지하게 많은겨 (saddle point)
+Saddle point를 벗어나는 방법은? 2nd order method! … 오히려 2nd order를 쓰면 그 지점들에 멈추는 경우가 많음.
+Saddle-Free Newton Method (<a href="http://arxiv.org/pdf/1406.2572.pdf">http://arxiv.org/pdf/1406.2572.pdf</a>)</p>
+
+<p>Deep Neural Network를 보면 Theory가 거의 없다.. 사실 많이 되어있다. 특히 circuit theory, dynamics.. 등으로 할 수 있음
+근데 그 어떤 것도 Rectifier에 대해 분석한게 없다 최근 좀 되고 있음 (<a href="http://arxiv.org/pdf/1402.1869.pdf">http://arxiv.org/pdf/1402.1869.pdf</a>)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[나의 창작욕에 대하여]]></title>
@@ -2156,240 +2482,6 @@ End of technical program of Day 2<strong> </strong>
 
 
 <ul><li>Liu Yang, Distance Metric Learning: A Comprehensive Survey, 2005</li><li>Liu Yang, An Overview of Distance Metric Learning, 2007</li><li>Bellet, A., Habrard, A., and Sebban, M. A Survey on Metric Learning for Feature Vectors and Structured Data, 2013</li><li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006).InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li></ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[서버를 구축해보자 - 웹서버 구축 스크립트 만들기]]></title>
-    <link href="http://SanghyukChun.github.io/36/"/>
-    <updated>2013-12-16T08:49:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/36</id>
-		<content type="html"><![CDATA[<p><a href="33" target="new">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고&#8230; 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/" target="new">이음 블로그</a> 참고&#8230; 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
-
-
-<p>일단, apache만 가지고 되는건 거의 없다. 기본적으로 php + mysql 기반으로 굴러가는 모듈이 워낙 많기 때문에 이 녀석들도 깔아주도록하자. 아래와 같은 스크립트를 만들어서 돌리면 편하다</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>apt-get -y install apache2 libapache2-mod-passenger
-</span><span class='line'>apt-get -y install mysql-server mysql-client
-</span><span class='line'>apt-get -y install php5-common php5 libapache2-mod-php5
-</span><span class='line'>apt-get -y install php5-mysql
-</span><span class='line'>apt-get -y install phpmyadmin</span></code></pre></td></tr></table></div></figure>
-
-
-<p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐&#8230; 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html" target="new">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
-
-
-<p>Default</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>&lt;VirtualHost *:80&gt;
-</span><span class='line'>  ServerAdmin webmaster@localhost
-</span><span class='line'>
-</span><span class='line'>  DocumentRoot /var/www
-</span><span class='line'>  &lt;Directory /&gt;
-</span><span class='line'>      Options FollowSymLinks
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>  &lt;Directory /var/www/&gt;
-</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>  &lt;Directory /var/www/redmine&gt;
-</span><span class='line'>    RailsBaseURI /redmine
-</span><span class='line'>    PassengerResolveSymlinksInDocumentRoot on
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-</span><span class='line'>  &lt;Directory "/usr/lib/cgi-bin"&gt;
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      Allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  ErrorLog ${APACHE_LOG_DIR}/error.log
-</span><span class='line'>
-</span><span class='line'>  # Possible values include: debug, info, notice, warn, error, crit,
-</span><span class='line'>  # alert, emerg.
-</span><span class='line'>  LogLevel warn
-</span><span class='line'>
-</span><span class='line'>  CustomLog ${APACHE_LOG_DIR}/access.log combined
-</span><span class='line'>&lt;/VirtualHost&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>passenger.conf</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_passenger.c&gt;
-</span><span class='line'>  PassengerDefaultUser www-data
-</span><span class='line'>  PassengerRoot /usr
-</span><span class='line'>  PassengerRuby /usr/bin/ruby
-</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>apt-get install redmine redmine-mysql
-</span><span class='line'>cp passenger.conf /etc/apache2/mods-available/passenger.conf
-</span><span class='line'>ln -s /usr/share/redmine/public /var/www/redmine
-</span><span class='line'>cp default /etc/apache2/sites-available/default</span></code></pre></td></tr></table></div></figure>
-
-
-<p>참 쉽다.. 참고로 이건 전부다 그냥 기본 설정이라 이렇게 한거지, 만약 설정이 되어있는 상태라면 위에 링크한 글대로 하기를 바란다. 혹시나 default설정 싹 날리거나 그러지 말고&#8230; 이제 service apache2 restart를 때려주면 레드마인이 돌아간다 올레</p>
-
-
-<p>음 그리고 이번에는 xe를 깔아보자. BBS 모듈이 필요할 때가 간간히 있기 때문에 xe는 깔아서 손해볼게 없다. (워드프레스도 쓸만하지만 단순 BBS로는 xe가 낫다.) 자 이번에도 스크립트.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>git clone https://github.com/xpressengine/xe-core.git
-</span><span class='line'>mv xe-core /var/www/xe
-</span><span class='line'>chmod 707 -R /var/www/xe
-</span><span class='line'>svn checkout http://xe-board.googlecode.com/svn/trunk/ board
-</span><span class='line'>mv board /var/www/xe/modules/board</span></code></pre></td></tr></table></div></figure>
-
-
-<p>뭐.. 이렇게 하고 ~~/xe 들어가서 설치하면 xe랑 board 모듈까지 설치 끝&#8230; 아 기본 설정인 경우에는 설정-고급-짧은 주소 사용에 아니오를 선택하고 캐시를 리로드해야한다. 이거 몰라서 한 1시간은 삽질했는데.. 이거 싫으면 따로 뭐를 깔아야하길래 그게 더 귀찮아서 그냥 설정을 바꿔줬다.</p>
-
-
-<p>마지막으로 위키를 깔아보자. 위키는 미디아위키를 사용한다.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
-</span><span class='line'>mv core /var/www/wiki
-</span><span class='line'>chmod 707 -R /var/www/wiki</span></code></pre></td></tr></table></div></figure>
-
-
-<p>아 참고로 xe도 wiki도 설치 후에 아파치를 한번 리스타트 해줘야할거다&#8230; 역시 이것도 /wiki로 들어가서 설치를 해주고 나온 php파일을 ftp로 /var/www/wiki에 다시 넣어주면 끝</p>
-
-
-<p></p>
-
-<p>전반적으로 크게 난해한 세팅도 없고.. 애당초 이번에 설치한 녀석들이 꽤 모듈로 잘 나온 놈들을 쓴 거라.. 크게 어렵지 않게 세팅했다. 지금 추가로 해볼까 고민 중인 것들은 개인 레포지토리를 뚫느냐 마느냐. 별로 큰 이득이 없어서 안할 것 같기는 하지만, 그래도 일단 만들어서 손해볼 것도 없고, 공부 삼아서 해볼까 고민 중이다. gui로 웹에서 접근 가능한 녀석을 만들어볼까하는데, 엄청 어려울 것 같지는 않고 그냥 엄청 귀찮을거 같아서 고민이다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[우분투에 Matlab과 JDK 깔기]]></title>
-    <link href="http://SanghyukChun.github.io/35/"/>
-    <updated>2013-12-14T23:24:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/35</id>
-		<content type="html"><![CDATA[<p>맨 처음 우분투 desktop을 메인 컴퓨터로 사용하겠다고 삽질하던 시절, Matlab 하나 까는 것도 무지막지 고생스러웠던 시절이 있다. 최근 다시 우분투를 메인 컴으로 사용하면서 매트랩 설치에 삽질을 하는 사람이 있을까싶어 이 글을 남겨본다. 기준은 2011B 버전이며, Linux Mac Solaris 호환 버전을 기준으로 한다.</p>
-
-
-<p>맨 처음 파일을 받고 압축을 풀게 되면 (tar.gz파일을 받은 상태라고 가정한다. + 참고로 저는 학교 라이센스를 사용합니다.) 폴더안에 install이라는 파일이 있는 것을 확인할 수 있다. 이 파일은 간단한 shell script인데, chmod로 사용할 수 있도록 바꿔주어야한다.. 거기에다가 이 녀석이 자기 폴더 내부에 있는 java 파일을 사용하는데 이놈이 뭔가 권한이 없는지 에러를 슝슝 뱉는다. 잘못하면 삽질하기 딱 좋은 상황. 그러나 간단하게 아래 명령어 하나로 해결할 수 있다.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>chmod -R +x Mathworks_2011B_Linux_Mac_Solaris</span></code></pre></td></tr></table></div></figure>
-
-
-<p>이렇게 한 줄 치고,</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>sudo ./Mathworks_2011B_Linux_Mac_Solaris/install</span></code></pre></td></tr></table></div></figure>
-
-
-<p>하면 깔끔하게 해결된다.</p>
-
-
-<p>+ install sudo로 안하면 파일 생성이 안된다</p>
-
-
-<p>아 그리고 JDK 설치도 삽질하기 딱 좋은데 이건 <a href="http://whatwant.tistory.com/438" target="new">정말 정리가 잘 된 포스트</a>가 있어서 링크로 대체하도록 하겠다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[인터넷 속의 수학 - Can I really reach anyone in 6 steps? (2/2)]]></title>
-    <link href="http://SanghyukChun.github.io/34/"/>
-    <updated>2013-12-12T16:48:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/34</id>
-		<content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
-
-
-<h5 id="34-1-review">Review of last post</h5>
-
-
-<p><a href="http://SanghyukChun.github.io/32" target="new">지난 포스트</a>에서는 전반적인 강의의 개요 및 간단한 Network Problem들에 대해 다뤘다. 특히 그 중에서 밀그램의 편지 실험에 대해 다시 한번 살펴보자. 이 실험은 사람과 사람 사이의 사회적 거리를 측정하기 위한 실험이다. 여기에서 사회적 거리 혹은 social distance는 우리가 흔히 &#8216;distance&#8217;라는 컨셉에서 쉽게 생각할 수 있는 유클리언 distance와는 조금 다른 개념인데, 유클리언 distance가 지리적, 공간적인 거리의 개념이라면 social ditance는 내가 이 사람과 얼마나 가까우냐에 대한 얘기이다. 즉, 내가 미국에 유학가있는 친구와 유클리언 거리는 무지막지 멀지만 사회적거리는 엄청 가깝고, 옆 연구실의 학생분들은 유클리언 거리는 매우 가깝지만 안타깝게도 사회적 거리는 엄청 먼 셈이다. 구체적으로 social distance를 정의해보자. 이 값은 social network 위에서 내 node에서 다른 목표 node로 이동할 때 이동해야하는 총 거리를 의미한다. 즉, 밀그럼의 실험에서 실험 참가자들의 평균적인 사회적 거리는 약 5 정도가 되는 것이다. (이전에도 언급했듯, Facebook에서 같은 실험을 해보면 4.74가 나온다.)</p>
-
-
-<p>자, 다시 한번 이전에 설명했던 실제 네트워크, 허브라는 개념 등에 대해서 생각해보자. 이렇게 전혀 상관없어 보이는 사람들 사이의 사회적 거리가 짧게나오는 이유는 사회적 네트워크의 토폴로지가 (그래프의 모양이) 독특하기 때문이다. 아래 그림을 봤을 때 구조적으로 멀어 보이는 지점을 이어주는 엄청나게 긴 장거리 연결 링크 (long-range link)가 존재한다는 것을 알 수 있다.</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/32-7.png" width="300"></p>
-
-<p>그리고 실제 네트워크는 뭉침현상(clustering)이 존재한다. 무슨 얘기이냐 하면, 특정 노트들끼리 뭉쳐있을 수 가 있다는 (cluster를 형성한다는) 의미이다. 따라서 밀그럼의 편지 실험에서 아무에게나 마구잡이로 편지를 전달하게 된다면 성공할 확률이 극히 낮아질 수 있다. (내부 cluster안에서만 편지가 빙빙 돌다가 실험이 끝날 수 있다.) 따라서 목표 지점과 현재 위치라는 굉장히 제한된 정보를 가지고 편지를 전달하기 위한 전략이 필요하고, 이를 다시 문제로 바꾸어서 생각해보면, 국지적인 정보만을 가지고 네트워크의 특정 지점에서 다른 특정 지점을 연결하는 가장 짧은 경로를 찾는 social search algorithm을 구현하기 위해서는 단순히 random하게 정보를 전달하는 것이 아니라, 어떤 특정한 rule이 필요하다는 것이다. 몇 가지 아이디어가 있는데, 대표적인 아이디어 중 하나는 사람들끼리의 연결은 그 정도가 같지 않다는 것이다. 즉, 내가 최종적으로 편지를 전달해야하는 사람이 은행가이므로 내 친구 중에서 간호사와 주식거래인이 있을 때 간호사보다는 주식거래인이 은행가와 확률적으로 사회적 거리가 더 짧을 것이라고 예측할 수 있을 것이다. 이런 식으로 특정 rule을 가지고 search를 하는 것이 매우 중요하다.</p>
-
-
-<h5 id="34-2-smallworld">Small world & Network Modeling</h5>
-
-
-<p>자, 이제 중요한 개념 몇 개를 다시 정리해보자.</p>
-
-
-<ul>
-    <li>Social Distance: Social Network에서 특정 node에서 다른 특정 node로 가기 위해 이동해야하는 가장 짧은 경로의 총 거리</li>
-    <li>Clustering coefficient: Social Netwrok에서 특정 node들끼리 얼마나 cluster를 형성할 것인지를 결정하는 계수. 이 값이 클 수록 cluster를 더 많이 형성한다. 수학적으로 다시 정의하자면 Network에서 node들의 connection이 connected triple을 일고 있을 확률을 의미한다. 아래 그림을 참고하면 더 이해가 쉬울 것이다.</li>
-    <li><img src="http://SanghyukChun.github.io/images/post/34-1.png" width="500"></li>
-    <li>Diameter: Social Network에서 가장 긴 Social Distance의 길이</li>
-    <li>Length of Network(L): 모든 social distance의 중간값. 일반적으로 그래프의 크기가 커지면 같이 커진다</li>
-    <li>Small World: Network의 크기가 증가하는 속도보다 L이 증가하는 속도가 더 느린 형태의 네트워크 (보통 증가비율이 Logarithm scale이면 small network라고 한다.)</li>
-</ul>
-
-
-<p>위의 용어들을 다시 명시한 채로 (몇 개는 새로 정의하였다) Real network를 생각해보자. 이전 실험들을 통해서 우리는 real network의 diameter는 매우 작은 편이라는 것을 알고 있고, 또한 clustering coefficient는 크다는 것을 알 수 있다. 그리고 중요한 컨셉 중 하나가 모든 social distance의 중간값인 L인데, 실제 네트워크에서는 그 네트워크의 크기가 커지는 속도보다 L이 더 천천히 증가한다. 이를 위에서도 언급했듯 Small World라고 한다.</p>
-
-
-<p>근데 문제는 이런 Small world를 (한국어로는 좁은 세상이라고 한다) 수학적으로 모델링하는 것이 쉽지 않다. Power-Law 분포를 가진 네트워크를 앞에서 설명헀었는데, 이 모델을 (푸아송 모델이라고 한다) 적용해서 문제를 바라보게 되면 거리 혹은 지름이 짧다는 점에서 사실적지만, 모든 node가 independent possibility로 연결되어 있어서 뭉침계수가 작다는 점에서는 사실적이지 않다. 다시 뭉침계수를 설명하자면, 이어진 세 마디가 삼각형을 이루고 있을 확률이 뭉침계수이다. 그렇다면 Regular Network는 어떨까? 이 경우는 Clustering coefficient는 크지만 Diameter 역시 크다는 점에서 unrealistic하다. (이를 보완하기 위해서 그 둘을 적절하게 섞은 The Watts-Strogatz-Newman Model이라는 것이 있다. 이에 대해서는 아래에서 자세히 설명하도록 하겠다.)</p>
-
-
-<h5 id="34-3-poissonregularnetwork">Poisson Network vs Regular Network</h5>
-
-
-<p>푸아송 네트워크는 각 마디가 power-law distribution을 가지는 p라는 independent possibility로 연결이 되어있는 형태이다. random한 연결이 많기 때문에 diameter가 많다는 것은 충분히 이해할 수 있을 것이다. 그러나 이 경우에는 모든 마디가 p의 확률로 연결이 되기 떄문에, 엄청나게 약한 연결도 &#8216;연결&#8217;이 되기 때문에 cluster coefficient가 \(C=p\)로 작아서 사실적인 네트워크 모델이 될 수 없다. 반면 정규 네트워크는 네트워크 자체가 원형으로 구성되며 자기 자신과 가까운 c명에게 연결하고 있는 형태이다. 이 경우 cluster coefficient는 \(C=\frac {3(c-2)} {4(c-1)}\)로 크지만 (c의 값이 2명 값이 0이고 4면 0.5, 무한대로 가면 0.75가 된다. 이 정도면 엄청나게 높은거다.) diameter가 크기 때문에 사실적인 모형이 아니다. 때문에 이 둘을 적절히 결합한 The Watts-Strogatz-Newman Model이라는 것이 등장하게 되는데, 제일 가까운 c명과 연결이 되어있으면서 (regular network의 성질, 이로 인해 높은 clustering coefficient를 가지는 것이 가능하다.) 또한 특정한 independent possibility p로 random한 node와 link를 가지고 있다. (poisson network의 성질, 이로 인해 낮은 diameter를 가지는 것이 가능하다.) 이 모델은 얼마나 random하게 link를 형성하느냐에 따라 그 네트워크의 topology나, 성질 등이 달라지게 될 것이다. (아래 그림을 보면 이해가 될 것이다.)</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/34-2.png" width="400">
-<img src="http://SanghyukChun.github.io/images/post/34-3.jpeg" width="400"></p>
-
-<p>아래 그림은 <a href="http://www.scholarpedia.org/article/Small-world_network" target="new">scholarpedia</a>에서 가져온 그림이다. p가 0이면 정규 네트워크처럼 diameter와 clustering coefficient가 모두 높지만, p를 증가시키면 점점 Poisson network와 비슷해지는 것을 알 수 있다. 따라서 적절한 p를 고르는 것이 small world를 모델링하기 위해 매우 중요하다고 할 수 있다.</p>
-
-
-<p><img src="http://www.scholarpedia.org/w/images/9/97/Swlc.png" width="400"></p>
-
-<h5 id="34-4-socialsearch">Fining paths - social search</h5>
-
-
-<p>그러면 이제 다시 local information만을 가지고 global shortest path를 찾는 문제로 돌아가서 생각해보자. 사실 이 문제는 optimization 문제로 치환해서 생각이 가능하지만, 안타깝게도 convex model이 아니기 떄문에 마냥 쉽게 적용하기는 쉽지 않다. 아무튼 다시 본론으로 돌아서, 가장 쉽게 생각할 수 있는 알고리듬은 greedy search algorithm이다. 내 neighbor 중에서 목표 node와 가장 가까울 것으로 생각되는 node로 넘어가고, 그 node에서도 마찬가지 과정을 반복하는 것이다. 하지만 당연한 얘기지만 이 알고리듬은 완벽하지 않다. 쉽게 생각해서, 내가 은행가와 가장 가까울 것이라고 예측한 주식거래인은 그 은행가를 직접적으로 모르지만, 간호사가 알고보니 그 은행가와 고등학교 동문이라 바로 연결이 되는 상황이라면? 이런 경우는 greedy algorithm이 global optima를 보장할 수 없게되는 것이다.</p>
-
-
-<p>search algorithm을 위해 도임되는 모델 중에서 클라인버그(Kleinberg) 검색 모델이라는 것도 있다. 이 모형은 국지적으로 connection을 가지고 있고 거리 r에 따라 멀리 있는 사람과 \(C * r^{-a}\)의 확률로 connection을 가지고 있다고 가정한다. 이 모델에 따르면 \(a = 2\) 일 때만 빠른 전달이 가능한데 그 모델링을 통해 예측한 결과는 아래 그래프와 같다.</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/34-4.gif" width="400"></p>
-
-<p>그 이외에도 사람 사이의 관계를 tree로 정의하고 social ditance를 tree에서 거쳐야 하는 단계 수로 정의하는 Watts-Dodds-Newman Model이라는 것도 존재한다. 이 모델의 Social distance를 정의하는 두 사람이 서로를 알 확률 \(p_m\)은 \(p_m = K 2^{\alpha m}\) 로 정의가 된다. 이 모델에서 level의 길이는 \(log_2 \frac n g\)로 정의가 되고, 평균적인 최단 거리도 계산이 가능하지만, 식이 꽤 복잡하기도 하고 이 모델의 reference도 찾지 못해 이 포스트에서는 생략을 하도록 하겠다 (직관적인 값이 아니라 이해를 위해 래퍼를 찾아봤는데 나오지 않는다) 아무튼 이 모델의 평균적인 최단거리에 node의 개수가 g이고 전체 사람이 n, a = 1이라는 특수한 경우로 문제를 바꾸어 생각해보면 평균 최단거리는 \(log^2 ( \frac n g )\) 에 비례한다. 특이점이라면, 이 모델은 tree 구조로 생각을 했기 때문에 Hub의 존재는 고려가 되지 않는다는 점이다.</p>
-
-
-<h5 id="34-5-conclusion">Conclusion</h5>
-
-
-<p>degree와 clustering을 동시에 만족하는 Network model은 현재까지는 없기 때문에 높은 clustering을 가지는 random distribution을 만드는 것도 활발한 연구 주제 중 하나라고 한다. 아무튼 network search의 핵심은 단순히 국지적인 정보만을 가지고 있어도 모든 Network에 정보 전파가 가능하다는 것이다. 아직도 연구가 활발히 진행되고 있는 분야이고, 정답도 없는 분야인 만큼 더 공부가 필요한 부분이라고 생각이 들었다. 이 포스트가 잘 이해가 되지 않거나 네트워크라는 것에 대해 흥미가 생긴다면 Linked: The New Science of Networks (Albert-laszlo Barabasi, Jennifer Frangos) 를 참고하면 될 것 같다.</p>
-
-
-<p>+ 추가로 정송 교수님의 comment를 추가하고 글을 마무리 짓도록 하겠다.</p>
-
-
-<p>Network search algoritm을 주변 resource를 검색하는 것으로 해석할 수 있을 것 같다. (ex 동물들의 먹이 탐색활동) genetic algorithm.. 현재 search space 내에서 solution에 대한 initial guess를 가지고 solution을 가지고 찾다가 간헐적으로 mutation이 일어나 다른 candidate space에서 solution을 찾는 모델이 있음. 지금 network search에 대한 설명을 들어보니 그와 비슷한 것 같다. 클라인버그 검색 모형에서도 a에 따라 a 세팅을 잘못하면 국지적으로 값을 찾을 수 없거나 혹은 너무 mutation이 자주 일어나서 잦은 swing현상으로 인해 최적화가 안된다.</p>
-
-
-<p>Modern network에 P2P같은 형태가 존재한다. 움직임에 의한 연결. 둘이 움직이다가 연결이 일어난다고 생각해보자. 만약 네브라스카가 움직이지 않는 static한 network라면 그 contact이 없지만, 만약 그 사람 중 하나가 mobility를 가지고 예를 들어 여행을 많이 다니는 사람이 하나 있어서 그 connection이 많이 일어나는 사람이 있다면 그 사람이 Network의 key가 되며 이것에 대한 수학적 모델링을 통한 연구가 이뤄지고 있다.</p>
 
 ]]></content>
   </entry>
