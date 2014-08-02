@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Machine learning 스터디 (1) Machine Learning이란? - README</title>
+  <meta name="author" content="Sanghyuk Chun">
+
+  
+  <meta name="description" content="내 멋대로 정리해보는 Machine Learning. 간단한 Introduction">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://SanghyukChun.github.io/57">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+	<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+
+<script>
+$(function() {
+	$('.tip').attr('data-toggle','tooltip');
+	$('.tip').attr('data-placement','top');
+	$('.tip').tooltip();
+});
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42711199-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=182012898639519";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+  
+  <div id="main">
+  	<header role="banner"><hgroup>
+  <h1><a id="blog-title" href="/">README</a>
+  
+    <span>&nbsp;&nbsp; SanghyukChun's Blog</span>
+  
+  </h1>
+</hgroup>
+
+</header>
+  	<nav role="navigation"><ul class="main-navigation list-inline">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="http://sanghyuk.kaist.ac.kr/aboutMe/">About Me</a></li>
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+
+</nav>
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Machine Learning 스터디 (1) Machine Learning이란?</h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-02T18:48:00+09:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 <a href="/blog/categories/machine-learning/" target="new">Machine learning과 관련된 글들</a>을 써왔지만, 항상 중구난방이고 제대로 정리가 되지 않은 느낌을 받아서 근래에 다시 머신러닝에 대해 공부를 하는 김에 싹 몰아서 정리해보기로 했다. 8월에 연구실에서 머신러닝 스터디를 하기로 했지만, 그것과는 조금 다르게 내가 생각했을 때 이런 순서로 정리를 하면 되겠다.. 하는 느낌으로 정리를 해볼 생각이다. Bishop 책을 많이 참고했으면 하고.. 특히 이번 ICML에서 느낀거지만, Machine Learning에는 정말 많은 분야가 있는데, 많은 Lecture들에서 어쩔 수 없이 그것들을 전부 커버하지 못하는 점이 너무 아쉬웠다. 그래서 일단 내가 할 수 있는데까지는 정리해보는게 좋지 않을까.. 하는 생각으로 글을 써보려 한다. 이런 글을 써야겠다는 생각은 오래전부터 했는데 정작 실천에 옮기는데에는 시간이 많이 걸렸네.. 그래 무튼 시작해보자.</p>
+
+
+<p>Machine Learning&#8230; 혹은 우리 말로 하면 기계 학습. 이놈이 대체 뭐길래 너도나도 머신러닝 머신러닝 해대는 걸까. 내가 예전 <a href="/3" target="new">Andrew Ng. 교수의 Machine Learning Lecture를 들으며 정리했던 글</a>에 정의했던바에 따르면, </p>
+
+
+<blockquote>
+    <p>머신러닝은 그 관계를 알 수 없는 수 많은 데이터들 사이에서 관계를 찾아내주는 마법과 같은 기술이다.</p>
+</blockquote>
+
+
+<p>라고 정의했었다. 마법과 같은 기술이라! 어디서 저런 중2병 스멜나는 용어를 가져왔는지 참.. 아무튼 내가 이쪽을 더 공부해보면서 느낀건, 결국에 이 Machine Learning이라는 것은 일종의 Modeling Problem이라는 것이다. 무슨 얘기냐? 머신러닝이란 <b>주어진 데이터</b>에 대해 <b>현상</b>을 <b>가장 잘 설명할 수 있는 관계</b>를 찾아내는 것이라 했었는데, 이 말을 조금 수학적으로 풀어내면 주어진 <b>데이터</b> \(X = (x_1, x_2, x_3, \ldots, x_n)\) 이 있을 때 이 데이터와 실제 <b>현상</b> \(Y = (y_1, y_2, \ldots, y_n) \)에 대한 <b>관계</b> function \(f\)를 찾아야한다. 당연히 우리가 정확한 함수 \(f\)를 찾아낼 수는 없으므로 <b>최대한 잘 설명할 수 있는</b>, 함수 \(f&#8217;\)을 찾아내야 한다. 이를 Hypothesis라고 한다. 즉, 이 모든 과정을 일종의 Modeling process로 생각이 가능하다는 뜻이다. 다만 우리의 새로운 process는 for given data에 대해 dependent한 model을 만들어낸다는 점이 독특한 것이다.</p>
+
+
+<p>스팸필터를 생각해보자. 데이터 X는 메일들이다. 우리가 받는 메일 하나하나가 데이터가 될 수도 있고, 그 메일 안에 있는 단어 하나하나가 될 수도, 혹은 아예 알파벳 하나하나가 될 수도 있다. 그것은 우리가 정하기 나름이니까. 그럼 현상 Y는 무엇일까? 각각의 메일이 스팸인지, 아니면 일반 메일인지 구분하는 구분자, indicator, 혹은 Label, Class가 될 것이다. 마지막으로 가장 잘 설명할 수 있는 함수는 이런 데이터들을 가지고 어떻게 Learning을 할 것인지에 대한 얘기가 될 것이다. 예를 들어 Naïve Bayes라던가, KNN, SVM도 있고, 요새 핫한 Deep learning도 있을 수 있다.</p>
+
+
+<p>그러면 이 함수로 우리는 무엇을 하고 싶은걸까? 단순히 데이터와 현상의 관계를 함수로 나타내는 것이 무슨 의미가 있지? 이것이 의미가 있는 이유는 우리가 새로 주어진 데이터, 혹은 test data에 대해 새로운 추론, inference를 하는 것이 가능하기 때문이다. 이 메일은 스팸인가? 이런 쇼핑 목록을 가진 사람은 또 뭘 사고 싶어할까? 이런 날씨에는 고속도로가 막힐까 막히지 않을까? 이런 질문들에 대해 앞서 우리가 정의한 방식대로 Machine Learning problem을 풀어 새로운 Hypothesis를 통해 우리는 inference를 내릴 수가 있다. 이런 inference가 맞을 수도 있고 틀릴 수도 있다. 그러나 우리는 최대한 좋은 방법으로 Learning을 한다면 좋은 inference를 할 수 있을 것이라고 생각할 수 있다. 이 &#8216;좋은 방법&#8217; 을 위해 도입되는 개념이 바로 cost function이다. 내가 원하는 결과와 실제 내가 찾아낸 가설과의 괴리가 얼마나 있는지를 function으로 정의하는 것이다. 가장 간단한 예로, 스팸 필터에서 &#8216;스팸이다 아니다&#8217;라는 질문이 틀리면 cost function은 1, 맞으면 0이라고 하자. 그렇게 정의하면 이 cost를 최소화 하는 방향으로 model을 learning하면 결국 가장 잘 맞추는 model을 얻을 수 있겠지.</p>
+
+
+<p>즉, 머신러닝이란, 완전히 raw한 데이터를 다루는 과정, 예를 들면 Dimensionality reduction, Metric Learning 등의 과정에서부터 시작해서, 어떻게 Learning할 것이냐, model이 무엇이냐, 조금 더 구체적으로 얘기하면 어떤 Algorithm을 사용해 이 model을 learning할 것이냐라는 문제를 풀어내고, 마지막으로 어떻게 결정을 내릴 것이냐, decision making을 할 것이냐 하는 이 여러개의 과정으로 나뉘어지는 것이다. 내가 관심있는 부분은 주로 어떤 model을 사용할 것이냐, 또 어떤 방법으로, 어떤 algorithm으로 이 model을 learning할 것이냐에 관심이 있다. 또 추가로 관심이 있는 부분이라면, 어떤 문제가 있을 때 그 문제를 Machine Learning의 관점에서 풀어내는 것도 좋아하고.. 예를 들면 추천 알고리듬 같은게 있겠다.</p>
+
+
+<p>사실 이렇게 머신러닝을 정의하기에는 조금 어정쩡한 부분이 있는 것이 사실이다. 그럼 Unsupervised Learning은?? Reinforcement Learning은? 그 이외에도 많은 것들을 이 정의만 가지고 설명하기에는 사실 무리가 있는 것이 맞지만, 그래도 이런 컨셉으로 이해를 하게 된다면, 즉 Machine Learning이 근본적으로 model, algorithm 문제라는 것을 이해하게 된다면 이 녀석들에 대한 이해도 빠르게 할 수 있지 않을까 생각된다. 위에 링크 건 <a href="/3" target="new">예전 글</a>에 이와 관련된 글들이 있으니 궁금하면 읽어보면 될 것 같다.마찬가지 이유로, 요즘 유행하는 Big Data 역시 근본적으로는 Machine Learning의 일부라는 것을 알 수 있다. <a href="/21" target="new">이에 대한 글</a>도 이전에 적은 적이 있으니 참고바란다. 달라지는 점이라면 algorithm이 굉장히 빨라야 한다하거나, Memory efficient 해야한다거나, 아니면 분산처리가 가능해야한다거나 하는 새로운 challenge들이 존재하기는 하지만, 근본적으로는 같다고 봐도 무방하다. 즉, 이 머신러닝이라는 것을 제대로 이해하고 다룰 수 있다면 정말 많은 문제들을 해결할 수 있다는 의미가 될 것 이다.</p>
+
+</div>
+
+<hr>
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-02T18:48:00+09:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/machine-learning-study/'>Machine-Learning-Study</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/57/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/57/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="380" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/55/" title="Previous Post: 2014 ICML 후기">&laquo; 2014 ICML 후기</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="facebook_comments" aria-live="polite">
+      <div class="fb-comments" data-href="http://SanghyukChun.github.io/57/" data-width="400" data-num-posts="10"></div>
+    </div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/57/">Machine Learning 스터디 (1) Machine Learning이란?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/55/">2014 ICML 후기</a>
+      </li>
+    
+      <li class="post">
+        <a href="/53/">나의 창작욕에 대하여</a>
+      </li>
+    
+      <li class="post">
+        <a href="/52/">Network Science - Scale Free Network (Barabasi-Albert Network)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/51/">Network Science - Small World Network (Watts-Strogztz Network)</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'SanghyukChun',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Sanghyuk Chun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=182012898639519&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

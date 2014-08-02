@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Machine-Learning-Study | README]]></title>
+  <link href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/atom.xml" rel="self"/>
+  <link href="http://SanghyukChun.github.io/"/>
+  <updated>2014-08-02T19:31:19+09:00</updated>
+  <id>http://SanghyukChun.github.io/</id>
+  <author>
+    <name><![CDATA[Sanghyuk Chun]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (1) Machine Learning이란?]]></title>
+    <link href="http://SanghyukChun.github.io/57/"/>
+    <updated>2014-08-02T18:48:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/57</id>
+    <content type="html"><![CDATA[<p>Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 <a href="http://SanghyukChun.github.io/blog/categories/machine-learning/" target="new">Machine learning과 관련된 글들</a>을 써왔지만, 항상 중구난방이고 제대로 정리가 되지 않은 느낌을 받아서 근래에 다시 머신러닝에 대해 공부를 하는 김에 싹 몰아서 정리해보기로 했다. 8월에 연구실에서 머신러닝 스터디를 하기로 했지만, 그것과는 조금 다르게 내가 생각했을 때 이런 순서로 정리를 하면 되겠다.. 하는 느낌으로 정리를 해볼 생각이다. Bishop 책을 많이 참고했으면 하고.. 특히 이번 ICML에서 느낀거지만, Machine Learning에는 정말 많은 분야가 있는데, 많은 Lecture들에서 어쩔 수 없이 그것들을 전부 커버하지 못하는 점이 너무 아쉬웠다. 그래서 일단 내가 할 수 있는데까지는 정리해보는게 좋지 않을까.. 하는 생각으로 글을 써보려 한다. 이런 글을 써야겠다는 생각은 오래전부터 했는데 정작 실천에 옮기는데에는 시간이 많이 걸렸네.. 그래 무튼 시작해보자.</p>
+
+
+<p>Machine Learning... 혹은 우리 말로 하면 기계 학습. 이놈이 대체 뭐길래 너도나도 머신러닝 머신러닝 해대는 걸까. 내가 예전 <a href="http://SanghyukChun.github.io/3" target="new">Andrew Ng. 교수의 Machine Learning Lecture를 들으며 정리했던 글</a>에 정의했던바에 따르면, </p>
+
+
+<blockquote>
+    <p>머신러닝은 그 관계를 알 수 없는 수 많은 데이터들 사이에서 관계를 찾아내주는 마법과 같은 기술이다.</p>
+</blockquote>
+
+
+<p>라고 정의했었다. 마법과 같은 기술이라! 어디서 저런 중2병 스멜나는 용어를 가져왔는지 참.. 아무튼 내가 이쪽을 더 공부해보면서 느낀건, 결국에 이 Machine Learning이라는 것은 일종의 Modeling Problem이라는 것이다. 무슨 얘기냐? 머신러닝이란 <b>주어진 데이터</b>에 대해 <b>현상</b>을 <b>가장 잘 설명할 수 있는 관계</b>를 찾아내는 것이라 했었는데, 이 말을 조금 수학적으로 풀어내면 주어진 <b>데이터</b> \(X = (x_1, x_2, x_3, \ldots, x_n)\) 이 있을 때 이 데이터와 실제 <b>현상</b> \(Y = (y_1, y_2, \ldots, y_n) \)에 대한 <b>관계</b> function \(f\)를 찾아야한다. 당연히 우리가 정확한 함수 \(f\)를 찾아낼 수는 없으므로 <b>최대한 잘 설명할 수 있는</b>, 함수 \(f'\)을 찾아내야 한다. 이를 Hypothesis라고 한다. 즉, 이 모든 과정을 일종의 Modeling process로 생각이 가능하다는 뜻이다. 다만 우리의 새로운 process는 for given data에 대해 dependent한 model을 만들어낸다는 점이 독특한 것이다.</p>
+
+
+<p>스팸필터를 생각해보자. 데이터 X는 메일들이다. 우리가 받는 메일 하나하나가 데이터가 될 수도 있고, 그 메일 안에 있는 단어 하나하나가 될 수도, 혹은 아예 알파벳 하나하나가 될 수도 있다. 그것은 우리가 정하기 나름이니까. 그럼 현상 Y는 무엇일까? 각각의 메일이 스팸인지, 아니면 일반 메일인지 구분하는 구분자, indicator, 혹은 Label, Class가 될 것이다. 마지막으로 가장 잘 설명할 수 있는 함수는 이런 데이터들을 가지고 어떻게 Learning을 할 것인지에 대한 얘기가 될 것이다. 예를 들어 Naïve Bayes라던가, KNN, SVM도 있고, 요새 핫한 Deep learning도 있을 수 있다.</p>
+
+
+<p>그러면 이 함수로 우리는 무엇을 하고 싶은걸까? 단순히 데이터와 현상의 관계를 함수로 나타내는 것이 무슨 의미가 있지? 이것이 의미가 있는 이유는 우리가 새로 주어진 데이터, 혹은 test data에 대해 새로운 추론, inference를 하는 것이 가능하기 때문이다. 이 메일은 스팸인가? 이런 쇼핑 목록을 가진 사람은 또 뭘 사고 싶어할까? 이런 날씨에는 고속도로가 막힐까 막히지 않을까? 이런 질문들에 대해 앞서 우리가 정의한 방식대로 Machine Learning problem을 풀어 새로운 Hypothesis를 통해 우리는 inference를 내릴 수가 있다. 이런 inference가 맞을 수도 있고 틀릴 수도 있다. 그러나 우리는 최대한 좋은 방법으로 Learning을 한다면 좋은 inference를 할 수 있을 것이라고 생각할 수 있다. 이 '좋은 방법' 을 위해 도입되는 개념이 바로 cost function이다. 내가 원하는 결과와 실제 내가 찾아낸 가설과의 괴리가 얼마나 있는지를 function으로 정의하는 것이다. 가장 간단한 예로, 스팸 필터에서 '스팸이다 아니다'라는 질문이 틀리면 cost function은 1, 맞으면 0이라고 하자. 그렇게 정의하면 이 cost를 최소화 하는 방향으로 model을 learning하면 결국 가장 잘 맞추는 model을 얻을 수 있겠지.</p>
+
+
+<p>즉, 머신러닝이란, 완전히 raw한 데이터를 다루는 과정, 예를 들면 Dimensionality reduction, Metric Learning 등의 과정에서부터 시작해서, 어떻게 Learning할 것이냐, model이 무엇이냐, 조금 더 구체적으로 얘기하면 어떤 Algorithm을 사용해 이 model을 learning할 것이냐라는 문제를 풀어내고, 마지막으로 어떻게 결정을 내릴 것이냐, decision making을 할 것이냐 하는 이 여러개의 과정으로 나뉘어지는 것이다. 내가 관심있는 부분은 주로 어떤 model을 사용할 것이냐, 또 어떤 방법으로, 어떤 algorithm으로 이 model을 learning할 것이냐에 관심이 있다. 또 추가로 관심이 있는 부분이라면, 어떤 문제가 있을 때 그 문제를 Machine Learning의 관점에서 풀어내는 것도 좋아하고.. 예를 들면 추천 알고리듬 같은게 있겠다.</p>
+
+
+<p>사실 이렇게 머신러닝을 정의하기에는 조금 어정쩡한 부분이 있는 것이 사실이다. 그럼 Unsupervised Learning은?? Reinforcement Learning은? 그 이외에도 많은 것들을 이 정의만 가지고 설명하기에는 사실 무리가 있는 것이 맞지만, 그래도 이런 컨셉으로 이해를 하게 된다면, 즉 Machine Learning이 근본적으로 model, algorithm 문제라는 것을 이해하게 된다면 이 녀석들에 대한 이해도 빠르게 할 수 있지 않을까 생각된다. 위에 링크 건 <a href="http://SanghyukChun.github.io/3" target="new">예전 글</a>에 이와 관련된 글들이 있으니 궁금하면 읽어보면 될 것 같다.마찬가지 이유로, 요즘 유행하는 Big Data 역시 근본적으로는 Machine Learning의 일부라는 것을 알 수 있다. <a href="http://SanghyukChun.github.io/21" target="new">이에 대한 글</a>도 이전에 적은 적이 있으니 참고바란다. 달라지는 점이라면 algorithm이 굉장히 빨라야 한다하거나, Memory efficient 해야한다거나, 아니면 분산처리가 가능해야한다거나 하는 새로운 challenge들이 존재하기는 하지만, 근본적으로는 같다고 봐도 무방하다. 즉, 이 머신러닝이라는 것을 제대로 이해하고 다룰 수 있다면 정말 많은 문제들을 해결할 수 있다는 의미가 될 것 이다.</p>
+
+]]></content>
+  </entry>
+  
+</feed>
