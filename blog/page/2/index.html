@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="BIG 2014 (2014/4/7 ~ 2014/4/8) Apr 6th, 2014 다음주 월요일부터 화요일 이틀간 BIG 2014라는 big data관련 workshop에 참여하게 되었다. 어떤 talk들이 주로 있는지 궁금해서 간략하게 프로그램을 훑어봤는데 이론적인 &hellip;">
+  <meta name="description" content="BIG 2014 세션들 Apr 9th, 2014 Introduction BIG 2014에 대한 설명은 이전 글을 참고하길 바란다. 이 글은 BIG 2014 일정 4월 7일 월요일과 4월 8일 화요일 세션들에 대해 내가 기록한 것들을 간략하게 정리한 글이다. 첫 날 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,214 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/45/">BIG 2014 세션들</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-09T10:45:00+09:00" pubdate data-updated="true">Apr 9<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h5>Introduction</h5>
+
+
+<p>BIG 2014에 대한 설명은 <a href="/44">이전 글</a>을 참고하길 바란다. 이 글은 BIG 2014 일정 4월 7일 월요일과 4월 8일 화요일 세션들에 대해 내가 기록한 것들을 간략하게 정리한 글이다. 첫 날 세션 중에서 흥미로운 세션은 Chris Volinsky의 mobile data analysis에 대한 talk과 Visualization talk 중에서 Matrix factorization을 사용해 진행한 paper도 나름 흥미로웠다. 그 밖에 나머지 세션들은 그냥 저냥 별로 interest하거나 inspiring하는 세션은 많이 없었다. 2일차 세션 역시 나에게 흥미가 가는 세션은 코넬 대학교의 Machine learning을 전공하는 교수님이 했던 talk과 kaggle engineer talk 정도였다.</p>
+
+
+<hr>
+
+
+<h4>1일차</h4>
+
+
+<h5>Keynote talk 1: Shaping Cities of the Future using Mobile Data - Chris Volinsky</h5>
+
+
+<p>이 talk을 진행한 <a href="http://www2.research.att.com/~volinsky/" target="new">Chris Volinsky</a>는 자그마치 Netflix prize의 winner 중 한 명이라고 한다. Machine Learning의 성공으로 꼽히는 대표적인 example 중 하나인 Netflix의 Algorithm을 만들어낸 사람의 talk을 듣게 될 줄이야. 내용도 흥미로운 내용이 많았다. 기본적인 아이디어는 우리가 살고 있는 장소, 더 구체적으로 말하자면 도시를 데이터를 기반으로 더 살기 좋은 장소로 만들자는 것이다. 다시 말해서 데이터 사이언스로 private한 data를 분석해 public good으로 만드려는 것이다. 이런 것의 예로 Netflix의 recommend system을 들었다. 즉, 그 자체로는 큰 의미가 없거나 private한 데이터들을 모아 big picture를 그리는 것이다. 이런 아이디어로 데이터를 공개하는 도시들이 많아지고 있는데, 뉴욕 시카고 텍사스 오스틴 등이 있다고 한다. 그리고 이런 데이터는 대부분 <a href="http://www.data.gov/" target="new">http://www.data.gov/</a>에서 확인가능하다고 한다. 나도 아직 제대로 본 적은 없는데 꽤 좋은 자료가 많은 듯. 실제로 이런 데이터를 사용해서 시카고의 범죄 데이터와 다른 데이터 간의 연관성 (뉴욕도 이런 실험을 했었다), 데이터 visuallization 등을 구축하고, 위에서 언급한 도시들은 API도 제공하고 portal도 제공한다고 한다. 이런 아이디어를 통해 더 나은 도시를 만들고자 하는 것이다. 이런 예는 정말정말 많다. 위에서 언급한 범죄 정보도 있고, street bump (문제가 있는 street), traffic, 날씨 등등.. 이런 접근을 통해 도시는 더 효율적이 되고 더 나은 movement를 장려하고 더 적은 전기, 물, traffic을 사용한다고 한다. </p>
+
+
+<p>사실 최근 이런 움직임이 가속화되는 가장 큰 이유는 모바일 데이터인데, 실제 이 talk의 연사는 AT&T lab 소속으로, 모바일 데이터를 다룰 일이 많다고 한다. 모바일 데이터 중 하나는 위치정보인데, 안타깝게도 완전한 위치정보를 얻는 것은 불가능하다. GPS가 항상 켜져있는 것도 아니고 GPS가 항상 정보를 송신하는 것은 아니기 때문. 대신 서로 다른 전파탑과의 통신 기록이 남는데, 이 기록을 사용해 대략적인 위치를 추적하는 것이 가능하다고 한다.</p>
+
+
+<p>Data access problem에는 다음과 같은 특성이 있는데 (1) No Content Ever, (2) Anonymize (always), (3) Aggregate (when possible), (4) Reduce granularity, (5) Principle of Least Privilege 가 그것이라고 한다. 아무튼 이 연사는 모바일 데이터를 사용해 사용자들의 움직임의 패턴을 분석해냈는데, 예를 들어 사람들이 아침 8시와 오후 6시에 각각 다른 장소 예를 들어 잁터와 집에 있을 것이다라는 가정을 하고 자도에 scatting을 해보면 실제 사람들의 traffic을 알 수 있다고 한다. 이때 쓰는 데이터는 사람들이 얼마나 많이 전화하고 문자를 하느냐 등의 정보로, 이를 사용하면 얼마나 많은 시간을 차 안에서 보내는지, 얼마나 많은 사람들이 대중교통을 쓰는지 등등을 알 수 있다고 한다. 실제로 이런 분석을 해보면 뉴욕보다 캘리포니아가 더 green하고 communication이 적다한다.</p>
+
+
+<p>이 뿐 아니라 모바일 데이터를 응용하면 사람들의 움직임의 dynamics도 관측이 가능하다. 그렇다면 이런 질문이 가능한데, 만약 우리가 (통신사가) 데이터를 제공한다면 이를 얼마나 더 좋은 곳에 사용할 수 있을 것인가라는 궁금증이 생긴다. 실제 사람들의 문자와 전화 패턴만을 분석하여 (특정 사람의 정보가 아니라 특정 송신탑에 걸리는 network traffic을 분석한다) 사람들의 생활 양식을 알 수도 있고, 다음 버스가 언제 올 것이며 택시는 어디에 있을 것인가 등등을 inform하는 방식으로 우리 삶을 개선시킬 수 있다. 이런 예로 traffic의 흐름을 어떤 조건에 따라 예측할 수 있다면 우리의 삶은 크게 개선될 수 있다. 그래서 한 번 송신탑들이 받는 시간에 따른 데이터 시퀀스 정보를 사용해서 사람들이 움직이는 traffic을 그려봤는데, 대부분의 사람들이 중심에 살기는 하지만 엄청 멀리 사는 사람도 있고.. 하여간 엄청 복잡하단다. 그래서 이걸 supervised learning으로 learning하는데, label은 어떤 상황 (비가 오거나 주말, 주중, 낮, 밤 등등등) 에 데이터 시퀀스가 어떻게 변화할 것이냐를 learning하는 것이다. 이런 데이터 시퀀스로 traffic을 예상할 수 있기 때문이다. 즉, 우리가 알고싶은 정보를 기존의 데이터로 표현하고 기존의 데이터를 learning하는 것이다. 알고리듬은 simple nearest neighbor를 사용했는데, metric을 <a href="http://en.wikipedia.org/wiki/Earth_mover's_distance" target="new">earth mover&#8217;s distance</a>로 썼다고 한다. 이를 통해 learning해본 결과, 다양한 상황에 따라 어떻게 traffic data가 변화하는지를 learning할 수 있었고 실제 오차률도 작았다고 한다.</p>
+
+
+<p>이 외에도 모바일 데이터를 (전화와 문자 사용 빈도) clustering한 결과 약 4개와 7개 cluster가 가장 optimal한 cluster인 것으로 나왔는데, 이런 clustering을 통해 요금제를 세분화하거나 마케팅을 세분화하는 등의 접근이 가능할 수 있다.</p>
+
+
+<p>전반적으로 우리가 사용하기 힘들어보이는 데이터를 어떻게 의미있는 데이터로 만들어내느냐에 대한 얘기가 많았다. 매우 인상깊었다.</p>
+
+
+<h5>Paper talk 1: Telling Commerce Stories Through Pictures, eBay Data Lab - eBay</h5>
+
+
+<p>간단하게, eBay라는 엄청나게 거대한 big commerce data를 가진 업체가 자신들의 가정에 따라 데이터를 분석하고 이를 시각화하고 그에 대해 스토리를 풀어내는 talk이었다. 데이터 수집 및 분석 환경은 구글 페이스북 등 다른 인터넷 기업들과 별로 다를 것 없이 유사하고, 데이터 분석을 통해 5W1H (Who, What, When, Where, Why, How) storytelling을 이끌어내더라. 이때 문제라면 스케일이 너무 크기 때문에 이런 정보를 리얼 타임에 처리하고 이를 통해 실제 활용가능한 액션을 도출하는 것이 어렵다는 것. Visuallization을 하면 좋은 점이 이런 과정을 크게 줄일 수 있고, 비기술자도 쉽게 이해할 수 있다는 것이다. 그래서 간단한 분석으로 tax에 따른 seller와 buyer의 분포를 봤더니 tax가 싼 방향으로 시장이 형성된다. 예를 들어 CA는 밖으로 나가는 세금이 비싸서 대부분의 리테일러와 구매자가 CA 사람들이다. 이걸 Cross border로 확장할 수도 있고 global trading에도 쓸 수 있다고 한다.</p>
+
+
+<p>Talk자체는 그냥 그랬고, 그냥 eBay에서 데이터 분석을 어떻게 쓰고 있는가 살펴볼 수 있는 talk이었다.</p>
+
+
+<h5>Paper talk 2: Visual Analytics for interactive exploration of large-scale documents via nonnegative matrix factorization - 조지아텍</h5>
+
+
+<p>이날 세션 중 두 번째로 흥미로웠다. <a href="http://www.cc.gatech.edu/~joyfull/" taget="new">Jaegul Choo</a>라는 분이 쓴 논문인데, Visuallization이라는 범주를 벗어나서, Matrix Factorization을 사용해 뭔가 Classification스럽게 사용했었다는 것, 그림이 굉장히 Deep Neural Network랑 유사하다는 점 두 가지가 흥미로웠다. 내용은 그닥 볼 것 없다. 그냥 예를 들어 갤탭과 아이패드 중 뭐가 나은가 보고 싶은데 리뷰가 각각 1300개 2000개가 있을 때 이걸 다 읽을 수는 없으니깐 데이터 마이닝을 적당히 하고 이를 시작화하면 의사결정에 도움이 된다, 그리고 이런 Visuallization을 nonnegative matrix factorization으로 풀어보겠다 라는 내용이다. NMF은 그냥 Topic Modeling으로만 사용한다는데, 내가 보기에는 단순한 Clustering으로 보였다. 즉, 이를 사용해 classification이나 clustering같은 general한 ML문제를 풀 수 있을 것 같다는 것이 나의 아이디어. 그리고 LDA보다 NMF가 엄청나게 빠르더라. Convergence도 빠르고 iteration도 적게 걸리고, 안정도 빨리 된다. (다 같은 얘기같지만..) 아무튼 이런 방법으로 visualization이 가능하다고 한다. <a href="http://www.cc.gatech.edu/~joyfull/resources/2014_big_vanmf.pdf" target="new">포스터</a>는 링크를 보면 되는데, 별거 없고 차라리 Visualization tool을 만든 <a href="http://www.cc.gatech.edu/~joyfull/resources/2013_tvcg_utopian.pdf" taget="new">논문</a>을 보는게 나은 것 같다. 제대로 읽어보지는 않았는데 NMF은 여기 나온다.</p>
+
+
+<p>이 talk을 듣고 궁금해서 찾아봤는데 <a href="http://jmlr.org/proceedings/papers/v5/lee09a/lee09a.pdf" taget="new">EEG를 NMF로 Classification하는 논문</a>도 있더라. 여러모로 흥미로운 주제인 것 같다.</p>
+
+
+<h5>Paper talk 3: mAnalytics: A Big Data Analytic Platform for Precision Marketing - China Mobile</h5>
+
+
+<p>중국의 통신 기업 China Mobile이 어떻게 데이터를 분석하는가에 대한 내용인데.. 그냥 시스템이 어떻게 돌아가는지에 대한 내용이었다. Recommendation에 쓴다는 것 같은데 (mAnalytics의 m이 Marketing의 M) 내가 흥미를 가질만한 내용은 없었다.</p>
+
+
+<h5>Invitation talk 1: Computational Education: A Big Data Opportunity? Electronic textbook, internet-based classes, new models of funding educations - MicroSoft</h5>
+
+
+<p>MS의 엔지니어가 와서 했던 talk인데, 쉽게 생각해서 전자 textbook을 만들고 인터넷 베이스 클래스를 만들 때 기존에 존재하는 좋은 교육 시스템을 모아서 더 좋은 새로운 시스템을 만들자라는 내용이다. 그리고 그걸 데이터 기반으로 하는거지. &#8216;좋은&#8217; 시스템은 Algorithmically ML based로 분석하고 이를 모아서 일종의 앙상블처럼 취합하는 듯. 전반적으로 NLP의 내용이 많았다. 예를 들어 section의 난이도가 어떠냐를 분석하는건 syntatic complexity를 통해 결정하는데, 이건 완전 통짜 NLP.. 아무튼 이런식으로 good/bad를 labeling하고 구체적으로 probabilistic decision model을 만들어낸다고 한다 (이 경우는 good/bad binary class model). 이건 좀 졸아서 적은게 많이 없는데, 아무튼 Syntatic Complexity는 단어의 길이랑, 단어당 syllable의 개수, 문장 길이 등등으로 판별한다고 한다. 아무튼 결국 이렇게 새로운 textbook과 curriculum을 개발하는게 최종 목적인듯</p>
+
+
+<p>Talk은 졸려서 많이 못들었는데, 일단 교육을 데이터로 접근한다는게 굉장히 신선했다.</p>
+
+
+<h5>Paper talk 5: Scholarly Big Data-based Prescriptive Analytics System Enhancing Research Capability - KISTI</h5>
+
+
+<p>text data (document) 분석하는 시스템 빌딩하는 것 같은데 발표 자료도 문제가 있고해서 뭔지 잘 모르겠더라. 시스템은 완성된 모양인데, 웹과 앱으로 deploy가 되어있다. 주소를 첨부한다. <a href="http://inscite-advisory.kisti.re.kr/search" taget="new">http://inscite-advisory.kisti.re.kr/search</a>, <a href="https://play.google.com/store/apps/details?id=net.xenix.inscite&hl=ko" taget="new">https://play.google.com/store/apps/details?id=net.xenix.inscite&hl=ko</a> 시스템은 어쨌거나 꽤 잘 만든 것 같다. UI도 그렇고 돌아가는 것도 그렇고..</p>
+
+
+<p>추가: 웹에서 설명을 찾았다. 인사이트 어댑티브는 KISTI 소프트웨어연구센터. 컴퓨터 지능연구실에서 개발한 테크놀러지 인텔리전스 서비스입니다. 인사이트 어댑티브 서비스는 총 4개의 기술 심층 분석 서비스와 총3개의 기관(국가)심층 분석 서비스로 구성되며 최종적으로 기술 분석 보고서를 자동으로 생성하여 pdf 형태로 제공합니다. 인사이트 어댑티브 서비스는 논문, 특허, 웹의 다양한 정보를 기반으로 기술에 대한 심층적인 분석과 예측 결과를 제공할 뿐 아니라 사용자 의도를 지능적으로 인식하여 사용자에게 적응형, 맞춤형 서비스 또한 제공합니다.</p>
+
+
+<h5>Paper talk 6: Building an Analytic Platform for The Web - Internet Memory</h5>
+
+
+<p>데이터 분석용 시스템 논문이다. 기본 아이디어는 웹 데이터가 영구하지 않기 때문에 계속 보관해야하고, 또 엄청 크기때문에 분산 시스템으로 구축해야한다는 것이다. 그 이상은 잘 모르겠다. 내가 이해하기로는 이 talk은 web data가 시간이 지나면서 변하거나 없어지는 정보가 존재하는데 그 정보를 어떻게 잘 처리해서 그걸 잘 처리하는 시스템, 혹은 플랫폼을 만들었다는 것인거 같은데 talk은 영 별로더라. 아 그리고 preprocessing 얘기가 자꾸 나오는데 데이터를 처리하는 방법에 대해서도 다루는건가 잘 모르겠더라.</p>
+
+
+<h5>Paper talk 7: Integration, Cross-Verification, Participation and Open Data: Opportunities and Challenges for Public Health</h5>
+
+
+<p>Healthcare에 대한 talk이었는데, 정확히는 기억이 안나지만 노트해놓은 것을 보니 그냥 여러개의 데이터 소스를 섞어서 prediction을 하는 모양이다.</p>
+
+
+<p>Challenges로는 new data sources integration & cross-correlation / citizens participation and data donors / open data가 있는데, 이것들을 cross-valdation, non-medical data sources for event-based surveillance 으로 해결한다고 한다.</p>
+
+
+<hr>
+
+
+<h4>2일차</h4>
+
+
+<h5>Keynote talk: In-Memory Real-Time Big Data Processing: What It Takes to Innovate and Change Industry</h5>
+
+
+<p>그냥 in-memory DB에 대한 talk이었다. 솔직히 이게 왜 여기에서 keynote talk으로 들어갔는지 이해가 안된다.</p>
+
+
+<h5>Paper talk 1: A Cloud-based Framework for Evaluation on Big Data</h5>
+
+
+<p>talk의 목표는 “Bring the algorithms to data, not data to algorithms&#8221; 인데, 그래서 정작 어떻게 하겠다는건지는 잘 모르겠더라. 그냥 데이터를 cloud로 저장하는 시스템을 만든 듯</p>
+
+
+<h5>Paper talk 2: Metronome, Building Blocks for Data Products</h5>
+
+
+<p>Dataset management system 논문이었다. 역시 딱히 흥미가 가지는 않았다.</p>
+
+
+<h5>Invited talk: Big Data of the People, for the People: Understanding the Collective Wisdom of Users - Conell</h5>
+
+
+<p>이 talk은 이날 talk 중에서 가장 흥미를 끄는 talk이었는데, 일단 발표자가 machine learning을 하는 사람이었어서 나랑 view point가 좀 맞는 편이었다.</p>
+
+
+<p>이 talk의 motivation은 Human interaction data를 처리하는 것인데, 이게 무엇이냐 하면 그냥 사람이 interaction하면서 발생하는 data를 의미한다. 예를 들어 사람들의 클릭률 정보라거나 어느 페이지에 오래 있는지 등의 interation에서 발생하는 정보이다. 그런데 이런 정보의 문제가 무엇이냐 하면 내가 관측한 data가 실제 machine learning system에서 사용하는 training data와는 다르다는 것이다. 무슨 얘기냐하면, 사람들의 행동이 어떤 distribution을 따르는 것이 아니라 내가 준 상황 내에서 본인이 고를 수 있는 최선을 고르기 때문에 실제 general model의 training data로 사용할 수 없다는 것이다. 즉, 유저들의 decision process를 먼저 이해해야하는데, 이런 관점으로 바라보게 된다면 다음과 같은 새로운 접근 방법이 가능하다. Decision -> feedback -> learning algorithm. 무슨 얘기이냐 하면 사용자가 내린 결정에 대해 우리가 feedback을 주는 방식으로 learning algorithm을 만들 수 있다는 것이다.</p>
+
+
+<p>간단한 예를 들어보자. 만약 우리가 두 개의 랭킹 function 중 하나를 선택해야하는 decision making problem이 있다고 하자. 대부분의 경우 real industry에서 하는 가장 합리적인 선택은 A/B test를 하는 것이다. Abandonment rate, reformulation rate, queries per session, click per query, click @1, max reciprocal rank, mean reciprocal rank, time to first click, time to last click 등의 정보들을 비교해 A와 B 중 어느 결정이 더 합리적인지를 밝혀내는 것이다. 그런데 <a href="ArXiv.org" target="new">ArXiv.org</a> 를 통해 case study를 해본 결과, 이런 여러가지 metric 중에서 그 어떤 metric도 expected order에 영향을 미치는 absolute metric이 없다는 결론이 나왔다고 한다. (이에 대해서 내 생각을 말해보자면, A/B test라는 것이 일종의 Maximum likelihood estimation 이기 때문에 발생하는 문제라고 생각한다. 우리가 봐야하는 정보는 엄청나게 많은데 매우 제한적인 정보만을 가지고 예측을 하기 때문에 정확하지 않은 결론으로 귀결되는 것이다.)</p>
+
+
+<p>다시 말하지만 observed data와 training data는 다르다. Observed data는 user의 decision이고, 결국에 우리가 explicit feedback을 주면 해당 decision에 영향을 주게 된다. 즉, 이 decision 혹은 observed data는 training data와는 다르게 된다. 따라서 우리는 decision process를 개선할 수 있는 feedback function을 design해야하고, 우리가 machine learning으로 기여할 수 있는 부분은 이런 feedback function을 위한 learning algorithm을 만들고 feedback function을 개선시키는 것이다.</p>
+
+
+<p>그래서 이 얘기를 하면서 Balanced interleaving라는 얘기가 나오는데 무슨 얘기인지 까먹었다. 아무튼 이런 문제를 dueling bandit problem으로 생각해 regret을 minimization시켜서 feedback function을 개선한다고 한다. 이때 retrieval function이 유한한 상황에서 dueling bandit로 인해 발생하는 reget은 theorically bounded된다고 한다. (그냥 쉽게 생각하면 이 알고리듬을 사용했을 때 기대되는 성능이 좋다는 의미이다)</p>
+
+
+<p>그리고 또 하나는 coactive feedback model인데, unknown utility function algorithm/user interaction, relationship to other online learning models observe context x, learning algorithms presents y, user return y with utility function for different algorithms 라고 하며 이 과정이 일어날 때 마다 regret이 update 된다고 한다. 이런 feedback model에서는 interaction이 given x, feedback이 개선된 prediction y이며, 이 x와 y를 supervised learning으로 learning시킨다. language translate 등이 이런 방법으로 알고리듬을 개선시킨다고 한다.</p>
+
+
+<p>이런 예로 발표자가 예전에 개발한 preference perceptron이라는 알고리듬을 소개하는데, 내용이 너무 빨리 지나가서 정확히 적지는 못하고 논문만 찾아봤는데 나중에 천천히 읽어봐야겠다.</p>
+
+
+<p>결론적으로 이 talk에서 하고자하는 얘기를 정리해보면, 실제 service provider 입장에서 어떤 특정 decision을 내려야하는 경우가 많다. 예를 들어 search 알고리듬을 바꾸거나 하는 경우가 있는데, 어떤 algorithm을 선택해야할 것이냐, 혹은 바꾸는 것이 좋냐 나쁘냐를 결정해야하는 경우가 많이 있다. 그런데 이 decision making을 하는 과정에서 feedback function을 주고 이를 통해 decision을 개선해 decision의 질을 높인다. 약간 game theory 비슷한 느낌이었는데, 가장 적절한 feedback function을 고르겠다는 얘기도 조금 나온 것으로 보아 일종의 reinforcement learning이 아닐까 생각된다.</p>
+
+
+<h5>Keynote talk: Evolution from Apache Hadoop to the Enterprise Data Hub: a new foundation for the Modern Information Architecture - Cloudera</h5>
+
+
+<p><a href="http://www.cloudera.com/" target="new">cloudera</a>라는 기업의 product에 대한 설명이었다. 결국 이런저런 설명을 들어보니 <a href="http://www.cloudera.com/content/cloudera/en/products-and-services/cdh.html">http://www.cloudera.com/content/cloudera/en/products-and-services/cdh.html</a> 요 product와 같은 설명이더라. 결론만 얘기하면, 지금 대부분의 시스템들이 저장 시스템 따로, Hadoop layer 따로, RDMBS layer 따로, 실제 application layer 따로, research layer 따로 BI 따로 진행하고 있는데 이 회사는 그 모든 것을 종합해주는 solution tool을 개발했다는 것이다.</p>
+
+
+<p>그래서 talk 마지막에 스마트폰 예시를 들면서 이제 아무도 녹음기 따로 카메라 따로 전자 노트 따로 PDA 따로 저장장치 따로 안들고 다니고 스마트폰 하나만 들고 다니듯이 시스템도 나중에는 이런 종합 솔루션으로 통합될거라는 그런 talk이었다.</p>
+
+
+<h5>Paper talk 3: BUbiNG: Massive Crawling for the Masses</h5>
+
+
+<p>Open source crawler system 논문이었다. 내가 관심있는 주제는 아니었음</p>
+
+
+<h5>Paper talk 4: Scalable Topic Change Detection in Social Posts</h5>
+
+
+<p>노트가 잘 안되어있는걸보니 시스템 논문인 것 같다. 기본 아이디어는 소셜 데이터들이 마구 산개해있는것처럼 보여도 사실은 어떤 distibution을 가지고 있을 것이라는것, 그리고 변화 그 자체를 detection해서 시간에 따라 변하는 소셜 정보를 detect하자는 것. 그 정도였다.</p>
+
+
+<h5>Invited talk: What do we learn from Kaggle machine learning competitions? - Kaggle</h5>
+
+
+<p>가장 기대를 했던 talk인데, 스카이프 연결상태가 안좋아서 (온라인으로 talk을 했다) 내용도 잘 안들리고 PPT도 잘 안보였다. 하지만 그 중에서 기억나는 점을 꼽자면, 먼저 kaggle leader board 방식이 그냥 도입된 것이 아니라 상위 top player들의 performance를 높일 수 있는 optimal한 방법이라고 claim하는 것이었고, 그리고 실제 competition의 winner들의 algorithm들을 분석해서 얻은 결과였다. 크게 두 가지가 있었는데, 하나는 top 3 algorithm을 ansemble한 algorithm이 1등 algorithm보다 훨씬 좋았다는 것과 대부분의 top player들이 deep neural network based였다는 것. 그 두 가지가 꽤 흥미로운 결과였다고 할 수 있었다. 그만큼 neural network가 강력하다는 얘기이고, 또 하나는 지금까지 나온 그 어떤 모델들도 실제 현상을 잘 설명할 수 없다는 의미가 될테니까.</p>
+
+
+<hr>
+
+
+<p>나름 이틀 동안 들은 workshop이었는데, 뭐 그냥 그랬다. 재미있는 talk도 몇 개 있었고, 내가 전혀 관심없는 talk도 많았다. 특히 시스템 쪽이나 DB 쪽은 정말 재미가 없었다. 그래도 실제 real industry나 다른 연구자들이 어떤 focus로 데이터를 바라보고 있는지에 대해 알 수 있는 나름 의미있는 시간이었던 것 같다.</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -1485,66 +1693,6 @@ End of technical program of Day 2<strong> </strong>
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/35/">우분투에 Matlab과 JDK 깔기</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-14T23:24:00+09:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>맨 처음 우분투 desktop을 메인 컴퓨터로 사용하겠다고 삽질하던 시절, Matlab 하나 까는 것도 무지막지 고생스러웠던 시절이 있다. 최근 다시 우분투를 메인 컴으로 사용하면서 매트랩 설치에 삽질을 하는 사람이 있을까싶어 이 글을 남겨본다. 기준은 2011B 버전이며, Linux Mac Solaris 호환 버전을 기준으로 한다.</p>
-
-
-<p>맨 처음 파일을 받고 압축을 풀게 되면 (tar.gz파일을 받은 상태라고 가정한다. + 참고로 저는 학교 라이센스를 사용합니다.) 폴더안에 install이라는 파일이 있는 것을 확인할 수 있다. 이 파일은 간단한 shell script인데, chmod로 사용할 수 있도록 바꿔주어야한다.. 거기에다가 이 녀석이 자기 폴더 내부에 있는 java 파일을 사용하는데 이놈이 뭔가 권한이 없는지 에러를 슝슝 뱉는다. 잘못하면 삽질하기 딱 좋은 상황. 그러나 간단하게 아래 명령어 하나로 해결할 수 있다.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>chmod -R +x Mathworks_2011B_Linux_Mac_Solaris</span></code></pre></td></tr></table></div></figure>
-
-
-<p>이렇게 한 줄 치고,</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo ./Mathworks_2011B_Linux_Mac_Solaris/install</span></code></pre></td></tr></table></div></figure>
-
-
-<p>하면 깔끔하게 해결된다.</p>
-
-
-<p>+ install sudo로 안하면 파일 생성이 안된다</p>
-
-
-<p>아 그리고 JDK 설치도 삽질하기 딱 좋은데 이건 <a href="http://whatwant.tistory.com/438" target="new">정말 정리가 잘 된 포스트</a>가 있어서 링크로 대체하도록 하겠다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1563,6 +1711,10 @@ End of technical program of Day 2<strong> </strong>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/58/">Machine Learning 스터디 (2) Probability Theory</a>
+      </li>
+    
+      <li class="post">
         <a href="/57/">Machine Learning 스터디 (1) Machine Learning이란?</a>
       </li>
     
@@ -1576,10 +1728,6 @@ End of technical program of Day 2<strong> </strong>
     
       <li class="post">
         <a href="/52/">Network Science - Scale Free Network (Barabasi-Albert Network)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/51/">Network Science - Small World Network (Watts-Strogztz Network)</a>
       </li>
     
   </ul>
