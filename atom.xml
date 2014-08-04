@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-08-03T16:32:51+09:00</updated>
+  <updated>2014-08-04T21:09:11+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,97 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (3) Overfitting]]></title>
+    <link href="http://SanghyukChun.github.io/59/"/>
+    <updated>2014-08-03T16:33:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/59</id>
+		<content type="html"><![CDATA[<p>Machine Learning Algorithm을 design하고 실제 구현을 하다보면 Overfitting이라는 문제가 꽤나 머리를 아프게 하는 경우가 많다. 아니, Algorithm 자체가 문제 없이 실행이 된다면 대부분의 경우 overfitting이 가장 큰 문제라고 단언해도 좋을 것 같다. 물론 좋은 Algorithm을 design하고 못하고의 문제는 또 다른 문제이기는 하다. 다음 글은 Algorithm에 대해서 써볼까.. 아무튼 이번 글에서는 Overfitting에 대해 좀 다뤄보도록 하겠다.</p>
+
+
+<h5>Overfitting</h5>
+
+
+<p>overfitting이란 문자 그대로 너무 과도하게 데이터에 대해 모델을 learning을 한 경우를 의미한다. 지금 현재에 대해 잘 설명하면 되는 것 아닌가? 싶을 수 있지만, 우리가 사실 원하는 정보는 기존에 알고 있는 데이터에 대한 것들이 아니라 새롭게 우리가 알게되는 데이터에 대한 것들을 알고 싶은 것인데, 정작 새로운 데이터에 대해서는 하나도 못맞추고, 즉 제대로 설명할 수 없는 경우라면 그 시스템은 그야말로 무용지물이라고 할 수 있을 것이다. 조금 더 자세한 설명은 <a href="http://SanghyukChun.github.io/14#Overfitting" target="new">이전에 적은 포스트</a>로 대체하겠다.</p>
+
+
+<h5>Regularization</h5>
+
+
+<p>이런 문제를 해결하기위해 여러가지 시도를 할 수 있다. 먼저 Overfitting이 일어나는 이유는 무엇인가에 대해서 한 번 생각해보자. 먼저 overfitting의 가장 간단한 예시를 하나 생각해보자.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/59-1.png" width="500"></p>
+
+<p>위 그림에서도 알 수 있 듯, 만약 우리가 주어진 데이터에 비해서 높은 complexity를 가지는 model을 learning하게 된다면 overfitting이 일어날 확률이 높다. 그렇다면 한 가지 가설을 세울 수 있는데, &#8216;complexity가 높을 수록 별로 좋은 모델이 아니다.&#8217; 라는 가설이다. 이는 <a href="http://en.wikipedia.org/wiki/Occam%27s_razor" target="new">Occam&#8217;s razor</a>, 오컴의 면도날이라 하여 문제의 solution은 간단하면 간단할수록 좋다라는 가설과 일맥상통하는 내용이다. 하지만 그렇다고해서 너무 complexity가 낮은 model을 사용한다면 역시 부정확한 결과를 얻게 될 것은 거의 자명해보인다. 그렇기 때문에 우리는 원래 cost function에 complexity와 관련된 penalty term을 추가하여, 어느 정도 &#8216;적당한&#8217; complexity를 찾을 수 있다. 이를 regularization이라 한다. 이 이외에도 다양한 설명이 있을 수 있기에 <a href="http://en.wikipedia.org/wiki/Regularization_(mathematics)" target="new">위키 링크</a>를 첨부한다.</p>
+
+
+<p>그리고 이를 Bayesian 관점에서 설명을 할 수도 있다.</p>
+
+
+<p>\[ p(Y|X) = {p(X|Y) p(Y) \over p(X)} \]</p>
+
+
+<p><a href="58#Bayes" target="new">이전 글</a>에서도 설명했던 것 처럼, 만약 우리가 어떤 사전지식, 혹은 prior knowledge가 존재한다면 단순히 observation만 하는 것 보다는 훨씬 더 잘 할 수 있을 것이다. 그리고 다시 Overfitting 문제로 돌아와서, overfitting이 생기는 가장 큰 이유는 너무 지금 데이터, 즉 observation에만 충실했던 것이 그 원인이다. 그러면 당연히 prior가 있으면 이를 해결할 수 있지 않을까? 라는 질문을 던질 수 있을 것이다. 즉, 우리의 prior는 high complexity solution은 나오지 않을 것이다. 어느정도 complexity가 높아지는 것 까지는 용인하지만, (표현할 수 있는 영역이 더 넓어지니까) 하지만 너무 그 complexity가 높아지면 문제가 생길 수 있다. 즉, 그런 high complexity를 가지는 solution이 나올 확률 자체가 매우 낮다. 라는 prior가 있다면 이를 간단하게 해결 할 수 있을 것이며, 이것이 결국 앞에서 봤었던 penalty와 동일하다는 것을 알 수 있다.</p>
+
+
+<h5>Model Selection</h5>
+
+
+<p>그런데 제 아무리 우리가 좋은 prior를 넣고, 좋은 penalty term을 design하더라도 만약 우리가 제대로 되지 않은 데이터들을 이용해 learning을 한다면 문제가 생길 수 있다. 마치 장님 코끼리 만지듯 전체 데이터는 엄청나게 많이 분포해있는데 우리가 가진 데이터가 아주 일부분에 대한 정보라면, 혹은 갑자기 그 상황에서 갑자기 노이즈가 팍 튀어서 데이터가 통채로 잘못 들어온다면? 아마 그런 데이터로 learning을 했다가는 sample bias가 일어나게 되어 크게 성능이 저하되게 될 것이다. 사실 위에 complexity라는 말도 결국에는 &#8216;Data point 대비 높은 complexity&#8217;가 더 정확한 말이다. 이를 최대한 피하기 위하여 우리는 <a href="http://en.wikipedia.org/wiki/Generalization" target="new">generalization</a> 이라는걸 하게 되는데, 다시 말해서 우리의 solution이 specific한 결과만을 주는 것이 아니라 general한 결과를 주도록 하려는 것이다. 이를 위한 여러 방법이 있을 수 있지만, 가장 많이 사용하는 방법은 validation set이라는 것을 사용하는 것이다. 즉, 모든 data를 전부 training에 사용하는 것이 아니라, 일부만 training에 사용하고 나머지를 일종의 validation을 하는 용도로 확인하는 것이다. 만약 우리의 모델이 꽤 괜찮은 모델이고, validation set이 잘 선택이 되었다면 training set에서만큼 validation set에서도 좋은 결과가 나올 수 있을 것이다.</p>
+
+
+<p>보통 전체 데이터 중에서 training과 validation의 비율은 8:2로 하는 것이 일반적이다. 하지만 만약 validation set이 너무 작다면, 이 마저도 좋은 결과를 내기에는 부족할 수 있다. 이를 해결할 수 있는 컨셉 중에서 cross-validation이라는 컨셉이 있는데, validation set을 하나만 가지는 것이 아니라 여러개의 validation set을 정해놓고 각각의 set에 대해서 learning을 하는 것이다. 예를 들어 우리가 데이터가 X={1,2,3,4,5,6,7,8,9,10} 이 있을 때, 첫 번째 learning에서는 {1,..,8}을 사용해 learning하고 그 다음에는 {2,..,9}까지 learning하는 식으로 모든 permutation에 대해서 learning을 할 수 있을 것이다. 그리고 당연히 이런 방식으로 여러번 learning을 하게되면 그 때 얻어지는 model parameter는 그때그때 달라질텐데, cross-validation은 그 값들을 적당히 사용하여 가장 적절한 parameter를 얻어내는 방식이다. average로 해도 되고, median으로 해도 되고, 여러 방법이 있을 수 있다. cross-validation의 단점은 algorithm의 running time이 데이터의 크기 뿐 아니라 validation을 하기 위한 그 여러 set들에 dependent하다는 것이다. 그리고 데이터가 많아지면 그런 validation set이 엄청나게 많아진다. 정확히는 exponential로 늘어나기 때문에 마냥 모든 데이터에 대해 cross-validation을 하는 것은 불가능하다.</p>
+
+
+<p>그렇기 때문에 실제로 cross-validation을 할때는 모든 데이터를 사용하지는 않고, 적당히 몇 개의 set을 골라서 여러 번 model parameter를 &#8216;적당히&#8217; 구하는 방법을 사용한다. 물론 이론적으로 AIC, BIC 등의 개념이 존재하여 이에 맞춰서 모델을 고르는 방법도 존재하지만 (AIC는 Akaike Information Criterion이고 BIC는 Bayesian Information Criterion으로, 둘 다 어떤 &#8216;information criteria&#8217;를 사용하느냐에 대한 내용이다.) 지금 내가 다루고자 하는 내용에서 좀 벗어나기 때문에 나중에 여유가 되면 이에 대한 글을 작성해보도록하겠다.</p>
+
+
+<h5>Curse of dimension</h5>
+
+
+<p>그러나 이게 끝이 아니다. 우리가 싸워 이겨내야할 문제들은 complexity, number of data 뿐 아니라 dimension of data 역시 존재한다. 즉, 우리가 1차원의 데이터를 다루는 것과 10000차원의 데이터를 다루는 것과는 정말 어마어마한 차이가 존재한다는 것이다. 이렇게 차원이 높은 데이터를 다룰 일이 있을까? 하고 약간 막연하게 생각할 수 있지만, 가장 간단한 예로, 100px by 100px 그림은 각각의 픽셀이 하나의 차원이라고 했을 때 10000차원 벡터로 표현이 가능하다. 실제로 머신러닝 분야에서 이미지를 다룰 때는 이런 식으로 처리를 하게 된다. 이 이외에도 high dimensioanl space 상에 존재하는 데이터를 다룰 일은 매우 많이 존재한다.</p>
+
+
+<p>그렇다면 이런 high dimensional data가 왜 우리가 learning한 system의 성능을 나쁘게 만들까? 정말 간단하게 생각해보자. 만약 우리가 주어진 공간을 regular cell로 나눴다고 가정해보자. 그리고 각각의 cell에 가장 많이 존재하는 class를 그 cell의 class로 생각하여 무조건 그 cell에 존재하는 데이터는 그 class라고 하는 logic을 생각해보자. 당연히 cell의 개수를 무한하게 가져가게 된다면, 그리고 데이터가 무한하다면 이 logic은 반드시 truth로 수렴하게 될 것이다. 이 알고리듬이 제대로 동작하려면 각각의 cell, 혹은 bin이 반드시 차있어야한다. 즉, 비어있는 empty cell이 존재해서는 안된다. 따라서 데이터는 아무리 적어도 cell의 개수만큼은 존재해야한다. 그런데 이렇게 cell을 만들게 될 경우 그 cell의 개수는 dimension이 증가함에 따라 exponential하게 늘어나게 되는 것이다. 예를 들어 우리가 1차원상에서 3개의 bin을 가지고 있다고 하면, 이는 2차원상에서는 9개, 3차원상에서는 27개.. 이렇게 exponentially grow하게 되는 것을 알 수 있다. 이 모델의 parameter들이 exponentially 증가하는 것이다. (아래 슬라이드(<a href="http://cssanalytics.wordpress.com/2013/10/06/random-subspace-optimization-rso/" target="new">출처</a>) 참고)</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/59-2.png" width="600"></p>
+
+<p>따라서 당연히 각각의 bin이 비어있지 않도록 ensure해줄 수 있는 data의 개수 역시 exponentially 하게 늘어나게 되고, 즉 차원이 증가하게 되면 필요한 데이터가 exponentailly하게 늘어나게 된다는 것을 의미한다. 그러나 당연히 우리가 3차원 데이터보다 100000차원 데이터를 exponential하게 더 많이 가지고 있으리라는 법은 없고, 이로 인해 문제가 발생하게 되는 것이다.</p>
+
+
+<p></p>
+
+<p>그리고 또 문제가 되는 것은 high dimensional space에서 정의되는 metric들로, 특히 2-norm 혹은 euclidean distance의 경우는 그 왜곡이 매우 심하여, 실제 멀리 떨어진 데이터보다 별로 멀리 떨어져있지 않고 각 dimension의 방향으로 약간의 noise가 섞여있는 데이터에 더 큰 distance를 부여하는 등의 문제가 존재한다.</p>
+
+
+<p>조금 다른 예를 들어보자. 만약 D-dimensional space에서 엄청나게 얇은 구각을 만들었다고 생각해보자. 여기에서 &#8216;구&#8217; 라는 것은 한 점에 대해 거리가 동일하게 떨어져있는 모든 점 내부의 영역을 의미한다는 것은 당연한 것이고.. 이 구의 부피는 \(V_D(r)=K_D r^D\) 가 될 것이며, \(K_D\)는 그냥 D에 대한 상수라고 생각하면 된다. 그럼 반지름이 1이고 두께가 \(\epsilon\)인 구각의 부피와 반지름이 1인 구의 부피의 비율은 \({V_D(1) - V_D(1-\epsilon) \over V_D(1)} = 1-(1-\epsilon)^D\) 가 될 것이다. 놀랍게도, 만약 very very high dimension D에서는 이 값이 1로 수렴하게 된다. 즉, 매우 얇은 구각의 부피가 구의 부피와 같다는 의미. 혹은 대부분의 부피가 거의 surface에 가까운 엄청나게 얇은 그 shell에 존재한다는 희안한 의미가 된다.</p>
+
+
+<p>즉, high dimension은 (1) model의 complexity도 증가시키며 (2) 필요한 데이터의 양도 exponentially 하게 늘어나게 하고 (3) 우리가 기존에 사용하던 metric이 제대로 동작하지 않는 그야말로 끔찍한 환경이라 할 수 있다. 그래서 이런 high dimensional space에서 일어나는 여러 문제점들을 통틀어 Curse of dimension이라 한다.</p>
+
+
+<p>이를 해결하기 위해서는 결국 feature extraction 등의 기술을 사용하여 dimension을 가장 적절하게 낮추는 것이 바람직하다고 할 수 있다.</p>
+
+
+
+
+<hr>
+
+
+<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine learning 스터디 (2) Probability Theory]]></title>
@@ -24,7 +115,7 @@
 <p>다만 그 중에서도 약간 중요하게 다룰만한 주제가 있는데, 그게 바로 Bayes&#8217; theorem이다. 이 Theorem 자체는 그냥 간단하게 \(p(X|Y) \)와 \(p(Y|X) \)와의 관계를 표현한 것임에 불과하지만, 그 안에 숨겨진 의미가 매우매우 중요하다.</p>
 
 
-<h5>Bayes&#8217; Theorem</h5>
+<h5 id="Bayes">Bayes&#8217; Theorem</h5>
 
 
 <p>\[ p(Y|X) = {p(X|Y) p(Y) \over p(X)} \]</p>
@@ -78,6 +169,7 @@
 <ul>
 <li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
 <li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
 </ul>
 
 ]]></content>
@@ -125,6 +217,7 @@
 <ul>
 <li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
 <li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
 </ul>
 
 ]]></content>
@@ -2227,120 +2320,6 @@ End of technical program of Day 2<strong> </strong>
 
 
 <ul><li>Liu Yang, Distance Metric Learning: A Comprehensive Survey, 2005</li><li>Liu Yang, An Overview of Distance Metric Learning, 2007</li><li>Bellet, A., Habrard, A., and Sebban, M. A Survey on Metric Learning for Feature Vectors and Structured Data, 2013</li><li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006).InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li></ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[서버를 구축해보자 - 웹서버 구축 스크립트 만들기]]></title>
-    <link href="http://SanghyukChun.github.io/36/"/>
-    <updated>2013-12-16T08:49:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/36</id>
-		<content type="html"><![CDATA[<p><a href="33" target="new">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고&#8230; 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/" target="new">이음 블로그</a> 참고&#8230; 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
-
-
-<p>일단, apache만 가지고 되는건 거의 없다. 기본적으로 php + mysql 기반으로 굴러가는 모듈이 워낙 많기 때문에 이 녀석들도 깔아주도록하자. 아래와 같은 스크립트를 만들어서 돌리면 편하다</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>apt-get -y install apache2 libapache2-mod-passenger
-</span><span class='line'>apt-get -y install mysql-server mysql-client
-</span><span class='line'>apt-get -y install php5-common php5 libapache2-mod-php5
-</span><span class='line'>apt-get -y install php5-mysql
-</span><span class='line'>apt-get -y install phpmyadmin</span></code></pre></td></tr></table></div></figure>
-
-
-<p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐&#8230; 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html" target="new">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
-
-
-<p>Default</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>&lt;VirtualHost *:80&gt;
-</span><span class='line'>  ServerAdmin webmaster@localhost
-</span><span class='line'>
-</span><span class='line'>  DocumentRoot /var/www
-</span><span class='line'>  &lt;Directory /&gt;
-</span><span class='line'>      Options FollowSymLinks
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>  &lt;Directory /var/www/&gt;
-</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>  &lt;Directory /var/www/redmine&gt;
-</span><span class='line'>    RailsBaseURI /redmine
-</span><span class='line'>    PassengerResolveSymlinksInDocumentRoot on
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-</span><span class='line'>  &lt;Directory "/usr/lib/cgi-bin"&gt;
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      Allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  ErrorLog ${APACHE_LOG_DIR}/error.log
-</span><span class='line'>
-</span><span class='line'>  # Possible values include: debug, info, notice, warn, error, crit,
-</span><span class='line'>  # alert, emerg.
-</span><span class='line'>  LogLevel warn
-</span><span class='line'>
-</span><span class='line'>  CustomLog ${APACHE_LOG_DIR}/access.log combined
-</span><span class='line'>&lt;/VirtualHost&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>passenger.conf</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_passenger.c&gt;
-</span><span class='line'>  PassengerDefaultUser www-data
-</span><span class='line'>  PassengerRoot /usr
-</span><span class='line'>  PassengerRuby /usr/bin/ruby
-</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>apt-get install redmine redmine-mysql
-</span><span class='line'>cp passenger.conf /etc/apache2/mods-available/passenger.conf
-</span><span class='line'>ln -s /usr/share/redmine/public /var/www/redmine
-</span><span class='line'>cp default /etc/apache2/sites-available/default</span></code></pre></td></tr></table></div></figure>
-
-
-<p>참 쉽다.. 참고로 이건 전부다 그냥 기본 설정이라 이렇게 한거지, 만약 설정이 되어있는 상태라면 위에 링크한 글대로 하기를 바란다. 혹시나 default설정 싹 날리거나 그러지 말고&#8230; 이제 service apache2 restart를 때려주면 레드마인이 돌아간다 올레</p>
-
-
-<p>음 그리고 이번에는 xe를 깔아보자. BBS 모듈이 필요할 때가 간간히 있기 때문에 xe는 깔아서 손해볼게 없다. (워드프레스도 쓸만하지만 단순 BBS로는 xe가 낫다.) 자 이번에도 스크립트.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>git clone https://github.com/xpressengine/xe-core.git
-</span><span class='line'>mv xe-core /var/www/xe
-</span><span class='line'>chmod 707 -R /var/www/xe
-</span><span class='line'>svn checkout http://xe-board.googlecode.com/svn/trunk/ board
-</span><span class='line'>mv board /var/www/xe/modules/board</span></code></pre></td></tr></table></div></figure>
-
-
-<p>뭐.. 이렇게 하고 ~~/xe 들어가서 설치하면 xe랑 board 모듈까지 설치 끝&#8230; 아 기본 설정인 경우에는 설정-고급-짧은 주소 사용에 아니오를 선택하고 캐시를 리로드해야한다. 이거 몰라서 한 1시간은 삽질했는데.. 이거 싫으면 따로 뭐를 깔아야하길래 그게 더 귀찮아서 그냥 설정을 바꿔줬다.</p>
-
-
-<p>마지막으로 위키를 깔아보자. 위키는 미디아위키를 사용한다.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr> <td class='code'><pre><code class=''><span class='line'>git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
-</span><span class='line'>mv core /var/www/wiki
-</span><span class='line'>chmod 707 -R /var/www/wiki</span></code></pre></td></tr></table></div></figure>
-
-
-<p>아 참고로 xe도 wiki도 설치 후에 아파치를 한번 리스타트 해줘야할거다&#8230; 역시 이것도 /wiki로 들어가서 설치를 해주고 나온 php파일을 ftp로 /var/www/wiki에 다시 넣어주면 끝</p>
-
-
-<p></p>
-
-<p>전반적으로 크게 난해한 세팅도 없고.. 애당초 이번에 설치한 녀석들이 꽤 모듈로 잘 나온 놈들을 쓴 거라.. 크게 어렵지 않게 세팅했다. 지금 추가로 해볼까 고민 중인 것들은 개인 레포지토리를 뚫느냐 마느냐. 별로 큰 이득이 없어서 안할 것 같기는 하지만, 그래도 일단 만들어서 손해볼 것도 없고, 공부 삼아서 해볼까 고민 중이다. gui로 웹에서 접근 가능한 녀석을 만들어볼까하는데, 엄청 어려울 것 같지는 않고 그냥 엄청 귀찮을거 같아서 고민이다.</p>
 
 ]]></content>
   </entry>

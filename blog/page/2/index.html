@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="BIG 2014 세션들 Apr 9th, 2014 Introduction BIG 2014에 대한 설명은 이전 글을 참고하길 바란다. 이 글은 BIG 2014 일정 4월 7일 월요일과 4월 8일 화요일 세션들에 대해 내가 기록한 것들을 간략하게 정리한 글이다. 첫 날 &hellip;">
+  <meta name="description" content="Network Science - Introduction Apr 16th, 2014 Network Science에 처음 관심을 가지게 된 계기는 인터넷 속의 수학에서 들었던 lecture였다. 내가 예전에 관심있었던 부분 중 하나가 소셜 네트워크, 혹은 다른 형태의 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,67 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/47/">Network Science - Introduction</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-16T13:47:00+09:00" pubdate data-updated="true">Apr 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Network Science에 처음 관심을 가지게 된 계기는 <a href="/blog/categories/math-in-internet" target="new">인터넷 속의 수학</a>에서 들었던 lecture였다. 내가 예전에 관심있었던 부분 중 하나가 소셜 네트워크, 혹은 다른 형태의 네트워크를 이해하고 그 네트워크를 더 효율적으로 개선시키거나 혹은 그 네트워크에서 무언가 우리가 새로운 방식의 BM을 창출해내는 것이었는데, Network Science는 이런 네트워크들을 이론적으로 이해하고 다양한 모델링 방법과 분석 방법을 제시한다는 점에서 관심이 갔었다. 그러던 중 학교에서 이런 수업이 개설되었기에 수강하게 되었다. 이 수업은 크게 봤을 때 3부분인데, 첫 번째 부분은 네트워크에 대한 기초적인 얘기들과 기본적인 Graph theory 영역이고 두 번째는 기본적인 네트워크 모델링이며 마지막은 네트워크에서 발생하는 Dynamic process에 대한 내용이다. 텍스트북은 Newman의 Networks - An Introduction, Lewis의 Network Science, 그리고 마지막으로 Barrat의 Dynamical Processes on Complex networks 총 세 권이다.</p>
+
+
+<p>네트워크의 종류는 정말 정말 많은데, 그냥 대부분의 관계도가 네트워크로 구성이 가능하고, network science를 사용해 분석이 가능하다. 예를 들어서 논문을 서로 refer하는 citation network를 분석할 수도 있고, 실제 사람들의 social network를 분석하거나 전력망 (power grid)을 네트워크로 생각해 문제를 푸는 것도 가능하다. Web도 hyper link와 page로 이루어진 network고, P2P역시 네트워크이다. 질병 역시 감염자와 비감염자로 판단할 수 있는 네트워크이고 Traffic 역시 네트워크이다.</p>
+
+
+<p>이런 network는 결국 수학적으로 바라보게 된다면 graph이다. 네트워크란 무엇인가? 결국에는 어떤 포인트가 있고 그 포인트들이 서로 연결되어있는 형태가 아닌가, 이를 수학적으로 정의하면 vertex와 edge로 정의된 graph가 된다. 또한 graph를 이해하기 위해서는 수학적인 접근법이 필수적이다. 따라서 기초적인 graph theory에 대한 이해도가 필요하며, 임의의 graph가 아닌 특정한 네트워크를 modeling하게 되면 네트워크에 대한 설명을 보다 더 간단하게 하는 것이 가능하다. 이것이 우리가 network modeling을 배우는 이유이며, 이는 결국 우리가 하고 싶은 Network 상에서 어떤 dynamic process 역시 더 간단하게 분석할 수 있는 것이다.</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: <a href="/49" target="new">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="/50" target="new">Random Network</a></li>
+    <li>Lecture 5: <a href="/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="/52" target="new">Scale free Network</a></li>
+</ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -1492,207 +1553,6 @@ End of technical program of Day 2<strong> </strong>
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/36/">서버를 구축해보자 - 웹서버 구축 스크립트 만들기</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-16T08:49:00+09:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="33" target="new">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고&#8230; 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/" target="new">이음 블로그</a> 참고&#8230; 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
-
-
-<p>일단, apache만 가지고 되는건 거의 없다. 기본적으로 php + mysql 기반으로 굴러가는 모듈이 워낙 많기 때문에 이 녀석들도 깔아주도록하자. 아래와 같은 스크립트를 만들어서 돌리면 편하다</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>apt-get -y install apache2 libapache2-mod-passenger
-</span><span class='line'>apt-get -y install mysql-server mysql-client
-</span><span class='line'>apt-get -y install php5-common php5 libapache2-mod-php5
-</span><span class='line'>apt-get -y install php5-mysql
-</span><span class='line'>apt-get -y install phpmyadmin</span></code></pre></td></tr></table></div></figure>
-
-
-<p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐&#8230; 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html" target="new">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
-
-
-<p>Default</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;VirtualHost *:80&gt;
-</span><span class='line'>  ServerAdmin webmaster@localhost
-</span><span class='line'>
-</span><span class='line'>  DocumentRoot /var/www
-</span><span class='line'>  &lt;Directory /&gt;
-</span><span class='line'>      Options FollowSymLinks
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>  &lt;Directory /var/www/&gt;
-</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>  &lt;Directory /var/www/redmine&gt;
-</span><span class='line'>    RailsBaseURI /redmine
-</span><span class='line'>    PassengerResolveSymlinksInDocumentRoot on
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-</span><span class='line'>  &lt;Directory "/usr/lib/cgi-bin"&gt;
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      Allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  ErrorLog ${APACHE_LOG_DIR}/error.log
-</span><span class='line'>
-</span><span class='line'>  # Possible values include: debug, info, notice, warn, error, crit,
-</span><span class='line'>  # alert, emerg.
-</span><span class='line'>  LogLevel warn
-</span><span class='line'>
-</span><span class='line'>  CustomLog ${APACHE_LOG_DIR}/access.log combined
-</span><span class='line'>&lt;/VirtualHost&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>passenger.conf</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_passenger.c&gt;
-</span><span class='line'>  PassengerDefaultUser www-data
-</span><span class='line'>  PassengerRoot /usr
-</span><span class='line'>  PassengerRuby /usr/bin/ruby
-</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>apt-get install redmine redmine-mysql
-</span><span class='line'>cp passenger.conf /etc/apache2/mods-available/passenger.conf
-</span><span class='line'>ln -s /usr/share/redmine/public /var/www/redmine
-</span><span class='line'>cp default /etc/apache2/sites-available/default</span></code></pre></td></tr></table></div></figure>
-
-
-<p>참 쉽다.. 참고로 이건 전부다 그냥 기본 설정이라 이렇게 한거지, 만약 설정이 되어있는 상태라면 위에 링크한 글대로 하기를 바란다. 혹시나 default설정 싹 날리거나 그러지 말고&#8230; 이제 service apache2 restart를 때려주면 레드마인이 돌아간다 올레</p>
-
-
-<p>음 그리고 이번에는 xe를 깔아보자. BBS 모듈이 필요할 때가 간간히 있기 때문에 xe는 깔아서 손해볼게 없다. (워드프레스도 쓸만하지만 단순 BBS로는 xe가 낫다.) 자 이번에도 스크립트.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>git clone https://github.com/xpressengine/xe-core.git
-</span><span class='line'>mv xe-core /var/www/xe
-</span><span class='line'>chmod 707 -R /var/www/xe
-</span><span class='line'>svn checkout http://xe-board.googlecode.com/svn/trunk/ board
-</span><span class='line'>mv board /var/www/xe/modules/board</span></code></pre></td></tr></table></div></figure>
-
-
-<p>뭐.. 이렇게 하고 ~~/xe 들어가서 설치하면 xe랑 board 모듈까지 설치 끝&#8230; 아 기본 설정인 경우에는 설정-고급-짧은 주소 사용에 아니오를 선택하고 캐시를 리로드해야한다. 이거 몰라서 한 1시간은 삽질했는데.. 이거 싫으면 따로 뭐를 깔아야하길래 그게 더 귀찮아서 그냥 설정을 바꿔줬다.</p>
-
-
-<p>마지막으로 위키를 깔아보자. 위키는 미디아위키를 사용한다.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
-</span><span class='line'>mv core /var/www/wiki
-</span><span class='line'>chmod 707 -R /var/www/wiki</span></code></pre></td></tr></table></div></figure>
-
-
-<p>아 참고로 xe도 wiki도 설치 후에 아파치를 한번 리스타트 해줘야할거다&#8230; 역시 이것도 /wiki로 들어가서 설치를 해주고 나온 php파일을 ftp로 /var/www/wiki에 다시 넣어주면 끝</p>
-
-
-<p></p>
-
-<p>전반적으로 크게 난해한 세팅도 없고.. 애당초 이번에 설치한 녀석들이 꽤 모듈로 잘 나온 놈들을 쓴 거라.. 크게 어렵지 않게 세팅했다. 지금 추가로 해볼까 고민 중인 것들은 개인 레포지토리를 뚫느냐 마느냐. 별로 큰 이득이 없어서 안할 것 같기는 하지만, 그래도 일단 만들어서 손해볼 것도 없고, 공부 삼아서 해볼까 고민 중이다. gui로 웹에서 접근 가능한 녀석을 만들어볼까하는데, 엄청 어려울 것 같지는 않고 그냥 엄청 귀찮을거 같아서 고민이다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1711,6 +1571,10 @@ End of technical program of Day 2<strong> </strong>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/59/">Machine Learning 스터디 (3) Overfitting</a>
+      </li>
+    
+      <li class="post">
         <a href="/58/">Machine Learning 스터디 (2) Probability Theory</a>
       </li>
     
@@ -1724,10 +1588,6 @@ End of technical program of Day 2<strong> </strong>
     
       <li class="post">
         <a href="/53/">나의 창작욕에 대하여</a>
-      </li>
-    
-      <li class="post">
-        <a href="/52/">Network Science - Scale Free Network (Barabasi-Albert Network)</a>
       </li>
     
   </ul>
