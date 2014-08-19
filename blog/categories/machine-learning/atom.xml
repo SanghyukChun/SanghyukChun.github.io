@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-08-20T00:19:05+09:00</updated>
+  <updated>2014-08-20T01:45:01+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,136 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (6) - Information Theory]]></title>
+    <link href="http://SanghyukChun.github.io/62/"/>
+    <updated>2014-08-20T00:20:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/62</id>
+    <content type="html"><![CDATA[<p>Information Theory는 섀년이라는 걸출한 천재가 이룩해낸 매우 뛰어난 이론이다. 이 이론 덕분에 우리는 이렇게 인터넷도 할 수 있고, 무선통신도 할 수 있는 것이다. 이 이론 덕분에 불안정한 noisy한 channel에서도 유한한 시간 안에 우리가 전달하고 싶은 정보를 전부 전달할 수 있다는 것을 확신할 수 있고, 이론적인 한계값까지 도출이 가능한 엄청난 이론이다. Machine Learning에서도 이런 information theory 측면에서 문제를 바라보는 경우가 종종 있는데, Entropy, Mutual Information, KL-divergence 등이 그것이다. 이 글에서는 그런 Machine Learning의 관점에서 많이 쓰이는 기초적인 정보이론의 개념들을 짚고 넘어가볼까 한다.</p>
+
+
+<h5>Entropy</h5>
+
+
+<p>엔트로피는 '정보'의 단위라고 할 수 있다. 어떤 distibution p(x)에서 generate되는 discrete random variable x가 있다고 해보자. 이 random variable x가 전달할 수 있는 정보량은 어떻게 계산할 수 있을까. 여기에서 '정보'란 얼만큼의 bit가 있어야 x에 대한 정보를 완벽하게 얻을 수 있는가로 정의해보자. 예를 들어서 fair한 동전 던지기의 정보량은 1이다. 한 비트만 있으면 반드시 그 동전 던지기의 distribution을 서술할 수 있다. 그러나 만약 fair coin이 아니라면 한 면이 나올 확률이 다른 면이 나올 확률보다 상대적으로 더 크기 때문에 한 비트보다도 더 적은 정보를 사용해 값을 맞추는 것이 가능해진다. 이런 정보의 양을 <a href="http://en.wikipedia.org/wiki/Entropy_(information_theory)" target="new">Entropy</a>라는 것으로 정의하게 되는데, 간단하게 생각하면 열역학2법칙의 그 엔트로피와 동일하다. 즉, 엔트로피가 커질수록 불확실성이 높아지고 정보량은 더 많아진다. Entropy는 \(H(x) = - \sum_x p(x) log_2 p(x) \)로 정의가 되며, 만약 p(x)가 0으로 가면 \(\log_2 p(x)\)는 음의 무한으로 발산하지만, p(x)가 0이 되는 속도가 더 빠르기 때문에 엔트로피는 0이 된다.</p>
+
+
+<p>그럼 왜 엔트로피는 이런 꼴을 하게 되는 것일까. 만약 우리가 전체 N개의 object들이 있고, 이 object들이 K개의 bin으로 나뉘어져있다고 해보자. 그리고 i번째 bin에 들어갈 수 있는 object의 개수를 \(n_i\)라고 했을 때, object들이 bin에 들어갈 수 있는 permutation의 개수는 \(W = \frac{N!}{\prod_i n_i!}\)와 같으며 이를 multiplicity라고 한다. 엔트로피란 이 multiplicity에 비례하는, 정확히는 log를 취한 값을 엔트로피라고 하게 된다. 즉 Entropy H는 multiplicity W에 대해 다음과 같이 표현된다.</p>
+
+
+<p>\[H = \frac{1}{N}\ln W = \frac{1}{N}\ln N! - \frac{1}{N}\sum_i \ln n_i ! \]</p>
+
+
+<p>이때 \(\lim N \to \infty) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation" target="new">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
+
+
+<p>\[H = -\lim_{N \to \infty} \sum_i \left( \frac{n_i}{N} \right) \ln \left( \frac{n_i}{N} \right) = - \sum_i p_i \ln p_i \]</p>
+
+
+<p>이는 위에서 정의한 엔트로피의 값과 일치한다.</p>
+
+
+<p>그런데 이 값은 discrete한 random variable에 대해 정의된 값이고 continous한 random variable x에 대해서는 <a href="http://en.wikipedia.org/wiki/Differential_entropy" target="new">differencial entropy</a>라는 정의할 수 있다. <a href="http://en.wikipedia.org/wiki/Mean_value_theorem" target="new">평균값 정리</a>에 의해서 우리는 다음을 만족하는 value \(x_i\)를 반드시 찾을 수 있다</p>
+
+
+<p>\[ \int_{i\Delta}^{(i+1)\Delta} p(x) dx = p(x_i) \Delta\]</p>
+
+
+<p>엔트로피는 discrete한 random variable에 대한 값이었는데, 위 식을 통해 continous variable x를 위의 식을 만족하는 \(x_i\)로 치환하는 방식으로 quantize할 수 있다. 또한 이런 경우 각 \(x_i\)를 관측할 확률이 \(p(x_i)\Delta\)로 계산되므로, 이렇게 했을 경우 엔트로피는 아래와 같이 계산할 수 있다.</p>
+
+
+<p>\[H_\Delta = -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = - \sum_i p(x_i) \Delta p(x_i) - \ln \Delta \]</p>
+
+
+<p>이때, 오른쪽 term은 x에 대한 값이 아니니까 일단 먼저 무시하고, \(\lim \Delta \to 0\)를 취해보자. 이렇게 계산할 경우 아래 식이 얻어진다.</p>
+
+
+<p>\[\lim_{\Delta \to 0} H_\Delta = \lim_{\Delta \to 0} -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = -\int p(x) \ln p(x) dx\]</p>
+
+
+<p>이때, 맨 오른쪽 term을 differencial entropy라고 정의한다. 즉, differencial entropy는 다음과 같이 정의된다.</p>
+
+
+<p>\[H(x) = -\int p(x) \ln p(x) dx\]</p>
+
+
+<p>마지막으로 random variable이 x,y 두 개가 있고 이 둘의 joint distribution p(x,y)가 있다고 해보자. 우리가 알고 있는 정보는 x의 value라고 했을 때 우리는 y의 information의 양을 계산할 수 있을까? 이를 <a href="http://en.wikipedia.org/wiki/Conditional_entropy" target="new">Conditional Entropy</a>라고 하는데 이때 y에 대해 필요한 additioanl information은 \(p(y|x)\)이며, x와 y의 확률은 p(x,y)이므로 Conditional Entropy는 아래와 같이 정의된다.</p>
+
+
+<p>\[H(y|x) = - \int \int p(y,x) \ln p(y|x) dy dx\]</p>
+
+
+<p>이 값은 다음과 같은 chain rule을 항상 만족시킨다.</p>
+
+
+<p>\[H(x,y) = H(y|x) + H(x)\]</p>
+
+
+<h5>KL divergence</h5>
+
+
+<p>어떤 probability distribution p(x)와 p(y)가 있다고 했을 때 이 둘의 차이, 혹은 distance를 정의할 수는 없을까. 예를 들어 p(x)라는 우리가 모르는 unknown distribution이 있을 때, 우리가 추측한 \(p(\hat x)\)와 true distribution p(x)가 얼마나 차이나는지를 계산할 수 있는 방법은 없을까. 만약 우리가 q(x)를 사용해서 x를 transmitting하는 coding scheme을 construct했다고 해보자. 그리고 true distribution을 p(x)였다고 했을 때, q(x)를 사용하였을 때 얼마나 더 많은 정보량이 필요할 것인지 measure할 수 있을 것이다. 이를 <a href="http://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence" target="new">Kullback-Leibler divergence</a> 혹은 KL divergence라고 하며 수식은 아래와 같다.</p>
+
+
+<p>\[KL(p\|\|q) = - \int p(x) \ln q(x) - \left( -\int p(x) \ln p(x) dx \right) \\\\ = -p(x) \ln \left[ \frac{q(x)}{p(x)} \right] dx \]</p>
+
+
+<p>정확히 얘기하면 이 값은 'distance'가 될 수는 없다. 왜냐하면 distance, 혹은 metric은 symmetric해야하는데 KL divergence는 \(KL(p\|\|q) \neq KL(q\|\|p)\) 이기 때문이다.</p>
+
+
+<p>KL divergence는 언제나 0 보다 크거나 같은데, 같은 경우는 오직 p(x)와 q(x)가 일치하는 경우 뿐이다. 이를 증명하기 위해서는 convexity 컨셉과 Jensen's inequality를 도입하면 쉽게 증명이 가능하지만, 여기에서는 생갹하도록 하겠다.</p>
+
+
+<p>중요한 점은, KL divergence는 두 distribution의 차이를 define할 수 있는 좋은 수단 중 하나라는 것이며, 다시 말해 원래 true distribution p(x)와 우리가 estimate한 q(x)가 얼마나 비슷한지를 measure할 수 있는 수단이라는 점이다.</p>
+
+
+<h5>Mutual Information</h5>
+
+
+<p><a href="http://en.wikipedia.org/wiki/Mutual_information" target="new">Mutual Information</a>은 두 random variable들이 얼마나 mutual dependence한지를 measure하는 방법을 의미한다. 만약 random variable x와 y가 independent하다면 joint distribution p(x,y) 는 p(x,y) = p(x)p(y) 로 주어지게 될 것이며, 만약 둘이 dependent한 경우에는 두 값이 달라질 것이다. 그렇다면 만약 true distribution을 p(x,y)라고 했을 때, 새롭게 우리가 x와 y가 independent하다고 estimate하고 구한 p(x)p(y)와의 KL-divergence를 구할 수 있지 않을까? 당연히 이 값은 x와 y가 independent할 때만 0이고 그 이외에는 항상 0보다 크다. 즉, 두 random variable이 얼마나 mutually dependent한가, 얼마나 Mutual하게 information을 많이 가지고 있느냐를 측정할 수 있는 도구가 되므로 이를 Mutual information이라 한다. 수식으로 표현해보면 아래와 같다.</p>
+
+
+<p>\[I(x,y) = KL(p(x,y)\|\|p(x)p(y) \\\\ = - \int \int p(x,y) \ln \left( \frac{p(x)p(y)}{p(x,y)} \right) dx dy\]</p>
+
+
+<p>위의 값을 Mutual Information이라 하며, 이 값은 항상 다음과 같은 관계를 만족시킨다.</p>
+
+
+<p>\[I(x,y) = H(x) - H(x|y) = H(y) - H(y|x)\]</p>
+
+
+<h5>Machine Learning and Information Theory</h5>
+
+
+<p>Entropy는 주어진 bin에 얼마나 비슷한 element들이 들어있는지를 측정하는 척도로 쓰일 수 있으며, decision tree를 learning하는 알고리듬 등에서도 사용할 수 있다. 또한 KL-divergence는 두 distribution과의 거리를 의미하므로, density estimation 관점에서 바라봤을 때 우리가 estimate하는 distribution과 원래 true distribution이 얼마나 유사한지, 우리가 얼마나 잘 density estimation을 했는지 evaluation을 하는 용도 등으로 쓰일 수 있다. 마지막으로 Mutual information을 Bayes perspective에서 바라보게 된다면, 만약 우리가 어떤 데이터 x의 prior p(x)를 관측하고, 새로운 데이터 y를 관측해 얻은 posterior distribution p(y|x)가 있다고 했을 때, Mutual information은 이전 관측 x를 통해 새로운 관측 y의 uncertainty가 얼마나 reduction 되는지를 의미하게 되는 것과 동일하다는 것을 알 수 있다.</p>
+
+
+<p>정보이론 자체는 Machine Learning과 크게 관계가 없어보이지만, 그 개념들은 생각보다 꽤 많은 부분에서 사용되게 되므로 좀 간략하게 다루게 되었다.</p>
+
+
+<p><a href="http://SanghyukChun.github.io/58">Probability Theory</a>, <a href="http://SanghyukChun.github.io/59">Overfitting</a>에서 일부, <a href="http://SanghyukChun.github.io/61">Decision Theory</a>, 그리고 <a href="http://SanghyukChun.github.io/62">Information Theory</a>를 커버하면서 이제서야 Bishop책 Ch 1에 해당하는 부분을 끝마쳤다. 만약 bishop을 따라간다면 이 다음에 probability distribution에 대해 다루고, conjugate prior나 exponential family, mixture of distribution 등등을 다뤄야하지만, 이 부분은 일단 생략을 하기로 한다면, 이 다음에는 사실 regression을 설명해야 할 차례이지만, 아마 이 다음에는 실제 information theory를 사용하는 Algorithm이 등장하는 Decision tree와, supervised learning 혹은 classification에 대해 다루게 될 것 같다. 그 이후에는 아마도 순서대로 Regression(Linear, Logistic)을 다루게 되고, Graphical Model을 간략하게 다룬 다음 Neural Network, EM 알고리듬, PAC Learning 순서대로 진행하게 되지 않을까 싶다. 다만 내가 PAC learning 세미나 준비를 해야해서 하는 김에 PAC가 조금 일찍 등장할 가능성도 있지 않을까 생각한다.</p>
+
+
+
+
+<hr>
+
+
+<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
+<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine learning 스터디 (5) Decision Theory]]></title>
@@ -172,6 +302,7 @@
 <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
 </ul>
 
 ]]></content>
@@ -241,6 +372,7 @@
 <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
 </ul>
 
 ]]></content>
@@ -334,6 +466,7 @@
 <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
 </ul>
 
 ]]></content>
@@ -407,62 +540,7 @@
 <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (1) Machine Learning이란?]]></title>
-    <link href="http://SanghyukChun.github.io/57/"/>
-    <updated>2014-08-02T18:48:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/57</id>
-    <content type="html"><![CDATA[<p>Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 <a href="http://SanghyukChun.github.io/blog/categories/machine-learning/" target="new">Machine learning과 관련된 글들</a>을 써왔지만, 항상 중구난방이고 제대로 정리가 되지 않은 느낌을 받아서 근래에 다시 머신러닝에 대해 공부를 하는 김에 싹 몰아서 정리해보기로 했다. 8월에 연구실에서 머신러닝 스터디를 하기로 했지만, 그것과는 조금 다르게 내가 생각했을 때 이런 순서로 정리를 하면 되겠다.. 하는 느낌으로 정리를 해볼 생각이다. Bishop 책을 많이 참고했으면 하고.. 특히 이번 ICML에서 느낀거지만, Machine Learning에는 정말 많은 분야가 있는데, 많은 Lecture들에서 어쩔 수 없이 그것들을 전부 커버하지 못하는 점이 너무 아쉬웠다. 그래서 일단 내가 할 수 있는데까지는 정리해보는게 좋지 않을까.. 하는 생각으로 글을 써보려 한다. 이런 글을 써야겠다는 생각은 오래전부터 했는데 정작 실천에 옮기는데에는 시간이 많이 걸렸네.. 그래 무튼 시작해보자.</p>
-
-
-<p>Machine Learning... 혹은 우리 말로 하면 기계 학습. 이놈이 대체 뭐길래 너도나도 머신러닝 머신러닝 해대는 걸까. 내가 예전 <a href="http://SanghyukChun.github.io/3" target="new">Andrew Ng. 교수의 Machine Learning Lecture를 들으며 정리했던 글</a>에 정의했던바에 따르면, </p>
-
-
-<blockquote>
-    <p>머신러닝은 그 관계를 알 수 없는 수 많은 데이터들 사이에서 관계를 찾아내주는 마법과 같은 기술이다.</p>
-</blockquote>
-
-
-<p>라고 정의했었다. 마법과 같은 기술이라! 어디서 저런 중2병 스멜나는 용어를 가져왔는지 참.. 아무튼 내가 이쪽을 더 공부해보면서 느낀건, 결국에 이 Machine Learning이라는 것은 일종의 Modeling Problem이라는 것이다. 무슨 얘기냐? 머신러닝이란 '주어진 데이터'에 대해 '현상'을 '가장 잘 설명할 수 있는 관계'를 찾아내는 것이라 했었는데, 이 말을 조금 수학적으로 풀어내면 주어진 '데이터' \(X = (x_1, x_2, x_3, \ldots, x_n)\) 이 있을 때 이 데이터와 실제 '현상' \(Y = (y_1, y_2, \ldots, y_n) \)에 대한 '관계' function \(f\)를 찾아야한다. 당연히 우리가 정확한 함수 \(f\)를 찾아낼 수는 없으므로 '최대한 잘 설명할 수 있는', 함수 \(f'\)을 찾아내야 한다. 이를 Hypothesis라고 한다. 즉, 이 모든 과정을 일종의 Modeling process로 생각이 가능하다는 뜻이다. 다만 우리의 새로운 process는 for given data에 대해 dependent한 model을 만들어낸다는 점이 독특한 것이다.</p>
-
-
-<p>스팸필터를 생각해보자. 데이터 X는 메일들이다. 우리가 받는 메일 하나하나가 데이터가 될 수도 있고, 그 메일 안에 있는 단어 하나하나가 될 수도, 혹은 아예 알파벳 하나하나가 될 수도 있다. 그것은 우리가 정하기 나름이니까. 그럼 현상 Y는 무엇일까? 각각의 메일이 스팸인지, 아니면 일반 메일인지 구분하는 구분자, indicator, 혹은 Label, Class가 될 것이다. 마지막으로 가장 잘 설명할 수 있는 함수는 이런 데이터들을 가지고 어떻게 Learning을 할 것인지에 대한 얘기가 될 것이다. 예를 들어 Naïve Bayes라던가, KNN, SVM도 있고, 요새 핫한 Deep learning도 있을 수 있다.</p>
-
-
-<p>그러면 이 함수로 우리는 무엇을 하고 싶은걸까? 단순히 데이터와 현상의 관계를 함수로 나타내는 것이 무슨 의미가 있지? 이것이 의미가 있는 이유는 우리가 새로 주어진 데이터, 혹은 test data에 대해 새로운 추론, inference를 하는 것이 가능하기 때문이다. 이 메일은 스팸인가? 이런 쇼핑 목록을 가진 사람은 또 뭘 사고 싶어할까? 이런 날씨에는 고속도로가 막힐까 막히지 않을까? 이런 질문들에 대해 앞서 우리가 정의한 방식대로 Machine Learning problem을 풀어 새로운 Hypothesis를 통해 우리는 inference를 내릴 수가 있다. 이런 inference가 맞을 수도 있고 틀릴 수도 있다. 그러나 우리는 최대한 좋은 방법으로 Learning을 한다면 좋은 inference를 할 수 있을 것이라고 생각할 수 있다. 이 '좋은 방법' 을 위해 도입되는 개념이 바로 cost function이다. 내가 원하는 결과와 실제 내가 찾아낸 가설과의 괴리가 얼마나 있는지를 function으로 정의하는 것이다. 가장 간단한 예로, 스팸 필터에서 '스팸이다 아니다'라는 질문이 틀리면 cost function은 1, 맞으면 0이라고 하자. 그렇게 정의하면 이 cost를 최소화 하는 방향으로 model을 learning하면 결국 가장 잘 맞추는 model을 얻을 수 있겠지.</p>
-
-
-<p>즉, 머신러닝이란, 완전히 raw한 데이터를 다루는 과정, 예를 들면 Dimensionality reduction, Metric Learning 등의 과정에서부터 시작해서, 어떻게 Learning할 것이냐, model이 무엇이냐, 조금 더 구체적으로 얘기하면 어떤 Algorithm을 사용해 이 model을 learning할 것이냐라는 문제를 풀어내고, 마지막으로 어떻게 결정을 내릴 것이냐, decision making을 할 것이냐 하는 이 여러개의 과정으로 나뉘어지는 것이다. 내가 관심있는 부분은 주로 어떤 model을 사용할 것이냐, 또 어떤 방법으로, 어떤 algorithm으로 이 model을 learning할 것이냐에 관심이 있다. 또 추가로 관심이 있는 부분이라면, 어떤 문제가 있을 때 그 문제를 Machine Learning의 관점에서 풀어내는 것도 좋아하고.. 예를 들면 추천 알고리듬 같은게 있겠다.</p>
-
-
-<p>사실 이렇게 머신러닝을 정의하기에는 조금 어정쩡한 부분이 있는 것이 사실이다. 그럼 Unsupervised Learning은?? Reinforcement Learning은? 그 이외에도 많은 것들을 이 정의만 가지고 설명하기에는 사실 무리가 있는 것이 맞지만, 그래도 이런 컨셉으로 이해를 하게 된다면, 즉 Machine Learning이 근본적으로 model, algorithm 문제라는 것을 이해하게 된다면 이 녀석들에 대한 이해도 빠르게 할 수 있지 않을까 생각된다. 위에 링크 건 <a href="http://SanghyukChun.github.io/3" target="new">예전 글</a>에 이와 관련된 글들이 있으니 궁금하면 읽어보면 될 것 같다.마찬가지 이유로, 요즘 유행하는 Big Data 역시 근본적으로는 Machine Learning의 일부라는 것을 알 수 있다. <a href="http://SanghyukChun.github.io/21" target="new">이에 대한 글</a>도 이전에 적은 적이 있으니 참고바란다. 달라지는 점이라면 algorithm이 굉장히 빨라야 한다하거나, Memory efficient 해야한다거나, 아니면 분산처리가 가능해야한다거나 하는 새로운 challenge들이 존재하기는 하지만, 근본적으로는 같다고 봐도 무방하다. 즉, 이 머신러닝이라는 것을 제대로 이해하고 다룰 수 있다면 정말 많은 문제들을 해결할 수 있다는 의미가 될 것 이다.</p>
-
-
-<p>마지막으로 조금 더 구체적인 예를 들어보자. 아까 예를 들었던 스팸 필터를 예로 들어보자면, 일반적으로 '머신러닝이 아닌' 스팸필터를 생각해보자. 가장 간단한 방법으로는 Black list가 있을 것이다. 해당하는 계정이 보낸 메일은 스팸으로 처리하는 방법이 있다. 하지만 이렇게 rule을 정해버릴 경우 그것을 우회하는 방법은 무수히 많다. 계정은 무한하게 생성 가능하니까. 그걸 보완하는 방법으로 White list가 있다. 허용하는 이메일만 accept를 하는 것이다. 하지만 이 역시 완전하지는 않다. 우리는 언제나 새로운 사람과 연락을 해야하는 경우가 있으니까. 즉, Machine Learning이 아닌 접근 방법은 어떤 deterministic한 rule을 통해서 동작하게 되며, 그것을 개선시키는 것은 온전히 사람의 몫이다. 그러나 머신러닝을 적용한 스팸필터는 우리가 특정 모델을 정의하고 난 이후에는, 예를 들어서 지금은 단어마다 그 단어가 포함되면 스팸일 확률을 계산해서 최종적인 확률을 계산하는 방식을 도입했다고 해보자. (naïve bayes) 처음에는 완벽하지 않겠지만, 데이터가 늘어나면 늘어날수록 이 모델의 정확도는 높아지게 될 것이다. 사람이 따로 룰을 정할 필요가 없이 machine이 스스로 알아서 improve가 되는 것이고, 더 나은 것을 learning하게 되는 것이다. 하지만 단점도 물론 존재한다. 같은 예를 계속 얘기해보면, 스팸이 아닌데 스팸으로 취급한 경우에 과연 머신러닝으로 접근한 방법은 디버깅을 어떻게 해야할까? 사람이 따로 rule을 정할 필요가 없다는 말은 반대로 말하면 사람이 rule에 미칠 수 있는 영향력이 크지않다는 의미도 된다. (나중에 decision theory에서 보면 알 수 있겠지만 항상 그런 것은 아니다.) 즉, 언제나 machine learning에는 error가 존재하는데, 이 error가 optimal한 point까지 도달하고 나면 debug할 수 있는 방법이 없다는 것이다. 반면 머신러닝이 아닌 방법은 특정 사람이 스팸필터에 걸리면 그때그때 룰을 수정해서 디버깅을 할 수 있다. 그리고 computation power에 대한 문제도 있을 수 있다. 머신러닝은 많은 데이터에서부터 모델을 learning해야하기 때문에 당연히 그냥 deterministic한 방법보다 계산량이 많아지게 되는 것이다. 이런 여러가지 장단이 있기 때문에 머신러닝이 항상 능사는 아니라고 할 수 있을 것이다.</p>
-
-
-<p>그런데 왜 이렇게 머신러닝을 중요하게 생각하는 것일까? 그것은 이제는 위에서 말한 문제점들이 더 이상 문제점이 아니기 때문이다. 문제점은 크게 두 가지였는데, 하나는 error였고, 또 하나는 computation이었다. Machine learning의 많은 모델들은 이론적으로 데이터가 무한하게 존재하는 경우 가장 이론적으로 작은 error를 생산해낸다. 그리고 그 뿐 아니라, 최근에는 사람이 눈으로 데이터의 rule을 정하기에는 데이터가 상상이상으로 많기 때문에 (소위 빅데이터라고 불린다) 사람이 직접 룰을 정하는 것에 무리가 생기는 경우가 많다. 즉, 사람이 rule을 결정하기가 점점 어려워지고 있는 것이다. 스팸 필터가 좋은 예인데, 사람이 아무리 좋은 룰을 만들어내도 새로운 스팸이 계속 생겨나게 된다. 그러나 우리가 모든 스팸메일을 가지고 있다면 machine learning approach는 더 나은 결과를 return 할 수 있을 것이다. 그리고 두 번째 문제는 최근에 하드웨어의 성능이 엄청나게 빠른 속도로 좋아지고 있을 뿐 아니라, 알고리듬의 측면에서도 여러가지 분산처리 알고리듬이 많이 개발이 되고 있어 계산량을 급격하게 감소시켜 빠르게 계산을 처리하는 것이 가능해졌다. 이런 이유들로 최근 머신러닝이 급부상하고 있는 것이 아닐까한다. 거기에다 이런 이유들, 데이터의 폭발적인 증가, 하드웨어의 개선, 분산처리 알고리듬의 개발 등은 지금 한순간 반짝하는 것들이 아니라 앞으로도 계속 비전이 있는 이유들이기 때문에 앞으로 머신러닝이라는 field 자체가 계속 좋은 방향으로 나아가지 않을까 기대가 된다.</p>
-
-
-
-
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
-
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
 </ul>
 
 ]]></content>
