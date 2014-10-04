@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-08-20T01:45:01+09:00</updated>
+  <updated>2014-10-04T22:34:29+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (6) - Information Theory]]></title>
+    <title type="html"><![CDATA[Machine learning 스터디 (6) Information Theory]]></title>
     <link href="http://SanghyukChun.github.io/62/"/>
     <updated>2014-08-20T00:20:00+09:00</updated>
     <id>http://SanghyukChun.github.io/62</id>
@@ -33,7 +33,7 @@
 <p>\[H = \frac{1}{N}\ln W = \frac{1}{N}\ln N! - \frac{1}{N}\sum_i \ln n_i ! \]</p>
 
 
-<p>이때 \(\lim N \to \infty) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation" target="new">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
+<p>이때 \(\lim N \to \infty \) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation" target="new">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
 
 
 <p>\[H = -\lim_{N \to \infty} \sum_i \left( \frac{n_i}{N} \right) \ln \left( \frac{n_i}{N} \right) = - \sum_i p_i \ln p_i \]</p>
@@ -120,6 +120,9 @@
 <p>정보이론 자체는 Machine Learning과 크게 관계가 없어보이지만, 그 개념들은 생각보다 꽤 많은 부분에서 사용되게 되므로 좀 간략하게 다루게 되었다.</p>
 
 
+<p>추가: 정보이론이 어떻게 머신러닝에 유용하게 쓰일 수 있는가에 대한 lecture와 book link를 추가하도록 하겠다. <a href="http://www.inference.phy.cam.ac.uk/itprnn_lectures/">http://www.inference.phy.cam.ac.uk/itprnn_lectures/</a>, <a href="http://www.inference.phy.cam.ac.uk/mackay/itila/book.html">http://www.inference.phy.cam.ac.uk/mackay/itila/book.html</a></p>
+
+
 <p><a href="http://SanghyukChun.github.io/58">Probability Theory</a>, <a href="http://SanghyukChun.github.io/59">Overfitting</a>에서 일부, <a href="http://SanghyukChun.github.io/61">Decision Theory</a>, 그리고 <a href="http://SanghyukChun.github.io/62">Information Theory</a>를 커버하면서 이제서야 Bishop책 Ch 1에 해당하는 부분을 끝마쳤다. 만약 bishop을 따라간다면 이 다음에 probability distribution에 대해 다루고, conjugate prior나 exponential family, mixture of distribution 등등을 다뤄야하지만, 이 부분은 일단 생략을 하기로 한다면, 이 다음에는 사실 regression을 설명해야 할 차례이지만, 아마 이 다음에는 실제 information theory를 사용하는 Algorithm이 등장하는 Decision tree와, supervised learning 혹은 classification에 대해 다루게 될 것 같다. 그 이후에는 아마도 순서대로 Regression(Linear, Logistic)을 다루게 되고, Graphical Model을 간략하게 다룬 다음 Neural Network, EM 알고리듬, PAC Learning 순서대로 진행하게 되지 않을까 싶다. 다만 내가 PAC learning 세미나 준비를 해야해서 하는 김에 PAC가 조금 일찍 등장할 가능성도 있지 않을까 생각한다.</p>
 
 
@@ -138,6 +141,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -303,6 +320,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -373,6 +404,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -467,6 +512,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -541,6 +600,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -551,36 +624,117 @@
     <link href="http://SanghyukChun.github.io/57/"/>
     <updated>2014-08-02T18:48:00+09:00</updated>
     <id>http://SanghyukChun.github.io/57</id>
-		<content type="html"><![CDATA[<p>Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 <a href="http://SanghyukChun.github.io/blog/categories/machine-learning/" target="new">Machine learning과 관련된 글들</a>을 써왔지만, 항상 중구난방이고 제대로 정리가 되지 않은 느낌을 받아서 근래에 다시 머신러닝에 대해 공부를 하는 김에 싹 몰아서 정리해보기로 했다. 8월에 연구실에서 머신러닝 스터디를 하기로 했지만, 그것과는 조금 다르게 내가 생각했을 때 이런 순서로 정리를 하면 되겠다.. 하는 느낌으로 정리를 해볼 생각이다. Bishop 책을 많이 참고했으면 하고.. 특히 이번 ICML에서 느낀거지만, Machine Learning에는 정말 많은 분야가 있는데, 많은 Lecture들에서 어쩔 수 없이 그것들을 전부 커버하지 못하는 점이 너무 아쉬웠다. 그래서 일단 내가 할 수 있는데까지는 정리해보는게 좋지 않을까.. 하는 생각으로 글을 써보려 한다. 이런 글을 써야겠다는 생각은 오래전부터 했는데 정작 실천에 옮기는데에는 시간이 많이 걸렸네.. 그래 무튼 시작해보자.</p>
+		<content type="html"><![CDATA[<p>Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 <a href="http://SanghyukChun.github.io/blog/categories/machine-learning/" target="new">Machine learning과 관련된 글들</a>을 써왔지만, 항상 중구난방이고 제대로 정리가 되지 않은 느낌을 받아서 근래에 다시 머신러닝에 대해 공부를 하는 김에 싹 몰아서 정리해보기로 했다. 8월에 연구실에서 머신러닝 스터디를 하기로 했지만, 그것과는 조금 다르게 내가 생각했을 때 이런 순서로 정리를 하면 되겠다.. 하는 느낌으로 정리를 해볼 생각이다. Bishop 책을 많이 참고했으면 하고.. 특히 이번 ICML에서 느낀거지만, Machine Learning에는 정말 많은 분야가 있는데, 많은 Lecture들에서 어쩔 수 없이 그것들을 전부 커버하지 못하는 점이 너무 아쉬웠다. 그래서 일단 내가 할 수 있는데까지는 정리해보는게 좋지 않을까.. 하는 생각으로 글을 써보려 한다.</p>
 
 
-<p>Machine Learning&#8230; 혹은 우리 말로 하면 기계 학습. 이놈이 대체 뭐길래 너도나도 머신러닝 머신러닝 해대는 걸까. 내가 예전 <a href="http://SanghyukChun.github.io/3" target="new">Andrew Ng. 교수의 Machine Learning Lecture를 들으며 정리했던 글</a>에 정의했던바에 따르면, </p>
+<p>시작하기 전에 재미있는 짤방을 하나 보고 가자. 여러 사람들이 생각하는 Machine Learning이란?</p>
 
 
-<blockquote>
-    <p>머신러닝은 그 관계를 알 수 없는 수 많은 데이터들 사이에서 관계를 찾아내주는 마법과 같은 기술이다.</p>
-</blockquote>
+<p><img src="http://SanghyukChun.github.io/images/post/57-1.jpg" width="600"></p>
+
+<p>난 이걸 보고 정말 재미있다는 생각을 했는데, Machine Learning이라는 말 자체가 기계를 학습시킨다, 가르친다라는 의미이기 때문에 마치 기계들을 모아놓고 수업을 하는 것 같은 모습을 society에서는 연상하기 쉽고, 내 친구들 그러니까 다른 공학이나 과학을 전공하는 친구들 입장에서 봤을 때는 로봇 AI를 하는 사람인 것 같고 조금 더 Hardware에 focus된 것처럼 느끼는 경우가 많다. 부모님은 뭔지는 모르겠는데 애가 맨날 컴퓨터하고 서버 얘기하니까 IDS에서의 저런 모습을 생각하고 ㅋㅋㅋㅋ 다른 프로그래머들은 뭔가 일반적인 프로그래밍과는 다르게 수학적으로 엄청 어려운 무언가를 하는 것 처럼 보이고 이상한 식들 막 적어놓고 &#8216;뭐야 저거 무서워&#8217; 이런 느낌으로 바라보기 마련이다. (저 식은 뭔지 모르겠는데 error function 관련된 식이 아닐까 싶네). 그리고 나는 내가 하는 일이 진짜 멋있는 일이라고 생각하지만 실제로 내가 하는건 남들이 만들어놓은 library를 import해서 사용하는게 전부라는 짤이다 ㅋㅋㅋ</p>
 
 
-<p>라고 정의했었다. 마법과 같은 기술이라! 어디서 저런 중2병 스멜나는 용어를 가져왔는지 참.. 아무튼 내가 이쪽을 더 공부해보면서 느낀건, 결국에 이 Machine Learning이라는 것은 일종의 Modeling Problem이라는 것이다. 무슨 얘기냐? 머신러닝이란 &#8216;주어진 데이터&#8217;에 대해 &#8216;현상&#8217;을 &#8216;가장 잘 설명할 수 있는 관계&#8217;를 찾아내는 것이라 했었는데, 이 말을 조금 수학적으로 풀어내면 주어진 &#8216;데이터&#8217; \(X = (x_1, x_2, x_3, \ldots, x_n)\) 이 있을 때 이 데이터와 실제 &#8216;현상&#8217; \(Y = (y_1, y_2, \ldots, y_n) \)에 대한 &#8216;관계&#8217; function \(f\)를 찾아야한다. 당연히 우리가 정확한 함수 \(f\)를 찾아낼 수는 없으므로 &#8216;최대한 잘 설명할 수 있는&#8217;, 함수 \(f&#8217;\)을 찾아내야 한다. 이를 Hypothesis라고 한다. 즉, 이 모든 과정을 일종의 Modeling process로 생각이 가능하다는 뜻이다. 다만 우리의 새로운 process는 for given data에 대해 dependent한 model을 만들어낸다는 점이 독특한 것이다.</p>
+<p>이 하나의 짤방에서 참 많은 얘기들을 할 수 있을 것 같은데.. 일단 내가 앞으로 얘기할 Machine Learning이라는 것은 위의 그림에서 찾자면 what other programmers think I do와 거의 흡사하다. 이유는 내가 하려는 부분이 알고리듬과 관련된 부분이 많고 모델링 등등 수학적인 무언가를 요구하고 저런 계산들을 통해 이론적으로 각 알고리듬이나 모델들의 무언가를 도출하는&#8230; 그런 과정들을 다루려는 것이기 때문이다. 자세한 얘기는 조금 더 뒤에서 할 수 있도록 하자.</p>
 
 
-<p>스팸필터를 생각해보자. 데이터 X는 메일들이다. 우리가 받는 메일 하나하나가 데이터가 될 수도 있고, 그 메일 안에 있는 단어 하나하나가 될 수도, 혹은 아예 알파벳 하나하나가 될 수도 있다. 그것은 우리가 정하기 나름이니까. 그럼 현상 Y는 무엇일까? 각각의 메일이 스팸인지, 아니면 일반 메일인지 구분하는 구분자, indicator, 혹은 Label, Class가 될 것이다. 마지막으로 가장 잘 설명할 수 있는 함수는 이런 데이터들을 가지고 어떻게 Learning을 할 것인지에 대한 얘기가 될 것이다. 예를 들어 Naïve Bayes라던가, KNN, SVM도 있고, 요새 핫한 Deep learning도 있을 수 있다.</p>
+<h5 id="57-1-WhatMLE">What is Machine Learning? - Easy Answer</h5>
 
 
-<p>그러면 이 함수로 우리는 무엇을 하고 싶은걸까? 단순히 데이터와 현상의 관계를 함수로 나타내는 것이 무슨 의미가 있지? 이것이 의미가 있는 이유는 우리가 새로 주어진 데이터, 혹은 test data에 대해 새로운 추론, inference를 하는 것이 가능하기 때문이다. 이 메일은 스팸인가? 이런 쇼핑 목록을 가진 사람은 또 뭘 사고 싶어할까? 이런 날씨에는 고속도로가 막힐까 막히지 않을까? 이런 질문들에 대해 앞서 우리가 정의한 방식대로 Machine Learning problem을 풀어 새로운 Hypothesis를 통해 우리는 inference를 내릴 수가 있다. 이런 inference가 맞을 수도 있고 틀릴 수도 있다. 그러나 우리는 최대한 좋은 방법으로 Learning을 한다면 좋은 inference를 할 수 있을 것이라고 생각할 수 있다. 이 &#8216;좋은 방법&#8217; 을 위해 도입되는 개념이 바로 cost function이다. 내가 원하는 결과와 실제 내가 찾아낸 가설과의 괴리가 얼마나 있는지를 function으로 정의하는 것이다. 가장 간단한 예로, 스팸 필터에서 &#8216;스팸이다 아니다&#8217;라는 질문이 틀리면 cost function은 1, 맞으면 0이라고 하자. 그렇게 정의하면 이 cost를 최소화 하는 방향으로 model을 learning하면 결국 가장 잘 맞추는 model을 얻을 수 있겠지.</p>
+<p>자 그러면 본론으로 들어가서 Machine Learning은 과연 무엇일까. 여러가지로 설명을 할 수 있겠지만 내가 예전 <a href="http://SanghyukChun.github.io/3" target="new">Andrew Ng. 교수의 Machine Learning Lecture를 들으며 정리했던 글</a>에 정의했던바에 따르면, &#8216;머신러닝은 그 관계를 알 수 없는 수 많은 데이터들 사이에서 관계를 찾아내주는 마법과 같은 기술이다.&#8217; 라는 얘기를 했었다.</p>
 
 
-<p>즉, 머신러닝이란, 완전히 raw한 데이터를 다루는 과정, 예를 들면 Dimensionality reduction, Metric Learning 등의 과정에서부터 시작해서, 어떻게 Learning할 것이냐, model이 무엇이냐, 조금 더 구체적으로 얘기하면 어떤 Algorithm을 사용해 이 model을 learning할 것이냐라는 문제를 풀어내고, 마지막으로 어떻게 결정을 내릴 것이냐, decision making을 할 것이냐 하는 이 여러개의 과정으로 나뉘어지는 것이다. 내가 관심있는 부분은 주로 어떤 model을 사용할 것이냐, 또 어떤 방법으로, 어떤 algorithm으로 이 model을 learning할 것이냐에 관심이 있다. 또 추가로 관심이 있는 부분이라면, 어떤 문제가 있을 때 그 문제를 Machine Learning의 관점에서 풀어내는 것도 좋아하고.. 예를 들면 추천 알고리듬 같은게 있겠다.</p>
+<p>마법과 같은 기술이라는 용어가 조금 유치하기는 하지만, 기본적인 Machine learning의 철학을 잘 반영하는 표현이라고 생각한다. Machine Learning은 컴퓨터에게 우리가 직접 명시적으로 무언가를 지시하지 않아도 데이터를 통해 컴퓨터가 자동으로 판별을 해 performance를 향상시킬 수 있도록 하는 무언가를 의미한다고 할 수 있다. 무슨 얘기이냐하면 예를 들어 우리가 이메일에 들어가는 스팸필터를 만든다고 생각해보자. 가장 간단하게 생각할 수 있는 방법은 blacklist를 만드는 방법이 있다. 사용자들에게 많이 report가 된 나쁜 email들을 모아서 blacklist에 지정하는 것이다. 그런데 이런 방법은 회피방법이 명확하다. 보낸 사람을 이상하게 바꿔 보내면 된다. 그러면 이제 메일의 제목이나 안에 들어가는 내용을 사용해 필터링을 해야하는데, 역시 가장 간단한 방법은 blacklist이다. 광고, 싸게, 이런 단어들이 들어가면 일단 차단을 시키는 방법이다. 그런데 이 방법은 우회하기도 쉬우며 (광.고. 라고 쓴다거나) 이런 방식으로 쓰이는 모든 단어를 추가할 수도 없으며, 일상 생활에서도 쓰일 수 있는 표현이 있을 수 있기 때문에 멀쩡한 사람의 email을 spam이라고 인식하게 되는 끔찍한 일이 벌어질 수 있다. 즉, 이런 식으로 일일이 blacklist를 조정하는 방식으로 프로그래밍을 하는 것을 &#8216;명시적으로 무언가를 지시한다&#8217; 라고 표현한 것이다. Machine Learning 적인 접근 방법으로 이 문제를 바라보게 되면, 컴퓨터에게 스팸인 email과 스팸이 아닌 email들을 주고, 스팸인 email들이 왜 스팸인지 &#8216;Learning&#8217;을 시켜서 &#8216;데이터를 통해 컴퓨터가 자동으로 판별을 해&#8217; 스팸을 걸러내는 방식을 취하는 것이다. 그리고 데이터를 통해 배우는 것이기 때문에 데이터가 많아질 수록 performance역시 증가하게 될 것이다. 이런 모든 것이 바로 Machine Learning이라고 할 수 있는 것이다.</p>
 
 
-<p>사실 이렇게 머신러닝을 정의하기에는 조금 어정쩡한 부분이 있는 것이 사실이다. 그럼 Unsupervised Learning은?? Reinforcement Learning은? 그 이외에도 많은 것들을 이 정의만 가지고 설명하기에는 사실 무리가 있는 것이 맞지만, 그래도 이런 컨셉으로 이해를 하게 된다면, 즉 Machine Learning이 근본적으로 model, algorithm 문제라는 것을 이해하게 된다면 이 녀석들에 대한 이해도 빠르게 할 수 있지 않을까 생각된다. 위에 링크 건 <a href="http://SanghyukChun.github.io/3" target="new">예전 글</a>에 이와 관련된 글들이 있으니 궁금하면 읽어보면 될 것 같다.마찬가지 이유로, 요즘 유행하는 Big Data 역시 근본적으로는 Machine Learning의 일부라는 것을 알 수 있다. <a href="http://SanghyukChun.github.io/21" target="new">이에 대한 글</a>도 이전에 적은 적이 있으니 참고바란다. 달라지는 점이라면 algorithm이 굉장히 빨라야 한다하거나, Memory efficient 해야한다거나, 아니면 분산처리가 가능해야한다거나 하는 새로운 challenge들이 존재하기는 하지만, 근본적으로는 같다고 봐도 무방하다. 즉, 이 머신러닝이라는 것을 제대로 이해하고 다룰 수 있다면 정말 많은 문제들을 해결할 수 있다는 의미가 될 것 이다.</p>
+<h5 id="57-2-WhatMLD">What is Machine Learning? - Modeling View</h5>
 
 
-<p>마지막으로 조금 더 구체적인 예를 들어보자. 아까 예를 들었던 스팸 필터를 예로 들어보자면, 일반적으로 &#8216;머신러닝이 아닌&#8217; 스팸필터를 생각해보자. 가장 간단한 방법으로는 Black list가 있을 것이다. 해당하는 계정이 보낸 메일은 스팸으로 처리하는 방법이 있다. 하지만 이렇게 rule을 정해버릴 경우 그것을 우회하는 방법은 무수히 많다. 계정은 무한하게 생성 가능하니까. 그걸 보완하는 방법으로 White list가 있다. 허용하는 이메일만 accept를 하는 것이다. 하지만 이 역시 완전하지는 않다. 우리는 언제나 새로운 사람과 연락을 해야하는 경우가 있으니까. 즉, Machine Learning이 아닌 접근 방법은 어떤 deterministic한 rule을 통해서 동작하게 되며, 그것을 개선시키는 것은 온전히 사람의 몫이다. 그러나 머신러닝을 적용한 스팸필터는 우리가 특정 모델을 정의하고 난 이후에는, 예를 들어서 지금은 단어마다 그 단어가 포함되면 스팸일 확률을 계산해서 최종적인 확률을 계산하는 방식을 도입했다고 해보자. (naïve bayes) 처음에는 완벽하지 않겠지만, 데이터가 늘어나면 늘어날수록 이 모델의 정확도는 높아지게 될 것이다. 사람이 따로 룰을 정할 필요가 없이 machine이 스스로 알아서 improve가 되는 것이고, 더 나은 것을 learning하게 되는 것이다. 하지만 단점도 물론 존재한다. 같은 예를 계속 얘기해보면, 스팸이 아닌데 스팸으로 취급한 경우에 과연 머신러닝으로 접근한 방법은 디버깅을 어떻게 해야할까? 사람이 따로 rule을 정할 필요가 없다는 말은 반대로 말하면 사람이 rule에 미칠 수 있는 영향력이 크지않다는 의미도 된다. (나중에 decision theory에서 보면 알 수 있겠지만 항상 그런 것은 아니다.) 즉, 언제나 machine learning에는 error가 존재하는데, 이 error가 optimal한 point까지 도달하고 나면 debug할 수 있는 방법이 없다는 것이다. 반면 머신러닝이 아닌 방법은 특정 사람이 스팸필터에 걸리면 그때그때 룰을 수정해서 디버깅을 할 수 있다. 그리고 computation power에 대한 문제도 있을 수 있다. 머신러닝은 많은 데이터에서부터 모델을 learning해야하기 때문에 당연히 그냥 deterministic한 방법보다 계산량이 많아지게 되는 것이다. 이런 여러가지 장단이 있기 때문에 머신러닝이 항상 능사는 아니라고 할 수 있을 것이다.</p>
+<p>그러면 Machine Learning을 조금 더 수학적으로 정의해보자. 수학적으로 Machine Learning problem을 기술해보면 아래와 같은 얘기를 할 수 있다.</p>
 
 
-<p>그런데 왜 이렇게 머신러닝을 중요하게 생각하는 것일까? 그것은 이제는 위에서 말한 문제점들이 더 이상 문제점이 아니기 때문이다. 문제점은 크게 두 가지였는데, 하나는 error였고, 또 하나는 computation이었다. Machine learning의 많은 모델들은 이론적으로 데이터가 무한하게 존재하는 경우 가장 이론적으로 작은 error를 생산해낸다. 그리고 그 뿐 아니라, 최근에는 사람이 눈으로 데이터의 rule을 정하기에는 데이터가 상상이상으로 많기 때문에 (소위 빅데이터라고 불린다) 사람이 직접 룰을 정하는 것에 무리가 생기는 경우가 많다. 즉, 사람이 rule을 결정하기가 점점 어려워지고 있는 것이다. 스팸 필터가 좋은 예인데, 사람이 아무리 좋은 룰을 만들어내도 새로운 스팸이 계속 생겨나게 된다. 그러나 우리가 모든 스팸메일을 가지고 있다면 machine learning approach는 더 나은 결과를 return 할 수 있을 것이다. 그리고 두 번째 문제는 최근에 하드웨어의 성능이 엄청나게 빠른 속도로 좋아지고 있을 뿐 아니라, 알고리듬의 측면에서도 여러가지 분산처리 알고리듬이 많이 개발이 되고 있어 계산량을 급격하게 감소시켜 빠르게 계산을 처리하는 것이 가능해졌다. 이런 이유들로 최근 머신러닝이 급부상하고 있는 것이 아닐까한다. 거기에다 이런 이유들, 데이터의 폭발적인 증가, 하드웨어의 개선, 분산처리 알고리듬의 개발 등은 지금 한순간 반짝하는 것들이 아니라 앞으로도 계속 비전이 있는 이유들이기 때문에 앞으로 머신러닝이라는 field 자체가 계속 좋은 방향으로 나아가지 않을까 기대가 된다.</p>
+<ul>
+<li>Experience E를 Learning할 Computer Program</li>
+<li>그리고 각각의 E에 대응되는 class of task T</li>
+<li>Task의 Performace Measure P</li>
+<li>Machine Learning이란 Experience E를 사용하여 (Learning하여) task T의 performance P가 개선이 되도록 하는 program (Algorithm)</li>
+</ul>
+
+
+<p>위에서 기술한 Machine Learning이라는 것은 일종의 Modeling Problem으로 생각할 수 있다. 무슨 얘기냐? 머신러닝이란 &#8216;주어진 데이터&#8217;에 대해 &#8216;현상&#8217;을 &#8216;가장 잘 설명할 수 있는 관계&#8217;를 찾아내는 것이라 했었는데, 이 말을 조금 수학적으로 풀어내면 주어진 &#8216;데이터&#8217; \(X = (x_1, x_2, x_3, \ldots, x_n)\) 이 있을 때 이 데이터와 실제 &#8216;현상&#8217; \(Y = (y_1, y_2, \ldots, y_n) \)에 대한 &#8216;관계&#8217; function \(f\)를 찾아야한다. 당연히 우리가 정확한 함수 \(f\)를 찾아낼 수는 없으므로 &#8216;최대한 잘 설명할 수 있는&#8217;, 함수 \(f&#8217;\)을 찾아내야 한다. 이를 Hypothesis라고 한다. 즉, 이 모든 과정을 일종의 Modeling process로 생각이 가능하다는 뜻이다. 다만 우리의 새로운 process는 for given data에 대해 dependent한 model을 만들어낸다는 점이 독특한 것이다.</p>
+
+
+<p>그렇다면 Machine Learning은 어떻게 진행이 될까. 먼저 problem setting이 필요하다. 다음과 같은 setting이 필요한데, (1) Set of possible instances (domain) X (2) Output Y (3) Unknown target function \(f:X\to Y\) (4) Set of function hypothesis space \(H \in \{ h| h: X\to Y \} \). 이는 곧 앞서 대략적으로 설명했던 function, hypothesis 등등에 관련된 설명을 조금 더 수학적으로 풀어낸 것이다. 여기에서 주목할 것은 네 번째 set of function hypothesis space인데, 이는 우리가 모든 function들을 확인할 수가 없기 때문에 그럴 것이다 라고 추측할 수 있는 function들의 set으로만 한정을 짓겠다는 의미가 되는 것이다. 이런 problem setting이 완료되고 나면 learning을 하기 위한 input data가 필요한데 이를 training data라고 한다. training data는 \(\{ \langle x_i, y_i \rangle &#92;}\) 식으로 주어지는데, 이때 supervised learning은 class 혹은 label이 주어지는 경우를 의미하고, unsupervised learning은 이 y가 존재하지 않는 경우이다. 마지막으로 Machine Learning의 output으로 \(h\in H\) 인 h 중에서 target function f와 가장 유사한 hypothesis를 고르게 되는데, 고르는 방법은 performance measure를 했을 때 가장 좋은 performance를 가지는 hypothesis를 선택하는 방식으로 고르게 된다.</p>
+
+
+<p>이를 조금 더 보기 쉽게 기술해보자.</p>
+
+
+<p>먼저 problem setting</p>
+
+
+<ul>
+    <li>Set of possible instance(domain): X</li>
+    <li>Output: Y</li>
+    <li><p>Unknown target function \(f:X \to Y\)</p></li>
+    <li><p>Set of hypothesis function space \(H \in \{h|h:X \to Y\}\)</p></li>
+</ul>
+
+
+<p>Input</p>
+
+
+<ul><li><p>Traing example \(\{ \langle x_i, y_i \rangle &#92;}\)</p></li></ul>
+
+
+<p>Output</p>
+
+
+<ul><li><p>\(h\in H\) that best approximates target function f with some performance measure</p></li></ul>
+
+
+<p>위에서 설명한 얘기를 그림으로 설명하면 아래와 같은 그림을 그릴 수 있다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/57-2.png" width="600"></p>
+
+<p>다시 한 번 스팸필터를 생각해보자. 데이터 X는 메일들이다. 우리가 받는 메일 하나하나가 데이터가 될 수도 있고, 그 메일 안에 있는 단어 하나하나가 될 수도, 혹은 아예 알파벳 하나하나가 될 수도 있다. 그것은 우리가 정하기 나름이니까. 그럼 현상 Y는 무엇일까? 각각의 메일이 스팸인지, 아니면 일반 메일인지 구분하는 구분자, indicator, 혹은 Label, Class가 될 것이다. 마지막으로 가장 잘 설명할 수 있는 함수는 이런 데이터들을 가지고 어떻게 Learning을 할 것인지에 대한 얘기가 될 것이다. 예를 들어 Naïve Bayes라던가, KNN, SVM도 있고, 요새 핫한 Deep learning도 있을 수 있다.</p>
+
+
+<h5 id="57-3-WhyML">Why Machine Learning?</h5>
+
+
+<p>그러면 이런 Machine Learning은 도대체 왜 사용하는걸까, 왜 이렇게 핫한걸까? 다시 말해서 Modeling view에서 했었던 표현을 그대로 사용해보자면, Machine Learning에서 찾아낸 Hypothesis로 우리는 무엇을 하고 싶은걸까? 단순히 데이터와 현상의 관계를 함수로 나타내는 것이 무슨 의미가 있지? 이것이 의미가 있는 이유는 우리가 새로 주어진 데이터, 혹은 test data에 대해 새로운 추론, inference를 하는 것이 가능하기 때문이다. 이 메일은 스팸인가? 이런 쇼핑 목록을 가진 사람은 또 뭘 사고 싶어할까? 이런 날씨에는 고속도로가 막힐까 막히지 않을까? 이런 질문들에 대해 앞서 우리가 정의한 방식대로 Machine Learning problem을 풀어 새로운 Hypothesis를 통해 우리는 inference를 내릴 수가 있다.</p>
+
+
+<p>또한 최근 들어서 Machine Learning이 급부상하고 있는 가장 큰 이유 중 하나는 &#8216;빅데이터&#8217; 라는 것이 등장했기 때문이다. 즉, 이전과는 비교할 수 없을 정도로 데이터의 크기가 급격하게 증가하게되었고, 그 어마어마한 데이터에서 어떤 inference를 뽑아낼 수 있다면 그것이 엄청난 효과를 거두게 할 수 있지 않을까라는 생각을 사람들이 하게 된 것이다. 그런데 이걸 explicit하게 일일이 해주기에는 솔직히 너무 힘들고, 기계가 데이터를 읽으면 알아서 inference를 내렸으면 좋겠다라는 needs가 커지게 되었고, 이에 Machine Learning을 사람들이 많이 요구하게 된 것이다. 사실 Machine Learning이 AI의 엄청 오래된 분야임에도 최근 들어서 뜬 가장 큰 이유 중 하나가, 이론적으로 Machine Learning이 아무리 훌륭해도 input data가 없으면 좋은 performance를 내고 싶어도 낼 수 없기 때문인데 최근에는 지천에 널린게 데이터이다보니 Machine Learning이라는 것에 대해 사람들이 많이 중요하게 생각을 하는 것 같다.</p>
+
+
+<p>조금 더 구체적인 예를 들어보자. 아까 예를 들었던 스팸 필터를 예로 들어보자면, 일반적으로 &#8216;머신러닝이 아닌&#8217; 스팸필터를 생각해보자. 가장 간단한 방법으로는 Black list가 있을 것이다. 해당하는 계정이 보낸 메일은 스팸으로 처리하는 방법이 있다. 하지만 이렇게 rule을 정해버릴 경우 그것을 우회하는 방법은 무수히 많다. 계정은 무한하게 생성 가능하니까. 그걸 보완하는 방법으로 White list가 있다. 허용하는 이메일만 accept를 하는 것이다. 하지만 이 역시 완전하지는 않다. 우리는 언제나 새로운 사람과 연락을 해야하는 경우가 있으니까. 즉, Machine Learning이 아닌 접근 방법은 어떤 deterministic한 rule을 통해서 동작하게 되며, 그것을 개선시키는 것은 온전히 사람의 몫이다. 그러나 머신러닝을 적용한 스팸필터는 우리가 특정 모델을 정의하고 난 이후에는, 예를 들어서 지금은 단어마다 그 단어가 포함되면 스팸일 확률을 계산해서 최종적인 확률을 계산하는 방식을 도입했다고 해보자. (naïve bayes) 처음에는 완벽하지 않겠지만, 데이터가 늘어나면 늘어날수록 이 모델의 정확도는 높아지게 될 것이다. 사람이 따로 룰을 정할 필요가 없이 machine이 스스로 알아서 improve가 되는 것이고, 더 나은 것을 learning하게 되는 것이다.</p>
+
+
+<p>하지만 물론 Machine Learning이 항상 능사는 아니고 단점도 존재한다. 같은 예를 계속 얘기해보면, 스팸이 아닌데 스팸으로 취급한 경우에 과연 머신러닝으로 접근한 방법은 디버깅을 어떻게 해야할까? 사람이 따로 rule을 정할 필요가 없다는 말은 반대로 말하면 사람이 rule에 미칠 수 있는 영향력이 크지않다는 의미도 된다. (나중에 decision theory에서 보면 알 수 있겠지만 항상 그런 것은 아니다.) 즉, 언제나 machine learning에는 error가 존재하는데, 이 error가 optimal한 point까지 도달하고 나면 debug할 수 있는 방법이 없다는 것이다. 반면 머신러닝이 아닌 방법은 특정 사람이 스팸필터에 걸리면 그때그때 룰을 수정해서 디버깅을 할 수 있다. 그리고 computation power에 대한 문제도 있을 수 있다. 머신러닝은 많은 데이터에서부터 모델을 learning해야하기 때문에 당연히 그냥 deterministic한 방법보다 계산량이 많아지게 되는 것이다. 이런 여러가지 장단이 있기 때문에 머신러닝이 항상 능사는 아니라고 할 수 있을 것이다.</p>
+
+
+<p>하지만 그럼에도 머신러닝이 최근에 많이 쓰이는 이유는 위에서 말한 문제점들이 더 이상 문제점이 아니기 때문이다. 문제점은 크게 두 가지였는데, 하나는 error였고, 또 하나는 computation이었다. Machine learning의 많은 모델들은 이론적으로 데이터가 무한하게 존재하는 경우 가장 이론적으로 작은 error를 생산해낸다. 그리고 그 뿐 아니라, 최근에는 사람이 눈으로 데이터의 rule을 정하기에는 데이터가 상상이상으로 많기 때문에 (아까 언급했던 빅데이터) 사람이 직접 룰을 정하는 것에 무리가 생기는 경우가 많다. 즉, 사람이 rule을 결정하기가 점점 어려워지고 있는 것이다. 스팸 필터가 좋은 예인데, 사람이 아무리 좋은 룰을 만들어내도 새로운 스팸이 계속 생겨나게 된다. 그러나 우리가 모든 스팸메일을 가지고 있다면 machine learning approach는 더 나은 결과를 return 할 수 있을 것이다. 그리고 두 번째 문제는 최근에 하드웨어의 성능이 엄청나게 빠른 속도로 좋아지고 있을 뿐 아니라, 알고리듬의 측면에서도 여러가지 분산처리 알고리듬이 많이 개발이 되고 있어 계산량을 급격하게 감소시켜 빠르게 계산을 처리하는 것이 가능해졌다. 이런 이유들로 최근 머신러닝이 급부상하고 있는 것이 아닐까한다. 거기에다 이런 이유들, 데이터의 폭발적인 증가, 하드웨어의 개선, 분산처리 알고리듬의 개발 등은 지금 한순간 반짝하는 것들이 아니라 앞으로도 계속 발전이 될 것으로 기대가 되는 상황에서 Machine Learning은 매우 훌륭한 도구가 될 수 있다.</p>
+
+
+<h5 id="57-4-ClassML">Class of Machine Learning</h5>
+
+
+<p>앞서 설명한 대로 Machine Learning을 정의하게 되면 완전히 raw한 데이터를 다루는 과정, 예를 들면 Dimensionality reduction, Metric Learning 등의 과정에서부터 시작해서, 어떻게 Learning할 것이냐, model이 무엇이냐, 조금 더 구체적으로 얘기하면 어떤 Algorithm을 사용해 이 model을 learning할 것이냐라는 문제를 풀어내고, 마지막으로 어떻게 결정을 내릴 것이냐, decision making을 할 것이냐 하는 등의 모든 여러 과정들이 Machine Learning의 종류라고 할 수 있다.</p>
+
+
+<p>하지만 일반적으로 Machine Learning의 class를 나누는 방법은 Supervised Learning, Unsupervised Learning, Reinforcement Learning으로 나뉜다. 쉽게 생각해서 Supervised Learning, Unsupervised Learning의 차이점은 데이터에 Label이 있느냐 없느냐의 차이이다. <a href="http://SanghyukChun.github.io/3" target="new">이전 글</a>에 내가 전에 설명한 적이 있으니 이에 대해 궁금한 점이 있다면 읽어보기를 권한다.</p>
+
+
+<p>Reinforcement Learning은 &#8216;action&#8217;을 learning하는 것인데, 어떤 환경에서 내가 action을 취할 때 마다 다른 reward를 받는다고 할 때, 내가 어떻게 action을 취해야 reward를 maximize할 수 있는가를 Learning하는 학문이다. 이 부분도 cover하고 싶고 나도 관심이 있는 부분이지만 아마 이 스터디에서는 다루지 못하지 않을까싶다.</p>
+
+
+<h5 id="id-57-5-aboutStudy">About This Machine Learning Study</h5>
+
+
+<p>이 스터디는 앞으로 내가 틈이 나는 대로 계속 글을 작성할 예정이다. 앞서 말한대로 주로 Bishop을 중심으로 작성하게 될 것 같으며, 필요하면 다른 책이나 논문을 참고해서 글을 작성해보려 한다. 이 스터디에 내가 작성한 다른 글들을 읽고 싶으면 아래 리스트에서 원하는 항목을 찾아 읽으면 될 것 같다.</p>
 
 
 
@@ -598,6 +752,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -636,48 +804,6 @@
 
 
 <p>ICML에서 여러모로 많은 자극을 받았다. 재미도 있었고. 내년 ICML은 내가 intivation 되서 갔으면 좋겠다! 나도 좋은 논문을 쓸 수 있었으면.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[나의 창작욕에 대하여]]></title>
-    <link href="http://SanghyukChun.github.io/53/"/>
-    <updated>2014-06-14T20:22:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/53</id>
-		<content type="html"><![CDATA[<p>무지막지하게 오래간만에 블로그에 글을 써본다. 시험 기간이라 그런가, 평소에는 어떤 글들을 쓸지 생각만 잔뜩해두고 있다가 시간이 부족하거나 아니면 내가 해야겠다는 생각을 못하거나 해서 글을 못쓰는 경우가 엄청 많았는데, 이 글은 뭔가 지금 쓰고 싶다는 생각이 들었다. 어쩌면 지금 이 글도 내가 지금 시험 공부에 집중을 못하고 내면에 숨겨진 창작에 대한 욕구가 불타오르는 것을 우회적으로 억누르기 위해서 이 글을 쓰는 것일 수도 있다.</p>
-
-
-<p></p>
-
-<p>생각해보면, 난 어렸을 때 부터 무언가 &#8216;만드는 것&#8217;에 대한 욕구가 굉장히 많았다. 그림을 그리는 것이라거나, 색종이를 오려 붙여서 무언가 새로운 것을 만들거나.. 그래서 내가 엄청나게 많이 봤던 프로그램 중 하나가 EBS의 만들어보아요.. 혹은 참 쉽죠? 로 알려진 밥로스의 그림 교실.. 물론 밥로스의 그림 교실은 아무리 따라해도 따라할 수 없었지만 ㅋㅋㅋㅋ 내가 유치원 혹은 끽해야 초등학교 저학년 시절에 만들었던 것 중에서 가장 기억에 나는 것 중 하나는 신문지로 만든 집.. 집이라기는 그렇고, 그냥 신문지를 둘둘말아 기둥을 만들어서 일종의 직육면체 모양의 미로? 비슷한걸 만드는 거였다. 이런걸로 꽤 집에서 피곤할 만한 짓들을 많이했었지.</p>
-
-
-<p>뭐, 그래서 어렸을 때는 사실 미술 쪽으로 진학을 할 생각도 많았다. 특히 디자인 쪽으로 해보고 싶은 생각이 굉장히 강했는데, 아마 내가 디자인 쪽으로 갔으면 캐리커쳐나 광고 등등 무언가 익살스럽게 만들 수 있는 쪽으로 가지 않았을까.. 아 물론 만약 디자인을 골랐다면 전공은 분명히 평면 디자인으로 갔을 것 같다. 아니면 만화라거나. 하지만 내가 미술에 재능이 아주 뛰어나게 부각되었던 것도 아니고, 사실 내가 부각을 보인 쪽은 수학, 과학 분야 혹은 사회 쪽이었기 때문에 나는 자연스럽게 공부 잘하는 학생들이 걷는 길을 걷게 되었다. 물론 그런 길을 걷게 된 계기는 내가 뚜렷한 목표가 있었기 때문이기도 했었지만.</p>
-
-
-<p>내가 이미 굉장히 어렸을 때 부터 나는 &#8216;기업가&#8217;가 되고 싶었다. Entrepreneurship에서 말하는 그런 기업가. 즉, 창업가가 되고 싶었다. 정주영 회장과 유한일 회장의 일화를 읽고 또 읽으면서 그런 빛나고 또 당당한 사람이 되기를 원했고, 내가 재미있는 분야에서 그런 것들을 해보고 싶었다. 내가 당시에 꽂혀있던건 다양한 종류의 전자기기들. 컴퓨터나 휴대용 음악 재생 기기 등에 많이 꽂혀있었고, 나는 그런 것들을 만들고 싶고, 그런 것들로 성공하고 싶다는 생각을 했었다. 그리고 창업으로 성공한 많은 사람들이 공대 출신이었기에, 나는 우리나라에서 가장 좋은 공대라고 생각되었던 카이스트에 진학하고 싶다는 생각을 이미 초등학생 때, 믿기지 않겠지만 하고 있었다. 그게 무슨 의미를 뜻하는지도 모르는 채로 그런 생각을 하고 있었다는게 용하다고 해야할지 멍청했었다고 해야할지..</p>
-
-
-<p>아무튼 나는 그렇게 수학 과학의 길을 걷게 되었고, 중고등학교 공부가 그렇듯 내가 할 수 있는 창조적인 일이라는건 존재하지 않았다. 내가 당시 재미있게 만들 수 있었던 것들은.. 글쎄 필기 노트라거나 음악 가사 적는거? 생각해보면 내가 적었던 가사들의 순수한 양만 따져본다면 그 시기에 가장 많은 가사를 적었던 것 같다. 어찌보면 글 쓰는 재미를 그때부터 알게 된 것일지도 모르고. 중학교 시절 동안 내가 할 수 있는건 거의 없었지. 그냥 내가 &#8216;만들 수 있는&#8217; 것들은 모나미 볼펜에다가 제도 샤프 넣어서 볼펜 샤프 만드는거 정도? 한 3개 정도 만들었던 것 같다.</p>
-
-
-<p>대학교에 진학했다. 내가 가고 싶다고 생각했던 카이스트로. 아, 물론 고등학교 가서는 카이스트가 아니라 서울대를 가고 싶었지만 난 성적이 모자랐었고, 지금 보면 뭐 서울대보다는 지금 여기가 더 많은 가치를 안겨주었다고 생각이 든다. 세상은 언제나 어떻게 흐를지 모르는거라니깐.. 대학교에 와서 나에게 창조적인 행위를 하고자 하는 욕구를 분출 할 수 있었던 출구는 보고서나 발표 수업이었던 것 같다. 보고서 하나 쓰는 데에도 남들은 그냥 배끼고 별로 의미를 부여하지 않는 것들에도 나는 그 하나를 정교하게 만들기 위해서 많이 노력하고 엄청나게 많은 내가 아는 지식들을, 모른다면 그 지식들을 배워서라도 채워넣으려고 했었다. 그 결과 나는 물리 실험에서 A+를 받았고.. 그 보고서들은 지금 읽어봐도 진짜 열심히 했다는게 느껴진다. 뭔가 짠하네.. 그리고 또 하나의 분출구가 PPT. 디자인을 하고 싶었던 욕망이 PPT로 많이 분출된 것 같다. 어찌보면 내가 하고 싶었던 것은 스티브 잡스이지, 워즈니악이 아니었는데 나는 잡스를 꿈꾸면서 워즈니악이 되는 커리큘럼을 밟는다는 것이 큰 스트레스였다.</p>
-
-
-<p>그러나 결국 그 창작욕들이 가장 크게 분출된 곳은 개발이 아니었을까. 4학년이 끝나고, 컨설팅에 대한 회의를 느끼고, 동시에 연구 역시 내 길이 아니라고 생각하고 있을 때 쯤, 이음에서 인턴을 할 기회가 생겼다. 물론 힘든 일도 많기는 했지만 결론적으로 말하자면 엄청나게 많은 것을 배운 것 같다. 그 중에서 가장 크게 배운 것은 내가 무엇을 할 수 있고 내가 무엇에 재미를 느끼고 내가 해야할 것이 무엇인지 배웠다는 것. 엄밀히 말하면 배운 것은 아니고 깨달은 것이라는게 맞을 것 같다. 누가 알려준 것이 아니라 내가 일을 하면서 그런 것들에 대해 진지하게 생각해보고 결론을 내릴 수 있었던 것이니까. 결국 내가 할 수 있는 것들 중에서 가장 내가 재미있게 할 수 있는 것은 무언가를 만드는 것이었다. 만드는 것. 얼마나 창조적인 단어인가. 근래에 정부가 계속 창조경제 창조경제 하지만, 그 의미가 무엇이건, 혹은 내가 그 정책에 대한 우호도가 어떻던지간에 분명 창조경제라고 일컬어지는 것의 근간은 만드는 것이다. 새로운 것을 만들어내고 그 안에서 새로운 가치를 창조해내는 것. 그리고 단순히 만들기만 하는 것은 재미가 없다. 남들이 만들었던 것을 그대로 다시 만든다거나 혹은 예전에 만들었던 것들을 그대로 다시 만드는 것은 재미가 없다. 그 동안 그 누구도 해보지 못했던 새로운 것을 만드는 것이 재미있는 것이지. 그리고 놀랍게도, 소프트웨어 영역에서 무언가를 만드는 일은 그 동안 해왔던 것을 반복하는 것도 아니며, 단순히 정해진 언어에 맞추어 내가 내 논리를 풀어내며 말을 하는 것에 불과했었다. 그래서 프로그래밍이 논리의 영역이라고 하는 사람들도 있지만, 그 논리가 어떤 것에 대한 논리인가를 생각해내는 것도 엄청 중요하다. 그런 것들이 내 안의 어떤 창조에 대한 욕구를 자극했고, 나는 개발에 내 창작열을 마구 불태웠다.</p>
-
-
-<p>회사에서 누가 시킨 것도 아닌데 새로 통계 프로그램을 뜯어 고치고, 매번 말썽을 부리던 시스템을 뜯어고치고 내가 새로 어드민 페이지를 만들어내고.. 테스트 페이지가 필요하다해서 다른 페이지들에서 영감을 얻어서 새로운 테스트페이지를 만들어내고.. 사실 대단한 일들은 아니었다. 하지만 시키지 않은 일을 했다는 것에 대해서, 그리고 그 안에서나마 잠시라도 기획서나 남들이 시키는 일에서 해방될 수 있다는 점에서 참 행복했었다. 멍청하게 그때 그 화면들을 캡쳐를 해놨어야했는데 하나도 캡쳐를 안해놔서 다시 보고 싶어도 볼 수가 없다.. 물론 reproduce는 무지 빨리 할 수 있겠지만. 아무튼 그렇게 이음을 그만두고 나서도 나는 그런 무언가를 만드는 혹은 개발하는 일을 꾸준히 했던 것 같다. 그 중 하나가 바로 이 블로그였고, <a href="http://sanghyuk.kaist.ac.kr/aboutMe/" taget="new">aboutMe</a>였고, 그 이외에도 만들었던 수 많은 페이지들이 그런 것들을 뿜어내는 역할을 했던 것 같다.</p>
-
-
-<p>사실 이 글을 쓰게 된 이유는 연구실 쇼파에 누워서 쉬던 중 갑자기 쇼파있는 쪽에 간단한 장판이나 매트를 깔면 엄청나게 좋은 휴식 공간이 될 것 같다는 아이디어가 불현듯 떠올랐었기 때문이다. 내 창작욕을 가장 크게 분출했던 곳 중 하나가 바로 연구실 디자인이었는데, 이미 완성이 되어있는 공간을 어떻게 활용해야 가장 아름답고 효율적이고 좋게 만들 수 있을까에 대해 정말 많이 고민했었고 고민 끝에 지금과 같은 내가 생각해도 참 만족스러운 배치가 나왔다. 물론 아직 내가 생각했었던 것들이 완전히 구현된 것은 아니다. 아직도 들어와야 할 가구나 비품들이 더 있지만 조금만 더 기다리고 방학 때 마무리를 할 생각이다. 아마 방학이 되면 내 창작욕을 불태울 새로운 장난감, 서버가 생길테니까 그런 일에 많이 시간을 못 쓸 수도 있겠지만.. ㅋㅋ</p>
-
-
-<p>그러니깐 내가 하고 싶은 말은 어린 시절 불타오르는 창작에 대한 욕구를 조별과제나 보고서 같은 의외로 학구적인 일들에 쏟아왔었고, 그리고 고학년이 되어서는 개발을 하는 것에 그 욕구를 해소하고 남는 시간에는 연구실을 꾸미면서 그런 욕구를 해소했던 것 같다. 요리라거나 인테리어에 관심이 많았던 것도 어떻게보면 같은 맥락인 것 같고. 그래서 학기 중에 K가 나에게 새로운 것을 만드는 일을 같이 해보지 않겠냐고 물어봤을 때 굉장히 가슴이 뛰고 당장이라도 무언가를 만들어보고 싶은 욕구에 사로잡혀 고생을 조금 했었던 것 이기도 하고.. 근래 관심이 생기는 것들은 셀프 인테리어라거나 DIY 쪽이다. 사실 이 쪽에 관심이 없었던 것은 아니지만 내가 이런 것들을 할 수 있는 공간이 거의 없었지만, 이제 연구실이 생겼고, 심지어 연구실도 새 연구실이다! 문자 그래도 내가 하자는 대로 모든 것들이 이뤄지는 셈. 심지어 교수님께서도 협조적이시다. 나는 이런 것들을 하는 것이 재미있고 더 좋은 공간을 만드는 것에 엄청나게 관심이 있다보니 그런 것들이 시너지를 일으켜서 점점 더 괜찮은 공간을 만들어가고 있다는 그런 생각도 든다. 그런 것들의 공통점은 새로운 것이라는 점, 그리고 또 어떻게 보면 내가 살고 있는 공간을 바꾼다는 점이 아닐까 싶다. 그래서 내가 갑자기 배워보고 싶다는 생각이 든 것이 목공이다. 생각해보면 내가 목공을 잘 했다면 혹은 조금이라도 알았더라면 많은 것들을 만들 수 있었을 것 같다. 특히 그냥 간단한 선반이나 아니면 박스형 수납장, 심지어 내가 지금 쓰고 있는 해피해킹의 팜레스트 정도는 만들 수 있지 않을까? 팜레스트는 사실 별로 필요없기는 한데.. 아무튼 그런 새로운 것들을 만드는 작업들을 배워보고 싶다는 그런 생각이 들었다.</p>
-
-
-<p>내가 대학원에 온 가장 큰 이유는 새로운 것, 그동안 남들이 하지 않았던 혹은 해보고 싶었어도 능력이 없어서 해보지 못했던 것들을 하기 위함이었다. 결국 그런 욕구에 충실하게 살아가다보면 뭐가 되더라도 되지 않을까? 그런 생각이 들었다.</p>
 
 ]]></content>
   </entry>
@@ -2167,79 +2293,6 @@ End of technical program of Day 2<strong> </strong>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[행복에 대한 단상]]></title>
-    <link href="http://SanghyukChun.github.io/41/"/>
-    <updated>2014-03-22T17:02:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/41</id>
-		<content type="html"><![CDATA[<h5>#1</h5>
-
-
-<p>사실 나에게 있어 &#8216;행복&#8217;이라는 단어는 막연하고 추상적인 단어에 불과했다. &#8216;행복해지기 위해서 살아간다&#8217; 라는 이야기를 들어도 당장 내가 행복한 것도 아니었고, 나에게 있어서 중요한 것은 당장 행복해지거나 미래에 행복을 향해서 달려가는 것이 아니라 나에게 주어진 일을 해내는 것이나 혹은 내가 목표로 하는 무언가에 도달하는 것에 더 급급했었기 때문이다. 그 때문인지는 몰라도 그런 &#8216;달려나가는 것&#8217;과는 연관없는 연애 등에도 무심했던 것일지도 모른다.</p>
-
-
-<h5>#2</h5>
-
-
-<p>생각해보면 그렇다. 내 인생에 있어서 많은 (부정적인) 영향을 미쳤던 초등학교를 졸업한 이후로 나는 줄곧 &#8216;경쟁&#8217;이라는 시스템 안에서 살아왔고 그에 어느새 자연스럽게 적응하고 순응해버렸다. 중학교부터 과학고등학교 입시 경쟁에 뛰어들면서 내 하루하루는 나를 위한 것이라기 보다는 입시를 위한 무한한 경쟁 속을 살아가는 것에 불과했을지도 모른다. 그런 와중에 내 행복에 대한 감각은 서서히 무뎌지고 끝내 퇴화해버렸을지도 모른다.</p>
-
-
-<h5>#3</h5>
-
-
-<p>대학에 들어와도 크게 달라지지 않았다. &#8216;징벌적 수업료&#8217;, &#8216;연차초과자에 대한 불이익&#8217;, &#8216;강제적 영어수업&#8217; 등은 나를 더 초조하고 불안하게 만들었으며 하루 종일 도서관에 앉아 공부를 하지 않고서는 도저히 안심할 수 없도록 만들었다. 그 누구의 탓도 아니었지만 나는 결국 내 자신이 선택하여 다시 그런 삶을 살기로 결정했던 것이다. 그렇게 카이스트에서 3년이라는 시간을, 나는 친구를 사귀거나 추억을 만드는 일보다 치열하게 사는 일에 더 집중했었다.</p>
-
-
-<h5>#4</h5>
-
-
-<p>그러던 중 카이스트에 짧은 시간 동안 큰 일이 터지게 되었고, 학교에서는 이에 대한 근본적인 해결법을 모색하기 시작했고, 그 결과 2012년 봄에 &#8216;행복론&#8217;이라는 수업을 개설하게 되었다. 나는 그 당시 내가 좋아하던 사람의 같이 수강하자는 꾀임에 빠져 그 수업을 수강하게 되었다. 수업은 그야말로 최악이었다. 카이스트 안의 그 어떤 강의실에도 수용할 수 없는 대규모 인원은 창의관에서 가장 많은 인원이 들어갈 수 있는 터만홀에서조차 바닥에 앉아야하는 상황이 발생했다.</p>
-
-
-<h5>#5</h5>
-
-
-<p>당시 나는 MSK에서 팀장을 하고 있었고, 그 수업이 1시 수업이었음에도 불구하고 12시 이전에 일찍 자리를 맡으러 가는 것이 너무 버거웠고 매일 바닥에 앉아 수업을 들어야했다. 거기에 수업 내용도 &#8216;행복론&#8217;이라기보다는 소소한 영역에서도 행복함을 찾았던 교수 본인의 인생사를 늘어놓는 것에 불과했다. 나는 마이클 샌델이 강의했던 행복론 등의 강의를 기대했었지만 점점 나는 그 강의에 대해 짜증이 나기 시작했고 나는 그 강의를 들을 때 마다 불행해졌다.</p>
-
-
-<h5>#6</h5>
-
-
-<p>그러던 중 어느날 그런 생각이 들었다. 이 많은 사람들 중에서 나처럼 모든 것이 불행하고 힘들고 짜증나는 사람도 있지만 교수처럼 모든 일에서 행복에 대해 논하고, 같은 환경에서도 더 즐거운 삶을 살면서 자신의 삶에 대해 만족감이 높은 사람들이 있는 것은 왜일까? 저 사람은 그 동안 어떤 삶을 살았기에 저렇게 행복한 삶이라고 본인이 당당하게 말할 수 있을까? 그런 생각을 하는 순간 나는 나를 불행하게 만드는 주체가 다름아닌 나였다는 사실을 깨닫게 되었다.</p>
-
-
-<h5>#7</h5>
-
-
-<p>학기가 끝나고 나는 이음에서 인턴을 하게 되었다. 처음에는 정말 행복했다. 내가 꼭 하고 싶었던 벤처에서의 생활, 모두에게서 배울 점이 있다는 사실은 나를 흥분시키기에 충분했고, 작은 것이나마 기여하기 위해 정말 열심히 노력했다. 처음 1주 정도는 정말 행복하고 내가 벤처를 해야겠다는 생각을 했었다는 것을 마음 속 깊숙히 다시 새기게 하는 좋은 계기가 되었다</p>
-
-
-<h5>#8</h5>
-
-
-<p>그러나 거기까지였다. 나는 엄청나게 간단한 일조차 제대로 처리하지 못헀고, 같이 들어온 동기와 계속해서 비교받고 다른 사람들이 나를 무시하고 경멸하는 것을 느끼면서 회사를 다녀야만 했었다. 회사를 나가는 하루하루가 지옥같고 나를 인턴으로 데려온 형과 인연을 끊고 그냥 빨리 퇴사를 해야겠다는 생각까지 진지하게 하고는 했었다. 그때는 정말 내가 쓸모없고 제대로 할 수 있는 일도 없고 모든 사람들이 나를 싫어하는 것만 같아서 너무나 힘들었다.</p>
-
-
-<h5>#9</h5>
-
-
-<p>그러던 내가 결국에는 남들에게 인정받고, 어느 정도는 기여를 할 수 있는 사람이 될 수 있었던 이유는 다른 것이 아니라 내가 내 일을 즐기고, 내가 무언가 도움이 될 수 있다는 것이 행복했기 때문이었던 것 같다. 물론 나를 대놓고 무시하고 경멸하던 사람들이 퇴사를 했던 것도 컸지만, 그보다 더 중요한 것은 내가 내 일에 대해 주인의식을 가지고 그 일을 처리하는 것에서 행복감을 느끼기 시작했다는 것이 더 중요했던 일이었다. 그 이전에 내가 하던 일은 남이 하던 일을 받아서 유지보수를 하며 남이 만들어놓은 버그를 내 힘으로 고치면서 문제가 생길 때 마다 내 몸으로 막으면서 내가 하는 일도 없이 하루하루 지쳐가는 것에 불과했지만, 어느 순간부터 내가 하는 일은 문제를 주도적으로 고쳐나가고 새로운 것을 만드는 일이 되었다. 그럴 수 있었던 이유는 내가 너무 하기 싫고 힘들었던 일을 인정하고 그 일을 고치고 새롭게 시작하면서부터였다.</p>
-
-
-<h5>#10</h5>
-
-
-<p>퇴사를 하고 나서 지구가 한 바퀴 돌고, 나는 카이스트에 석사생이 되어 Machine Learning을 공부하고 있다. 나는 내가 하는 일에 만족하고 행복하지만 가끔 그런 행복에 대한 것을 잊을 때가 있다. 가끔 나는 내가 불행하다고 느끼는데, 그럴 때 마다 나에게 아이러니하게 비춰지는 모습은 카이스트로 피크닉을 나온 행복한 가족과 연인들의 모습이다. 같은 장소에서 나는 이렇게 불행하다고 느끼고 있고 버거워하고 있는데, 저 사람들은 지금 이 순간이 너무나 행복하고 미소를 짓고 있다는 사실이, 나에게는 다시 한 번 행복에 대해서 생각을 하게 하는 좋은 동기가 된다.</p>
-
-
-<h5>마치며</h5>
-
-
-<p>행복이라는 것은 결국 마음먹기 나름인 것인 것 같다. 감정에 있어서만큼은 사람에게는 양성 피드백 루프가 형성되어있는 것 같다. 내가 지금 하는 일이 그저 힘들기만하고 괴롭기만하다고 느끼면 나는 점점 더 힘들어진다. 반면 내가 지금 행복하고 일이 마음에 든다면 점점 나는 행복해지고 그 행복감에 넘쳐 생산성도 덩달아 올라가게 된다. 내가 행복에 대해 고민하게 된 것은 사실 근 2-3년 정도밖에 안되긴 했지만, 분명 행복이라는 것이 사람에게 얼마나 중요한 것인지 다시 한 번 깨닫게 된다. 가끔씩 행복이라는 것을 망각하고, 나를 다시 절망의 구렁텅이로 밀어넣고는 하는데, 그럴 때 마다 나를 끌어올릴 수 있는 것은 오직 나 밖에 없는 것이다. 그런 점에 있어서 최근 싸우자 귀신아의 내용에 많이 공감한다. 그 웹툰에서는 자존감으로 표현하지만, 결국에는 일맥상통하는 개념인 것 같다는 생각이 든다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Coursera Neural Networks for Machine Learning Week2 - Perceptron]]></title>
     <link href="http://SanghyukChun.github.io/40/"/>
     <updated>2014-03-21T07:21:00+09:00</updated>
@@ -2394,6 +2447,249 @@ End of technical program of Day 2<strong> </strong>
     <li>Lecture 14: Deep neural nets with generative pre-training</li>
     <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
     <li>Lecture 16: Recent applications of deep neural nets</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Coursera Neural Networks for Machine Learning Week1 - Neural Network and Machine Learning]]></title>
+    <link href="http://SanghyukChun.github.io/39/"/>
+    <updated>2014-03-17T23:23:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/39</id>
+		<content type="html"><![CDATA[<h5>들어가기 전에</h5>
+
+
+<p>약 반 년 전에 <a href="https://www.coursera.org/" target="new">Coursera</a>에서 <a href="https://class.coursera.org/ml-003/lecture" target="new">Andrew Ng 교수의 Machin Learning Class</a>를 수강한 적이 있다. 사실 당시에 이 course를 수강할 때, 이 course는 introduction course로만 듣고, Geoffrey Hinton 교수의 Neural Network 강의를 들을 생각이었는데, 시간에 쫓기다보니 어느새 나는 석사생이 되었고, 아직도 이 강의를 듣지 못한 상태였다. 그러다가 최근 우연하게 이 강의를 다시 들여다 볼 일이 생기게 되었고, 약 2-3주 동안 이 강의를 듣고 요약글을 꾸준하게 올려 볼 생각이다. <a href="http://SanghyukChun.github.io/10" target="new">예전 글</a>에서 언급했지만, 내가 너무 쉽다고 생각되면 과감하게 중간부터 요약을 관둘 생각이다.</p>
+
+
+<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 첫 주차 강의를 요약한 글이다. 첫 주차이기 때문에 아주 간단한 introduction course이며, 주로 machine learning과 neural network는 무엇인지 아주 간략하게 설명하는 내용이 주가 된다.</p>
+
+
+<h5>Why do we need machine learning?</h5>
+
+
+<p>사실 이 질문은 물론이고, machine learning이란 무엇인지 내가 <a href="http://SanghyukChun.github.io/3" target="new" class="red tip" title="Machine Learning Week1 - What Is Machine Learning">아주</a> <a href="http://SanghyukChun.github.io/21" target="new" class="red tip" title="빅데이터 이야기: 데이터 수집에서 분석까지">많은</a> <a href="http://SanghyukChun.github.io/30" target="new" class="red tip" title="인터넷 속의 수학 - How Does Netflix Recommend Movies?">글</a>에서 다뤘었기에 자세한 언급은 되도록 피하도록 하겠다. 다만 이 lecture에서는 주로 patterns recognition, anomalies recognition, 그리고 prediction 등의 문제에 집중을 하고 있으며, 특히 image를 classification하는 문제에 focus가 되어있다. 이런 문제의 대표적인 예는 MNIST (hand write letter data base), Face recognition 등이 있다. 실제로 내가 예전에 공부했었던 Neural Network의 대부분은 이런 image process에 focus되어있었다.</p>
+
+
+<h5>What are neural network?</h5>
+
+
+<p>그렇다면 neural network란 무엇인가? 이 질문에 대답하기 이전에 먼저 인간의 뇌가 어떻게 동작하는가에 대해 간략하게 알아보자. 인간의 뇌는 아주 많은 neuron(신경)들로 이루어져 있다. 각 neuron들은 synapse라는 통로를 이용하여 information을 전달하게 되는데, 이런 real human neural network 구조를 아주아주 simplify하면, graph의 형태로 표현이 가능해진다! 즉, 각각의 neuron을 graph의 node, 그리고 synapse를 그 node들을 연결하는 edge로 표현하는 것이다. 여기에서 조금 더 real-likely한 modeling을 하기 위해서 두 가지 factor가 추가된다. 하나는 weight이며 또 하나는 bias이다. 먼저 weight에 대해서 설명을 해보자. 실제 neural network 사이에서 information은 ion이 pumping이 되거나 하는 방식으로 이동하게 된다. 그런데 이 information이 모든 상황에 똑같이 전달되는 것이 아니라, 적절한 학습을 통해서 그 양이 조절이 된다. 즉, 우리가 &#8216;컴퓨터&#8217;라는 물체가 무엇인지 인지하는 과정에서 우리의 뇌로 들어오는 시각정보를 처리하기 위해서 각각의 신경세포들이 서로 다른 양의 information을 전달하게 된다는 것이다. 예를 들어서 우리가 컴퓨터를 봤을 때 모든 시각 정보를 총 동원해서 이것이 컴퓨터다! 라고 판단하는 것이 아니라 일부 특정한 feature들 (예를 들어서 모니터와 키보드 마우스가 있는 모습)을 보고 내가 지금 보고 있는 것이 컴퓨터라는 결론을 내리 듯, 우리의 neural network는 자연스럽게 synatic weight를 학습함으로써 더 정확하고 빠른 연산 및 분류가 가능하도록 설계가 되어있는 것이다. 이런 synaptic weight는 우리가 &#8216;학습&#8217;이라고 부른 과정 동안 계속 update가 된다. 그리고 또 하나 bias에 대해 생각해보자. 만약 우리가 데이터 센터에서 근무를 한다면 아마도 상당히 많은 컴퓨터를 보게 될 것이며, 아마도 대충 네모네모하게 생긴 물건들은 컴퓨터일 가능성이 높지 않을까? 반면 내가 지금 등산 중이라면 아마도 내가 본 물체가 컴퓨터일 가능성은 극히 낮을 것이다. 즉, &#8216;input이 어떤 특정 결과에 가까울 것이다&#8217;를 indicate하는 factor일 뿐 아니라, 그 정도를 조절하기 위한 값이라고 할 수 있는 것이다. 그렇다면 이런 구조의 장점은 무엇일까? 사람의 뇌에는 자그마치 \(10^{11}\)개의 neuron이 존재한다고 한다. 또한 그 neuron들을 연결하는 link는 약 \(10^{14}\)개가 존재하게 된다. 그야말로 어마어마한 숫자의 신경들이 비록 하나의 computation power는 떨어질지 몰라도 이것들이 하나의 network를 형성하면서 엄청나게 빠른 parellel computation이 가능해지고 엄청나게 빠른 연산이 가능해지는 것이다. 거기에 각 neuron들이 information을 저장하고 있기 때문에 단순히 RAM으로 binary bit를 저장하는 것과는 차원이 다른 용량을 저장할 수 있게 되는 것이다.</p>
+
+
+<p>자 그러면 이제 human neural network가 어떻게 동작하는지 살펴보았다. 그렇다면 이런 뛰어난 model을 어떻게 real field적용할 수 있을까? 우리의 뇌가 그야말로 컴퓨터에 비해 outperformance를 보이는 분야에 이런 아이디어를 적용하면 좀 그 성능이 개선되지 않을까? 그야말로 많은 사람들이 얘기하듯 컴퓨터는 멍청하다. 인간이 만든 system에 정해진 input이 들어는 상황에서는 무엇보다 빠르고 정확한 computation을 보여주지만, 스스로 무언가를 &#8216;판단&#8217;할 수 없으며, 사람에 비해서 그 유연성이 매우 떨어진다. 때문에 AI를 연구하는 사람들에게 스스로 &#8216;학습&#8217;하는 machine learning이 새로운 대안으로 제시되고 이 분야가 AI에서부터 시작되었다는 점이 전혀 놀랍지 않은 것이다. 잠시 얘기가 샛길로 빠졌는데, 결국 사람이 컴퓨터에 비해서 엄청 잘 할수 있으며 실제 real field에서 수요가 많은 대표적인 문제가 바로 image processing이다. 컴퓨터는 image를 pixel map으로 밖에 인식할 수가 없다. 즉, 가장 많이 쓰이는 example인 MNIST handwrite database를 보면, 각 이미지는 28 by 28 pixel map이며, 다시 말해서 이미지 하나에 총 784개의 information이 존재한다는 것을 알 수 있다. 이 database는 흑백 사진이니깐 그냥 간단하게 까만 것과 하얀 것으로 구분하면, 총 784개의 binary 값을 component로 가지는 vector로 생각할 수 있을 것이다. 하지만 내가 위에서도 잠깐 언급했던 것 처럼 우리는 절대로 그 시각정보를 전부 활용하여 물체를 인지하지 않는다. 일부 &#8216;feature&#8217;를 인식해서 내가 지금 보고 있는 것이 무엇인지 판단하게 되는데, 안타깝게도 컴퓨터는 그런 작업이 불가능한 것이다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/39-1.png" width="300"></p>
+
+<p>위의 사진이 바로 MNIST dataset의 일부분인데, 우리는 바로 각 글씨가 무엇을 의미하는지 바로 인지할 수 있지만, 멍청한 컴퓨터는 이 글씨들을 10개의 digit으로 바로 인지하는 것이 아니라 784 차원의 vector로 인식하게 되는 것이다. 앗 잠깐, 그런데 우리가 &#8216;바로&#8217; 인지하는 것도 사실 뇌가 연산을 한 결과가 아닌가? 그렇다면 뇌가 어떻게 동작하는지를 &#8216;모방&#8217;하면 기존의 방법들보다 더 나은 새로운 방법이 나올 수 있지 않을까? 그렇다! 이것이 바로 artifitial neural network의 motivation이다. 인간의 뇌는 엄청나게 빠르고 엄청나게 많은 연산을 자그마치 &#8216;parellel&#8217;하게 처리한다! 이는 정말 optimal한 system이 아닐 수 없다. 때문에 neural network의 application의 대다수는 이런 vision 문제를 해결하기 위해 사용이 된다.</p>
+
+
+<h5>Some simple models of neurons</h5>
+
+
+<p>이제 neural network의 필요성과 기본적인 구조는 알았으니, 구체적으로 우리가 그것을 구현하기 위한 모델을 만들어보자. 앞서 얘기했듯 우리의 artifitial neural network는 input이 들어오고, 각 graph의 weight와 맨 처음 설정한 bias를 통해 output을 얻어내는 구조이다. 즉, input을 x, weight를 w, bias를 b, output을 y라고 한다면, </p>
+
+
+<p>$$ y = b + \sum_i x_i w_i $$</p>
+
+
+<p>와 같은 식을 얻을 수 있을 것이다. 여기에서 \(x_i\)는 i번 째 input을 의미한다. 즉, MNIST에서 24 by 24, 784개의 input들에 대해서 모든 component들 (각 pixel들)의 값에 weight를 곱하고 그걸 모두 더한 다음 bias를 더해준 결과가 output인 것이다. 매우 간단한 시스템이다. 그렇다면 소제목인 &#8216;Some simple models of neurons&#8217;은 무슨 의미란 말인가?? 별건 아니고, output을 바로 사용할 것이냐 아니면 무언가 다른 형태로 modeling하여 사용할 것이냐에 대한 문제이다. 앞서 설명한 수식은 neuron들을 계산한 결과가 바로 최종 output이 된다. 그러나 실제로는 이것 말고도 많은 모델들이 존재하는데, 예를 들어서 \(z = b + \sum_i x_i w_i\) 라고 했을 때 y의 값을 z가 0보다 크면 z값을 그대로 사용하고 0보다 작으면 0이라고 할 수도 있을 것이다. 이런 모델을 Rectified Linear Neurons이라고 하며 linear threshold neuron이라고 하기도 한다. 또한 0보다 작으면 0, 0보다 크면 1이 되도록 하는 binary threshold neuron도 생각할 수 있다. 실제로 우리가 사용하게 될 model은 바로 sigmoid neuron이다. Sigmoid function은 매우 간단한데, 다음과 같은 모양이다. \(y = \frac 1 {1+e^{-z}}\) 이런 형태가 되면, z가 양의 방향으로 무한하게 커진다면 아래 항이 1이 되므로 값이 1이 되고, z가 무한하게 음의 방향으로 커진다면 아래 항이 무한하게 발산하게 되어 전체 식의 값이 0이 되는 것이다. 즉, 아래와 같은 모양을 띄게 되는 것이다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/39-2.png" width="320"></p>
+
+<p>대부분의 경우 우리가 필요한 output은 binary이므로 (0또는 1이므로) 이 함수의 결과가 output의 확률을 나타내는 stochastic binary neuron을 생각하는 것이 가능하다. 즉, \(p(y=1) = \frac 1 {1+e^{-z}}\) 로 표현하고 output의 값을 stochastic하게 예측하는 방법을 사용할 수 있는 것이다. 아마 앞으로 neural network라 하면 이런 stochastic model이 중심이 된다고 생각하면 될 것이다.</p>
+
+
+<h5>A simple example of learning</h5>
+
+
+<p>이 부분은 사실 크게 설명할 것은 많이 없고, 그렇다면 이런 neural network를 실제 이미지 recognition에 어떻게 사용할 것이냐.. 에 대한 부분이다. MNIST를 예로 들면 임의의 784 pixel map이 들어왔을 때 10개의 class (0~9) 중에서 어느 class에 해당하는지 어떻게 예측할 것이고 어떻게 decision을 내릴 것인가! 에 대한 실제 예시를 다루는 것이다. 이미 class가 정해진 이미지들을 가지고 neural network의 weight들을 학습하고, 그 결과를 통해 class를 구분하는 것이다. 한 가지 방법은, neural network를 layer처럼 쌓는다고 생각했을 때 (아래의 첫 번째 그림) 만약 이 network에서 맨 마지막 layer에서 어떤 특정한 shape으로 수렴하도록 만들었을 때 그 수렴한 결과를 이용해 class를 구분할 수 있을 것이다 (마찬가지 아래 두 번째 그림).</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/39-3.png" width="400">
+<img src="http://SanghyukChun.github.io/images/post/39-4.png" width="600"></p>
+
+<p>이렇게 복잡하게 해야하는 이유는 몇 개의 간단한 알고리듬, 예를 들어서 아래 삐침 글자가 오른쪽으로 뻗으면 &#8216;2&#8217; 라고 하는 등의 간단한 rule을 각각의 class에 대해 만들어서 이 rule에 의해 determistic하게 결정하는 무지무지 간단한 heuristic algorithm이 아니라 neural network을 쓰는 이유는, 실제 우리가 생각할 수 있는 것보다 엄청나게 많은 variation이 존재하고 (심지어 숫자임에도 불구하고!) 이 때문에 이런 heuristic한 방법으로는 좋은 performance가 나오기 힘들기 때문이다. 특히 MNIST에는 갈겨 쓴 글씨가 많아서 더 그럴지도..</p>
+
+
+<h5>Three types of learning</h5>
+
+
+<p>machine learnig에는 supervised learning, reinforcement learning, unsupervised learning 총 세 가지 큰 범주가 존재한다. 각각에 대한 설명은.. 워낙 많이 했기에 생략하고 (reinforcement learning은 한 적은 없지만, neural network의 main interest가 아니다) 간단하게 설명하면, neural network로 supervised learning을 하는 것이 앞의 절반, 그리고 unsupervised learning을 하는 것이 뒤의 절반이 될 예정이다. 특히 엄청나게 오래되고 old한 neural network가 재조명을 받고 연구가 활발하게 된 가장 큰 이유가 Deep learning 등의 unsupervised learning임을 감안해봤을 때, 매우 기대가 되는 부분이다. (대부분의 교재는 supervised learning에 대해서만 다룬다.)</p>
+
+
+<h5>Conclusion</h5>
+
+
+<p>이 렉쳐는 워낙 intro level이고.. 예전에 중복해서 다룬 개념이 너무 많아서 생략한 내용이 좀 많다. 최대한 자세하게 적으려 노력했지만, 의아한 부분이 있으면 위키피디아 등에 자세히 설명이 되어있으니 그 글들을 참고해주길 바란다.</p>
+
+
+
+
+<h5>Coursera Neural Networks for Machine Learning</h5>
+
+
+<p>다른 요약글들 보기 (<a href="http://SanghyukChun.github.io/blog/categories/cousera-nn/">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="http://SanghyukChun.github.io/39">Introduction</a></li>
+    <li>Lecture 2: <a href="http://SanghyukChun.github.io/40">The Perceptron learning procedure</a></li>
+    <li>Lecture 3: <a href="http://SanghyukChun.github.io/42">The backpropagation learning proccedure</a></li>
+    <li>Lecture 4: <a href="http://SanghyukChun.github.io/43">Learning feature vectors for words</a></li>
+    <li>Lecture 5: <a href="http://SanghyukChun.github.io/43">Object recognition with neural nets</a></li>
+    <li>Lecture 6: Optimization: How to make the learning go faster</li>
+    <li>Lecture 7: Recurrent neural networks</li>
+    <li>Lecture 8: More recurrent neural networks</li>
+    <li>Lecture 9: Ways to make neural networks generalize better</li>
+    <li>Lecture 10: Combining multiple neural networks to improve generalization</li>
+    <li>Lecture 11: Hopfield nets and Boltzmann machines</li>
+    <li>Lecture 12: Restricted Boltzmann machines (RBMs)</li>
+    <li>Lecture 13: Stacking RBMs to make Deep Belief Nets</li>
+    <li>Lecture 14: Deep neural nets with generative pre-training</li>
+    <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
+    <li>Lecture 16: Recent applications of deep neural nets</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[LMNN(Large Margin Nearest Neighbors) LMCA(Large Margin Component Anaylsis)]]></title>
+    <link href="http://SanghyukChun.github.io/38/"/>
+    <updated>2014-03-03T15:21:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/38</id>
+		<content type="html"><![CDATA[<p>KNN은 machine learning에서 general하게 많이 쓰이는 알고리듬이다. 이 알고리듬은 아이디어도 매우 간단하고 구현하기도 간단하고 성능도 어느 정도 이상 나오는 꽤나 훌륭한 알고리듬이기 때문이다. <a href="http://SanghyukChun.github.io/37" target="new">이전 글</a>에서 distance metric learning의 대략적인 컨셉을 설명했었고, 그 중에서도 optimization을 통해 metric을 learning하는 category에 대해 간략하게 언급했었다. 이 글에서는 그런 알고리듬 중에서 LMNN (Large Margin Nearest Neighbors) 그리고 이 방법의 단점을 보완한 LMCA (Large Margin Component Analysis) 라는 알고리듬을 소개할 것이다.</p>
+
+
+<h5>LMNN - Introduction</h5>
+
+
+<p>먼저 LMNN이라는 아이디어는 2006년 <a class="red tip" title="Advances in Neural Information Processing Systems">NIPS</a>에 발표된 Distance metric learning for large margin nearest neighbor classification이라는 논문에 소개된 기법이다. 이 알고리듬은 distance metric learning에 대해 설명했던 <a href="http://SanghyukChun.github.io/37" target="new">이전 글</a>에 잠깐 언급했던 Mahalanobis Metric을 직접 학습하는 알고리듬이다. 이 Metric은 지난 번에 설명했기 때문에 자세한 설명은 생략하도록 하겠다.</p>
+
+
+<p>이 논문에서는 거리가 제곱근 형태가 아니라 제곱 들의 합으로 표현을 했다. 즉, Mahalanobis Metric을 \(D(\vec x_i , \vec x_j )=(\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j )\) 꼴로 표현하게 된다. 혹은 \(D(\vec x_i , \vec x_j )= ||L(\vec x_i - \vec x_j)||^2 \)으로 표현된다.</p>
+
+
+<h5>LMNN - Cost function</h5>
+
+
+<p>이 방법의 핵심 아이디어는, 위에서 표현한 Metric을 평가하는 Cost function을 design하고 이 function을 minimize시키는 Metric을 찾아내는 것이다. 매우 간단한 컨셉이고, 만약 운이 좋아서 optimization 문제가 반드시 하나의 global solution으로 수렴한다는 것이 보장만 된다면 가장 최고의 성능을 낼 수 있을 것이라는 것은 자명한 일이다. (<a href="http://SanghyukChun.github.io/31/" target="new">이전에 작성한 글</a>에서 이러한 좋은 문제 중 하나인 convex optimization에 대해 간략하게 언급했었다.) 자, 그러면 이 논문에서 Cost function을 어떻게 정의했는지 한 번 알아보자.</p>
+
+
+<p>$$ \varepsilon (\mathbf L ) = \sum_{ij} \eta_{ij} ||L(\vec x_i - \vec x_j)||^2 + c \sum_{ijl} \eta_{ij} (1-y_{il}) h[ 1 + ||L(\vec x_i - \vec x_j)||^2 - ||L(\vec x_i - \vec x_l)||^2 ] $$</p>
+
+
+<p>이때, 각 notation이 의미하는 바는 아래와 같다</p>
+
+
+<p></p>
+
+<ol>
+    <li>\({(\vec x_i , y_i )}_{i=1}^n\): training set을 의미한다. 벡터 x는 input data를, scalar y는 label을 의미한다. (binary class가 아니어도 상관없다.)</li>
+    <li>\(\eta_{ij}\): \(\vec x_j\)가 \(\vec x_i\)의 target neighbor인가 아닌가를 나타내는 binary variable. 맨 처음 learning할 때 고정되는 값이며 알고리듬이 돌아가는 동안 변하지 않는 값이다.</li>
+    <li>\(y_{ij}\): label \(y_i\)와 \(y_j\)가 서로 일치하는가 하지 않는가를 나타내는 binary variable이다. 역시 변하지 않는다.</li>
+    <li>h(x): hinge function으로, 간단하게 표현하면 \(h(x) = max(0,x) \)이다. 즉, 0보다 작으면 0, 아니면 원래 값을 취하는 함수이다.</li>
+    <li>c: 0보다 큰 임의의 상수로, 끌어당기는 term과 밀어내는 term사이의 trade-off를 조정한다. 보통 cross validation으로 결정한다.</li>
+    <li>Target neighbor: 임의의 \(x_i\)와 같은 label을 가진 데이터들 중에서 가장 가까운 k개의 데이터들을 의미하며 k는 사용자가 세팅할 수 있다</li>
+</ol>
+
+
+<p>뭔가 복잡해보이지만, 일단 간단하게 설명하자면 앞의 항은 같은 label끼리 서로 끌어오는 term이고, 뒷 항은 서로 다른 label끼리 밀어내는 term이다. 이유는 간단한데, 먼저 앞과 뒷항 모두 포함되어있는 \(\eta_{ij}\)는 i와 j가 서로 target data일 때만 해당 항을 남기고, 아니면 0으로 만들어버리기 때문에 이 모든 연산은 target neighbor들에 대해서만 진행이 되게 된다. 따라서 앞의 항은 target neighbor들끼리의 거리를 의미하므로, 이 값을 minimization한다는 것은 서로 같은 label들끼리 최대한 가깝게 모아준다는 의미와 같게 되는 것이다. 그럼 오른쪽 항은? 이 항은 잘 보면 summation factor가 i,j,l인데, 일단 먼저 target neighbor i와 j에 대해서 이와는 다른 label을 가진 (\((1-y_{il})\)가 0이 되지 않는) l들에 대해서 최대한 그 거리를 멀어지게 하도록 하는 항이다. 이 값은 사실 그냥 나온 값이 아니라 아래 식을 통해서 나오게 된 값이다.</p>
+
+
+<p>$$ d(\vec x_i , \vec x_j) + 1 \le d(\vec x_i , \vec x_l) $$</p>
+
+
+<h5>LMNN - Optimization</h5>
+
+
+<p>위의 식에 대해서 간단히 언급을 하자면, 모든 i와 j들에 대해서, label이 다른 l과의 거리보다 label이 같은 데이터들끼리의 거리가 무조건 1만큼은 작아야한다는 식이다. 이 식을 살짝 전개하면 원래 cost function의 오른쪽 항과 같은 모양을 얻을 수 있을 것이다.</p>
+
+
+<p>자! 이제 cost function을 정의했으니 optimize를 해보자. 근데 문제가 하나 있는데, 이 cost function은 <a class="red tip" title="Convex Optimization은 solution이 무조건 하나다. 나중에 블로그에서 자세하게 다뤄보도록 하겠다.">convex</a>가 아니다. 때문에 L에 대해 문제를 해결했을 때 정확한 global minimum을 찾을 수가 없게 된다. 하지만 이 논문은 아주 간단하게 이 문제를 convex 문제로 바꾸게 된다. convex 문제 중에서 semidefinite programming이라는 문제가 있는데 (간단하게 SDP라고 한다) 이 문제는 &#8216;어떤 조건&#8217;을 가장 잘 만족하는 positive semidefinite matrix를 찾는 문제이다. 이 문제에 대해 언급하면 포스트가 너무 길어지니 <a href="http://en.wikipedia.org/wiki/Semidefinite_programming" target="new">위키 링크</a>로 대체하도록 하겠다.</p>
+
+
+<p>그러면 이 문제를 어떻게 SDP로 바꿀 수 있을까? 해결법은 Metric을 L로 표현하는 대신에 M으로 표현하고, 이 M에 대해 문제를 푸는 것이다. 이렇게 표현하게 되면 문제가 아래와 같이 변하게 되며 이는 SDP로 간단하게 해결할 수 있는 문제가 된다.</p>
+
+
+<p>$$ \mathbf {Minimize} \sum_{ij} \eta_{ij} (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) + c \sum_{ij} \eta_{ij} (1-y_{il}) \xi_{ijl} \ \mathbf {subject} \ \mathbf {to:} $$</p>
+
+
+<p style="margin-left:15%"> (1) \( (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) - (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) \geq 1- \xi_{ijl} \)</p>
+
+
+<p style="margin-left:15%"> (2) \( \xi_{ijl} \geq 0 \)</p>
+
+
+<p style="margin-left:15%"> (3) \( \mathbf M \succeq 0 \)</p>
+
+
+<p>여기에서 \(\xi_{ij}\)는 slack variable로, 이전 식의 hinge function과 완전히 같은 동작을 하도록 &#8220;mimick&#8221;을 하는 변수이다. 이 문제는 앞에서 언급한 SDP로 해결할 수 있는 format이기 때문에 이제 이 문제를 해결해서 적절한 \(\mathbf M\)을 찾아내면 우리가 찾고자하는 적절한 Metric을 찾을 수 있게 되는 것이다.</p>
+
+
+<h5>LMNN - Result</h5>
+
+
+<p>자 이제 LMNN의 실제 performance를 measure해보자. 참고로 이 알고리듬은 저자가 직접 버전관리하는 소스코드가 존재한다. <a href="http://www.cse.wustl.edu/~kilian/code/code.html" target="new">링크</a>에서 간단하게 다운로드 받을 수 있다. 이 Metric learning이 well-working하는지 판단하기 위해서 이 논문에서는 총 4개의 알고리듬을 비교한다. (1) Euclidean distance를 사용하는 기존의 KNN (2) Optimization을 통해 얻은 Metric을 사용해 Mahaloanobis distance를 사용한 KNN (3) 앞에서 얻은 Metric을 계산할 때 사용한 Cost function을 가장 최소화시키는 label을 고르는 Energy-based classification (4) Multiclass SVM 이렇게 총 네가지 알고리듬을 사용한다. 그런데, 만약 dimension이 높은 경우에는 위의 Optimization식이 Overfitting이 될 위험성이 존재한다. 따라서 이를 방지하기 위하여 feature가 많은 문제는 PCA를 사용하여 dimension을 낮추는 작업을 하게 되는데, 이 문제가 결국 다음에 설명할 LMCA의 Motive가 된다. 아무튼 이런 방법을 사용하여 얻은 결과는 아래 표와 같다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/38-1.png" width="600"></p>
+
+<p>대체로 Energy-based classification이 가장 좋은 결과를 보이는 것을 알 수 있으며, 이 논문의 방법을 통해 계산한 Metric이 분명 기존의 다른 방법들보다 더 나은 방법을 제시한다고 할 수 있을 것이다. 그러나 이 방법의 근본적인 문제점이라면 Optimization으로 Metric을 구하기 때문에 Overfitting문제에 매우 취약하다는 것이며, 특히 dimension이 높고 sample개수가 적으면 이 문제가 매우매우 심각해진다. 다만, face, hand-write letter, spoken letter 등등 매우 다양한 데이터셋에 전부 개선된 performance를 보이는 것은 충분히 고무적인 결과라고 할 수 있을 것이다.</p>
+
+
+<h5>LMCA - Motivation</h5>
+
+
+<p>하지만, Feature가 1000단위가 넘어가는 high dimension 상황에서는 문제가 발생할 수 있다. 기본적으로 Optimization 문제라는 것은 언제나 Overfitting issue에서 벗어날 수 없다. 특히 LMNN이 정의한 Optimization문제는 정사각행렬 M을 학습해야하므로, dimension이 높아질수록 Optimization을 통해 찾아내야하는 항이 제곱 스케일로 늘어난다. 즉, 당장 차원이 100단위만 넘어도 찾아내야하는 항의 수가 10000개가 넘어가게 된다는 의미이다. 따라서 우리가 실제 이 문제를 적용하는 경우에, 어쩔 수 없이 dimension reduction technology를 사용할 수 밖에 없어진다. LMNN 논문에서는 PCA를 사용하여 dimension을 낮춘 이후에 Optimization문제를 풀게 되는데, 이 PCA라는 것이 물론 좋고 많은 사람들이 사용하는 dimesion reduction 방법이지만, 이 방법으로 인해 발생하는 오차가 매우 크고 실제로 더 좋은 performance를 낼 수 있음에도 불구하고 그 성능이 크게 저하되는 요인이 된다는 것이 LMCA의 Motivation이다. 실제로 PCA를 사용하게되면 Dominant한 term을 뽑아내기는 하지만 그 dimension이 낮아지거나 혹은 기존에 가지고 있는 input vector들이 bais가 된 경우에는 좋은 결과를 얻지 못할수도 있기 때문에 이 문제는 꽤나 큰 문제가 될 수 있다.</p>
+
+
+<h5>LMCA - Idea</h5>
+
+
+<p>그렇다면 어떻게 PCA등의 별다른 dimension reduction technology없이 Overfitting 문제를 해결할 수 있을까? 사실 이 논문에서 주장하는 내용은 매우 간단하다. 이전 논문인 LMNN에서 찾고자하는 Metric인 L이 dimension을 변화시키기 않는 transformation이었던 것에 반해, LMCA에서는 L을 원래 차원 D에서 더 낮은 차원 d로 보내는 L을 찾겠다는 것이다. 하지만 여기에서 문제가 생긴다. Full rank가 아닌 \( \mathbf M = \mathbf L^top \mathbf L\) 은 이제 더 이상 Semidefinite programming문제가 아니게 된다. 이유는 원래 SDP 문제에서 rank = d라는 조건이 추가되기 때문인데, 이렇게 되면 M이 convex domain이 아니게 되기 때문에 더 이상 이 문제가 convex problem이 아니게 되고, 따라서 이 문제는 더 이상 global optimum으로 수렴하지 않는다!</p>
+
+
+<p>그렇다면 해결책은 없는 것일까? 이 논문에서는 그냥 원래 non convex인 L에 대한 cost function을 그냥 gradient descent method를 사용하여 optimize시킨다. 물론 이렇게 계산된 값은 local optimum이다. 때문에 LMNN이 무조건 global solution을 찾았던 것과 비해서 매우 performance가 떨어질 것 같지만, 저자들은 다음과 같은 2가지 장점이 있기 때문에 오히려 이 방법이 더 performance가 높다고 주장한다. 첫째, 원래 Full rank M을 찾을 때는 unknown component들이 D by D만큼 존재했었지만, 지금은 차원을 더 낮추었기 때문에 찾아야하는 값이 더 적어진다. 마치 Matrix completion의 장점과 비슷한 것이다. 둘째, 원래 LMNN은 Optimization을 할 때 parameter들이 굉장히 많은데 이런 여러 요소 없이 바로 Optimization이 가능해진다는 것이다. 물론 당연히 이 논리의 기본 가정은 high dimension data에 PCA를 사용해 low dimension으로 만들었을 때 이미 information loss가 많이 발생하거나 이미 tranining data에 overfitting되기 때문에 성능에 무조건적인 저하를 불러일으키게 되기 때문에 Optimization을 PCA를 사용하지 않은 Full dimension에 대해서 실행했다는 가정 하에 성립할 것이다.</p>
+
+
+<h5>LMCA - Results</h5>
+
+
+<p>그렇다면 결과를 한 번 확인해보자.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/38-2.png" width="600"></p>
+
+<p>위의 그림은 high dimension dataset에 대한 것이고 아래 결과는 low dimension dataset에 대한 결과이다. 아무래도 high dimension에서는 저자들이 주장한 대로 LMNN에 비해 결과가 많이 개선된 것을 확인할 수 있다. (이 그림에서는 kernelized된&#8230; 즉 non-linear method 역시 함께 evaluation된 결과이기 때문에 LMNN과 비교해야할 대상은 linear method이다) 하지만 low dimension에 대해서는 항상 더 높은 것 만은 아니며, 일부 경우에 대해서는 LMNN이 더 좋은 결과를 보임을 알 수 있다. 즉, 이 방법은 overfitting issue가 발생했을 때 global optimum은 아니지만 그와 유사한 (그러나 절대 같다고 하거나 그와 유사하다고 할 수도 없는) local optimum을 찾는 방법이기 때문에, overfitting issue가 적은 low dimension에서는 LMNN보다 성능이 떨어질 수도 있는 것이다.</p>
+
+
+<h5>Non-linear LMNN, LMCA</h5>
+
+
+<p>지금까지 언급한 방법들은 모두 &#8216;linear&#8217;한 transformation을 찾는 문제였다. 하지만 세상에는 엄청나게 많은 non-linear metric이 존재하며, 분명 linear보다 성능이 더 좋은 non-linear metric을 찾을 수 있을 것이라고 생각할 수 있다. 그렇다면 이 논문들에서 과연 그런 방법을 다루지 않을까? 일단 LMNN은 NIPS에 제출된 원래 논문에는 non-linear problem이 언급이 되어있지않지만, 나중에 GB-LMNN (Gradient Boost LMNN)이라는 방법을 소개하며, 이 방법의 powerful함은 LMNN code에서 직접 확인할 수 있을 것이다. 이 방법은 Gradient Boost라는 방법을 사용하여 non-linear metric을 찾아내는데, 문제는 이 방법이 non-convex하다. 따라서 초기값에 따라서 그 결과가 상이하게 달라지게 되는데, 해당 논문에서는 LMNN을 통해 학습한 L을 초기값으로 사용하여 Optimum값을 찾는 아이디어를 제시해 L의 성능을 개선시킨다고 명시되어있다. 분명 Optimize를 시키기 때문에 본래 값보다는 더 좋은 값으로 수렴할 것이며 성능도 어느정도 올라갈 것이라고 예측이 가능할 것이다. Gradient boost는 regression tree라는 것을 학습하여 non-linear transformation을 찾아내는데, 이 tree의 node개수나 level등등을 어떻게 학습시킬 것이냐에 따라 그 running time과 overfitting issue가 결정되는 듯 하다. 더 자세한 점은 해당 논문을 읽어보기를 권한다.</p>
+
+
+<p>또한 LMCA는 원 논문에 non-linear method까지 언급이 되어있다. 본래 아이디어 자체가 그냥 gradient descent를 사용해서 local optimum L을 찾는 문제이기 때문에 kernel에 대해서도 이 문제를 동일하게 풀 수 있는 듯하다. 다만 그 update rule을 어떻게 결정하느냐의 문제가 있는지 논문에서 cost function의 gradient방향으로 내려가는 것이 올바른 update rule이라는 것을 Lemma를 증명해놓았다. 아무튼 당연한 얘기지만 이 방법이 linear method보다 그 결과가 좋다. 자세한 점은 마찬가지로 해당 논문을 참고하길 바란다.</p>
+
+
+<h5>Conclusion</h5>
+
+
+<p>KNN은 엄청 직관적인 method이지만 분명 powerful하고 easy to implement한 방법이다. 또한 이론적으로 그 bound가 가장 optimal한 case에 bayes risk와 같다는 것이 증명이 되어있기 때문에 사실 굉장히 좋은 방법이라고 할 수 있다. 그러나 실제 우리가 이 방법을 적용하는 대부분의 상황에서는 metric learning이 performance에 크게 영향을 끼칠 수 밖에 없다. LMNN과 LMCA는 Optimization problem을 solve함으로써 상당히 좋은 결과를 얻어낼 수 있는 좋은 Metric learning알고리듬이라고 할 수 있다. 물론 이 방법들에는 overfitting issue가 존재하고, 이 때문에 적절한 상황이 아닌 경우에 특히 high dimension, low sample problem에서 well working하지 않는다는 단점이 존재하기는 한다. 하지만 저자가 구현한 implement하기 좋은 matlab code도 존재하고, 여러모로 괜찮은 방법이 아닌가 하는 생각이 든다.</p>
+
+
+<p>References</p>
+
+
+<ul>
+    <li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006) .InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li>
+    <li>Torresani, L., & Lee, K. (2007). Large margin component analysis. Advances in Neural Information Processing</li>
+    <li><a href="http://www1.cse.wustl.edu/~xuzx/research/publications/gb-lmnn.pdf" target="new">Kedem, D., Xu, Z., & Weinberger, K. (n.d.). Gradient Boosted Large Margin Nearest Neighbors</a></li>   
 </ul>
 
 ]]></content>

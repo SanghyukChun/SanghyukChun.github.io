@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning-Study | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-08-20T01:45:01+09:00</updated>
+  <updated>2014-10-04T22:34:29+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (6) - Information Theory]]></title>
+    <title type="html"><![CDATA[Machine learning 스터디 (6) Information Theory]]></title>
     <link href="http://SanghyukChun.github.io/62/"/>
     <updated>2014-08-20T00:20:00+09:00</updated>
     <id>http://SanghyukChun.github.io/62</id>
@@ -33,7 +33,7 @@
 <p>\[H = \frac{1}{N}\ln W = \frac{1}{N}\ln N! - \frac{1}{N}\sum_i \ln n_i ! \]</p>
 
 
-<p>이때 \(\lim N \to \infty) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation" target="new">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
+<p>이때 \(\lim N \to \infty \) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation" target="new">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
 
 
 <p>\[H = -\lim_{N \to \infty} \sum_i \left( \frac{n_i}{N} \right) \ln \left( \frac{n_i}{N} \right) = - \sum_i p_i \ln p_i \]</p>
@@ -120,6 +120,9 @@
 <p>정보이론 자체는 Machine Learning과 크게 관계가 없어보이지만, 그 개념들은 생각보다 꽤 많은 부분에서 사용되게 되므로 좀 간략하게 다루게 되었다.</p>
 
 
+<p>추가: 정보이론이 어떻게 머신러닝에 유용하게 쓰일 수 있는가에 대한 lecture와 book link를 추가하도록 하겠다. <a href="http://www.inference.phy.cam.ac.uk/itprnn_lectures/">http://www.inference.phy.cam.ac.uk/itprnn_lectures/</a>, <a href="http://www.inference.phy.cam.ac.uk/mackay/itila/book.html">http://www.inference.phy.cam.ac.uk/mackay/itila/book.html</a></p>
+
+
 <p><a href="http://SanghyukChun.github.io/58">Probability Theory</a>, <a href="http://SanghyukChun.github.io/59">Overfitting</a>에서 일부, <a href="http://SanghyukChun.github.io/61">Decision Theory</a>, 그리고 <a href="http://SanghyukChun.github.io/62">Information Theory</a>를 커버하면서 이제서야 Bishop책 Ch 1에 해당하는 부분을 끝마쳤다. 만약 bishop을 따라간다면 이 다음에 probability distribution에 대해 다루고, conjugate prior나 exponential family, mixture of distribution 등등을 다뤄야하지만, 이 부분은 일단 생략을 하기로 한다면, 이 다음에는 사실 regression을 설명해야 할 차례이지만, 아마 이 다음에는 실제 information theory를 사용하는 Algorithm이 등장하는 Decision tree와, supervised learning 혹은 classification에 대해 다루게 될 것 같다. 그 이후에는 아마도 순서대로 Regression(Linear, Logistic)을 다루게 되고, Graphical Model을 간략하게 다룬 다음 Neural Network, EM 알고리듬, PAC Learning 순서대로 진행하게 되지 않을까 싶다. 다만 내가 PAC learning 세미나 준비를 해야해서 하는 김에 PAC가 조금 일찍 등장할 가능성도 있지 않을까 생각한다.</p>
 
 
@@ -138,6 +141,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -303,6 +320,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -373,6 +404,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -467,6 +512,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
@@ -541,6 +600,20 @@
 <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
 <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
 <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li>Convex Optimzation</li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Feature Extraction</li>
+<li>Matrix Completion</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>And others.. (Reinforcement Learning, Boosting, Model Selection)</li>
 </ul>
 
 ]]></content>
