@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Network Science - Measures and Metric Apr 17th, 2014 들어가기 전에 이 글은 2014년 KAIST Network Science 수업 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph &hellip;">
+  <meta name="description" content="Network Science - Random Network (Erdös-Rényi Network) Apr 22nd, 2014 들어가기 전에 이 글은 2014년 KAIST Network Science 수업 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,233 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/50/">Network Science - Random Network (Erdös-Rényi Network)</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-22T11:37:00+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h5 id="50-1-before">들어가기 전에</h5>
+
+
+<p>이 글은 <a href="/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 가장 기초적인 Network modeling 중 하나인 random network에 대해 다룬다.</p>
+
+
+<h5 id="50-2-why">Why we need network model?</h5>
+
+
+<p>이 글을 포함해 3개의 강의는 모두 네트워크 모델링과 관련된 내용이다. 이 글은 random network, 그리고 다음 글은 순서대로 small world network, 그리고 그 다음은 scale free network에 대해 다루게 된다. 이런 네트워크 모델링을 우리는 왜 알아야할까. 사실 이유는 간단하다. 그냥 네트워크를 사용해 무언가를 분석하는 것이 매우 어렵기 때문이다. 예를 들어서 우리는 실제 social network가 어떻게 구성되어있는지 알지못한다. 만약 우리가 실제 네트워크와 매우 유사한, 그러나 훨씬 간단한 형태의 모델을 만들게 된다면 해당 네트워크에서 발생하게 될 일들을 쉽게 예측할 수 있을 것이다. 이 글에서 다루게 되는 random network는 그러한 네트워크 모델링 중에서 가장 간단한 모델 중 하나이다.</p>
+
+
+<h5 id="50-3-random-graph">Random Graph</h5>
+
+
+<p>Random graph란 어떤 fixed parameter를 가지는 stochastic 모델이다. Notation은 \(G(n,p)\) 로 적게 되는데, n은 vertex의 개수, p는 각각의 vertex pair들이 서로 edge를 가질 independent probability를 의미한다. 즉, 이 network는 확률 p로 인해 edge가 생성되므로 매번 새로 generate할 때 마다 그 결과가 달라지는 stochastic model인 것이다. 따라서 우리가 n개의 vertex와 m개의 edge를 가지는 임의의 network \(G(n,m) \)를 얻게 될 확률은 \(P(G) = p^m (1-p) ^ { {n \choose 2} - m} \) 로 얻을 수 있다. 이러한 모델을 맨 처음 수학적으로 이를 분석했던 사람들의 이름을 따서 Erdös-Rényi model 이라고도 하고 그 degree와 edge의 distribution이 Poisson혹은 Bernoulli 분포를 따르기 때문에 Poisson random graph 혹은 Bernoulli random graph라고 하기도 한다.</p>
+
+
+<h5 id="50-4-meanedgedegree">Mean Edge and Mean Degree in Random Graph</h5>
+
+
+<p>아런 Random graph에서 n과 p가 주어졌을 때, graph가 generate가 될 때마다 항상 edge의 개수는 달라지지만, 이것이 특정 확률을 따르기 때문에 평균 edge의 개수를 계산하는 것이 가능하다. 계산하기 전에 간단하게 생각하면 n개의 vertex에 존재하는 모든 pair들 중 확률 p로 edge를 가지기 때문에 평균 edge의 개수는 모든 pair의 개수에서 edge가 존재할 확률인 p를 곱한 \( {n \choose k} p\) 가 될 것이다. 그렇다면 정말 그런지 확인해보도록 하자. 그러면 먼저 m개의 edge를 가지는 임의의 Graph \(G(m)\) 이 generate될 확률을 구해보자. 이 갚은 바로 위에서 edge가 m개인 graph \(G(m)\) 하나가 표현될 확률을 계산했으므로, 이런 graph의 개수를 count한 후 간단하게 이를 summation하면된다.</p>
+
+
+<p>$$ P(m) = { {n \choose 2}  \choose m} p^m (1-p)^{ {n \choose 2} - m} $$</p>
+
+
+<p>위에서 우리는 m에 대한 확률 분포를 구했기 때문에 m의 평균 값은 간단하게 \(\sum_m mP(m)\) 으로 계산할 수 있다. 그런데 \(m\)의 확률 분호 \(P(m)\)은 \(n\)이 \({n \choose m}\) 이고 \(k\)가 \(m\)인 binomial distribution이다. 또한 우리는 binomial distribution의 mean value가 단순하게 \(np\) 임을 알고 있으므로 평균 값은 아래와 같이 계산할 수 있다. 이에 대한 자세한 설명은 <a href="http://en.wikipedia.org/wiki/Binomial_distribution" target="new">위키피디아 링크</a>로 대체한다.</p>
+
+
+<p>$$ \bar m = \sum_{m=0}^{n \choose 2} m P(m) = {n \choose 2} p $$</p>
+
+
+<p>이 결과는 우리가 처음 예측한 값과 정확히 일치한다.</p>
+
+
+<p>그러면 이제 degree의 평균 값을 구해보자. 그 이전에 이번에는 mean degree가 얼마일지 간단하게 생각해보자. 이때 mean degree라는 것은 결국 한 vertex에서 가지는 평균 edge의 개수를 의미하기 때문에 평균 edge개수인 \({n \choose k}p\)를 vertex pair 개수인 \(n \over 2\)로 나눠준 값인 \((n-1)p\) 가 될 것이라고 예측할 수 있다. 그렇다면 실제로 계산해보자. <a href="/48#48-7-degree">이전 글</a>에서 이미 우리가 유도했던 것처럼 edge가 \(m\)개 있는 graph의 mean degree는 \(2m \over n\)으로 구할 수 있다. 따라서 평균 degree는 위에서 우리가 edge의 평균 개수를 구한 것 처럼 간단히 구할 수 있다.</p>
+
+
+<p>$$ \bar k = \sum_{m=0}^{n \choose k} {2m \over n} P(m) = {2 \over n} {n \choose 2} p = (n-1)p $$</p>
+
+
+<p>역시 처음에 예측한 값과 일치한다. 참고로 random graph에서 평균 degree는 \(c\)라는 notation으로 표기가 되며, 따라서 \(c=(n-1)p\)이다.</p>
+
+
+<h5 id="50-5-degreedist">Degree Distribution</h5>
+
+
+<p>그렇다면 이번에는 degree의 distribution을 알아보자. 평균 degree의 개수도 물론 중요하지만 실제 degree가 어떻게 분포하고 있는지를 아는 것도 매우 중요하다. 왜냐하면 결국 network의 특성을 이해하기 위해서는 개별 node들이 얼만큼 다른 node들과 연결되어있는지 알아야하며, 이 결과가 네트워크에 어떤 결과를 불러올지 파악하는 것이 매우 중요하기 때문이다. 그렇다면 먼저 간단하게 하나의 vertex가 \(k\)개의 다른 vertex와 연결되어있는 상황이 발생할 확률을 계산해보자. 이때, 당연히 전체 vertex 개수는 \(n\)개 이므로 \(k\)개의 vertex와 연결되어있는 vertex는 나머지 \(n-1-k\) vertex와 연결되어있지 않다. 따라서 임의의 vertex가 \(k\)개의 vertex와 연결되어있을 확률 \(p_k\)는 아래와 같이 계산된다.</p>
+
+
+<p>$$ p_k = { n-1 \choose k } p^k (1-p)^{n-1-k} $$</p>
+
+
+<p>이 결과는 또 binomial distribution이다. 즉, \(G(n,p)\)의 degree distribution은 binomial distribution이라는 것을 알 수 있다. 하지만 이 식은 간단한 근사식을 통해서 더 간단하게 표현하는 것이 가능하다. 대부분의 경우 우리가 관심이 있는 영역은 \(n\)이 엄청나게 큰 network이므로 이런 상황에서 앞 부분의 combination을 근사하고, 그 다음에는 뒷 부분의 \((1-p)^{n-1-k}\)의 log 값을 근사 시켜보자.</p>
+
+
+<p>먼저 \(n-1 \choose k\)를 근사한 결과는 \({n-1 \choose k} = {(n-1)! \over (n-1-k)! k!} \simeq {(n-1)^k \over k!}\) 이다. 이 근사식은 그냥 매우 간단한 근사식이므로 설명을 생략하도록 하겠다. 그렇다면 이제 다음으로 확률의 맨 뒷부분을 근사해보자. 이 값은 먼저 log를 취한 후 log를 근사하여 그 값을 계산한다.</p>
+
+
+<p>$$ \ln[(1-p)^{n-1-k}] = (n-1-k) \ln ( 1- \frac {c} {n-1}) \simeq -(n-1-k) { c \over n-1} \simeq -c $$</p>
+
+
+<p>이 근사식에서 첫 번째 계산식은 \(p = { c \over n-1} \)이라는 이전의 결과를 사용한 것이고 근사하는 부분은 <a href="http://en.wikipedia.org/wiki/Natural_logarithm#Derivative.2C_Taylor_series" target="new">log의 taylor expansion</a>이 \(\ln(x) = (x-1) - {(x-1)^2 \over 2} + {(x-1)^3 \over 3} - &#8230;\) 라는 것을 사용한 것이다. 그 다음 근사는 당연히 n이 k보다 엄청 크다고 가정한 것이다. 자 그 결과는 놀랍게도 \(\ln[(1-p)^{n-1-k}] \simeq -c\) 이다. 즉, \((1-p)^{n-1-k} \simeq e^{-c}\) 라는 사실을 알 수 있다.</p>
+
+
+<p>자 이제 모든 결과를 종합해보면 n이 엄청나게 큰 상황에서 다음과 같은 결과를 얻는다</p>
+
+
+<p>$$ p_k \simeq {(n-1)^k \over k!} p^k e^{-c} ={ (n-1)^k \over k!} ({c \over n-1})^k e^{-c} \simeq e^{-c} {c^k \over k!}$$</p>
+
+
+<p>자, 우리는 n이 매우 크다는 조건 하나를 사용해 근사를 한 결과 Poisson distribution을 얻게 되었다. 즉, n이 매우 큰 \(G(n,p)\)에서 degree distribution은 poisson distribution을 가진다는 사실을 알 수 있다. (사실 글의 처음에서도 말했던 것 처럼 이런 이유로 random network라는 이름은 사실 poisson random graph의 준말이다.)</p>
+
+
+<h5 id="50-6-cluster">Cluster and giant Component</h5>
+
+
+<p>자 그러면 이제 또 중요한 measurement 중 하나인 clustering coefficient를 계산해보자. Random Graph에서 \(c\)는 평균 degree를 의미하기 때문에 이 글에서 clustering coefficient는 \(C\)로 표기될 것이다. 이 clustering coefficent는 내가 이웃한 vertex 두 개가 서로 연결되어있을 확률을 의미한다. 그런데 우리의 graph \(G(n,p)\)의 임의의 vertex pair가 서로 연결되어있을 확률은 언제나 \(c \over n-1 \)이다. 따라서 clustering coefficient \(C\)는 \(c \over n-1 \) 라는 사실을 아주 간단하게 알 수 있다. 즉, 이 식에 따르면 \(n \to \infty\) 가 되고 \(c\)의 값이 fixed 되어있는 graph에서의 \(C\)는 0으로 수렴한다는 사실을 알 수 있다. 그러나 실제 네트워크에서 관찰되는 결과는 mean degree가 fixed되어있더라도 clustering coeficient의 값이 여전히 크게 유지가 된다는 것이다. 이런 특성 때문에 바로 다음 글에서 설명하게 될 small world network의 필요성이 대두된다.</p>
+
+
+<p>아무튼 단순히 clustering coefficient만 계산하는 것은 크게 와닿지 않는다. 구체적으로 이 네트워크에서 giant component라는 것이 존재할 확률이나 실제 존재했을 때 어떤 형태로 존재할지를 예측해보자. 여기에서 giant component란 문자 그대로 네트워크 상에서 존재하는 가장 largest한 component라고 보면 된다. (Component에 대한 설명은 <a href="/48#48-8-path" taget="new">이전 글</a> 참고) Simple하게 \(p=0\)이면 모든 graph가 disjoint되어있고 giant component라는 것은 존재하지 않는다. 반면 \(p=1\)이면 모든 vertex가 연결되어있고 graph는 vertex의 개수가 \(n\)인 오직 하나의 componet를 가지게 된다. 자 그러면 이제 \(p\)가 0에서 1사이의 값일 때를 생각해보자. 이런 상황에서 giant component가 존재한다고 가정하고, 이 component에 포함되는 vertex의 개수를 \(n_{gc}\) 라고 하자. 이렇다고 가정을 하게 되면 임의의 fraction of nodes가 giant component에 포함이 되지 않을 확률을 \(u\)라고 하면 우리는 이 값이 \(u=1-{n_{gc} \over n}\) 이라는 사실을 알 수 있다. (당연히 \(n_{gc} = n(1-u)\) 이다.) 그렇다면 이제 이 u를 통해 giant component를 분석해보도록 하자.</p>
+
+
+<p>먼저 임의의 vertex \(i\)가 이런 GC에 포함된다고 가정해보자. 그렇다면 이 vertex \(i\)는 vertex \(j\)라는 vertex를 거쳐 GC에 연결되어야한다고 했을 때, \(i\)가 GC에 포함이 되지 않을 확률은 (1) \(i\)와 \(j\)가 연결되어있지 않다: \(1-p\) (2) \(i\)와 \(j\)가 연결되어있으나 \(j\)가 GC에 연결되어있지 않다: \(pu\) 이렇게 총 두 가지 경우 임을 알 수 있다. 따라서 임의의 vertex \(i\)가 임의의 다른 vertex \(j\)를 거쳐 GC에 포함되지 않을 확률은 \(1-p+pu\)이고, 다른 모든 vertex에 대해 이를 확장해보면 다른 vertex가 \(n-1\)개 있으므로 이 확률은 \({(1-p+pu)}^{n-1}\) 임을 알 수 있다. 그런데 이 값은 결국 한 vertex가 GC에 포함될 확률 \(u\)와 같다. 따라서 \(u={(1-p+pu)}^{n-1}\) 이라는 사실을 알 수 있다.</p>
+
+
+<p>자, 그러면 \(p={c \over n-1}\) 이므로 위의 식에 대입하고, log를 근사시키면 아래와 같은 결과를 얻게 된다.</p>
+
+
+<p>$$ \ln u= (n-1) \ln {\left(1-{c \over n-1} (1-u) \right)} \simeq -(n-1) {c \over n-1} (1-u) = -c (1-u) $$</p>
+
+
+<p>위의 식을 통해 \(u=e^{-c(1-u)}\) 라는 사실을 알 수 있다. 이때 giant component 안에 들어있는 vertex의 개수의 비율을 \(S=1-u={n_{gc} \over n}\) 이라고 정의한다면 이 식은 아래와 같이 적을 수 있다.</p>
+
+
+<p>$$ S=1-e^{-cS} $$</p>
+
+
+<p>이로부터 우리는 Giant component의 크기 자체가 평균 degree에 의해 bound된다는 사실을 알 수 있다. 즉, 어떤 값 \(c\)에 의해 S가 결정된다는 것이다. 그러나 식이 한 번에 풀릴 수 있는 간단한 형태가 아니기 때문에 이 식에서 바로 정확한 S값을 구할 수는 없고, 그 대안으로 graphical solution이 제시된다. 즉, x축이 S의 값이고 y축이 S에 대한 함수의 값인 2차원 그래프를 그리고, \(y=S\)와 \(y=1-e^{-cS}\)의 교점을 구하는 것이다. 이런 두 함수를 그려보게 되면 아래와 같은 결과를 얻게 된다.</p>
+
+
+<p><img src="/images/post/50-1.png" width="500"></p>
+
+<p>위의 그래프에서 알 수 있는 사실은, 모든 함수들이 원점에서부터 시작하고 계속 기울기가 감소하는 형태이기 때문에 만약 원점에서 함수의 기울기가 1보다 큰 값이 존재하는 함수가 존재한다면 그 함수는 반드시 원점이 아닌 교점이 존재한다는 사실이다. 이런 교점을 찾아보면, \({d \over dS} (1-e^-{-cS})=1\)이라는 식을 풀어야하며 이 식을 계산해보면 \(ce^{-cS} = 1\)이라는 식을 얻을 수 있다. 즉, S=0인 점에서 기울기는 무조건 \(c\)가 되므로 \(c\)의 값이 1보다 크면 반드시 giant component가 존재하며 그 보다 작으면 giant component가 존재하지 않는 다는 것을 알 수 있다.</p>
+
+
+<h5 id="50-7-smallcomponent">Small Componets</h5>
+
+
+<p>이번에는 Giant component에 포함되어있지 않은 Small component에 대해 알아보자. 만약 giant component가 네트워크에 딱 하나만 존재한다고 가정해보자. 그리고 각각의 크기가 \(S_1 n\) \(S_2 n\) 이라고 가정했을 때, \(i\)가 첫 번째 GC에 속하는 vertex, \(j\)가 두 번째 GC에 속하는 vertex일 때, 모든 distinct vertex pair \((i,j)\)의 개수는 간단하게 그 둘을 곱한 \(S_1 S_2 n^2\)일 것이다. 만약 각각의 pair는 \(p\)의 확률로 연결이 되어있거나 \(1-p\)의 확률로 연결되어져있지 않다. 따라서 이 두 개의 GC가 서로 완벽하게 분리되어있을 확률 \(q\)는 다음과 같이 계산할 수 있다</p>
+
+
+<p>$$ q = (1-p)^{S_1 S_2 n^2} = \left( 1 - {c \over n-1} \right)^{S_1 S_2 n^2} $$</p>
+
+
+<p>이때 만약 \(n \to \infty\) 가 된다면, 우리는 아래와 같은 근사식을 구할 수 있다.</p>
+
+
+<p>$$ \ln q = S_1 S_2 \lim_{n \to \infty} \left[ n^2 \ln \left( 1 - {c \over n-1} \right) \right] = S_1 S_2 \left[ -c(n+1) + {1 \over 2} c^2 \right] = c S_1 S_2 [-n + ({1 \over 2} c -1) ]$$</p>
+
+
+<p>그러면 우리는 남은 상수항을 \(q_0\)라 정의하고, \(q = q_0 e^{-c S_1 S_2 n}\) 이라는 식을 구할 수 있다. 이 식은 너무나 당연하게 \(n \to \infty\) 가 되면 값이 0이된다. 따라서 우리는 \(n\)이 매우 큰 상황에서 두 개의 GC가 존재할 확률이 0이므로 \(n\)이 큰 네트워크는 단 하나의 Giant component를 가지고 있다는 결론을 내릴 수 있다.</p>
+
+
+<p>Random network는 단 하나의 Giant component만을 가지고 있기 때문에, 그에 포함되지 않은 나머지 component들을 모두 small component라고 정의할 수 있을 것이다. 이 때 각각의 small component의 크기를 \(\pi_s\)라고 정의하면 이 값들의 모든 합은 반드시 \(1-S\)이므로 \(\sum_s \pi_s = 1-S\) 라는 식을 얻을 수 있다.</p>
+
+
+<p>본격적으로 small component에 대해 다루기 전에 먼저 small component가 어떤 형태로 구성이 되어있을지 생각해보도록 하자. 정답부터 말하자면, small component는 tree의 형태를 하고 있다. 각각의 small component를 \(s\)개의 vertex를 가지는 tree라고 해보자. 당연히 tree의 edge의 개수는 \(s-1\)일 것이며 이 값은 connected 되어있는 \(s\)의 vertex가 만들어낼 수 edge의 최소 개수이다. 만약 이 최소 개수보다 많은 edge가 단 하나라도 존재할 확률은 \(c \over n-1\)이며, 이런 graph는 반드시 cycle이 생기게 되므로 더 이상 tree가 아니게 되어버린다. 그렇다면 우리가 이 small component가 tree임을 입증하기 위해서는 이런 additional edge가 존재할 확률이 0라는 것을 보이면 된다. tree를 구성하는 edge이외에 추가가 될 수 있는 edge의 개수는 \({s \choose 2} - (s-1) = {1 \over 2} (s-1)(s-2)\)이다. 이를 통해 tree안에 이런 edge가 단 하나라도 존재할 확률은 \({1 \over 2} {c(s-1)(s-2) \over n-1}\) 라는 것을 알 수 있다. 따라서 \(n \to \infty\) 가 되면 이 확률은 0이 되어버린다. 따라서 이 component는 반드시 tree라는 사실을 알 수 있다.</p>
+
+
+<p>이번에는 아래와 같은 상황을 한 번 상상해보자. 왼쪽과 오른쪽은 단 하나의 vertex만 제외하면 완벽하게 같은 Graph이다. 왼쪽 graph는 vertex \(i\)의 neighbor들이 모두 다른 small component에 속해있는 경우이며, 즉, 서로 분리되어있는 subgraph들을 하나로 이어주는 역할을 하고 있다. 오른쪽은 그 \(i\)는 없지만 여전히 서로 같은 확률을 그대로 유지하고 있고 여전히 확률 p를 가지는 random graph 이다.</p>
+
+
+<p><img src="/images/post/50-2.png" width="500"></p>
+
+<p>이런 상황에서 만약 우리가 충분히 큰 \(n\)을 가정했을 때 각각의 subgraph 역시 큰 graph의 특성을 따라갈 것이기 때문에, \(i\)가 없는 오른쪽 그림에서\(i\)의 neighbor \(n_1\)이 size가 \(s_1\)인 small component에 속할 확률은 \(\pi_{s_1}\)로 주어진다는 것을 예측할 수 있다.</p>
+
+
+<p>자 그렇다면 이런 vertex \(i\)가 \(k\)의 degree를 가지고 있었다고 가정해보자. 위의 결과로 인해 vertex \(i\)가 \(s\) 만큼의 크기를 갖는 small component에 속할 확률 \(P(s|k)\)는 이 vertex의 모든 neighbor, 즉 \(k\)개의 neighbor들이 각각 \(s_1\)부터 \(s_k\)까지 속할 확률과 같으며 이 값은 아래와 같이 계산 할 수 있을 것이다.</p>
+
+
+<p>$$ P(S|k) = \sum_{s_1}^infty &#8230; \sum_{s_k}^{\infty} \left[ \Pi_{j=1}^k pi_{s_j} \right] \delta (s-1, \sum_j s_j) $$</p>
+
+
+<p>이때 \(\delta (m,n)\)은 <a href="http://en.wikipedia.org/wiki/Kronecker_delta" target="new">Kronecker delta</a>를 의미하며 이 함수는 간단하게 두 값이 같으면 1 다르면 0을 반환한다. 즉, 이 수식에서 델타의 의미는 모든 \(s_j\)들을 더하면 \(s-1\)이 나와야한다는 것이다. =========== 추가 설명 작성 중 =============</p>
+
+
+<p>============Small component에 대한 추가 설명 작성 중=================</p>
+
+
+<h5 id="50-8-distofcompsize">Complete Distribution of Component Size</h5>
+
+
+<p></p>
+
+
+<h5 id="50-9-path">Path Length</h5>
+
+
+<p>보통 네트워크, 혹은 그래프에서 Diameter, 혹은 지름이라 함은 가장 긴 longest geodesic distance를 의미한다. 이 값은 즉, 임의의 두 vertex를 골랐을 때 가장 짧은 경로의 길이를 의미한다고 보면 된다. Random graph에서 이 값은 어떻게 구할 수 있을까? 먼저 간단하게 임의의 vertex에서 \(s\) 번 이동했을 때 visit할 수 있는 평균 vertex의 개수는 매 진행마다 degree 만큼의 vertex를 추가로 더 갈 수 있으므로 평균 degree들을 \(s\)번 곱한 형태인 \(c^s\)일 것이다. 그리고 우리가 원하는 경로는 가장 짧은 경로를 찾는 것이므로 vertex travel step을 이 visit 가능한 vertex와 전체 vertex의 개수가 같아지는 순간 끝나하면 우리가 원하는 shortest path의 길이를 유추할 수 있게 될 것이다. (정확한 경로는 예측할 수 없지만) 따라서 \(c^s \simeq n\)이 될 것이며 따라서 \(s \simeq {\ln n \over \ln c}\)가 될 것이다. 즉, 놀랍게도 아무리 \(n\)의 값이 급격하게 커지더라도 random graph의 diameter가 증가하는 속도는 \(\log n\) 이라는 것이다. 이 값은 충분히 작은 값으로, 이런 움직임이 실제 네트워크의 움직임과 매우 흡사하다는 것을 실험을 통해서 밝혀졌다.</p>
+
+
+<h5 id="50-10-problems">Random Graph의 문제점</h5>
+
+
+<p>앞서 살펴본 바를 토대로 Random Graph가 가지고 있는 문제점들을 살펴보도록 하자. 먼저 Average path length는 \(\bar l \simeq {\log n \over \log c} \)로 표현이 되며 이것은 곧, random graph는 \(n\)의 값에 비례하여 path length가 늘어나는 것이 아니라 log scale로 증가한다는 것을 알 수 있다. 즉, \(n\)이 매우 크더라도 path는 그에 비해 매우 짧다는 것을 알 수 있다. 이것은 실제 대부분의 네트워크들에서도 나타나는 현상이다. 반면 clustering coefficient는 \(c \over n\)으로 표현이 되며 \(n\)의 값이 증가할 수록 떨어지는 것을 알 수 있는데, 실제 network들이 \(n\)이 커지더라도 높은 clustering coefficient를 유지한다는 점에서 현실과 잘 맞지 않는다는 것을 알 수 있다. 마지막으로 Degree distribution을 살펴보게 되면, random graph에서의 degree distribution은 \(P(k) \simeq e^{-c} {c^k \over k!}\)로 근사가 되는데, 실제 네트워크에서 관측되는 distribution은 \(P(k) \simeq k^{-\gamma}\) 와 같은 power distribution이다. 따라서 이 역시 잘 맞지 않는다는 것을 알 수 있다.</p>
+
+
+<p>Random network는 가장 간단한 network모델이며 수학적으로 잘 증명되었고 쉽게 이해할 수 있는 network모델이다. 그러나 real network와 비교해 잘 맞지 않는 점들이 있기 때문에 우리는 결국 새로운 network model들을 계속 더 공부해야만 하는 것이다.</p>
+
+
+<p>따라서 다음 글은 이와 같은 문제를 일부 해결한 Small world network에 대해 다루게 될 것이다.</p>
+
+
+
+
+<h5>KAIST Network Science</h5>
+
+
+<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="/47" target="new">Introduction</a></li>
+    <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
+    <li>Lecture 3: <a href="/49" target="new">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="/50" target="new">Random Network</a></li>
+    <li>Lecture 5: <a href="/51" target="new">Small world Network</a></li>
+    <li>Lecture 6: <a href="/52" target="new">Scale free Network</a></li>
+</ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -1615,171 +1842,6 @@ End of technical program of Day 2<strong> </strong>
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/38/">LMNN(Large Margin Nearest Neighbors) LMCA(Large Margin Component Anaylsis)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-03T15:21:00+09:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>KNN은 machine learning에서 general하게 많이 쓰이는 알고리듬이다. 이 알고리듬은 아이디어도 매우 간단하고 구현하기도 간단하고 성능도 어느 정도 이상 나오는 꽤나 훌륭한 알고리듬이기 때문이다. <a href="/37" target="new">이전 글</a>에서 distance metric learning의 대략적인 컨셉을 설명했었고, 그 중에서도 optimization을 통해 metric을 learning하는 category에 대해 간략하게 언급했었다. 이 글에서는 그런 알고리듬 중에서 LMNN (Large Margin Nearest Neighbors) 그리고 이 방법의 단점을 보완한 LMCA (Large Margin Component Analysis) 라는 알고리듬을 소개할 것이다.</p>
-
-
-<h5>LMNN - Introduction</h5>
-
-
-<p>먼저 LMNN이라는 아이디어는 2006년 <a class="red tip" title="Advances in Neural Information Processing Systems">NIPS</a>에 발표된 Distance metric learning for large margin nearest neighbor classification이라는 논문에 소개된 기법이다. 이 알고리듬은 distance metric learning에 대해 설명했던 <a href="/37" target="new">이전 글</a>에 잠깐 언급했던 Mahalanobis Metric을 직접 학습하는 알고리듬이다. 이 Metric은 지난 번에 설명했기 때문에 자세한 설명은 생략하도록 하겠다.</p>
-
-
-<p>이 논문에서는 거리가 제곱근 형태가 아니라 제곱 들의 합으로 표현을 했다. 즉, Mahalanobis Metric을 \(D(\vec x_i , \vec x_j )=(\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j )\) 꼴로 표현하게 된다. 혹은 \(D(\vec x_i , \vec x_j )= ||L(\vec x_i - \vec x_j)||^2 \)으로 표현된다.</p>
-
-
-<h5>LMNN - Cost function</h5>
-
-
-<p>이 방법의 핵심 아이디어는, 위에서 표현한 Metric을 평가하는 Cost function을 design하고 이 function을 minimize시키는 Metric을 찾아내는 것이다. 매우 간단한 컨셉이고, 만약 운이 좋아서 optimization 문제가 반드시 하나의 global solution으로 수렴한다는 것이 보장만 된다면 가장 최고의 성능을 낼 수 있을 것이라는 것은 자명한 일이다. (<a href="/31/" target="new">이전에 작성한 글</a>에서 이러한 좋은 문제 중 하나인 convex optimization에 대해 간략하게 언급했었다.) 자, 그러면 이 논문에서 Cost function을 어떻게 정의했는지 한 번 알아보자.</p>
-
-
-<p>$$ \varepsilon (\mathbf L ) = \sum_{ij} \eta_{ij} ||L(\vec x_i - \vec x_j)||^2 + c \sum_{ijl} \eta_{ij} (1-y_{il}) h[ 1 + ||L(\vec x_i - \vec x_j)||^2 - ||L(\vec x_i - \vec x_l)||^2 ] $$</p>
-
-
-<p>이때, 각 notation이 의미하는 바는 아래와 같다</p>
-
-
-<p></p>
-
-<ol>
-    <li>\({(\vec x_i , y_i )}_{i=1}^n\): training set을 의미한다. 벡터 x는 input data를, scalar y는 label을 의미한다. (binary class가 아니어도 상관없다.)</li>
-    <li>\(\eta_{ij}\): \(\vec x_j\)가 \(\vec x_i\)의 target neighbor인가 아닌가를 나타내는 binary variable. 맨 처음 learning할 때 고정되는 값이며 알고리듬이 돌아가는 동안 변하지 않는 값이다.</li>
-    <li>\(y_{ij}\): label \(y_i\)와 \(y_j\)가 서로 일치하는가 하지 않는가를 나타내는 binary variable이다. 역시 변하지 않는다.</li>
-    <li>h(x): hinge function으로, 간단하게 표현하면 \(h(x) = max(0,x) \)이다. 즉, 0보다 작으면 0, 아니면 원래 값을 취하는 함수이다.</li>
-    <li>c: 0보다 큰 임의의 상수로, 끌어당기는 term과 밀어내는 term사이의 trade-off를 조정한다. 보통 cross validation으로 결정한다.</li>
-    <li>Target neighbor: 임의의 \(x_i\)와 같은 label을 가진 데이터들 중에서 가장 가까운 k개의 데이터들을 의미하며 k는 사용자가 세팅할 수 있다</li>
-</ol>
-
-
-<p>뭔가 복잡해보이지만, 일단 간단하게 설명하자면 앞의 항은 같은 label끼리 서로 끌어오는 term이고, 뒷 항은 서로 다른 label끼리 밀어내는 term이다. 이유는 간단한데, 먼저 앞과 뒷항 모두 포함되어있는 \(\eta_{ij}\)는 i와 j가 서로 target data일 때만 해당 항을 남기고, 아니면 0으로 만들어버리기 때문에 이 모든 연산은 target neighbor들에 대해서만 진행이 되게 된다. 따라서 앞의 항은 target neighbor들끼리의 거리를 의미하므로, 이 값을 minimization한다는 것은 서로 같은 label들끼리 최대한 가깝게 모아준다는 의미와 같게 되는 것이다. 그럼 오른쪽 항은? 이 항은 잘 보면 summation factor가 i,j,l인데, 일단 먼저 target neighbor i와 j에 대해서 이와는 다른 label을 가진 (\((1-y_{il})\)가 0이 되지 않는) l들에 대해서 최대한 그 거리를 멀어지게 하도록 하는 항이다. 이 값은 사실 그냥 나온 값이 아니라 아래 식을 통해서 나오게 된 값이다.</p>
-
-
-<p>$$ d(\vec x_i , \vec x_j) + 1 \le d(\vec x_i , \vec x_l) $$</p>
-
-
-<h5>LMNN - Optimization</h5>
-
-
-<p>위의 식에 대해서 간단히 언급을 하자면, 모든 i와 j들에 대해서, label이 다른 l과의 거리보다 label이 같은 데이터들끼리의 거리가 무조건 1만큼은 작아야한다는 식이다. 이 식을 살짝 전개하면 원래 cost function의 오른쪽 항과 같은 모양을 얻을 수 있을 것이다.</p>
-
-
-<p>자! 이제 cost function을 정의했으니 optimize를 해보자. 근데 문제가 하나 있는데, 이 cost function은 <a class="red tip" title="Convex Optimization은 solution이 무조건 하나다. 나중에 블로그에서 자세하게 다뤄보도록 하겠다.">convex</a>가 아니다. 때문에 L에 대해 문제를 해결했을 때 정확한 global minimum을 찾을 수가 없게 된다. 하지만 이 논문은 아주 간단하게 이 문제를 convex 문제로 바꾸게 된다. convex 문제 중에서 semidefinite programming이라는 문제가 있는데 (간단하게 SDP라고 한다) 이 문제는 &#8216;어떤 조건&#8217;을 가장 잘 만족하는 positive semidefinite matrix를 찾는 문제이다. 이 문제에 대해 언급하면 포스트가 너무 길어지니 <a href="http://en.wikipedia.org/wiki/Semidefinite_programming" target="new">위키 링크</a>로 대체하도록 하겠다.</p>
-
-
-<p>그러면 이 문제를 어떻게 SDP로 바꿀 수 있을까? 해결법은 Metric을 L로 표현하는 대신에 M으로 표현하고, 이 M에 대해 문제를 푸는 것이다. 이렇게 표현하게 되면 문제가 아래와 같이 변하게 되며 이는 SDP로 간단하게 해결할 수 있는 문제가 된다.</p>
-
-
-<p>$$ \mathbf {Minimize} \sum_{ij} \eta_{ij} (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) + c \sum_{ij} \eta_{ij} (1-y_{il}) \xi_{ijl} \ \mathbf {subject} \ \mathbf {to:} $$</p>
-
-
-<p style="margin-left:15%"> (1) \( (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) - (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) \geq 1- \xi_{ijl} \)</p>
-
-
-<p style="margin-left:15%"> (2) \( \xi_{ijl} \geq 0 \)</p>
-
-
-<p style="margin-left:15%"> (3) \( \mathbf M \succeq 0 \)</p>
-
-
-<p>여기에서 \(\xi_{ij}\)는 slack variable로, 이전 식의 hinge function과 완전히 같은 동작을 하도록 &#8220;mimick&#8221;을 하는 변수이다. 이 문제는 앞에서 언급한 SDP로 해결할 수 있는 format이기 때문에 이제 이 문제를 해결해서 적절한 \(\mathbf M\)을 찾아내면 우리가 찾고자하는 적절한 Metric을 찾을 수 있게 되는 것이다.</p>
-
-
-<h5>LMNN - Result</h5>
-
-
-<p>자 이제 LMNN의 실제 performance를 measure해보자. 참고로 이 알고리듬은 저자가 직접 버전관리하는 소스코드가 존재한다. <a href="http://www.cse.wustl.edu/~kilian/code/code.html" target="new">링크</a>에서 간단하게 다운로드 받을 수 있다. 이 Metric learning이 well-working하는지 판단하기 위해서 이 논문에서는 총 4개의 알고리듬을 비교한다. (1) Euclidean distance를 사용하는 기존의 KNN (2) Optimization을 통해 얻은 Metric을 사용해 Mahaloanobis distance를 사용한 KNN (3) 앞에서 얻은 Metric을 계산할 때 사용한 Cost function을 가장 최소화시키는 label을 고르는 Energy-based classification (4) Multiclass SVM 이렇게 총 네가지 알고리듬을 사용한다. 그런데, 만약 dimension이 높은 경우에는 위의 Optimization식이 Overfitting이 될 위험성이 존재한다. 따라서 이를 방지하기 위하여 feature가 많은 문제는 PCA를 사용하여 dimension을 낮추는 작업을 하게 되는데, 이 문제가 결국 다음에 설명할 LMCA의 Motive가 된다. 아무튼 이런 방법을 사용하여 얻은 결과는 아래 표와 같다.</p>
-
-
-<p><img src="/images/post/38-1.png" width="600"></p>
-
-<p>대체로 Energy-based classification이 가장 좋은 결과를 보이는 것을 알 수 있으며, 이 논문의 방법을 통해 계산한 Metric이 분명 기존의 다른 방법들보다 더 나은 방법을 제시한다고 할 수 있을 것이다. 그러나 이 방법의 근본적인 문제점이라면 Optimization으로 Metric을 구하기 때문에 Overfitting문제에 매우 취약하다는 것이며, 특히 dimension이 높고 sample개수가 적으면 이 문제가 매우매우 심각해진다. 다만, face, hand-write letter, spoken letter 등등 매우 다양한 데이터셋에 전부 개선된 performance를 보이는 것은 충분히 고무적인 결과라고 할 수 있을 것이다.</p>
-
-
-<h5>LMCA - Motivation</h5>
-
-
-<p>하지만, Feature가 1000단위가 넘어가는 high dimension 상황에서는 문제가 발생할 수 있다. 기본적으로 Optimization 문제라는 것은 언제나 Overfitting issue에서 벗어날 수 없다. 특히 LMNN이 정의한 Optimization문제는 정사각행렬 M을 학습해야하므로, dimension이 높아질수록 Optimization을 통해 찾아내야하는 항이 제곱 스케일로 늘어난다. 즉, 당장 차원이 100단위만 넘어도 찾아내야하는 항의 수가 10000개가 넘어가게 된다는 의미이다. 따라서 우리가 실제 이 문제를 적용하는 경우에, 어쩔 수 없이 dimension reduction technology를 사용할 수 밖에 없어진다. LMNN 논문에서는 PCA를 사용하여 dimension을 낮춘 이후에 Optimization문제를 풀게 되는데, 이 PCA라는 것이 물론 좋고 많은 사람들이 사용하는 dimesion reduction 방법이지만, 이 방법으로 인해 발생하는 오차가 매우 크고 실제로 더 좋은 performance를 낼 수 있음에도 불구하고 그 성능이 크게 저하되는 요인이 된다는 것이 LMCA의 Motivation이다. 실제로 PCA를 사용하게되면 Dominant한 term을 뽑아내기는 하지만 그 dimension이 낮아지거나 혹은 기존에 가지고 있는 input vector들이 bais가 된 경우에는 좋은 결과를 얻지 못할수도 있기 때문에 이 문제는 꽤나 큰 문제가 될 수 있다.</p>
-
-
-<h5>LMCA - Idea</h5>
-
-
-<p>그렇다면 어떻게 PCA등의 별다른 dimension reduction technology없이 Overfitting 문제를 해결할 수 있을까? 사실 이 논문에서 주장하는 내용은 매우 간단하다. 이전 논문인 LMNN에서 찾고자하는 Metric인 L이 dimension을 변화시키기 않는 transformation이었던 것에 반해, LMCA에서는 L을 원래 차원 D에서 더 낮은 차원 d로 보내는 L을 찾겠다는 것이다. 하지만 여기에서 문제가 생긴다. Full rank가 아닌 \( \mathbf M = \mathbf L^top \mathbf L\) 은 이제 더 이상 Semidefinite programming문제가 아니게 된다. 이유는 원래 SDP 문제에서 rank = d라는 조건이 추가되기 때문인데, 이렇게 되면 M이 convex domain이 아니게 되기 때문에 더 이상 이 문제가 convex problem이 아니게 되고, 따라서 이 문제는 더 이상 global optimum으로 수렴하지 않는다!</p>
-
-
-<p>그렇다면 해결책은 없는 것일까? 이 논문에서는 그냥 원래 non convex인 L에 대한 cost function을 그냥 gradient descent method를 사용하여 optimize시킨다. 물론 이렇게 계산된 값은 local optimum이다. 때문에 LMNN이 무조건 global solution을 찾았던 것과 비해서 매우 performance가 떨어질 것 같지만, 저자들은 다음과 같은 2가지 장점이 있기 때문에 오히려 이 방법이 더 performance가 높다고 주장한다. 첫째, 원래 Full rank M을 찾을 때는 unknown component들이 D by D만큼 존재했었지만, 지금은 차원을 더 낮추었기 때문에 찾아야하는 값이 더 적어진다. 마치 Matrix completion의 장점과 비슷한 것이다. 둘째, 원래 LMNN은 Optimization을 할 때 parameter들이 굉장히 많은데 이런 여러 요소 없이 바로 Optimization이 가능해진다는 것이다. 물론 당연히 이 논리의 기본 가정은 high dimension data에 PCA를 사용해 low dimension으로 만들었을 때 이미 information loss가 많이 발생하거나 이미 tranining data에 overfitting되기 때문에 성능에 무조건적인 저하를 불러일으키게 되기 때문에 Optimization을 PCA를 사용하지 않은 Full dimension에 대해서 실행했다는 가정 하에 성립할 것이다.</p>
-
-
-<h5>LMCA - Results</h5>
-
-
-<p>그렇다면 결과를 한 번 확인해보자.</p>
-
-
-<p><img src="/images/post/38-2.png" width="600"></p>
-
-<p>위의 그림은 high dimension dataset에 대한 것이고 아래 결과는 low dimension dataset에 대한 결과이다. 아무래도 high dimension에서는 저자들이 주장한 대로 LMNN에 비해 결과가 많이 개선된 것을 확인할 수 있다. (이 그림에서는 kernelized된&#8230; 즉 non-linear method 역시 함께 evaluation된 결과이기 때문에 LMNN과 비교해야할 대상은 linear method이다) 하지만 low dimension에 대해서는 항상 더 높은 것 만은 아니며, 일부 경우에 대해서는 LMNN이 더 좋은 결과를 보임을 알 수 있다. 즉, 이 방법은 overfitting issue가 발생했을 때 global optimum은 아니지만 그와 유사한 (그러나 절대 같다고 하거나 그와 유사하다고 할 수도 없는) local optimum을 찾는 방법이기 때문에, overfitting issue가 적은 low dimension에서는 LMNN보다 성능이 떨어질 수도 있는 것이다.</p>
-
-
-<h5>Non-linear LMNN, LMCA</h5>
-
-
-<p>지금까지 언급한 방법들은 모두 &#8216;linear&#8217;한 transformation을 찾는 문제였다. 하지만 세상에는 엄청나게 많은 non-linear metric이 존재하며, 분명 linear보다 성능이 더 좋은 non-linear metric을 찾을 수 있을 것이라고 생각할 수 있다. 그렇다면 이 논문들에서 과연 그런 방법을 다루지 않을까? 일단 LMNN은 NIPS에 제출된 원래 논문에는 non-linear problem이 언급이 되어있지않지만, 나중에 GB-LMNN (Gradient Boost LMNN)이라는 방법을 소개하며, 이 방법의 powerful함은 LMNN code에서 직접 확인할 수 있을 것이다. 이 방법은 Gradient Boost라는 방법을 사용하여 non-linear metric을 찾아내는데, 문제는 이 방법이 non-convex하다. 따라서 초기값에 따라서 그 결과가 상이하게 달라지게 되는데, 해당 논문에서는 LMNN을 통해 학습한 L을 초기값으로 사용하여 Optimum값을 찾는 아이디어를 제시해 L의 성능을 개선시킨다고 명시되어있다. 분명 Optimize를 시키기 때문에 본래 값보다는 더 좋은 값으로 수렴할 것이며 성능도 어느정도 올라갈 것이라고 예측이 가능할 것이다. Gradient boost는 regression tree라는 것을 학습하여 non-linear transformation을 찾아내는데, 이 tree의 node개수나 level등등을 어떻게 학습시킬 것이냐에 따라 그 running time과 overfitting issue가 결정되는 듯 하다. 더 자세한 점은 해당 논문을 읽어보기를 권한다.</p>
-
-
-<p>또한 LMCA는 원 논문에 non-linear method까지 언급이 되어있다. 본래 아이디어 자체가 그냥 gradient descent를 사용해서 local optimum L을 찾는 문제이기 때문에 kernel에 대해서도 이 문제를 동일하게 풀 수 있는 듯하다. 다만 그 update rule을 어떻게 결정하느냐의 문제가 있는지 논문에서 cost function의 gradient방향으로 내려가는 것이 올바른 update rule이라는 것을 Lemma를 증명해놓았다. 아무튼 당연한 얘기지만 이 방법이 linear method보다 그 결과가 좋다. 자세한 점은 마찬가지로 해당 논문을 참고하길 바란다.</p>
-
-
-<h5>Conclusion</h5>
-
-
-<p>KNN은 엄청 직관적인 method이지만 분명 powerful하고 easy to implement한 방법이다. 또한 이론적으로 그 bound가 가장 optimal한 case에 bayes risk와 같다는 것이 증명이 되어있기 때문에 사실 굉장히 좋은 방법이라고 할 수 있다. 그러나 실제 우리가 이 방법을 적용하는 대부분의 상황에서는 metric learning이 performance에 크게 영향을 끼칠 수 밖에 없다. LMNN과 LMCA는 Optimization problem을 solve함으로써 상당히 좋은 결과를 얻어낼 수 있는 좋은 Metric learning알고리듬이라고 할 수 있다. 물론 이 방법들에는 overfitting issue가 존재하고, 이 때문에 적절한 상황이 아닌 경우에 특히 high dimension, low sample problem에서 well working하지 않는다는 단점이 존재하기는 한다. 하지만 저자가 구현한 implement하기 좋은 matlab code도 존재하고, 여러모로 괜찮은 방법이 아닌가 하는 생각이 든다.</p>
-
-
-<p>References</p>
-
-
-<ul>
-    <li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006) .InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li>
-    <li>Torresani, L., & Lee, K. (2007). Large margin component analysis. Advances in Neural Information Processing</li>
-    <li><a href="http://www1.cse.wustl.edu/~xuzx/research/publications/gb-lmnn.pdf" target="new">Kedem, D., Xu, Z., & Weinberger, K. (n.d.). Gradient Boosted Large Margin Nearest Neighbors</a></li>   
-</ul>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1798,6 +1860,10 @@ End of technical program of Day 2<strong> </strong>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/77/">모바일 시대 Platform에 대한 고찰</a>
+      </li>
+    
+      <li class="post">
         <a href="/62/">Machine Learning 스터디 (6) Information Theory</a>
       </li>
     
@@ -1811,10 +1877,6 @@ End of technical program of Day 2<strong> </strong>
     
       <li class="post">
         <a href="/59/">Machine Learning 스터디 (3) Overfitting</a>
-      </li>
-    
-      <li class="post">
-        <a href="/58/">Machine Learning 스터디 (2) Probability Theory</a>
       </li>
     
   </ul>

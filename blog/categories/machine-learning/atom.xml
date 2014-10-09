@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-10-04T22:34:29+09:00</updated>
+  <updated>2014-10-10T02:28:53+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -120,10 +120,7 @@
 <p>정보이론 자체는 Machine Learning과 크게 관계가 없어보이지만, 그 개념들은 생각보다 꽤 많은 부분에서 사용되게 되므로 좀 간략하게 다루게 되었다.</p>
 
 
-<p>추가: 정보이론이 어떻게 머신러닝에 유용하게 쓰일 수 있는가에 대한 lecture와 book link를 추가하도록 하겠다. <a href="http://www.inference.phy.cam.ac.uk/itprnn_lectures/">http://www.inference.phy.cam.ac.uk/itprnn_lectures/</a>, <a href="http://www.inference.phy.cam.ac.uk/mackay/itila/book.html">http://www.inference.phy.cam.ac.uk/mackay/itila/book.html</a></p>
-
-
-<p><a href="http://SanghyukChun.github.io/58">Probability Theory</a>, <a href="http://SanghyukChun.github.io/59">Overfitting</a>에서 일부, <a href="http://SanghyukChun.github.io/61">Decision Theory</a>, 그리고 <a href="http://SanghyukChun.github.io/62">Information Theory</a>를 커버하면서 이제서야 Bishop책 Ch 1에 해당하는 부분을 끝마쳤다. 만약 bishop을 따라간다면 이 다음에 probability distribution에 대해 다루고, conjugate prior나 exponential family, mixture of distribution 등등을 다뤄야하지만, 이 부분은 일단 생략을 하기로 한다면, 이 다음에는 사실 regression을 설명해야 할 차례이지만, 아마 이 다음에는 실제 information theory를 사용하는 Algorithm이 등장하는 Decision tree와, supervised learning 혹은 classification에 대해 다루게 될 것 같다. 그 이후에는 아마도 순서대로 Regression(Linear, Logistic)을 다루게 되고, Graphical Model을 간략하게 다룬 다음 Neural Network, EM 알고리듬, PAC Learning 순서대로 진행하게 되지 않을까 싶다. 다만 내가 PAC learning 세미나 준비를 해야해서 하는 김에 PAC가 조금 일찍 등장할 가능성도 있지 않을까 생각한다.</p>
+<p>추가: 정보이론이 어떻게 머신러닝에 유용하게 쓰일 수 있는가에 대한 lecture와 book link들 <a href="http://www.inference.phy.cam.ac.uk/itprnn_lectures/">http://www.inference.phy.cam.ac.uk/itprnn_lectures/</a>, <a href="http://www.inference.phy.cam.ac.uk/mackay/itila/book.html">http://www.inference.phy.cam.ac.uk/mackay/itila/book.html</a></p>
 
 
 
@@ -495,6 +492,18 @@
 
 
 <p>이를 해결하기 위해서는 결국 feature extraction 등의 기술을 사용하여 dimension을 가장 적절하게 낮추는 것이 바람직하다고 할 수 있다.</p>
+
+
+<h5 id="59-5-bvt">Bias-variance Trade-off</h5>
+
+
+<p>    <a href="http://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff" target="new">Bais-variance trade-off</a>   </p>
+
+
+<h5 id="59-6-robust">Overfitting and Robustness</h5>
+
+
+<p>마지막으로 Robustness라는 개념에 다루고 글을 마치도록 하겠다. 지금까지 overfitting에 대한 설명을 읽어보면 알 수 있듯, overfitting이라는 것은 </p>
 
 
 
