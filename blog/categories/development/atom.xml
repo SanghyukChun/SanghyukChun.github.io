@@ -4,7 +4,7 @@
   <title><![CDATA[Category: development | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-10-10T02:28:53+09:00</updated>
+  <updated>2014-10-10T02:42:51+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[새로운 front framework Webplate에 대한 소견]]></title>
+    <link href="http://SanghyukChun.github.io/79/"/>
+    <updated>2014-10-10T02:30:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/79</id>
+    <content type="html"><![CDATA[<p>얼마전 <a href="http://getwebplate.com/">Webplate</a>라는 front-end framework를 접하게 되었는데 상당히 좋은 인상을 받아서 블로그에 소개 겸 사용 소감을 남겨보려 한다.</p>
+
+
+<p>그 동안 내가 웹을 개발하면서 느꼈던 가장 불편한 점은, 디자이너가 없이는 내가 할 수 있는 것들이 상당히 제한된다는 것이었다. 그러던 와중에 <a href="http://getbootstrap.com/">twitter bootstrap</a>을 알게 되었고, 덕분에 상당히 많은 웹 페이지들을 만들 수 있었다. 이 블로그도 그렇고, 내 aboutMe 페이지도 그렇고 홈페이지도 그렇고 요즘 만들고 있는 연구실 홈페이지도 그렇고.</p>
+
+
+<p>하지만 bootstrap을 사용하면서 불편한 점이 없는건 아니었다. Bootstrap은 매우 훌륭한 디자인 가이드를 제공하고 있기는 하지만, 결국 기본적인 웹 frame조차 내가 처음부터 html 코딩을 해야하는 점은 매우 귀찮은 일이 아닐 수 없었다. 지금은 이것에 어느 정도 익숙해지고 내가 내 나름의 template을 가지게 되었지만 그 이전에는 html부터 코딩을 하는 것이 여간 귀찮은 일이 아니었다. 특히 aboutMe만들 때 생각하면... 정말 끝없이 고치고 또 고쳤던 기억이 난다.</p>
+
+
+<p>그러던 와중 webplate를 보게 되었는데, 처음 본 순간 정말 센세이션이었다. 마침 <a href="https://github.com/chrishumboldt/webplate">github</a>도 있길래 fork해서 한 10분 정도 둘러봤는데,</p>
+
+
+<ol>
+<li>Twitter Bootstrap과 비교를 하지 않을 수 없는데, 사실 Webplate에서 가능한건 Bootstrap에서도 다 가능할 뿐 아니라 자유도 역시 Bootstrap이 더 좋다. 하지만 Bootstrap에서는 내가 다 구현을 했어야했던 것들이 Webplate에서는 구현이 되어있다는 것이 좋은 듯. 
+한 마디로 Bootstrap은 style에 대한 기본 base느낌이라면 Webplate는 진짜 front framework다</li>
+<li>비록 내가 따로 설정을 해줘야하지만, example project에서 기본 글씨체를 Lato로 강제해서 참 좋다. Open Sans 애리얼 헬베티카 꺼졍...</li>
+<li>다시 framework에 대한 얘기인데, pre태그 에서 코드 이쁘게 보여주는 기능을 class로 부르기만 하면 되게 구현이 되어있어서 짱짱 편하다. 내가 라이브러리 찾아서 부를 수도 있지만 귀찮으니까... </li>
+<li>기본적으로 필요한 대부분의 라이브러리가 포함되어있다. response.js를 포함해서! 때문에 반응형으로 만들기도 편하고 호환에 대한 두려움 없이 작업을 하는게 가능하지만 ie에서 완전 호환이 되는지 잘 모르겠다. (아마 되겠지)</li>
+<li>이 framework 자체가 vertical UI를 강제하고 있다. 최근 핫한 UI이기는 하지만 (stripe UI같은거) 다른 모양을 원하는 경우에는, 특히 상단 바가 아니라 좌측에 메뉴를 넣고 싶은 경우라면 이 framework을 쓰는게 아니라 따로 만들어야할 것 같다. (하지만 요즘 모든 웹은 다 기본이 vertical UI..)</li>
+<li>Service, Product 등의 introduction page를 간단하게 만들 생각이라면 이보다 더 Cool한 web framework는 없어보인다. (전시회 소개나 festival page로도 좋을 것 같네) 그 이외에 어떤 곳에서 이 framework를 사용할 수 있을지 아직은 잘 모르겠다. Vertical UI를 쓸 수 있는 곳이라면 전부 쓸 수 있을 것 같기는 하다.</li>
+</ol>
+
+
+<p>한 마디로 간단하게 만들 수 있는 웹은 이 녀석으로 대략 커버가 가능하다는 점, 그리고 반응형에 대한 이슈를 내가 따로 고민할 필요가 없다는 점이 너무 마음에 들었다. <a href="http://getwebplate.com/documentation">Document</a>링크를 첨부할테니 관심있는 사람들은 한 번 읽어봤으면 좋겠다. 최근 이걸 사용해 따로 개발할 웹이 없어서 정작 내가 사용해볼 수가 없다는게 아쉽기는하다.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[모바일 시대 Platform에 대한 고찰]]></title>
