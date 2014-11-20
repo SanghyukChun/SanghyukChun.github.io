@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Gitlab을 깔자 - README</title>
+  <meta name="author" content="Sanghyuk Chun">
+
+  
+  <meta name="description" content="Gitlab Omnibus package for Ubuntu 14.04 를 설치하면서 생겼던 문제들을 trouble shooting하는 과정들">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://SanghyukChun.github.io/80">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+	<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+
+<script>
+$(function() {
+	$('.tip').attr('data-toggle','tooltip');
+	$('.tip').attr('data-placement','top');
+	$('.tip').tooltip();
+});
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42711199-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=182012898639519";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+  
+  <div id="main">
+  	<header role="banner"><hgroup>
+  <h1><a id="blog-title" href="/">README</a>
+  
+    <span>&nbsp;&nbsp; SanghyukChun's Blog</span>
+  
+  </h1>
+</hgroup>
+
+</header>
+  	<nav role="navigation"><ul class="main-navigation list-inline">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="http://sanghyuk.kaist.ac.kr/aboutMe/">About Me</a></li>
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+
+</nav>
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Gitlab을 깔자</h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-20T03:05:00+09:00" pubdate data-updated="true">Nov 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>버전관리의 중요성은 몇 번을 강조해도 부족하지 않다. 버전관리를 하기 위한 여러 도구들이 존재하지만, 난 분산 버전 관리 (DVCS) 를 좋아한다. Mercurial 로 처음 버전관리를 공부했고, 지금은 주로 Github에 소스를 올리기 때문에 git 을 많이 쓰고 있다. 콘솔에서는 큰 차이가 있지만, 정작 둘 다 <a href="http://www.sourcetreeapp.com/">SourceTree</a>로만 관리하기 때문에.. 예전에는 맥버전만 있었지만, 이제는 윈도우 버전도 생겨서 다른 사람들도 용이하게 쓸 수 있다. 이런 이유로 최근에는 거의 모든 레포지토리를 git 레포지토리로 만들게 되는데, 연구실에서 내가 쓰고 있는 논문이나 프로젝트용 코드 같은 경우는 공개된 레포지토리로 올려도 곤란하고, 연구실 단위로 관리를 해야할 필요를 느껴서 <a href="https://about.gitlab.com/">GitLab</a>이라는 놈을 깔아보기로 헀다.</p>
+
+
+<p>Gitlab을 한 마디로 요약하자면 &#8216;개인용 github&#8217; 라고 할 수 있다. 코드를 훑어보니 rails 기반에 nginx를 서버로 사용하고 있어서 내가 친숙한 환경이기도 해서 좋더라. 늘 깔아야지 깔아야지했는데 이게 생각보다 설치가 머리가 아파서.. 나중에 시간이 넉넉해지면 설치하려 했으나 어쩌다보니 갑작스럽게 설치를 하게 되었다.</p>
+
+
+<p>내 설치환경은 Ubuntu 14.04, <a href="https://about.gitlab.com/downloads/">다운로드 페이지</a>에서 ubuntu 14.04를 선택하는 아래와 같은 명령어를 실행하면 알아서 옴니버스 버전을 깔아준다고 한다.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget https://downloads-packages.s3.amazonaws.com/ubuntu-14.04/gitlab_7.4.3-omnibus.5.1.0.ci-1_amd64.deb
+</span><span class='line'>sudo apt-get install openssh-server
+</span><span class='line'>sudo apt-get install postfix # Select 'Internet Site', using sendmail instead also works, exim has problems
+</span><span class='line'>sudo dpkg -i gitlab_7.4.3-omnibus.5.1.0.ci-1_amd64.deb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>난 openssh-server, postfix는 깔려있으니 생략했다.</p>
+
+
+<p>다음으로는 <code>sudo vim /etc/gitlab/gitlab.rb</code> 를 실행해 <code>gitlab.rb</code> 를 수정해야한다. 다시 한 번 말하지만, gitlab은 rails로 돌아가기 떄문에 rails setting 을 해줘야한다. 원래 레일즈 프로젝트의 설정을 바꾸기 위해서는 yml 파일이나 다른 rb 파일들을 직접 수정해주어야하는데, gitlab 옴니버스 버전에서는 친절하게 이 루비 파일 하나만 바꾸면, 알아서 yml 등을 generate해준다. 아 편하고 좋다! 라고 생각했지만 이것이 그 모든 재앙의 시작이었다..</p>
+
+
+<p>편하게 해주려고 만든 ruby setting 파일이 왜 문제가 되었느냐, 사실 이 대부분은 문제가 생기지 않는다. 예를 들어서 <code>www.example.com</code> 이라는 도메인을 가지고 있고, gitlab 의 접속 경로를 <code>gitlab.example.com</code> 으로 사용한다면 옴니버스 버전을 바로 사용하면 된다. 하지만 내가 사용하는 서버는 학교 도메인에서 서브도메인을 받아서 사용하기 때문에 <code>sanghyuk.kaist.ac.kr</code> 이런 식의 도메인을 가지고 있다. 따라서 위와 같은 경로를 취하게 되면 <code>gitlab.sanghyuk.kaist.ac.kr</code> 이라는 기괴한 경로가 생기게 되고, 당연하지만 이런 경로는 허용되지 않는다. 따라서 <code>sanghyuk.kaist.ac.kr/gitlab</code> 같은 relative domain을 사용해야한다. nginx에서 이런 서브 도메인을 루트로 삼는 것은 규칙에 위반되지만 사용하는 것이 가능하긴하다. rails에서도 root url을 relative url로 바꾸고 하면 돌릴 수 있지만.. 이건 내가 rails파일을 직접 바꿀 때 얘기였다.</p>
+
+
+<p>옴니버스 버전에서 이런저런 삽질을 하다가 찾아낸 이슈.. <a href="https://gitlab.com/gitlab-org/omnibus-gitlab/issues/238">옴니버전에서는 Relative URL root를 지원할 계획이 없다</a> 아&#8230; <code>gitlab.rb</code> 에서 삽질을 하고 있었는데 다 쓸데 없는 짓에 불과했던 것이다.</p>
+
+
+<p>그래서 relative url은 포기하고 다른 쪽으로 알아보니 포트를 바꿔서 접속을 하는 방법이 있더라. 이건 그나마 훨씬 할 만 헀다. <code>/etc/gitlab/gitlab.rb</code> 에서 다음과 같이 설정해준다.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>external_url = 'http://sanghyuk.kaist.ac.kr:1234'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>아 참고로, 내가 깐 버전은 = 을 안쓰면 에러가 나서 내가 = 을 따로 넣어줬다. 옴니버스 버전별로 다른 모양</p>
+
+
+<p>이렇게 하고 <code>sudo gitlab-ctl reconfigure</code> 을 실행시켜서 yml 등을 자동으로 generate시키기만 하면 문제 해결! &#8230; 이 아니었다. 아예 접속 자체가 되지를 않아서 이제 여기에서 다시 삽질을 시작했는데, 먼저 netstat으로 포트는 열려있나 봤다. 안타깝게도 아예 포트가 열려있지도 않았다. 돌아버리겠는건 <code>gitlab-ctl status</code> 에서는 잘 실행되는 것으로 나오는 것.</p>
+
+
+<p>이제 또 한참 삽질을 하다가, 아예 nginx 조차 돌아가는 것 같지 않아서 nginx 세팅을 수동으로 뜯어고치기로 결정했다. 이게 상당히 위험한 짓인데, 나중에 내가 생각없이 또 reconfigure를 때리면 내가 고친 파일들이 새로운 파일들로 덮어씌일 것이기 때문이다. 때문에 이렇게 설정을 시작한다면 reconfigure 대신 <code>gitlab-ctl restart</code> 로 configure 파일을 다시 생성시키지 말고 레일즈랑 nginx 등만 내렸다가 올려야한다. 이제 세팅을 바꿔보자.</p>
+
+
+<p>가장 먼저 nginx 설정을 찾아봤다. <code>/var/opt/gitlab/nginx/conf/gitlab-http.conf</code> 에 설정 파일이 있는데, listen과 server name이 엉망으로 되어있더라. 당연히 nginx가 설정이 잘못되었으니 서버에 접속도 못하고 포트도 안열려 있던 것. 이 둘을 제대로 바꿔주고 restart를 했다.</p>
+
+
+<p>드디어 &#8216;페이지를 찾을 수 없습니다&#8217; 창말고 다른 창을 볼 수 있었다. 그러나 여기에서 또 502 에러가 발생했는데, 아마도 내부 rails가 제대로 올라오지 않은 모양인가보다. 그래서 혹시 레일즈 세팅도 이상한가 싶어서 yml 파일을 찾아봤다.</p>
+
+
+<p><code>/var/opt/gitlab/gitlab-rails/etc/gitlab.yml</code> 을 열어봤더니 여기도 host랑 port가 엉망이었다. 이 부분을 바꿔주고 나서 다시 <code>sudo gitlab-ctl restart</code></p>
+
+
+<p>아 드디어 잘 실행된다. 기존에 쓰던 다른 레포지토리를 추가해주기 위해서 <a href="http://git-scm.com/book/ko/v1/Git%EC%9D%98-%EA%B8%B0%EC%B4%88-%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%A0%80%EC%9E%A5%EC%86%8C">remote</a>를 해주려고 보니 ssh key를 생성해서 넣어줘야 하더라. 이건 <a href="http://git-scm.com/book/ko/v1/Git-%EC%84%9C%EB%B2%84-SSH-%EA%B3%B5%EA%B0%9C%ED%82%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0">이 글</a>을 보면 된다. 이건 예전에 다 등록해뒀던거라서 금방금방했다. 조금 가지고 놀아보니 아직까지는 매우 만족스럽다.</p>
+
+
+<p>이렇게 일단 주먹구구식으로 깃랩을 돌리는 것에는 성공했지만, 아직 reconfigure를 함부로 하면 안된다. 내가 바꾼 <code>/var/opt/gitlab/gitlab-rails/etc/gitlab.yml</code>, <code>/var/opt/gitlab/nginx/conf/gitlab-http.conf</code> 는 <code>gitlab-ctl reconfigure</code> 를 할 때 자동으로 generate 되는 파일이다. 따라서 내가 바꾼 설정이 저장이 되지 않기 때문에 함부로 reconfigure를 했다가는&#8230; 나중에 시간이 나면 이 부분을 gitlab.rb 만 바꿔서 수정할 수 있는지 알아보자.</p>
+
+</div>
+
+<hr>
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-20T03:05:00+09:00" pubdate data-updated="true">Nov 20<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/development/'>development</a>, <a class='category' href='/blog/categories/gitlab/'>gitlab</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/80/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/80/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="380" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/79/" title="Previous Post: 새로운 front framework Webplate에 대한 소견">&laquo; 새로운 front framework Webplate에 대한 소견</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="facebook_comments" aria-live="polite">
+      <div class="fb-comments" data-href="http://SanghyukChun.github.io/80/" data-width="400" data-num-posts="10"></div>
+    </div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/80/">Gitlab을 깔자</a>
+      </li>
+    
+      <li class="post">
+        <a href="/79/">새로운 Front Framework Webplate에 대한 소견</a>
+      </li>
+    
+      <li class="post">
+        <a href="/77/">모바일 시대 Platform에 대한 고찰</a>
+      </li>
+    
+      <li class="post">
+        <a href="/63/">Machine Learning 스터디 (7) Convex Optimization</a>
+      </li>
+    
+      <li class="post">
+        <a href="/62/">Machine Learning 스터디 (6) Information Theory</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'SanghyukChun',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Sanghyuk Chun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=182012898639519&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

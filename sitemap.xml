@@ -2,11 +2,11 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://SanghyukChun.github.io/1/</loc>
-        <lastmod>2013-07-29T08:43:02+09:00</lastmod>
+        <lastmod>2014-11-20T14:34:48+09:00</lastmod>
     </url>
     <url>
         <loc>http://SanghyukChun.github.io/2/</loc>
-        <lastmod>2013-07-29T08:43:02+09:00</lastmod>
+        <lastmod>2014-11-20T14:33:22+09:00</lastmod>
     </url>
     <url>
         <loc>http://SanghyukChun.github.io/3/</loc>
@@ -14,7 +14,7 @@
     </url>
     <url>
         <loc>http://SanghyukChun.github.io/4/</loc>
-        <lastmod>2013-07-29T08:43:02+09:00</lastmod>
+        <lastmod>2014-11-20T14:34:33+09:00</lastmod>
     </url>
     <url>
         <loc>http://SanghyukChun.github.io/5/</loc>
@@ -241,12 +241,16 @@
         <lastmod>2014-10-10T02:42:19+09:00</lastmod>
     </url>
     <url>
+        <loc>http://SanghyukChun.github.io/80/</loc>
+        <lastmod>2014-11-20T14:37:06+09:00</lastmod>
+    </url>
+    <url>
         <loc>http://SanghyukChun.github.io/archives/</loc>
-        <lastmod>2014-10-10T06:36:42+09:00</lastmod>
+        <lastmod>2014-11-20T14:37:06+09:00</lastmod>
     </url>
     <url>
         <loc>http://SanghyukChun.github.io/</loc>
-        <lastmod>2014-10-10T06:36:42+09:00</lastmod>
+        <lastmod>2014-11-20T14:37:06+09:00</lastmod>
     </url>
     <url>
         <loc>http://SanghyukChun.github.io/robots.txt</loc>

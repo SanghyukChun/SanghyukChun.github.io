@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2) Nov 27th, 2013 본 포스팅은 단기강좌 인터넷 속의 수학의 강의 들을 요약하는 포스트입니다. Introduction Netflix라는 미국의 DVD rental &hellip;">
+  <meta name="description" content="인터넷 속의 수학 - How Does Netflix Recommend Movies? (2/2) Dec 2nd, 2013 본 포스팅은 단기강좌 인터넷 속의 수학의 강의 들을 요약하는 포스트입니다. Recall: Machine Learning 이전의 많은 포스트 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,157 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/31/">인터넷 속의 수학 - How Does Netflix Recommend Movies? (2/2)</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-02T21:43:00+09:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>본 포스팅은 <a href="/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
+
+
+<h5>Recall: Machine Learning</h5>
+
+
+<p><a href="/21" target="new">이전의</a> <a href="/30" target="new">많은</a> <a href="/blog/categories/machine-learning" target="new">포스트 들</a>에서도 설명했듯이 Machine Learning은 데이터를 통해 새로운 시스템을 만드는 것을 의미한다. 그렇다면 굳이 사람이 아니라 기계가 이런 일을 해야하는 이유가 있을까? 무엇보다 기계는 사람보다 단순 계산을 훨씬 빠르게 할 수 있다. 간단한 예를 하나 들어보자. 페르마 숫자라는 문제가 있다.</p>
+
+
+<p>$$ {F_n} = 2^{2^n} +1 $$</p>
+
+
+<p>이 숫자는 위와 같이 표현이 되는데, 페르마는 모든 n에 대해서 이 숫자가 소수라는 주장을 하였다. 그러나 100년 뒤 오일러가 이의 반례를 찾아냈다.</p>
+
+
+<p>$$ {F_5} = 2^{2^5} + 1 = 2^{32} +1 = 4294967297 = 641 * 6700417 $$</p>
+
+
+<p>사람이 이를 증명하는 데에 100년이라는 시간이 걸렸지만, 컴퓨터를 사용하면 이 문제는 고작 몇 분안에 끝나는 간단한 문제이다. 이런 문제에서 컴퓨터 혹은 기계를 사용하는 것이 매우 효율적인 것이다. 다시 Machine Learning으로 돌아가보자. Machine Learing algorithm은 주어진 training data에서 특정한 시스템을 만들고 각종 model parameter들을 optimize하여 주어진 training data에 가장 잘 들어맞는 system을 만든다. 이런 과정을 위해서는 이런 optimize problem이 reasonable한 시간 안에 풀 수 있는 문제인지 그렇지 않은 문제인지 반드시 알아야만 한다. 만약 한 문제를 optimize하는데에 엄청 오랜 시간.. 예를 들어서 몇십만년 단위의 시간이 걸린다면 실전에서 사용할 수 없을 것이다.</p>
+
+
+<p>과연 컴퓨터로 풀 수 있는 문제란 무엇이 있을까? 컴퓨터는 Turing에 의해 1936년에 처음 제시가 되었고 (Turing Machine) 이 덕분에 지금까지 하드웨어 문제에 불과했던 성능에 관련된 문제가 수학적인 문제로 치환될 수 있었다. 또한 1971년 Computational classes (NP complete) 가 Cook에 의해 define되었다. 여기에서 정의된 P와 NP problem을 사용하면 우리가 처음 제시한 질문: 이 문제를 컴퓨터로 풀 수 있는가? 에 대한 질문에 답을 할 수 있는 것이다.</p>
+
+
+<p>다음에 대한 설명을 하기 전에 먼저 P와 NP problem에 대해 잠시 설명하도록 하겠다. 먼저 P는 금방 문제의 정답을 찾을 수 있는 문제이다. 또한 NP는 해답이 있을 때 이 해답이 맞는지 아닌지 verify할 수 있는 문제를 뜻한다. 예를 들어 어떤 주어진 여러 개의 Path 중에서 특정한 path를 찾는 문제는 P problem이다. 또한 NP problem은 path가 있을 때 그 path를 따라갈 수 있는가에 대한 문제가 되는 것이다. 이 두 개의 문제에 해당하지 않는 문제도 엄청나게 많으며, 재미삼아 말해주자면, P이면 NP인가? 라는 질문은 Seven Millennium Prize Problems 중 하나일 정도로 수학에서 상당히 중요한 영역을 차지하고 있다.</p>
+
+
+<p>P problem의 대표적인 예는 Convex Optimization이다. Convex Optimization은 mimimum value를 찾는 문제 중에서 매우 특수한 경우를 의미하며, 함수가 convex하고 domain 역시 convex한 경우를 의미한다. 간단하게 생각하면 convex와 &#8216;볼록하다&#8217; 가 같은 말이며, convex function이란 모든 구간에서 볼록한 함수를 의미한다. (Convex Optimization에 대해서는 나중에 더 자세한 포스팅으로 설명을 할 수 있도록 하겠다.) 간단히 예를 들어보면</p>
+
+
+<p><img src="http://people.mech.kuleuven.be/~bdemeule/pics/convex.jpg" width="400"></p>
+
+<p>위의 그림에서 왼쪽 함수는 일부 구간에서 볼록하지 않기 때문에 convex하지 않고 오른쪽의 함수는 convex하다. 위의 그림을 보면 알 수 있듯, convex function에서는 local한 minimum value만 찾더라도 global한 mimimum값을 찾을 수 있다. 때문에 Convex optimization은 optimization 중에서도 매우 특수한 경우이며 P, NP problem 중에서 P에 속하는 문제이다. 이를 수식적으로 표현해보면</p>
+
+
+<p>
+$${minimize}\quad{f(x)}$$
+$${subject}\,{to}\,{x} \in D \subseteq {R^n}$$
+</p>
+
+
+<p>으로 표현하는 것이 가능하다. Netflix 알고리듬에서 언급하게 될 3개의 알고리듬 중에서 Baseline predictor와 Matrix factorization 알고리듬에서 이런 Convex Optimization을 활용하게 된다.</p>
+
+
+<h5>Recall: Netflix Recommendation Problem</h5>
+
+
+<p>Netflix problem의 목적은 간단하다. Netflix Matrix라는 user와 movie의 조합으로 이루어진 Matrix에서 아직 알려지지 않은 부분의 값을 유추하는 것이다. 이 문제에 대한 설명은 지난번에 적은 글에 자세히 적혀있으니 생략하도록 하겠다. 그렇다면, 새로운 알고리듬이 더 좋은 알고리듬인지 아닌지 어떻게 판단할 수 있을까? 여러가지 방법이 있을 수 있지만, Netflix에서는 RMSE (Root Mean Squared Error) 를 정의한다. RMSE는 \(\sqrt{MSE} = \sqrt{\frac 1 n \sum_{i=1}^n ( \hat{X_i}-X_i )^2}\)로 표현이 가능하며, 쉽게 생각하면 예측치가 실제 값과 얼마나 차이가 나는지를 측정하는 역할을 한다고 생각하면 간단하다. 즉, Netflix의 Recommendation problem은 Netflix Matrix에서 알려져 있는 entry를 사용해 training set과 problem set을 만들고 RMSE를 계산해서 그 RMSE를 최대한 낮추는 문제인 것이다. 이 글에서는 이런 RMSE의 값을 10% 줄이기 위한 3가지 알고리듬: Baseline Predictor, Neighborhood method, Matrix Factorization에 대해 다루게 될 것이다.</p>
+
+
+<h5>Algorithm 1: Baseline Predictor</h5>
+
+
+<p>첫 번째 알고리듬은 Baseline Predictor이다. 이 알고리듬은 각각의 영화 혹은 사람마다 기본적으로 정해진 Baseline이 존재한다는 가정에서부터 시작된다. 즉, 각각 영화마다 평점이 높은 영화가 있을 수도 있으며. 또 평점을 잘 주는 사람이 있을 수도 있고 짜게 주는 사람도 있을 수 있다. 또한 비교적 popular 한 영화라면 rating이 높을 것이고, 이 사람이 이전에 준 rating의 값의 평균이 낮다면 앞으로 줄 rating의 값 또한 작을 것이라는 가설을 세울 수 있을 것이다. 그렇다면 이런 baseline을 사람에 대한 혹은 영화에 대해서 각각 만들 수 있을 것이며 이를 모으면 vector로 표현하는 것이 가능할 것이다. \(b_i\)를 movie에 대한 baseline, \(b_u\)를 user에 대한 baseline이라고 가정하고, 이 baseline이 높으면 rating을 잘 받는 영화 / 잘 주는 사람 이라고 생각하자. 그렇다면
+$$\hat r_{ui} = {\overline r} + b_u + b_i$$
+로 정의한다면, baseline을 찾는 문제는
+$${minimize}\,\sum {(r_{ui} - \hat r_{ui})^2} $$
+을 만족하는 \(b_u\)와 \(b_i\)를 찾는 문제로 바꿀 수 있다. 그리고 여기에서 가장 중요한 점은 이것이다. 이 문제는 Convex optimization으로 풀 수 있다는 것이다.</p>
+
+
+<p>Baseline Predictor는 기존의 데이터를 가장 잘 설명할 수 있는 model parameter를 찾는 문제이며 성능이 아주 썩 좋은 편은 아니지만 random guessing보다는 훨씬 좋으며 어느 정도의 가중치를 줄 수 있다는 장점이 존재한다. 특히 temporal model과 결합하여 baseline predictor를 사용하면 꽤 강력한 결과를 얻을 수 있는데, Baseline Predictor with Temporal Models는 User의 rating은 day에 dependent할 수 있다는 가정을 깔고 movie의 trend가 시간에 따라 변한다고 가정한다. 그리고 이에 대한 적절한 변수를 시간마다 주고 \(b_u(t),\,b_i(t)\)를 가장 잘 설명할 수 있는 baseline의 값을 찾음으로써 시간에 대한 정보까지 고려할 수 있는 알고리듬을 설계하는 것이 가능한 것이다.</p>
+
+
+<p>그러나, 기본적으로 parameter를 fitting하는 문제이기 때문에 Overfitting problem이 발생할 수 있다. Overfitting problem이란 현재 parameter들이 training data에 너무 optimization되어 오히려 future data에 대해서는 값이 제대로 맞지 않는 경우를 의미한다. 이는 전체 데이터가 아닌 일부의 데이터만 봤기에 생길 수도 있는 문제이며 data에 noise가 끼어 noise까지 fitting이 되었었을 수도 있다. 아무튼 overfitting problem은 현재에 너무 과도하게 집중하면 미래 data를 설명하는 데에 문제가 생길 수 있다는 것을 의미한다. Baseline Predictor에서 Model parameter를 너무 optimize시키면 지금까지의 known data에는 정말 잘 맞지만, test data에서는 error가 엄청 커질 수도 있는 것이다. 이를 막기 위해서 위에서 제시했던 minimzation problem을
+$${minimize}\,\sum {(r_{ui} - \hat r_{ui})^2 + \lambda (\sum_u {b_u}^2 + \sum_i {b_i}^2)} $$
+처럼 \(\lambda\)와 관련된 추가적인 term을 추가한 다음 풀게 된다면, overfitting문제가 어느 정도 해결된다. 여기에서 overfitting을 막기 위해 사용한 \(\lambda\)가 증가하게 되면 점점 test data error가 떨어지다가 어느 정도 지나면 test data error가 다시 increase 된다. 따라서 적절한 \(\lambda\)를 선택하는 것도 매우 중요하다는 것을 알 수 있다.</p>
+
+
+<h5>Algorithm 2: Neighborhood Method</h5>
+
+
+<p>지난 포스트에서도 설명했던 것 처럼 이 알고리듬에서는 각각의 movie마다 movie 간의 유사도 정보를 가지고 있다고 가정하고 각각의 movie i와 j마다 \(d_{ij}\)라는 distance term을 정의하여 그 distance를 통해 얼마나 유사한지를 판별하게 된다. 즉 이 아이디어는 rating을 user가 영화 i를 좋아했으면 j도 좋아하지 않겠느냐.. 라는 idea를 기반으로 measure를 하게 된다. 이 알고리듬에서 distance function은
+$$ d_{ij} = \frac{({r_i} * {r_j})}{(|r_i| * |r_j|)} $$
+위와 같이 정의한다. 이 때 \(r_i\)와 \(r_j\)는 모든 user의 movie rating을 모아둔 vector이다. 즉, \(r_i = [2, 1, 3, 4, &#8230;]\) 등으로 표현된다는 것이다. 이때 임의의 두 vector사이 unknown factor가 다를 수 있으므로 두 vector에서 모두 알고 있는 값들을 모아 reduced form을 구해서 이 값을 계산하게 된다고 한다. distance가 두 벡터의 내적을 2-norm으로 나눈 것으로 정의가 되기 때문에 \(d_{ij}\)는 두 vector 사이 angle에 cosine을 취한 값이 된다. 즉, 두 벡터가 가까우면 가까울 수록 1에 근접해지고 멀어질 수록 값이 작아지게 된다. 즉, 이렇게 거리를 정의함으로써 두 벡터 간의 유사성이 얼마나 되느냐를 측정하는 척도가 될 수 있는 것이다.</p>
+
+
+<p>NH method는 이 알고리듬 자체만 사용하게 되었을 때 결과가 그닥 좋지는 못하다. 그러나 Baseline Predictor랑 같이 결합해서 사용할 수 있으며 Baseline predictor를 계산하고 알고 있는 값과의 error를 계산하고 이 에러 값을 사용해서 NM을 사용하면 훨씬 결과가 좋게 나오게 된다. 이렇게 사용하기 위해서는 \(\hat r_{ui} = \sum \frac {(d_{ij} * r_{ij})} {\sum (d_{ij})}\) 와 같은 형태로 r을 정의하고 predict를 하게 된다. 이 경우 영화의 개수가 많아질수록 연산량이 어마어마하게 늘어나기 때문에 이 알고리듬은 모든 영화에 대해 전부 다 적용하는 것이 아니라 top 50 movie 중에서 i와 similar한 movie를 일부 골라서 적용한다고 한다.</p>
+
+
+<h5>Algorithm 3: Matrix Factorization</h5>
+
+
+<p>만약 알려진 거대한 Matrix가 있을 때 이를 더 작은 Matrix의 multiplication으로 표현할 수 있다면 우리는 더 적은 값을 measure해서 전체 값을 추측할 수 있을 것이다. 이것이 Matrix Factorization의 기본 아이디어이며, 이 알고리듬은 성능이 매우 뛰어나서 다른 알고리즘 없이도 8% 정도까지 개선이 가능하다고 한다.</p>
+
+
+<p><img src="/images/post/30-1.png" width="400"></p>
+
+<p>우리의 문제에서 각각의 Matrix를 R, P, Q라고 정의하자. 그리고 P와 Q 각각의 row의 개수와 column의 개수를 k라고 하자. 그렇다면 R은 480000 by 18000, P는 48000 by k, Q는 k by 18000 Matrix일 것이며, R = PQ가 될 것이다. 당연히 k의 값이 클 수록 낮은 에러로 원래의 데이터를 복구하기 쉬워지겠지만, k가 커질수록 overfitting issue가 존재하게 될 것이다. 실제로 Netflix에서는 약 20정도의 k를 사용한다고 한다. 당연한 얘기지만 실제로는 P, Q가 존재하지 않을 수도 있다. 따라서 이 문제는 아래와 같이 치환이 가능하다.
+$${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
+이 문제는 P인가? 불행히도 이 문제는 함수 \(f(P,Q)=|R-RQ|^2\) 자체가 convex가 아니기 때문에 Convex optimization problem이 아니며, P역시 아니다. 대신 이 문제를 convex optimization으로 근사하는 방법이 가능하다.</p>
+
+
+<p>첫 번째 방법은 \(minimize |R - PQ|\) 를 \(minimize |R - A|^2 \hskip 1em where \hskip 0.3em rank(A) = k… \) 로 바꾸는 것이다. \(|R-A|^2\)은 convex function이기 때문에 convex optimization으로 푸는 것이 가능해 보인다. 그런데 domain인 rank(A) = k가 convex set이 아니기 때문에 이 문제는 불행히도 convex optimization은 아니다. 따라서 이를 가장 유사한 convex optimization problem으로 바꾸면, rank(A) = k라는 조건 대신에 &#8216;sum of singular values of A is at most h&#8217; 라는 조건으로 문제를 풀면 된다. 이는 정확히 같은 조건은 아니고 거의 유사한 조건이다. 이렇게 문제를 non convex optimization에서 convex optimization으로 근사해서 원래 문제의 답을 추측하는 것이 가능한 것이다.</p>
+
+
+<p>또 하나의 방법은 \(minimize_{P,Q} |R-PQ|^2\) 을 푸는 것이다. 이 때 \(f(P,Q) = |R-PQ|^2\)은 convex function은 아니지만, P를 constant로 두면 Q에 대해 convex하고 Q를 constant로 두면 P에 대해 convex해지게 된다. 이를 bi convex라고 하며 둘 모두에 대해 convex하면 joint convex라고 한다. 아무튼 이제 이 방법 두 개를 모두 사용해서 Q를 고정하고 가장 잘 설명하는 P를 찾고, P를 고정하고 가장 잘 설명하는 Q를 찾는 과정을 반복적으로 왔다갔다 하면서 값을 찾는다. 이 방법을 이론적으로 분석하는 것이 엄청 어렵고 힘들어서 논문으로 많이 나오지는 않았지만 실전에서 엄청 많이쓰는 방법이다. 앞서 설명한 방법보다 이 방법이 더 성능도 잘 나온다. 최근 [Sujay et al. 2013] 에서 앞서 언급한 approach보다 이 approach가 좋은지는 모르겠지만 최소한 나쁘지 않다라는 것을 증명하였다고 한다. (구체적으로는 global optima convergence condition for R을 증명하였다고 한다.)</p>
+
+
+<h5>Summary and Questions</h5>
+
+
+<p>마지막으로 <a class="red tip" title="Neighborhood method">NH</a>와 <a class="red tip" title="Matrix factoriztion">MF</a>에 대해 잠시 비교해보자. NM은 local structure를 찾아서 recommendation problem을 풀겠다는 컨셉이고 MF는 global structure를 찾아서 recommendation problem을 풀겠다는 컨셉이다. 당연히 local한 solution보다 global한 structure를 찾는 컨셉이 더 정확할 것이다. 실제로 다른 알고리듬 하나도 없이 MF만 적용을 해봐도 Cinematch에 비해 8% 정도 improved 된 결과를 취할 수가 있게 된다. 하지만 역시 맨 처음 제시되었던 10%를 달성하려면 <a class="red tip" title="Baseline predictor with temporal models">BP</a>를 적용한 NH와 MF 둘을 잘 combine해야만 달성이 가능하다.</p>
+
+
+<p>이런 알고리듬들에 대해서 몇 가지 Further Questions이 있을 수 있을 것이다.</p>
+
+
+<ul>
+<li> R = PQ를 풀기 위한 R의 entries 숫자는 얼마나 될 것인가</li>
+<li> MF를 더 빠르게 design할 수 있겠느냐, 더 나은 다른 algorithm도 있을 수 있겠느냐..</li>
+<li> NM과 MF를 같이 조합했을 때 왜 결과가 좋은 이유가 무엇이냐, 이론적인, mathematical answer 를 줄 수 있느냐</li>
+</ul>
+
+
+<p>등의 question 들이 있을 수 있으며 이와 관련된 많은 연구가 활발하게 진행되고 있다고 한다.</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -793,55 +944,6 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/22/">그래비티 - 스케일이 다른 재난 영화(스포)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-22T16:48:00+09:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>우주에서 사람이 과연 살아남을 수 있을까? 항상 공상과학영화를 보거나 혹은 소설을 읽다보면 드는 생각 중 하나였다. 이런 아이디어가 실제 영화로, 그것도 IMAX 3D로 구현되어 상당히 흥미로웠다. 아마 우리의 거의 대부분이 절대 죽을 때 까지 경험해 볼 수 없을 우주에서 일어나는 일들을 거의 완벽하게 시뮬레이션으로 구현한 영화라고 하여 더욱 기대가 갔다. 실제로 가서 관람해보니 <a title="문제가 있는 부분들은 실제 도입부에 문제가 되었던 위성 폭발이 영화에서 묘사되는 것 처럼 극적인 결과를 불러일으키지 않는다는 사실이고, 또 하나는 허블우주망원경의 위치와 ISS, 중국 우주정거장의 위치 등이 절대로 영화에서 묘사되는 만큼 가깝지가 않다는 점 정도.." class="red tip">일부 사실과 맞지 않는 문제</a>가 있는 부분이 있기는 하지만 대부분 무중력 상태에서 발생하는 상황을 매우 잘 고증해내어 놀랐다.우주에 대한 묘사도 아름다웠지만, 그 뿐 아니라 영화 전체적인 흐름이나 촬영기법 또한 정말 훌륭했다. 그 중에서 특히 인상 깊은 장면은 초반 도입부의 롱테이크 씬이었는데, 우주에서 바라본 지구의 모습을 롱테이크로 가져가면서 휴스턴과 교신하는 익스플로러 호와 허블 우주망원경이 점점 가까워지는 씬이었는데, 이 씬하나로 우주의 광활하고 고요한 장면을 극적으로 잘 묘사해낸 훌륭한 연출 방법이었다. 그 소름끼칠 정도의 적막함. 그리고 그 엄청나게 큰 우주에서 인간은 얼마나 작은 존재인지 도입부의 롱테이크 씬을 통해서 다시 한번 상기하게 되었다. 그리고 또 인상 깊었던 촬영 기법 중 하나는 주인공이 바라보는 시선과 주인공을 바라보는 시선을 자연스럽게 교차하며 보여주는 장면이었는데, 닥터 스톰이 패닉에 빠져있을 때 그 암울하고 당황스러운 상황을 관객들도 공유할 수 있도록 하는 정말 좋은 연출이었다고 생각한다.</p>
-
-
-<p>위에서 극찬한 우주에 대한 묘사나 촬영 기법 등의 기술과는 다르게 시놉시스는 매우 간단해서 허블 우주 망원경을 고치러 올라간 특수임무팀이 조난당해 지구로 목숨을 걸고 돌아가는 것이 전체 이야기 흐름의 전부이다. 그러나 실제 이야기가 흘러가는 과정은 긴박하기 그지없는데, 특히 첫 번째 충돌에서 방방거리면서 좋아하던 우주 비행사가 바로 파편에 맞아 즉사했을 뿐 아니라 익스플로러호도 파편에 충돌하면서 내부 승무원들이 전부 몰살당하는 장면은 비극적이고 소름끼치는 장면이었다. 그리고 화재와 두 번째 충돌 인해 ISS가 완전히 박살이 나는 장면은 이 영화의 하이라이트라고 할 수 있을 것 같은데 정말 처참하게 부서지고 또 너무나 적막하게 부서진다. 당연히 진공 상태인 우주에서는 소리를 전달할 매개체가 존재하지 않으므로 눈 앞에서 어마어마하게 큰 폭발이 일어나더라도 내 소유즈 안에서 나오는 소리만 들리고 폭발로 인해 발생하는 소음은 전혀 들리지 않고 소름끼칠 정도로 고요하고 적막한 것이다. 그 이외에도 긴박감을 극대화시킨 장면을 하나만 더 꼽자면 중국 우주 정거장이 대기권으로 추락하면서 불타 없어지는 장면인데, 이 장면 역시 매우 극적이었다.</p>
-
-
-<p>우리가 생각할 수 있는 외로움은 우주에서 조난 당한 것에 비해면 감히 견줄 수 없을 것이다. 내가 살 수 있는 가망이 전혀 없다는 것을 알고 있고 당연히 희망조차 존재하지 않는다. 죽고나서도 아무도 나의 위치를 알 수 없고 내 유해조차 수습할 수 없는 상황인 것이다. 생각만 해도 소름끼치게 무섭다. 그런데 <a class="red tip" title="배우: 조지 클루니">맷 코왈스키</a>는 그런 상황에서 냉철하게 자신을 버리고 <a class="red tip" title="배우: 산드라 블록">스톤 라이언</a>을 살린다. 물론 군인이고 이런 극단적인 돌발상황에 익숙하고 잘 훈련받았겠지만 그거랑 진짜 내가 죽는 것은 다른데 그렇게 할 수 있다는 것이 너무 충격적이었다. 물론 영화를 더 극적으로 만들기 위한 연출에 불과하지만.. 심지어 맷이 로프를 끊고 멀리 날아갈 때도 우주 유영 기록을 깰 수 있을 것 같다느니 겐지스 강 너머로 뜨는 해가 아름답다는 소리나 하고 있으니 자신의 상황과 얼마나 대조되는 행동인가. 심지어 자신이 죽어가는 그 와중에도 ISS에 들어갈 수 있도록 끝까지 독려하고 무선으로 지시하여 닥터가 ISS에 들어갈 수 있게 만들었으니 닥터 스톤이 살아남을 수 있었던 가장 큰 원동력이었던 셈이다. 그래서 중간에 갑자기 소유즈 내부로 맷이 도어를 오픈하고 들어왔을 때 당연히 이게 말이 안되는 상황이고 아닐 것이라는 생각이 들었지만 순간 진심으로 맷이 진짜 살아돌아온 것이기를 빌었다. 현실은 아 시밤 꿈이었지만.. 그래도 그 덕분에 닥터 스톤이 각성해서 살아날 수 있었고 허무하게 자신의 목숨을 내던지는 것이 아니라 끝내 탈출에 성공하고 지구로 돌아오지 않았는가.</p>
-
-
-<p>처음에 우주유영을 하는 장면에서 맷이 닥터 스톤에게 물어본다. 우주에서 뭐가 제일 좋냐고. 스톤은 딱 한 단어로 대답한다. &#8216;Silence&#8217; 하지만 조난당하고 모든 교신이 끊어지고 정말 우주를 증오한다고 말하는 모습을 보면 결국 자신이 우주에서 가장 좋았던 것이 자신을 가장 무섭고 공포에 처하게 했다는 사실이 아이러니 하다. 심지어 이 쥐 죽은 듯한 침묵은 영화의 가장 극적인 장면에서도 계속되는데, 잘 들어보면 심장소리를 제외하고는 아무런 소리도 들리지 않는다. ISS가 박살이 나고 우주 쓰레기가 주인공을 덮쳐도 쓸데없는 효과음은 없다. 이 영화의 가장 뛰어난 효과음은 바로 고요였다. 그래서인지 중간에 소유즈에서 지구와 통신이 되었을 때 개 짖는 소리와 아이 소리에 닥터가 그렇게 반응하고 끝내 울음을 터트리게 되었을 것이다. 또 재미있게도 닥터 스톤에게 다가온 맷의 환영이 말한 우주의 아름다움은, 마찬가지로 고요였다. 우주선의 모든 전원을 끄고 가만히 눈을 감고 있으면 세상과 완전히 분리되어 있는 그 기분. 아무도 나를 상처주지 않고 나도 남들에 의해 상처받지 않는 완벽한 상황. 이 영화에는 항상 그 Silence가 다양한 관점에서 계속 해석이 된다. 정말 고요함, 혹은 적막함 이상의 단어가 있으면 좋겠는데 불행히도 내 짧은 어휘실력으로는 이를 설명할 수 없다는 것이 안타깝다.</p>
-
-
-<p>이 영화는 더욱 더 극적인 효과를 위한 적절하고 완벽하다고 할 수 있는 촬영 기법과 연출을 선보였다. 그 뿐아니라 씬도 아주 훌륭하고, 비록 간단한 시놉시스임에도 불구하고 말로는 설명할 수 없는 긴박함으로 끝까지 긴장을 풀 수가 없다. 이 영화를 통해 바라본 우주는 너무나도 아름답지만 그 아름다움과는 대조적으로 너무 소름끼치게 무서웠다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -860,6 +962,10 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/80/">Gitlab을 깔자</a>
+      </li>
+    
+      <li class="post">
         <a href="/79/">새로운 Front Framework Webplate에 대한 소견</a>
       </li>
     
@@ -873,10 +979,6 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
     
       <li class="post">
         <a href="/62/">Machine Learning 스터디 (6) Information Theory</a>
-      </li>
-    
-      <li class="post">
-        <a href="/61/">Machine Learning 스터디 (5) Decision Theory</a>
       </li>
     
   </ul>

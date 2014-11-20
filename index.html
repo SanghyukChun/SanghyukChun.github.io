@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="새로운 Front Framework Webplate에 대한 소견 Oct 10th, 2014 얼마전 Webplate라는 front-end framework를 접하게 되었는데 상당히 좋은 인상을 받아서 블로그에 소개 겸 사용 소감을 남겨보려 한다. 그 동안 내가 웹을 &hellip;">
+  <meta name="description" content="Gitlab을 깔자 Nov 20th, 2014 버전관리의 중요성은 몇 번을 강조해도 부족하지 않다. 버전관리를 하기 위한 여러 도구들이 존재하지만, 난 분산 버전 관리 (DVCS) 를 좋아한다. Mercurial 로 처음 버전관리를 공부했고, 지금은 주로 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,102 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/80/">Gitlab을 깔자</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-20T03:05:00+09:00" pubdate data-updated="true">Nov 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>버전관리의 중요성은 몇 번을 강조해도 부족하지 않다. 버전관리를 하기 위한 여러 도구들이 존재하지만, 난 분산 버전 관리 (DVCS) 를 좋아한다. Mercurial 로 처음 버전관리를 공부했고, 지금은 주로 Github에 소스를 올리기 때문에 git 을 많이 쓰고 있다. 콘솔에서는 큰 차이가 있지만, 정작 둘 다 <a href="http://www.sourcetreeapp.com/">SourceTree</a>로만 관리하기 때문에.. 예전에는 맥버전만 있었지만, 이제는 윈도우 버전도 생겨서 다른 사람들도 용이하게 쓸 수 있다. 이런 이유로 최근에는 거의 모든 레포지토리를 git 레포지토리로 만들게 되는데, 연구실에서 내가 쓰고 있는 논문이나 프로젝트용 코드 같은 경우는 공개된 레포지토리로 올려도 곤란하고, 연구실 단위로 관리를 해야할 필요를 느껴서 <a href="https://about.gitlab.com/">GitLab</a>이라는 놈을 깔아보기로 헀다.</p>
+
+
+<p>Gitlab을 한 마디로 요약하자면 &#8216;개인용 github&#8217; 라고 할 수 있다. 코드를 훑어보니 rails 기반에 nginx를 서버로 사용하고 있어서 내가 친숙한 환경이기도 해서 좋더라. 늘 깔아야지 깔아야지했는데 이게 생각보다 설치가 머리가 아파서.. 나중에 시간이 넉넉해지면 설치하려 했으나 어쩌다보니 갑작스럽게 설치를 하게 되었다.</p>
+
+
+<p>내 설치환경은 Ubuntu 14.04, <a href="https://about.gitlab.com/downloads/">다운로드 페이지</a>에서 ubuntu 14.04를 선택하는 아래와 같은 명령어를 실행하면 알아서 옴니버스 버전을 깔아준다고 한다.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget https://downloads-packages.s3.amazonaws.com/ubuntu-14.04/gitlab_7.4.3-omnibus.5.1.0.ci-1_amd64.deb
+</span><span class='line'>sudo apt-get install openssh-server
+</span><span class='line'>sudo apt-get install postfix # Select 'Internet Site', using sendmail instead also works, exim has problems
+</span><span class='line'>sudo dpkg -i gitlab_7.4.3-omnibus.5.1.0.ci-1_amd64.deb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>난 openssh-server, postfix는 깔려있으니 생략했다.</p>
+
+
+<p>다음으로는 <code>sudo vim /etc/gitlab/gitlab.rb</code> 를 실행해 <code>gitlab.rb</code> 를 수정해야한다. 다시 한 번 말하지만, gitlab은 rails로 돌아가기 떄문에 rails setting 을 해줘야한다. 원래 레일즈 프로젝트의 설정을 바꾸기 위해서는 yml 파일이나 다른 rb 파일들을 직접 수정해주어야하는데, gitlab 옴니버스 버전에서는 친절하게 이 루비 파일 하나만 바꾸면, 알아서 yml 등을 generate해준다. 아 편하고 좋다! 라고 생각했지만 이것이 그 모든 재앙의 시작이었다..</p>
+
+
+<p>편하게 해주려고 만든 ruby setting 파일이 왜 문제가 되었느냐, 사실 이 대부분은 문제가 생기지 않는다. 예를 들어서 <code>www.example.com</code> 이라는 도메인을 가지고 있고, gitlab 의 접속 경로를 <code>gitlab.example.com</code> 으로 사용한다면 옴니버스 버전을 바로 사용하면 된다. 하지만 내가 사용하는 서버는 학교 도메인에서 서브도메인을 받아서 사용하기 때문에 <code>sanghyuk.kaist.ac.kr</code> 이런 식의 도메인을 가지고 있다. 따라서 위와 같은 경로를 취하게 되면 <code>gitlab.sanghyuk.kaist.ac.kr</code> 이라는 기괴한 경로가 생기게 되고, 당연하지만 이런 경로는 허용되지 않는다. 따라서 <code>sanghyuk.kaist.ac.kr/gitlab</code> 같은 relative domain을 사용해야한다. nginx에서 이런 서브 도메인을 루트로 삼는 것은 규칙에 위반되지만 사용하는 것이 가능하긴하다. rails에서도 root url을 relative url로 바꾸고 하면 돌릴 수 있지만.. 이건 내가 rails파일을 직접 바꿀 때 얘기였다.</p>
+
+
+<p>옴니버스 버전에서 이런저런 삽질을 하다가 찾아낸 이슈.. <a href="https://gitlab.com/gitlab-org/omnibus-gitlab/issues/238">옴니버전에서는 Relative URL root를 지원할 계획이 없다</a> 아&#8230; <code>gitlab.rb</code> 에서 삽질을 하고 있었는데 다 쓸데 없는 짓에 불과했던 것이다.</p>
+
+
+<p>그래서 relative url은 포기하고 다른 쪽으로 알아보니 포트를 바꿔서 접속을 하는 방법이 있더라. 이건 그나마 훨씬 할 만 헀다. <code>/etc/gitlab/gitlab.rb</code> 에서 다음과 같이 설정해준다.</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>external_url = 'http://sanghyuk.kaist.ac.kr:1234'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>아 참고로, 내가 깐 버전은 = 을 안쓰면 에러가 나서 내가 = 을 따로 넣어줬다. 옴니버스 버전별로 다른 모양</p>
+
+
+<p>이렇게 하고 <code>sudo gitlab-ctl reconfigure</code> 을 실행시켜서 yml 등을 자동으로 generate시키기만 하면 문제 해결! &#8230; 이 아니었다. 아예 접속 자체가 되지를 않아서 이제 여기에서 다시 삽질을 시작했는데, 먼저 netstat으로 포트는 열려있나 봤다. 안타깝게도 아예 포트가 열려있지도 않았다. 돌아버리겠는건 <code>gitlab-ctl status</code> 에서는 잘 실행되는 것으로 나오는 것.</p>
+
+
+<p>이제 또 한참 삽질을 하다가, 아예 nginx 조차 돌아가는 것 같지 않아서 nginx 세팅을 수동으로 뜯어고치기로 결정했다. 이게 상당히 위험한 짓인데, 나중에 내가 생각없이 또 reconfigure를 때리면 내가 고친 파일들이 새로운 파일들로 덮어씌일 것이기 때문이다. 때문에 이렇게 설정을 시작한다면 reconfigure 대신 <code>gitlab-ctl restart</code> 로 configure 파일을 다시 생성시키지 말고 레일즈랑 nginx 등만 내렸다가 올려야한다. 이제 세팅을 바꿔보자.</p>
+
+
+<p>가장 먼저 nginx 설정을 찾아봤다. <code>/var/opt/gitlab/nginx/conf/gitlab-http.conf</code> 에 설정 파일이 있는데, listen과 server name이 엉망으로 되어있더라. 당연히 nginx가 설정이 잘못되었으니 서버에 접속도 못하고 포트도 안열려 있던 것. 이 둘을 제대로 바꿔주고 restart를 했다.</p>
+
+
+<p>드디어 &#8216;페이지를 찾을 수 없습니다&#8217; 창말고 다른 창을 볼 수 있었다. 그러나 여기에서 또 502 에러가 발생했는데, 아마도 내부 rails가 제대로 올라오지 않은 모양인가보다. 그래서 혹시 레일즈 세팅도 이상한가 싶어서 yml 파일을 찾아봤다.</p>
+
+
+<p><code>/var/opt/gitlab/gitlab-rails/etc/gitlab.yml</code> 을 열어봤더니 여기도 host랑 port가 엉망이었다. 이 부분을 바꿔주고 나서 다시 <code>sudo gitlab-ctl restart</code></p>
+
+
+<p>아 드디어 잘 실행된다. 기존에 쓰던 다른 레포지토리를 추가해주기 위해서 <a href="http://git-scm.com/book/ko/v1/Git%EC%9D%98-%EA%B8%B0%EC%B4%88-%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%A0%80%EC%9E%A5%EC%86%8C">remote</a>를 해주려고 보니 ssh key를 생성해서 넣어줘야 하더라. 이건 <a href="http://git-scm.com/book/ko/v1/Git-%EC%84%9C%EB%B2%84-SSH-%EA%B3%B5%EA%B0%9C%ED%82%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0">이 글</a>을 보면 된다. 이건 예전에 다 등록해뒀던거라서 금방금방했다. 조금 가지고 놀아보니 아직까지는 매우 만족스럽다.</p>
+
+
+<p>이렇게 일단 주먹구구식으로 깃랩을 돌리는 것에는 성공했지만, 아직 reconfigure를 함부로 하면 안된다. 내가 바꾼 <code>/var/opt/gitlab/gitlab-rails/etc/gitlab.yml</code>, <code>/var/opt/gitlab/nginx/conf/gitlab-http.conf</code> 는 <code>gitlab-ctl reconfigure</code> 를 할 때 자동으로 generate 되는 파일이다. 따라서 내가 바꾼 설정이 저장이 되지 않기 때문에 함부로 reconfigure를 했다가는&#8230; 나중에 시간이 나면 이 부분을 gitlab.rb 만 바꿔서 수정할 수 있는지 알아보자.</p>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -1530,70 +1626,6 @@ $(function() {
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/55/">2014 ICML 후기</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-26T16:16:00+09:00" pubdate data-updated="true">Jun 26<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>이번에 <a href="icml.cc/2014/" target="new">ICML 2014</a>를 다녀왔다. 내 첫 해외 학회이기도 했고, 처음으로 Machine Learning과 관련된 연구를 하는 사람들의 talk을 듣고, 그 사람들이 직접 하는 일들을 많이 볼 수 있어서 개인적으로 많이 고무된 상태로 학회에 참여했었다. 첫 학회를 다녀온 기념으로 학회에서 내가 느낀 점들을 간단하게 정리해보고자 한다. 대충 보자면 아래 리스트 정도가 될 것 같다.</p>
-
-
-<ul>
-<li>항상 열정을 가지고 있고 열심인 사람들</li>
-<li>어떤 식으로 연구를 해야겠다라는 생각</li>
-<li>Machine Learning이라는 학문의 방대함</li>
-<li>Neural Network와 Deep Learnig의 강세</li>
-<li>Real Industry와 Machine Learning</li>
-</ul>
-
-
-<p>먼저 사람들. 개인적으로 내 자신에게 살짝 아쉬운 점이라면 학회에서 만난 사람들에게 먼저 다가가서 이야기를 걸거나 할 베짱이 많이 없었다는 것이다. 사실 내가 그렇게 사람들에게 먼저 다가가고 얘기를 나누기에는 내가 알고 있는 지식이 많이 부족함에도 원인이 있기는 하지만 그래도 다들 같은 분야에 관심을 가지고 (세부 관심사는 조금씩 다를 수 있지만) 나와 비슷한 입장을 가진 사람들도 있을 수 있었을텐데 내가 조금 적극적이지 못했던 부분이 있다. 학기 중에 윤준보교수님 수업에서 학회를 가면 그 사람들과 이야기를 많이 나누어보라는 얘기를 해주셨는데 막상 내게 그런 기회가 생기니 할 수 있는 말이 많이 없더라. 조금 더 정진해서 그런 대화에 두려움이 없을 정도의 지식을 쌓아야할텐데. 그런 개인적인 아쉬움은 잠시 넘겨서 생각을 해보자면, ICML에서 만난 사람들은 정말 열정있는 사람들이었다. 고작 15분에서 20분짜리 talk조차 이해하지 못하고 허덕이고 있는 나와는 다르게, 정말 발표자의 talk을 이해하고 그들과 communication하면서 질문하는 모습이 멋져보였다. 1시간 가까이 되는 invited talk이나 key note talk에서도 많은 부분을 놓치지 않으려 노력하는 모습도 멋졌다고 생각한다. 나도 그런 멋지다고 생각한 모습에 한 단계 더 다가가야할텐데.</p>
-
-
-<p>그리고 그 다음은 역시 연구였다. 내가 대학원생이 되었고, 연구가 나에게 가장 중요한 비중을 차지하게 된 이상, 어떤 연구를 할 것이며 어떻게 연구를 할 것이며.. 혹은 왜 연구를 해야하는 것이냐 등의 물음은 나에게 굉장히 중요한 물음이다. 약간 어느 정도는 간접적으로 그 질문들에 대한 답을 얻을 수 있었던 것 같은데, 어떤 공명감으로 연구를 한다는 느낌보다는 이 문제를 풀어야하겠다는 그런 근본적인 호기심? 같은게 영향을 미치는게 아닌가 싶다. 사실 명확하게 이거다! 싶은 느낌은 잘 들지 않았지만 앞서 말했듯이 다들 열정적으로 임하고 질문 하나하나가 날카롭게 들어가는 모습을 보면서 이런 학회에 publish를 하는 사람들은 어떤 생각으로 다른 사람들의 talk을 듣는지 조금이나마 간접적으로라도 체험할 수 있지 않았나 싶다. 아무튼 진짜 열정적으로 해야한다. 그게 진짜 큰 것 같다.</p>
-
-
-<p>또 학회에서 놀라웠던 점이라면 Machine Learning이라는 분야 자체가 생각보다도 훨씬 더 방대했다는 점이다. 전체 Track이 6개가 parallel 하게 돌아가면서 전체 다 합쳐서 거의 300개 가까이 되는 talk이 진행이 됐으니까.. (<a href="http://icml.cc/2014/index/article/12.htm" target="new">스케쥴</a>) 단순히 accept된 paper만 많은 것이 아니라 각 track의 주제 또한 너무나도 다양하였다. Networks and Graph-Based Learning, Reinforcement Learning, Bayesian Optimization and Gaussian Processes, Supervised Learning, Neural Networks and Deep Learning, Graphical Models, Bandits, Monte Carlo, Statistical Methods, Structured Prediction, Deep Learning and Vision, Matrix Completion and Graphs, Learning Theory, Clustering and Nonparametrics, Active Learning, Optimization, Large-Scale Learning, Latent Variable Models, Online Learning and Planning, Clustering, Metric Learning and Feature Selection, Optimization, Neural Language and Speech, Graphical Models and Approximate Inference, Online Learning, Monte Carlo and Approximate Inference, Method-Of-Moments and Spectral Methods, Boosting and Ensemble Methods, Matrix Factorization, Nonparametric Bayes, Manifolds, Kernel Methods, Unsupervised Learning and Detection, Crowd-Sourcing, Manifolds and Graphs, Regularization and Lasso, Nearest-Neighbors and Large-Scale Learning, Topic Models, Sparsity, Neural Theory and Spectral Methods, Features and Feature Selection, Time Series and Sequences&#8230;. 와 진짜 많다. 물론 이 전체를 또 잘 묶으면 더 줄어들 수 있겠지만 그래도 일단 각각의 Track들이 서로 다른 주제를 가지고 이렇게 많이 있다는 사실이 놀라웠다. 글쎄, 그래도 굳이 크게 나누자면, (1) Learning for Graphical Model (2) Traditional Machine Learning Problems (Bayesian, Supervised Learning&#8230;), (3) Optimization (4) Monte Carlo (5) Unsupervised Learning (Clustering, Metric Learning&#8230;) (6) Neural Network (7) Others 정도가 아닐까. 모르겠다 너무 많고 내가 모르는 분야가 너무 많아서. 아무튼 정말 Machine Learning이 어마어마하게 큰 분야라는 것을 다시 한 번 느끼게 되었다. 나는 저 많은 Track 중에서 어느 분야에 기여를 할 수 있을까?</p>
-
-
-<p>꼭 그런건 아니었지만, 전반적으로 Deep learning 과 관련된 talk들. 심지어 &#8216;Deep&#8217; 이라는 이름이 들어가기만 해도 컨퍼런스 룸이 터질듯한 것을 볼 수 있었다. 정말 요즘 이게 핫하긴 핫하다. 근데 난 이상하게 정말 Deep learning이 싫은데.. 이유를 잘 모르겠다. 가장 practical하게 powerful해서 그렇겠지? 중국에서 해서 그런지는 모르겠지만 Deep learning세션은 중국인들이 바글바글 몰려서 진짜 산만했었다. 그만큼 가장 핫하다는 뜻이고, 중국인들이 이런 실용적인 것들에 무지 관심이 많다는 것을 느꼈다. 이론쪽보다는 확실히 그런 practical 한 세션에 중국인들이 압도적으로 많았다. Deep learning 관련 시스템 쪽도 사람 엄청 많았고.. 진짜 그야말로 Deep Learning의 시대라고 봐도 무방할 정도. 대단하더라.</p>
-
-
-<p>마찬가지 맥락에서, 굉장히 많은 기업들이 ICML을 찾았다. 구글, Facebook, 아마존, MS, 야후 같은 글로벌 기업은 물론이고 바이두, 알리바바 같은 중국 기업들도 엄청 많았다. 그만큼 머신러닝을 전공한 사람들의 힘이 필요하다는, 그런 사람들에 대한 수요가 확실하구나.. 라는 그런 생각이 들더라. 기업 연구소 특히 MS나 구글 연구소 등에서도 많은 논문들이 나오는걸 보고, 저런 연구소에서 일하는 것도 생각보다는 나쁘지 않을 수도 있다는 그런 생각도 들고 그랬다.</p>
-
-
-<p>ICML에서 여러모로 많은 자극을 받았다. 재미도 있었고. 내년 ICML은 내가 intivation 되서 갔으면 좋겠다! 나도 좋은 논문을 쓸 수 있었으면.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1610,6 +1642,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/80/">Gitlab을 깔자</a>
+      </li>
+    
+      <li class="post">
         <a href="/79/">새로운 Front Framework Webplate에 대한 소견</a>
       </li>
     
@@ -1623,10 +1659,6 @@ $(function() {
     
       <li class="post">
         <a href="/62/">Machine Learning 스터디 (6) Information Theory</a>
-      </li>
-    
-      <li class="post">
-        <a href="/61/">Machine Learning 스터디 (5) Decision Theory</a>
       </li>
     
   </ul>
