@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="2014 ICML 후기 Jun 26th, 2014 이번에 ICML 2014를 다녀왔다. 내 첫 해외 학회이기도 했고, 처음으로 Machine Learning과 관련된 연구를 하는 사람들의 talk을 듣고, 그 사람들이 직접 하는 일들을 많이 볼 수 있어서 개인적으로 &hellip;">
+  <meta name="description" content="Machine Learning 스터디 (1) Machine Learning이란? Aug 2nd, 2014 Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 Machine learning과 관련된 글들을 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,186 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/57/">Machine Learning 스터디 (1) Machine Learning이란?</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-02T18:48:00+09:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 <a href="/blog/categories/machine-learning/" target="new">Machine learning과 관련된 글들</a>을 써왔지만, 항상 중구난방이고 제대로 정리가 되지 않은 느낌을 받아서 근래에 다시 머신러닝에 대해 공부를 하는 김에 싹 몰아서 정리해보기로 했다. 8월에 연구실에서 머신러닝 스터디를 하기로 했지만, 그것과는 조금 다르게 내가 생각했을 때 이런 순서로 정리를 하면 되겠다.. 하는 느낌으로 정리를 해볼 생각이다. Bishop 책을 많이 참고했으면 하고.. 특히 이번 ICML에서 느낀거지만, Machine Learning에는 정말 많은 분야가 있는데, 많은 Lecture들에서 어쩔 수 없이 그것들을 전부 커버하지 못하는 점이 너무 아쉬웠다. 그래서 일단 내가 할 수 있는데까지는 정리해보는게 좋지 않을까.. 하는 생각으로 글을 써보려 한다.</p>
+
+
+<p>시작하기 전에 재미있는 짤방을 하나 보고 가자. 여러 사람들이 생각하는 Machine Learning이란?</p>
+
+
+<p><img src="/images/post/57-1.jpg" width="600"></p>
+
+<p>난 이걸 보고 정말 재미있다는 생각을 했는데, Machine Learning이라는 말 자체가 기계를 학습시킨다, 가르친다라는 의미이기 때문에 마치 기계들을 모아놓고 수업을 하는 것 같은 모습을 society에서는 연상하기 쉽고, 내 친구들 그러니까 다른 공학이나 과학을 전공하는 친구들 입장에서 봤을 때는 로봇 AI를 하는 사람인 것 같고 조금 더 Hardware에 focus된 것처럼 느끼는 경우가 많다. 부모님은 뭔지는 모르겠는데 애가 맨날 컴퓨터하고 서버 얘기하니까 IDS에서의 저런 모습을 생각하고 ㅋㅋㅋㅋ 다른 프로그래머들은 뭔가 일반적인 프로그래밍과는 다르게 수학적으로 엄청 어려운 무언가를 하는 것 처럼 보이고 이상한 식들 막 적어놓고 &#8216;뭐야 저거 무서워&#8217; 이런 느낌으로 바라보기 마련이다. (저 식은 뭔지 모르겠는데 error function 관련된 식이 아닐까 싶네). 그리고 나는 내가 하는 일이 진짜 멋있는 일이라고 생각하지만 실제로 내가 하는건 남들이 만들어놓은 library를 import해서 사용하는게 전부라는 짤이다 ㅋㅋㅋ</p>
+
+
+<p>이 하나의 짤방에서 참 많은 얘기들을 할 수 있을 것 같은데.. 일단 내가 앞으로 얘기할 Machine Learning이라는 것은 위의 그림에서 찾자면 what other programmers think I do와 거의 흡사하다. 이유는 내가 하려는 부분이 알고리듬과 관련된 부분이 많고 모델링 등등 수학적인 무언가를 요구하고 저런 계산들을 통해 이론적으로 각 알고리듬이나 모델들의 무언가를 도출하는&#8230; 그런 과정들을 다루려는 것이기 때문이다. 자세한 얘기는 조금 더 뒤에서 할 수 있도록 하자.</p>
+
+
+<h5 id="57-1-WhatMLE">What is Machine Learning? - Easy Answer</h5>
+
+
+<p>자 그러면 본론으로 들어가서 Machine Learning은 과연 무엇일까. 여러가지로 설명을 할 수 있겠지만 내가 예전 <a href="/3" target="new">Andrew Ng. 교수의 Machine Learning Lecture를 들으며 정리했던 글</a>에 정의했던바에 따르면, &#8216;머신러닝은 그 관계를 알 수 없는 수 많은 데이터들 사이에서 관계를 찾아내주는 마법과 같은 기술이다.&#8217; 라는 얘기를 했었다.</p>
+
+
+<p>마법과 같은 기술이라는 용어가 조금 유치하기는 하지만, 기본적인 Machine learning의 철학을 잘 반영하는 표현이라고 생각한다. Machine Learning은 컴퓨터에게 우리가 직접 명시적으로 무언가를 지시하지 않아도 데이터를 통해 컴퓨터가 자동으로 판별을 해 performance를 향상시킬 수 있도록 하는 무언가를 의미한다고 할 수 있다. 무슨 얘기이냐하면 예를 들어 우리가 이메일에 들어가는 스팸필터를 만든다고 생각해보자. 가장 간단하게 생각할 수 있는 방법은 blacklist를 만드는 방법이 있다. 사용자들에게 많이 report가 된 나쁜 email들을 모아서 blacklist에 지정하는 것이다. 그런데 이런 방법은 회피방법이 명확하다. 보낸 사람을 이상하게 바꿔 보내면 된다. 그러면 이제 메일의 제목이나 안에 들어가는 내용을 사용해 필터링을 해야하는데, 역시 가장 간단한 방법은 blacklist이다. 광고, 싸게, 이런 단어들이 들어가면 일단 차단을 시키는 방법이다. 그런데 이 방법은 우회하기도 쉬우며 (광.고. 라고 쓴다거나) 이런 방식으로 쓰이는 모든 단어를 추가할 수도 없으며, 일상 생활에서도 쓰일 수 있는 표현이 있을 수 있기 때문에 멀쩡한 사람의 email을 spam이라고 인식하게 되는 끔찍한 일이 벌어질 수 있다. 즉, 이런 식으로 일일이 blacklist를 조정하는 방식으로 프로그래밍을 하는 것을 &#8216;명시적으로 무언가를 지시한다&#8217; 라고 표현한 것이다. Machine Learning 적인 접근 방법으로 이 문제를 바라보게 되면, 컴퓨터에게 스팸인 email과 스팸이 아닌 email들을 주고, 스팸인 email들이 왜 스팸인지 &#8216;Learning&#8217;을 시켜서 &#8216;데이터를 통해 컴퓨터가 자동으로 판별을 해&#8217; 스팸을 걸러내는 방식을 취하는 것이다. 그리고 데이터를 통해 배우는 것이기 때문에 데이터가 많아질 수록 performance역시 증가하게 될 것이다. 이런 모든 것이 바로 Machine Learning이라고 할 수 있는 것이다.</p>
+
+
+<h5 id="57-2-WhatMLD">What is Machine Learning? - Modeling View</h5>
+
+
+<p>그러면 Machine Learning을 조금 더 수학적으로 정의해보자. 수학적으로 Machine Learning problem을 기술해보면 아래와 같은 얘기를 할 수 있다.</p>
+
+
+<ul>
+<li>Experience E를 Learning할 Computer Program</li>
+<li>그리고 각각의 E에 대응되는 class of task T</li>
+<li>Task의 Performace Measure P</li>
+<li>Machine Learning이란 Experience E를 사용하여 (Learning하여) task T의 performance P가 개선이 되도록 하는 program (Algorithm)</li>
+</ul>
+
+
+<p>위에서 기술한 Machine Learning이라는 것은 일종의 Modeling Problem으로 생각할 수 있다. 무슨 얘기냐? 머신러닝이란 &#8216;주어진 데이터&#8217;에 대해 &#8216;현상&#8217;을 &#8216;가장 잘 설명할 수 있는 관계&#8217;를 찾아내는 것이라 했었는데, 이 말을 조금 수학적으로 풀어내면 주어진 &#8216;데이터&#8217; \(X = (x_1, x_2, x_3, \ldots, x_n)\) 이 있을 때 이 데이터와 실제 &#8216;현상&#8217; \(Y = (y_1, y_2, \ldots, y_n) \)에 대한 &#8216;관계&#8217; function \(f\)를 찾아야한다. 당연히 우리가 정확한 함수 \(f\)를 찾아낼 수는 없으므로 &#8216;최대한 잘 설명할 수 있는&#8217;, 함수 \(f&#8217;\)을 찾아내야 한다. 이를 Hypothesis라고 한다. 즉, 이 모든 과정을 일종의 Modeling process로 생각이 가능하다는 뜻이다. 다만 우리의 새로운 process는 for given data에 대해 dependent한 model을 만들어낸다는 점이 독특한 것이다.</p>
+
+
+<p>그렇다면 Machine Learning은 어떻게 진행이 될까. 먼저 problem setting이 필요하다. 다음과 같은 setting이 필요한데, (1) Set of possible instances (domain) X (2) Output Y (3) Unknown target function \(f:X\to Y\) (4) Set of function hypothesis space \(H \in \{ h| h: X\to Y \} \). 이는 곧 앞서 대략적으로 설명했던 function, hypothesis 등등에 관련된 설명을 조금 더 수학적으로 풀어낸 것이다. 여기에서 주목할 것은 네 번째 set of function hypothesis space인데, 이는 우리가 모든 function들을 확인할 수가 없기 때문에 그럴 것이다 라고 추측할 수 있는 function들의 set으로만 한정을 짓겠다는 의미가 되는 것이다. 이런 problem setting이 완료되고 나면 learning을 하기 위한 input data가 필요한데 이를 training data라고 한다. training data는 \(\{ \langle x_i, y_i \rangle &#92;}\) 식으로 주어지는데, 이때 supervised learning은 class 혹은 label이 주어지는 경우를 의미하고, unsupervised learning은 이 y가 존재하지 않는 경우이다. 마지막으로 Machine Learning의 output으로 \(h\in H\) 인 h 중에서 target function f와 가장 유사한 hypothesis를 고르게 되는데, 고르는 방법은 performance measure를 했을 때 가장 좋은 performance를 가지는 hypothesis를 선택하는 방식으로 고르게 된다.</p>
+
+
+<p>이를 조금 더 보기 쉽게 기술해보자.</p>
+
+
+<p>먼저 problem setting</p>
+
+
+<ul>
+    <li>Set of possible instance(domain): X</li>
+    <li>Output: Y</li>
+    <li><p>Unknown target function \(f:X \to Y\)</p></li>
+    <li><p>Set of hypothesis function space \(H \in \{h|h:X \to Y\}\)</p></li>
+</ul>
+
+
+<p>Input</p>
+
+
+<ul><li><p>Traing example \(\{ \langle x_i, y_i \rangle &#92;}\)</p></li></ul>
+
+
+<p>Output</p>
+
+
+<ul><li><p>\(h\in H\) that best approximates target function f with some performance measure</p></li></ul>
+
+
+<p>위에서 설명한 얘기를 그림으로 설명하면 아래와 같은 그림을 그릴 수 있다.</p>
+
+
+<p><img src="/images/post/57-2.png" width="600"></p>
+
+<p>다시 한 번 스팸필터를 생각해보자. 데이터 X는 메일들이다. 우리가 받는 메일 하나하나가 데이터가 될 수도 있고, 그 메일 안에 있는 단어 하나하나가 될 수도, 혹은 아예 알파벳 하나하나가 될 수도 있다. 그것은 우리가 정하기 나름이니까. 그럼 현상 Y는 무엇일까? 각각의 메일이 스팸인지, 아니면 일반 메일인지 구분하는 구분자, indicator, 혹은 Label, Class가 될 것이다. 마지막으로 가장 잘 설명할 수 있는 함수는 이런 데이터들을 가지고 어떻게 Learning을 할 것인지에 대한 얘기가 될 것이다. 예를 들어 Naïve Bayes라던가, KNN, SVM도 있고, 요새 핫한 Deep learning도 있을 수 있다.</p>
+
+
+<h5 id="57-3-WhyML">Why Machine Learning?</h5>
+
+
+<p>그러면 이런 Machine Learning은 도대체 왜 사용하는걸까, 왜 이렇게 핫한걸까? 다시 말해서 Modeling view에서 했었던 표현을 그대로 사용해보자면, Machine Learning에서 찾아낸 Hypothesis로 우리는 무엇을 하고 싶은걸까? 단순히 데이터와 현상의 관계를 함수로 나타내는 것이 무슨 의미가 있지? 이것이 의미가 있는 이유는 우리가 새로 주어진 데이터, 혹은 test data에 대해 새로운 추론, inference를 하는 것이 가능하기 때문이다. 이 메일은 스팸인가? 이런 쇼핑 목록을 가진 사람은 또 뭘 사고 싶어할까? 이런 날씨에는 고속도로가 막힐까 막히지 않을까? 이런 질문들에 대해 앞서 우리가 정의한 방식대로 Machine Learning problem을 풀어 새로운 Hypothesis를 통해 우리는 inference를 내릴 수가 있다.</p>
+
+
+<p>또한 최근 들어서 Machine Learning이 급부상하고 있는 가장 큰 이유 중 하나는 &#8216;빅데이터&#8217; 라는 것이 등장했기 때문이다. 즉, 이전과는 비교할 수 없을 정도로 데이터의 크기가 급격하게 증가하게되었고, 그 어마어마한 데이터에서 어떤 inference를 뽑아낼 수 있다면 그것이 엄청난 효과를 거두게 할 수 있지 않을까라는 생각을 사람들이 하게 된 것이다. 그런데 이걸 explicit하게 일일이 해주기에는 솔직히 너무 힘들고, 기계가 데이터를 읽으면 알아서 inference를 내렸으면 좋겠다라는 needs가 커지게 되었고, 이에 Machine Learning을 사람들이 많이 요구하게 된 것이다. 사실 Machine Learning이 AI의 엄청 오래된 분야임에도 최근 들어서 뜬 가장 큰 이유 중 하나가, 이론적으로 Machine Learning이 아무리 훌륭해도 input data가 없으면 좋은 performance를 내고 싶어도 낼 수 없기 때문인데 최근에는 지천에 널린게 데이터이다보니 Machine Learning이라는 것에 대해 사람들이 많이 중요하게 생각을 하는 것 같다.</p>
+
+
+<p>조금 더 구체적인 예를 들어보자. 아까 예를 들었던 스팸 필터를 예로 들어보자면, 일반적으로 &#8216;머신러닝이 아닌&#8217; 스팸필터를 생각해보자. 가장 간단한 방법으로는 Black list가 있을 것이다. 해당하는 계정이 보낸 메일은 스팸으로 처리하는 방법이 있다. 하지만 이렇게 rule을 정해버릴 경우 그것을 우회하는 방법은 무수히 많다. 계정은 무한하게 생성 가능하니까. 그걸 보완하는 방법으로 White list가 있다. 허용하는 이메일만 accept를 하는 것이다. 하지만 이 역시 완전하지는 않다. 우리는 언제나 새로운 사람과 연락을 해야하는 경우가 있으니까. 즉, Machine Learning이 아닌 접근 방법은 어떤 deterministic한 rule을 통해서 동작하게 되며, 그것을 개선시키는 것은 온전히 사람의 몫이다. 그러나 머신러닝을 적용한 스팸필터는 우리가 특정 모델을 정의하고 난 이후에는, 예를 들어서 지금은 단어마다 그 단어가 포함되면 스팸일 확률을 계산해서 최종적인 확률을 계산하는 방식을 도입했다고 해보자. (naïve bayes) 처음에는 완벽하지 않겠지만, 데이터가 늘어나면 늘어날수록 이 모델의 정확도는 높아지게 될 것이다. 사람이 따로 룰을 정할 필요가 없이 machine이 스스로 알아서 improve가 되는 것이고, 더 나은 것을 learning하게 되는 것이다.</p>
+
+
+<p>하지만 물론 Machine Learning이 항상 능사는 아니고 단점도 존재한다. 같은 예를 계속 얘기해보면, 스팸이 아닌데 스팸으로 취급한 경우에 과연 머신러닝으로 접근한 방법은 디버깅을 어떻게 해야할까? 사람이 따로 rule을 정할 필요가 없다는 말은 반대로 말하면 사람이 rule에 미칠 수 있는 영향력이 크지않다는 의미도 된다. (나중에 decision theory에서 보면 알 수 있겠지만 항상 그런 것은 아니다.) 즉, 언제나 machine learning에는 error가 존재하는데, 이 error가 optimal한 point까지 도달하고 나면 debug할 수 있는 방법이 없다는 것이다. 반면 머신러닝이 아닌 방법은 특정 사람이 스팸필터에 걸리면 그때그때 룰을 수정해서 디버깅을 할 수 있다. 그리고 computation power에 대한 문제도 있을 수 있다. 머신러닝은 많은 데이터에서부터 모델을 learning해야하기 때문에 당연히 그냥 deterministic한 방법보다 계산량이 많아지게 되는 것이다. 이런 여러가지 장단이 있기 때문에 머신러닝이 항상 능사는 아니라고 할 수 있을 것이다.</p>
+
+
+<p>하지만 그럼에도 머신러닝이 최근에 많이 쓰이는 이유는 위에서 말한 문제점들이 더 이상 문제점이 아니기 때문이다. 문제점은 크게 두 가지였는데, 하나는 error였고, 또 하나는 computation이었다. Machine learning의 많은 모델들은 이론적으로 데이터가 무한하게 존재하는 경우 가장 이론적으로 작은 error를 생산해낸다. 그리고 그 뿐 아니라, 최근에는 사람이 눈으로 데이터의 rule을 정하기에는 데이터가 상상이상으로 많기 때문에 (아까 언급했던 빅데이터) 사람이 직접 룰을 정하는 것에 무리가 생기는 경우가 많다. 즉, 사람이 rule을 결정하기가 점점 어려워지고 있는 것이다. 스팸 필터가 좋은 예인데, 사람이 아무리 좋은 룰을 만들어내도 새로운 스팸이 계속 생겨나게 된다. 그러나 우리가 모든 스팸메일을 가지고 있다면 machine learning approach는 더 나은 결과를 return 할 수 있을 것이다. 그리고 두 번째 문제는 최근에 하드웨어의 성능이 엄청나게 빠른 속도로 좋아지고 있을 뿐 아니라, 알고리듬의 측면에서도 여러가지 분산처리 알고리듬이 많이 개발이 되고 있어 계산량을 급격하게 감소시켜 빠르게 계산을 처리하는 것이 가능해졌다. 이런 이유들로 최근 머신러닝이 급부상하고 있는 것이 아닐까한다. 거기에다 이런 이유들, 데이터의 폭발적인 증가, 하드웨어의 개선, 분산처리 알고리듬의 개발 등은 지금 한순간 반짝하는 것들이 아니라 앞으로도 계속 발전이 될 것으로 기대가 되는 상황에서 Machine Learning은 매우 훌륭한 도구가 될 수 있다.</p>
+
+
+<h5 id="57-4-ClassML">Class of Machine Learning</h5>
+
+
+<p>앞서 설명한 대로 Machine Learning을 정의하게 되면 완전히 raw한 데이터를 다루는 과정, 예를 들면 Dimensionality reduction, Metric Learning 등의 과정에서부터 시작해서, 어떻게 Learning할 것이냐, model이 무엇이냐, 조금 더 구체적으로 얘기하면 어떤 Algorithm을 사용해 이 model을 learning할 것이냐라는 문제를 풀어내고, 마지막으로 어떻게 결정을 내릴 것이냐, decision making을 할 것이냐 하는 등의 모든 여러 과정들이 Machine Learning의 종류라고 할 수 있다.</p>
+
+
+<p>하지만 일반적으로 Machine Learning의 class를 나누는 방법은 Supervised Learning, Unsupervised Learning, Reinforcement Learning으로 나뉜다. 쉽게 생각해서 Supervised Learning, Unsupervised Learning의 차이점은 데이터에 Label이 있느냐 없느냐의 차이이다. <a href="/3" target="new">이전 글</a>에 내가 전에 설명한 적이 있으니 이에 대해 궁금한 점이 있다면 읽어보기를 권한다.</p>
+
+
+<p>Reinforcement Learning은 &#8216;action&#8217;을 learning하는 것인데, 어떤 환경에서 내가 action을 취할 때 마다 다른 reward를 받는다고 할 때, 내가 어떻게 action을 취해야 reward를 maximize할 수 있는가를 Learning하는 학문이다. 이 부분도 cover하고 싶고 나도 관심이 있는 부분이지만 아마 이 스터디에서는 다루지 못하지 않을까싶다.</p>
+
+
+<h5 id="id-57-5-aboutStudy">About This Machine Learning Study</h5>
+
+
+<p>이 스터디는 앞으로 내가 틈이 나는 대로 계속 글을 작성할 예정이다. 앞서 말한대로 주로 Bishop을 중심으로 작성하게 될 것 같으며, 필요하면 다른 책이나 논문을 참고해서 글을 작성해보려 한다. 이 스터디에 내가 작성한 다른 글들을 읽고 싶으면 아래 리스트에서 원하는 항목을 찾아 읽으면 될 것 같다.</p>
+
+
+
+
+<hr>
+
+
+<p><a href="/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+
+
+<ul>
+<li><a href="/57">Machine Learning이란?</a></li>
+<li><a href="/58">Probability Theory</a></li>
+<li><a href="/59">Overfitting</a></li>
+<li><a href="/60">Algorithm</a></li>
+<li><a href="/61">Decision Theory</a></li>
+<li><a href="/62">Information Theory</a></li>
+<li><a href="/63">Convex Optimzation</a></li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Ensemble Learning (Random Forest, Ada Boost)</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Dimensionality Reduction (LDA, PCA)</li>
+<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>Reinforcement Learning</li>
+</ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -1652,92 +1832,6 @@ End of technical program of Day 2<strong> </strong>
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/43/">Coursera Neural Networks for Machine Learning Week4 & 5 - Applications</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-05T21:38:00+09:00" pubdate data-updated="true">Apr 5<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h5>들어가기 전에</h5>
-
-
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 4주차와 5주차 강의를 요약한 글이다. 이 강의에서는 이론적인 형태의 무언가를 배운다기보다는 real application의 예로 Neural Network를 사용해 word prediction (NLP에서 쓰이는) 그리고 object recognition를 하는 방법에 대해 다룬다. 내가 관심이 있는 부분은 실제 이 NN을 어떻게 적용하냐라기 보다는 NN이란 무엇이며 어떤 이론적 배경이 있는 것이며 그 알고리듬에 더 관심이 있기 때문에 대부분이 engineerning issue인 이번 두 강의들은 대략적으로 어떤 내용에 대해서 다루는지만 아주 간략하게 기술하였다.</p>
-
-
-<h5>Learning feature vectors for words</h5>
-
-
-<p>Speech recoginition에서 가장 중요한 문제 중 하나는 바로 제대로 인식되지 않은 단어가 무엇일지 추측하는 것이다. 아무리 기술이 좋아지더라도 speech를 완전하게 복원하는 것은 불가능하다. 살제 사람들도 완전하게 speech를 인식하는 것은 아니고 때에 따라 적당히 추측해서 이해하는 것처럼, 이런 문제가 음성 인식에서 많이 중요한 문제로 대두되고 있다. 나도 seri를 사용하다보면 음성인식률이 생각보다 좋지않아서 실망하고는 하는데, 이런 문제점을 해결하기 위해 다양한 방법들이 제시되고 있다. 이 강의는 이런 것들을 개선시키기 위해 neural network를 도입했었던 연구들에 대해 다룬다. 참고로 여기에서 사용하는 모든 NN들은 softmax function neuron을 사용하고 error function은 cross entropy error를 사용한다. 이유는 sigmoid function을 사용했을 때 error가 rmse라면 제대로 우리가 원하는 방향으로 학습하기가 어렵기 때문이다. 왜냐하면 sigmoid function은 양 쪽 끝 부분이 거의 평평하기 때문에 만약 우리가 정 반대쪽 방향에서 rmse의 gradient 방향을 취하게 된다면 거의 변화가 없다고 판단할 수도 있기 때문이다. 따라서 이런 방법을 개선하기 위해서 cross entropy error를 사용하였고, 이 방법을 사용하기 위하여 sigmoid를 softmax로 바꿔서 probability distribution으로 만들어준 것이다. 아무튼 이 강의에서 설명하는 방법들은 이런 방법들에 기반해서 NN을 만든다. 아무튼 우리가 처음에 풀려고 했었던 단어를 추측하는 고전적인 방법 중에 <a href="http://en.wikipedia.org/wiki/N-gram" target="new">N-gram</a>문제라는 것이 있는데, n개의 단어 배열들을 학습하여 임의의 n-1개의 단어가 주어졌을 때 그 다음 단어가 무엇일지 예측하는 문제이다. 실제로 자연언어처리에서 많이 사용하는 기법 중 하나인데, 보통 trigram을 많이 사용한다 (3개의 단어 시퀀스를 학습) 그런데 이 경우 우리가 모든 단어를 학습할 수도 없고, 우리가 관측하지 못한 단어배열이라고 해서 세상에 존재하지 않는 단어 배열이라 확신할 수가 없기 때문에 당연히 성능 역시 좋지 않을 것이라고 예측할 수 있을 것이다. 대신 input을 앞의 2개의 단어를 취하고 그 output을 세 번째 단어로 하는 neural network를 학습할 수도 있을 것이다. 하지만 이렇게 할 경우 output의 양이 너무 많아지므로 대신 3번째 단어의 후보군들의 집합을 같이 넣어서 결과를 얻는 방식을 취할 수도 있을 것이다. 더 성능을 높이기 위해서 엄청 긴 word seqeunce를 통채로 학습하고, 임의의 단어의 앞의 n개 단어 뒤의 m개 단어를 보고 추측하는 것이 가능할 것이다. 이 경우, 지금 단어가 random인지 제대로 된 단어인지 일부러 섞어서 learning을 하게 되면 output을 binary로 받는 것이 가능해져서 엄청나게 빠른 test time을 가질 수가 있게 된다는 장점이 있다.</p>
-
-
-<h5>Object recognition with neural nets</h5>
-
-
-<p>우리가 물체를 인식하는 것을 매우 자연스러운 일로 생각하지만 실제로 이것을 구현하는 것은 절대로 쉬운 일이 아니다. 우리는 물체가 살짝 가려져 있어도 구분이 가능하고, 또한 해당 물체를 유동적으로 인식한다. 무슨 말인가하면, 인식 알고리듬을 디자인하는데 있어서 문제점은 (1) 물체가 다른 물체 혹은 주변 환경에 의해서 가려진 상태일 때 (2) 밝기와 조명에 따른 해당 물체의 색 변화 (pixel 정보가 변한다) (3) 같은 클래스에 속해도 조금씩 다른 모습 - 예를 들어서 손글씨 숫자는 비록 같은 숫자이나 전부 필체가 달라서 variation이 있다. (4) 물체가 정의되는 것은 모양이 아니라 다른 방법으로 결정되는 경우도 많다 - 예를 들어 의자는 모습으로 구분하는 것이 아니라 그 사용처가 어디인가에 따라 분류해야 구분할 수 있을 것이다.</p>
-
-
-<p>그 밖에도 결국 우리가 사용할 수 있는 정보는 image 정보이고, 디지털 input image는 단순한 pixel map이다. 예를 들어서 1024 by 720 pixel의 사진이라고 한다면 총 737280개의 pixel이 input이 될 것이다. 각 pixel은 RGB정보를 가지고 있으므로 값은 (0,0,0) ~ (255,255,255) 사이의 값으로 정해질 것이다. 색상이 중요하지 않은 경우에는 흑백 사진으로 바꾸어 단순히 밝기로만 판단하기도 한다. 아무튼 그렇기 때문에 약간의 물체의 이동도 성능을 크게 바꿔버릴 수 있다. 단순히 옆으로 이동한 것 뿐 아니라 회전된 정보나 뒤집힌 정보는 우리가 인식 알고리듬을 작성하는데에 매우 어려운 부분으로 작용한다. 따라서 우리는 모든 정보를 normalization시켜야할 필요가 있으며 align해야 할 필요가 있다. 이런 처리 없이는 올바른 정보를 학습하기가 매우 어려워질 것이다.</p>
-
-
-<p>이 강의에서는 이런 문제점들을 가지고 있는 object recognition을 neural network로 접근한다. 이런 경우 determistic method보다 훨씬 더 좋은 성능을 낼 수 있으리라는 것은 자명할 것이다. Input은 pixel map이고, output은 어떤 object인지 알려주는 label 혹은 class가 될 것이다. 이런 Hidden layer가 포함된 neural network를 backpropagation 방법을 사용하여 learning한다. 실제로 많은 image recoginition에서 neural network를 사용하고 있으며, 앞에서 설명했었던 여러 문제점들을 해결해주는 경우가 많다. 또한 아마 이런 목적을 가지고 설계된 알고리듬 중에서는 neural network가 가장 성능이 좋을 것이다.</p>
-
-
-
-
-<h5>Coursera Neural Networks for Machine Learning</h5>
-
-
-<p>다른 요약글들 보기 (<a href="/blog/categories/cousera-nn/">카테고리로 이동</a>)</p>
-
-
-<ul>
-    <li>Lecture 1: <a href="/39">Introduction</a></li>
-    <li>Lecture 2: <a href="/40">The Perceptron learning procedure</a></li>
-    <li>Lecture 3: <a href="/42">The backpropagation learning proccedure</a></li>
-    <li>Lecture 4: <a href="/43">Learning feature vectors for words</a></li>
-    <li>Lecture 5: <a href="/43">Object recognition with neural nets</a></li>
-    <li>Lecture 6: Optimization: How to make the learning go faster</li>
-    <li>Lecture 7: Recurrent neural networks</li>
-    <li>Lecture 8: More recurrent neural networks</li>
-    <li>Lecture 9: Ways to make neural networks generalize better</li>
-    <li>Lecture 10: Combining multiple neural networks to improve generalization</li>
-    <li>Lecture 11: Hopfield nets and Boltzmann machines</li>
-    <li>Lecture 12: Restricted Boltzmann machines (RBMs)</li>
-    <li>Lecture 13: Stacking RBMs to make Deep Belief Nets</li>
-    <li>Lecture 14: Deep neural nets with generative pre-training</li>
-    <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
-    <li>Lecture 16: Recent applications of deep neural nets</li>
-</ul>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1756,6 +1850,10 @@ End of technical program of Day 2<strong> </strong>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/81/">맥 요세미티 업데이트 이후 Homebrew 문제점 Troubleshooting</a>
+      </li>
+    
+      <li class="post">
         <a href="/80/">Gitlab을 깔자</a>
       </li>
     
@@ -1769,10 +1867,6 @@ End of technical program of Day 2<strong> </strong>
     
       <li class="post">
         <a href="/63/">Machine Learning 스터디 (7) Convex Optimization</a>
-      </li>
-    
-      <li class="post">
-        <a href="/62/">Machine Learning 스터디 (6) Information Theory</a>
       </li>
     
   </ul>

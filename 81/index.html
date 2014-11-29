@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>octopress 자잘한 세팅 변경 및 post용 script 만들기 - README</title>
+  <title>맥 요세미티 업데이트 이후 Homebrew 문제점 troubleshooting - README</title>
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Octopress의 favicon, permalink를 변경하고 post 생성을 자동화하는 Script를 설명합니다">
+  <meta name="description" content="맥 요세미티 업데이트 이후 Homebrew에 생긴 문제점 troubleshooting 삽질">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://SanghyukChun.github.io/6">
+  <link rel="canonical" href="http://SanghyukChun.github.io/81">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
@@ -93,7 +93,7 @@ $(function() {
   
   <header>
     
-      <h1 class="entry-title">Octopress 자잘한 세팅 변경 및 Post용 Script 만들기</h1>
+      <h1 class="entry-title">맥 요세미티 업데이트 이후 Homebrew 문제점 Troubleshooting</h1>
     
     
       <p class="meta text-right mB50">
@@ -109,35 +109,32 @@ $(function() {
   
 
 
-<time datetime="2013-07-27T20:13:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+<time datetime="2014-11-30T03:24:00+09:00" pubdate data-updated="true">Nov 30<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 octopress랑 같아서 도저히 작업하면서 신경쓰여서 바꿔버렸다. 이건 정말 간단하다. source/ directory바로 밑에 있는 favicon.png만 다른 파일로 바꿔주고 generate하고 deploy하면 끝</p>
+<div class="entry-content"><p>나는 맥 OS 장비가 두 개 있다. 하나는 연구실에서 사용하는 아이맥이고 또 하나는 연구실 밖에서 사용하는 맥북프로이다. 이번 요세미티 업데이트는 프리뷰 때 부터 기대를 많이 했기에 나오자마자 바로 두 머신 모두 요세미티 설치를 했다. 그리고 그게 내가 이 글을 쓰게 된 시발점이 되었다.</p>
 
 
-<p>두번 째로 Permalink. 쉽게 생각하면 포스트의 고유 주소값. 내가 티스토리, 워드프레스로 넘어가면서 가장 불만이었던 점이 이 고유 주소값의 default가 포스트 이름이라는 점. 근데 나는 원래 포스트 이름이 꽤 긴편이고 거기다가 주소에 날짜가 들어가면 정말 우아하지 않다고 생각해서 가장 미니멀리즘하게 포스트 순서대로 하는 것을 좋아한다. 그런데 octopress도 기본 값이 년/월/일/제목 이다.. -_- 그래서 간단하게 바꿔줬는데, _config.yml에 있는 permalink를 /:year/:month/:day/:title에서 /:title로 바꿔주고 markdown 파일 이름을 2013-07-25-1.markdown 이런 식으로 바꿔주면 된다. 어차피 앞에 주소는 rake new_post할 때 해주는거니깐 딱히 고민할 이유는 없다.</p>
+<p>Homebrew는 맥에서 가장 많이 사용하는 패키지 관리 프로그램 중 하나로, 간단히 생각하면 ubuntu의 apt-get과 같은 역할을 (더 fancy하게!) 해준다. 그런데 문제는 이 녀석이 ruby base로 돌아가고, ruby path가 하드코딩되어있는데, 요세미티는 system ruby의 버전을 강제로 업그레이드시켜버리기 때문에 brew의 모든 명령이 깨진다는 것. 참고로 이건 예전 버전의 homebrew에서나 그렇고, 새로 나온 버전은 아무 문제가 없다.</p>
 
 
-<p></p>
-
-<p>근데 이렇게 하면 매번 생성할 때 마다 마지막 파일 이름이 뭐였는지 일일이 확인해야해서 굉장히 상당히 엄청 귀찮다. 그래서 아래와 같은 스크립트를 만들었음</p>
+<p>가장 간단한 해결책은 임시로 brew.rb 파일에 있는 path를 current ruby로 바꿔준 다음 brew를 최신 버전으로 다시 내려받는 것이다. 하지만 늘 인생은 쉽지 않지. 쉬운 길을 눈 앞에 두고 돌아가기 마련인데, 두 머신 모두 (약간의 시간 차이를 두고 한 일이지만) brew를 삭제하고, 다시 설치한다음 rvm으로 ruby 버전을 다시 다운로드 받는&#8230; 삽질을 했다.</p>
 
 
-<p></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>num=$(ls -l | grep markdown | wc -l)
-</span><span class='line'>bundle exec rake new_post["$((num+1))"]</span></code></pre></td></tr></table></div></figure>
+<p>그런데 이번에 rvm으로 루비 버전을 먼저 내려받다가, brew가 깨져있는 상황에서 실수로 지금 이미 있는 루비조차 날려버리는 최악의 실수를 해버렸다. 다시 말해 ruby 를 입력해도 아무 반응이 없고, rvm list는 비어있는 최악의 상황. 먼저 rvm install 2.0.0 을 실행했는데, 컴파일이 거의 한 시간 정도의 긴 시간이 지나도 끝나지를 않아 찾아보니 xcode 버전이 낮으면 그럴 수 있다더라. 다시 내 xcode를 보니 5버전.. 최신은 6버전이다. 바로 xcode부터 재설치를 했다. 근데 xcode가 보통 무거워야지.. 설치하는데 시간이 꽤 걸렸다.</p>
 
 
-<p>그냥 post.sh라고 이름 붙이고 /source/_post directory바로 밑에 두고 ./post.sh만 돌리면 알아서 순서대로 만들어 준다 굳굳</p>
+<p>xcode 재설치를 끝내고 homebrew를 설치하려고 보니 ruby 명령어를 실행해야하는터라, 강제로 system ruby path에 들어가 system ruby로 실행을 시켰다. brew를 제대로 지우지 않은 상황이라면 시키는대로 하면 된다. 설치 후에는 brew doctor 한 번 돌려줘야한다. 꼬여있는 dependency를 정리해야하기 때문.</p>
+
+
+<p>이제 rvm install 2.0.0, rvm install 1.9.3, rvm install 2.1.5 모두 잘 실행된다. (라고 적었지만 사실 1.9.3은 gcc48설치하는게 너무 오래 걸려서 아직 끝은 안난게 함정&#8230;)</p>
+
+
+<p>Gitlab도 그렇고, 지금 쓰고 있는 Octopress도 그렇고, 많은 웹에서 쓰는 프레임워크 혹은 어플리케이션들이 rails 기반, 루비 기반인 경우가 많아 이런 문제가 왕왕 생기고는 하는데, 당황하지 않고 천천히 찾아보면 해결하는게 크게 어렵지는 않다. 루비는 sudo user로 설치하는게 아니다보니까 더 쉬운 듯. 가장 중요한건 인내심을 가지는 것. 너무 이상할 정도로 오래걸리는건 생각해볼 필요가 있지만, 대부분의 경우 생각보다 시간이 훨씬 오래 걸린다.</p>
 
 </div>
 
@@ -161,12 +158,12 @@ $(function() {
   
 
 
-<time datetime="2013-07-27T20:13:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+<time datetime="2014-11-30T03:24:00+09:00" pubdate data-updated="true">Nov 30<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+    <a class='category' href='/blog/categories/development/'>development</a>
   
 </span>
 
@@ -175,7 +172,7 @@ $(function() {
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/6/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/6/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/81/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/81/" >Tweet</a>
   
   
   
@@ -186,10 +183,8 @@ $(function() {
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/5/" title="Previous Post: Script와 함께하는 Bundle exec~">&laquo; Script와 함께하는 Bundle exec~</a>
+        <a class="basic-alignment left" href="/80/" title="Previous Post: Gitlab을 깔자">&laquo; Gitlab을 깔자</a>
       
-      
-        <a class="basic-alignment right" href="/7/" title="Next Post: Octopress에 facebook comments 추가하기">Octopress에 facebook comments 추가하기 &raquo;</a>
       
     </p>
   </footer>
@@ -199,7 +194,7 @@ $(function() {
   <section>
     <h1>Comments</h1>
     <div id="facebook_comments" aria-live="polite">
-      <div class="fb-comments" data-href="http://SanghyukChun.github.io/6/" data-width="400" data-num-posts="10"></div>
+      <div class="fb-comments" data-href="http://SanghyukChun.github.io/81/" data-width="400" data-num-posts="10"></div>
     </div>
   </section>
 
