@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-12-13T05:04:06+09:00</updated>
+  <updated>2014-12-13T05:08:40+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -21,7 +21,7 @@
 		<content type="html"><![CDATA[<p>예전부터 블로그 댓글 기능을 제대로 만들어야겠다는 생각을 늘 하고 있었는데, 갑자기 삘이 꽂혀서 disqus를 설치했다. 아예 생각난 김에 트윗이나 라이크 버튼도 기능 테스트를 더 해볼까 싶었는데 그건 그냥 귀찮아서 스킵하기로 했다.</p>
 
 
-<p>사용 방법은 심플하다. <a href="www.disqus.com">www.disqus.com</a> 에 접속해서 아이디 만들고, 새로 disqus 하나 만든 다음에, 옥토프레스 _config.yml에 disqus short name만 넣어주면 된다.</p>
+<p>사용 방법은 심플하다. <a href="http://www.disqus.com">http://www.disqus.com</a> 에 접속해서 아이디 만들고, 새로 disqus 하나 만든 다음에, 옥토프레스 _config.yml에 disqus short name만 넣어주면 된다.</p>
 
 ]]></content>
   </entry>
