@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>블로그에서 Latex 수식 사용하기(MathJax) - README</title>
+  <title>블로그에 Disqus 설치 - README</title>
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="블로그나 일반 웹 페이지에서 Latex 문법을 사용하는 방법에 대해 설명합니다">
+  <meta name="description" content="블로그에 댓글 용도로 사용할 disqus를 설치하였다">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://SanghyukChun.github.io/25">
+  <link rel="canonical" href="http://SanghyukChun.github.io/82">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
@@ -84,7 +84,7 @@ $(function() {
   
   <header>
     
-      <h1 class="entry-title">블로그에서 Latex 수식 사용하기(MathJax)</h1>
+      <h1 class="entry-title">블로그에 Disqus 설치</h1>
     
     
       <p class="meta text-right mB50">
@@ -100,7 +100,7 @@ $(function() {
   
 
 
-<time datetime="2013-11-05T19:26:00+09:00" pubdate data-updated="true">Nov 5<span>th</span>, 2013</time>
+<time datetime="2014-12-13T04:58:00+09:00" pubdate data-updated="true">Dec 13<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -109,30 +109,10 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/" target="new"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
+<div class="entry-content"><p>예전부터 블로그 댓글 기능을 제대로 만들어야겠다는 생각을 늘 하고 있었는데, 갑자기 삘이 꽂혀서 disqus를 설치했다. 아예 생각난 김에 트윗이나 라이크 버튼도 기능 테스트를 더 해볼까 싶었는데 그건 그냥 귀찮아서 스킵하기로 했다.</p>
 
 
-<p>방법은 매우 간단하다. 아래와 같은 코드를 head에 넣으면 끝. </p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>이제 준비는 끝났다. 이제 수식을 넣어보자.</p>
-
-
-<p>사용법은 어렵지 않다. 만약 \( E=mc^2 \)를 쓰고 싶으면 </p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\( E=mc^2 \)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>라고 적으면 된다. 위에 E=mc^2를 적은 곳에 다른 Latex 문법을 넣으면 다른 수식을 표현할 수 있다.</p>
-
-
-<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292" target="new">블로그에서 수식 표현하기</a></p>
+<p>사용 방법은 심플하다. <a href="www.disqus.com">www.disqus.com</a> 에 접속해서 아이디 만들고, 새로 disqus 하나 만든 다음에, 옥토프레스 _config.yml에 disqus short name만 넣어주면 된다.</p>
 
 </div>
 
@@ -156,12 +136,12 @@ $(function() {
   
 
 
-<time datetime="2013-11-05T19:26:00+09:00" pubdate data-updated="true">Nov 5<span>th</span>, 2013</time>
+<time datetime="2014-12-13T04:58:00+09:00" pubdate data-updated="true">Dec 13<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+    <a class='category' href='/blog/categories/development/'>development</a>
   
 </span>
 
@@ -170,7 +150,7 @@ $(function() {
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/25/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/25/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/82/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/82/" >Tweet</a>
   
   
   
@@ -181,10 +161,8 @@ $(function() {
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/24/" title="Previous Post: 당신이 수학을 공부해야만 하는 이유">&laquo; 당신이 수학을 공부해야만 하는 이유</a>
+        <a class="basic-alignment left" href="/81/" title="Previous Post: 맥 요세미티 업데이트 이후 Homebrew 문제점 troubleshooting">&laquo; 맥 요세미티 업데이트 이후 Homebrew 문제점 troubleshooting</a>
       
-      
-        <a class="basic-alignment right" href="/26/" title="Next Post: 게임은 정말 사회악인가? 한국 게임업계는 정말 반성할 것이 없는가?">게임은 정말 사회악인가? 한국 게임업계는 정말 반성할 것이 없는가? &raquo;</a>
       
     </p>
   </footer>
@@ -280,8 +258,8 @@ $(function() {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://SanghyukChun.github.io/25/';
-        var disqus_url = 'http://SanghyukChun.github.io/25/';
+        var disqus_identifier = 'http://SanghyukChun.github.io/82/';
+        var disqus_url = 'http://SanghyukChun.github.io/82/';
         var disqus_script = 'embed.js';
       
     (function () {

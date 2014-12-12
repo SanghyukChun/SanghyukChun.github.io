@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Machine Learning 스터디 (1) Machine Learning이란? Aug 2nd, 2014 | Comments Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 Machine &hellip;">
+  <meta name="description" content="Machine Learning 스터디 (2) Probability Theory Aug 3rd, 2014 | Comments 지난 글에서 Machine Learning을 일종의 function 처럼 묘사했었는데, 사실 Machine Learning을 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,15 +60,6 @@ $(function() {
 
 <body   >
   
-	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=182012898639519";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
-  
   <div id="main">
   	<header role="banner"><hgroup>
   <h1><a id="blog-title" href="/">README</a>
@@ -90,6 +81,124 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/58/">Machine Learning 스터디 (2) Probability Theory</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-03T14:18:00+09:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2014</time>
+        
+         | <a href="/58/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>지난 글에서 Machine Learning을 일종의 function 처럼 묘사했었는데, 사실 Machine Learning을 Probability density의 관점에서 보는 것도 가능하다. 이 얘기를 하려면 먼저 Probability density를 포함한 전반적인 probability theory에 대해 먼저 다뤄야할 것 같아서 그 주제로 먼저 글을 써보기로 했다. 일단 엄청 기본적인 내용들, 예를 들어서 조건부 확률이 무엇이고, 이런 얘기들은 일단 생략을 하도록 하겠다. 너무 basic한 얘기이고 \(p(X) = \sum_Y p(X,y) \) 이런거나 \(p(X,Y) = p(Y|X) p(X) \) 이런건 너무나도 기초적인 얘기들이니까. 만약 조건부확률을 잘 모른다면 구글링을 통해 먼저 간단한 지식을 습득하고 오기를 권한다.</p>
+
+
+<p>다만 그 중에서도 약간 중요하게 다룰만한 주제가 있는데, 그게 바로 Bayes&#8217; theorem이다. 이 Theorem 자체는 그냥 간단하게 \(p(X|Y) \)와 \(p(Y|X) \)와의 관계를 표현한 것임에 불과하지만, 그 안에 숨겨진 의미가 매우매우 중요하다.</p>
+
+
+<h5 id="58-1-Bayes">Bayes&#8217; Theorem</h5>
+
+
+<p>\[ p(Y|X) = {p(X|Y) p(Y) \over p(X)} \]</p>
+
+
+<p>식의 모양은 위와 같다. 이 식이 중요한 이유는 무엇이냐면, 실제 우리가 관측하는 데이터와 실제 일어나는 현상과의 관계를 이어주는 연결고리가 되기 때문이다.</p>
+
+
+<p>우리가 실제로 관측할 수 있는 데이터와 현상의 관계는 어떻게 되느냐 하면 &#8216;이런 현상이 나타났을 때 데이터의 분포&#8217; 를 보는 것이다. 무슨 얘기냐, 만약 데이터를 X, 현상을 Y라고 해보자. 그럼 우리가 당연히 얻고 싶은 것은 주어진 데이터 X에 대한 현상 Y일 것이다. 즉 \( p(Y|X) \) 를 우리는 실제로 계산하고 싶은 것이다. 그런데 우리가 확인할 수 있는 데이터는 무엇이냐 하면, 어떤 주어진 현상 Y에 대해 존재하는 데이터 X들의 분포 즉, \( p(X|Y) \) 만을 관측할 수 있다. 예를 들어보자. 만약 어떤 질병에 대한 검사를 하는 상황이라고 가정해보자. 우리가 확인할 수 있는 것은 해당 검사에 대해 양성 판정을 받았는지 아닌지 밖에 확인할 수 없다. 만약 이 검사가 완벽하지 않다면 (즉, 정확도가 90% 정도라면) 실제 우리가 관측하는 검사 결과와 그 사람의 질병 보유 상황이 다를 수 있는 것이다. 즉, 검사 결과를 X라고 하고 실제 병에 걸렸는지 아닌지를 Y라고 한다면 우리가 최종적으로 확인하고 싶은 것은 \( p(Y|X) \), 즉 검사 결과를 보고 이 사람이 진짜 질병을 가질 확률을 알고 싶은 것이지만, 실제 우리가 확인할 수 있는 데이터는 \( p(X|Y) \), 즉 이 사람이 실제 병에 걸렸을 때 제대로 검사가 될 확률 (아까 90%라고 했었던) 뿐이 가지고 있지 않다. 더 자세한 것은 <a href="http://musicetc.wikidot.com/bayes-theorem#toc3" target="new">링크</a>를 참조하길 바란다.</p>
+
+
+<p>중요한 것은 무엇이냐 하면, 진짜 우리가 관측할 수 있는 데이터만 가지고는 우리가 원하는 추론을 하는 것이 어렵다는 점이다. 이때, 주어진 현상에 대해 나타나는 데이터의 분포 \( p(X|Y) \), 즉 우리의 observation을 일컬어 Likelihood라고 한다. 만약 우리가 아무런 정보도 가지고 있는 상황이 아니라면 언제나 이 값을 최대로 만드는 작업을 통해 가장 optimized된 현상을 찾을 수 있는데 이를 maximum likelihood라 한다. (<a href="http://en.wikipedia.org/wiki/Maximum_likelihood" target="new">위키</a>) 즉, 우리가 관측한 정보만을 가지고, 그 정보가 전부라고 가정한 이후에 그 안에서 모든 optimization을 거쳐 가장 좋은 something을 얻어내는 과정이라 할 수 있다. 이를 Maximum Likelihood Estimation 혹은 MLE라 한다. 이 녀석은 Machine learning을 하면서 정말 많이 나오는 용어이고, 실제 이 방법을 사용해 풀어내는 문제들이 많기 때문에 반드시 숙지해야하는 개념이다. (또한 이 녀석이 좋은 이유는 간단함도 있지만, unbiased solution을 얻을 수 있다는 점인데, 이 부분은 나중에 설명할 수 있도록 하겠다.)</p>
+
+
+<p>그런데, 앞서 설명했던 예시와 같이, 항상 MLE가 능사는 아니다. 극단적으로 생각해서, 만약 우리가 동전 던지기를 해서 10번 던져서 10번 tail이 나오면 &#8216;이 동전은 tail이 100%로 나오는 동전이다&#8217; 라고 예측하는 것이 바로 MLE인 것이다. 이 방법이 잘 될 떄도 많지만, 방금처럼 데이터가 부족한 경우 등에는 좋은 결과를 얻지 못할 수 있다. 만약 우리가 &#8216;동전 던지기를 하면 head, tail이 50:50 으로 나온다.&#8217; 라는 것을 알고 있다면 조금 더 나은 추론을 하는 것이 가능하지 않을까? 이런 생각에서 나오는 것이 바로 Maximize a posterior, 혹은 MAP이다. Posterior는 앞에서 설명했던 주어진 데이터에 대한 현상의 확률, 즉 \( p(Y|X) \)이다. 간단히 생각해서 Likelihood는 내가 본 데이터에 대한 관측값 만을 의미하는 것이고, Posterior는 관측값과 다른 결과들을 조합하여 나온 조금 더 추론하기에 알맞은 형태? 라고 보면 될 것 같다.</p>
+
+
+<p>앞서 Bayes&#8217; theorem에서 계산했듯, Observation, 혹은 Likelihood를 알고 있을 때 Posterior를 계산하기 위해서는 \(p(X), p(Y)\)가 필요하다. 이때 \(p(Y)\)는 어떤 현상에 대한 사전 정보이다. 즉, 아까 동전 던지기에서 동전을 던졌을 때 head tail이 나올 확률이 0.5라는 것에 대한 사전 정보이다. 이를 prior 라고 한다. 만약 이 값을 알고 있다면 observation이 잘못되어도 이 값이 약간의 보정을 해주는 역할을 할 수 있게 되는 것이다. 그리고 여기에서 데이터의 분포 \(p(X)\)는 일종의 normalization 을 해주는 역할을 하며, 실제 모든 데이터에 대해 \(p(X|Y) p(X)\) 를 계산한 뒤 그 값들을 noralization하는 것과 동일한 효과이기 때문에 이 값에 대해 알 필요는 없다.</p>
+
+
+<p>정리하자면, Bayes&#8217; theorem은 observation(likelihood), 현상에 대한 사전정보 (prior), 주어진 데이터에 대한 현상의 확률 (posterior) 의 관계를 define하는 중요한 역할을 한다고 할 수 있겠다.</p>
+
+
+
+
+<h5 id="58-2-pd">Probability densities</h5>
+
+
+<p>Probability density, 우리 말로 하면 확률밀도가 되겠다. 간단히 생각하면 주어진 domain에 대해 확률이 어떻게 분포하고 있는지를 나타내는 일종의 function이라 할 수 있겠다. 아마 이것도 고등학교 수학시간에 배우는 것으로 기억하는데.. 그만큼 아주 간단한 개념이다. 자세한건 위키를 <a href="http://en.wikipedia.org/wiki/Probability_density_function" target="new">참고</a>하면 될 것 같다. 그럼 이게 실제로 어떤 의미가 있으며 맨 처음에 probability density 관점에서 machine learning을 볼 수 있다는 것의 의미는 무엇인가?</p>
+
+
+<p>Probaiblity density라는 녀석은 결국 주어진 데이터들이 어떤 방식으로, 어떤 확률로 분포해있는지를 알려주는 녀석이라 할 수 있다. 예를 들어보자. 만약 우리가 스팸필터를 만들었는데 &#8216;광고&#8217; 라는 단어가 포함이 되면 해당 메일이 스팸일 확률이 80%이고, &#8216;구매&#8217; 라는 단어가 포함이 되면 90%, &#8216;Machine Learning&#8217; 이라는 단어가 포함되면 스팸일 확률이 10%.. 이런식으로 모든 단어, 모든 domain에 대해 스팸일 확률을 알고 있다면, 혹은 그런 probability density를 찾을 수 있다면, 더 정확히 말하면 probability density function을 찾아낼 수 있다면 우리는 매우 좋은 inference를 할 수 있게 될 것이다.</p>
+
+
+<p>이제 Machine Learning과의 연계를 지어보자. 어떤 우리가 모르는 probability density function을 가지는 데이터들에 대해, 그 데이터들을 사용해 probability density function을 찾아내는, estimate하는 과정을 일컬어 Density estimation이라 부른다. 이전에는 데이터들을 통해 &#8216;함수&#8217;를 찾아낸 것이고, 지금은 그 함수가 density function이라는 점이 다른 점이다.</p>
+
+
+
+
+<p>Bayes&#8217; theorem 이나 probability density 등 이외에도 probability theory 쪽에서 언급해야할 얘기들이 없는 것은 아니다. 예를 들어서 expectation이라거나.. 하지만 내 생각에 이번 글에서 언급한 두 개는 약간 기본적인 probability theory와는 다르게 조금 머신러닝적인 insight가 필요한 부분이 아닐까해서 조금 강조해서 언급해보았다.</p>
+
+
+
+
+<hr>
+
+
+<p><a href="/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+
+
+<ul>
+<li><a href="/57">Machine Learning이란?</a></li>
+<li><a href="/58">Probability Theory</a></li>
+<li><a href="/59">Overfitting</a></li>
+<li><a href="/60">Algorithm</a></li>
+<li><a href="/61">Decision Theory</a></li>
+<li><a href="/62">Information Theory</a></li>
+<li><a href="/63">Convex Optimzation</a></li>
+<li>Classification Introduction (Decision Tree, Naïve Bayes, KNN)</li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Ensemble Learning (Random Forest, Ada Boost)</li>
+<li>Graphical Model</li>
+<li>Hidden Markov Model</li>
+<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li>EM algorithm</li>
+<li>Dimensionality Reduction (LDA, PCA)</li>
+<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>Reinforcement Learning</li>
+</ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -1587,271 +1696,6 @@ $(function() {
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/44/">BIG 2014 (2014/4/7 ~ 2014/4/8)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-06T04:57:00+09:00" pubdate data-updated="true">Apr 6<span>th</span>, 2014</time>
-        
-         | <a href="/44/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>다음주 월요일부터 화요일 이틀간 <a href="http://big2014.org/" target="new">BIG 2014</a>라는 big data관련 workshop에 참여하게 되었다. 어떤 talk들이 주로 있는지 궁금해서 간략하게 프로그램을 훑어봤는데 이론적인 내용들보다는 실제 application level에서 일어나는 문제들이나 얘기들이 많이 있는 것 같다. 특히 시스템 쪽 얘기가 많이 나올 것 같은데 나는 이쪽 분야에 아직 어느 정도 관심이 있어서 들으면 재미있을 것 같다. 그리고 Visualization등과 관련되어 보이는 topic도 간간히 눈에 띄고, analysis에 대한 얘기도 눈에 띈다. 사실 새로운 이론적 깊이를 배우러간다기보다는 최근 real field에서 big data를 어떻게 생각하고 실제로 활용하고 있는지 보러간다는 것 자체가 나에게 큰 의미가 있을 것으로 기대된다. 무엇보다 나는 앞으로 이런 소위 말하는 빅데이터를 아이템 삼아서 벤처를 할 생각이니깐.. 특히 미국 쪽에서 어떤 움직임을 보이고 있는지 가서 잘 살펴보고 와야겠다. Invited speaker에 Kaggle engineer도 있고.. 관련 연구를 하는 교수님들도 있어서 이론적인 내용과 실제 apply하는 내용이 적절하게 잘 밸런스가 맞춰져 진행이 될 것 같다.</p>
-
-
-<p>아마도 <a href="http://www2014.kr/" target="new">www2014</a>라는 코엑스에서 열리는 학회의 서브 프로그램인 것 같다. 서울에서 열린다는 점이 마음에 든다. 구글링해보니 작년 www2013은 브라질에서 한 모양이던데.. 아마도 인터넷 관련 학회인 것 같다. 논문도 내는 것 같고.. 일단 나와는 아주 상관이 있을 것 같지는 않다. 어쨌거나 코엑스에서 열려서 집에서 가기 좋다는건 참 괜찮은 것 같다.</p>
-
-
-<p>해당 컨퍼런스의 프로그램은 아래와 같다. (프로그램은 홈페이지에서 따왔다.) <a href="http://ec2-50-112-76-239.us-west-2.compute.amazonaws.com/upload/big_agenda.pdf" target="new">PDF</a>로 받을 수도 있다.</p>
-
-
-
-
-<h5>BIG 2014 Final Program</h5>
-
-
-<table cellspacing="5" class="table table-bordered" style="width:600"><tbody><tr><td bgcolor="#4BACC6" colspan="2" class="white" style="text-align:center">
-<strong>Monday, April 7th</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>9:15</strong>
-</td>
-<td bgcolor="#A5D5E2">
-BIG&#8217;2014 Opening<strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>9:30</strong>
-</td>
-<td bgcolor="#D2EAF1">
-<strong><u>Keynote Speaker</u></strong><strong>: </strong>Chris Volinsky, AVP AT&amp;T<br><strong>Shaping Cities of the Future using Mobile Data</strong><strong> </strong>
-<ul><li>Introduced by Robin Chen</li>
-</ul></td>
-</tr><tr><td bgcolor="#E36C0A" class="white">
-<strong>10:30</strong>
-</td>
-<td bgcolor="#FBD4B4">
-Coffee Break<strong> </strong>
-</td>
-</tr><tr><td bgcolor="#31849B" colspan="2" class="white">
-<strong>Session chair: Junlan Feng</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>11:00</strong>
-</td>
-<td bgcolor="#A5D5E2">
-Neel Sundaresan and Jack Shen<br><strong>Visually:&nbsp; Telling Commerce Stories Through Pictures</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>11:25</strong>
-</td>
-<td bgcolor="#D2EAF1">
-Jaegul Choo, Barry Drake and&nbsp;Haesun Park<br><strong>Visual Analytics for Interactive Exploration of Large-scale Document Data via Nonnegative Matrix Factorization</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>11:50</strong>
-</td>
-<td bgcolor="#A5D5E2">
-Keyun Hu, Hongyan Yan and Junlan Feng<br><strong>mAnalytics: A Big Data Analytic Platform for Precision Marketing</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>12:15</strong>
-</td>
-<td bgcolor="#D2EAF1">
-Frank Smadja<br><strong>The Big Data Challenges of Computational Market Research</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#E36C0A" class="white">
-<strong>12:40</strong>
-</td>
-<td bgcolor="#FBD4B4">
-Lunch
-</td>
-</tr><tr><td align="right" bgcolor="#4BACC6" class="white">
-<strong>13:45</strong>
-</td>
-<td bgcolor="#A5D5E2">
-<strong><u>Invited Speaker:</u></strong> Rakesh Agrawal, Microsoft Technical Fellow<br><strong>Computational Education: A Big Data Opportunity?</strong><strong> </strong>
-<ul><li>Introduced by Prabhakar Raghavan</li>
-</ul></td>
-</tr><tr><td bgcolor="#31849B" colspan="2" class="white">
-<strong>Session chair: Frank Smadja</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>14:30</strong>
-</td>
-<td bgcolor="#D2EAF1">
-Jinhyung Kim, Minhee Cho, Mikyoung Lee and Hanmin Jung<br><strong>Scholarly Big Data-based Prescriptive Analytics System Enhancing Research Capability</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>14:55</strong>
-</td>
-<td bgcolor="#A5D5E2">
-Julien Masanes, Stanislav Barton and Philippe Rigaux<br><strong>Building an Analytic Platform for The Web</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#E36C0A" class="white">
-<strong>15:20</strong>
-</td>
-<td bgcolor="#FBD4B4">
-Coffee Break
-</td>
-</tr><tr><td bgcolor="#31849B" colspan="2" class="white">
-<strong>Session chair: Neel Sanduresan</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>15:50</strong>
-</td>
-<td bgcolor="#A5D5E2">
-Patty Kostkova<br><strong>Integration, Cross-Verification, Participation and Open Data: Opportunities and Challenges for Public Health</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>16:15</strong>
-</td>
-<td bgcolor="#D2EAF1">
-<strong>Panel:&nbsp;</strong><strong>Open Data: Holy Grail for Surveillance and Research - so what&#8217;s the problem?</strong><br><strong>Moderator:</strong> Patty Kostkova<br><strong>Panelists:</strong> Philip Abdelmalik, Ciro Cattuto, Daniel Hulme and Hans Ossebaard
-</td>
-</tr><tr><td bgcolor="#E36C0A" class="white">
-<strong>17:15</strong>
-</td>
-<td bgcolor="#FBD4B4">
-End of technical program of Day 1
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>18:30</strong>
-</td>
-<td bgcolor="#A5D5E2">
-<strong>BIG Dinner<em> Sponsored by AT&amp;T</em></strong><strong> </strong>
-</td>
-</tr></tbody></table>
-
-
-
-
-<table cellspacing="5" class="table table-bordered"><tbody><tr><td bgcolor="#4BACC6" colspan="2" class="white" style="text-align:center">
-<strong>Tuesday, April 8th</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>9:15</strong>
-</td>
-<td bgcolor="#A5D5E2">
-Preview of today’s agenda<strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>9:30</strong>
-</td>
-<td bgcolor="#D2EAF1">
-<strong><u>Keynote Speaker</u></strong><strong>: </strong>Prof. Sang Kyun Cha, Seoul National University<br><strong>In-Memory Real-Time Big Data Processing: What It Takes to Innovate and Change Industry</strong>
-<ul><li>Introduced by Alessandro Panconesi</li>
-</ul></td>
-</tr><tr><td bgcolor="#E36C0A" class="white">
-<strong>10:30</strong>
-</td>
-<td bgcolor="#FBD4B4">
-Coffee Break<strong> </strong>
-</td>
-</tr><tr><td bgcolor="#31849B" colspan="2" class="white">
-<strong>Session chair: Paolo Boldi</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>11:00</strong>
-</td>
-<td bgcolor="#A5D5E2">
-Allan Hanbury,&nbsp;Georg Langs, Bjoern Menze and&nbsp;Henning Müller<br><strong>A Cloud-based Framework for Evaluation on Big Data</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>11:25</strong>
-</td>
-<td bgcolor="#D2EAF1">
-Paul Ogilvie, Jonathan Traupman, Xiangrui Meng and Doris Xin<br><strong>Metronome: Building Blocks for Data Products</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>11:50</strong>
-</td>
-<td bgcolor="#A5D5E2">
-<strong><u>Invited Speaker</u></strong><strong>: </strong>Prof. Thorsten Joachims, Cornell<br><strong>Big Data of the People, for the People: Understanding the Collective Wisdom of Users</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#E36C0A" class="white">
-<strong>12:35</strong>
-</td>
-<td bgcolor="#FBD4B4">
-Lunch<strong> </strong>
-</td>
-</tr><tr><td bgcolor="#31849B" colspan="2" class="white">
-<strong>Session chair: Andrei Broder</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>13:45</strong>
-</td>
-<td bgcolor="#A5D5E2">
-<strong><u>Keynote Speaker</u></strong><strong>:</strong> Amr Awadallah, Cloudera CTO and Co-founder<br><strong>Evolution from Apache Hadoop to the Enterprise Data Hub: a new foundation for the Modern Information Architecture</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>14:45</strong>
-</td>
-<td bgcolor="#D2EAF1">
-Sebastiano Vigna,&nbsp;Paolo Boldi, Andrea Marino and&nbsp;Massimo Santini<br><strong>BUbiNG: Massive Crawling for the Masses</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#E36C0A" class="white">
-<strong>15:10</strong>
-</td>
-<td bgcolor="#FBD4B4">
-Coffee Break<strong> </strong>
-</td>
-</tr><tr><td bgcolor="#31849B" colspan="2" class="white">
-<strong>Session chair: Ronny Lempl</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>15:40</strong>
-</td>
-<td style="background-color: rgb(210, 234, 241);">
-Sofia Kleisarchaki,&nbsp;Vassilis Christophides, Sihem Amer-Yahia and<br>Ahlame Douzal-Chouakria<br><strong>Scalable Topic Change Detection in Social Posts</strong><strong> </strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>16:05</strong>
-</td>
-<td bgcolor="#A5D5E2">
-<strong><u>Invited Speaker</u></strong><strong>:</strong> Ben Hamner, Director of Engineering, Kaggle<br><strong>What do we learn from Kaggle machine learning competitions?</strong>
-</td>
-</tr><tr><td bgcolor="#4BACC6" class="white">
-<strong>16:50</strong>
-</td>
-<td bgcolor="#D2EAF1">
-BIG’2014 Closing<strong> </strong>
-</td>
-</tr><tr><td bgcolor="#E36C0A" class="white">
-<strong>17:00</strong>
-</td>
-<td bgcolor="#FBD4B4">
-End of technical program of Day 2<strong> </strong>
-</td>
-</tr></tbody></table>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1870,6 +1714,10 @@ End of technical program of Day 2<strong> </strong>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/82/">블로그에 Disqus 설치</a>
+      </li>
+    
+      <li class="post">
         <a href="/81/">맥 요세미티 업데이트 이후 Homebrew 문제점 Troubleshooting</a>
       </li>
     
@@ -1883,10 +1731,6 @@ End of technical program of Day 2<strong> </strong>
     
       <li class="post">
         <a href="/77/">모바일 시대 Platform에 대한 고찰</a>
-      </li>
-    
-      <li class="post">
-        <a href="/63/">Machine Learning 스터디 (7) Convex Optimization</a>
       </li>
     
   </ul>
