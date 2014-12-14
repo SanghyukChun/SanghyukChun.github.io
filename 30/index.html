@@ -109,13 +109,13 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><p>본 포스팅은 <a href="/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
+<div class="entry-content"><p>본 포스팅은 <a href="/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
 
 
 <h5>Introduction</h5>
 
 
-<p>Netflix라는 미국의 DVD rental 업체가 있다. <a href="/21" target="new">이전 포스트</a>에서 다뤘던 기업 중에 하나인데, 다시 한번 간략하게 설명을 하자면 Netflix는 미국의 온라인 DVD rental 업체이다. 1997년 시작한 DVD rental business이며 초기 BM은 간단했다. 한달에 고정적인 비용을 내고 video나 dvd를 빌릴 수 있도록 하며 번거로운 연체료가 없는 모델이었다. 이렇게 하면 return률이 감소하는 단점이 있는데 이런 단점을 새로운 dvd를 빌리려면 다시 return해야 빌릴 수 있는 rule을 만들어 크게 성공하였다. <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788963708041&orderClick=LAH&Kc" target="new">디멘드</a>를 읽어보면 이에 대해서는 자세히 알 수 있을 것이다. 이후 2007년에 <a class="red tip" title="internet 상에서 VOD감상이 가능하도록 하는 서비스">VOD(video on demand)</a> service를 시작하였고, 2008년 9 million이던 user가 VOD 이후 30 million으로 폭증하였다. 현재 미국 traffic 25%는 Netflix VOD 때문에 발생할 정도로 거대한 기업이 되었다. 이렇게 Netflix가 크게 성장하게 된 배경에는 Recommendation system이 존재하는데, Netflix의 추천 시스템은 User prior video history를 기반으로 새 영화를 추천하고 사용자들이 더 다양하고 많은 비디오를 빌려볼 수 있도록 유도하고 있다. 이런 추천시스템은 Amazon, Youtube, GeoLife in MS 등도 적용하고 있는 많은 기업들에게 중요하게 인식되고 있는 시스템이다.</p>
+<p>Netflix라는 미국의 DVD rental 업체가 있다. <a href="/21">이전 포스트</a>에서 다뤘던 기업 중에 하나인데, 다시 한번 간략하게 설명을 하자면 Netflix는 미국의 온라인 DVD rental 업체이다. 1997년 시작한 DVD rental business이며 초기 BM은 간단했다. 한달에 고정적인 비용을 내고 video나 dvd를 빌릴 수 있도록 하며 번거로운 연체료가 없는 모델이었다. 이렇게 하면 return률이 감소하는 단점이 있는데 이런 단점을 새로운 dvd를 빌리려면 다시 return해야 빌릴 수 있는 rule을 만들어 크게 성공하였다. <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788963708041&orderClick=LAH&Kc">디멘드</a>를 읽어보면 이에 대해서는 자세히 알 수 있을 것이다. 이후 2007년에 <a class="red tip" title="internet 상에서 VOD감상이 가능하도록 하는 서비스">VOD(video on demand)</a> service를 시작하였고, 2008년 9 million이던 user가 VOD 이후 30 million으로 폭증하였다. 현재 미국 traffic 25%는 Netflix VOD 때문에 발생할 정도로 거대한 기업이 되었다. 이렇게 Netflix가 크게 성장하게 된 배경에는 Recommendation system이 존재하는데, Netflix의 추천 시스템은 User prior video history를 기반으로 새 영화를 추천하고 사용자들이 더 다양하고 많은 비디오를 빌려볼 수 있도록 유도하고 있다. 이런 추천시스템은 Amazon, Youtube, GeoLife in MS 등도 적용하고 있는 많은 기업들에게 중요하게 인식되고 있는 시스템이다.</p>
 
 
 <p>잠시 본 글로 넘어가기 이전에 Recommendation, 혹은 추천이라는 문제에 대해서 잠시 생각해보고 넘어가보자. 세상에는 정말 많은 Recommendation problem이 존재한다. 정말 간단한 현실 속의 예를 들어보자면 소개팅을 예를 들 수 있다. 소개팅을 주선해 줄 때 어떤 상대를 소개시켜주는 것이 가장 적절할까? 가만 생각해보면 소개팅을 상대방과 잘 맞을 것으로 예상되는 사람을 &#8216;추천&#8217; 해주는 문제로 변경해서 해결해 볼 수 있다. 예를 들어서 내가 소개팅을 시켜주려는 상대가 이전에 A라는 타입을 좋아했었다면 이번 소개팅에서도 A 타입을 추천해주는 방식으로 문제 해결이 가능한 것이다. 이런 것이 일종의 recommend question이다.</p>
@@ -130,7 +130,7 @@ $(function() {
 <h5>Machine Learning</h5>
 
 
-<p>Machine Learning이란 무엇인가? 이 블로그에서 다뤘던 <a href="/blog/categories/machine-learning" target="new">수 많은 글들</a>이 Machine Learning에 대해 다루고 있지만, 역시 간략하게 다시 언급을 하자면 Machine Learning은 Data로 부터 system을 구성하는 것이라고 할 수 있다. 위키피디아의 설명을 참고하자면 <a href="http://en.wikipedia.org/wiki/Machine_learning" target="new">&#8216;Machine learning, a branch of artificial intelligence, concerns the construction and study of systems that can learn from data.&#8217;</a> 라고 한다.</p>
+<p>Machine Learning이란 무엇인가? 이 블로그에서 다뤘던 <a href="/blog/categories/machine-learning">수 많은 글들</a>이 Machine Learning에 대해 다루고 있지만, 역시 간략하게 다시 언급을 하자면 Machine Learning은 Data로 부터 system을 구성하는 것이라고 할 수 있다. 위키피디아의 설명을 참고하자면 <a href="http://en.wikipedia.org/wiki/Machine_learning">&#8216;Machine learning, a branch of artificial intelligence, concerns the construction and study of systems that can learn from data.&#8217;</a> 라고 한다.</p>
 
 
 <p>이해를 돕기 위해 사람이 새로운 정보를 습득하는 과정에 대해서 생각해보자. 학교에서 새로운 지식을 배울 때, 우리는 수업과 책을 읽고 정보를 습득한다. 그리고 내가 제대로 배웠는지 판단하기 위해서 시험을 치고 그 결과에 따라서 이 정보를 잘 습득했다, 혹은 그렇지 못했다를 판단할 수 있는 것이다. 이때 공부를 위해서 sample exam을 계속 치면서 자신의 이해도를 판단하고 자신의 공부 방법을 개선해서 더 나은 학습을 하는 것이 가능하다. (시험을 수능, sample exam을 모의고사라고 생각하면 이해가 빠를 것이다)</p>

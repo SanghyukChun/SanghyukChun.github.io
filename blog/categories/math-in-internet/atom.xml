@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Math-in-Internet | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/math-in-internet/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-12-13T05:08:40+09:00</updated>
+  <updated>2014-12-14T13:19:55+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -18,13 +18,13 @@
     <link href="http://SanghyukChun.github.io/34/"/>
     <updated>2013-12-12T16:48:00+09:00</updated>
     <id>http://SanghyukChun.github.io/34</id>
-    <content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
+    <content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
 
 
 <h5 id="34-1-review">Review of last post</h5>
 
 
-<p><a href="http://SanghyukChun.github.io/32" target="new">지난 포스트</a>에서는 전반적인 강의의 개요 및 간단한 Network Problem들에 대해 다뤘다. 특히 그 중에서 밀그램의 편지 실험에 대해 다시 한번 살펴보자. 이 실험은 사람과 사람 사이의 사회적 거리를 측정하기 위한 실험이다. 여기에서 사회적 거리 혹은 social distance는 우리가 흔히 'distance'라는 컨셉에서 쉽게 생각할 수 있는 유클리언 distance와는 조금 다른 개념인데, 유클리언 distance가 지리적, 공간적인 거리의 개념이라면 social ditance는 내가 이 사람과 얼마나 가까우냐에 대한 얘기이다. 즉, 내가 미국에 유학가있는 친구와 유클리언 거리는 무지막지 멀지만 사회적거리는 엄청 가깝고, 옆 연구실의 학생분들은 유클리언 거리는 매우 가깝지만 안타깝게도 사회적 거리는 엄청 먼 셈이다. 구체적으로 social distance를 정의해보자. 이 값은 social network 위에서 내 node에서 다른 목표 node로 이동할 때 이동해야하는 총 거리를 의미한다. 즉, 밀그럼의 실험에서 실험 참가자들의 평균적인 사회적 거리는 약 5 정도가 되는 것이다. (이전에도 언급했듯, Facebook에서 같은 실험을 해보면 4.74가 나온다.)</p>
+<p><a href="http://SanghyukChun.github.io/32">지난 포스트</a>에서는 전반적인 강의의 개요 및 간단한 Network Problem들에 대해 다뤘다. 특히 그 중에서 밀그램의 편지 실험에 대해 다시 한번 살펴보자. 이 실험은 사람과 사람 사이의 사회적 거리를 측정하기 위한 실험이다. 여기에서 사회적 거리 혹은 social distance는 우리가 흔히 'distance'라는 컨셉에서 쉽게 생각할 수 있는 유클리언 distance와는 조금 다른 개념인데, 유클리언 distance가 지리적, 공간적인 거리의 개념이라면 social ditance는 내가 이 사람과 얼마나 가까우냐에 대한 얘기이다. 즉, 내가 미국에 유학가있는 친구와 유클리언 거리는 무지막지 멀지만 사회적거리는 엄청 가깝고, 옆 연구실의 학생분들은 유클리언 거리는 매우 가깝지만 안타깝게도 사회적 거리는 엄청 먼 셈이다. 구체적으로 social distance를 정의해보자. 이 값은 social network 위에서 내 node에서 다른 목표 node로 이동할 때 이동해야하는 총 거리를 의미한다. 즉, 밀그럼의 실험에서 실험 참가자들의 평균적인 사회적 거리는 약 5 정도가 되는 것이다. (이전에도 언급했듯, Facebook에서 같은 실험을 해보면 4.74가 나온다.)</p>
 
 
 <p>자, 다시 한번 이전에 설명했던 실제 네트워크, 허브라는 개념 등에 대해서 생각해보자. 이렇게 전혀 상관없어 보이는 사람들 사이의 사회적 거리가 짧게나오는 이유는 사회적 네트워크의 토폴로지가 (그래프의 모양이) 독특하기 때문이다. 아래 그림을 봤을 때 구조적으로 멀어 보이는 지점을 이어주는 엄청나게 긴 장거리 연결 링크 (long-range link)가 존재한다는 것을 알 수 있다.</p>
@@ -66,7 +66,7 @@
 <p><img src="/images/post/34-2.png" width="400">
 <img src="/images/post/34-3.jpeg" width="400"></p>
 
-<p>아래 그림은 <a href="http://www.scholarpedia.org/article/Small-world_network" target="new">scholarpedia</a>에서 가져온 그림이다. p가 0이면 정규 네트워크처럼 diameter와 clustering coefficient가 모두 높지만, p를 증가시키면 점점 Poisson network와 비슷해지는 것을 알 수 있다. 따라서 적절한 p를 고르는 것이 small world를 모델링하기 위해 매우 중요하다고 할 수 있다.</p>
+<p>아래 그림은 <a href="http://www.scholarpedia.org/article/Small-world_network">scholarpedia</a>에서 가져온 그림이다. p가 0이면 정규 네트워크처럼 diameter와 clustering coefficient가 모두 높지만, p를 증가시키면 점점 Poisson network와 비슷해지는 것을 알 수 있다. 따라서 적절한 p를 고르는 것이 small world를 모델링하기 위해 매우 중요하다고 할 수 있다.</p>
 
 
 <p><img class="<a" src="href="http://www.scholarpedia.org/w/images/9/97/Swlc.png">http://www.scholarpedia.org/w/images/9/97/Swlc.png</a>" width="400"></p>
@@ -107,13 +107,13 @@
     <link href="http://SanghyukChun.github.io/32/"/>
     <updated>2013-12-03T17:58:00+09:00</updated>
     <id>http://SanghyukChun.github.io/32</id>
-    <content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
+    <content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
 
 
 <h5 id="32-1-intro">Introduction</h5>
 
 
-<p>흔히 이 세상의 모든 사람들은 나와 6다리 만 건너면 이어져있다고들 말한다. (밀그램의 편지실험) 심지어 나와 상관없어보이는 버락 오바마 대통령도 사회적 거리가 생각보다 가까울 수 있다는 것이다. Facebook의 조사결과에 따르면 Facebook 상에서 연결된 <a href="http://arxiv.org/abs/1111.4570" target="new">다리의 평균값은 4.74</a> 정도라고 한다. 근데, 진짜 정말로 모든 사람들과 6 steps로 연결이 가능할까? 이 글에서는 이런 현상에 대해서 설명하고, 실제 사람과 사람 간의 네트워크가 어떤 식으로 구성되고, 그것을 수학적으로 어떻게 모델링하고 있는지를 다루게 될 것이다.</p>
+<p>흔히 이 세상의 모든 사람들은 나와 6다리 만 건너면 이어져있다고들 말한다. (밀그램의 편지실험) 심지어 나와 상관없어보이는 버락 오바마 대통령도 사회적 거리가 생각보다 가까울 수 있다는 것이다. Facebook의 조사결과에 따르면 Facebook 상에서 연결된 <a href="http://arxiv.org/abs/1111.4570">다리의 평균값은 4.74</a> 정도라고 한다. 근데, 진짜 정말로 모든 사람들과 6 steps로 연결이 가능할까? 이 글에서는 이런 현상에 대해서 설명하고, 실제 사람과 사람 간의 네트워크가 어떤 식으로 구성되고, 그것을 수학적으로 어떻게 모델링하고 있는지를 다루게 될 것이다.</p>
 
 
 <p>최근 10년 사이 네트워크는 사람들의 생활에 정말 정말 큰 영향을 미치고 있다. 특히 소셜 네트워크 혹은 SNS라고 불리는 새로운 형태의 서비스의 등장으로 인해 사람들과 사람들 사이의 긴밀한 연결이 더 가능해졌다. 이런 네트워크가 파생된 것은 사실 생각보다 역사가 짧은데, 실제 정보를 전달할 때는 전기신호로 보내야하고, 그 신호를 보내는 channel이 굉장히 noisy한데, 과연 이런 nosiy channel로 realistic한 시간 안으로 정보를 온전하게 전달할 수 있을까? 당연히 정보가 손실되면 retransmission을 시도해서 상대편이 정보를 다시 받을 수 있도록 할 수 있지만, 그 반복해서 보내는 retransmission이 실제 의미있는 숫자 이내로 성공할 수 있겠냐는 문제에 대해 아무도 답을 할 수가 없었기 때문에 연구가 지지부진한 상태였다. 그러나 지금으로부터 약 60여년 전 클로이 섀넌이라는 기라성같은 연구자가 noisy한 channel에서 error-free communication이 가능하다는 것을 증명해냈고, 그 이후로 통신학의 급격한 발전이 이루어졌다. 우리가 쓰는 인터넷은 군대 및 연구기관의 '알파넷'이라는 통신 기술이 그 전신인데, 이 기술은 전쟁으로 인해 한 기관이 파괴되어도 다른 곳에서 정보를 전송할 수 있도록 분산시킬 용도로 개발되었다고 한다. 지금 우리가 사용하는 스위칭, 패킷 등의 기술도 이때 개발 되었다. 우리가 진짜 '인터넷' 이라고 부르는 월드 와이드 웹은 유럽의 입자 가속기 연구서 (CERN)에서 데이터 교환의 용이성을 위해 처음 등장하게 되었다. 그리고 수 많은 사람들의 노력으로 우리가 현재 쓰는 모습의 인터넷 네트워크가 탄생한 것이다.</p>
@@ -151,8 +151,8 @@
 <p><p>이 실험은 결국 미국이라는 network에서 지리적, 사회적으로 가장 고립되었을 것이라고 예상되는 두 node로 이동하기 위해서 평균적으로 얼마나 많은 step이 요구되는가를 측정하기 위한 실험이다. 결과는 어땠을까? 10? 20? 100? 아래 그래프가 그 결과이다.<p>
 <img src="/images/post/32-3.png" width="400">
 <p>당연한 얘기지만 가로축은 얼마나 많은 사람을 거쳤는가를 의미하고, 세로축은 해당 거리에 해당하는 사람이 얼마나 많은가를 의미한다. 이 실험은 총 217개의 편지 중에서 64개의 편지만 최종적으로 도달하게 되었고 (성공확률 약 30%) 평균 거리는 약 5.2이며 중간값은 6이었다. 때문에 이 실험결과를 일컬어 모든 사람들이 6step으로 이어져있다고 해석해 6단계 분리이론이라고도 부르기도 한다. 이 실험이 완벽하지 않고 logic whole이 존재한다고 주장하는 일부 비판적인 시선이 있는 것은 사실이지만, 이 실험은 충분히 의미가 있고, 무엇보다 실제로 이를 실험적으로 증명하는 것을 시도한 첫 번째 실험이라는 점에서 의미가 있다.</p>
-<p>이와 비슷한 다른 예시가 있다. 수학에서 <a href="http://ko.wikipedia.org/wiki/%EC%97%90%EB%A5%B4%EB%90%98%EC%8B%9C_%EC%88%98" target="new">에르도쉬 숫자</a>라는 것이 존재하는데, 이 사람은 엄청나게 많은 공동연구를 진행한 사람이고, 그래서 업적이 뛰어난 사람일수록 이 사람과 공저자를 한 경험이 많다고 한다. 그래서 그 아이디어를 차용해 그 사람이 얼마나 학계에서 권위가 있는지를 측정하는 지표로 쓰이는 것이 이 숫자인데, 에르도쉬 본인은 이 숫자가 0이다. 그리고 에르도쉬와 공저를 한 경험이 있는 연구자의 숫자는 1이다. 만약 내가 직접적으로 에르도쉬와 공저를 하지 않았더라도, 에르도쉬 넘버가 1인 사람과 공저를 한 경우에 내 에르도쉬 넘버는 2가 된다. 즉, 내가 얼마나 에르도쉬라는 사람과 가까운 관계인지를 측정하는 수단인 것이다. 참고로 나는 조만간 에르도쉬 넘버가 3이 될텐데, <a href="https://sites.google.com/site/mijirim/" target="new">내 지도교수님</a>의 <a class="red tip" title="Erdos - Tetali - Shin">에르도쉬 넘버가 2</a>이기 때문이다.</p>
-<p>비슷한 숫자로 케빈베이컨 숫자라는 것이 있는데, 이번에는 논문 공저자라는 다소 strict한 rule이 아니라 영화 배우 케빈베이컨과 같이 영화를 출연한 사람에게 (엑스트라도 포함) 같은 방식으로 숫자를 매기는 것이다. 꽤 재미있는 것은, 미국의 그 어떤 영화배우도 이 배우와 거리가 6이하라고 한다. <a href="http://oracleofbacon.org/" target="new">인터넷 웹사이트</a>도 있다. 사실 케빈 베이컨이 가장 뛰어난 배우이거나 많은 작품을 출연했기 때문이 아니라 그 어떤 배우를 대상으로 하여도 비슷한 결과가 나온다고 한다. (이 사이트에 의하면 평균을 취했을 때 가장 평균 거리가 짧은 배우는 <a href="http://oracleofbacon.org/center_list.php">Harvey Keitel</a>이라고 한다)</p>
+<p>이와 비슷한 다른 예시가 있다. 수학에서 <a href="http://ko.wikipedia.org/wiki/%EC%97%90%EB%A5%B4%EB%90%98%EC%8B%9C_%EC%88%98">에르도쉬 숫자</a>라는 것이 존재하는데, 이 사람은 엄청나게 많은 공동연구를 진행한 사람이고, 그래서 업적이 뛰어난 사람일수록 이 사람과 공저자를 한 경험이 많다고 한다. 그래서 그 아이디어를 차용해 그 사람이 얼마나 학계에서 권위가 있는지를 측정하는 지표로 쓰이는 것이 이 숫자인데, 에르도쉬 본인은 이 숫자가 0이다. 그리고 에르도쉬와 공저를 한 경험이 있는 연구자의 숫자는 1이다. 만약 내가 직접적으로 에르도쉬와 공저를 하지 않았더라도, 에르도쉬 넘버가 1인 사람과 공저를 한 경우에 내 에르도쉬 넘버는 2가 된다. 즉, 내가 얼마나 에르도쉬라는 사람과 가까운 관계인지를 측정하는 수단인 것이다. 참고로 나는 조만간 에르도쉬 넘버가 3이 될텐데, <a href="https://sites.google.com/site/mijirim/">내 지도교수님</a>의 <a class="red tip" title="Erdos - Tetali - Shin">에르도쉬 넘버가 2</a>이기 때문이다.</p>
+<p>비슷한 숫자로 케빈베이컨 숫자라는 것이 있는데, 이번에는 논문 공저자라는 다소 strict한 rule이 아니라 영화 배우 케빈베이컨과 같이 영화를 출연한 사람에게 (엑스트라도 포함) 같은 방식으로 숫자를 매기는 것이다. 꽤 재미있는 것은, 미국의 그 어떤 영화배우도 이 배우와 거리가 6이하라고 한다. <a href="http://oracleofbacon.org/">인터넷 웹사이트</a>도 있다. 사실 케빈 베이컨이 가장 뛰어난 배우이거나 많은 작품을 출연했기 때문이 아니라 그 어떤 배우를 대상으로 하여도 비슷한 결과가 나온다고 한다. (이 사이트에 의하면 평균을 취했을 때 가장 평균 거리가 짧은 배우는 <a href="http://oracleofbacon.org/center_list.php">Harvey Keitel</a>이라고 한다)</p>
 <h5 id="32-4-regularnet">Mathmetical Approach &ndash; Regular Network</h5>
 <p>자 이게 과연 정말 뜨악스럽고 놀랄만한 일일까? 정말 간단한 수학적 모델로 한 번 검증을 시도해보자. 가정을 하나 해보자. 만약 &lsquo;모든 사람'이 아는 사람이 딱 10명 씩 있다고 가정해보자. 뭐 어느 정도는 납득해볼만한 가정이지 않은가? (나중에 얘기하겠지만 틀린 얘기다.) 그렇다면 한 단계 더 건너면 10 * 10 = 100, 또 한 단계를 건너면 10 * 10 * 10 = 100, 그리고 만약 내가 6 step 만큼 건너갔을 때 아는 사람의 숫자는 (10<sup>7</sup>), 즉 1000만 명의 사람과 연결이 되어있는 것이다. 이것을 보고 정규 네트워크 (regular network) 라고 부르며, 이렇게 문제를 가정하고 생각하면 생각보다 문제가 간단해진다. 이 방법이 에르도쉬가 문제를 풀이한 방법이다. network 내부에서 node와 node가 연결되는 것은 확률의 문제이고, 만약 모든 사람들이 이 확률을 비슷하게 가지고 있다고 가정하면, 위와 같은 정규 네트워크가 나오게 되는 것이다. (구체적으로는 node가 연결되는 숫자가 정규분포로 나오기 때문에 정규 네트워크라고 한다.) 이 네트워크의 모양은 아래와 같다.</p>
 <img src="/images/post/32-4.png" width="300">
@@ -174,13 +174,13 @@
     <link href="http://SanghyukChun.github.io/31/"/>
     <updated>2013-12-02T21:43:00+09:00</updated>
     <id>http://SanghyukChun.github.io/31</id>
-    <content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
+    <content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
 
 
 <h5>Recall: Machine Learning</h5>
 
 
-<p><a href="http://SanghyukChun.github.io/21" target="new">이전의</a> <a href="http://SanghyukChun.github.io/30" target="new">많은</a> <a href="http://SanghyukChun.github.io/blog/categories/machine-learning" target="new">포스트 들</a>에서도 설명했듯이 Machine Learning은 데이터를 통해 새로운 시스템을 만드는 것을 의미한다. 그렇다면 굳이 사람이 아니라 기계가 이런 일을 해야하는 이유가 있을까? 무엇보다 기계는 사람보다 단순 계산을 훨씬 빠르게 할 수 있다. 간단한 예를 하나 들어보자. 페르마 숫자라는 문제가 있다.</p>
+<p><a href="http://SanghyukChun.github.io/21">이전의</a> <a href="http://SanghyukChun.github.io/30">많은</a> <a href="http://SanghyukChun.github.io/blog/categories/machine-learning">포스트 들</a>에서도 설명했듯이 Machine Learning은 데이터를 통해 새로운 시스템을 만드는 것을 의미한다. 그렇다면 굳이 사람이 아니라 기계가 이런 일을 해야하는 이유가 있을까? 무엇보다 기계는 사람보다 단순 계산을 훨씬 빠르게 할 수 있다. 간단한 예를 하나 들어보자. 페르마 숫자라는 문제가 있다.</p>
 
 
 <p>$$ {F_n} = 2^{2^n} +1 $$</p>
@@ -298,13 +298,13 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
     <link href="http://SanghyukChun.github.io/30/"/>
     <updated>2013-11-27T15:17:00+09:00</updated>
     <id>http://SanghyukChun.github.io/30</id>
-    <content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
+    <content type="html"><![CDATA[<p>본 포스팅은 <a href="http://SanghyukChun.github.io/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
 
 
 <h5>Introduction</h5>
 
 
-<p>Netflix라는 미국의 DVD rental 업체가 있다. <a href="http://SanghyukChun.github.io/21" target="new">이전 포스트</a>에서 다뤘던 기업 중에 하나인데, 다시 한번 간략하게 설명을 하자면 Netflix는 미국의 온라인 DVD rental 업체이다. 1997년 시작한 DVD rental business이며 초기 BM은 간단했다. 한달에 고정적인 비용을 내고 video나 dvd를 빌릴 수 있도록 하며 번거로운 연체료가 없는 모델이었다. 이렇게 하면 return률이 감소하는 단점이 있는데 이런 단점을 새로운 dvd를 빌리려면 다시 return해야 빌릴 수 있는 rule을 만들어 크게 성공하였다. <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788963708041&orderClick=LAH&Kc" target="new">디멘드</a>를 읽어보면 이에 대해서는 자세히 알 수 있을 것이다. 이후 2007년에 <a class="red tip" title="internet 상에서 VOD감상이 가능하도록 하는 서비스">VOD(video on demand)</a> service를 시작하였고, 2008년 9 million이던 user가 VOD 이후 30 million으로 폭증하였다. 현재 미국 traffic 25%는 Netflix VOD 때문에 발생할 정도로 거대한 기업이 되었다. 이렇게 Netflix가 크게 성장하게 된 배경에는 Recommendation system이 존재하는데, Netflix의 추천 시스템은 User prior video history를 기반으로 새 영화를 추천하고 사용자들이 더 다양하고 많은 비디오를 빌려볼 수 있도록 유도하고 있다. 이런 추천시스템은 Amazon, Youtube, GeoLife in MS 등도 적용하고 있는 많은 기업들에게 중요하게 인식되고 있는 시스템이다.</p>
+<p>Netflix라는 미국의 DVD rental 업체가 있다. <a href="http://SanghyukChun.github.io/21">이전 포스트</a>에서 다뤘던 기업 중에 하나인데, 다시 한번 간략하게 설명을 하자면 Netflix는 미국의 온라인 DVD rental 업체이다. 1997년 시작한 DVD rental business이며 초기 BM은 간단했다. 한달에 고정적인 비용을 내고 video나 dvd를 빌릴 수 있도록 하며 번거로운 연체료가 없는 모델이었다. 이렇게 하면 return률이 감소하는 단점이 있는데 이런 단점을 새로운 dvd를 빌리려면 다시 return해야 빌릴 수 있는 rule을 만들어 크게 성공하였다. <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788963708041&orderClick=LAH&Kc">디멘드</a>를 읽어보면 이에 대해서는 자세히 알 수 있을 것이다. 이후 2007년에 <a class="red tip" title="internet 상에서 VOD감상이 가능하도록 하는 서비스">VOD(video on demand)</a> service를 시작하였고, 2008년 9 million이던 user가 VOD 이후 30 million으로 폭증하였다. 현재 미국 traffic 25%는 Netflix VOD 때문에 발생할 정도로 거대한 기업이 되었다. 이렇게 Netflix가 크게 성장하게 된 배경에는 Recommendation system이 존재하는데, Netflix의 추천 시스템은 User prior video history를 기반으로 새 영화를 추천하고 사용자들이 더 다양하고 많은 비디오를 빌려볼 수 있도록 유도하고 있다. 이런 추천시스템은 Amazon, Youtube, GeoLife in MS 등도 적용하고 있는 많은 기업들에게 중요하게 인식되고 있는 시스템이다.</p>
 
 
 <p>잠시 본 글로 넘어가기 이전에 Recommendation, 혹은 추천이라는 문제에 대해서 잠시 생각해보고 넘어가보자. 세상에는 정말 많은 Recommendation problem이 존재한다. 정말 간단한 현실 속의 예를 들어보자면 소개팅을 예를 들 수 있다. 소개팅을 주선해 줄 때 어떤 상대를 소개시켜주는 것이 가장 적절할까? 가만 생각해보면 소개팅을 상대방과 잘 맞을 것으로 예상되는 사람을 '추천' 해주는 문제로 변경해서 해결해 볼 수 있다. 예를 들어서 내가 소개팅을 시켜주려는 상대가 이전에 A라는 타입을 좋아했었다면 이번 소개팅에서도 A 타입을 추천해주는 방식으로 문제 해결이 가능한 것이다. 이런 것이 일종의 recommend question이다.</p>
@@ -319,7 +319,7 @@ $${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
 <h5>Machine Learning</h5>
 
 
-<p>Machine Learning이란 무엇인가? 이 블로그에서 다뤘던 <a href="http://SanghyukChun.github.io/blog/categories/machine-learning" target="new">수 많은 글들</a>이 Machine Learning에 대해 다루고 있지만, 역시 간략하게 다시 언급을 하자면 Machine Learning은 Data로 부터 system을 구성하는 것이라고 할 수 있다. 위키피디아의 설명을 참고하자면 <a href="http://en.wikipedia.org/wiki/Machine_learning" target="new">'Machine learning, a branch of artificial intelligence, concerns the construction and study of systems that can learn from data.'</a> 라고 한다.</p>
+<p>Machine Learning이란 무엇인가? 이 블로그에서 다뤘던 <a href="http://SanghyukChun.github.io/blog/categories/machine-learning">수 많은 글들</a>이 Machine Learning에 대해 다루고 있지만, 역시 간략하게 다시 언급을 하자면 Machine Learning은 Data로 부터 system을 구성하는 것이라고 할 수 있다. 위키피디아의 설명을 참고하자면 <a href="http://en.wikipedia.org/wiki/Machine_learning">'Machine learning, a branch of artificial intelligence, concerns the construction and study of systems that can learn from data.'</a> 라고 한다.</p>
 
 
 <p>이해를 돕기 위해 사람이 새로운 정보를 습득하는 과정에 대해서 생각해보자. 학교에서 새로운 지식을 배울 때, 우리는 수업과 책을 읽고 정보를 습득한다. 그리고 내가 제대로 배웠는지 판단하기 위해서 시험을 치고 그 결과에 따라서 이 정보를 잘 습득했다, 혹은 그렇지 못했다를 판단할 수 있는 것이다. 이때 공부를 위해서 sample exam을 계속 치면서 자신의 이해도를 판단하고 자신의 공부 방법을 개선해서 더 나은 학습을 하는 것이 가능하다. (시험을 수능, sample exam을 모의고사라고 생각하면 이해가 빠를 것이다)</p>

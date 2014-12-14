@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-12-13T05:08:40+09:00</updated>
+  <updated>2014-12-14T13:19:55+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -18,7 +18,7 @@
     <link href="http://SanghyukChun.github.io/25/"/>
     <updated>2013-11-05T19:26:00+09:00</updated>
     <id>http://SanghyukChun.github.io/25</id>
-    <content type="html"><![CDATA[<p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/" target="new"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
+    <content type="html"><![CDATA[<p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
 
 
 <p>방법은 매우 간단하다. 아래와 같은 코드를 head에 넣으면 끝. </p>
@@ -44,7 +44,7 @@
 <p>라고 적으면 된다. 위에 E=mc^2를 적은 곳에 다른 Latex 문법을 넣으면 다른 수식을 표현할 수 있다.</p>
 
 
-<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292" target="new">블로그에서 수식 표현하기</a></p>
+<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292">블로그에서 수식 표현하기</a></p>
 
 ]]></content>
   </entry>

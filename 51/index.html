@@ -112,22 +112,22 @@ $(function() {
 <div class="entry-content"><h5 id="51-1-before">들어가기 전에</h5>
 
 
-<p>이 글은 <a href="/47" target="new">2014년 KAIST Network Science 수업</a> 중 Small World Network 내용을 요약한 글이다. 이 렉쳐에서는 Small World Network라는 concept과 실제 그런 컨셉을 적용한 Network model 중 하나인 Watts-Strogztz Network에 대해 다루게 된다.</p>
+<p>이 글은 <a href="/47">2014년 KAIST Network Science 수업</a> 중 Small World Network 내용을 요약한 글이다. 이 렉쳐에서는 Small World Network라는 concept과 실제 그런 컨셉을 적용한 Network model 중 하나인 Watts-Strogztz Network에 대해 다루게 된다.</p>
 
 
 <h5 id="51-2-problemofrandomnetwork">Prolem of Random Network</h5>
 
 
-<p><a href="/50#50-10-problems" target="new">이전 글</a>에서 다뤘 듯, Random Network는 실제 Network와 맞지 않는 부분이 많이 존재한다. 가장 큰 문제는 degree distribution과 clustering coefficient가 실제 network 분포와 크게 반하다는 점이다. 따라서 이 글에서는 그런 점들을 개선시킨 새로운 컨셉의 네트워크 모델링에 대해서 다루게 될 것이다. 사실 이 Small world network라는 것이 맨 처음 1998년도 논문으로 발표가 되었을 때 그 기반이 되는 Network가 <a href="http://en.wikipedia.org/wiki/Regular_graph" target="new">Regular Network</a>이기 때문에 이런 Regular Network에 대해서도 다룬 이후에 Small World Network를 다루는 것이 맞다고 생각하지만, 실제 강의 내용에서 Regular Network 생략되었기 때문에 나 역시 이 글에서 Regular Network에 대해서는 많이 다루지 않을 생각이다. 참고로 Regular Network는 모든 vertex가 같은 degree를 가지는 Network를 의미하며 k-regular network라고 하면 모든 vertex의 mean degree가 \(k\)라는 의미이다. 그런데 이 lecture에서는 local degree의 값이 \(k\)가 아니라 \(2k\)이며 \(k= {m \over n}\)으로 정의한다. 엄청나게 헷갈리기는 하지만.. 일단 lecture의 notation을 따르도록 하겠다. 즉, 2-regular network는 local degree가 4이며 즉, 각 vertex는 4개의 edge를 가진다. 실제 이 chapter 자체가 2-regular network를 small world network로 바꾸는 Watts-Strogztz Network에 대한 내용이므로 이 점을 꼭 숙지하고 넘어가야한다.</p>
+<p><a href="/50#50-10-problems">이전 글</a>에서 다뤘 듯, Random Network는 실제 Network와 맞지 않는 부분이 많이 존재한다. 가장 큰 문제는 degree distribution과 clustering coefficient가 실제 network 분포와 크게 반하다는 점이다. 따라서 이 글에서는 그런 점들을 개선시킨 새로운 컨셉의 네트워크 모델링에 대해서 다루게 될 것이다. 사실 이 Small world network라는 것이 맨 처음 1998년도 논문으로 발표가 되었을 때 그 기반이 되는 Network가 <a href="http://en.wikipedia.org/wiki/Regular_graph">Regular Network</a>이기 때문에 이런 Regular Network에 대해서도 다룬 이후에 Small World Network를 다루는 것이 맞다고 생각하지만, 실제 강의 내용에서 Regular Network 생략되었기 때문에 나 역시 이 글에서 Regular Network에 대해서는 많이 다루지 않을 생각이다. 참고로 Regular Network는 모든 vertex가 같은 degree를 가지는 Network를 의미하며 k-regular network라고 하면 모든 vertex의 mean degree가 \(k\)라는 의미이다. 그런데 이 lecture에서는 local degree의 값이 \(k\)가 아니라 \(2k\)이며 \(k= {m \over n}\)으로 정의한다. 엄청나게 헷갈리기는 하지만.. 일단 lecture의 notation을 따르도록 하겠다. 즉, 2-regular network는 local degree가 4이며 즉, 각 vertex는 4개의 edge를 가진다. 실제 이 chapter 자체가 2-regular network를 small world network로 바꾸는 Watts-Strogztz Network에 대한 내용이므로 이 점을 꼭 숙지하고 넘어가야한다.</p>
 
 
 <h5 id="51-3-smallworldnetwork">Small World Network</h5>
 
 
-<p>Small world network란 예전 <a href="/34#34-2-smallworld" target="new">인터넷 속의 수학</a>에서도 간략하게 다뤘던 내용이므로 예전 글을 참고해도 좋을 것 같다. Small World Network란 높은 clustering coefficient를 가지고 있고, 상대적으로 짧은 diameter를 가지고 있으며 entropy가 scalable한 sparse network를 의미한다. 여기에서 여러 가지 용어들이 나오는데, clustering coefficient는 넘어가도 되고, diameter는 network에서 가장 긴 shortest path, 그리고 entrophy는 이 graph를 나타내기 위한 information의 양을 의미한다. 마지막으로 sparse network라는 것은 모든 vertex pair사이에 edge가 존재하는 것이 아니라 edge가 존재하지 않는 vertex pair가 존재한다는 의미이다. Small world network는 regular network와 random network의 중간 정도 쯤 되는 network인데, 역시 이것도 <a href="/34#34-3-poissonregularnetwork" target="new">이전 글</a>에서 다뤘던 내용이므로 관심이 있다면 간략하게 읽어보기를 권한다. 간단하게 설명하면 Samll world network는 regular network에 적당한 randomness를 추가하여 얻을 수 있기 때문에 이 두 개의 네트워크의 중간 정도라고 표현하는 것이다.</p>
+<p>Small world network란 예전 <a href="/34#34-2-smallworld">인터넷 속의 수학</a>에서도 간략하게 다뤘던 내용이므로 예전 글을 참고해도 좋을 것 같다. Small World Network란 높은 clustering coefficient를 가지고 있고, 상대적으로 짧은 diameter를 가지고 있으며 entropy가 scalable한 sparse network를 의미한다. 여기에서 여러 가지 용어들이 나오는데, clustering coefficient는 넘어가도 되고, diameter는 network에서 가장 긴 shortest path, 그리고 entrophy는 이 graph를 나타내기 위한 information의 양을 의미한다. 마지막으로 sparse network라는 것은 모든 vertex pair사이에 edge가 존재하는 것이 아니라 edge가 존재하지 않는 vertex pair가 존재한다는 의미이다. Small world network는 regular network와 random network의 중간 정도 쯤 되는 network인데, 역시 이것도 <a href="/34#34-3-poissonregularnetwork">이전 글</a>에서 다뤘던 내용이므로 관심이 있다면 간략하게 읽어보기를 권한다. 간단하게 설명하면 Samll world network는 regular network에 적당한 randomness를 추가하여 얻을 수 있기 때문에 이 두 개의 네트워크의 중간 정도라고 표현하는 것이다.</p>
 
 
-<p>사실 이 Small world라는 단어는 Stanley Milgram의 6 degree 실험에서 처음 등장한 것인데, 이 실험에 대한 자세한 설명은 <a href="/32#32-3-milgramexp" target="new">이전에 적은 글</a>을 참고하기를 바란다. 이 실험의 결론만 얘기하자면 실제 social 네트워크에서는 임의의 vertex pair를 선택했을 때 그 둘 사이를 지르는 가장 짧은 path의 길이가 network의 크기에 비해서 엄청나게 짧다는 것이다. 이 실험에서는 실제 미국 내의 네트워크에서 6개의 step이면 상대방에게 도달할 수 있다는 것을 알 수 있었다. (심지어 shortest path도 아니고 greedy search 였음에도 불구하고) 이 글에서 설명하게 될 Small world network 역시 상대적으로 짧은 diameter를 가지게 되고, clustering coefficient와 closeness centrality도 높다.</p>
+<p>사실 이 Small world라는 단어는 Stanley Milgram의 6 degree 실험에서 처음 등장한 것인데, 이 실험에 대한 자세한 설명은 <a href="/32#32-3-milgramexp">이전에 적은 글</a>을 참고하기를 바란다. 이 실험의 결론만 얘기하자면 실제 social 네트워크에서는 임의의 vertex pair를 선택했을 때 그 둘 사이를 지르는 가장 짧은 path의 길이가 network의 크기에 비해서 엄청나게 짧다는 것이다. 이 실험에서는 실제 미국 내의 네트워크에서 6개의 step이면 상대방에게 도달할 수 있다는 것을 알 수 있었다. (심지어 shortest path도 아니고 greedy search 였음에도 불구하고) 이 글에서 설명하게 될 Small world network 역시 상대적으로 짧은 diameter를 가지게 되고, clustering coefficient와 closeness centrality도 높다.</p>
 
 
 <h5 id="51-4-wattsstrogatz">Watts-Strogatz Procedure</h5>
@@ -144,7 +144,7 @@ $(function() {
 
 <p><img src="/images/post/51-1.png" width="600"></p>
 
-<p>자 그런데 지금까지 설명한 방법은 완전히 random procedure이기 때문에 connected graph를 보장할 수 없다. 어떻게 이것을 개선시킬 수 있을까? 간단하게 생각할 수 있는 방법으로는 만약 선택한 edge를 제거했을 때 isolated vertex가 생기는 경우 해당 edge를 바꾸지 않도록 하는 방법이 있을 수 있을 것이다. 2000년도 뉴먼이 제시한 NSWS model에서는 이런 문제를 해결한 새로운 알고리듬을 제시했다고 하는데 <a href="http://arxiv.org/pdf/cond-mat/0001118.pdf" target="new">논문</a>은 찾은 것 같은데 자세히 읽어보지는 못했다.</p>
+<p>자 그런데 지금까지 설명한 방법은 완전히 random procedure이기 때문에 connected graph를 보장할 수 없다. 어떻게 이것을 개선시킬 수 있을까? 간단하게 생각할 수 있는 방법으로는 만약 선택한 edge를 제거했을 때 isolated vertex가 생기는 경우 해당 edge를 바꾸지 않도록 하는 방법이 있을 수 있을 것이다. 2000년도 뉴먼이 제시한 NSWS model에서는 이런 문제를 해결한 새로운 알고리듬을 제시했다고 하는데 <a href="http://arxiv.org/pdf/cond-mat/0001118.pdf">논문</a>은 찾은 것 같은데 자세히 읽어보지는 못했다.</p>
 
 
 <h5 id="51-5-degreedist">Degree Sequence Distribution</h5>
@@ -281,16 +281,16 @@ $(function() {
 <h5>KAIST Network Science</h5>
 
 
-<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/">카테고리로 이동</a>)</p>
 
 
 <ul>
-    <li>Lecture 1: <a href="/47" target="new">Introduction</a></li>
-    <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
-    <li>Lecture 3: <a href="/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: <a href="/50" target="new">Random Network</a></li>
-    <li>Lecture 5: <a href="/51" target="new">Small world Network</a></li>
-    <li>Lecture 6: <a href="/52" target="new">Scale free Network</a></li>
+    <li>Lecture 1: <a href="/47">Introduction</a></li>
+    <li>Lecture 2: <a href="/48">Graph Theory</a></li>
+    <li>Lecture 3: <a href="/49">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="/50">Random Network</a></li>
+    <li>Lecture 5: <a href="/51">Small world Network</a></li>
+    <li>Lecture 6: <a href="/52">Scale free Network</a></li>
 </ul>
 
 </div>

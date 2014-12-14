@@ -112,7 +112,7 @@ $(function() {
 <div class="entry-content"><h5 id="48-1-before">들어가기 전에</h5>
 
 
-<p>이 글은 <a href="/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
+<p>이 글은 <a href="/47">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
 
 
 <h5 id="48-2-networkandgraph">Network and Graph</h5>
@@ -182,7 +182,7 @@ $(function() {
 <p>Planar network는 서로 교차하는 edge가 하나도 없게 그릴 수 있는 graph를 의미한다. tree도 planar graph의 일종이다. 이런 planar graph는 반드시 4-coloring 보다 많은 색을 칠하는 것이 불가능하다는 것이 이론적으로 증명되어있다. Coloring problem은 graph를 any adjacent vertex pair가 서로 같은 색을 가지지 않도록 색을 칠해주는 문제인데, 4-coloring이라는 것은 4가지 색으로 색칠을 한다는 의미이다. 즉, planar graph에서 5-color problem은 반드시 풀 수 없는 문제이다.</p>
 
 
-<p>그런데 일반적인 graph가 planar인지 아닌지 어떻게 판단할 수 있을까? <a href="http://en.wikipedia.org/wiki/Kuratowski's_theorem" target="new">Kuratowski&#8217;s theorem</a>이라는 것이 있다. 모든 non-planar graph는 적어도 한 개 이상의 subgraph가 K5혹은 UG의 expansion이라는 theorem인데, 이를 통해 우리는 간단히 graph의 subdivision을 구해서 이 graph가 planar인지 아닌지 여부를 판단할 수 있다.</p>
+<p>그런데 일반적인 graph가 planar인지 아닌지 어떻게 판단할 수 있을까? <a href="http://en.wikipedia.org/wiki/Kuratowski's_theorem">Kuratowski&#8217;s theorem</a>이라는 것이 있다. 모든 non-planar graph는 적어도 한 개 이상의 subgraph가 K5혹은 UG의 expansion이라는 theorem인데, 이를 통해 우리는 간단히 graph의 subdivision을 구해서 이 graph가 planar인지 아닌지 여부를 판단할 수 있다.</p>
 
 
 <h5 id="48-7-degree">Degree</h5>
@@ -230,7 +230,7 @@ $(function() {
 <p>Geodesic path라는 것이 있는데, shortest path의 일종이다. 이때 shortest path를 weight의 sum이 아니라 단순히 hop의 개수만 세는 방식으로 계산하는 것이다. 일반적으로 graph의 diameter를 측정한다고 했을 때는 이 값을 사용한다.</p>
 
 
-<p>Eulerian path라는 것도 있는데, 모든 edge를 정확히 한번만 visit할 수 있는 path를 의미하며, Hamiltonian path는 모든 vertex를 한 번씩 visit하는 path를 의미한다. Euler path는 이전에 <a href="/blog/categories/math-in-internet" target="new">인터넷 속의 수학</a>에서 설명했었던 <a href="/32">쾨르히스베르크 다리 문제</a>를 풀 때 사용할 수 있다. 이 path는 job sequencing, garbage collection, parallel programming등에 사용할 수 있지만 이 path를 찾는 방법은 NP-complete이기 때문에 빠른 시간 안에 찾을 수는 없고 보통 approximation algorithm을 사용하게 된다.</p>
+<p>Eulerian path라는 것도 있는데, 모든 edge를 정확히 한번만 visit할 수 있는 path를 의미하며, Hamiltonian path는 모든 vertex를 한 번씩 visit하는 path를 의미한다. Euler path는 이전에 <a href="/blog/categories/math-in-internet">인터넷 속의 수학</a>에서 설명했었던 <a href="/32">쾨르히스베르크 다리 문제</a>를 풀 때 사용할 수 있다. 이 path는 job sequencing, garbage collection, parallel programming등에 사용할 수 있지만 이 path를 찾는 방법은 NP-complete이기 때문에 빠른 시간 안에 찾을 수는 없고 보통 approximation algorithm을 사용하게 된다.</p>
 
 
 <p>component는 graph의 subgraph를 의미한다. 이 때 component 안의 vertex를 모두 visit하는 path가 최소한 하나 이상 존재해야한다. out-component는 특정 vertex A에서 시작해 도달 가능한 vertex들의 set이며, in-component는 vertex A로 도달 가능한 path를 가지는 vertex들의 set이다.</p>
@@ -254,7 +254,7 @@ $(function() {
 <h5 id="48-10-laplacian">Graph Laplacian</h5>
 
 
-<p>어떤 commodity 혹은 substance의 flow가 어떤 비율로 흘러가느냐에 따라 Diffusion이라는 것을 정의할 수 있다. 약간 복잡한 얘기인데, 약간 불필요해보이기도 하고 복잡해서 <a href="http://en.wikipedia.org/wiki/Laplacian_matrix#Random_walks_on_graphs" target="new">링크</a>로 대체하겠다. 링크에서도 나오듯 결국에는 Random walk를 정의하기 위해서 나온 개념으로 보이므로 생략하도록 하겠다.</p>
+<p>어떤 commodity 혹은 substance의 flow가 어떤 비율로 흘러가느냐에 따라 Diffusion이라는 것을 정의할 수 있다. 약간 복잡한 얘기인데, 약간 불필요해보이기도 하고 복잡해서 <a href="http://en.wikipedia.org/wiki/Laplacian_matrix#Random_walks_on_graphs">링크</a>로 대체하겠다. 링크에서도 나오듯 결국에는 Random walk를 정의하기 위해서 나온 개념으로 보이므로 생략하도록 하겠다.</p>
 
 
 
@@ -262,16 +262,16 @@ $(function() {
 <h5>KAIST Network Science</h5>
 
 
-<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/">카테고리로 이동</a>)</p>
 
 
 <ul>
-    <li>Lecture 1: <a href="/47" target="new">Introduction</a></li>
-    <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
-    <li>Lecture 3: <a href="/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: <a href="/50" target="new">Random Network</a></li>
-    <li>Lecture 5: <a href="/51" target="new">Small world Network</a></li>
-    <li>Lecture 6: <a href="/52" target="new">Scale free Network</a></li>
+    <li>Lecture 1: <a href="/47">Introduction</a></li>
+    <li>Lecture 2: <a href="/48">Graph Theory</a></li>
+    <li>Lecture 3: <a href="/49">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="/50">Random Network</a></li>
+    <li>Lecture 5: <a href="/51">Small world Network</a></li>
+    <li>Lecture 6: <a href="/52">Scale free Network</a></li>
 </ul>
 
 </div>

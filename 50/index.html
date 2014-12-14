@@ -112,7 +112,7 @@ $(function() {
 <div class="entry-content"><h5 id="50-1-before">들어가기 전에</h5>
 
 
-<p>이 글은 <a href="/47" target="new">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 가장 기초적인 Network modeling 중 하나인 random network에 대해 다룬다.</p>
+<p>이 글은 <a href="/47">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 가장 기초적인 Network modeling 중 하나인 random network에 대해 다룬다.</p>
 
 
 <h5 id="50-2-why">Why we need network model?</h5>
@@ -136,7 +136,7 @@ $(function() {
 <p>$$ P(m) = { {n \choose 2}  \choose m} p^m (1-p)^{ {n \choose 2} - m} $$</p>
 
 
-<p>위에서 우리는 m에 대한 확률 분포를 구했기 때문에 m의 평균 값은 간단하게 \(\sum_m mP(m)\) 으로 계산할 수 있다. 그런데 \(m\)의 확률 분호 \(P(m)\)은 \(n\)이 \({n \choose m}\) 이고 \(k\)가 \(m\)인 binomial distribution이다. 또한 우리는 binomial distribution의 mean value가 단순하게 \(np\) 임을 알고 있으므로 평균 값은 아래와 같이 계산할 수 있다. 이에 대한 자세한 설명은 <a href="http://en.wikipedia.org/wiki/Binomial_distribution" target="new">위키피디아 링크</a>로 대체한다.</p>
+<p>위에서 우리는 m에 대한 확률 분포를 구했기 때문에 m의 평균 값은 간단하게 \(\sum_m mP(m)\) 으로 계산할 수 있다. 그런데 \(m\)의 확률 분호 \(P(m)\)은 \(n\)이 \({n \choose m}\) 이고 \(k\)가 \(m\)인 binomial distribution이다. 또한 우리는 binomial distribution의 mean value가 단순하게 \(np\) 임을 알고 있으므로 평균 값은 아래와 같이 계산할 수 있다. 이에 대한 자세한 설명은 <a href="http://en.wikipedia.org/wiki/Binomial_distribution">위키피디아 링크</a>로 대체한다.</p>
 
 
 <p>$$ \bar m = \sum_{m=0}^{n \choose 2} m P(m) = {n \choose 2} p $$</p>
@@ -172,7 +172,7 @@ $(function() {
 <p>$$ \ln[(1-p)^{n-1-k}] = (n-1-k) \ln ( 1- \frac {c} {n-1}) \simeq -(n-1-k) { c \over n-1} \simeq -c $$</p>
 
 
-<p>이 근사식에서 첫 번째 계산식은 \(p = { c \over n-1} \)이라는 이전의 결과를 사용한 것이고 근사하는 부분은 <a href="http://en.wikipedia.org/wiki/Natural_logarithm#Derivative.2C_Taylor_series" target="new">log의 taylor expansion</a>이 \(\ln(x) = (x-1) - {(x-1)^2 \over 2} + {(x-1)^3 \over 3} - &#8230;\) 라는 것을 사용한 것이다. 그 다음 근사는 당연히 n이 k보다 엄청 크다고 가정한 것이다. 자 그 결과는 놀랍게도 \(\ln[(1-p)^{n-1-k}] \simeq -c\) 이다. 즉, \((1-p)^{n-1-k} \simeq e^{-c}\) 라는 사실을 알 수 있다.</p>
+<p>이 근사식에서 첫 번째 계산식은 \(p = { c \over n-1} \)이라는 이전의 결과를 사용한 것이고 근사하는 부분은 <a href="http://en.wikipedia.org/wiki/Natural_logarithm#Derivative.2C_Taylor_series">log의 taylor expansion</a>이 \(\ln(x) = (x-1) - {(x-1)^2 \over 2} + {(x-1)^3 \over 3} - &#8230;\) 라는 것을 사용한 것이다. 그 다음 근사는 당연히 n이 k보다 엄청 크다고 가정한 것이다. 자 그 결과는 놀랍게도 \(\ln[(1-p)^{n-1-k}] \simeq -c\) 이다. 즉, \((1-p)^{n-1-k} \simeq e^{-c}\) 라는 사실을 알 수 있다.</p>
 
 
 <p>자 이제 모든 결과를 종합해보면 n이 엄청나게 큰 상황에서 다음과 같은 결과를 얻는다</p>
@@ -254,7 +254,7 @@ $(function() {
 <p>$$ P(S|k) = \sum_{s_1}^infty &#8230; \sum_{s_k}^{\infty} \left[ \Pi_{j=1}^k pi_{s_j} \right] \delta (s-1, \sum_j s_j) $$</p>
 
 
-<p>이때 \(\delta (m,n)\)은 <a href="http://en.wikipedia.org/wiki/Kronecker_delta" target="new">Kronecker delta</a>를 의미하며 이 함수는 간단하게 두 값이 같으면 1 다르면 0을 반환한다. 즉, 이 수식에서 델타의 의미는 모든 \(s_j\)들을 더하면 \(s-1\)이 나와야한다는 것이다. =========== 추가 설명 작성 중 =============</p>
+<p>이때 \(\delta (m,n)\)은 <a href="http://en.wikipedia.org/wiki/Kronecker_delta">Kronecker delta</a>를 의미하며 이 함수는 간단하게 두 값이 같으면 1 다르면 0을 반환한다. 즉, 이 수식에서 델타의 의미는 모든 \(s_j\)들을 더하면 \(s-1\)이 나와야한다는 것이다. =========== 추가 설명 작성 중 =============</p>
 
 
 <p>============Small component에 대한 추가 설명 작성 중=================</p>
@@ -289,16 +289,16 @@ $(function() {
 <h5>KAIST Network Science</h5>
 
 
-<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/" target="new">카테고리로 이동</a>)</p>
+<p>다른 요약글들 보기 (<a href="/blog/categories/network-science/">카테고리로 이동</a>)</p>
 
 
 <ul>
-    <li>Lecture 1: <a href="/47" target="new">Introduction</a></li>
-    <li>Lecture 2: <a href="/48" target="new">Graph Theory</a></li>
-    <li>Lecture 3: <a href="/49" target="new">Measures and Metric</a></li>
-    <li>Lecture 4: <a href="/50" target="new">Random Network</a></li>
-    <li>Lecture 5: <a href="/51" target="new">Small world Network</a></li>
-    <li>Lecture 6: <a href="/52" target="new">Scale free Network</a></li>
+    <li>Lecture 1: <a href="/47">Introduction</a></li>
+    <li>Lecture 2: <a href="/48">Graph Theory</a></li>
+    <li>Lecture 3: <a href="/49">Measures and Metric</a></li>
+    <li>Lecture 4: <a href="/50">Random Network</a></li>
+    <li>Lecture 5: <a href="/51">Small world Network</a></li>
+    <li>Lecture 6: <a href="/52">Scale free Network</a></li>
 </ul>
 
 </div>

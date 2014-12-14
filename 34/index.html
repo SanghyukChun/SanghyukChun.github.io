@@ -109,13 +109,13 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><p>본 포스팅은 <a href="/29" target="new">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
+<div class="entry-content"><p>본 포스팅은 <a href="/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
 
 
 <h5 id="34-1-review">Review of last post</h5>
 
 
-<p><a href="/32" target="new">지난 포스트</a>에서는 전반적인 강의의 개요 및 간단한 Network Problem들에 대해 다뤘다. 특히 그 중에서 밀그램의 편지 실험에 대해 다시 한번 살펴보자. 이 실험은 사람과 사람 사이의 사회적 거리를 측정하기 위한 실험이다. 여기에서 사회적 거리 혹은 social distance는 우리가 흔히 &#8216;distance&#8217;라는 컨셉에서 쉽게 생각할 수 있는 유클리언 distance와는 조금 다른 개념인데, 유클리언 distance가 지리적, 공간적인 거리의 개념이라면 social ditance는 내가 이 사람과 얼마나 가까우냐에 대한 얘기이다. 즉, 내가 미국에 유학가있는 친구와 유클리언 거리는 무지막지 멀지만 사회적거리는 엄청 가깝고, 옆 연구실의 학생분들은 유클리언 거리는 매우 가깝지만 안타깝게도 사회적 거리는 엄청 먼 셈이다. 구체적으로 social distance를 정의해보자. 이 값은 social network 위에서 내 node에서 다른 목표 node로 이동할 때 이동해야하는 총 거리를 의미한다. 즉, 밀그럼의 실험에서 실험 참가자들의 평균적인 사회적 거리는 약 5 정도가 되는 것이다. (이전에도 언급했듯, Facebook에서 같은 실험을 해보면 4.74가 나온다.)</p>
+<p><a href="/32">지난 포스트</a>에서는 전반적인 강의의 개요 및 간단한 Network Problem들에 대해 다뤘다. 특히 그 중에서 밀그램의 편지 실험에 대해 다시 한번 살펴보자. 이 실험은 사람과 사람 사이의 사회적 거리를 측정하기 위한 실험이다. 여기에서 사회적 거리 혹은 social distance는 우리가 흔히 &#8216;distance&#8217;라는 컨셉에서 쉽게 생각할 수 있는 유클리언 distance와는 조금 다른 개념인데, 유클리언 distance가 지리적, 공간적인 거리의 개념이라면 social ditance는 내가 이 사람과 얼마나 가까우냐에 대한 얘기이다. 즉, 내가 미국에 유학가있는 친구와 유클리언 거리는 무지막지 멀지만 사회적거리는 엄청 가깝고, 옆 연구실의 학생분들은 유클리언 거리는 매우 가깝지만 안타깝게도 사회적 거리는 엄청 먼 셈이다. 구체적으로 social distance를 정의해보자. 이 값은 social network 위에서 내 node에서 다른 목표 node로 이동할 때 이동해야하는 총 거리를 의미한다. 즉, 밀그럼의 실험에서 실험 참가자들의 평균적인 사회적 거리는 약 5 정도가 되는 것이다. (이전에도 언급했듯, Facebook에서 같은 실험을 해보면 4.74가 나온다.)</p>
 
 
 <p>자, 다시 한번 이전에 설명했던 실제 네트워크, 허브라는 개념 등에 대해서 생각해보자. 이렇게 전혀 상관없어 보이는 사람들 사이의 사회적 거리가 짧게나오는 이유는 사회적 네트워크의 토폴로지가 (그래프의 모양이) 독특하기 때문이다. 아래 그림을 봤을 때 구조적으로 멀어 보이는 지점을 이어주는 엄청나게 긴 장거리 연결 링크 (long-range link)가 존재한다는 것을 알 수 있다.</p>
@@ -157,7 +157,7 @@ $(function() {
 <p><img src="/images/post/34-2.png" width="400">
 <img src="/images/post/34-3.jpeg" width="400"></p>
 
-<p>아래 그림은 <a href="http://www.scholarpedia.org/article/Small-world_network" target="new">scholarpedia</a>에서 가져온 그림이다. p가 0이면 정규 네트워크처럼 diameter와 clustering coefficient가 모두 높지만, p를 증가시키면 점점 Poisson network와 비슷해지는 것을 알 수 있다. 따라서 적절한 p를 고르는 것이 small world를 모델링하기 위해 매우 중요하다고 할 수 있다.</p>
+<p>아래 그림은 <a href="http://www.scholarpedia.org/article/Small-world_network">scholarpedia</a>에서 가져온 그림이다. p가 0이면 정규 네트워크처럼 diameter와 clustering coefficient가 모두 높지만, p를 증가시키면 점점 Poisson network와 비슷해지는 것을 알 수 있다. 따라서 적절한 p를 고르는 것이 small world를 모델링하기 위해 매우 중요하다고 할 수 있다.</p>
 
 
 <p><img src="http://www.scholarpedia.org/w/images/9/97/Swlc.png" width="400"></p>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Cousera-NN | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/cousera-nn/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-12-13T05:08:40+09:00</updated>
+  <updated>2014-12-14T13:19:55+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -21,13 +21,13 @@
     <content type="html"><![CDATA[<h5>들어가기 전에</h5>
 
 
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 4주차와 5주차 강의를 요약한 글이다. 이 강의에서는 이론적인 형태의 무언가를 배운다기보다는 real application의 예로 Neural Network를 사용해 word prediction (NLP에서 쓰이는) 그리고 object recognition를 하는 방법에 대해 다룬다. 내가 관심이 있는 부분은 실제 이 NN을 어떻게 적용하냐라기 보다는 NN이란 무엇이며 어떤 이론적 배경이 있는 것이며 그 알고리듬에 더 관심이 있기 때문에 대부분이 engineerning issue인 이번 두 강의들은 대략적으로 어떤 내용에 대해서 다루는지만 아주 간략하게 기술하였다.</p>
+<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 4주차와 5주차 강의를 요약한 글이다. 이 강의에서는 이론적인 형태의 무언가를 배운다기보다는 real application의 예로 Neural Network를 사용해 word prediction (NLP에서 쓰이는) 그리고 object recognition를 하는 방법에 대해 다룬다. 내가 관심이 있는 부분은 실제 이 NN을 어떻게 적용하냐라기 보다는 NN이란 무엇이며 어떤 이론적 배경이 있는 것이며 그 알고리듬에 더 관심이 있기 때문에 대부분이 engineerning issue인 이번 두 강의들은 대략적으로 어떤 내용에 대해서 다루는지만 아주 간략하게 기술하였다.</p>
 
 
 <h5>Learning feature vectors for words</h5>
 
 
-<p>Speech recoginition에서 가장 중요한 문제 중 하나는 바로 제대로 인식되지 않은 단어가 무엇일지 추측하는 것이다. 아무리 기술이 좋아지더라도 speech를 완전하게 복원하는 것은 불가능하다. 살제 사람들도 완전하게 speech를 인식하는 것은 아니고 때에 따라 적당히 추측해서 이해하는 것처럼, 이런 문제가 음성 인식에서 많이 중요한 문제로 대두되고 있다. 나도 seri를 사용하다보면 음성인식률이 생각보다 좋지않아서 실망하고는 하는데, 이런 문제점을 해결하기 위해 다양한 방법들이 제시되고 있다. 이 강의는 이런 것들을 개선시키기 위해 neural network를 도입했었던 연구들에 대해 다룬다. 참고로 여기에서 사용하는 모든 NN들은 softmax function neuron을 사용하고 error function은 cross entropy error를 사용한다. 이유는 sigmoid function을 사용했을 때 error가 rmse라면 제대로 우리가 원하는 방향으로 학습하기가 어렵기 때문이다. 왜냐하면 sigmoid function은 양 쪽 끝 부분이 거의 평평하기 때문에 만약 우리가 정 반대쪽 방향에서 rmse의 gradient 방향을 취하게 된다면 거의 변화가 없다고 판단할 수도 있기 때문이다. 따라서 이런 방법을 개선하기 위해서 cross entropy error를 사용하였고, 이 방법을 사용하기 위하여 sigmoid를 softmax로 바꿔서 probability distribution으로 만들어준 것이다. 아무튼 이 강의에서 설명하는 방법들은 이런 방법들에 기반해서 NN을 만든다. 아무튼 우리가 처음에 풀려고 했었던 단어를 추측하는 고전적인 방법 중에 <a href="http://en.wikipedia.org/wiki/N-gram" target="new">N-gram</a>문제라는 것이 있는데, n개의 단어 배열들을 학습하여 임의의 n-1개의 단어가 주어졌을 때 그 다음 단어가 무엇일지 예측하는 문제이다. 실제로 자연언어처리에서 많이 사용하는 기법 중 하나인데, 보통 trigram을 많이 사용한다 (3개의 단어 시퀀스를 학습) 그런데 이 경우 우리가 모든 단어를 학습할 수도 없고, 우리가 관측하지 못한 단어배열이라고 해서 세상에 존재하지 않는 단어 배열이라 확신할 수가 없기 때문에 당연히 성능 역시 좋지 않을 것이라고 예측할 수 있을 것이다. 대신 input을 앞의 2개의 단어를 취하고 그 output을 세 번째 단어로 하는 neural network를 학습할 수도 있을 것이다. 하지만 이렇게 할 경우 output의 양이 너무 많아지므로 대신 3번째 단어의 후보군들의 집합을 같이 넣어서 결과를 얻는 방식을 취할 수도 있을 것이다. 더 성능을 높이기 위해서 엄청 긴 word seqeunce를 통채로 학습하고, 임의의 단어의 앞의 n개 단어 뒤의 m개 단어를 보고 추측하는 것이 가능할 것이다. 이 경우, 지금 단어가 random인지 제대로 된 단어인지 일부러 섞어서 learning을 하게 되면 output을 binary로 받는 것이 가능해져서 엄청나게 빠른 test time을 가질 수가 있게 된다는 장점이 있다.</p>
+<p>Speech recoginition에서 가장 중요한 문제 중 하나는 바로 제대로 인식되지 않은 단어가 무엇일지 추측하는 것이다. 아무리 기술이 좋아지더라도 speech를 완전하게 복원하는 것은 불가능하다. 살제 사람들도 완전하게 speech를 인식하는 것은 아니고 때에 따라 적당히 추측해서 이해하는 것처럼, 이런 문제가 음성 인식에서 많이 중요한 문제로 대두되고 있다. 나도 seri를 사용하다보면 음성인식률이 생각보다 좋지않아서 실망하고는 하는데, 이런 문제점을 해결하기 위해 다양한 방법들이 제시되고 있다. 이 강의는 이런 것들을 개선시키기 위해 neural network를 도입했었던 연구들에 대해 다룬다. 참고로 여기에서 사용하는 모든 NN들은 softmax function neuron을 사용하고 error function은 cross entropy error를 사용한다. 이유는 sigmoid function을 사용했을 때 error가 rmse라면 제대로 우리가 원하는 방향으로 학습하기가 어렵기 때문이다. 왜냐하면 sigmoid function은 양 쪽 끝 부분이 거의 평평하기 때문에 만약 우리가 정 반대쪽 방향에서 rmse의 gradient 방향을 취하게 된다면 거의 변화가 없다고 판단할 수도 있기 때문이다. 따라서 이런 방법을 개선하기 위해서 cross entropy error를 사용하였고, 이 방법을 사용하기 위하여 sigmoid를 softmax로 바꿔서 probability distribution으로 만들어준 것이다. 아무튼 이 강의에서 설명하는 방법들은 이런 방법들에 기반해서 NN을 만든다. 아무튼 우리가 처음에 풀려고 했었던 단어를 추측하는 고전적인 방법 중에 <a href="http://en.wikipedia.org/wiki/N-gram">N-gram</a>문제라는 것이 있는데, n개의 단어 배열들을 학습하여 임의의 n-1개의 단어가 주어졌을 때 그 다음 단어가 무엇일지 예측하는 문제이다. 실제로 자연언어처리에서 많이 사용하는 기법 중 하나인데, 보통 trigram을 많이 사용한다 (3개의 단어 시퀀스를 학습) 그런데 이 경우 우리가 모든 단어를 학습할 수도 없고, 우리가 관측하지 못한 단어배열이라고 해서 세상에 존재하지 않는 단어 배열이라 확신할 수가 없기 때문에 당연히 성능 역시 좋지 않을 것이라고 예측할 수 있을 것이다. 대신 input을 앞의 2개의 단어를 취하고 그 output을 세 번째 단어로 하는 neural network를 학습할 수도 있을 것이다. 하지만 이렇게 할 경우 output의 양이 너무 많아지므로 대신 3번째 단어의 후보군들의 집합을 같이 넣어서 결과를 얻는 방식을 취할 수도 있을 것이다. 더 성능을 높이기 위해서 엄청 긴 word seqeunce를 통채로 학습하고, 임의의 단어의 앞의 n개 단어 뒤의 m개 단어를 보고 추측하는 것이 가능할 것이다. 이 경우, 지금 단어가 random인지 제대로 된 단어인지 일부러 섞어서 learning을 하게 되면 output을 binary로 받는 것이 가능해져서 엄청나게 빠른 test time을 가질 수가 있게 된다는 장점이 있다.</p>
 
 
 <h5>Object recognition with neural nets</h5>
@@ -80,7 +80,7 @@
     <content type="html"><![CDATA[<h5>들어가기 전에</h5>
 
 
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 3주차 강의를 요약한 글이다. 이 렉쳐에서는 Perceptron의 한계를 극복하기 위해 도입된 multi-layer feed forward network를 learning하는 algorithm인 backpropagation algorithm에 대해서 다룬다.</p>
+<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 3주차 강의를 요약한 글이다. 이 렉쳐에서는 Perceptron의 한계를 극복하기 위해 도입된 multi-layer feed forward network를 learning하는 algorithm인 backpropagation algorithm에 대해서 다룬다.</p>
 
 
 <h5>Learning the weights of a linear neuron</h5>
@@ -103,7 +103,7 @@
 <p>이런 iterative method는 맨 처음 모든 weight를 random하게 guess하고 <a class="red tip" title="조건은 바뀔 수 있다. 예를 들어 input 3개를 보고 update하는 것도 가능하다. 뒤에서 조금 더 자세히 다루도록 하겠다.">매 input마다</a> 적절하게 weight를 update시킨다. 이 방법은 weight가 어떤 특정한 value로 converge할 때까지 계속된다. 그렇다면 이런 방법의 예를 하나 들어보자. 이 강의에서는 다음과 같은 function을 정의한다. \(price = x_{fish} w_{fish} + x_{chip} w_{chip} + x_{ketchup} w_{ketchup}\) 즉, 내가 식당에서 <a class="red tip" title="fish and chips라고 하는 요리.. 생선튀김이랑 감자튀김 같이 먹는거랑 똑같다">생선과 칩과 케첩</a>을 먹었을 때 내가 지불해야하는 금액을 내가 먹은 양 (x), 그리고 각 item들의 가격 (w)으로 나타낸 것이다. 내가 알고 있는 값은 input x (내가 시킨 양) 그리고 계산서를 통해 얻은 값이다. 하지만 나는 w를 모르며, 이 w를 찾는 것이 목적이다. 그렇다면 처음에는 random하게 w를 guess할 수 있을 것이다. 이때, (120, 50, 100)이 true weight라고 해보자. 즉, 현재 input이 2,5,3일 때 price는 850일 것이다. 현재 우리는 weight에 대한 정보가 없으므로 모두 50이라고 가정하면 내가 estimate한 price는 500이고, error의 값은 350이 된다. 이때, \(\triangle w_i = \epsilon x_i (t-y)\)라는 learning rule이 있다고 해보자. (이 learning rule은 delta-rule이라는 규칙으로, 바로 다음 단락에서 자세히 다루도록 하겠다.) 이 수식을 적용하면 다음 weight는 70, 100, 80이 되고 error는 30으로 줄어들게 된다 (esitimated price = 880, true = 850) 이런 식으로 각 iteration마다 error의 값을 줄여나가면서 true weight를 찾는 것이 iterative method의 작동원리인 것이다.</p>
 
 
-<p>그렇다면 이런 방법에서 가장 중요한 개념은 아마 learning rule일 것이다. 이 렉쳐에서는 'Delta Rule'이라는 rule을 소개하고 있다. 이 방법은 일종의 Gradient Descent method인데, single layer neural network에서 주로 사용하는 방법이라고 한다. 자세한 설명은 <a href="http://en.wikipedia.org/wiki/Delta_rule" target="new">wiki</a>를 참고. 그렇다면 왜 delta-rule은 \(\triangle w_i = \epsilon x_i (t-y)\) 의 꼴을 띄고 있는 것일까? 증명은 간단하다. error를 squared residuals summation error로 정의하고 차근차근 수식을 전개하면 해당 꼴을 얻을 수 있다. wiki에도 언급이 되어 있으므로 설명이 미진하다면 wiki를 참고하면 될 것 같다. 먼저 \(E = \sum_j \frac 1 2 (t_j - y_j)^2\)이라하자. (notation은 wiki의 notation을 사용하겠다.) 이 error는 convex function이고 domain도 convex하므로 gradient descent method를 사용하면 error의 global minimum값을 반드시 찾을 수 있다. 따라서 만약 우리가 "weight space"에 대해서 이 error를 최소화하게 된다면 매 순간 minimize하기 위해 내려가는 방향 즉, 이 함수의 gradient 값은 \(\frac {\partial E} {\partial w_{ji}}\)이 될 것이다. 이때, 이 gradient descent는 error를 줄이기 위해서 필요한 weight들의 change이고, 방향은 반대이므로 \(\triangle w_{ij} = - \epsilon \frac \partial E \partial w_{ji}\)라고 할 수 있는 것이다. 그리고 뒤의 미분항을 간단하게 chain rule을 사용하여 정리하면 이전의 식은 결국 다음과 같은 수식으로 표현이 가능하다.</p>
+<p>그렇다면 이런 방법에서 가장 중요한 개념은 아마 learning rule일 것이다. 이 렉쳐에서는 'Delta Rule'이라는 rule을 소개하고 있다. 이 방법은 일종의 Gradient Descent method인데, single layer neural network에서 주로 사용하는 방법이라고 한다. 자세한 설명은 <a href="http://en.wikipedia.org/wiki/Delta_rule">wiki</a>를 참고. 그렇다면 왜 delta-rule은 \(\triangle w_i = \epsilon x_i (t-y)\) 의 꼴을 띄고 있는 것일까? 증명은 간단하다. error를 squared residuals summation error로 정의하고 차근차근 수식을 전개하면 해당 꼴을 얻을 수 있다. wiki에도 언급이 되어 있으므로 설명이 미진하다면 wiki를 참고하면 될 것 같다. 먼저 \(E = \sum_j \frac 1 2 (t_j - y_j)^2\)이라하자. (notation은 wiki의 notation을 사용하겠다.) 이 error는 convex function이고 domain도 convex하므로 gradient descent method를 사용하면 error의 global minimum값을 반드시 찾을 수 있다. 따라서 만약 우리가 "weight space"에 대해서 이 error를 최소화하게 된다면 매 순간 minimize하기 위해 내려가는 방향 즉, 이 함수의 gradient 값은 \(\frac {\partial E} {\partial w_{ji}}\)이 될 것이다. 이때, 이 gradient descent는 error를 줄이기 위해서 필요한 weight들의 change이고, 방향은 반대이므로 \(\triangle w_{ij} = - \epsilon \frac \partial E \partial w_{ji}\)라고 할 수 있는 것이다. 그리고 뒤의 미분항을 간단하게 chain rule을 사용하여 정리하면 이전의 식은 결국 다음과 같은 수식으로 표현이 가능하다.</p>
 
 
 <p>$$ \triangle w_{ij} = \epsilon (t_j - y_j)x_i $$</p>
@@ -145,7 +145,7 @@
 <p>그렇다면 이제 backpropagation algorithm에 대해 discribe해보자. backpropagation의 기본 아이디어는 우리가 hidden unit들 그 자체에 대해서 알 필요가 하나도 없고 (알 수도 없을 뿐더러), 대신 hidden unit들로 인해 생성되는 error change를 관측하는 것이 더 낫다는 것이다. 즉, hidden unit 그 자체의 activity를 learning하는 것이 아니라, hidden unit들로 인해서 생겨나는 error derivatives를 사용하자는 것이다. 이 방법은 ouput layer에서 아래 layer로 정보를 backpropagation하여 (역으로 보내어) lower layer에서 그 값을 기준으로 다시 weight를 update시킨다. input pattern은 hidden layer에 전달이 되고, 다시 hidden layer가 output layer로 전달을 시키므로 (hidden layer가 하나일 때) 이런 방법으로 현재 weight에 대한 expected value와 estimated value 사이의 error를 구할 수 있고 이것을 최소화 하는 방향으로 weight를 learning하는 것이다. weight를 learning할 때는 앞에서 우리가 이미 살펴보았던 delta-rule을 사용하여 output layer에서의 각 neuron들의 error를 사용해 weight들을 update한다.</p>
 
 
-<p>이를 그림으로 표현하면 아래와 같다. (출처: <a href="http://tex.stackexchange.com/questions/162326/drawing-back-propagation-neural-network" target="new">링크</a>)</p>
+<p>이를 그림으로 표현하면 아래와 같다. (출처: <a href="http://tex.stackexchange.com/questions/162326/drawing-back-propagation-neural-network">링크</a>)</p>
 
 
 <p><img src="/images/post/42-1.png" width="600"></p>
@@ -224,13 +224,13 @@
     <content type="html"><![CDATA[<h5>들어가기 전에</h5>
 
 
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 2주차 강의를 요약한 글이다. 첫 주 강의에서 Neural Network란 무엇이며 어떤 종류의 Neural Network들이 있는지 등에 대해 간략하게 다뤘다면, 이 강의에서는 가장 오래된 Neural Network 중 하나인 Perceptron을 설명하는 내용이 주가 된다.</p>
+<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 2주차 강의를 요약한 글이다. 첫 주 강의에서 Neural Network란 무엇이며 어떤 종류의 Neural Network들이 있는지 등에 대해 간략하게 다뤘다면, 이 강의에서는 가장 오래된 Neural Network 중 하나인 Perceptron을 설명하는 내용이 주가 된다.</p>
 
 
 <h5>An overview of the main types of neural network architecture</h5>
 
 
-<p><a href="http://SanghyukChun.github.io/39" target="new">이전 글</a>에서 Neuron들에는 어떤 종류가 있을 수 있는가 다뤘었다. 대충 linear neuron, linear threshold neuron, binary neuron, binary threshold neuron, sigmod neuron 등이 있었다. 그렇다면 neuron들로 구성된 neural network에는 어떤 type들로 구분되는가도 간략하게 알아보도록 해보자.</p>
+<p><a href="http://SanghyukChun.github.io/39">이전 글</a>에서 Neuron들에는 어떤 종류가 있을 수 있는가 다뤘었다. 대충 linear neuron, linear threshold neuron, binary neuron, binary threshold neuron, sigmod neuron 등이 있었다. 그렇다면 neuron들로 구성된 neural network에는 어떤 type들로 구분되는가도 간략하게 알아보도록 해보자.</p>
 
 
 <p>일단 가장 간단한 형태의 network로 Feed-forward neural network가 존재한다. 가장 일반적으로 쓰이고 실제 어플리케이션에 적용되는 neural network들도 대부분이 feed-forward라고 한다. 이 네트워크는 상당히 간단한 구조인데, 첫 번째 layer는 input이며 가장 마지막 layer는 output이다. 그리고 중간의 input과 output으로 관찰되지 않는 영역을 "hidden" layer라고 하는데, 당연히 visuable하지 않으므로 (우리가 직접 관측하는 영역이 아니므로) hidden이라고 불리는 것이다. 만약 hidden layer가 하나보다 많이 존재한다면 이 network는 "deep" neural network라고 불린다.</p>
@@ -384,16 +384,16 @@
     <content type="html"><![CDATA[<h5>들어가기 전에</h5>
 
 
-<p>약 반 년 전에 <a href="https://www.coursera.org/" target="new">Coursera</a>에서 <a href="https://class.coursera.org/ml-003/lecture" target="new">Andrew Ng 교수의 Machin Learning Class</a>를 수강한 적이 있다. 사실 당시에 이 course를 수강할 때, 이 course는 introduction course로만 듣고, Geoffrey Hinton 교수의 Neural Network 강의를 들을 생각이었는데, 시간에 쫓기다보니 어느새 나는 석사생이 되었고, 아직도 이 강의를 듣지 못한 상태였다. 그러다가 최근 우연하게 이 강의를 다시 들여다 볼 일이 생기게 되었고, 약 2-3주 동안 이 강의를 듣고 요약글을 꾸준하게 올려 볼 생각이다. <a href="http://SanghyukChun.github.io/10" target="new">예전 글</a>에서 언급했지만, 내가 너무 쉽다고 생각되면 과감하게 중간부터 요약을 관둘 생각이다.</p>
+<p>약 반 년 전에 <a href="https://www.coursera.org/">Coursera</a>에서 <a href="https://class.coursera.org/ml-003/lecture">Andrew Ng 교수의 Machin Learning Class</a>를 수강한 적이 있다. 사실 당시에 이 course를 수강할 때, 이 course는 introduction course로만 듣고, Geoffrey Hinton 교수의 Neural Network 강의를 들을 생각이었는데, 시간에 쫓기다보니 어느새 나는 석사생이 되었고, 아직도 이 강의를 듣지 못한 상태였다. 그러다가 최근 우연하게 이 강의를 다시 들여다 볼 일이 생기게 되었고, 약 2-3주 동안 이 강의를 듣고 요약글을 꾸준하게 올려 볼 생각이다. <a href="http://SanghyukChun.github.io/10">예전 글</a>에서 언급했지만, 내가 너무 쉽다고 생각되면 과감하게 중간부터 요약을 관둘 생각이다.</p>
 
 
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 첫 주차 강의를 요약한 글이다. 첫 주차이기 때문에 아주 간단한 introduction course이며, 주로 machine learning과 neural network는 무엇인지 아주 간략하게 설명하는 내용이 주가 된다.</p>
+<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 첫 주차 강의를 요약한 글이다. 첫 주차이기 때문에 아주 간단한 introduction course이며, 주로 machine learning과 neural network는 무엇인지 아주 간략하게 설명하는 내용이 주가 된다.</p>
 
 
 <h5>Why do we need machine learning?</h5>
 
 
-<p>사실 이 질문은 물론이고, machine learning이란 무엇인지 내가 <a href="http://SanghyukChun.github.io/3" target="new" class="red tip" title="Machine Learning Week1 - What Is Machine Learning">아주</a> <a href="http://SanghyukChun.github.io/21" target="new" class="red tip" title="빅데이터 이야기: 데이터 수집에서 분석까지">많은</a> <a href="http://SanghyukChun.github.io/30" target="new" class="red tip" title="인터넷 속의 수학 - How Does Netflix Recommend Movies?">글</a>에서 다뤘었기에 자세한 언급은 되도록 피하도록 하겠다. 다만 이 lecture에서는 주로 patterns recognition, anomalies recognition, 그리고 prediction 등의 문제에 집중을 하고 있으며, 특히 image를 classification하는 문제에 focus가 되어있다. 이런 문제의 대표적인 예는 MNIST (hand write letter data base), Face recognition 등이 있다. 실제로 내가 예전에 공부했었던 Neural Network의 대부분은 이런 image process에 focus되어있었다.</p>
+<p>사실 이 질문은 물론이고, machine learning이란 무엇인지 내가 <a href="http://SanghyukChun.github.io/3" class="red tip" title="Machine Learning Week1 - What Is Machine Learning">아주</a> <a href="http://SanghyukChun.github.io/21" class="red tip" title="빅데이터 이야기: 데이터 수집에서 분석까지">많은</a> <a href="http://SanghyukChun.github.io/30" class="red tip" title="인터넷 속의 수학 - How Does Netflix Recommend Movies?">글</a>에서 다뤘었기에 자세한 언급은 되도록 피하도록 하겠다. 다만 이 lecture에서는 주로 patterns recognition, anomalies recognition, 그리고 prediction 등의 문제에 집중을 하고 있으며, 특히 image를 classification하는 문제에 focus가 되어있다. 이런 문제의 대표적인 예는 MNIST (hand write letter data base), Face recognition 등이 있다. 실제로 내가 예전에 공부했었던 Neural Network의 대부분은 이런 image process에 focus되어있었다.</p>
 
 
 <h5>What are neural network?</h5>

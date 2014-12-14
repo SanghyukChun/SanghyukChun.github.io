@@ -109,7 +109,7 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><p>Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 <a href="/blog/categories/machine-learning/" target="new">Machine learning과 관련된 글들</a>을 써왔지만, 항상 중구난방이고 제대로 정리가 되지 않은 느낌을 받아서 근래에 다시 머신러닝에 대해 공부를 하는 김에 싹 몰아서 정리해보기로 했다. 8월에 연구실에서 머신러닝 스터디를 하기로 했지만, 그것과는 조금 다르게 내가 생각했을 때 이런 순서로 정리를 하면 되겠다.. 하는 느낌으로 정리를 해볼 생각이다. Bishop 책을 많이 참고했으면 하고.. 특히 이번 ICML에서 느낀거지만, Machine Learning에는 정말 많은 분야가 있는데, 많은 Lecture들에서 어쩔 수 없이 그것들을 전부 커버하지 못하는 점이 너무 아쉬웠다. 그래서 일단 내가 할 수 있는데까지는 정리해보는게 좋지 않을까.. 하는 생각으로 글을 써보려 한다.</p>
+<div class="entry-content"><p>Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 계속 여러 종류의 <a href="/blog/categories/machine-learning/">Machine learning과 관련된 글들</a>을 써왔지만, 항상 중구난방이고 제대로 정리가 되지 않은 느낌을 받아서 근래에 다시 머신러닝에 대해 공부를 하는 김에 싹 몰아서 정리해보기로 했다. 8월에 연구실에서 머신러닝 스터디를 하기로 했지만, 그것과는 조금 다르게 내가 생각했을 때 이런 순서로 정리를 하면 되겠다.. 하는 느낌으로 정리를 해볼 생각이다. Bishop 책을 많이 참고했으면 하고.. 특히 이번 ICML에서 느낀거지만, Machine Learning에는 정말 많은 분야가 있는데, 많은 Lecture들에서 어쩔 수 없이 그것들을 전부 커버하지 못하는 점이 너무 아쉬웠다. 그래서 일단 내가 할 수 있는데까지는 정리해보는게 좋지 않을까.. 하는 생각으로 글을 써보려 한다.</p>
 
 
 <p>시작하기 전에 재미있는 짤방을 하나 보고 가자. 여러 사람들이 생각하는 Machine Learning이란?</p>
@@ -126,7 +126,7 @@ $(function() {
 <h5 id="57-1-WhatMLE">What is Machine Learning? - Easy Answer</h5>
 
 
-<p>자 그러면 본론으로 들어가서 Machine Learning은 과연 무엇일까. 여러가지로 설명을 할 수 있겠지만 내가 예전 <a href="/3" target="new">Andrew Ng. 교수의 Machine Learning Lecture를 들으며 정리했던 글</a>에 정의했던바에 따르면, &#8216;머신러닝은 그 관계를 알 수 없는 수 많은 데이터들 사이에서 관계를 찾아내주는 마법과 같은 기술이다.&#8217; 라는 얘기를 했었다.</p>
+<p>자 그러면 본론으로 들어가서 Machine Learning은 과연 무엇일까. 여러가지로 설명을 할 수 있겠지만 내가 예전 <a href="/3">Andrew Ng. 교수의 Machine Learning Lecture를 들으며 정리했던 글</a>에 정의했던바에 따르면, &#8216;머신러닝은 그 관계를 알 수 없는 수 많은 데이터들 사이에서 관계를 찾아내주는 마법과 같은 기술이다.&#8217; 라는 얘기를 했었다.</p>
 
 
 <p>마법과 같은 기술이라는 용어가 조금 유치하기는 하지만, 기본적인 Machine learning의 철학을 잘 반영하는 표현이라고 생각한다. Machine Learning은 컴퓨터에게 우리가 직접 명시적으로 무언가를 지시하지 않아도 데이터를 통해 컴퓨터가 자동으로 판별을 해 performance를 향상시킬 수 있도록 하는 무언가를 의미한다고 할 수 있다. 무슨 얘기이냐하면 예를 들어 우리가 이메일에 들어가는 스팸필터를 만든다고 생각해보자. 가장 간단하게 생각할 수 있는 방법은 blacklist를 만드는 방법이 있다. 사용자들에게 많이 report가 된 나쁜 email들을 모아서 blacklist에 지정하는 것이다. 그런데 이런 방법은 회피방법이 명확하다. 보낸 사람을 이상하게 바꿔 보내면 된다. 그러면 이제 메일의 제목이나 안에 들어가는 내용을 사용해 필터링을 해야하는데, 역시 가장 간단한 방법은 blacklist이다. 광고, 싸게, 이런 단어들이 들어가면 일단 차단을 시키는 방법이다. 그런데 이 방법은 우회하기도 쉬우며 (광.고. 라고 쓴다거나) 이런 방식으로 쓰이는 모든 단어를 추가할 수도 없으며, 일상 생활에서도 쓰일 수 있는 표현이 있을 수 있기 때문에 멀쩡한 사람의 email을 spam이라고 인식하게 되는 끔찍한 일이 벌어질 수 있다. 즉, 이런 식으로 일일이 blacklist를 조정하는 방식으로 프로그래밍을 하는 것을 &#8216;명시적으로 무언가를 지시한다&#8217; 라고 표현한 것이다. Machine Learning 적인 접근 방법으로 이 문제를 바라보게 되면, 컴퓨터에게 스팸인 email과 스팸이 아닌 email들을 주고, 스팸인 email들이 왜 스팸인지 &#8216;Learning&#8217;을 시켜서 &#8216;데이터를 통해 컴퓨터가 자동으로 판별을 해&#8217; 스팸을 걸러내는 방식을 취하는 것이다. 그리고 데이터를 통해 배우는 것이기 때문에 데이터가 많아질 수록 performance역시 증가하게 될 것이다. 이런 모든 것이 바로 Machine Learning이라고 할 수 있는 것이다.</p>
@@ -210,7 +210,7 @@ $(function() {
 <p>앞서 설명한 대로 Machine Learning을 정의하게 되면 완전히 raw한 데이터를 다루는 과정, 예를 들면 Dimensionality reduction, Metric Learning 등의 과정에서부터 시작해서, 어떻게 Learning할 것이냐, model이 무엇이냐, 조금 더 구체적으로 얘기하면 어떤 Algorithm을 사용해 이 model을 learning할 것이냐라는 문제를 풀어내고, 마지막으로 어떻게 결정을 내릴 것이냐, decision making을 할 것이냐 하는 등의 모든 여러 과정들이 Machine Learning의 종류라고 할 수 있다.</p>
 
 
-<p>하지만 일반적으로 Machine Learning의 class를 나누는 방법은 Supervised Learning, Unsupervised Learning, Reinforcement Learning으로 나뉜다. 쉽게 생각해서 Supervised Learning, Unsupervised Learning의 차이점은 데이터에 Label이 있느냐 없느냐의 차이이다. <a href="/3" target="new">이전 글</a>에 내가 전에 설명한 적이 있으니 이에 대해 궁금한 점이 있다면 읽어보기를 권한다.</p>
+<p>하지만 일반적으로 Machine Learning의 class를 나누는 방법은 Supervised Learning, Unsupervised Learning, Reinforcement Learning으로 나뉜다. 쉽게 생각해서 Supervised Learning, Unsupervised Learning의 차이점은 데이터에 Label이 있느냐 없느냐의 차이이다. <a href="/3">이전 글</a>에 내가 전에 설명한 적이 있으니 이에 대해 궁금한 점이 있다면 읽어보기를 권한다.</p>
 
 
 <p>Reinforcement Learning은 &#8216;action&#8217;을 learning하는 것인데, 어떤 환경에서 내가 action을 취할 때 마다 다른 reward를 받는다고 할 때, 내가 어떻게 action을 취해야 reward를 maximize할 수 있는가를 Learning하는 학문이다. 이 부분도 cover하고 싶고 나도 관심이 있는 부분이지만 아마 이 스터디에서는 다루지 못하지 않을까싶다.</p>

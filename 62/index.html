@@ -115,7 +115,7 @@ $(function() {
 <h5>Entropy</h5>
 
 
-<p>엔트로피는 &#8216;정보&#8217;의 단위라고 할 수 있다. 어떤 distibution p(x)에서 generate되는 discrete random variable x가 있다고 해보자. 이 random variable x가 전달할 수 있는 정보량은 어떻게 계산할 수 있을까. 여기에서 &#8216;정보&#8217;란 얼만큼의 bit가 있어야 x에 대한 정보를 완벽하게 얻을 수 있는가로 정의해보자. 예를 들어서 fair한 동전 던지기의 정보량은 1이다. 한 비트만 있으면 반드시 그 동전 던지기의 distribution을 서술할 수 있다. 그러나 만약 fair coin이 아니라면 한 면이 나올 확률이 다른 면이 나올 확률보다 상대적으로 더 크기 때문에 한 비트보다도 더 적은 정보를 사용해 값을 맞추는 것이 가능해진다. 이런 정보의 양을 <a href="http://en.wikipedia.org/wiki/Entropy_(information_theory)" target="new">Entropy</a>라는 것으로 정의하게 되는데, 간단하게 생각하면 열역학2법칙의 그 엔트로피와 동일하다. 즉, 엔트로피가 커질수록 불확실성이 높아지고 정보량은 더 많아진다. Entropy는 \(H(x) = - \sum_x p(x) log_2 p(x) \)로 정의가 되며, 만약 p(x)가 0으로 가면 \(\log_2 p(x)\)는 음의 무한으로 발산하지만, p(x)가 0이 되는 속도가 더 빠르기 때문에 엔트로피는 0이 된다.</p>
+<p>엔트로피는 &#8216;정보&#8217;의 단위라고 할 수 있다. 어떤 distibution p(x)에서 generate되는 discrete random variable x가 있다고 해보자. 이 random variable x가 전달할 수 있는 정보량은 어떻게 계산할 수 있을까. 여기에서 &#8216;정보&#8217;란 얼만큼의 bit가 있어야 x에 대한 정보를 완벽하게 얻을 수 있는가로 정의해보자. 예를 들어서 fair한 동전 던지기의 정보량은 1이다. 한 비트만 있으면 반드시 그 동전 던지기의 distribution을 서술할 수 있다. 그러나 만약 fair coin이 아니라면 한 면이 나올 확률이 다른 면이 나올 확률보다 상대적으로 더 크기 때문에 한 비트보다도 더 적은 정보를 사용해 값을 맞추는 것이 가능해진다. 이런 정보의 양을 <a href="http://en.wikipedia.org/wiki/Entropy_(information_theory)">Entropy</a>라는 것으로 정의하게 되는데, 간단하게 생각하면 열역학2법칙의 그 엔트로피와 동일하다. 즉, 엔트로피가 커질수록 불확실성이 높아지고 정보량은 더 많아진다. Entropy는 \(H(x) = - \sum_x p(x) log_2 p(x) \)로 정의가 되며, 만약 p(x)가 0으로 가면 \(\log_2 p(x)\)는 음의 무한으로 발산하지만, p(x)가 0이 되는 속도가 더 빠르기 때문에 엔트로피는 0이 된다.</p>
 
 
 <p>그럼 왜 엔트로피는 이런 꼴을 하게 되는 것일까. 만약 우리가 전체 N개의 object들이 있고, 이 object들이 K개의 bin으로 나뉘어져있다고 해보자. 그리고 i번째 bin에 들어갈 수 있는 object의 개수를 \(n_i\)라고 했을 때, object들이 bin에 들어갈 수 있는 permutation의 개수는 \(W = \frac{N!}{\prod_i n_i!}\)와 같으며 이를 multiplicity라고 한다. 엔트로피란 이 multiplicity에 비례하는, 정확히는 log를 취한 값을 엔트로피라고 하게 된다. 즉 Entropy H는 multiplicity W에 대해 다음과 같이 표현된다.</p>
@@ -124,7 +124,7 @@ $(function() {
 <p>\[H = \frac{1}{N}\ln W = \frac{1}{N}\ln N! - \frac{1}{N}\sum_i \ln n_i ! \]</p>
 
 
-<p>이때 \(\lim N \to \infty \) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation" target="new">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
+<p>이때 \(\lim N \to \infty \) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
 
 
 <p>\[H = -\lim_{N \to \infty} \sum_i \left( \frac{n_i}{N} \right) \ln \left( \frac{n_i}{N} \right) = - \sum_i p_i \ln p_i \]</p>
@@ -133,7 +133,7 @@ $(function() {
 <p>이는 위에서 정의한 엔트로피의 값과 일치한다.</p>
 
 
-<p>그런데 이 값은 discrete한 random variable에 대해 정의된 값이고 continous한 random variable x에 대해서는 <a href="http://en.wikipedia.org/wiki/Differential_entropy" target="new">differencial entropy</a>라는 정의할 수 있다. <a href="http://en.wikipedia.org/wiki/Mean_value_theorem" target="new">평균값 정리</a>에 의해서 우리는 다음을 만족하는 value \(x_i\)를 반드시 찾을 수 있다</p>
+<p>그런데 이 값은 discrete한 random variable에 대해 정의된 값이고 continous한 random variable x에 대해서는 <a href="http://en.wikipedia.org/wiki/Differential_entropy">differencial entropy</a>라는 정의할 수 있다. <a href="http://en.wikipedia.org/wiki/Mean_value_theorem">평균값 정리</a>에 의해서 우리는 다음을 만족하는 value \(x_i\)를 반드시 찾을 수 있다</p>
 
 
 <p>\[ \int_{i\Delta}^{(i+1)\Delta} p(x) dx = p(x_i) \Delta\]</p>
@@ -157,7 +157,7 @@ $(function() {
 <p>\[H(x) = -\int p(x) \ln p(x) dx\]</p>
 
 
-<p>마지막으로 random variable이 x,y 두 개가 있고 이 둘의 joint distribution p(x,y)가 있다고 해보자. 우리가 알고 있는 정보는 x의 value라고 했을 때 우리는 y의 information의 양을 계산할 수 있을까? 이를 <a href="http://en.wikipedia.org/wiki/Conditional_entropy" target="new">Conditional Entropy</a>라고 하는데 이때 y에 대해 필요한 additioanl information은 \(p(y|x)\)이며, x와 y의 확률은 p(x,y)이므로 Conditional Entropy는 아래와 같이 정의된다.</p>
+<p>마지막으로 random variable이 x,y 두 개가 있고 이 둘의 joint distribution p(x,y)가 있다고 해보자. 우리가 알고 있는 정보는 x의 value라고 했을 때 우리는 y의 information의 양을 계산할 수 있을까? 이를 <a href="http://en.wikipedia.org/wiki/Conditional_entropy">Conditional Entropy</a>라고 하는데 이때 y에 대해 필요한 additioanl information은 \(p(y|x)\)이며, x와 y의 확률은 p(x,y)이므로 Conditional Entropy는 아래와 같이 정의된다.</p>
 
 
 <p>\[H(y|x) = - \int \int p(y,x) \ln p(y|x) dy dx\]</p>
@@ -172,7 +172,7 @@ $(function() {
 <h5>KL divergence</h5>
 
 
-<p>어떤 probability distribution p(x)와 p(y)가 있다고 했을 때 이 둘의 차이, 혹은 distance를 정의할 수는 없을까. 예를 들어 p(x)라는 우리가 모르는 unknown distribution이 있을 때, 우리가 추측한 \(p(\hat x)\)와 true distribution p(x)가 얼마나 차이나는지를 계산할 수 있는 방법은 없을까. 만약 우리가 q(x)를 사용해서 x를 transmitting하는 coding scheme을 construct했다고 해보자. 그리고 true distribution을 p(x)였다고 했을 때, q(x)를 사용하였을 때 얼마나 더 많은 정보량이 필요할 것인지 measure할 수 있을 것이다. 이를 <a href="http://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence" target="new">Kullback-Leibler divergence</a> 혹은 KL divergence라고 하며 수식은 아래와 같다.</p>
+<p>어떤 probability distribution p(x)와 p(y)가 있다고 했을 때 이 둘의 차이, 혹은 distance를 정의할 수는 없을까. 예를 들어 p(x)라는 우리가 모르는 unknown distribution이 있을 때, 우리가 추측한 \(p(\hat x)\)와 true distribution p(x)가 얼마나 차이나는지를 계산할 수 있는 방법은 없을까. 만약 우리가 q(x)를 사용해서 x를 transmitting하는 coding scheme을 construct했다고 해보자. 그리고 true distribution을 p(x)였다고 했을 때, q(x)를 사용하였을 때 얼마나 더 많은 정보량이 필요할 것인지 measure할 수 있을 것이다. 이를 <a href="http://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler divergence</a> 혹은 KL divergence라고 하며 수식은 아래와 같다.</p>
 
 
 <p>\[KL(p\|\|q) = - \int p(x) \ln q(x) - \left( -\int p(x) \ln p(x) dx \right) &#92;&#92; = -p(x) \ln \left[ \frac{q(x)}{p(x)} \right] dx \]</p>
@@ -190,7 +190,7 @@ $(function() {
 <h5>Mutual Information</h5>
 
 
-<p><a href="http://en.wikipedia.org/wiki/Mutual_information" target="new">Mutual Information</a>은 두 random variable들이 얼마나 mutual dependence한지를 measure하는 방법을 의미한다. 만약 random variable x와 y가 independent하다면 joint distribution p(x,y) 는 p(x,y) = p(x)p(y) 로 주어지게 될 것이며, 만약 둘이 dependent한 경우에는 두 값이 달라질 것이다. 그렇다면 만약 true distribution을 p(x,y)라고 했을 때, 새롭게 우리가 x와 y가 independent하다고 estimate하고 구한 p(x)p(y)와의 KL-divergence를 구할 수 있지 않을까? 당연히 이 값은 x와 y가 independent할 때만 0이고 그 이외에는 항상 0보다 크다. 즉, 두 random variable이 얼마나 mutually dependent한가, 얼마나 Mutual하게 information을 많이 가지고 있느냐를 측정할 수 있는 도구가 되므로 이를 Mutual information이라 한다. 수식으로 표현해보면 아래와 같다.</p>
+<p><a href="http://en.wikipedia.org/wiki/Mutual_information">Mutual Information</a>은 두 random variable들이 얼마나 mutual dependence한지를 measure하는 방법을 의미한다. 만약 random variable x와 y가 independent하다면 joint distribution p(x,y) 는 p(x,y) = p(x)p(y) 로 주어지게 될 것이며, 만약 둘이 dependent한 경우에는 두 값이 달라질 것이다. 그렇다면 만약 true distribution을 p(x,y)라고 했을 때, 새롭게 우리가 x와 y가 independent하다고 estimate하고 구한 p(x)p(y)와의 KL-divergence를 구할 수 있지 않을까? 당연히 이 값은 x와 y가 independent할 때만 0이고 그 이외에는 항상 0보다 크다. 즉, 두 random variable이 얼마나 mutually dependent한가, 얼마나 Mutual하게 information을 많이 가지고 있느냐를 측정할 수 있는 도구가 되므로 이를 Mutual information이라 한다. 수식으로 표현해보면 아래와 같다.</p>
 
 
 <p>\[I(x,y) = KL(p(x,y)\|\|p(x)p(y) &#92;&#92; = - \int \int p(x,y) \ln \left( \frac{p(x)p(y)}{p(x,y)} \right) dx dy\]</p>

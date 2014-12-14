@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Research | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/research/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-12-13T05:08:40+09:00</updated>
+  <updated>2014-12-14T13:19:55+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -18,13 +18,13 @@
     <link href="http://SanghyukChun.github.io/38/"/>
     <updated>2014-03-03T15:21:00+09:00</updated>
     <id>http://SanghyukChun.github.io/38</id>
-    <content type="html"><![CDATA[<p>KNN은 machine learning에서 general하게 많이 쓰이는 알고리듬이다. 이 알고리듬은 아이디어도 매우 간단하고 구현하기도 간단하고 성능도 어느 정도 이상 나오는 꽤나 훌륭한 알고리듬이기 때문이다. <a href="http://SanghyukChun.github.io/37" target="new">이전 글</a>에서 distance metric learning의 대략적인 컨셉을 설명했었고, 그 중에서도 optimization을 통해 metric을 learning하는 category에 대해 간략하게 언급했었다. 이 글에서는 그런 알고리듬 중에서 LMNN (Large Margin Nearest Neighbors) 그리고 이 방법의 단점을 보완한 LMCA (Large Margin Component Analysis) 라는 알고리듬을 소개할 것이다.</p>
+    <content type="html"><![CDATA[<p>KNN은 machine learning에서 general하게 많이 쓰이는 알고리듬이다. 이 알고리듬은 아이디어도 매우 간단하고 구현하기도 간단하고 성능도 어느 정도 이상 나오는 꽤나 훌륭한 알고리듬이기 때문이다. <a href="http://SanghyukChun.github.io/37">이전 글</a>에서 distance metric learning의 대략적인 컨셉을 설명했었고, 그 중에서도 optimization을 통해 metric을 learning하는 category에 대해 간략하게 언급했었다. 이 글에서는 그런 알고리듬 중에서 LMNN (Large Margin Nearest Neighbors) 그리고 이 방법의 단점을 보완한 LMCA (Large Margin Component Analysis) 라는 알고리듬을 소개할 것이다.</p>
 
 
 <h5>LMNN - Introduction</h5>
 
 
-<p>먼저 LMNN이라는 아이디어는 2006년 <a class="red tip" title="Advances in Neural Information Processing Systems">NIPS</a>에 발표된 Distance metric learning for large margin nearest neighbor classification이라는 논문에 소개된 기법이다. 이 알고리듬은 distance metric learning에 대해 설명했던 <a href="http://SanghyukChun.github.io/37" target="new">이전 글</a>에 잠깐 언급했던 Mahalanobis Metric을 직접 학습하는 알고리듬이다. 이 Metric은 지난 번에 설명했기 때문에 자세한 설명은 생략하도록 하겠다.</p>
+<p>먼저 LMNN이라는 아이디어는 2006년 <a class="red tip" title="Advances in Neural Information Processing Systems">NIPS</a>에 발표된 Distance metric learning for large margin nearest neighbor classification이라는 논문에 소개된 기법이다. 이 알고리듬은 distance metric learning에 대해 설명했던 <a href="http://SanghyukChun.github.io/37">이전 글</a>에 잠깐 언급했던 Mahalanobis Metric을 직접 학습하는 알고리듬이다. 이 Metric은 지난 번에 설명했기 때문에 자세한 설명은 생략하도록 하겠다.</p>
 
 
 <p>이 논문에서는 거리가 제곱근 형태가 아니라 제곱 들의 합으로 표현을 했다. 즉, Mahalanobis Metric을 \(D(\vec x_i , \vec x_j )=(\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j )\) 꼴로 표현하게 된다. 혹은 \(D(\vec x_i , \vec x_j )= ||L(\vec x_i - \vec x_j)||^2 \)으로 표현된다.</p>
@@ -33,7 +33,7 @@
 <h5>LMNN - Cost function</h5>
 
 
-<p>이 방법의 핵심 아이디어는, 위에서 표현한 Metric을 평가하는 Cost function을 design하고 이 function을 minimize시키는 Metric을 찾아내는 것이다. 매우 간단한 컨셉이고, 만약 운이 좋아서 optimization 문제가 반드시 하나의 global solution으로 수렴한다는 것이 보장만 된다면 가장 최고의 성능을 낼 수 있을 것이라는 것은 자명한 일이다. (<a href="http://SanghyukChun.github.io/31/" target="new">이전에 작성한 글</a>에서 이러한 좋은 문제 중 하나인 convex optimization에 대해 간략하게 언급했었다.) 자, 그러면 이 논문에서 Cost function을 어떻게 정의했는지 한 번 알아보자.</p>
+<p>이 방법의 핵심 아이디어는, 위에서 표현한 Metric을 평가하는 Cost function을 design하고 이 function을 minimize시키는 Metric을 찾아내는 것이다. 매우 간단한 컨셉이고, 만약 운이 좋아서 optimization 문제가 반드시 하나의 global solution으로 수렴한다는 것이 보장만 된다면 가장 최고의 성능을 낼 수 있을 것이라는 것은 자명한 일이다. (<a href="http://SanghyukChun.github.io/31/">이전에 작성한 글</a>에서 이러한 좋은 문제 중 하나인 convex optimization에 대해 간략하게 언급했었다.) 자, 그러면 이 논문에서 Cost function을 어떻게 정의했는지 한 번 알아보자.</p>
 
 
 <p>$$ \varepsilon (\mathbf L ) = \sum_{ij} \eta_{ij} ||L(\vec x_i - \vec x_j)||^2 + c \sum_{ijl} \eta_{ij} (1-y_{il}) h[ 1 + ||L(\vec x_i - \vec x_j)||^2 - ||L(\vec x_i - \vec x_l)||^2 ] $$</p>
@@ -66,7 +66,7 @@
 <p>위의 식에 대해서 간단히 언급을 하자면, 모든 i와 j들에 대해서, label이 다른 l과의 거리보다 label이 같은 데이터들끼리의 거리가 무조건 1만큼은 작아야한다는 식이다. 이 식을 살짝 전개하면 원래 cost function의 오른쪽 항과 같은 모양을 얻을 수 있을 것이다.</p>
 
 
-<p>자! 이제 cost function을 정의했으니 optimize를 해보자. 근데 문제가 하나 있는데, 이 cost function은 <a class="red tip" title="Convex Optimization은 solution이 무조건 하나다. 나중에 블로그에서 자세하게 다뤄보도록 하겠다.">convex</a>가 아니다. 때문에 L에 대해 문제를 해결했을 때 정확한 global minimum을 찾을 수가 없게 된다. 하지만 이 논문은 아주 간단하게 이 문제를 convex 문제로 바꾸게 된다. convex 문제 중에서 semidefinite programming이라는 문제가 있는데 (간단하게 SDP라고 한다) 이 문제는 '어떤 조건'을 가장 잘 만족하는 positive semidefinite matrix를 찾는 문제이다. 이 문제에 대해 언급하면 포스트가 너무 길어지니 <a href="http://en.wikipedia.org/wiki/Semidefinite_programming" target="new">위키 링크</a>로 대체하도록 하겠다.</p>
+<p>자! 이제 cost function을 정의했으니 optimize를 해보자. 근데 문제가 하나 있는데, 이 cost function은 <a class="red tip" title="Convex Optimization은 solution이 무조건 하나다. 나중에 블로그에서 자세하게 다뤄보도록 하겠다.">convex</a>가 아니다. 때문에 L에 대해 문제를 해결했을 때 정확한 global minimum을 찾을 수가 없게 된다. 하지만 이 논문은 아주 간단하게 이 문제를 convex 문제로 바꾸게 된다. convex 문제 중에서 semidefinite programming이라는 문제가 있는데 (간단하게 SDP라고 한다) 이 문제는 '어떤 조건'을 가장 잘 만족하는 positive semidefinite matrix를 찾는 문제이다. 이 문제에 대해 언급하면 포스트가 너무 길어지니 <a href="http://en.wikipedia.org/wiki/Semidefinite_programming">위키 링크</a>로 대체하도록 하겠다.</p>
 
 
 <p>그러면 이 문제를 어떻게 SDP로 바꿀 수 있을까? 해결법은 Metric을 L로 표현하는 대신에 M으로 표현하고, 이 M에 대해 문제를 푸는 것이다. 이렇게 표현하게 되면 문제가 아래와 같이 변하게 되며 이는 SDP로 간단하게 해결할 수 있는 문제가 된다.</p>
@@ -90,7 +90,7 @@
 <h5>LMNN - Result</h5>
 
 
-<p>자 이제 LMNN의 실제 performance를 measure해보자. 참고로 이 알고리듬은 저자가 직접 버전관리하는 소스코드가 존재한다. <a href="http://www.cse.wustl.edu/~kilian/code/code.html" target="new">링크</a>에서 간단하게 다운로드 받을 수 있다. 이 Metric learning이 well-working하는지 판단하기 위해서 이 논문에서는 총 4개의 알고리듬을 비교한다. (1) Euclidean distance를 사용하는 기존의 KNN (2) Optimization을 통해 얻은 Metric을 사용해 Mahaloanobis distance를 사용한 KNN (3) 앞에서 얻은 Metric을 계산할 때 사용한 Cost function을 가장 최소화시키는 label을 고르는 Energy-based classification (4) Multiclass SVM 이렇게 총 네가지 알고리듬을 사용한다. 그런데, 만약 dimension이 높은 경우에는 위의 Optimization식이 Overfitting이 될 위험성이 존재한다. 따라서 이를 방지하기 위하여 feature가 많은 문제는 PCA를 사용하여 dimension을 낮추는 작업을 하게 되는데, 이 문제가 결국 다음에 설명할 LMCA의 Motive가 된다. 아무튼 이런 방법을 사용하여 얻은 결과는 아래 표와 같다.</p>
+<p>자 이제 LMNN의 실제 performance를 measure해보자. 참고로 이 알고리듬은 저자가 직접 버전관리하는 소스코드가 존재한다. <a href="http://www.cse.wustl.edu/~kilian/code/code.html">링크</a>에서 간단하게 다운로드 받을 수 있다. 이 Metric learning이 well-working하는지 판단하기 위해서 이 논문에서는 총 4개의 알고리듬을 비교한다. (1) Euclidean distance를 사용하는 기존의 KNN (2) Optimization을 통해 얻은 Metric을 사용해 Mahaloanobis distance를 사용한 KNN (3) 앞에서 얻은 Metric을 계산할 때 사용한 Cost function을 가장 최소화시키는 label을 고르는 Energy-based classification (4) Multiclass SVM 이렇게 총 네가지 알고리듬을 사용한다. 그런데, 만약 dimension이 높은 경우에는 위의 Optimization식이 Overfitting이 될 위험성이 존재한다. 따라서 이를 방지하기 위하여 feature가 많은 문제는 PCA를 사용하여 dimension을 낮추는 작업을 하게 되는데, 이 문제가 결국 다음에 설명할 LMCA의 Motive가 된다. 아무튼 이런 방법을 사용하여 얻은 결과는 아래 표와 같다.</p>
 
 
 <p><img src="/images/post/38-1.png" width="600"></p>
@@ -145,7 +145,7 @@
 <ul>
     <li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006) .InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li>
     <li>Torresani, L., & Lee, K. (2007). Large margin component analysis. Advances in Neural Information Processing</li>
-    <li><a href="http://www1.cse.wustl.edu/~xuzx/research/publications/gb-lmnn.pdf" target="new">Kedem, D., Xu, Z., & Weinberger, K. (n.d.). Gradient Boosted Large Margin Nearest Neighbors</a></li>   
+    <li><a href="http://www1.cse.wustl.edu/~xuzx/research/publications/gb-lmnn.pdf">Kedem, D., Xu, Z., & Weinberger, K. (n.d.). Gradient Boosted Large Margin Nearest Neighbors</a></li>    
 </ul>
 
 ]]></content>
@@ -159,10 +159,10 @@
     <content type="html"><![CDATA[<p>Machine Learning 분야에는 KNN 등의 input data의 <a class="red tip" title="간단하게 생각해서 distance function이라 생각하면 된다. 자세한 설명은 뒤에서 계속">distance metric</a>을 어떻게 설정하냐 따라에 크게 영향을 받는 알고리듬들이 종종 존재한다. 그런데, 대부분 이런 method들에서 주로 사용하는 distance metric은 Euclidean distance로, 이 metric은 근본적으로 데이터 하나와 다른 데이터 하나와의 관계만을 나타내기 때문에 실제 distribution으로 존재하는 데이터에는 적합하지 않은 경우가 많다. 때문에 데이터들의 분포 등을 고려하여 이런 '거리'를 새로 정의하는 분야가 존재하는데 이를 일컬어 Distance Metric Learning이라 한다.</p>
 
 
-<p>그렇다면 distance metric이란 무엇인가부터 간단하게 짚고 넘어가자. Distance metric은 쉽게 생각하면 distance를 정의하는 방법이라고 할 수 있다. 몇 가지 규칙이 존재하는데, 자세한 내용은 <a href="http://en.wikipedia.org/wiki/Metric_(mathematics)" target="new">위키피디아 페이지</a>를 참고하길 바란다. 역시 가장 간단한 예시는 Euclidean distance로, 우리가 가장 많이 알고 있는 거리를 측정하는 방법일 것이다. 이 함수는 간단하게 \(d(p,q)=\sqrt{(p_1-q_1)^2+(p_2-q_2)^2+...}\)로 정의된다. 그 밖에도 두 점의 값이 정확히 일치하면 1, 일치하지 않는다면 0으로 표시하는 binary distance등도 존재한다.</p>
+<p>그렇다면 distance metric이란 무엇인가부터 간단하게 짚고 넘어가자. Distance metric은 쉽게 생각하면 distance를 정의하는 방법이라고 할 수 있다. 몇 가지 규칙이 존재하는데, 자세한 내용은 <a href="http://en.wikipedia.org/wiki/Metric_(mathematics)">위키피디아 페이지</a>를 참고하길 바란다. 역시 가장 간단한 예시는 Euclidean distance로, 우리가 가장 많이 알고 있는 거리를 측정하는 방법일 것이다. 이 함수는 간단하게 \(d(p,q)=\sqrt{(p_1-q_1)^2+(p_2-q_2)^2+...}\)로 정의된다. 그 밖에도 두 점의 값이 정확히 일치하면 1, 일치하지 않는다면 0으로 표시하는 binary distance등도 존재한다.</p>
 
 
-<p>이 밖에도 중요한 distance metric으로는 Mahalanobis Distance Metric이라는 것이 있다. 이 distance metric은 Euclidean distance metric이 data set의 correlation을 하나도 고려하지 않은 문제점을 해결할 수 있고, 또한 scale-invariant한 특성을 가지고 있다. 이 metric은 \(d(p,q)=\sqrt{(\vec p - \vec q)^\top \Omega (\vec p - \vec q)}\)로 정의된다. 이 때 \(\Omega\)는 semidefinite matrix이다. <a href="http://en.wikipedia.org/wiki/Mahalanobis_distance" target="new">위키피디아</a>에서 발췌한 보다 정확한 정의는 앞서 나왔던 수식에서 \(\Omega\)가 covariance matrix인 metric이다. 따라서 이 metric이 data set의 correlation을 포함하여 거리를 표현할 수 있는 것이다. 하지만 실제 분포를 알 수 없는 임의의 데이터들에 대해서 올바른 covariance matrix를 계산하는 것은 매우 어렵다. 따라서 이 Mahalanobis metric의 \(\Omega\)를 learning하는 method들도 존재하는데, 대표적으로 LMNN(Large Margin Nearest Neighbor) classification이 있다. 이 논문에 대해서는 추후에 따로 포스트를 하도록 하겠다.</p>
+<p>이 밖에도 중요한 distance metric으로는 Mahalanobis Distance Metric이라는 것이 있다. 이 distance metric은 Euclidean distance metric이 data set의 correlation을 하나도 고려하지 않은 문제점을 해결할 수 있고, 또한 scale-invariant한 특성을 가지고 있다. 이 metric은 \(d(p,q)=\sqrt{(\vec p - \vec q)^\top \Omega (\vec p - \vec q)}\)로 정의된다. 이 때 \(\Omega\)는 semidefinite matrix이다. <a href="http://en.wikipedia.org/wiki/Mahalanobis_distance">위키피디아</a>에서 발췌한 보다 정확한 정의는 앞서 나왔던 수식에서 \(\Omega\)가 covariance matrix인 metric이다. 따라서 이 metric이 data set의 correlation을 포함하여 거리를 표현할 수 있는 것이다. 하지만 실제 분포를 알 수 없는 임의의 데이터들에 대해서 올바른 covariance matrix를 계산하는 것은 매우 어렵다. 따라서 이 Mahalanobis metric의 \(\Omega\)를 learning하는 method들도 존재하는데, 대표적으로 LMNN(Large Margin Nearest Neighbor) classification이 있다. 이 논문에 대해서는 추후에 따로 포스트를 하도록 하겠다.</p>
 
 
 <p>아무튼, distance metric learning은 input data space에서 data들에 가장 적합한 형태의 어떤 metric을 learning하는 알고리듬이다. 여기에서 data는 각 pair 별로 similar/dissimilar가 정의되어 있는 형태의 데이터이다. 즉, metric learning은 similar한 point끼리는 더 가까운 거리로 판단하게 하고, dissimilar한 point는 더 먼 거리로 판단하게 하는 어떤 metric을 학습하는 것이다. 당연히 KNN 등의 알고리듬들은 그 성능이 크게 개선될 수 있다.</p>
@@ -182,7 +182,7 @@
 <p>내가 읽은 두 개의 survery에서는 (Liu Yang, Distance Metric Learning: A Comprehensive Survey, 2005 그리고 Liu Yang, An Overview of Distance Metric Learning, 2007) 이 두 가지 분류 뿐 아니라 두 가지 분류를 더 추가하였다. 하나는 Maximum margin based distance learning이고, 또 하나는 kernel method이다. 일단 kernel 쪽은 내가 잘 모르기도 하고, 내 관심사는 maximum margin based distance learning이므로, 이 부분에 조금 더 집중해서 설명하도록 하겠다.</p>
 
 
-<p>위의 survey에서 정의하는 Maximum margin based learning은 다음과 같다. <a class="red">"Formulate distance metric learning as a constrained convex programming problem, and attempt to learn complete distance metric from training data"</a> 즉, Convex optimization을 통해서 가장 최적의 metric을 찾아내는 method라는 것이다. 여기에서 convex optimization은 이전에 블로그에서 다룬 적이 없기 때문에 나중에 이에 대한 글을 쓰게 되면 여기에 추가 랑크를 달도록 하고 지금은 일단 위키피디아 링크로 설명을 대체하도록 하겠다. <a href="http://en.wikipedia.org/wiki/Convex_optimization" target="new">링크</a></p>
+<p>위의 survey에서 정의하는 Maximum margin based learning은 다음과 같다. <a class="red">"Formulate distance metric learning as a constrained convex programming problem, and attempt to learn complete distance metric from training data"</a> 즉, Convex optimization을 통해서 가장 최적의 metric을 찾아내는 method라는 것이다. 여기에서 convex optimization은 이전에 블로그에서 다룬 적이 없기 때문에 나중에 이에 대한 글을 쓰게 되면 여기에 추가 랑크를 달도록 하고 지금은 일단 위키피디아 링크로 설명을 대체하도록 하겠다. <a href="http://en.wikipedia.org/wiki/Convex_optimization">링크</a></p>
 
 
 <p>이 방법은 주어진 input에 대해서 가장 최고의 performance를 내는 metric을 찾아내기 때문에 가장 성능이 좋아보일 것 같지만, 실제로는 몇 가지 문제점들을 가지고 있다. 하나, convex optimization은 대부분 gradient descent method를 사용하여 그 계산하는데, 이 계산량이 다른 method들에 비해서 많이 비싸다. 둘째, input training data들에 대해서 optimize한 결과로 metric을 정의하기 때문에 overfitting 문제가 발생할 수 있다. 특히 이 overfitting은 dimesion이 높아질 수록, traing sample의 숫자가 줄어들 수록 더더욱 문제가 된다. 때문에 이런 문제점을 해결하기 위해서 dimension을 reduction한 이후에 metric을 learning하는 등의 technique들이 사용되고 있다. 하지만 이 역시 문제가 있는데, 이 문제에 대해서는 나중에 포스팅하게 될 LMCA 논문에서 다루도록 하겠다.</p>
@@ -198,10 +198,10 @@
 
 
 <ul>
-    <li><a href="http://www.iip.ist.i.kyoto-u.ac.jp/member/cuturi/Teaching/KAIST/kaist_2013.pdf" target="new">Marco Cuturi. KAIST Machine Learning Tutorial Metrics and Kernels A few recent topics, 2013</a></li>
-    <li><a href="http://cseweb.ucsd.edu/~naverma/talks/metric_learning_tutorial_verma.pdf" target="new">Nakul Verma, A tutorial on Metric Learning with some recent advances</a></li>
-    <li><a href="http://www-bcf.usc.edu/~bellet/misc/metric_learning_tutorial.pdf" target="new">Aurelien Ballet, Tutorial on Metric Learning, 2013</a></li>
-    <li><a href="http://compscicenter.ru/sites/default/files/materials/2012_05_03_MachineLearning_lecture_09.pdf" target="new">Brian Kulis. Tutorial on Metric Learning. International Conference on Machine Learning (ICML) 2010</a></li>
+    <li><a href="http://www.iip.ist.i.kyoto-u.ac.jp/member/cuturi/Teaching/KAIST/kaist_2013.pdf">Marco Cuturi. KAIST Machine Learning Tutorial Metrics and Kernels A few recent topics, 2013</a></li>
+    <li><a href="http://cseweb.ucsd.edu/~naverma/talks/metric_learning_tutorial_verma.pdf">Nakul Verma, A tutorial on Metric Learning with some recent advances</a></li>
+    <li><a href="http://www-bcf.usc.edu/~bellet/misc/metric_learning_tutorial.pdf">Aurelien Ballet, Tutorial on Metric Learning, 2013</a></li>
+    <li><a href="http://compscicenter.ru/sites/default/files/materials/2012_05_03_MachineLearning_lecture_09.pdf">Brian Kulis. Tutorial on Metric Learning. International Conference on Machine Learning (ICML) 2010</a></li>
 </ul>
 
 
@@ -221,7 +221,7 @@
     <content type="html"><![CDATA[<p>학부를 들어와서 선배들이나 교수님들에게 들었던 많은 잔소리가 있지만 그 중에서 가장 이해가 안되던 잔소리는 '수학공부 열심히 해라' 였다. 학부 입학부터 지겹게 듣던 얘기지만 그 당시 나는 '아니 나는 전자공학을 공부할건데 도대체 수학이랑 무슨 상관이지?' 라는 생각을 가지고 있었다. 학부 4년 동안 전공 공부를 해봐도 내 전공은 수학과 전혀 상관이 없어보였다. 그러다가 학부 5학년이 되어 내 진로가 컴퓨터 쪽으로 바뀌게 되면서 그때부터 다시 그 잔소리가 나를 따라오기 시작했다. '프로그래밍을 잘하려면 수학을 잘 해야해' 음.. 도대체 프로그래밍이랑 수학은 또 무슨 관계란 말인가. 그리고 이제 학부의 마지막을 바라보고 석사에 진학하기 직전인 지금 돌이켜 생각해보니 역시 학부 떄는 수학 공부를 열심히 해야한다.</p>
 
 
-<p>수학을 잘 해야하는 이유는 사실 굉장히 단순하다. 대부분의 engineering 문제를 수학으로 접근하면 접근 자체가 쉬워지거나, 혹은 확신할 수 없었던 문제를 확신할 수 있다. 예를 하나 들어보자. 어느 멀리 떨어진 지점과 디지털 신호로 통신을 해야하는 상황이다. 그런데 통신망에 어느 정도인지는 모르지만 노이즈가 존재해서 가끔씩 데이터가 제대로 도달할 수 없는 상황이라고 해보자. 만약 데이터가 제대로 도달하지 않았다면? 그렇다면 보내는 쪽에서 데이터를 다시 보내야 할 것이다. 그런데 문제는, 이렇게 재전송을 통해서 내가 보내고 싶은 모든 정보를 안전하게 유한한 시간 안에 보낼 수 있는지에 대한 확신이 없다는 점이다. 실제로 1950년 이전에는 노이즈가 존재하는 통신망에서 정보를 안전하게 유한한 시간 내로 보낼 수 있다는 사실이 증명이 되지 않아 통신을 위한 디지털 신호처리 분야가 존재하지 않았다. 그런데 1949년 클로드 섀넌이 '화기 제어 시스템에서 데이터의 예측과 평활' 이라는 논문을 통해 방금 말한 상황에서 유한하게 잡음이 있는 통신망으로 디지털 신호를 보낼 수 있음을 수학적으로 증명해내었다. 만약 섀넌이 이를 수학적으로 증명하지 않았다면 신호 처리 분야는 존재하지 않았거나 매우 늦게 시작되었을 것이다. 이전에 내가 적었던 포스트 중에서 <a target="new" href="http://SanghyukChun.github.io/14#Gradient_Descent">Gradient Descent Method에 대해 간략하게 다룬 글</a>이 있었다. 그 글에서도 언급했듯, 경우에 따라서는 Gradient Descent Method Algorithm자체가 converge하지 않을 수도 있다. 이를 알지 못한다면 아직 optima를 향해 계속 step이 진행 중인 것인지 아니면 정말 converge하지 않는 것인지 알 수 있는 방법이 없다. (Gradient descent method는 local한 method이기 때문에 전체 function의 모양 등을 알 수가 없다.) 따라서 만약 우리가 이 method가 converge하는 조건을 미리 알 수 있다면 쓸데없는 계산없이 필요할 때에만 해당 method를 적용하는 것이 가능할 것이다. (혹시 그 정답을 궁금해 하는 사람이 있을까봐 정답을 적어주자면 <a class="red tip" title="링크를 클릭하면 굉장히 수학적으로 이를 풀어놓은 설명을 볼 수 있다." href="http://blogs.princeton.edu/imabandit/2013/04/04/orf523-strong-convexity/" target="new">l-Lipschitz &amp; Strongly Convex function</a>이면 Gradient descent method가 반드시 Global optima로 수렴하게 된다.)</p>
+<p>수학을 잘 해야하는 이유는 사실 굉장히 단순하다. 대부분의 engineering 문제를 수학으로 접근하면 접근 자체가 쉬워지거나, 혹은 확신할 수 없었던 문제를 확신할 수 있다. 예를 하나 들어보자. 어느 멀리 떨어진 지점과 디지털 신호로 통신을 해야하는 상황이다. 그런데 통신망에 어느 정도인지는 모르지만 노이즈가 존재해서 가끔씩 데이터가 제대로 도달할 수 없는 상황이라고 해보자. 만약 데이터가 제대로 도달하지 않았다면? 그렇다면 보내는 쪽에서 데이터를 다시 보내야 할 것이다. 그런데 문제는, 이렇게 재전송을 통해서 내가 보내고 싶은 모든 정보를 안전하게 유한한 시간 안에 보낼 수 있는지에 대한 확신이 없다는 점이다. 실제로 1950년 이전에는 노이즈가 존재하는 통신망에서 정보를 안전하게 유한한 시간 내로 보낼 수 있다는 사실이 증명이 되지 않아 통신을 위한 디지털 신호처리 분야가 존재하지 않았다. 그런데 1949년 클로드 섀넌이 '화기 제어 시스템에서 데이터의 예측과 평활' 이라는 논문을 통해 방금 말한 상황에서 유한하게 잡음이 있는 통신망으로 디지털 신호를 보낼 수 있음을 수학적으로 증명해내었다. 만약 섀넌이 이를 수학적으로 증명하지 않았다면 신호 처리 분야는 존재하지 않았거나 매우 늦게 시작되었을 것이다. 이전에 내가 적었던 포스트 중에서 <a href="http://SanghyukChun.github.io/14#Gradient_Descent">Gradient Descent Method에 대해 간략하게 다룬 글</a>이 있었다. 그 글에서도 언급했듯, 경우에 따라서는 Gradient Descent Method Algorithm자체가 converge하지 않을 수도 있다. 이를 알지 못한다면 아직 optima를 향해 계속 step이 진행 중인 것인지 아니면 정말 converge하지 않는 것인지 알 수 있는 방법이 없다. (Gradient descent method는 local한 method이기 때문에 전체 function의 모양 등을 알 수가 없다.) 따라서 만약 우리가 이 method가 converge하는 조건을 미리 알 수 있다면 쓸데없는 계산없이 필요할 때에만 해당 method를 적용하는 것이 가능할 것이다. (혹시 그 정답을 궁금해 하는 사람이 있을까봐 정답을 적어주자면 <a class="red tip" title="링크를 클릭하면 굉장히 수학적으로 이를 풀어놓은 설명을 볼 수 있다." href="http://blogs.princeton.edu/imabandit/2013/04/04/orf523-strong-convexity/">l-Lipschitz &amp; Strongly Convex function</a>이면 Gradient descent method가 반드시 Global optima로 수렴하게 된다.)</p>
 
 
 <p>그러나 사실 모든 연구자들이 문제를 수학적으로 접근하지는 않는다. 수학으로 문제를 해결하는 것은 이론을 연구하는 연구자들이 주로 하는 일이지 시스템을 디자인하거나 새로운 회로를 설계하는 등의 연구를 하는 경우에는 수학을 사용해 문제를 해결하지는 않는다. 나 역시 수학을 직접 사용하지 않는 사람 중 하나였고 (연구를 하는 것은 아니었지만) 수학이 나에게 필요한 이유를 이해하지 못했었다. 하지만 수학은 단순히 문제를 푸는 수단일 뿐 아니라 문제를 접근하고 해결하는 좋은 이념이 되기도 한다. 무슨 얘기이냐 하면, 수학 자체가 좋은 문제 해결 수단으로 쓰일 수 있기 때문에 수학 공부를 열심히 해야하는 것은 맞지만, 수학 문제를 직접적으로 푸는 것이 아니더라도, 수학적 문제 해결 방식을 많이 접하다보면 다른 문제를 해결할 때에도 도움이 된다는 의미이다. 수학으로 문제를 해결하게 되면 반드시 논리가 성립해야 다음 단계로 진행할 수 있다. z = x + y 라는 것이 확실해야 a + z = a + x + y 라고 할 수 있는 것이지, 갑자기 아무 조건도 없이 a + z = x가 될 수는 없다. 즉, 수학적으로 문제를 해결한다면 (과정이 옳다면) 논리에 빈틈이 없어지고 그 문제는 반박할 여지 없이 완벽한 해답을 가지게 되는 것이다. 꼭 위에서 언급했던 대로 수학으로 문제를 해결하지 않더라도 이런 문제 해결 방법을 많이 접하는 것 만으로도 자연스럽게 논리적으로 사고하는 훈련이 된다는 의미이다. 그리고 대부분의 연구자들은 논리적인 사고력이 매우 중요하다.</p>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-12-13T05:08:40+09:00</updated>
+  <updated>2014-12-14T13:19:55+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -18,7 +18,7 @@
     <link href="http://SanghyukChun.github.io/36/"/>
     <updated>2013-12-16T08:49:00+09:00</updated>
     <id>http://SanghyukChun.github.io/36</id>
-    <content type="html"><![CDATA[<p><a href="33" target="new">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고... 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/" target="new">이음 블로그</a> 참고... 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
+    <content type="html"><![CDATA[<p><a href="33">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고... 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/">이음 블로그</a> 참고... 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
 
 
 <p>일단, apache만 가지고 되는건 거의 없다. 기본적으로 php + mysql 기반으로 굴러가는 모듈이 워낙 많기 때문에 이 녀석들도 깔아주도록하자. 아래와 같은 스크립트를 만들어서 돌리면 편하다</p>
@@ -35,7 +35,7 @@ apt-get -y install php5-mysql
 apt-get -y install phpmyadmin
 ```</p>
 
-<p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐... 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html" target="new">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
+<p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐... 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
 
 
 <p>Default</p>
@@ -151,10 +151,10 @@ chmod 707 -R /var/www/wiki
     <link href="http://SanghyukChun.github.io/33/"/>
     <updated>2013-12-12T01:15:00+09:00</updated>
     <id>http://SanghyukChun.github.io/33</id>
-    <content type="html"><![CDATA[<p>사실 서버용 컴퓨터를 구매한 것은 벌써 거의 <a href="http://SanghyukChun.github.io/28" target="new">2주도 더 이전에 있었던 일</a>이지만, 근래에 좀 많이 바빠서 이제서야 기본적인 세팅을 하게 되었다. 지난번에 설치한 우분투 서버에 뭔가 문제가 있었는지 장소를 옮겨서 부팅하자마자 OS가 뻗어버리는... 그래서 오늘 다시 다 밀어버리고 처음부터 다시 세팅했다.</p>
+    <content type="html"><![CDATA[<p>사실 서버용 컴퓨터를 구매한 것은 벌써 거의 <a href="http://SanghyukChun.github.io/28">2주도 더 이전에 있었던 일</a>이지만, 근래에 좀 많이 바빠서 이제서야 기본적인 세팅을 하게 되었다. 지난번에 설치한 우분투 서버에 뭔가 문제가 있었는지 장소를 옮겨서 부팅하자마자 OS가 뻗어버리는... 그래서 오늘 다시 다 밀어버리고 처음부터 다시 세팅했다.</p>
 
 
-<p>서버를 설치하면서는 뭐 크게 신경 쓸 만한 옵션은 많이 없긴한데.. 난 개인적으로 내가 관리하는 편이 좋아서 파티션에서 <a href="http://www.fis.unipr.it/pub/linux/redhat/9/en/doc/RH-DOCS/rhl-cg-ko-9/ch-lvm-intro.html" target="new">LVM</a>도 끄고, 자동 업데이트도 끄고.. 유틸도 전부 안깔고 진행했다. 그리고 ip 세팅만 해줬는데, 나는 학교에서 할당 받은 ip만 사용할 수 있는 상황이니깐, 이게 나름 중요하다. 맨 처음 세팅할 때 ip를 입력하게 되면 별로 머리아플 일이 없기는 하지만, 실수로 세팅을 하지 않은 상황이거나 하면... 나중에 설치가 끝난 이후에 /etc/network/interfaces와 /etc/resolv.conf만 고쳐주면 간단하다. 아래는 내 interfaces 파일</p>
+<p>서버를 설치하면서는 뭐 크게 신경 쓸 만한 옵션은 많이 없긴한데.. 난 개인적으로 내가 관리하는 편이 좋아서 파티션에서 <a href="http://www.fis.unipr.it/pub/linux/redhat/9/en/doc/RH-DOCS/rhl-cg-ko-9/ch-lvm-intro.html">LVM</a>도 끄고, 자동 업데이트도 끄고.. 유틸도 전부 안깔고 진행했다. 그리고 ip 세팅만 해줬는데, 나는 학교에서 할당 받은 ip만 사용할 수 있는 상황이니깐, 이게 나름 중요하다. 맨 처음 세팅할 때 ip를 입력하게 되면 별로 머리아플 일이 없기는 하지만, 실수로 세팅을 하지 않은 상황이거나 하면... 나중에 설치가 끝난 이후에 /etc/network/interfaces와 /etc/resolv.conf만 고쳐주면 간단하다. 아래는 내 interfaces 파일</p>
 
 
 <p>```</p>
@@ -184,7 +184,7 @@ iface p2p1 inet static
 <p>이게 맨 처음에 설치할 떄 잡아줬더니 p2p1이라고 잡아줬는데, 평소에는 그냥 따로 추가할 필요없이 아래같은 format으로 적어주면 그만. 이걸 적고 service networking restart를 해주면 dns도 같이 잡힌다. (알아서 resolv.conf가 업데이트 된다.) 이제 인터넷도 끝.</p>
 
 
-<p>이제 유틸을 깔 차례. apt-get으로 설치 가능한 유틸은 대충 깔고... 문제는 아파치, mysql, php등등인데, <a href="http://karasix.blog.me/10090152926" target="new">이거에 관련된 블로그</a>를 찾았다. 별로 어렵지는 않고, 그냥 가끔 헷갈릴 때 보면 괜찮은 듯.</p>
+<p>이제 유틸을 깔 차례. apt-get으로 설치 가능한 유틸은 대충 깔고... 문제는 아파치, mysql, php등등인데, <a href="http://karasix.blog.me/10090152926">이거에 관련된 블로그</a>를 찾았다. 별로 어렵지는 않고, 그냥 가끔 헷갈릴 때 보면 괜찮은 듯.</p>
 
 
 <p>지금 아파치를 설치 중인데, APR이 없다고 에러가 뜬다.. <a href="http://stackoverflow.com/questions/9436860/apache-httpd-setup-and-installation">stackoverflow</a>를 보니 <a href="http://apr.apache.org/">APR</a>이란 놈을 깔아야하는 모양. 아 이건 좀 귀찮다. 여기서부터는 내일부터.</p>
@@ -203,7 +203,7 @@ iface p2p1 inet static
 <ul>
     <li>내 개인 웹서버 - 간단한 나에 대한 소개 등등을 하는 개인 페이지나 내가 개발하는 웹 어플리케이션을 배포하기 위한 용도.. 대충 아래에 있는 목록 정도를 배포하지 않을까 싶다</li>
     <ul>
-        <li>현재 <a href="sanghyukchun.github.io/aboutMe" target="new">sanghyukchun.github.io/aboutMe</a>에 있는 내 PR페이지</li>
+        <li>현재 <a href="sanghyukchun.github.io/aboutMe">sanghyukchun.github.io/aboutMe</a>에 있는 내 PR페이지</li>
         <li>연구를 하고 그 기록을 보관하기 위한 개인 BBS.. 이건 XE 써서 만들면 간단할 것 같다</li>
         <li>연구 및 개인 스케쥴 관리를 위한 레드마인</li>
         <li>내가 필요한 내용을 정리하기 위한 개인 Wiki</li>
@@ -240,7 +240,7 @@ iface p2p1 inet static
     <link href="http://SanghyukChun.github.io/25/"/>
     <updated>2013-11-05T19:26:00+09:00</updated>
     <id>http://SanghyukChun.github.io/25</id>
-    <content type="html"><![CDATA[<p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/" target="new"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
+    <content type="html"><![CDATA[<p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
 
 
 <p>방법은 매우 간단하다. 아래와 같은 코드를 head에 넣으면 끝. </p>
@@ -266,7 +266,7 @@ iface p2p1 inet static
 <p>라고 적으면 된다. 위에 E=mc^2를 적은 곳에 다른 Latex 문법을 넣으면 다른 수식을 표현할 수 있다.</p>
 
 
-<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292" target="new">블로그에서 수식 표현하기</a></p>
+<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292">블로그에서 수식 표현하기</a></p>
 
 ]]></content>
   </entry>

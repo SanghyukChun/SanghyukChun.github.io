@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Big2014 | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/big2014/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2014-12-13T05:08:40+09:00</updated>
+  <updated>2014-12-14T13:19:55+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -33,7 +33,7 @@
 <h5>Keynote talk 1: Shaping Cities of the Future using Mobile Data - Chris Volinsky</h5>
 
 
-<p>이 talk을 진행한 <a href="http://www2.research.att.com/~volinsky/" target="new">Chris Volinsky</a>는 자그마치 Netflix prize의 winner 중 한 명이라고 한다. Machine Learning의 성공으로 꼽히는 대표적인 example 중 하나인 Netflix의 Algorithm을 만들어낸 사람의 talk을 듣게 될 줄이야. 내용도 흥미로운 내용이 많았다. 기본적인 아이디어는 우리가 살고 있는 장소, 더 구체적으로 말하자면 도시를 데이터를 기반으로 더 살기 좋은 장소로 만들자는 것이다. 다시 말해서 데이터 사이언스로 private한 data를 분석해 public good으로 만드려는 것이다. 이런 것의 예로 Netflix의 recommend system을 들었다. 즉, 그 자체로는 큰 의미가 없거나 private한 데이터들을 모아 big picture를 그리는 것이다. 이런 아이디어로 데이터를 공개하는 도시들이 많아지고 있는데, 뉴욕 시카고 텍사스 오스틴 등이 있다고 한다. 그리고 이런 데이터는 대부분 <a href="http://www.data.gov/" target="new">http://www.data.gov/</a>에서 확인가능하다고 한다. 나도 아직 제대로 본 적은 없는데 꽤 좋은 자료가 많은 듯. 실제로 이런 데이터를 사용해서 시카고의 범죄 데이터와 다른 데이터 간의 연관성 (뉴욕도 이런 실험을 했었다), 데이터 visuallization 등을 구축하고, 위에서 언급한 도시들은 API도 제공하고 portal도 제공한다고 한다. 이런 아이디어를 통해 더 나은 도시를 만들고자 하는 것이다. 이런 예는 정말정말 많다. 위에서 언급한 범죄 정보도 있고, street bump (문제가 있는 street), traffic, 날씨 등등.. 이런 접근을 통해 도시는 더 효율적이 되고 더 나은 movement를 장려하고 더 적은 전기, 물, traffic을 사용한다고 한다. </p>
+<p>이 talk을 진행한 <a href="http://www2.research.att.com/~volinsky/">Chris Volinsky</a>는 자그마치 Netflix prize의 winner 중 한 명이라고 한다. Machine Learning의 성공으로 꼽히는 대표적인 example 중 하나인 Netflix의 Algorithm을 만들어낸 사람의 talk을 듣게 될 줄이야. 내용도 흥미로운 내용이 많았다. 기본적인 아이디어는 우리가 살고 있는 장소, 더 구체적으로 말하자면 도시를 데이터를 기반으로 더 살기 좋은 장소로 만들자는 것이다. 다시 말해서 데이터 사이언스로 private한 data를 분석해 public good으로 만드려는 것이다. 이런 것의 예로 Netflix의 recommend system을 들었다. 즉, 그 자체로는 큰 의미가 없거나 private한 데이터들을 모아 big picture를 그리는 것이다. 이런 아이디어로 데이터를 공개하는 도시들이 많아지고 있는데, 뉴욕 시카고 텍사스 오스틴 등이 있다고 한다. 그리고 이런 데이터는 대부분 <a href="http://www.data.gov/">http://www.data.gov/</a>에서 확인가능하다고 한다. 나도 아직 제대로 본 적은 없는데 꽤 좋은 자료가 많은 듯. 실제로 이런 데이터를 사용해서 시카고의 범죄 데이터와 다른 데이터 간의 연관성 (뉴욕도 이런 실험을 했었다), 데이터 visuallization 등을 구축하고, 위에서 언급한 도시들은 API도 제공하고 portal도 제공한다고 한다. 이런 아이디어를 통해 더 나은 도시를 만들고자 하는 것이다. 이런 예는 정말정말 많다. 위에서 언급한 범죄 정보도 있고, street bump (문제가 있는 street), traffic, 날씨 등등.. 이런 접근을 통해 도시는 더 효율적이 되고 더 나은 movement를 장려하고 더 적은 전기, 물, traffic을 사용한다고 한다. </p>
 
 
 <p>사실 최근 이런 움직임이 가속화되는 가장 큰 이유는 모바일 데이터인데, 실제 이 talk의 연사는 AT&T lab 소속으로, 모바일 데이터를 다룰 일이 많다고 한다. 모바일 데이터 중 하나는 위치정보인데, 안타깝게도 완전한 위치정보를 얻는 것은 불가능하다. GPS가 항상 켜져있는 것도 아니고 GPS가 항상 정보를 송신하는 것은 아니기 때문. 대신 서로 다른 전파탑과의 통신 기록이 남는데, 이 기록을 사용해 대략적인 위치를 추적하는 것이 가능하다고 한다.</p>
@@ -42,7 +42,7 @@
 <p>Data access problem에는 다음과 같은 특성이 있는데 (1) No Content Ever, (2) Anonymize (always), (3) Aggregate (when possible), (4) Reduce granularity, (5) Principle of Least Privilege 가 그것이라고 한다. 아무튼 이 연사는 모바일 데이터를 사용해 사용자들의 움직임의 패턴을 분석해냈는데, 예를 들어 사람들이 아침 8시와 오후 6시에 각각 다른 장소 예를 들어 잁터와 집에 있을 것이다라는 가정을 하고 자도에 scatting을 해보면 실제 사람들의 traffic을 알 수 있다고 한다. 이때 쓰는 데이터는 사람들이 얼마나 많이 전화하고 문자를 하느냐 등의 정보로, 이를 사용하면 얼마나 많은 시간을 차 안에서 보내는지, 얼마나 많은 사람들이 대중교통을 쓰는지 등등을 알 수 있다고 한다. 실제로 이런 분석을 해보면 뉴욕보다 캘리포니아가 더 green하고 communication이 적다한다.</p>
 
 
-<p>이 뿐 아니라 모바일 데이터를 응용하면 사람들의 움직임의 dynamics도 관측이 가능하다. 그렇다면 이런 질문이 가능한데, 만약 우리가 (통신사가) 데이터를 제공한다면 이를 얼마나 더 좋은 곳에 사용할 수 있을 것인가라는 궁금증이 생긴다. 실제 사람들의 문자와 전화 패턴만을 분석하여 (특정 사람의 정보가 아니라 특정 송신탑에 걸리는 network traffic을 분석한다) 사람들의 생활 양식을 알 수도 있고, 다음 버스가 언제 올 것이며 택시는 어디에 있을 것인가 등등을 inform하는 방식으로 우리 삶을 개선시킬 수 있다. 이런 예로 traffic의 흐름을 어떤 조건에 따라 예측할 수 있다면 우리의 삶은 크게 개선될 수 있다. 그래서 한 번 송신탑들이 받는 시간에 따른 데이터 시퀀스 정보를 사용해서 사람들이 움직이는 traffic을 그려봤는데, 대부분의 사람들이 중심에 살기는 하지만 엄청 멀리 사는 사람도 있고.. 하여간 엄청 복잡하단다. 그래서 이걸 supervised learning으로 learning하는데, label은 어떤 상황 (비가 오거나 주말, 주중, 낮, 밤 등등등) 에 데이터 시퀀스가 어떻게 변화할 것이냐를 learning하는 것이다. 이런 데이터 시퀀스로 traffic을 예상할 수 있기 때문이다. 즉, 우리가 알고싶은 정보를 기존의 데이터로 표현하고 기존의 데이터를 learning하는 것이다. 알고리듬은 simple nearest neighbor를 사용했는데, metric을 <a href="http://en.wikipedia.org/wiki/Earth_mover's_distance" target="new">earth mover's distance</a>로 썼다고 한다. 이를 통해 learning해본 결과, 다양한 상황에 따라 어떻게 traffic data가 변화하는지를 learning할 수 있었고 실제 오차률도 작았다고 한다.</p>
+<p>이 뿐 아니라 모바일 데이터를 응용하면 사람들의 움직임의 dynamics도 관측이 가능하다. 그렇다면 이런 질문이 가능한데, 만약 우리가 (통신사가) 데이터를 제공한다면 이를 얼마나 더 좋은 곳에 사용할 수 있을 것인가라는 궁금증이 생긴다. 실제 사람들의 문자와 전화 패턴만을 분석하여 (특정 사람의 정보가 아니라 특정 송신탑에 걸리는 network traffic을 분석한다) 사람들의 생활 양식을 알 수도 있고, 다음 버스가 언제 올 것이며 택시는 어디에 있을 것인가 등등을 inform하는 방식으로 우리 삶을 개선시킬 수 있다. 이런 예로 traffic의 흐름을 어떤 조건에 따라 예측할 수 있다면 우리의 삶은 크게 개선될 수 있다. 그래서 한 번 송신탑들이 받는 시간에 따른 데이터 시퀀스 정보를 사용해서 사람들이 움직이는 traffic을 그려봤는데, 대부분의 사람들이 중심에 살기는 하지만 엄청 멀리 사는 사람도 있고.. 하여간 엄청 복잡하단다. 그래서 이걸 supervised learning으로 learning하는데, label은 어떤 상황 (비가 오거나 주말, 주중, 낮, 밤 등등등) 에 데이터 시퀀스가 어떻게 변화할 것이냐를 learning하는 것이다. 이런 데이터 시퀀스로 traffic을 예상할 수 있기 때문이다. 즉, 우리가 알고싶은 정보를 기존의 데이터로 표현하고 기존의 데이터를 learning하는 것이다. 알고리듬은 simple nearest neighbor를 사용했는데, metric을 <a href="http://en.wikipedia.org/wiki/Earth_mover's_distance">earth mover's distance</a>로 썼다고 한다. 이를 통해 learning해본 결과, 다양한 상황에 따라 어떻게 traffic data가 변화하는지를 learning할 수 있었고 실제 오차률도 작았다고 한다.</p>
 
 
 <p>이 외에도 모바일 데이터를 (전화와 문자 사용 빈도) clustering한 결과 약 4개와 7개 cluster가 가장 optimal한 cluster인 것으로 나왔는데, 이런 clustering을 통해 요금제를 세분화하거나 마케팅을 세분화하는 등의 접근이 가능할 수 있다.</p>
@@ -63,7 +63,7 @@
 <h5>Paper talk 2: Visual Analytics for interactive exploration of large-scale documents via nonnegative matrix factorization - 조지아텍</h5>
 
 
-<p>이날 세션 중 두 번째로 흥미로웠다. <a href="http://www.cc.gatech.edu/~joyfull/" taget="new">Jaegul Choo</a>라는 분이 쓴 논문인데, Visuallization이라는 범주를 벗어나서, Matrix Factorization을 사용해 뭔가 Classification스럽게 사용했었다는 것, 그림이 굉장히 Deep Neural Network랑 유사하다는 점 두 가지가 흥미로웠다. 내용은 그닥 볼 것 없다. 그냥 예를 들어 갤탭과 아이패드 중 뭐가 나은가 보고 싶은데 리뷰가 각각 1300개 2000개가 있을 때 이걸 다 읽을 수는 없으니깐 데이터 마이닝을 적당히 하고 이를 시작화하면 의사결정에 도움이 된다, 그리고 이런 Visuallization을 nonnegative matrix factorization으로 풀어보겠다 라는 내용이다. NMF은 그냥 Topic Modeling으로만 사용한다는데, 내가 보기에는 단순한 Clustering으로 보였다. 즉, 이를 사용해 classification이나 clustering같은 general한 ML문제를 풀 수 있을 것 같다는 것이 나의 아이디어. 그리고 LDA보다 NMF가 엄청나게 빠르더라. Convergence도 빠르고 iteration도 적게 걸리고, 안정도 빨리 된다. (다 같은 얘기같지만..) 아무튼 이런 방법으로 visualization이 가능하다고 한다. <a href="http://www.cc.gatech.edu/~joyfull/resources/2014_big_vanmf.pdf" target="new">포스터</a>는 링크를 보면 되는데, 별거 없고 차라리 Visualization tool을 만든 <a href="http://www.cc.gatech.edu/~joyfull/resources/2013_tvcg_utopian.pdf" taget="new">논문</a>을 보는게 나은 것 같다. 제대로 읽어보지는 않았는데 NMF은 여기 나온다.</p>
+<p>이날 세션 중 두 번째로 흥미로웠다. <a href="http://www.cc.gatech.edu/~joyfull/" taget="new">Jaegul Choo</a>라는 분이 쓴 논문인데, Visuallization이라는 범주를 벗어나서, Matrix Factorization을 사용해 뭔가 Classification스럽게 사용했었다는 것, 그림이 굉장히 Deep Neural Network랑 유사하다는 점 두 가지가 흥미로웠다. 내용은 그닥 볼 것 없다. 그냥 예를 들어 갤탭과 아이패드 중 뭐가 나은가 보고 싶은데 리뷰가 각각 1300개 2000개가 있을 때 이걸 다 읽을 수는 없으니깐 데이터 마이닝을 적당히 하고 이를 시작화하면 의사결정에 도움이 된다, 그리고 이런 Visuallization을 nonnegative matrix factorization으로 풀어보겠다 라는 내용이다. NMF은 그냥 Topic Modeling으로만 사용한다는데, 내가 보기에는 단순한 Clustering으로 보였다. 즉, 이를 사용해 classification이나 clustering같은 general한 ML문제를 풀 수 있을 것 같다는 것이 나의 아이디어. 그리고 LDA보다 NMF가 엄청나게 빠르더라. Convergence도 빠르고 iteration도 적게 걸리고, 안정도 빨리 된다. (다 같은 얘기같지만..) 아무튼 이런 방법으로 visualization이 가능하다고 한다. <a href="http://www.cc.gatech.edu/~joyfull/resources/2014_big_vanmf.pdf">포스터</a>는 링크를 보면 되는데, 별거 없고 차라리 Visualization tool을 만든 <a href="http://www.cc.gatech.edu/~joyfull/resources/2013_tvcg_utopian.pdf" taget="new">논문</a>을 보는게 나은 것 같다. 제대로 읽어보지는 않았는데 NMF은 여기 나온다.</p>
 
 
 <p>이 talk을 듣고 궁금해서 찾아봤는데 <a href="http://jmlr.org/proceedings/papers/v5/lee09a/lee09a.pdf" taget="new">EEG를 NMF로 Classification하는 논문</a>도 있더라. 여러모로 흥미로운 주제인 것 같다.</p>
@@ -141,7 +141,7 @@
 <p>이 talk의 motivation은 Human interaction data를 처리하는 것인데, 이게 무엇이냐 하면 그냥 사람이 interaction하면서 발생하는 data를 의미한다. 예를 들어 사람들의 클릭률 정보라거나 어느 페이지에 오래 있는지 등의 interation에서 발생하는 정보이다. 그런데 이런 정보의 문제가 무엇이냐 하면 내가 관측한 data가 실제 machine learning system에서 사용하는 training data와는 다르다는 것이다. 무슨 얘기냐하면, 사람들의 행동이 어떤 distribution을 따르는 것이 아니라 내가 준 상황 내에서 본인이 고를 수 있는 최선을 고르기 때문에 실제 general model의 training data로 사용할 수 없다는 것이다. 즉, 유저들의 decision process를 먼저 이해해야하는데, 이런 관점으로 바라보게 된다면 다음과 같은 새로운 접근 방법이 가능하다. Decision -> feedback -> learning algorithm. 무슨 얘기이냐 하면 사용자가 내린 결정에 대해 우리가 feedback을 주는 방식으로 learning algorithm을 만들 수 있다는 것이다.</p>
 
 
-<p>간단한 예를 들어보자. 만약 우리가 두 개의 랭킹 function 중 하나를 선택해야하는 decision making problem이 있다고 하자. 대부분의 경우 real industry에서 하는 가장 합리적인 선택은 A/B test를 하는 것이다. Abandonment rate, reformulation rate, queries per session, click per query, click @1, max reciprocal rank, mean reciprocal rank, time to first click, time to last click 등의 정보들을 비교해 A와 B 중 어느 결정이 더 합리적인지를 밝혀내는 것이다. 그런데 <a href="ArXiv.org" target="new">ArXiv.org</a> 를 통해 case study를 해본 결과, 이런 여러가지 metric 중에서 그 어떤 metric도 expected order에 영향을 미치는 absolute metric이 없다는 결론이 나왔다고 한다. (이에 대해서 내 생각을 말해보자면, A/B test라는 것이 일종의 Maximum likelihood estimation 이기 때문에 발생하는 문제라고 생각한다. 우리가 봐야하는 정보는 엄청나게 많은데 매우 제한적인 정보만을 가지고 예측을 하기 때문에 정확하지 않은 결론으로 귀결되는 것이다.)</p>
+<p>간단한 예를 들어보자. 만약 우리가 두 개의 랭킹 function 중 하나를 선택해야하는 decision making problem이 있다고 하자. 대부분의 경우 real industry에서 하는 가장 합리적인 선택은 A/B test를 하는 것이다. Abandonment rate, reformulation rate, queries per session, click per query, click @1, max reciprocal rank, mean reciprocal rank, time to first click, time to last click 등의 정보들을 비교해 A와 B 중 어느 결정이 더 합리적인지를 밝혀내는 것이다. 그런데 <a href="ArXiv.org">ArXiv.org</a> 를 통해 case study를 해본 결과, 이런 여러가지 metric 중에서 그 어떤 metric도 expected order에 영향을 미치는 absolute metric이 없다는 결론이 나왔다고 한다. (이에 대해서 내 생각을 말해보자면, A/B test라는 것이 일종의 Maximum likelihood estimation 이기 때문에 발생하는 문제라고 생각한다. 우리가 봐야하는 정보는 엄청나게 많은데 매우 제한적인 정보만을 가지고 예측을 하기 때문에 정확하지 않은 결론으로 귀결되는 것이다.)</p>
 
 
 <p>다시 말하지만 observed data와 training data는 다르다. Observed data는 user의 decision이고, 결국에 우리가 explicit feedback을 주면 해당 decision에 영향을 주게 된다. 즉, 이 decision 혹은 observed data는 training data와는 다르게 된다. 따라서 우리는 decision process를 개선할 수 있는 feedback function을 design해야하고, 우리가 machine learning으로 기여할 수 있는 부분은 이런 feedback function을 위한 learning algorithm을 만들고 feedback function을 개선시키는 것이다.</p>
@@ -162,7 +162,7 @@
 <h5>Keynote talk: Evolution from Apache Hadoop to the Enterprise Data Hub: a new foundation for the Modern Information Architecture - Cloudera</h5>
 
 
-<p><a href="http://www.cloudera.com/" target="new">cloudera</a>라는 기업의 product에 대한 설명이었다. 결국 이런저런 설명을 들어보니 <a href="http://www.cloudera.com/content/cloudera/en/products-and-services/cdh.html">http://www.cloudera.com/content/cloudera/en/products-and-services/cdh.html</a> 요 product와 같은 설명이더라. 결론만 얘기하면, 지금 대부분의 시스템들이 저장 시스템 따로, Hadoop layer 따로, RDMBS layer 따로, 실제 application layer 따로, research layer 따로 BI 따로 진행하고 있는데 이 회사는 그 모든 것을 종합해주는 solution tool을 개발했다는 것이다.</p>
+<p><a href="http://www.cloudera.com/">cloudera</a>라는 기업의 product에 대한 설명이었다. 결국 이런저런 설명을 들어보니 <a href="http://www.cloudera.com/content/cloudera/en/products-and-services/cdh.html">http://www.cloudera.com/content/cloudera/en/products-and-services/cdh.html</a> 요 product와 같은 설명이더라. 결론만 얘기하면, 지금 대부분의 시스템들이 저장 시스템 따로, Hadoop layer 따로, RDMBS layer 따로, 실제 application layer 따로, research layer 따로 BI 따로 진행하고 있는데 이 회사는 그 모든 것을 종합해주는 solution tool을 개발했다는 것이다.</p>
 
 
 <p>그래서 talk 마지막에 스마트폰 예시를 들면서 이제 아무도 녹음기 따로 카메라 따로 전자 노트 따로 PDA 따로 저장장치 따로 안들고 다니고 스마트폰 하나만 들고 다니듯이 시스템도 나중에는 이런 종합 솔루션으로 통합될거라는 그런 talk이었다.</p>
@@ -199,13 +199,13 @@
     <link href="http://SanghyukChun.github.io/44/"/>
     <updated>2014-04-06T04:57:00+09:00</updated>
     <id>http://SanghyukChun.github.io/44</id>
-    <content type="html"><![CDATA[<p>다음주 월요일부터 화요일 이틀간 <a href="http://big2014.org/" target="new">BIG 2014</a>라는 big data관련 workshop에 참여하게 되었다. 어떤 talk들이 주로 있는지 궁금해서 간략하게 프로그램을 훑어봤는데 이론적인 내용들보다는 실제 application level에서 일어나는 문제들이나 얘기들이 많이 있는 것 같다. 특히 시스템 쪽 얘기가 많이 나올 것 같은데 나는 이쪽 분야에 아직 어느 정도 관심이 있어서 들으면 재미있을 것 같다. 그리고 Visualization등과 관련되어 보이는 topic도 간간히 눈에 띄고, analysis에 대한 얘기도 눈에 띈다. 사실 새로운 이론적 깊이를 배우러간다기보다는 최근 real field에서 big data를 어떻게 생각하고 실제로 활용하고 있는지 보러간다는 것 자체가 나에게 큰 의미가 있을 것으로 기대된다. 무엇보다 나는 앞으로 이런 소위 말하는 빅데이터를 아이템 삼아서 벤처를 할 생각이니깐.. 특히 미국 쪽에서 어떤 움직임을 보이고 있는지 가서 잘 살펴보고 와야겠다. Invited speaker에 Kaggle engineer도 있고.. 관련 연구를 하는 교수님들도 있어서 이론적인 내용과 실제 apply하는 내용이 적절하게 잘 밸런스가 맞춰져 진행이 될 것 같다.</p>
+    <content type="html"><![CDATA[<p>다음주 월요일부터 화요일 이틀간 <a href="http://big2014.org/">BIG 2014</a>라는 big data관련 workshop에 참여하게 되었다. 어떤 talk들이 주로 있는지 궁금해서 간략하게 프로그램을 훑어봤는데 이론적인 내용들보다는 실제 application level에서 일어나는 문제들이나 얘기들이 많이 있는 것 같다. 특히 시스템 쪽 얘기가 많이 나올 것 같은데 나는 이쪽 분야에 아직 어느 정도 관심이 있어서 들으면 재미있을 것 같다. 그리고 Visualization등과 관련되어 보이는 topic도 간간히 눈에 띄고, analysis에 대한 얘기도 눈에 띈다. 사실 새로운 이론적 깊이를 배우러간다기보다는 최근 real field에서 big data를 어떻게 생각하고 실제로 활용하고 있는지 보러간다는 것 자체가 나에게 큰 의미가 있을 것으로 기대된다. 무엇보다 나는 앞으로 이런 소위 말하는 빅데이터를 아이템 삼아서 벤처를 할 생각이니깐.. 특히 미국 쪽에서 어떤 움직임을 보이고 있는지 가서 잘 살펴보고 와야겠다. Invited speaker에 Kaggle engineer도 있고.. 관련 연구를 하는 교수님들도 있어서 이론적인 내용과 실제 apply하는 내용이 적절하게 잘 밸런스가 맞춰져 진행이 될 것 같다.</p>
 
 
-<p>아마도 <a href="http://www2014.kr/" target="new">www2014</a>라는 코엑스에서 열리는 학회의 서브 프로그램인 것 같다. 서울에서 열린다는 점이 마음에 든다. 구글링해보니 작년 www2013은 브라질에서 한 모양이던데.. 아마도 인터넷 관련 학회인 것 같다. 논문도 내는 것 같고.. 일단 나와는 아주 상관이 있을 것 같지는 않다. 어쨌거나 코엑스에서 열려서 집에서 가기 좋다는건 참 괜찮은 것 같다.</p>
+<p>아마도 <a href="http://www2014.kr/">www2014</a>라는 코엑스에서 열리는 학회의 서브 프로그램인 것 같다. 서울에서 열린다는 점이 마음에 든다. 구글링해보니 작년 www2013은 브라질에서 한 모양이던데.. 아마도 인터넷 관련 학회인 것 같다. 논문도 내는 것 같고.. 일단 나와는 아주 상관이 있을 것 같지는 않다. 어쨌거나 코엑스에서 열려서 집에서 가기 좋다는건 참 괜찮은 것 같다.</p>
 
 
-<p>해당 컨퍼런스의 프로그램은 아래와 같다. (프로그램은 홈페이지에서 따왔다.) <a href="http://ec2-50-112-76-239.us-west-2.compute.amazonaws.com/upload/big_agenda.pdf" target="new">PDF</a>로 받을 수도 있다.</p>
+<p>해당 컨퍼런스의 프로그램은 아래와 같다. (프로그램은 홈페이지에서 따왔다.) <a href="http://ec2-50-112-76-239.us-west-2.compute.amazonaws.com/upload/big_agenda.pdf">PDF</a>로 받을 수도 있다.</p>
 
 
 

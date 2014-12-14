@@ -112,13 +112,13 @@ $(function() {
 <div class="entry-content"><h5>들어가기 전에</h5>
 
 
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="new">Neural Networks for Machine Learning</a> 2주차 강의를 요약한 글이다. 첫 주 강의에서 Neural Network란 무엇이며 어떤 종류의 Neural Network들이 있는지 등에 대해 간략하게 다뤘다면, 이 강의에서는 가장 오래된 Neural Network 중 하나인 Perceptron을 설명하는 내용이 주가 된다.</p>
+<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 2주차 강의를 요약한 글이다. 첫 주 강의에서 Neural Network란 무엇이며 어떤 종류의 Neural Network들이 있는지 등에 대해 간략하게 다뤘다면, 이 강의에서는 가장 오래된 Neural Network 중 하나인 Perceptron을 설명하는 내용이 주가 된다.</p>
 
 
 <h5>An overview of the main types of neural network architecture</h5>
 
 
-<p><a href="/39" target="new">이전 글</a>에서 Neuron들에는 어떤 종류가 있을 수 있는가 다뤘었다. 대충 linear neuron, linear threshold neuron, binary neuron, binary threshold neuron, sigmod neuron 등이 있었다. 그렇다면 neuron들로 구성된 neural network에는 어떤 type들로 구분되는가도 간략하게 알아보도록 해보자.</p>
+<p><a href="/39">이전 글</a>에서 Neuron들에는 어떤 종류가 있을 수 있는가 다뤘었다. 대충 linear neuron, linear threshold neuron, binary neuron, binary threshold neuron, sigmod neuron 등이 있었다. 그렇다면 neuron들로 구성된 neural network에는 어떤 type들로 구분되는가도 간략하게 알아보도록 해보자.</p>
 
 
 <p>일단 가장 간단한 형태의 network로 Feed-forward neural network가 존재한다. 가장 일반적으로 쓰이고 실제 어플리케이션에 적용되는 neural network들도 대부분이 feed-forward라고 한다. 이 네트워크는 상당히 간단한 구조인데, 첫 번째 layer는 input이며 가장 마지막 layer는 output이다. 그리고 중간의 input과 output으로 관찰되지 않는 영역을 &#8220;hidden&#8221; layer라고 하는데, 당연히 visuable하지 않으므로 (우리가 직접 관측하는 영역이 아니므로) hidden이라고 불리는 것이다. 만약 hidden layer가 하나보다 많이 존재한다면 이 network는 &#8220;deep&#8221; neural network라고 불린다.</p>
