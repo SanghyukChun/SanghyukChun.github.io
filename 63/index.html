@@ -109,7 +109,10 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><p>Machine learning 문제를 풀다보면 Objective function을 만들고 그 objective function을 optimize 해야하는 경우가 매우 빈번하게 발생한다. 간단히 생각해서 loss function을 minimize하는 것도 optimization이다. 그렇다면 그런 optimization은 도대체 어떻게 해야하는 것일까. 여러가지 방법이 있겠지만 이번 글에서는 간단한 optimization이라는 것에 대한 컨셉을 다루고, 그 중 특수 케이스인 convex optimization에 대해 다루도록 하겠다.</p>
+<div class="entry-content"><h5>들어가며</h5>
+
+
+<p>Machine learning 문제를 풀다보면 Objective function을 만들고 그 objective function을 optimize 해야하는 경우가 매우 빈번하게 발생한다. 간단히 생각해서 loss function을 minimize하는 것도 optimization이다. 그렇다면 그런 optimization은 도대체 어떻게 해야하는 것일까. 여러가지 방법이 있겠지만 이번 글에서는 간단한 optimization이라는 것에 대한 컨셉을 다루고, 그 중 특수 케이스인 convex optimization에 대해 다루도록 하겠다.</p>
 
 
 <h5>Optimization</h5>
@@ -349,6 +352,17 @@ $(function() {
 
 
 <p>하지만 그럼에도 local한 optimum이 엄청나게 많은 경우에는 local optimum으로 converge하는 것이 문제가 되기 때문에 함수를 convex하게 relaxation 시켜서 optimization을 푸는 경우도 존재한다. 특히 원래 문제가 NP-hard인 경우, parameter를 골라야하는 경우 등에 convex relaxation을 많이하는 것 같다.</p>
+
+
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2014년 9월 10일: 글 등록</li>
+<li>2015년 2월 28일: 변경 이력 추가</li>
+</ul>
 
 
 <h5>Reference</h5>

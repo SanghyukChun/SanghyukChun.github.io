@@ -100,7 +100,7 @@ $(function() {
   
 
 
-<time datetime="2014-08-03T16:33:00+09:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2014</time>
+<time datetime="2014-08-04T12:09:00+09:00" pubdate data-updated="true">Aug 4<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -109,19 +109,22 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><p>Machine Learning Algorithm을 design하고 실제 구현을 하다보면 Overfitting이라는 문제가 꽤나 머리를 아프게 하는 경우가 많다. 아니, Algorithm 자체가 문제 없이 실행이 된다면 대부분의 경우 overfitting이 가장 큰 문제라고 단언해도 좋을 것 같다. 물론 좋은 Algorithm을 design하고 못하고의 문제는 또 다른 문제이기는 하다. 다음 글은 Algorithm에 대해서 써볼까.. 아무튼 이번 글에서는 Overfitting에 대해 좀 다뤄보도록 하겠다.</p>
+<div class="entry-content"><h5>들어가며</h5>
+
+
+<p>Overfitting은 Machine Learning Algorithm을 design하고 실제 구현을 할 때 Algorithm 설계를 제외하면 가장 어렵고 머리를 아프게 하는 문제 중 하나이다. Overfitting을 잘 관리하지 못하면 실전에서 써먹을 수 없는 알고리즘이 되기 때문에 overfitting을 잘 관리하는 것의 중요성은 몇 번을 강조해도 부족하지 않다. 보통 overfitting을 따로 chapter로 빼거나 하는 등으로 설명하는 경우가 많이 없지만, 나는 그만큼 overfitting과 관련된 이슈들이 중요하다고 생각하고, 다룰 얘기가 많다고 생각하기 때문에 이 글을 통해 overfitting의 개념과 그것을 해결하기 위한 방법, overfitting이 발생하는 근본적인 원인 등에 대해 다루도록 하겠다.</p>
 
 
 <h5 id="59-1-overfitting">Overfitting</h5>
 
 
-<p>overfitting이란 문자 그대로 너무 과도하게 데이터에 대해 모델을 learning을 한 경우를 의미한다. 지금 현재에 대해 잘 설명하면 되는 것 아닌가? 싶을 수 있지만, 우리가 사실 원하는 정보는 기존에 알고 있는 데이터에 대한 것들이 아니라 새롭게 우리가 알게되는 데이터에 대한 것들을 알고 싶은 것인데, 정작 새로운 데이터에 대해서는 하나도 못맞추고, 즉 제대로 설명할 수 없는 경우라면 그 시스템은 그야말로 무용지물이라고 할 수 있을 것이다. 조금 더 자세한 설명은 <a href="/14#Overfitting">이전에 적은 포스트</a>로 대체하겠다.</p>
+<p><a href="http://en.wikipedia.org/wiki/Overfitting">Overfitting</a>이란 문자 그대로 너무 과도하게 데이터에 대해 모델을 learning을 한 경우를 의미한다. 현재에 대해 잘 설명하는 것 만으로 충분하지 않을까라고 생각할 수 있지만, 우리가 사실 원하는 정보는 기존에 알고 있는 데이터에 대한 것들이 아니라 새롭게 우리가 알게되는 데이터에 대한 것들을 알고 싶은 것인데, 정작 새로운 데이터에 대해서는 하나도 못맞추고, 즉 제대로 설명할 수 없는 경우라면 그 시스템은 그야말로 무용지물이라고 할 수 있을 것이다. <a href="/14#Overfitting">이전에 적은 포스트</a>에서도 간략하게 다루고 있다.</p>
 
 
 <h5 id="59-2-reg">Regularization</h5>
 
 
-<p>이런 문제를 해결하기위해 여러가지 시도를 할 수 있다. 먼저 Overfitting이 일어나는 이유는 무엇인가에 대해서 한 번 생각해보자. 먼저 overfitting의 가장 간단한 예시를 하나 생각해보자.</p>
+<p>Overfitting을 어떻게 해결할까 고민하기에 앞서 먼저 Overfitting이 일어나는 이유는 무엇인가에 대해서 한 번 생각해보자. 먼저 overfitting의 가장 간단한 예시를 하나 생각해보자.</p>
 
 
 <p><img src="/images/post/59-1.png" width="500"></p>
@@ -197,6 +200,16 @@ $(function() {
 
 
 
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2014년 8월 4일: 글 등록</li>
+<li>2014년 10월 9일: 구성 변경 및 내용 추가 (Bayes, Model Selection 등)</li>
+<li>2015년 2월 28일: 변경 이력 추가, 문장 표현 등 수정</li>
+</ul>
+
+
 <hr>
 
 
@@ -249,7 +262,7 @@ $(function() {
   
 
 
-<time datetime="2014-08-03T16:33:00+09:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2014</time>
+<time datetime="2014-08-04T12:09:00+09:00" pubdate data-updated="true">Aug 4<span>th</span>, 2014</time>
       
 
 <span class="categories">
