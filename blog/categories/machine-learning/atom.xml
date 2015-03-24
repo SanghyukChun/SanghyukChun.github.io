@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-03-25T03:26:34+09:00</updated>
+  <updated>2015-03-25T03:34:32+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -108,8 +108,10 @@
 <p>$$ \pi_j = \frac{\sum_i p(z_j=1|x)}{N}$$</p>
 
 
-<p>정리하자면, GMM을 풀기 위한 EM 알고리즘은, 먼저 각각의 데이터가 어느 클러스터에 속할지에 대한 정보를 update해 (\(z\)를 업데이트 하여) expectation을 계산하고, 다음으로 업데이트 된 정보들을 사용해 나머지 값들로 가장 log likelihood를 최대화하는 parameter들을 (\(\mu, \Sigma, \pi\)를) 찾아낸다.</p>
+<p>정리하자면, GMM을 풀기 위한 EM 알고리즘은, 먼저 각각의 데이터가 어느 클러스터에 속할지에 대한 정보를 update해 (\(z\)를 업데이트 하여) expectation을 계산하고, 다음으로 업데이트 된 정보들을 사용해 나머지 값들로 가장 log likelihood를 최대화하는 parameter들을 (\(\mu, \Sigma, \pi\)를) 찾아낸다. 알고리즘을 돌리면 아래처럼 iteration이 지날 때 마다 점점 좋은 값을 찾아준다. (출처: <a href="http://kipl.tistory.com/64">Geometry & Recognition :: Gaussian Mixture Model & K-means</a>)</p>
 
+
+<p><img src="/images/post/69-4.gif" width="500"></p>
 
 <p>GMM은 사실 직관적으로 이해하기 쉬운 알고리즘은 아니다. 보통 Machine learning에서 정말 정말 중요한 EM 알고리즘에 대해 설명하기 전에 example같은 느낌으로 설명하는 경우가 많으며, 실제로 다른 클러스터링 알고리즘들에 비해 많이 사용되는 것 같지도 않다. 그러나 EM을 이해하기 위해서 한 번 쯤은 공부해야하는 알고리즘이며, k-means를 제외하면 가장 유명한 클러스터링 방법 중에 하나이기 때문에 머신러닝을 공부하는 경우에는 GMM을 빼놓고 넘어가기 힘들다. 이 글에서는 중간 계산과정을 많이 생략했으므로 이 글만 읽고 이해하기에는 다소 어려울 수 있다. 가장 좋은건 Bishop 책 chapter 9을 읽어보는 것이며, 상황이 여의치 않다면 다른 lecture note들을 찾아보기를 권한다.</p>
 
@@ -127,6 +129,15 @@
 
 <ul>
 <li>2015년 3월 25일: 글 등록</li>
+</ul>
+
+
+<h5>Reference</h5>
+
+
+<ul>
+<li>Bishop, Christopher M. Pattern recognition and machine learning. Vol. 4. No. 4. New York: springer, 2006. Chapter 9</li>
+<li><a href="http://kipl.tistory.com/64">Geometry &amp; Recognition :: Gaussian Mixture Model &amp; K-means</a></li>
 </ul>
 
 
