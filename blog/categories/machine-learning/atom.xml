@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-03-25T03:25:07+09:00</updated>
+  <updated>2015-03-25T03:26:34+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,156 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (13) Clustering (K-means, Gaussian Mixture Model)]]></title>
+    <link href="http://SanghyukChun.github.io/69/"/>
+    <updated>2015-03-25T03:20:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/69</id>
+    <content type="html"><![CDATA[<h5>들어가며</h5>
+
+
+<p><a href="57-4-ClassML">첫 번째 글</a>에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 앞서 이미 그 중 <a href="http://SanghyukChun.github.io/64">Supervised Learning</a>을 간략하게 다룬 글이 있었고, 이 글에서는 그 중 Unsupervised Learning의 가장 대표적인 예시인 Clustering 대해 다룰 것이며 가장 대표적이고 간단한 두 가지 알고리즘에 대해서 역시 다룰 것이다.</p>
+
+
+<h5>What is Clustering?</h5>
+
+
+<p><a href="http://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a>은 <a href="http://en.wikipedia.org/wiki/Unsupervised_learning">Unsupervised Learning</a>의 일종으로, label 데이터 없이 주어진 데이터들을 가장 잘 설명하는 cluster를 찾는 문제이다. 왜 클러스터링이 필요할까? Classification을 하기 위해서는 데이터와 각각의 데이터의 label이 필요하지만, 실제로는 데이터는 존재하지만 그 데이터의 label이나 category가 무엇인지 알 수 없는 경우가 많기 때문에 classfication이 아닌 다른 방법을 통해 데이터들을 설명해야하는 경우가 발생한다. 아래 그림은 클러스터링이 어떤 것인지 잘 보여주는 그림이다.</p>
+
+
+<p><img src="/images/post/69-1.png" width="500"></p>
+
+<p>우리에게 처음 주어진 것은 왼쪽 파란 데이터이다. 각각의 데이터에 대한 정보는 아무 것도 없는 상태에서 주어진 데이터들을 가장 잘 설명하는 클러스터를 찾아내는 것이 클러스터링의 목적이다. 따라서 클러스터링은 대부분 Optimization 문제를 푸는 경우가 많다. 이는 클러스터링 뿐 아니라 다른 많은 unsupervised learning에서도 역시 마찬가지이다.</p>
+
+
+<p><a href="http://SanghyukChun.github.io/57">첫 번째 글</a>과 <a href="http://SanghyukChun.github.io/64">이전 글</a>에서 머신러닝 문제는 먼저 주어진 데이터에 대한 가정을 하고, 해당 가정을 만족하는 best hypothesis를 찾는 문제라고 언급한 적이 있다. Clustering 문제 역시 Machine Learning 문제이므로 데이터에 대한 가정을 먼저 해야하고, best hypothesis를 찾는 과정을 거친다. 따라서 각각의 서로 다른 clustering algorithm들은 서로 다른 assumption을 가지고 있으며, 해당 assumption을 가장 잘 만족하는 function parameter를 계산하는 과정이다. 앞으로 설명하게 될 알고리즘들에 대한 설명을 읽을 때 데이터에 대해 어떤 가정을 하였는지 꼼꼼히 확인하면서 읽으면 알고리즘을 이해하기 한결 수월할 것이다.</p>
+
+
+<h5>K-means</h5>
+
+
+<p>클러스터를 정의하는 방법에는 여러 가지가 있을 수 있지만, 가장 간단한 정의 중 하나는 클러스터 내부에 속한 데이터들이 서로 '가깝다'라고 정의하고, '가장 가까운' 내부 거리를 가지는 클러스터를 고르는 것이다. K-means는 같은 클러스터에 속한 데이터는 서로 '가깝다' 라고 가정한다. 이때 각각의 클러스터마다 '중심'이 하나씩 존재하고, 각각의 데이터가 그 중심과 '얼마나 가까운가'를 cost로 정의한다. K-means는 이렇게 정의된 cost를 가장 줄이는 클러스터를 찾는 알고리즘이다. 수식으로 적으면 다음과 같다.</p>
+
+
+<p>$$ \min_{b,w} \sum_i^n \sum_j^k w_{ij} \| x_i - b_j \|_2^2 \text{ s.t. } \sum_j w_{ij} = 1, \forall j$$</p>
+
+
+<p>데이터는 \(n\)개 있으며 클러스터는 \(k\)개 있다고 가정했다. 이때, \(b_j\)는 \(j\) 번째 클러스터의 '중심'을 의미하며, \(w_{ij}\)는 \(i\) 번째 데이터가 \(j\) 번째 클러스터에 속하면 1, 아니면 0을 가지는 binary variable이다. 또한 뒤에 붙는 조건은 반드시 각 데이터 별로 한 개의 클러스터에 assign이 되어야한다는 constraint이다.</p>
+
+
+<p>이 문제는 풀기 쉬운 문제가 아니다. Binary variable \(w_{ij}\) 때문에, 모든 cluster 조합을 하나하나 확인해야만 optimal한 값을 구할 수 있다. 즉, jointly optimize하는 것이 매우 어렵다. 그러나 재미있게도 \(b\)와 \(w\) 둘 중 하나를 고정하고 나머지 하나를 update하는 것은 매우 간단하다. 나머지 값이 고정되었을 때 \(b_j\)의 optimal값은 \(j\) 번째 클러스터의 'mean'을 계산하는 것이다 (이 때문에 '\(k\)' 개의 'mean'을 찾는다고 해서 k-means 알고리즘이다). \(w_{ij}\)의 optimal 값은 모든 데이터 i에 대해, 각각 모든 클러스터 중에서 \(x_i - b_j\)가 가장 작은 클러스터에 assign하는 것이 optimal한 solution이다. 이렇듯 만약 다른 변수 하나를 정확하게 알고 있다고 생각하면 아주 간단한 방법으로 alternative optimization이 가능하다. 사실 이 개념은 예전에 적은 <a href="http://SanghyukChun.github.io/63">convex optimization</a>글에서 잠깐 언급했던 coordinate descent 방법과 거의 유사하다. K-means 알고리즘은 이렇게 \(b\)와 \(w\)를 alternative하게 계속 update하면서 \(b\)와 \(w\)가 더 이상 바뀌지 않을 때 까지 계산을 반복하는 알고리즘이다. 안타깝게도 K-means는 global optimum에 수렴하지 않고 local한 optimum에 수렴하므로 initialization에 매우매우 취약하다는 단점이 존재한다.</p>
+
+
+<p>또한 여담으로 K-means objective function에 사용한 \(\ell_2\) norm의 제곱이 outlier 혹은 noise에 매우 취약하기 때문에 조금 더 outlier에 덜 sensitive한 'robust한' norm을 사용하는 방법도 존재한다. 예를 들어 \(\ell_2\) norm의 제곱을 \(\ell_1\) norm으로 바꾸면 'mean' 대신에 'median'을 찾는 문제로 바뀌게 된다. 이를 k-median이라고 부른다. 그 밖에도 k-means의 robustness를 개선하기 위한 다양한 방법들이 개발이 되어있지만 이 글에서는 다루지 않도록 하겠다.</p>
+
+
+<h5>Gaussian Mixture Model</h5>
+
+
+<p>K-means algorithm의 key idea는 'alternative update'이다. 즉, coordinate wise로 다른 변수들을 고정한 채로 'alternative'하게 변수들을 update함으로써 jointly optimization을 할 수 없는 문제를 푸는 것이다. 비록 그 결과가 global하지 않은 local에 converge하더라도, 찾지 못하는 것보다는 훨씬 낫기 때문에 실제로 이런 방법이 많이 쓰인다. 이번 섹션에서는 이런 방법을 사용하는 또 다른 알고리즘을 하나 소개하도록 하겠다.</p>
+
+
+<p>Gaussian Mixture Model, Mixture of Gaussian, GMM, 혹은 MoG는 데이터가 'Gaussian'의 'Mixture'로 구성이 되어있다고 가정한다. 보통 GMM이라고 많이 부르며, 이 글에서 다루는 GMM은 가장 optimal한 GMM을 찾는 알고리즘을 의미한다. 즉, 데이터가 \(k\)개의 gaussian으로 구성되어있다고 했을 때, 가장 데이터를 잘 설명하는 \(k\)개의 평균과 covariance를 찾는 알고리즘이다. 아래 그림은 3개의 gaussian으로 구성되어있다고 가정하고 그 gaussian 분포들을 찾은 결과이다.</p>
+
+
+<p><img src="/images/post/69-2.png" width="500"></p>
+
+<p>모든 machine learning 문제는 'performance measure'를 가진다고 예전에 얘기한 적이 있다. GMM의 performance measure는 log likelihood function이다. 즉, 주어진 paramter에 대해 데이터 X의 확률을 가장 크게 만드는 parameter를 찾는 것이 목표가 된다. log likelihood는 \(\ln p(X|\theta)\)로 정의가 된다. 우리가 찾아야하는 parameter \(\theta\)는 각각의 gaussian의 평균 \(\mu_j\), covariance \(\Sigma_j\), 그리고 마지막으로 각각의 데이터가 각각의 gaussian에 속할 확률 \(\pi_j\)로 구성된다. 따라서 주어진 \(\mu_j, \Sigma_j\)에 대한 \(x_i\)의 multinomial gaussian distribution을 \(N(x_i|\mu_j, \Sigma_j)\)라고 정의한다면 log likelihood function은 다음과 같이 기술할 수 있다.</p>
+
+
+<p>$$ \ln p(X|\pi, \mu, \Sigma) = \sum_i^n \ln \sum_j^k \pi_j N (x_i | \mu_j, \Sigma_j) $$</p>
+
+
+<p>그러나 역시 이 문제도 jointly update가 매우매우 어려운 문제이다. 그러나 K-means와 비슷하게도 \(\pi\)를 고정하고 \(\mu, \Sigma\)를 계산하는 것은 쉬우며, 그 반대 역시 쉽다. 따라서 비슷하게 alternative update를 통해 문제를 해결하는 알고리즘을 어렵지 않게 디자인 할 수 있다. 역시 이 알고리즘도 global로 수렴하지 않고 local로만 수렴하게 된다. 다음 글에서 더 자세하게 설명하겠지만, GMM을 풀기 위한 이 알고리즘을 'EM' 알고리즘이라고 한다. EM은 Expectation Maximization의 약자로, E step과 M step으로 나뉘어져있다. E step은 현재 주어진 \(\mu, \Sigma, \pi\)들을 사용해 가장 'expectation'이 높은 latent variable의 값을 찾아내는 과정이며, M step은 새로 estimate된 latent variable을 사용해 그 값을 maximize하는 \(\mu, \Sigma, \pi\)를 찾는 과정이다. EM 알고리즘은 E step과 M step이 계속 번갈아 진행되며, 더 이상 값이 변하지 않을 때 까지 반복된다. K-means를 이런 관점으로 바라보게 된다면, cluster information \(w_{ij}\)를 update하는 과정이 E step, \(b\)를 update하는 과정을 M step이라고 할 수 있다.</p>
+
+
+<p>사실 엄밀하게 설명하면 GMM을 푸는 EM에서 E-step 때 update하는 것은 정확하게 \(\pi\)와 같은 것은 아니다. EM으로 이 문제를 풀기 위해서 우리는 새로운 'latent' variable을 introduce해야한다. latent variable은 쉽게 생각하면 graphical model에서 hidden variable에 해당하는 값이다. 다음에 EM 알고리즘에 대해 자세히 다룰 때 다시 설명하겠지만, 이렇게 latent variable을 설정하는 이유는 어떤 특정 variable의 marginal distribution을 optimize하는 것은 어려울 때, latent variable을 사용해 그 variable과 latent variable의 joint distribution을 다루는 것은 간단할 수 있기 때문이다. GMM에서는 latent variable \(z\)를 introduce하게 된다. \(z\)는 \(k\)-ary variable로, \(z\)의 \(j\) 번째 dimension인 \(z_j\)는 Binary random variable이며, \(p(z_j=1) = pi_j, \) where \(\sum_j z_j = 1\) and \(\sum_j \pi_j = 1\) 이라는 조건을 가지고 있다. \(z\)의 marginal probability는 \(p(z) = \prod_j \pi_j^{z_j}\)로 어렵지 않게 계산할 수 있으며, 비슷하게 주어진 데이터 \(x\)에 대한 conditional distribution 역시 간단하게 다음과 같이 표현된다. \(p(x|z) = \prod_j N(x|\mu_j, \Sigma_j)^{z_j}\).</p>
+
+
+<p>따라서 앞선 식들로부터 joint distribution을 얻을 수 있고, 그 값을 marginalize해 다음과 같은 결과를 얻을 수 있다.</p>
+
+
+<p>$$ p(x) = \sum_z p(x,z) = \sum_z p(z)p(x|z) = \sum_j \pi_j N(x|\mu_j, \Sigma_j) $$</p>
+
+
+<p>정리하자면, 각각의 data point \(x_i\) in GMM의 graphical representation은 다음과 같이 표현할 수 있다.</p>
+
+
+<p><img src="/images/post/69-3.png" width="300"></p>
+
+<p>위의 결과들을 토대로 이제 간단하게 EM algorithm을 돌릴 수 있다. 먼저 E step에서는 \(p(z_j = 1|x)\)를 계산할 것이다. 각 데이터에 대해 \(j\) 번째 클러스터에 속할 확률, 혹은 posterior를 계산하는 과정이다. 이 값은 Bayes rule을 통해 간단하게 다음과 같이 계산할 수 있다.</p>
+
+
+<p>$$ p(z_j = 1|x) = \frac{p(z_j=1)p(x|z_j=1)}{\sum_j^k p(z_j=1)p(x|z_j=1)} = \frac{\pi_j N(x|\mu_j, \Sigma_j)}{\sum_j^k \pi_j N(x|\mu_j \Sigma_j)} $$</p>
+
+
+<p>다음으로 \(z\)를 fix했을 때 다음과 같이 나머지 paramter를 계산할 수 있다.</p>
+
+
+<p>$$ \mu_j = \frac{1}{\sum_i p(z_j=1|x)} \sum_i p(z_{ij}=1|x) x_i$$</p>
+
+
+<p>$$ \Sigma_j = \frac{1}{\sum_i p(z_j=1|x)} \sum_i p(z_{ij}=1|x) (x_i-\mu_j) (x_i-\mu_j)^\top$$</p>
+
+
+<p>$$ \pi_j = \frac{\sum_i p(z_j=1|x)}{N}$$</p>
+
+
+<p>정리하자면, GMM을 풀기 위한 EM 알고리즘은, 먼저 각각의 데이터가 어느 클러스터에 속할지에 대한 정보를 update해 (\(z\)를 업데이트 하여) expectation을 계산하고, 다음으로 업데이트 된 정보들을 사용해 나머지 값들로 가장 log likelihood를 최대화하는 parameter들을 (\(\mu, \Sigma, \pi\)를) 찾아낸다.</p>
+
+
+<p>GMM은 사실 직관적으로 이해하기 쉬운 알고리즘은 아니다. 보통 Machine learning에서 정말 정말 중요한 EM 알고리즘에 대해 설명하기 전에 example같은 느낌으로 설명하는 경우가 많으며, 실제로 다른 클러스터링 알고리즘들에 비해 많이 사용되는 것 같지도 않다. 그러나 EM을 이해하기 위해서 한 번 쯤은 공부해야하는 알고리즘이며, k-means를 제외하면 가장 유명한 클러스터링 방법 중에 하나이기 때문에 머신러닝을 공부하는 경우에는 GMM을 빼놓고 넘어가기 힘들다. 이 글에서는 중간 계산과정을 많이 생략했으므로 이 글만 읽고 이해하기에는 다소 어려울 수 있다. 가장 좋은건 Bishop 책 chapter 9을 읽어보는 것이며, 상황이 여의치 않다면 다른 lecture note들을 찾아보기를 권한다.</p>
+
+
+<h5>정리</h5>
+
+
+<p>Clustering은 unsupervised learning 분야에서 가장 활발히 연구되는 분야 중 하나이다. 이 글에서는 여러 종류의 클러스터링 알고리즘 중에서 optimization function을 (1) 거리 기반으로 세우고 그것을 푸는 알고리즘과 (2) 확률과 확률분포를 기반으로 세우고 그것을 푸는 알고리즘을 소개하였다. 특히 GMM은 다음 글에서 다룰 주제인 EM algorithm과 밀접하게 관련되는 내용이므로 한 번 쯤은 책이나 렉쳐노트를 정독하는 것을 권한다.</p>
+
+
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2015년 3월 25일: 글 등록</li>
+</ul>
+
+
+<hr>
+
+
+<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
+<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
+<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Ensemble Learning (Random Forest, Ada Boost)</li>
+<li>Graphical Model</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+<li>EM algorithm</li>
+<li>Hidden Markov Model</li>
+<li>Dimensionality Reduction (LDA, PCA)</li>
+<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>Reinforcement Learning</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine learning 스터디 (8) Classification Introduction (Decision Tree, Naïve Bayes, KNN)]]></title>
@@ -761,103 +911,6 @@
 <ul>
 <li>2014년 8월 19일: 글 등록</li>
 <li>2015년 2월 28일: 변경 이력 추가</li>
-</ul>
-
-
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
-
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li>EM algorithm</li>
-<li>Dimensionality Reduction (LDA, PCA)</li>
-<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
-<li>Neural Network Introduction</li>
-<li>Deep Learning</li>
-<li>Reinforcement Learning</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (4) Algorithm]]></title>
-    <link href="http://SanghyukChun.github.io/60/"/>
-    <updated>2014-08-10T21:17:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/60</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
-<p>Machine Learning을 제대로 이해하기 위해서는 알고리즘에 대한 이해가 필수적이다. 어떤 알고리즘이 좋은 것이고 어떤 알고리즘이 나쁜 것인지에 대한 구분이 이뤄져야지만 향후 논의하게 될 많은 주제들에 대해 얘기하기 쉬워진다. 어떤 문제가 풀 수 있는 문제이고 어떤 문제가 풀 수 없는 문제인가? 풀 수 있다 없다는 어떻게 정의하는가? 등에 대해 이해해야만 머신러닝 알고리즘들에서 얘기하는 local optimum이나 compuation complexity 등에 대해 이해할 수 있을 것이다. (잘 모르는 개념이더라도 영화 이미테이션 게임을 봤다면 금방 이해할 수 있을 것이다)</p>
-
-
-<p><a href="57">이전 글</a>에서 머신러닝에서 알고리즘이란 어떤 의미가 있는지를 얘기했었다. 쉽게 생각하면, 우리가 원하는 형태로 모델을 정의한 이후에 그 모델을 어떻게 learning할 것인가, 즉, 어떤 알고리즘을 사용하여 model을 learning할 것인가에 대한 얘기를 하기 위해서는 알고리즘에 대해 반드시 짚고 넘어가야만 한다. 알고리즘 부분에서 반드시 짚고 넘어가야할 부분은 (1) Big O notation (2) P and NP (3) Reduction (4) NP Complete (5) Approximation Algorithm 정도라고 생각하기에 이 글에서는 이 정도 내용을 다루도록 하겠다.</p>
-
-
-<h5 id="60-1-bigO">Algorithm, Big O notation</h5>
-
-
-<p>먼저 algorithm이란 무엇인지에 대해 생각해보자. 알고리즘이란 것의 정확한 정의는 <a href="http://en.wikipedia.org/wiki/Algorithm">위키</a>를 참고하길 바란다. 알고리즘에 있어서 중요한 몇 가지를 꼽자면, 먼저 input이 정의가 되어야하며 output을 가져야한다. 즉, 알고리즘은 특정 데이터에 대해 동작해야하며, 해당 데이터에 대한 알고리즘의 결과를 출력해야만한다. 그리고 알고리즘은 반드시 어떤 '목적'을 가지고 있다. 즉, 내가 만약 특정 지점부터 다른 특정 지점으로 이동하는 가장 짧은 path를 찾는 알고리즘을 작성해야만한다면 해당 알고리즘의 목적은 shortest path를 찾는 것이고, input은 임의의 graph와 시작점, 그리고 끝점이 될 것이다. 마지막으로 출력값은 shortest path가 될 것이다. 이런 것을 행할 수 있는 일종의 procedure가 알고리즘이라고 할 수 있다. 하지만 우리는 그냥 임의의 알고리즘이 필요한 것이 아니라 '좋은' 알고리즘이 필요하다. 예를 들어서 Algorithm A는 shortest path를 찾는데 1시간이 걸리고, Algorithm B는 4초가 걸린다면 당연히 B를 사용해야할 것이다. 그렇다면 알고리즘의 좋다 혹은 나쁘다는 무엇으로 구분하느냐, <a href="http://en.wikipedia.org/wiki/Big_O_notation">Big O notation</a>의 역할이 바로 그것을 구분하는 역할을 하는 것인데, 이 notation은 해당하는 알고리즘이 '주어진 input의 크기에 대해' 계산량이 얼마나 필요하느냐를 indicate하는 notation이다. 표기는 O(n) 와 같은 꼴로 표시하게 된다. n은 input의 크기이다. 예를 들어 shortest path면 전체 graph의 node의 개수가 될 것이다. O notation은 일종의 upper limit로, 아무리 최악의 상황에서도 계산량이 O 안에 있는 양보다 적게 걸린다는 의미이다. 또한 만약 소요 시간이 2n 이거나 n+1 이거나 10000000000000000n 이어도 이 알고리즘들은 모두 O(n)이 된다. 이 정도 얘기는 조금만 구글링해도 많이 나오는 얘기니 여기까지만 적고, 진짜 중요한건 'polynomial time'일 것이다. 무슨 얘기이냐하면, 알고리즘의 실행시간이 input의 크기가 늘어나는 것에 대해 polynomial scale로 증가하는 알고리즘이 좋은 알고리즘이라는 뜻이다. 당연히 input에 대해 최대한 적게 증가하는 알고리즘이 좋기는 하지만, \( O(e^n) \) 보다는 \( O(n^4) \) 이 훨씬 더 좋다는 얘기이다. Exponential time이 소요되는 알고리즘은 사실상 거의 무한대의 시간이 걸린다고 봐도 될 정도로 절망적인 computation time을 의미하며, 제대로 활용 가능한 알고리즘이 되려면 그 알고리즘의 computation time은 반드시 polynomial time이어야한다.</p>
-
-
-<p>Expotentially increase라는 말에는 정말 어마어마한 파괴력이 있다. 이것이 왜 절망적이냐하면, 우리가 linear한 10n 알고리즘을 가지고 있을 때 input의 size가 1, 2, 3 의 순으로 증가하더라도 여전히 computation time은 10, 20, 30이지만, exponential time이 필요한 경우에는 예를 들어 10^n이라고 한다면 10, 100, 1000만큼의 시간이 필요하다. 즉 input이 3배 증가했을 뿐인데 두 알고리즘은 1000/30 = 33.33 배 만큼의 성능차이가 나는 것이다. 만약 input size가 100이라면? \(10^{97}\) 만큼의 차이가 난다. Exponential이라는 것에는 이만큼의 파괴력이 있다. 그러나 polynomial time안에 풀 수 있다면, 100배가 증가했을 때, n과 \(n^2\)의 차이는 100에 불과하다. 이 때문에 polynomial time algorithm은 풀 수 있는 문제로 취급되고, exponential algorithm은 실제로 쓸 수 없는 알고리즘으로 취급받는 것이다. <a href="http://SanghyukChun.github.io/59#59-3-ms">이전 글의 model selection part</a>에서 '그리고 데이터가 많아지면 그런 validation set이 엄청나게 많아진다. 정확히는 exponential로 늘어나기 때문에 마냥 모든 데이터에 대해 cross-validation을 하는 것은 불가능하다.' 라는 표현을 했을 때 exponential 로 증가하는 validation이 불가능하다는 표현을 했던 것이다.</p>
-
-
-<h5 id="60-2-np">P and NP</h5>
-
-
-<p>P problem이란 해당하는 문제를 polynomial time안에 풀 수 있는 알고리즘을 제시할 수 있는 문제를 의미한다. 예를 들어 우리에게 주어진 데이터의 개수를 sorting하는 알고리즘은 \(n log n\) 의 시간이 필요하므로 P problem이라 할 수 있다. NP problem은 올바르지는 않지만 진짜 진짜 간단하게, 표현하면, 'polynomial time안에 풀 수 없는 엄청나게 어려운 문제' 라고 할 수 있다. 하지만 이것은 올바르지 않은 정의이며, 심지어 정말 polynomial time안에 풀 수 없는지 조차 아직 확실하지 않다. NP problem의 정확한 정의는 'problem이 주어지고 해당 problem에 대해 어떤 suggested solution이 주어졌을 때 polynomial time안에 그 solution이 맞는 solution인지 아닌지 구분할 수 있는 문제'라고 할 수 있다. 당연히 정확한 답을 polynomial time안에 풀 수 있는 P는 NP의 subset이다. 즉, NP는 P를 포함하는 set이라고 할 수 있다. 그렇다면 NP는 반드시 P보다 크다고 할 수 있을까? 이 문제를 얘기하려면 먼저 Reduction에 대해 다뤄야한다.</p>
-
-
-<h5 id="60-3-red">Reduction</h5>
-
-
-<p>Problem X에서 Y로의 Reduction이란 만약 우리가 Problem Y를 풀 수 있는 Algorithm을 가지고 있을 때, 이 algorithm을 사용해 problem X를 풀 수 있는 algorithm을 찾을 수 있다는 것을 의미한다. 즉, 우리가 problem X를 풀기위해서는 problem Y를 풀기만 하면 된다. 즉, 간단히 생각하면 문제 Y가 X보다는 더 어려운 문제라고 생각하면 된다. 만약 우리가 problem Y 를 풀기위한 algorithm 중에서 P인 algorithm을 가지고 있다면, 그리고 reduction을 polynomial time안에 할 수 있다면 우리는 반드시 problem X를 polynomial time안에 풀 수 있을 것이다.</p>
-
-
-<h5 id="60-4-npc">NP Complete</h5>
-
-
-<p>NP Complete problem은 모든 NP problem이 해당 problem으로 reduction될 수 있는 문제를 의미한다. 즉, 내가 그 어떤 NP problem을 제시하더라도 반드시 어떤 NP complete problem으로 reduction시키는 것이 가능하다. 그리고 <a href="http://en.wikipedia.org/wiki/Cook%E2%80%93Levin_theorem">Cook-Levin Theorem</a>에서 Boolean SAT problem이 NP problem이라는 것을 증명한다. 그렇다면 당연히 SAT problem을 통해서 다른 NP complete problem들을 찾을 수 있다. 우리가 많이 사용하는 NP complete problem들은 <a href="http://en.wikipedia.org/wiki/Independent_set_problem">Independent set problem</a>, <a href="http://en.wikipedia.org/wiki/Clique_problem">Clique problem</a>, <a href="http://en.wikipedia.org/wiki/Vertex_cover_problem">Vertex Cover problem</a>, <a href="http://en.wikipedia.org/wiki/Set_cover">Set Cover problem</a>, <a href="http://en.wikipedia.org/wiki/Subset_sum_problem">Subset Sum problem</a> <a href="http://en.wikipedia.org/wiki/Hamiltonian_path_problem">Hamiltonian path problem</a>, <a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling salesman problem</a>, <a href="http://en.wikipedia.org/wiki/Graph_coloring_problem">Graph Coloring problem</a> 등이 있다. 해당 문제들의 전체 목록은 <a href="http://en.wikipedia.org/wiki/NP-complete#NP-complete_problems">위키</a>에서도 볼 수 있다.</p>
-
-
-<p>그렇다면 당연히 필연적으로 할 수 있는 질문은, 'NP complete problem을 polynomial time안에 풀 수 있는가?' 라는 질문이 되겠다. 당연히 위에 서술한 그 어떤 문제 중에서 단 하나라도 polynomial solution을 제시할 수 있다면 모든 NP 문제들을 P로 풀 수 있을 것이다. 이 질문이 그 유명한 <a href="http://en.wikipedia.org/wiki/P_versus_NP_problem">P=NP?</a> 문제가 되겠다. 그리고 또 안타깝게도 이 문제는 <a href="http://en.wikipedia.org/wiki/Millennium_Prize_Problems">Millennium Prize Problems</a>라고 해서 엄청나게 어려운, 상금이 걸려있는 문제 중 하나이다. 즉, 아직도 결론이 나지 않은 문제이다. 하지만 그럼에도 대부분의 사람들이 NP complete는 polynomial time안에 풀 수 없다고 생각하고 있으며, 그 때문에 현재 우리가 사용 중인 모든 보안 알고리즘들은 이 NP completeness에 기반하여 만들어져있다. (정확히는 숫자를 곱하는 것은 쉬우나, 주어진 숫자가 소수인지아닌지 구분하는 것은 NP hard problem이라는 특성을 사용한다. - NP hard는 NP complete만큼 어렵거나 그보다 더 어려운 문제를 의미.) 따라서 일단 해당 문제를 reduction했더니 NP complete problem이 튀어나온다면 그 문제는 polynomial안에 답을 낼 수 없는 문제가 되겠다.</p>
-
-
-<h5 id="60-4-aa">Approximation Algorithm</h5>
-
-
-<p>그렇다고 이 문제는 NPC problem이니까 풀지말자! 라고 넘기기에는 세상에 너무나 많은 문제들이 NP complete problem이다. 그래서 정확하지는 않지만 NP complete problem을 풀기위한 여러가지 방법들이 존재한다. (<a href="http://en.wikipedia.org/wiki/NP-complete#Solving_NP-complete_problems">위키</a> 참고) 그 중에서도 approximation algorithm은 정확한 답을 구하는 것이 아니라 approximated solution을 polynomial안에 얻어내는 알고리즘을 의미한다. 즉, 원래 알고리즘이 x라는 답을 줬을 때, \(\alpha\)-approximation algorithm은 \(\alpha\)x 라는 답을 주게 된다. 자세한 점은 <a href="http://en.wikipedia.org/wiki/Approximation_algorithm">위키</a> 참고. 즉, NPC problem이 절망적으로 어려운 문제인 것은 맞지만 마냥 절망만 하고 있을 필요는 없다는 의미이며, approximation 말고도 NPC를 해결하는 방법은 여러 방법들이 존재한다. 하지만 일단 가장 중요한 개념 중 하나라고 할 수 있다.</p>
-
-
-<p>수 많은 경우, Machine Learning 문제를 해결하다보면, 해당 문제가 NP complete problem인 경우가 많이 존재한다. 따라서 절대적인 값을 구하는 것이 불가능하여 어쩔 수 없이 local optimum을 구하는 경우도 있고, 혹은 해당 문제를 정확히 일치하지는 않지만 polynomial time안에 구할 수 있는 문제로 바꾸어 문제를 해결하는 방법도 존재한다. 즉, Machine learning에 대해 공부하기 위해서는 algorithm에 대한 이해가 매우매우 필수적이라고 할 수 있을 것이다.</p>
-
-
-
-
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2014년 8월 10일: 글 등록</li>
-<li>2015년 2월 28일: 변경 이력 추가, 문장 표현 등 수정 (알고리듬->알고리즘)</li>
 </ul>
 
 

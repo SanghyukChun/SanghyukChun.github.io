@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="서버를 구축해보자 - 웹서버 구축 스크립트 만들기 Dec 16th, 2013 | Comments 지난 포스팅에서 APR이 깔리지 않아 어쩌고 저쩌고&#8230; 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 &hellip;">
+  <meta name="description" content="Distance Metric Learning Mar 2nd, 2014 | Comments Machine Learning 분야에는 KNN 등의 input data의 distance metric을 어떻게 설정하냐 따라에 크게 영향을 받는 알고리듬들이 종종 존재한다. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,97 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/37/">Distance Metric Learning</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-02T20:24:00+09:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2014</time>
+        
+         | <a href="/37/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Machine Learning 분야에는 KNN 등의 input data의 <a class="red tip" title="간단하게 생각해서 distance function이라 생각하면 된다. 자세한 설명은 뒤에서 계속">distance metric</a>을 어떻게 설정하냐 따라에 크게 영향을 받는 알고리듬들이 종종 존재한다. 그런데, 대부분 이런 method들에서 주로 사용하는 distance metric은 Euclidean distance로, 이 metric은 근본적으로 데이터 하나와 다른 데이터 하나와의 관계만을 나타내기 때문에 실제 distribution으로 존재하는 데이터에는 적합하지 않은 경우가 많다. 때문에 데이터들의 분포 등을 고려하여 이런 &#8216;거리&#8217;를 새로 정의하는 분야가 존재하는데 이를 일컬어 Distance Metric Learning이라 한다.</p>
+
+
+<p>그렇다면 distance metric이란 무엇인가부터 간단하게 짚고 넘어가자. Distance metric은 쉽게 생각하면 distance를 정의하는 방법이라고 할 수 있다. 몇 가지 규칙이 존재하는데, 자세한 내용은 <a href="http://en.wikipedia.org/wiki/Metric_(mathematics)">위키피디아 페이지</a>를 참고하길 바란다. 역시 가장 간단한 예시는 Euclidean distance로, 우리가 가장 많이 알고 있는 거리를 측정하는 방법일 것이다. 이 함수는 간단하게 \(d(p,q)=\sqrt{(p_1-q_1)^2+(p_2-q_2)^2+&#8230;}\)로 정의된다. 그 밖에도 두 점의 값이 정확히 일치하면 1, 일치하지 않는다면 0으로 표시하는 binary distance등도 존재한다.</p>
+
+
+<p>이 밖에도 중요한 distance metric으로는 Mahalanobis Distance Metric이라는 것이 있다. 이 distance metric은 Euclidean distance metric이 data set의 correlation을 하나도 고려하지 않은 문제점을 해결할 수 있고, 또한 scale-invariant한 특성을 가지고 있다. 이 metric은 \(d(p,q)=\sqrt{(\vec p - \vec q)^\top \Omega (\vec p - \vec q)}\)로 정의된다. 이 때 \(\Omega\)는 semidefinite matrix이다. <a href="http://en.wikipedia.org/wiki/Mahalanobis_distance">위키피디아</a>에서 발췌한 보다 정확한 정의는 앞서 나왔던 수식에서 \(\Omega\)가 covariance matrix인 metric이다. 따라서 이 metric이 data set의 correlation을 포함하여 거리를 표현할 수 있는 것이다. 하지만 실제 분포를 알 수 없는 임의의 데이터들에 대해서 올바른 covariance matrix를 계산하는 것은 매우 어렵다. 따라서 이 Mahalanobis metric의 \(\Omega\)를 learning하는 method들도 존재하는데, 대표적으로 LMNN(Large Margin Nearest Neighbor) classification이 있다. 이 논문에 대해서는 추후에 따로 포스트를 하도록 하겠다.</p>
+
+
+<p>아무튼, distance metric learning은 input data space에서 data들에 가장 적합한 형태의 어떤 metric을 learning하는 알고리듬이다. 여기에서 data는 각 pair 별로 similar/dissimilar가 정의되어 있는 형태의 데이터이다. 즉, metric learning은 similar한 point끼리는 더 가까운 거리로 판단하게 하고, dissimilar한 point는 더 먼 거리로 판단하게 하는 어떤 metric을 학습하는 것이다. 당연히 KNN 등의 알고리듬들은 그 성능이 크게 개선될 수 있다.</p>
+
+
+<p>아래는 distance metric learning을 간략하게 그림으로 나타낸 것이다. 그림은 Bellet, A., Habrard, A., and Sebban, M. A Survey on Metric Learning for Feature Vectors and Structured Data, 2013 에서 발췌하였다.</p>
+
+
+<p><img src="/images/post/37-1.png" width="500"></p>
+
+<p>즉, 우리가 metric learning을 하는 가장 큰 이유는 KNN 등의 metric에 크게 좌우되는 algorithm들의 성능을 개선시키기 위함인 것이다.</p>
+
+
+<p>그렇다면 distance metric learning의 종류는 어떻게 되는가? 일반적인 machine learning 분류처럼 supervised/unsupervised learning이 존재한다. 먼저 supervised learning은 constraints나 label이 이미 주어진 상태에서 metric을 학습하게 된다. 즉, 이미 우리는 모든 데이터들의 관계를 알 고 있고, 이 관계에서 가장 적합한 distance metric을 찾는 알고리듬인 것이다. 대표적으로 NCA, RCA 등의 알고리듬 들이 존재한다고 한다. 이에 반해 unsupervised learning은 아무런 사전지식없이 metric을 learning하는데, 주로 dimension reduction technique으로 많이 사용한다. 예를 들어서 PCA가 이 범주에 들어가게 된다.</p>
+
+
+<p>내가 읽은 두 개의 survery에서는 (Liu Yang, Distance Metric Learning: A Comprehensive Survey, 2005 그리고 Liu Yang, An Overview of Distance Metric Learning, 2007) 이 두 가지 분류 뿐 아니라 두 가지 분류를 더 추가하였다. 하나는 Maximum margin based distance learning이고, 또 하나는 kernel method이다. 일단 kernel 쪽은 내가 잘 모르기도 하고, 내 관심사는 maximum margin based distance learning이므로, 이 부분에 조금 더 집중해서 설명하도록 하겠다.</p>
+
+
+<p>위의 survey에서 정의하는 Maximum margin based learning은 다음과 같다. <a class="red">&#8220;Formulate distance metric learning as a constrained convex programming problem, and attempt to learn complete distance metric from training data&#8221;</a> 즉, Convex optimization을 통해서 가장 최적의 metric을 찾아내는 method라는 것이다. 여기에서 convex optimization은 이전에 블로그에서 다룬 적이 없기 때문에 나중에 이에 대한 글을 쓰게 되면 여기에 추가 랑크를 달도록 하고 지금은 일단 위키피디아 링크로 설명을 대체하도록 하겠다. <a href="http://en.wikipedia.org/wiki/Convex_optimization">링크</a></p>
+
+
+<p>이 방법은 주어진 input에 대해서 가장 최고의 performance를 내는 metric을 찾아내기 때문에 가장 성능이 좋아보일 것 같지만, 실제로는 몇 가지 문제점들을 가지고 있다. 하나, convex optimization은 대부분 gradient descent method를 사용하여 그 계산하는데, 이 계산량이 다른 method들에 비해서 많이 비싸다. 둘째, input training data들에 대해서 optimize한 결과로 metric을 정의하기 때문에 overfitting 문제가 발생할 수 있다. 특히 이 overfitting은 dimesion이 높아질 수록, traing sample의 숫자가 줄어들 수록 더더욱 문제가 된다. 때문에 이런 문제점을 해결하기 위해서 dimension을 reduction한 이후에 metric을 learning하는 등의 technique들이 사용되고 있다. 하지만 이 역시 문제가 있는데, 이 문제에 대해서는 나중에 포스팅하게 될 LMCA 논문에서 다루도록 하겠다.</p>
+
+
+<p>아무튼 maximum margin based learning의 대표적인 예는 LMNN method로, 이 method는 위에서 설명했던 Mahalanobis metric을 직접 learning하며, non-convex problem을 Semidefinite problem으로 바꾸어 global optimum을 찾는 문제로 바꾸어서 계산을 하게 된다. 이 논문에 대해서는 나중에 다시 포스팅하도록 하겠다.</p>
+
+
+<p>혹시 이 부분에 대해서 더 자세히 알고 싶다면, 아래에 링크해놓은 tutorial들을 읽어보길 바란다.</p>
+
+
+<p>Tutorials</p>
+
+
+<ul>
+    <li><a href="http://www.iip.ist.i.kyoto-u.ac.jp/member/cuturi/Teaching/KAIST/kaist_2013.pdf">Marco Cuturi. KAIST Machine Learning Tutorial Metrics and Kernels A few recent topics, 2013</a></li>
+    <li><a href="http://cseweb.ucsd.edu/~naverma/talks/metric_learning_tutorial_verma.pdf">Nakul Verma, A tutorial on Metric Learning with some recent advances</a></li>
+    <li><a href="http://www-bcf.usc.edu/~bellet/misc/metric_learning_tutorial.pdf">Aurelien Ballet, Tutorial on Metric Learning, 2013</a></li>
+    <li><a href="http://compscicenter.ru/sites/default/files/materials/2012_05_03_MachineLearning_lecture_09.pdf">Brian Kulis. Tutorial on Metric Learning. International Conference on Machine Learning (ICML) 2010</a></li>
+</ul>
+
+
+<p>References</p>
+
+
+<ul><li>Liu Yang, Distance Metric Learning: A Comprehensive Survey, 2005</li><li>Liu Yang, An Overview of Distance Metric Learning, 2007</li><li>Bellet, A., Habrard, A., and Sebban, M. A Survey on Metric Learning for Feature Vectors and Structured Data, 2013</li><li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006).InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li></ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -1083,106 +1174,6 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/27/">캐시버타이징, 당신이 지갑을 열어야 하는 101가지 이유</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-19T21:30:00+09:00" pubdate data-updated="true">Nov 19<span>th</span>, 2013</time>
-        
-         | <a href="/27/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>사람들은 흔히 멋진 광고, 작품성있는 광고에 열광하고는 한다. 하지만 그런 광고가 정말 좋은 광고일까? 잠깐 좋은 광고란 무엇인지에 대해 생각해보고 넘어가보자. 광고란 무엇일까? 사전적인 의미의 광고는 다음과 같다. (당연한 얘기지만 출처는 <a href="http://ko.wikipedia.org/wiki/%EA%B4%91%EA%B3%A0">위키피디아</a>)</p>
-
-
-<blockquote>광고(廣告, 영어: advertising)는 명시적인 광고주가 매체를 통해 의사전달을 하는 단방향 의사소통 방법이며 광고를 접하는 수용자의 태도를 변화시키기 위한 목적을 가진다.</blockquote>
-
-
-<p>말이 너무 어려운가? 그럼 이건 어떤가?</p>
-
-
-<blockquote>&#8220;광고&#8221;라는 한자어는 &#8220;널리 알리다&#8221;라는 뜻을 가지고 있다.</blockquote>
-
-
-<p>그렇다. 광고라는 것은 기본적으로 무언가를 널리 알라는 것을 의미한다. 자 그렇다면 여기에서 &#8216;무엇&#8217;을 광고하느냐가 달라지는 것인데, 기업 입장에서 생각하면 크게 두 가지 종류로 나눌 수 있을 것이다. 하나는 특정 product를 홍보하는 것, 또 하나는 특정 product가 아닌 자사의 (상대적인) 가치를 높이기 위해 자사를 홍보하는 것. 즉, 광고는 내가 새로 만든 물건을 끝내주게 잘 알리거나 혹은 자사의 이미지를 높여주는 역할을 한다는 얘기다. 그게 광고의 본질이다. 자 그러면 다시 좋은 광고 얘기로 넘어가보자.</p>
-
-
-<p>애당초 광고란 상업성이 짙을 수 밖에 없는 현상이다. 광고의 필요성이 대두된 이유부터가 회사들이 수익을 더 많이 내기 위해서가 아니었는가? 그런데 흔히 말하는 &#8216;작품성있는&#8217; 혹은 &#8216;예술적인&#8217; 광고는 그 본질과 다소 초점이 다르다. 물론 예술적이면서 상업적이고 효과적인 광고를 만드는 것도 가능하다. 그러나 더 쉬운 방법으로 더 저렴하게 효과적인 홍보를 할 수 있음에도 구태여 어려운 문구를 사용하고 소비자가 한 번에 이해할 수 없는 광고를 만드는 것이 과연 회사 입장에서 회사를 더 성장시킬 수 있는 방법일까? 이 책, 캐시버타이징은 이런 광고계의 현실에 쓴 소리를 던진다.</p>
-
-
-<blockquote>
-    <p>광고의 99퍼센트는 아무것도 팔지 못하고 있다.</p>
-    <small>David Ogilvy, <cite title="Source Title">Founder of Ogilvy &amp; Mather</cite></small>
-</blockquote>
-
-
-<p>이 책은 사람들의 기본적인 8가지 욕구를 가지고 있다고 주장하며 좋은 광고를 만들기 위해서는 이 욕구들을 잘 활용해야한다고 주장한다. 그 욕구는 아래와 같다</p>
-
-
-<ul>
-    <li>생존, 사는 즐거움, 수명 연장</li>
-    <li>먹고 마시는 즐거움</li>
-    <li>공포와 고통과 위험으로부터의 자유</li>
-    <li>성적 만족</li>
-    <li>안락한 생활 조건</li>
-    <li>남보다 우월해지고 싶고, 이기고 싶고, 뒤떨어지지 않게 따라가고 싶은 마음</li>
-    <li>사랑하는 사람들에 대한 관심과 보호</li>
-    <li>사회적 인정</li>
-</ul>
-
-
-<p>과연 누가 이런 8가지 기본적인 욕구가 옳다 그르다 얘기할 수 있을까? 이 욕구들은 정말 기본적이고 사람이라면 응당 가지고 있는 욕구들이다. 이는 생각보다 큰 영향을 미치는데, 위의 욕구를 반영해 &#8216;Art of Controversy&#8217;라고 제목지어진 지금까지 한 권도 팔리지 않은 책의 이름을, &#8216;How to Argue Logically&#8217;로 바꾸어 &#8216;남보다 우월해지고 싶은&#8217; 여섯번째 기본욕구를 반영해 바꾸어보니, 연간 판매부수가 0에서 3만으로 크게 뛰었다. 이 8가지 욕구가 결코 무시할 수 없는 조건이라는 것이다.</p>
-
-
-<p>하지만 실제로 사람들은 더 많은 욕구를 가지고 있으며, 2차적, 후천적인 욕구를 가지고 있다. 이 책에서는 아래 9가지를 나열하였다.</p>
-
-
-<ul>
-    <li>지식을 획득하고 교육을 받고 싶다.</li>
-    <li>호기심을 충족시키고 싶다.</li>
-    <li>몸과 환경이 깨끗하면 좋겠다.</li>
-    <li>매사에 능률적이고 싶다.</li>
-    <li>수고를 덜고 싶다.</li>
-    <li>남을 믿고싶다/다른 사람들과 똑같아 지고 싶지 않다.</li>
-    <li>스타일을 멋지게 표현하고 싶다.</li>
-    <li>경제적이고 싶다/이익이 있으면 좋겠다.</li>
-    <li>유리한 거래를 하고 싶다.</li>
-</ul>
-
-
-<p>그러나 이 후천적 욕구는 아무리 대단한 욕구라 할지라도 기본적인 8가지 욕구를 따라갈 수 없다. 이 책은 앞서 언급한 8가지 기본 욕구를 활용하여 좋은 (잘 팔리는) 광고 카피를 뽑아내는 법에 대해 다룬다. 사실 많은 사람들이 멋있는 광고를 찬양할지라도 사실 정말 팔리는 광고는 이런 소비자들의 심리를 잘 파악해 그 취약점을 파고드는 광고인 것이다. 내가 당신한테 무엇을 해줄 수 있는지! 내 물건을 구매했을 때 당신한테 어떤 멋진 내일이 찾아오는지! 내 물건을 구매하면 어떻게 당신에게 찾아올 끔찍한 미래를 피할 수 있는지! 이런 광고가 정말 먹히는 광고이고 정말 물건을 팔아주는 광고인 것이다.</p>
-
-
-<p>요즘 마케팅에 심취한 후배들을 만나보면 많은 후배들이 &#8216;멋있는 광고&#8217; 혹은 &#8216;Creative한 광고&#8217;를 하고 싶어하고 그런 일에 꽂혀있는 경우가 허다하다. 하지만 결국 광고의 본질, 마케팅의 본질은 자신의 물건을 소비자들에게 판매하는 것이고, 멋있는 광고보다는 잘 팔리는 광고가 사실 훨씬 더 중요하다는 사실을 절대 잊어서는 안될 것이다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1201,6 +1192,10 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/69/">Machine Learning 스터디 (13) Clustering (K-means, Gaussian Mixture Model)</a>
+      </li>
+    
+      <li class="post">
         <a href="/64/">Machine Learning 스터디 (8) Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a>
       </li>
     
@@ -1214,10 +1209,6 @@ $$ S = \sum_{i}^{n} {a_i * f_i} $$
     
       <li class="post">
         <a href="/82/">블로그에 Disqus 설치</a>
-      </li>
-    
-      <li class="post">
-        <a href="/81/">맥 요세미티 업데이트 이후 Homebrew 문제점 Troubleshooting</a>
       </li>
     
   </ul>
