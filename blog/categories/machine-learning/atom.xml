@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-03-25T02:12:38+09:00</updated>
+  <updated>2015-03-25T03:25:07+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<h5>들어가며</h5>
 
 
-<p><a href="57-4-ClassML">첫 번째 글</a>에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 이 글에서는 그 중 Supervised Learning의 가장 대표적인 예시인 Classification에 대해 다룰 것이며 가장 대표적이고 간단한 세 가지 알고리즘에 대해서 역시 다룰 것이다.</p>
+<p><a href="http://SanghyukChun.github.io/57#57-4-ClassML">첫 번째 글</a>에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 이 글에서는 그 중 Supervised Learning의 가장 대표적인 예시인 Classification에 대해 다룰 것이며 가장 대표적이고 간단한 세 가지 알고리즘에 대해서 역시 다룰 것이다.</p>
 
 
 <h5>What is Classification?</h5>
@@ -30,7 +30,7 @@
 <p><a href="http://en.wikipedia.org/wiki/Statistical_classification">Classification</a>은 <a href="http://en.wikipedia.org/wiki/Supervised_learning">Supervised Learning</a>의 일종으로, 기존에 존재하는 데이터와 category와의 관계를 learning하여 새로 관측된 데이터의 category를 판별하는 문제이다. 스팸 필터를 예로 들어들어보자. 스팸 필터의 데이터는 이메일이고, category, 혹은 label, class는 spam메일인지 일반 메일인지를 판별하는 것이 될 것이다. 스팸필터는 먼저 스팸 메일, 그리고 일반 메일을 learning을 한 이후, 새로운 데이터 (혹은 메일)이 input으로 들어왔을 때 해당 메일이 스팸인지 일반 메일인지 판별하는 문제를 풀어야하며, 이런 문제를 classification이라고 한다.</p>
 
 
-<p><a href="57">첫 번째 글</a>에서 머신러닝 문제는 먼저 주어진 데이터에 대한 가정을 하고, 해당 가정을 만족하는 best hypothesis를 찾는 문제라고 언급한 적이 있다. Classification 문제 역시 Machine Learning 문제이므로 데이터에 대한 가정을 먼저 해야하고, best hypothesis를 찾는 과정을 거친다. 따라서 각각의 서로 다른 classification algorithm들은 서로 다른 assumption을 가지고 있으며, 해당 assumption을 가장 잘 만족하는 function parameter를 계산하는 과정이다. 앞으로 설명하게 될 알고리즘들에 대한 설명을 읽을 때 데이터에 대해 어떤 가정을 하였는지 꼼꼼히 확인하면서 읽으면 알고리즘을 이해하기 한결 수월할 것이다.</p>
+<p><a href="http://SanghyukChun.github.io/57">첫 번째 글</a>에서 머신러닝 문제는 먼저 주어진 데이터에 대한 가정을 하고, 해당 가정을 만족하는 best hypothesis를 찾는 문제라고 언급한 적이 있다. Classification 문제 역시 Machine Learning 문제이므로 데이터에 대한 가정을 먼저 해야하고, best hypothesis를 찾는 과정을 거친다. 따라서 각각의 서로 다른 classification algorithm들은 서로 다른 assumption을 가지고 있으며, 해당 assumption을 가장 잘 만족하는 function parameter를 계산하는 과정이다. 앞으로 설명하게 될 알고리즘들에 대한 설명을 읽을 때 데이터에 대해 어떤 가정을 하였는지 꼼꼼히 확인하면서 읽으면 알고리즘을 이해하기 한결 수월할 것이다.</p>
 
 
 <h5>Decision Tree</h5>
@@ -131,7 +131,7 @@
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
 <li>Hidden Markov Model</li>
-<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li>EM algorithm</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
@@ -435,7 +435,7 @@
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
 <li>Hidden Markov Model</li>
-<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li>EM algorithm</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
@@ -593,7 +593,7 @@
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
 <li>Hidden Markov Model</li>
-<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li>EM algorithm</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
@@ -785,7 +785,7 @@
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
 <li>Hidden Markov Model</li>
-<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li>EM algorithm</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
@@ -882,7 +882,7 @@
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
 <li>Hidden Markov Model</li>
-<li>Clustering (K-means, Gaussian Mixture Model)</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li>EM algorithm</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
