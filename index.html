@@ -168,7 +168,7 @@ $(function() {
 <p>$$ \ln p(X|\pi, \mu, \Sigma) = \sum_i^n \ln \sum_j^k \pi_j N (x_i | \mu_j, \Sigma_j) $$</p>
 
 
-<p>그러나 역시 이 문제도 jointly update가 매우매우 어려운 문제이다. 그러나 K-means와 비슷하게도 \(\pi\)를 고정하고 \(\mu, \Sigma\)를 계산하는 것은 쉬우며, 그 반대 역시 쉽다. 따라서 비슷하게 alternative update를 통해 문제를 해결하는 알고리즘을 어렵지 않게 디자인 할 수 있다. 역시 이 알고리즘도 global로 수렴하지 않고 local로만 수렴하게 된다. 다음 글에서 더 자세하게 설명하겠지만, GMM을 풀기 위한 이 알고리즘을 <a href="http://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm">&#8216;EM&#8217; 알고리즘</a>이라고 한다. EM은 Expectation Maximization의 약자로, E step과 M step으로 나뉘어져있다. E step은 현재 주어진 \(\mu, \Sigma, \pi\)들을 사용해 가장 &#8216;expectation&#8217;이 높은 latent variable의 값을 찾아내는 과정이며, M step은 새로 estimate된 latent variable을 사용해 그 값을 maximize하는 \(\mu, \Sigma, \pi\)를 찾는 과정이다. EM 알고리즘은 E step과 M step이 계속 번갈아 진행되며, 더 이상 값이 변하지 않을 때 까지 반복된다. K-means를 이런 관점으로 바라보게 된다면, cluster information \(w_{ij}\)를 update하는 과정이 E step, \(b\)를 update하는 과정을 M step이라고 할 수 있다.</p>
+<p>그러나 역시 이 문제도 jointly update가 매우매우 어려운 문제이다. 그러나 K-means와 비슷하게도 \(\pi\)를 고정하고 \(\mu, \Sigma\)를 계산하는 것은 쉬우며, 그 반대 역시 쉽다. 따라서 비슷하게 alternative update를 통해 문제를 해결하는 알고리즘을 어렵지 않게 디자인 할 수 있다. 역시 이 알고리즘도 global로 수렴하지 않고 local로만 수렴하게 된다. GMM을 풀기 위해서 사용되는 알고리즘 중 가장 유명한 알고리즘으로는 <a href="http://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm">&#8216;EM&#8217; 알고리즘</a>이 존재한다. 이 알고리즘에 대해서는 <a href="/70">다음 글</a>에서 더 자세하게 설명하도록 하고, 이 글에서는 EM 알고리즘이라는 것을 알고 있는 상태에서 어떻게 각 step을 해결할 수 있는지에 대해서만 다루도록 하겠다. E-step에서는 현재 주어진 \(\mu, \Sigma, \pi\)들을 사용해 가장 &#8216;expectation&#8217;이 높은 latent variable의 값을 찾아내며, M-step에서는 새로 estimate된 latent variable을 사용해 그 값을 maximize하는 \(\mu, \Sigma, \pi\)를 찾는다. EM 알고리즘은 E-step과 M-step이 계속 번갈아 진행되며, 더 이상 값이 변하지 않을 때 까지 반복된다. K-means를 이런 관점으로 바라보게 된다면, cluster information \(w_{ij}\)를 update하는 과정이 E-step, \(b\)를 update하는 과정을 M-step이라고 할 수 있다. (그러나 K-means을 푸는 알고리즘은 엄밀하게 말하면 EM 알고리즘이 아니다)</p>
 
 
 <p>사실 엄밀하게 설명하면 GMM을 푸는 EM에서 E-step 때 update하는 것은 정확하게 \(\pi\)와 같은 것은 아니다. EM으로 이 문제를 풀기 위해서 우리는 새로운 &#8216;latent&#8217; variable을 introduce해야한다. latent variable은 쉽게 생각하면 graphical model에서 hidden variable에 해당하는 값이다. 다음에 EM 알고리즘에 대해 자세히 다룰 때 다시 설명하겠지만, 이렇게 latent variable을 설정하는 이유는 어떤 특정 variable의 marginal distribution을 optimize하는 것은 어려울 때, latent variable을 사용해 그 variable과 latent variable의 joint distribution을 다루는 것은 간단할 수 있기 때문이다. GMM에서는 latent variable \(z\)를 introduce하게 된다. \(z\)는 \(k\)-ary variable로, \(z\)의 \(j\) 번째 dimension인 \(z_j\)는 Binary random variable이며, \(p(z_j=1) = pi_j, \) where \(\sum_j z_j = 1\) and \(\sum_j \pi_j = 1\) 이라는 조건을 가지고 있다. \(z\)의 marginal probability는 \(p(z) = \prod_j \pi_j^{z_j}\)로 어렵지 않게 계산할 수 있으며, 비슷하게 주어진 데이터 \(x\)에 대한 conditional distribution 역시 간단하게 다음과 같이 표현된다. \(p(x|z) = \prod_j N(x|\mu_j, \Sigma_j)^{z_j}\).</p>
@@ -208,7 +208,7 @@ $(function() {
 
 <p><img src="/images/post/69-4.gif" width="500"></p>
 
-<p>GMM은 사실 직관적으로 이해하기 쉬운 알고리즘은 아니다. 보통 Machine learning에서 정말 정말 중요한 EM 알고리즘에 대해 설명하기 전에 example같은 느낌으로 설명하는 경우가 많으며, 실제로 다른 클러스터링 알고리즘들에 비해 많이 사용되는 것 같지도 않다. 그러나 EM을 이해하기 위해서 한 번 쯤은 공부해야하는 알고리즘이며, k-means를 제외하면 가장 유명한 클러스터링 방법 중에 하나이기 때문에 머신러닝을 공부하는 경우에는 GMM을 빼놓고 넘어가기 힘들다. 이 글에서는 중간 계산과정을 많이 생략했으므로 이 글만 읽고 이해하기에는 다소 어려울 수 있다. 가장 좋은건 Bishop 책 chapter 9을 읽어보는 것이며, 상황이 여의치 않다면 다른 lecture note들을 찾아보기를 권한다.</p>
+<p>EM 알고리즘에 대한 심도있는 이해 없이 이 글을 이해하는 것은 조금 어려울 수 있다. 이 글이 잘 이해가 되지 않는다면 먼저 EM 알고리즘에 대해 설명한 <a href="/70">다음 글</a>을 읽어본 다음 다시 읽어보기를 권한다.</p>
 
 
 <h5>정리</h5>
@@ -224,6 +224,7 @@ $(function() {
 
 <ul>
 <li>2015년 3월 25일: 글 등록</li>
+<li>2015년 6월 14일: EM 알고리즘 링크 추가 및 설명 변경</li>
 </ul>
 
 
@@ -257,7 +258,7 @@ $(function() {
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
 <li><a href="/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li>EM algorithm</li>
+<li><a href="/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
