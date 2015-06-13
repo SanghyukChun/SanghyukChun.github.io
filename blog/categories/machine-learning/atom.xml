@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-06-14T03:48:42+09:00</updated>
+  <updated>2015-06-14T03:49:41+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -292,9 +292,9 @@
 <li>Support Vector Machine</li>
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
-<li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li>EM algorithm</li>
+<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+<li>Hidden Markov Model</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li>Neural Network Introduction</li>
@@ -596,9 +596,9 @@
 <li>Support Vector Machine</li>
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
-<li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li>EM algorithm</li>
+<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+<li>Hidden Markov Model</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li>Neural Network Introduction</li>
@@ -754,9 +754,9 @@
 <li>Support Vector Machine</li>
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
-<li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li>EM algorithm</li>
+<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+<li>Hidden Markov Model</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li>Neural Network Introduction</li>
@@ -946,9 +946,9 @@
 <li>Support Vector Machine</li>
 <li>Ensemble Learning (Random Forest, Ada Boost)</li>
 <li>Graphical Model</li>
-<li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li>EM algorithm</li>
+<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+<li>Hidden Markov Model</li>
 <li>Dimensionality Reduction (LDA, PCA)</li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li>Neural Network Introduction</li>
