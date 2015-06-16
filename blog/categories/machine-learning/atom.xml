@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-06-17T05:23:08+09:00</updated>
+  <updated>2015-06-17T05:24:52+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -110,7 +110,7 @@
 <p>이때 \(\|A\|_F\)는 <a href="http://mathworld.wolfram.com/FrobeniusNorm.html">Frobenius norm</a>을 의미한다. 이 norm은 matrix의 모든 element들의 제곱을 더한 값이며, \(\| A \|_F^2 = {\tt tr} (A A^\top) = {\tt tr} (A^\top A) \) 라는 특성이 알려져있다. 이제 위의 식에서 \(Z\)를 UV decomposition한 후 대입해보면 다음과 같은 식을 얻는다.</p>
 
 
-<p>\[\min_{U\in R^{d \times k}, V\in R^{n \times k}, U^\top U = I}\]</p>
+<p>\[\min_{U\in R^{d \times k}, V\in R^{n \times k}, U^\top U = I} \|X - UV^\top\|_F^2\]</p>
 
 
 <p>이 식을 \(V\)에 대해 미분하면 optimal한 V는 \(V=X^\top U\)로 표현이 됨을 알 수 있으며, 이를 위의 식에 대입한 후, Frobenius norm의 성질을 잘 활용하면 아래와 같은 식이 나온다.</p>
