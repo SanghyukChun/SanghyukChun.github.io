@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-06-14T03:55:51+09:00</updated>
+  <updated>2015-06-17T05:23:08+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,185 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (16) Dimensionality Reduction (PCA, LDA)]]></title>
+    <link href="http://SanghyukChun.github.io/72/"/>
+    <updated>2015-06-17T05:21:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/72</id>
+    <content type="html"><![CDATA[<h5>들어가며</h5>
+
+
+<p>Machine Learning problem을 풀다보면, 종종 high dimensional 데이터를 다뤄야할 일이 생긴다. 그런데 dimension 높은 데이터를 다루다보면 여러 문제가 발생하는데, 높은 dimension으로 인해 생기는 대표적인 문제가 <a href="http://SanghyukChun.github.io/59#59-4-cd">예전 글</a>에서 다뤘던 Curse of dimensionality이다. 또한 많은 algorithm들에서 dimension이 complexity에 영향을 주는 경우가 많으므로 높은 dimension은 알고리즘의 성능에 악영향을 미치는 경우가 많다. 그렇기 때문에 많은 경우 데이터의 dimension이 높다면 다양한 방식의 dimenionality reduction 기술을 적용해 데이터의 차원을 낮추는 작업을 한다. 일반적으로 많이 사용하는 Dimensionality Reduction으로는 LDA와 PCA가 있으며, ICA, CCA 등의 방법도 종종 사용되며, 그 이외에도 RBM, Auto-encoder 등의 Neural network와 관련된 모델들도 존재한다. 이 글에서는 가장 많이 사용되는 방법들인 LDA와 PCA에 대해서만 다룰 것이다.</p>
+
+
+<h5>Recall: Curse of Dimensonality</h5>
+
+
+<p>Curse of Dimensionality는 데이터의 차원이 높아질수록 발생하는 여러 문제들을 통틀어 일컫는 말이다. 이런 문제가 발생하는 이유는 차원이 높아질수록 우리가 일반적으로 사용하는 Euclidean distance가 예상치 못한 방식으로 동작하기 때문이다. 예를 들어 d-차원 공간에서 임의의 점으로부터 거리가 1인 점들을 모아놓은 공간을 생각해봤을 때, d가 점점 커지면 커질수록 그 구의 대부분의 부피가 거의 surface에 가까운 엄청나게 얇은 shell에 존재한다는 것을 이미 예전 글에서 증명한바 있다. 다시 말해서 아주 높은 차원의 데이터는 우리가 원하지 않는 방향으로 움직일 가능성이 크다.</p>
+
+
+<h5>Feature Extraction</h5>
+
+
+<p>많은 상황에서 차원의 크기는 feature의 개수를 의미한다. 예를 들어 키, 몸무게, 나이, 성별이라는 네 가지 정보를 가지고 클러스터링을 한다고 생각해보자. 이 경우 데이터의 차원은 4이다. 그런데 아마도 이 네 가지 정보 이외에도 소득, 학력, 자산크기 등의 정보 등을 추가로 사용해 클러스터링을 한다면 더 좋은 클러스터링이 가능할지도 모른다. 문제는, 모든 feature가 전부 의미있는 feature는 아닐 수 있다는 것이다. 몸무게 정보를 사용하여 클러스터링한 것과 사용하지 않고 클러스터링한 것 중에서 몸무게 정보를 사용하지 않고 클러스터링 한 것이 더 좋을 수도 있다는 것이다. 이렇게 주어진 정보들 중에서 정말 의미 있는 feature를 뽑아내는 과정을 feature extration이라고 한다. 가장 간단한 feature extraction은 모든 feature를 사용해보기도 하고 사용해보지 않기도 하면서 \(2^d\) 개의 조합을 모두 확인해보는 것이다. 그러나 이 방법은 차원의 크기에 exponential할 뿐 아니라, 만약 기존 feature가 highly correlate되어있고, 여러 개의 feature를 묶어서 한 feature로 만들어야 성능이 좋아지는 경우 등에 대해 좋은 성능을 내기 어렵다. 따라서 이런 상황에서도 dimensionality reduction 방법을 사용해 feature를 뽑아낼 수 있다. 만약 우리가 100개의 feature를 가지고 있을 때, '가장 좋은' 30개의 feature만 뽑기 위해서 30차원으로 dimensionality reduction을 하는 것이다.</p>
+
+
+<h5>Dimensionality Reduction</h5>
+
+
+<p>데이터의 차원을 낮춘다는 것의 의미는, 현재 데이터가 존재하는 차원에서 그보다 낮은 다른 차원으로 데이터들을 mapping시키는 map을 찾는다는 것과 같다고 할 수 있다. 이때 어떤 임의의 차원에서 그보다 낮은 임의의 낮은 차원으로 가는 mapping은 셀 수 없이 많다. 그렇다면 우리는 어떤 mapping을 선택해야할까? 예를 들어 가장 간단한 방법으로, d 차원 데이터를 d' 차원으로 보내고 싶을 때, 앞에서 설명했던 간단한 방법처럼 임의의 d' 개의 축을 골라서 그 축만 사용하는 방법도 있을 수 있고, <a class="red tip" title="projection이라고도 한다.">d에서 d'으로 가는 linear map</a>을 임의로 하나 고르는 것도 가능하다. 물론 non linear map도 가능하지만, 이 글에서 다룰 LDA와 PCA 두 가지 방법은 모두 linear mapping을 찾는 알고리즘이다. LDA는 supervised learning이며, PCA는 unsupervised learning에 해당하게 된다. 모든 문제에서 데이터는 matrix \(X\)로 표기되며, 데이터의 차원은 d이고, 개수는 n개이다. 따라서 \(X\)는 d by n matrix가 된다.</p>
+
+
+<h5>LDA</h5>
+
+
+<p><a href="http://en.wikipedia.org/wiki/Linear_discriminant_analysis">Linear Discriminant Analysis (LDA)</a>는 Dimensionality reduction만을 위한 방법은 아니다. LDA로 약어가 표시되는 것들이 꽤 많아서 (예: Latent Dirichelt Allocation) 이 모델을 처음 제안한 사람의 이름을 따서 Fisher's LDA 라고 부르기도 한다. LDA는 여러 클래스가 존재할 때 그 클래스들을 최대한 잘 분리시키는 projection을 찾는다. 철학은 굉장히 단순한데, projection 시킨 데이터들에서 같은 클래스에 속하는 데이터들의 variance는 최대한 줄이고 (\(\sigma_{within}\)), 각 데이터들의 평균 값들의 variance는 최대한 키워서 (\(\sigma_{between}\)) 클래스들끼리 최대한 멀리 떨어지게 만드는 것이다. 이를 수식으로 표현하면 다음과 같은 수식을 얻을 수 있다.</p>
+
+
+<p>\[S = \frac{\sigma_{between}^2}{\sigma_{within}^2}\]</p>
+
+
+<p>일단 가장 간단한 상황인 클래스가 2개일 때의 상황만 고려해보도록하자. 참고로 LDA의 결과는 항상 클래스 개수 - 1 개까지의 벡터 밖에 찾을 수 없기 때문에, 이 상황에서 우리가 찾게 될 projection은 1차원 projection을 찾는 것이므로 간단하게 vector \(w\)로 기술하도록 하겠다. 클래스가 2개 뿐이라면, 위의 식은 엄청 간단한 수식으로 바뀌게 된다. 먼저 \(\sigma_{between}\)은 데이터가 단 두 개 뿐이기 때문에 간단하게 \( (w \cdot \mu_1 - w \cdot \mu_2 )^2 \)으로 표현이 된다. 이때, \(\mu_1, \mu_2\)는 각각 1번째 클래스와 2번째 클래스에 속한 데이터들의 평균 값이다. 다음으로 \(\sigma_{within}\) 역시 어렵지 않게 계산할 수가 있다. Projection을 하게 되면 데이터의 variance는 \(w^\top \Sigma w\)로 표현이 되기 때문에, 1번 클래스와 2번 클래스에 대해 이 값을 계산하고 더해주기만 하면 된다. 식을 정리해보면</p>
+
+
+<p>\[w = \arg\min_w \frac{\sigma_{between}^2}{\sigma_{within}^2} = \arg\min_w\frac{(w \cdot \mu_1 - w \cdot \mu_2 )^2}{w^\top \Sigma_1 w + w^\top \Sigma_2 w} \]</p>
+
+
+<p>그리고 위 식을 w에 대해 미분하고 좀 정리해보면 \(w \propto    (\Sigma_1 + \Sigma_2)^{-1}(\mu_1 - \mu_2) \) 라는 식을 얻을 수 있다.</p>
+
+
+<h5>Multiclass LDA</h5>
+
+
+<p></p>
+
+<p>그러면 클래스가 2개보다 많을 때, 벡터 \(w\)가 아닌 subspace \(U\)를 찾는 과정은 어떻게 되는지 살펴보도록하자. 다시 \(\sigma_{within}\)과 \(\sigma_{between}\)을 살펴보자. 먼저 \(\sigma_{between}\)은 위와 비슷한 형태로 표현할 수 없다. 그러나 우리가 각각의 클래스의 평균을 \(\mu_i\)라고 정의한다면, 그냥 이 값들의 variance를 계산하기만 하면 된다. 이 variance는 \(\sum_i (\mu_i - \mu)(\mu_i-\mu)^\top\)로 표현이 된다. 이때 \(\mu\)는 모든 평균들의 평균이다. 이 variance가 있으므로, projection하여 얻는 variance도 앞 뒤에 proejction matrix를 곱해 쉽게 계산할 수 있다. \(\sigma_{within}\)은 위와 비슷한 방식으로 \(\sigma_{within} = U^\top \left(\sum_i \Sigma_i \right) U \)로 표현할 수 있다. 이때 \(\Sigma_i\)는 i번째 클래스의 variance이다. 이 식을 정리해보면 다음과 같은 식을 얻는다.</p>
+
+
+<p>\[U = \arg\min_U \frac{\sigma_{between}^2}{\sigma_{within}^2} = \arg\min_U \frac{U^\top \left(\sum_i (\mu_i - \mu)(\mu_i-\mu)^\top\right) U}{U^\top \left(\sum_i \Sigma_i \right) U} = \arg\max_U \frac{U^\top A U}{U^\top B} \]</p>
+
+
+<p>\(A\)와 \(B\)는 각각 괄호 안에 있는 값을 의미한다. 위 식에서 보게 되면, 분자에 해당하는 부분이 rank가 클래스 개수 - 1 이기 때문에, 우리가 이 식을 풀었을 때도 \(U\)의 rank가 클래스 개수 - 1이 되므로 LDA가 구할 수 있는 subspace의 축 개수가 클래스 개수 - 1로 제한되는 것이다. 이 식을 풀기 위해서는 eigenvalue를 계산하는 것으로 간단하게 식을 풀 수 있다. 지금부터 왜 이 식이 eigenvalue를 푸는 것으로 해결이 가능한지를 살펴보자.</p>
+
+
+<h5>General Eigenvector problem</h5>
+
+
+<p>문제를 간단하게 하기 위해 전체 subspace가 아닌 vector \(w\)만 고려해보도록 하자. 따라서 식은</p>
+
+
+<p>\[\min_w \frac{w^\top A w}{w^\top B w}\]</p>
+
+
+<p>로 표현 가능하다. 이제 이 식을 w에 대해서 미분해보면 다음과 같은 식을 얻게 된다</p>
+
+
+<p>\[\left(w^\top B w\right)^2 \big[ 2A w \left( w^\top B w \right) - 2B w \left( w^\top A w \right) \big] = 0\]</p>
+
+
+<p>이를 잘 정리하면</p>
+
+
+<p>\[Aw = \frac{w^\top A w} {w^\top B w} B w\]</p>
+
+
+<p>로 표현이 되고, 우리가 원래 풀려고 했던 \(\frac{w^\top A w} {w^\top B w}\)를 \(\lambda\)라고 정의하면 식이 \(A w = \lambda B w\)라는 엄청 간단한 식이 나오게 된다. 이런 형태를 만족하는 \(\lambda\)를 찾는 문제를 general eigenvalue problem이라 부른다. 만약 \(B\)가 Identity matrix라면 우리가 아는 일반 eigenvalue problem이 된다. 따라서 원래 문제가 \(\lambda\)의 minimum을 찾는 것이었으니 이제 가장 작은 general eigenvalue를 찾기만 하면 우리가 풀고 싶었던 문제를 풀 수 있는 것이다.</p>
+
+
+<h5>PCA</h5>
+
+
+<p><a href="http://en.wikipedia.org/wiki/Principal_component_analysis">Principal Component Analysis (PCA)</a>는 Dimensionality reduction의 가장 대표적인 방법 중 하나이다. PCA는 projection된 데이터의 variance가 최대화되는 projection matrix를 찾는 문제이다. 그런데 <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition#Low-rank_matrix_approximation">Eckart–Young theorem</a>에 의해서, 이 문제의 답이 데이터 \(X\)에 대한 <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular value decomposition(SVD)</a>으로 계산할 수 있다는 것이 알려져 있다. 그래서 PCA를 variance를 maximize하는 원래 정의대로 설명이 하는 경우도 많고, low rank matrix 문제로 설명하는 경우도 있다. 이 글에서는 low rank matrix estimation 문제로 설명하도록 하겠다. 이 문제의 objective는 아래 식과 같다.</p>
+
+
+<p>\[\min_{rank(Z)=k} \| X - Z \|_F^2\]</p>
+
+
+<p>이때 \(\|A\|_F\)는 <a href="http://mathworld.wolfram.com/FrobeniusNorm.html">Frobenius norm</a>을 의미한다. 이 norm은 matrix의 모든 element들의 제곱을 더한 값이며, \(\| A \|_F^2 = {\tt tr} (A A^\top) = {\tt tr} (A^\top A) \) 라는 특성이 알려져있다. 이제 위의 식에서 \(Z\)를 UV decomposition한 후 대입해보면 다음과 같은 식을 얻는다.</p>
+
+
+<p>\[\min_{U\in R^{d \times k}, V\in R^{n \times k}, U^\top U = I}\]</p>
+
+
+<p>이 식을 \(V\)에 대해 미분하면 optimal한 V는 \(V=X^\top U\)로 표현이 됨을 알 수 있으며, 이를 위의 식에 대입한 후, Frobenius norm의 성질을 잘 활용하면 아래와 같은 식이 나온다.</p>
+
+
+<p>\[\max_{U\in R^{d \times k}, U^\top U = I} {\tt tr} (U^\top X X^\top U)\]</p>
+
+
+<p>가 되며, 이 식의 답은 SVD를 통해 계산할 수 있다는 것을 알 수 있다. 그러나 만약 \(X\)의 mean이 0가 아니게 되면 UV decomposition을 하는 과정에서 문제가 생기게 되서 같은 방식으로 깔끔하게 구할 수가 없다. 이 과정은 다소 복잡하므로 생략하고 결과만 얘기하면, 그냥 \(\hat X = X - \frac{1}{n} X \mathbf 1\)을 SVD하면 된다. 뒤에 있는 term은 그냥 X의 평균값이다.</p>
+
+
+<p>정리하면, 임의의 데이터 X에 대한 PCA는 다음과 같이 구할 수 있다.</p>
+
+
+<ol>
+    <li>데이터 \(X\)의 empirical mean을 계산한 후 모든 데이터에서 평균을 빼준다.</li>
+    <li>새로 만들어진 데이터 \(\hat X\)의 가장 큰 singular value부터 k번째 큰 singular value까지에 대응하는 singular vector들을 구한다. (SVD를 통해)</li>
+    <li>뽑아낸 k개의 singular vector로 U를 구성하고 return한다.</li>
+</ol>
+
+
+<p>쉽지만 그만큼 강력하다. 하지만 PCA의 경우 Frobenius norm의 제곱값을 사용하므로 각 element들이 norm을 계산할 때 한 번 제곱되고, 다시 전체에 제곱을 취할 때 또 제곱이 취해지므로 조금이라도 원래 데이터와 다른 outlier가 존재하게 된다면 그 효과가 굉장히 극적으로 증폭되기 때문에 noise에 취약하다. 이를 방지하기 위해 objective의 norm을 1-norm으로 바꾸거나 하는 등의 robust PCA 연구도 활발하게 진행되고 있다.</p>
+
+
+<h5>정리</h5>
+
+
+<p>Dimensionality Reduction은 매우 유용하고 많이 쓰이는 툴이다. 특히 PCA는 굉장히 빈번하게 사용되고 알고리즘도 매우 간단하기 때문에 알아두면 쓰임새가 많다. 이 글에서는 LDA와 PCA만 다뤘지만, ICA, CCA, RBM 등 굉장히 많은 dimensionality reduction 기술들이 존재한다. 이 중 RBM은 추후에 다시 한 번 자세하게 설명하도록 하겠다.</p>
+
+
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2015년 6월 17일: 글 등록</li>
+</ul>
+
+
+<h5>Reference</h5>
+
+
+<ul>
+<li>Nie, Feiping, Jianjun Yuan, and Heng Huang. &ldquo;Optimal mean robust principal component analysis.&rdquo; Proceedings of the 31st International Conference on Machine Learning (ICML-14). 2014.</li>
+</ul>
+
+
+<hr>
+
+
+<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
+<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
+<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Ensemble Learning (Random Forest, Ada Boost)</li>
+<li>Graphical Model</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+<li>Hidden Markov Model</li>
+<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
+<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
+<li>Neural Network Introduction</li>
+<li>Deep Learning</li>
+<li>Reinforcement Learning</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine learning 스터디 (14) EM algorithm]]></title>
@@ -129,7 +308,7 @@
 <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
-<li>Dimensionality Reduction (LDA, PCA)</li>
+<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li>Neural Network Introduction</li>
 <li>Deep Learning</li>
@@ -291,7 +470,7 @@
 <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
-<li>Dimensionality Reduction (LDA, PCA)</li>
+<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li>Neural Network Introduction</li>
 <li>Deep Learning</li>
@@ -421,7 +600,7 @@
 <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
-<li>Dimensionality Reduction (LDA, PCA)</li>
+<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li>Neural Network Introduction</li>
 <li>Deep Learning</li>
@@ -725,165 +904,7 @@
 <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
-<li>Dimensionality Reduction (LDA, PCA)</li>
-<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
-<li>Neural Network Introduction</li>
-<li>Deep Learning</li>
-<li>Reinforcement Learning</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (6) Information Theory]]></title>
-    <link href="http://SanghyukChun.github.io/62/"/>
-    <updated>2014-08-20T00:20:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/62</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
-<p>Information Theory는 섀년이라는 걸출한 천재가 이룩해낸 매우 뛰어난 이론이다. 이 이론 덕분에 우리는 이렇게 인터넷도 할 수 있고, 무선통신도 할 수 있는 것이다. 이 이론 덕분에 불안정한 noisy한 channel에서도 유한한 시간 안에 우리가 전달하고 싶은 정보를 전부 전달할 수 있다는 것을 확신할 수 있고, 이론적인 한계값까지 도출이 가능한 엄청난 이론이다. Machine Learning에서도 이런 information theory 측면에서 문제를 바라보는 경우가 종종 있는데, Entropy, Mutual Information, KL-divergence 등이 그것이다. 이 글에서는 그런 Machine Learning의 관점에서 많이 쓰이는 기초적인 정보이론의 개념들을 짚고 넘어가볼까 한다.</p>
-
-
-<h5>Entropy</h5>
-
-
-<p>엔트로피는 '정보'의 단위라고 할 수 있다. 어떤 distibution p(x)에서 generate되는 discrete random variable x가 있다고 해보자. 이 random variable x가 전달할 수 있는 정보량은 어떻게 계산할 수 있을까. 여기에서 '정보'란 얼만큼의 bit가 있어야 x에 대한 정보를 완벽하게 얻을 수 있는가로 정의해보자. 예를 들어서 fair한 동전 던지기의 정보량은 1이다. 한 비트만 있으면 반드시 그 동전 던지기의 distribution을 서술할 수 있다. 그러나 만약 fair coin이 아니라면 한 면이 나올 확률이 다른 면이 나올 확률보다 상대적으로 더 크기 때문에 한 비트보다도 더 적은 정보를 사용해 값을 맞추는 것이 가능해진다. 이런 정보의 양을 <a href="http://en.wikipedia.org/wiki/Entropy_(information_theory)">Entropy</a>라는 것으로 정의하게 되는데, 간단하게 생각하면 열역학2법칙의 그 엔트로피와 동일하다. 즉, 엔트로피가 커질수록 불확실성이 높아지고 정보량은 더 많아진다. Entropy는 \(H(x) = - \sum_x p(x) log_2 p(x) \)로 정의가 되며, 만약 p(x)가 0으로 가면 \(\log_2 p(x)\)는 음의 무한으로 발산하지만, p(x)가 0이 되는 속도가 더 빠르기 때문에 엔트로피는 0이 된다.</p>
-
-
-<p>그럼 왜 엔트로피는 이런 꼴을 하게 되는 것일까. 만약 우리가 전체 N개의 object들이 있고, 이 object들이 K개의 bin으로 나뉘어져있다고 해보자. 그리고 i번째 bin에 들어갈 수 있는 object의 개수를 \(n_i\)라고 했을 때, object들이 bin에 들어갈 수 있는 permutation의 개수는 \(W = \frac{N!}{\prod_i n_i!}\)와 같으며 이를 multiplicity라고 한다. 엔트로피란 이 multiplicity에 비례하는, 정확히는 log를 취한 값을 엔트로피라고 하게 된다. 즉 Entropy H는 multiplicity W에 대해 다음과 같이 표현된다.</p>
-
-
-<p>\[H = \frac{1}{N}\ln W = \frac{1}{N}\ln N! - \frac{1}{N}\sum_i \ln n_i ! \]</p>
-
-
-<p>이때 \(\lim N \to \infty \) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
-
-
-<p>\[H = -\lim_{N \to \infty} \sum_i \left( \frac{n_i}{N} \right) \ln \left( \frac{n_i}{N} \right) = - \sum_i p_i \ln p_i \]</p>
-
-
-<p>이는 위에서 정의한 엔트로피의 값과 일치한다.</p>
-
-
-<p>그런데 이 값은 discrete한 random variable에 대해 정의된 값이고 continous한 random variable x에 대해서는 <a href="http://en.wikipedia.org/wiki/Differential_entropy">differencial entropy</a>라는 정의할 수 있다. <a href="http://en.wikipedia.org/wiki/Mean_value_theorem">평균값 정리</a>에 의해서 우리는 다음을 만족하는 value \(x_i\)를 반드시 찾을 수 있다</p>
-
-
-<p>\[ \int_{i\Delta}^{(i+1)\Delta} p(x) dx = p(x_i) \Delta\]</p>
-
-
-<p>엔트로피는 discrete한 random variable에 대한 값이었는데, 위 식을 통해 continous variable x를 위의 식을 만족하는 \(x_i\)로 치환하는 방식으로 quantize할 수 있다. 또한 이런 경우 각 \(x_i\)를 관측할 확률이 \(p(x_i)\Delta\)로 계산되므로, 이렇게 했을 경우 엔트로피는 아래와 같이 계산할 수 있다.</p>
-
-
-<p>\[H_\Delta = -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = - \sum_i p(x_i) \Delta p(x_i) - \ln \Delta \]</p>
-
-
-<p>이때, 오른쪽 term은 x에 대한 값이 아니니까 일단 먼저 무시하고, \(\lim \Delta \to 0\)를 취해보자. 이렇게 계산할 경우 아래 식이 얻어진다.</p>
-
-
-<p>\[\lim_{\Delta \to 0} H_\Delta = \lim_{\Delta \to 0} -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = -\int p(x) \ln p(x) dx\]</p>
-
-
-<p>이때, 맨 오른쪽 term을 differencial entropy라고 정의한다. 즉, differencial entropy는 다음과 같이 정의된다.</p>
-
-
-<p>\[H(x) = -\int p(x) \ln p(x) dx\]</p>
-
-
-<p>마지막으로 random variable이 x,y 두 개가 있고 이 둘의 joint distribution p(x,y)가 있다고 해보자. 우리가 알고 있는 정보는 x의 value라고 했을 때 우리는 y의 information의 양을 계산할 수 있을까? 이를 <a href="http://en.wikipedia.org/wiki/Conditional_entropy">Conditional Entropy</a>라고 하는데 이때 y에 대해 필요한 additioanl information은 \(p(y|x)\)이며, x와 y의 확률은 p(x,y)이므로 Conditional Entropy는 아래와 같이 정의된다.</p>
-
-
-<p>\[H(y|x) = - \int \int p(y,x) \ln p(y|x) dy dx\]</p>
-
-
-<p>이 값은 다음과 같은 chain rule을 항상 만족시킨다.</p>
-
-
-<p>\[H(x,y) = H(y|x) + H(x)\]</p>
-
-
-<h5>KL divergence</h5>
-
-
-<p>어떤 probability distribution p(x)와 p(y)가 있다고 했을 때 이 둘의 차이, 혹은 distance를 정의할 수는 없을까. 예를 들어 p(x)라는 우리가 모르는 unknown distribution이 있을 때, 우리가 추측한 \(p(\hat x)\)와 true distribution p(x)가 얼마나 차이나는지를 계산할 수 있는 방법은 없을까. 만약 우리가 q(x)를 사용해서 x를 transmitting하는 coding scheme을 construct했다고 해보자. 그리고 true distribution을 p(x)였다고 했을 때, q(x)를 사용하였을 때 얼마나 더 많은 정보량이 필요할 것인지 measure할 수 있을 것이다. 이를 <a href="http://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler divergence</a> 혹은 KL divergence라고 하며 수식은 아래와 같다.</p>
-
-
-<p>\[KL(p\|\|q) = - \int p(x) \ln q(x) - \left( -\int p(x) \ln p(x) dx \right) \\\\ = -p(x) \ln \left[ \frac{q(x)}{p(x)} \right] dx \]</p>
-
-
-<p>정확히 얘기하면 이 값은 'distance'가 될 수는 없다. 왜냐하면 distance, 혹은 metric은 symmetric해야하는데 KL divergence는 \(KL(p\|\|q) \neq KL(q\|\|p)\) 이기 때문이다.</p>
-
-
-<p>KL divergence는 언제나 0 보다 크거나 같은데, 같은 경우는 오직 p(x)와 q(x)가 일치하는 경우 뿐이다. 이를 증명하기 위해서는 convexity 컨셉과 Jensen's inequality를 도입하면 쉽게 증명이 가능하지만, 여기에서는 생갹하도록 하겠다.</p>
-
-
-<p>중요한 점은, KL divergence는 두 distribution의 차이를 define할 수 있는 좋은 수단 중 하나라는 것이며, 다시 말해 원래 true distribution p(x)와 우리가 estimate한 q(x)가 얼마나 비슷한지를 measure할 수 있는 수단이라는 점이다.</p>
-
-
-<h5>Mutual Information</h5>
-
-
-<p><a href="http://en.wikipedia.org/wiki/Mutual_information">Mutual Information</a>은 두 random variable들이 얼마나 mutual dependence한지를 measure하는 방법을 의미한다. 만약 random variable x와 y가 independent하다면 joint distribution p(x,y) 는 p(x,y) = p(x)p(y) 로 주어지게 될 것이며, 만약 둘이 dependent한 경우에는 두 값이 달라질 것이다. 그렇다면 만약 true distribution을 p(x,y)라고 했을 때, 새롭게 우리가 x와 y가 independent하다고 estimate하고 구한 p(x)p(y)와의 KL-divergence를 구할 수 있지 않을까? 당연히 이 값은 x와 y가 independent할 때만 0이고 그 이외에는 항상 0보다 크다. 즉, 두 random variable이 얼마나 mutually dependent한가, 얼마나 Mutual하게 information을 많이 가지고 있느냐를 측정할 수 있는 도구가 되므로 이를 Mutual information이라 한다. 수식으로 표현해보면 아래와 같다.</p>
-
-
-<p>\[I(x,y) = KL(p(x,y)\|\|p(x)p(y) \\\\ = - \int \int p(x,y) \ln \left( \frac{p(x)p(y)}{p(x,y)} \right) dx dy\]</p>
-
-
-<p>위의 값을 Mutual Information이라 하며, 이 값은 항상 다음과 같은 관계를 만족시킨다.</p>
-
-
-<p>\[I(x,y) = H(x) - H(x|y) = H(y) - H(y|x)\]</p>
-
-
-<h5>Machine Learning and Information Theory</h5>
-
-
-<p>Entropy는 주어진 bin에 얼마나 비슷한 element들이 들어있는지를 측정하는 척도로 쓰일 수 있으며, decision tree를 learning하는 알고리듬 등에서도 사용할 수 있다. 또한 KL-divergence는 두 distribution과의 거리를 의미하므로, density estimation 관점에서 바라봤을 때 우리가 estimate하는 distribution과 원래 true distribution이 얼마나 유사한지, 우리가 얼마나 잘 density estimation을 했는지 evaluation을 하는 용도 등으로 쓰일 수 있다. 마지막으로 Mutual information을 Bayes perspective에서 바라보게 된다면, 만약 우리가 어떤 데이터 x의 prior p(x)를 관측하고, 새로운 데이터 y를 관측해 얻은 posterior distribution p(y|x)가 있다고 했을 때, Mutual information은 이전 관측 x를 통해 새로운 관측 y의 uncertainty가 얼마나 reduction 되는지를 의미하게 되는 것과 동일하다는 것을 알 수 있다.</p>
-
-
-<p>정보이론 자체는 Machine Learning과 크게 관계가 없어보이지만, 그 개념들은 생각보다 꽤 많은 부분에서 사용되게 되므로 좀 간략하게 다루게 되었다.</p>
-
-
-<p>추가: 정보이론이 어떻게 머신러닝에 유용하게 쓰일 수 있는가에 대한 lecture와 book link들 <a href="http://www.inference.phy.cam.ac.uk/itprnn_lectures/">[1]</a>, <a href="http://www.inference.phy.cam.ac.uk/mackay/itila/book.html">[2]</a></p>
-
-
-
-
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2014년 8월 19일: 글 등록</li>
-<li>2014년 10월 9일: 정보이론, 머신러닝 렉쳐 및 책 링크 등록</li>
-<li>2015년 2월 28일: 변경 이력 추가</li>
-</ul>
-
-
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
-
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li>Dimensionality Reduction (LDA, PCA)</li>
+<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li>Neural Network Introduction</li>
 <li>Deep Learning</li>
