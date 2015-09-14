@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neural-Network | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/neural-network/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-14T20:06:17+09:00</updated>
+  <updated>2015-09-14T20:41:17+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -41,7 +41,7 @@
 <p>본 논문을 소개하기 전에 먼저 RNN에 대해 간단하게 설명을 하고 넘어가도록 하겠다. 이름에서도 알 수 있듯 일반적인 Feed-forward network와 RNN의 차이는 recurrent한 loop의 존재 유무이다. 이는 자기 자신을 향한 self-loop일 수도 있고, 아니면 cycle 형태이거나 아니면 undirected edge의 형태일 수도 있다. 보통 일반적으로 RNN이라 하면 아래 그림과 같이 hidden unit에 self-loop이 있는 형태를 일컫는 듯하다. (출처: Bengio Deep Learning book)</p>
 
 
-<p><img src="/images/post/89-1.png" width="600"></p>
+<p><img src="/images/post/89-1.PNG" width="600"></p>
 
 <p>이 그림에서도 알 수 있듯 self-loop의 존재는 RNN으로 하여금 자연스럽게 historical data를 현재 decision에 반영하도록 만들어준다. 즉, RNN 모델은 마치 HMM 등의 sequencial data를 처리하는 모델들처럼 동작하는 것이다. 실제 learning을 할 때는 시간에 대해 self-loop를 'unfold' 하여 마치 weight를 공유하는 deep layer를 연산하듯 update한다. RNN에 대한 더 자세한 설명은 추후 다른 포스팅을 통해 다룰 수 있도록 하겠다.</p>
 
@@ -61,7 +61,7 @@
 <p>LSTM은 historical information을 저장하기 위한 다소 복잡한 dynamics를 가지고 있다. "long term" memory라는 것은 memory cell (\(c_t\))에 저장되며, 시간에 따라, 그리고 주어진 input data에 따라 저장해둔 information을 얼마나 간직하고 있을지 forget gate (\(f_t\)) 라는 것을 통해 결정하게 된다. LSTM을 그림으로 표현하면 아래 그림과 같다. (출처: 논문)</p>
 
 
-<p><img src="/images/post/89-2.png" width="600"></p>
+<p><img src="/images/post/89-2.PNG" width="600"></p>
 
 <p>이를 수식으로 한 번 나타내어보자. 먼저 몇 가지 notation을 정의해보자. 먼저 모든 state는 n-dimension이라고 가정하자. \(h_t^l \in \mathbb R^n \)은 layer \(l\)의 timestamp \(t\)일 때의 hidden state라고 하자. 그리고 \(T_{n,m}: \mathbb R^n \to \mathbb R^m\) 을 n차원에서 m차원으로 가는 affine transform이라고 해보자. 예를 들어 parameter \(W\)와 \(b\)로 나타내어지는 \(Wx + b\)도 \(T_{n,m}\)에 포함된다 (즉, 이 논문에서는 복잡한 weight와 bias에 대한 식을 T라는 notation으로 간단하게 치환했다고 생각하면 된다). 마지막으로 \(\odot\)을 두 벡터의 element-wise multiplication이라고 정의해보자. 이렇게 notation을 정의하고 나면 일반적인 vanilla RNN을 다음과 같이 과거의 hidden state와 현재 hidden state의 이전 layer의 state로부터 현재 hidden state를 표현하는 function으로 표현할 수 있다.</p>
 
@@ -72,7 +72,7 @@
 <p>이때, function \(f\)는 RNN의 경우 sigmoid나 tanh 함수 중 하나로 선택하는 것이 일반적이다. 그럼 이번에는 LSTM을 수식으로 표현해보자.</p>
 
 
-<p><img class="center" src="/images/post/89-3.png" width="250"></p>
+<p><img class="center" src="/images/post/89-3.PNG" width="250"></p>
 
 <p>앞에서 언급했던 LSTM의 graphical representation을 살펴보면서 수식을 읽어보면 어렵지 않게 이해할 수 있을 것이다.</p>
 
@@ -87,12 +87,12 @@
 <p>저자들은 RNN에 Dropout을 붙였을 때 잘 동작하지 않는 이유가 dropout이 지워버리면 안되는 과거 information까지 전부 지워버리기 때문이라고 주장한다. 때문에 RNN에 Dropout을 적용하기 위해서는 recurrent connection이 아닌 connection 들에 대해서만 Dropout을 적용해야한다고 논문에서는 주장하고 있다. 아래 식에 조금 더 자세하게 적혀있다. 이때 \(\mathbf D\) 는 dropout operator라는 것으로, 주어진 argument의 random subset을 0으로 만들어버리는 operator이다. 즉, \(\mathbf D (h)\) 라고 한다면 vector \(h\) 중 random하게 고른 일부를 (보통 50%) 0으로 설정하라는 뜻이다.</p>
 
 
-<p><img class="center" src="/images/post/89-4.png" width="250"></p>
+<p><img class="center" src="/images/post/89-4.PNG" width="250"></p>
 
 <p>이를 그림으로 표현하면 아래와 같다. 이때 실선은 일반적인 connection이고, 점선이 dropout으로 연결된 connection을 의미한다. (출처: 논문)</p>
 
 
-<p><img src="/images/post/89-5.png" width="600"></p>
+<p><img src="/images/post/89-5.PNG" width="600"></p>
 
 <p>위 그림에서도 알 수 있듯, 과거에서부터 propagation되는 information은 언제나 100% 보존되지만, 아래 layer에서 위 layer로 전달되는 information은 특정 확률로 dropout에 의해 corruption되어 진행된다. 이때, 맨 아래 data layer로부터 맨 위 \(L\)번째 layer까지 information이 전달되는 동안 점선으로 그려진 connection은 정확하게 \(L+1\) 번 만큼만 지나게 된다. 만약 recurrent connection까지 dropout을 적용했다면, 이 횟수는 \(L+1\) 보다 항상 같거나 클 것이며, 더 long-term dependency를 가질수록 그 효과가 더 강해져서 우리가 원하는 과거 정보는 거의 다 희석되고, 결과적으로 안좋은 결과를 얻게 될 확률이 높아질 것이다.</p>
 
