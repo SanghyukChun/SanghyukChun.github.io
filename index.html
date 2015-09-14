@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Machine Learning 스터디 (18) Neural Network Introduction Sep 13th, 2015 | Comments 들어가며 최근 Machine Learning 분야에서 가장 뜨거운 분야는 누가 뭐래도 Deep Learning이다. &hellip;">
+  <meta name="description" content="Recurrent Neural Network Regularization Sep 14th, 2015 | Comments 최근 머신러닝 분야에서 가장 주목받고 있는 분야는 Deep learning이다. Recurrent Neural Network, 혹은 RNN은 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -88,6 +88,156 @@ $(function() {
       
   <header>
     
+      <h1 class="entry-title"><a href="/89/">Recurrent Neural Network Regularization</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-14T19:26:00+09:00" pubdate data-updated="true">Sep 14<span>th</span>, 2015</time>
+        
+         | <a href="/89/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>최근 머신러닝 분야에서 가장 주목받고 있는 분야는 Deep learning이다. Recurrent Neural Network, 혹은 RNN은 Deep learning 연구 분야 중에서도 요즘 가장 활발하게 연구가 진행되고 있는 분야 중 하나이다. RNN은 sequencial data를 처리하는데에 적합한 형태로 디자인 되어있으며, 현재 language model, speech recognition, machine translation 등에서 우수한 결과를 성취하고 있는 neural network model 중 하나이다. 이 논문은 popular한 RNN 중 하나인 LSTM 모델을 regularization 시켜서 보다 기존 결과들보다 더 잘 동작하는 결과를 제안한다.</p>
+
+
+
+
+<h5>Motivation: Regularization of Recurrent Neural Network</h5>
+
+
+
+
+<p>RNN이 sequencial data에 대해 꽤 좋은 성능을 보이고 있는 것은 사실이지만, RNN을 regularization하는 방법은 많이 제안되어있지 않은 상황이다. 기존 MLP (Multi-Layer Perceptron, 혹은 feed-forward network) 쪽에서는 Dropout, ReLU 등의 컨셉들이 연구되면서 상당한 발전이 있었지만, 아직 RNN에는 Dropout조차 제대로 적용되지 않고 있다고 한다. Dropout을 붙이면 오히려 성능이 떨어지기 때문에 아직은 LSTM (Long-Short-Term-Memory) 모델에 dropout없이 연구가 진행되고 있는 모양이다. 이 논문에서는 LSTM에 dropout을 RNN의 특성을 잘 살린 형태로 적용하여 dropout이 잘 동작하도록 하는 방법을 제안한다.</p>
+
+
+
+
+<h5 id="RNN-intro">RNN Introduction</h5>
+
+
+
+
+<p>본 논문을 소개하기 전에 먼저 RNN에 대해 간단하게 설명을 하고 넘어가도록 하겠다. 이름에서도 알 수 있듯 일반적인 Feed-forward network와 RNN의 차이는 recurrent한 loop의 존재 유무이다. 이는 자기 자신을 향한 self-loop일 수도 있고, 아니면 cycle 형태이거나 아니면 undirected edge의 형태일 수도 있다. 보통 일반적으로 RNN이라 하면 아래 그림과 같이 hidden unit에 self-loop이 있는 형태를 일컫는 듯하다. (출처: Bengio Deep Learning book)</p>
+
+
+<p><img src="/images/post/89-1.png" width="600"></p>
+
+<p>이 그림에서도 알 수 있듯 self-loop의 존재는 RNN으로 하여금 자연스럽게 historical data를 현재 decision에 반영하도록 만들어준다. 즉, RNN 모델은 마치 HMM 등의 sequencial data를 처리하는 모델들처럼 동작하는 것이다. 실제 learning을 할 때는 시간에 대해 self-loop를 &#8216;unfold&#8217; 하여 마치 weight를 공유하는 deep layer를 연산하듯 update한다. RNN에 대한 더 자세한 설명은 추후 다른 포스팅을 통해 다룰 수 있도록 하겠다.</p>
+
+
+
+
+<h5>Long-Short-Term-Memory (LSTM) Architecture</h5>
+
+
+
+
+<p>기존 vanilla RNN은 long-term dependency를 가지도록 learnig을 하게되면 gradient vanishing이나 exploding 문제에 직면하기 쉬워진다. 이유는 dependency를 더 long-term으로 가져갈수록 gradient 값이 시간에 따른 곱하기 형태가 되어 gradient growth가 exponential해지기 때문이다 (역시 위와 마찬가지로 나중에 더 자세하게 다루도록 하겠다). 때문에 이를 해결하기 위한 아이디어 중 하나로 LSTM이라는 것이 존재한다.</p>
+
+
+
+
+<p>LSTM은 historical information을 저장하기 위한 다소 복잡한 dynamics를 가지고 있다. &#8220;long term&#8221; memory라는 것은 memory cell (\(c_t\))에 저장되며, 시간에 따라, 그리고 주어진 input data에 따라 저장해둔 information을 얼마나 간직하고 있을지 forget gate (\(f_t\)) 라는 것을 통해 결정하게 된다. LSTM을 그림으로 표현하면 아래 그림과 같다. (출처: 논문)</p>
+
+
+<p><img src="/images/post/89-2.png" width="600"></p>
+
+<p>이를 수식으로 한 번 나타내어보자. 먼저 몇 가지 notation을 정의해보자. 먼저 모든 state는 n-dimension이라고 가정하자. \(h_t^l \in \mathbb R^n \)은 layer \(l\)의 timestamp \(t\)일 때의 hidden state라고 하자. 그리고 \(T_{n,m}: \mathbb R^n \to \mathbb R^m\) 을 n차원에서 m차원으로 가는 affine transform이라고 해보자. 예를 들어 parameter \(W\)와 \(b\)로 나타내어지는 \(Wx + b\)도 \(T_{n,m}\)에 포함된다 (즉, 이 논문에서는 복잡한 weight와 bias에 대한 식을 T라는 notation으로 간단하게 치환했다고 생각하면 된다). 마지막으로 \(\odot\)을 두 벡터의 element-wise multiplication이라고 정의해보자. 이렇게 notation을 정의하고 나면 일반적인 vanilla RNN을 다음과 같이 과거의 hidden state와 현재 hidden state의 이전 layer의 state로부터 현재 hidden state를 표현하는 function으로 표현할 수 있다.</p>
+
+
+<p>\[\mbox{RNN: } h_t^{l-1}, h_{t-1}^l \to h_t^l, \mbox{ where } h_t^l = f(T_{n,n} h_t^{l-1} + T_{n,n} h_{t-1}^l). \]</p>
+
+
+<p>이때, function \(f\)는 RNN의 경우 sigmoid나 tanh 함수 중 하나로 선택하는 것이 일반적이다. 그럼 이번에는 LSTM을 수식으로 표현해보자.</p>
+
+
+<p><img class="center" src="/images/post/89-3.png" width="250"></p>
+
+<p>앞에서 언급했던 LSTM의 graphical representation을 살펴보면서 수식을 읽어보면 어렵지 않게 이해할 수 있을 것이다.</p>
+
+
+
+
+<h5>Dropout Regularization for LSTM</h5>
+
+
+
+
+<p>저자들은 RNN에 Dropout을 붙였을 때 잘 동작하지 않는 이유가 dropout이 지워버리면 안되는 과거 information까지 전부 지워버리기 때문이라고 주장한다. 때문에 RNN에 Dropout을 적용하기 위해서는 recurrent connection이 아닌 connection 들에 대해서만 Dropout을 적용해야한다고 논문에서는 주장하고 있다. 아래 식에 조금 더 자세하게 적혀있다. 이때 \(\mathbf D\) 는 dropout operator라는 것으로, 주어진 argument의 random subset을 0으로 만들어버리는 operator이다. 즉, \(\mathbf D (h)\) 라고 한다면 vector \(h\) 중 random하게 고른 일부를 (보통 50%) 0으로 설정하라는 뜻이다.</p>
+
+
+<p><img class="center" src="/images/post/89-4.png" width="250"></p>
+
+<p>이를 그림으로 표현하면 아래와 같다. 이때 실선은 일반적인 connection이고, 점선이 dropout으로 연결된 connection을 의미한다. (출처: 논문)</p>
+
+
+<p><img src="/images/post/89-5.png" width="600"></p>
+
+<p>위 그림에서도 알 수 있듯, 과거에서부터 propagation되는 information은 언제나 100% 보존되지만, 아래 layer에서 위 layer로 전달되는 information은 특정 확률로 dropout에 의해 corruption되어 진행된다. 이때, 맨 아래 data layer로부터 맨 위 \(L\)번째 layer까지 information이 전달되는 동안 점선으로 그려진 connection은 정확하게 \(L+1\) 번 만큼만 지나게 된다. 만약 recurrent connection까지 dropout을 적용했다면, 이 횟수는 \(L+1\) 보다 항상 같거나 클 것이며, 더 long-term dependency를 가질수록 그 효과가 더 강해져서 우리가 원하는 과거 정보는 거의 다 희석되고, 결과적으로 안좋은 결과를 얻게 될 확률이 높아질 것이다.</p>
+
+
+<p><img src="/images/post/89-6.png" width="600"></p>
+
+<p>위 그림은 어떻게 information이 time t-2로부터 t+2까지 전달되는지 그 flow를 표현한 것이다. 굵은 선이 information path를 나타내는데, 앞서 설명한 것 처럼 이런 information flow는 data layer로부터 decision layer까지 정확하게 \(L+1\) 번만 dropout의 영향을 받게 된다. 반면 standard dropout을 적용했더라면 information이 더 많은 dropout들에 의해 영향을 받아서 LSTM이 정보를 더 긴 시간 동안 저장할 수 없도록 만들게 되는 것이다. 때문에 recurrent connection에 dropout을 적용하지 않는 것 만으로도 LSTM에서 좋은 regularization 효과를 얻을 수 있는 것이다.</p>
+
+
+
+
+<h5>Experiments</h5>
+
+
+
+
+<p>논문에서는 총 4개의 실험을 진행한다. Language Modeling (Penn Tree Bank - PTB dataset), Speech Recognition, Machine Translation 그리고 마지막으로 Image Caption Generation이 그것이다. 결과는 순서대로 아래 Table 1,2,3,4에 나열되어있다.</p>
+
+
+<p><img src="/images/post/89-7.png" width="600"></p>
+
+<h5>Summary of Recurrent Neural Network Regularization</h5>
+
+
+<ul>
+<li>Motivation: Dropout을 RNN에 그냥 적용하면 성능이 좋지 않다</li>
+<li>Idea: Dropout을 모든 connection에 적용하는 대신 non recurrent connection에만 dropout을 적용하자</li>
+</ul>
+
+
+<h5>Reference</h5>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1409.2329">Zaremba, Wojciech, Ilya Sutskever, and Oriol Vinyals. &ldquo;Recurrent neural network regularization.&rdquo; arXiv preprint arXiv:1409.2329 (2014).</a></li>
+<li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
+</ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/74/">Machine Learning 스터디 (18) Neural Network Introduction</a></h1>
     
     
@@ -150,7 +300,7 @@ $(function() {
 <p>예를 들어 아래와 같이 주어진 사진에서 각각의 물체를 찾아내는 문제를 생각해보자 (출처: <a href="http://www.engadget.com/2014/09/08/google-details-object-recognition-tech/">링크</a>). 사람에게는 너무나 간단한 일이지만, 컴퓨터가 처리하기에는 너무나 어려운 일이다. 어떻게 어디부터 어디까지가 &#8216;tv or monitor&#8217;라고 판단할 수 있을까? 컴퓨터에게 사진은 단순한 0과 1로 이루어진 픽셀 데이터에 지나지 않기 때문에 이는 아주 어려운 일이다.</p>
 
 
-<p><img src="/images/post/74-2.jpg" width="400"></p>
+<p><img class="center" src="/images/post/74-2.jpg" width="400"></p>
 
 <p>그렇기 때문에 자연언어처리, 컴퓨터 비전 등의 영역에서는 인간과 비슷한 성능을 내는 시스템을 만들 수만 있다면 엄청난 기술적 진보가 일어날 수 있을 것이다. 그렇기 때문에 인간의 능력을 쫓아가는 것 이전에, 먼저 인간의 뇌를 모방해보자라는 아이디어를 낼 수 있을 것이다. Neural Network는 이런 모티베이션으로 만들어진 간단한 수학적 모델이다. 우리는 이미 인간의 뇌가 엄청나게 많은 뉴런들과 그것들을 연결하는 시냅스로 구성되어있다는 사실을 알고 있다. 또한 각각의 뉴런들이 activate되는 방식에 따라서 다른 뉴런들도 activate 되거나 activate되지 않거나 하는 등의 action을 취하게 될 것이다. 그렇다면 이 사실들을 기반으로 다음과 같은 간단한 수학적 모델을 정의하는 것이 가능하다.</p>
 
@@ -184,7 +334,7 @@ $(function() {
 <p>보통 가장 많이 예시로 드는 activation function으로 sigmoid function이 있다. (출처는 위의 <a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks/Activation_Functions">위키</a>와 같음)</p>
 
 
-<p><img src="/images/post/74-4.png" width="300"></p>
+<p><img class="center" src="/images/post/74-4.png" width="300"></p>
 
 <p>이 함수는 미분이 간단하다거나, 실제 뉴런들이 동작하는 것과 비슷하게 생겼다는 등의 이유로 과거에는 많이 사용되었지만, 별로 practical한 activation function은 아니고, 실제로는 ReLU를 가장 많이 사용한다 (2012년 ImageNet competition에서 우승했던 <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">AlexNet</a> publication을 보면, ReLU와 dropout을 쓰는 것이 그렇지 않은 것보다 훨씬 더 우수한 결과를 얻는다고 주장하고 있다. 이에 대한 자세한 내용은 다른 포스트를 통해 보충하도록 하겠다). 참고로 neuron을 non-linearity라고 부르기도 하는데, 그 이유는 activation function으로 linear function을 사용하게 되면 아무리 여러 neuron layer를 쌓는다고 하더라도 그것이 결국 하나의 layer로 표현이 되기 때문에 non-linear한 activation function을 사용하기 때문이다.</p>
 
@@ -228,7 +378,7 @@ $(function() {
 
 
 
-<p>상황에 따라 조금씩 다른 loss function을 사용하지만, classification에 대해서는 보통 softmax loss가 gradient의 값이 비교적 numerically stable하기 때문에 softmax loss가 많이 사용한다. 이렇게 loss function이 주어진다면, 이 값을 주어진 paramter들에 대해 gradient를 구한 다음 그 값들을 사용해 parameter를 update하기만 하면 된다. 문제는, 일반적인 경우에 대해 이 paramter 계산이 엄청 쉬운 것만은 아니라는 것이다.</p>
+<p>상황에 따라 조금씩 다른 loss function을 사용하지만, classification에 대해서는 보통 softmax loss가 gradient의 값이 numerically stable하기 때문에 softmax loss를 많이 사용한다. 이렇게 loss function이 주어진다면, 이 값을 주어진 paramter들에 대해 gradient를 구한 다음 그 값들을 사용해 parameter를 update하기만 하면 된다. 문제는, 일반적인 경우에 대해 이 paramter 계산이 엄청 쉬운 것만은 아니라는 것이다.</p>
 
 
 <p>Backpropagtaion algorithm은 chain rule을 사용해 gradient 계산을 엄청 간단하게 만들어주는 알고리즘으로, 각각의 paramter의 grdient를 계산할 때 parallelization도 용이하고, 알고리즘 디자인만 조금 잘하면 memory도 많이 아낄 수 있기 때문에 실제 neural network update는 이 backpropagtaion 알고리즘을 사용하게 된다.</p>
@@ -275,10 +425,21 @@ $(function() {
 
 
 
+<h5>Stochastic Gradient Descent</h5>
+
+
+<p>Gradient를 계산했으니 이제 직접 Gradient Descent를 써서 parameter만 update하면 된다. 그러나 문제가 하나 있는데, 일반적으로 neural network의 input data의 개수가 엄청나게 많다는 것이다. 때문에 정확한 gradient를 계산하기 위해서는 모든 training data에 대해 gradient를 전부 계산하고, 그 값을 평균 내어 정확한 gradient를 구한 다음 &#8216;한 번&#8217; update해야한다. 그러나 이런 방법은 너무나도 비효율적이기 때문에 Stochastic Gradient Descent (SGD) 라는 방법을 사용해야한다.</p>
+
+
+<p>SGD는 모든 데이터의 gradient를 평균내어 gradient update를 하는 대신 (이를 &#8216;full batch&#8217;라고 한다), 일부의 데이터로 &#8216;mini batch&#8217;를 형성하여 한 batch에 대한 gradient만을 계산하여 전체 parameter를 update한다. Convex optimization의 경우, 특정 조건이 충족되면 SGD와 GD가 같은 global optimum으로 수렴하는 것이 증명되어있지만, neural network는 convex가 아니기 때문에 batch를 설정하는 방법에 따라 수렴하는 조건이 바뀌게 된다. Batch size는 일반적으로 메모리가 감당할 수 있을 정도까지 최대한 크게 잡는 것 같다.</p>
+
+
+
+
 <h5 id="example">Backpropagation Algorithm: example</h5>
 
 
-<p>바로 전 문단에서 chain rule이라는 것을 언급하였는데, 실제 이 chain rule이 어떻게 적용되는지 아래의 간단한 예를 통해 살펴보도록하자. 이때 계산의 편의를 위해 각각의 neuron은 sigmoid loss를 가지고 있다고 가정하도록 하겠다.</p>
+<p>이전에 chain rule로 gradient를 계산한다고 언급했었는데, 실제 이 chain rule이 어떻게 적용되는지 아래의 간단한 예를 통해 살펴보도록하자. 이때 계산의 편의를 위해 각각의 neuron은 sigmoid loss를 가지고 있다고 가정하도록 하겠다.</p>
 
 
 <p><img src="/images/post/74-5.png" width="600"></p>
@@ -356,6 +517,7 @@ $(function() {
 
 <ul>
 <li>2015년 9월 13일: 글 등록</li>
+<li>2015년 9월 14일: 오타수정, SGD 내용 추가 등</li>
 </ul>
 
 
@@ -1537,63 +1699,6 @@ $(function() {
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/81/">맥 요세미티 업데이트 이후 Homebrew 문제점 Troubleshooting</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-30T03:24:00+09:00" pubdate data-updated="true">Nov 30<span>th</span>, 2014</time>
-        
-         | <a href="/81/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>나는 맥 OS 장비가 두 개 있다. 하나는 연구실에서 사용하는 아이맥이고 또 하나는 연구실 밖에서 사용하는 맥북프로이다. 이번 요세미티 업데이트는 프리뷰 때 부터 기대를 많이 했기에 나오자마자 바로 두 머신 모두 요세미티 설치를 했다. 그리고 그게 내가 이 글을 쓰게 된 시발점이 되었다.</p>
-
-
-<p>Homebrew는 맥에서 가장 많이 사용하는 패키지 관리 프로그램 중 하나로, 간단히 생각하면 ubuntu의 apt-get과 같은 역할을 (더 fancy하게!) 해준다. 그런데 문제는 이 녀석이 ruby base로 돌아가고, ruby path가 하드코딩되어있는데, 요세미티는 system ruby의 버전을 강제로 업그레이드시켜버리기 때문에 brew의 모든 명령이 깨진다는 것. 참고로 이건 예전 버전의 homebrew에서나 그렇고, 새로 나온 버전은 아무 문제가 없다.</p>
-
-
-<p>가장 간단한 해결책은 임시로 brew.rb 파일에 있는 path를 current ruby로 바꿔준 다음 brew를 최신 버전으로 다시 내려받는 것이다. 하지만 늘 인생은 쉽지 않지. 쉬운 길을 눈 앞에 두고 돌아가기 마련인데, 두 머신 모두 (약간의 시간 차이를 두고 한 일이지만) brew를 삭제하고, 다시 설치한다음 rvm으로 ruby 버전을 다시 다운로드 받는&#8230; 삽질을 했다.</p>
-
-
-<p>그런데 이번에 rvm으로 루비 버전을 먼저 내려받다가, brew가 깨져있는 상황에서 실수로 지금 이미 있는 루비조차 날려버리는 최악의 실수를 해버렸다. 다시 말해 ruby 를 입력해도 아무 반응이 없고, rvm list는 비어있는 최악의 상황. 먼저 rvm install 2.0.0 을 실행했는데, 컴파일이 거의 한 시간 정도의 긴 시간이 지나도 끝나지를 않아 찾아보니 xcode 버전이 낮으면 그럴 수 있다더라. 다시 내 xcode를 보니 5버전.. 최신은 6버전이다. 바로 xcode부터 재설치를 했다. 근데 xcode가 보통 무거워야지.. 설치하는데 시간이 꽤 걸렸다.</p>
-
-
-<p>xcode 재설치를 끝내고 homebrew를 설치하려고 보니 ruby 명령어를 실행해야하는터라, 강제로 system ruby path에 들어가 system ruby로 실행을 시켰다. brew를 제대로 지우지 않은 상황이라면 시키는대로 하면 된다. 설치 후에는 brew doctor 한 번 돌려줘야한다. 꼬여있는 dependency를 정리해야하기 때문.</p>
-
-
-<p>이제 rvm install 2.0.0, rvm install 1.9.3, rvm install 2.1.5 모두 잘 실행된다. (라고 적었지만 사실 1.9.3은 gcc48설치하는게 너무 오래 걸려서 아직 끝은 안난게 함정&#8230;)</p>
-
-
-<p>Gitlab도 그렇고, 지금 쓰고 있는 Octopress도 그렇고, 많은 웹에서 쓰는 프레임워크 혹은 어플리케이션들이 rails 기반, 루비 기반인 경우가 많아 이런 문제가 왕왕 생기고는 하는데, 당황하지 않고 천천히 찾아보면 해결하는게 크게 어렵지는 않다. 루비는 sudo user로 설치하는게 아니다보니까 더 쉬운 듯. 가장 중요한건 인내심을 가지는 것. 너무 이상할 정도로 오래걸리는건 생각해볼 필요가 있지만, 대부분의 경우 생각보다 시간이 훨씬 오래 걸린다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1610,6 +1715,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/89/">Recurrent Neural Network Regularization</a>
+      </li>
+    
+      <li class="post">
         <a href="/74/">Machine Learning 스터디 (18) Neural Network Introduction</a>
       </li>
     
@@ -1623,10 +1732,6 @@ $(function() {
     
       <li class="post">
         <a href="/70/">Machine Learning 스터디 (14) EM Algorithm</a>
-      </li>
-    
-      <li class="post">
-        <a href="/69/">Machine Learning 스터디 (13) Clustering (K-means, Gaussian Mixture Model)</a>
       </li>
     
   </ul>

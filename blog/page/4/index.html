@@ -9,7 +9,7 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Coursera Neural Networks for Machine Learning Week3 - Backpropagation Mar 26th, 2014 | Comments 들어가기 전에 이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 &hellip;">
+  <meta name="description" content="Coursera Neural Networks for Machine Learning Week4 & 5 - Applications Apr 5th, 2014 | Comments 들어가기 전에 이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,94 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/43/">Coursera Neural Networks for Machine Learning Week4 & 5 - Applications</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-05T21:38:00+09:00" pubdate data-updated="true">Apr 5<span>th</span>, 2014</time>
+        
+         | <a href="/43/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h5>들어가기 전에</h5>
+
+
+<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 4주차와 5주차 강의를 요약한 글이다. 이 강의에서는 이론적인 형태의 무언가를 배운다기보다는 real application의 예로 Neural Network를 사용해 word prediction (NLP에서 쓰이는) 그리고 object recognition를 하는 방법에 대해 다룬다. 내가 관심이 있는 부분은 실제 이 NN을 어떻게 적용하냐라기 보다는 NN이란 무엇이며 어떤 이론적 배경이 있는 것이며 그 알고리듬에 더 관심이 있기 때문에 대부분이 engineerning issue인 이번 두 강의들은 대략적으로 어떤 내용에 대해서 다루는지만 아주 간략하게 기술하였다.</p>
+
+
+<h5>Learning feature vectors for words</h5>
+
+
+<p>Speech recoginition에서 가장 중요한 문제 중 하나는 바로 제대로 인식되지 않은 단어가 무엇일지 추측하는 것이다. 아무리 기술이 좋아지더라도 speech를 완전하게 복원하는 것은 불가능하다. 살제 사람들도 완전하게 speech를 인식하는 것은 아니고 때에 따라 적당히 추측해서 이해하는 것처럼, 이런 문제가 음성 인식에서 많이 중요한 문제로 대두되고 있다. 나도 seri를 사용하다보면 음성인식률이 생각보다 좋지않아서 실망하고는 하는데, 이런 문제점을 해결하기 위해 다양한 방법들이 제시되고 있다. 이 강의는 이런 것들을 개선시키기 위해 neural network를 도입했었던 연구들에 대해 다룬다. 참고로 여기에서 사용하는 모든 NN들은 softmax function neuron을 사용하고 error function은 cross entropy error를 사용한다. 이유는 sigmoid function을 사용했을 때 error가 rmse라면 제대로 우리가 원하는 방향으로 학습하기가 어렵기 때문이다. 왜냐하면 sigmoid function은 양 쪽 끝 부분이 거의 평평하기 때문에 만약 우리가 정 반대쪽 방향에서 rmse의 gradient 방향을 취하게 된다면 거의 변화가 없다고 판단할 수도 있기 때문이다. 따라서 이런 방법을 개선하기 위해서 cross entropy error를 사용하였고, 이 방법을 사용하기 위하여 sigmoid를 softmax로 바꿔서 probability distribution으로 만들어준 것이다. 아무튼 이 강의에서 설명하는 방법들은 이런 방법들에 기반해서 NN을 만든다. 아무튼 우리가 처음에 풀려고 했었던 단어를 추측하는 고전적인 방법 중에 <a href="http://en.wikipedia.org/wiki/N-gram">N-gram</a>문제라는 것이 있는데, n개의 단어 배열들을 학습하여 임의의 n-1개의 단어가 주어졌을 때 그 다음 단어가 무엇일지 예측하는 문제이다. 실제로 자연언어처리에서 많이 사용하는 기법 중 하나인데, 보통 trigram을 많이 사용한다 (3개의 단어 시퀀스를 학습) 그런데 이 경우 우리가 모든 단어를 학습할 수도 없고, 우리가 관측하지 못한 단어배열이라고 해서 세상에 존재하지 않는 단어 배열이라 확신할 수가 없기 때문에 당연히 성능 역시 좋지 않을 것이라고 예측할 수 있을 것이다. 대신 input을 앞의 2개의 단어를 취하고 그 output을 세 번째 단어로 하는 neural network를 학습할 수도 있을 것이다. 하지만 이렇게 할 경우 output의 양이 너무 많아지므로 대신 3번째 단어의 후보군들의 집합을 같이 넣어서 결과를 얻는 방식을 취할 수도 있을 것이다. 더 성능을 높이기 위해서 엄청 긴 word seqeunce를 통채로 학습하고, 임의의 단어의 앞의 n개 단어 뒤의 m개 단어를 보고 추측하는 것이 가능할 것이다. 이 경우, 지금 단어가 random인지 제대로 된 단어인지 일부러 섞어서 learning을 하게 되면 output을 binary로 받는 것이 가능해져서 엄청나게 빠른 test time을 가질 수가 있게 된다는 장점이 있다.</p>
+
+
+<h5>Object recognition with neural nets</h5>
+
+
+<p>우리가 물체를 인식하는 것을 매우 자연스러운 일로 생각하지만 실제로 이것을 구현하는 것은 절대로 쉬운 일이 아니다. 우리는 물체가 살짝 가려져 있어도 구분이 가능하고, 또한 해당 물체를 유동적으로 인식한다. 무슨 말인가하면, 인식 알고리듬을 디자인하는데 있어서 문제점은 (1) 물체가 다른 물체 혹은 주변 환경에 의해서 가려진 상태일 때 (2) 밝기와 조명에 따른 해당 물체의 색 변화 (pixel 정보가 변한다) (3) 같은 클래스에 속해도 조금씩 다른 모습 - 예를 들어서 손글씨 숫자는 비록 같은 숫자이나 전부 필체가 달라서 variation이 있다. (4) 물체가 정의되는 것은 모양이 아니라 다른 방법으로 결정되는 경우도 많다 - 예를 들어 의자는 모습으로 구분하는 것이 아니라 그 사용처가 어디인가에 따라 분류해야 구분할 수 있을 것이다.</p>
+
+
+<p>그 밖에도 결국 우리가 사용할 수 있는 정보는 image 정보이고, 디지털 input image는 단순한 pixel map이다. 예를 들어서 1024 by 720 pixel의 사진이라고 한다면 총 737280개의 pixel이 input이 될 것이다. 각 pixel은 RGB정보를 가지고 있으므로 값은 (0,0,0) ~ (255,255,255) 사이의 값으로 정해질 것이다. 색상이 중요하지 않은 경우에는 흑백 사진으로 바꾸어 단순히 밝기로만 판단하기도 한다. 아무튼 그렇기 때문에 약간의 물체의 이동도 성능을 크게 바꿔버릴 수 있다. 단순히 옆으로 이동한 것 뿐 아니라 회전된 정보나 뒤집힌 정보는 우리가 인식 알고리듬을 작성하는데에 매우 어려운 부분으로 작용한다. 따라서 우리는 모든 정보를 normalization시켜야할 필요가 있으며 align해야 할 필요가 있다. 이런 처리 없이는 올바른 정보를 학습하기가 매우 어려워질 것이다.</p>
+
+
+<p>이 강의에서는 이런 문제점들을 가지고 있는 object recognition을 neural network로 접근한다. 이런 경우 determistic method보다 훨씬 더 좋은 성능을 낼 수 있으리라는 것은 자명할 것이다. Input은 pixel map이고, output은 어떤 object인지 알려주는 label 혹은 class가 될 것이다. 이런 Hidden layer가 포함된 neural network를 backpropagation 방법을 사용하여 learning한다. 실제로 많은 image recoginition에서 neural network를 사용하고 있으며, 앞에서 설명했었던 여러 문제점들을 해결해주는 경우가 많다. 또한 아마 이런 목적을 가지고 설계된 알고리듬 중에서는 neural network가 가장 성능이 좋을 것이다.</p>
+
+
+
+
+<h5>Coursera Neural Networks for Machine Learning</h5>
+
+
+<p>다른 요약글들 보기 (<a href="/blog/categories/cousera-nn/">카테고리로 이동</a>)</p>
+
+
+<ul>
+    <li>Lecture 1: <a href="/39">Introduction</a></li>
+    <li>Lecture 2: <a href="/40">The Perceptron learning procedure</a></li>
+    <li>Lecture 3: <a href="/42">The backpropagation learning proccedure</a></li>
+    <li>Lecture 4: <a href="/43">Learning feature vectors for words</a></li>
+    <li>Lecture 5: <a href="/43">Object recognition with neural nets</a></li>
+    <li>Lecture 6: Optimization: How to make the learning go faster</li>
+    <li>Lecture 7: Recurrent neural networks</li>
+    <li>Lecture 8: More recurrent neural networks</li>
+    <li>Lecture 9: Ways to make neural networks generalize better</li>
+    <li>Lecture 10: Combining multiple neural networks to improve generalization</li>
+    <li>Lecture 11: Hopfield nets and Boltzmann machines</li>
+    <li>Lecture 12: Restricted Boltzmann machines (RBMs)</li>
+    <li>Lecture 13: Stacking RBMs to make Deep Belief Nets</li>
+    <li>Lecture 14: Deep neural nets with generative pre-training</li>
+    <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
+    <li>Lecture 16: Recent applications of deep neural nets</li>
+</ul>
+
+</div>
+  
+  
+
+<hr>
+    </article>
   
   
     <article>
@@ -1307,102 +1395,6 @@ $(function() {
 <hr>
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/32/">인터넷 속의 수학 - Can I Really Reach Anyone in 6 Steps? (1/2)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-03T17:58:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2013</time>
-        
-         | <a href="/32/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>본 포스팅은 <a href="/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
-
-
-<h5 id="32-1-intro">Introduction</h5>
-
-
-<p>흔히 이 세상의 모든 사람들은 나와 6다리 만 건너면 이어져있다고들 말한다. (밀그램의 편지실험) 심지어 나와 상관없어보이는 버락 오바마 대통령도 사회적 거리가 생각보다 가까울 수 있다는 것이다. Facebook의 조사결과에 따르면 Facebook 상에서 연결된 <a href="http://arxiv.org/abs/1111.4570">다리의 평균값은 4.74</a> 정도라고 한다. 근데, 진짜 정말로 모든 사람들과 6 steps로 연결이 가능할까? 이 글에서는 이런 현상에 대해서 설명하고, 실제 사람과 사람 간의 네트워크가 어떤 식으로 구성되고, 그것을 수학적으로 어떻게 모델링하고 있는지를 다루게 될 것이다.</p>
-
-
-<p>최근 10년 사이 네트워크는 사람들의 생활에 정말 정말 큰 영향을 미치고 있다. 특히 소셜 네트워크 혹은 SNS라고 불리는 새로운 형태의 서비스의 등장으로 인해 사람들과 사람들 사이의 긴밀한 연결이 더 가능해졌다. 이런 네트워크가 파생된 것은 사실 생각보다 역사가 짧은데, 실제 정보를 전달할 때는 전기신호로 보내야하고, 그 신호를 보내는 channel이 굉장히 noisy한데, 과연 이런 nosiy channel로 realistic한 시간 안으로 정보를 온전하게 전달할 수 있을까? 당연히 정보가 손실되면 retransmission을 시도해서 상대편이 정보를 다시 받을 수 있도록 할 수 있지만, 그 반복해서 보내는 retransmission이 실제 의미있는 숫자 이내로 성공할 수 있겠냐는 문제에 대해 아무도 답을 할 수가 없었기 때문에 연구가 지지부진한 상태였다. 그러나 지금으로부터 약 60여년 전 클로이 섀넌이라는 기라성같은 연구자가 noisy한 channel에서 error-free communication이 가능하다는 것을 증명해냈고, 그 이후로 통신학의 급격한 발전이 이루어졌다. 우리가 쓰는 인터넷은 군대 및 연구기관의 &#8216;알파넷&#8217;이라는 통신 기술이 그 전신인데, 이 기술은 전쟁으로 인해 한 기관이 파괴되어도 다른 곳에서 정보를 전송할 수 있도록 분산시킬 용도로 개발되었다고 한다. 지금 우리가 사용하는 스위칭, 패킷 등의 기술도 이때 개발 되었다. 우리가 진짜 &#8216;인터넷&#8217; 이라고 부르는 월드 와이드 웹은 유럽의 입자 가속기 연구서 (CERN)에서 데이터 교환의 용이성을 위해 처음 등장하게 되었다. 그리고 수 많은 사람들의 노력으로 우리가 현재 쓰는 모습의 인터넷 네트워크가 탄생한 것이다.</p>
-
-
-<h5 id="32-2-graph">Network Problems - Graph Theory</h5>
-
-
-<p>앞서 네트워크의 역사에 대해 간략하게 설명했는데, 그렇다면 실제 이런 네트워크를 잘 구성하기 위해서 우리가 풀어야하는 몇 가지 문제점들이 존재한다. 특히 네트워크에 요구되는 사항들을 충족시키려면 네트워크를 잘 이해하는 것이 필요하고 이런 것을 위해 네트워크 과학이라는 분야까지 생겼을 정도로 문제가 생각보다 광대하다. 몇 가지를 꼽아보자면, 좋은 네트워크는 (1) 효율적인 소통을 해야하고, (2) 외부의 공격에 견고하게 방어를 할 수 있어야하고, (3) 복잡성이 낮고 간결해야 한다. 그렇다면 이런 사항들을 충족시키기 위한 몇 가지 문제들을 살펴보자. 최초의 네트워크 문제는 쾨니히스베르크의 다리라고 불리는 문제이다. 누가 처음 만들었는지는 모르고 언제부터 존재했는지는 모르지만, 1735년 오일러가 이를 수학적으로 증명해낸 문제이다. 이 문제에서 부터 사실 네트워크 이론이 나왔다고 해도 과언이 아니다. 문제는 간단하다. 아래의 그림을 보면서 자세히 설명해보자.</p>
-
-
-<p><img src="/images/post/32-1.png" width="400"></p>
-
-<p>오래전에 프로이센이라는 국가의 <a class="red tip" title="지금의 러시아 칼리닌그라드">쾨니히스베르크</a>라는 자그마한 도시가 하나 있었다. 이 도시의 지식인들이 그냥 도시를 산책하다가 심심했던 모양인지 생각해낸 문제이다. 쾨니히스베르크에는 프레겔 강이 흐르고 있고, 이 강에는 두 개의 큰 섬이 있다. 그리고 이 섬들과 도시의 나머지 부분을 연결하는 7개의 다리가 있다. 이때 7개의 다리들을 한 번만 건너면서 처음 시작한 위치로 돌아오는 길이 있는가 하는 것이 문제이다. (출처: <a class="red tip" title="http://ko.wikipedia.org/wiki/%EC%BE%A8%EB%8B%88%ED%9E%88%EC%8A%A4%EB%B2%A0%EB%A5%B4%ED%81%AC%EC%9D%98_%EB%8B%A4%EB%A6%AC_%EB%AC%B8%EC%A0%9C">위키피디아</a>) 이 문제가 꽤 오랜 기간 동안 풀리지 않은채로 존재하다가 오일러가 이를 엄청나게 간단한 방법을 통해 해결을 해버렸다.</p>
-
-
-<p><img src="/images/post/32-2.jpg" width="400"></p>
-
-<p>다리와 섬을 위의 그림처럼 &#8216;그래프&#8217;로 표현하게 되면 문제가 엄청나게 쉬워진다. 이 그래프가 한붓그리기가 가능하기 위해서는 엣지가 홀수 개인 노드가 1개만 있어야하는데 이 그림에서 볼 수 있듯 그보다 그런 노드가 많음을 알 수 있다. 오일러의 이 풀이로 인해 &#8216;그래프 이론&#8217;이라는 새로운 분야가 창조되었고, 이는 우리가 풀고싶은 네트워크 문제를 해결하기 위해 필요한 가장 기본적이고 필수적인 분야 중 하나라고 할 수 있을 것이다.</p>
-
-
-<h5 id="32-3-milgramexp">Network Problems - 6 degree of separation</h5>
-
-
-<p>또 다른 실험을 하나 살펴보자. 1967년, 미국의 스탠리 밀그램은 아래와 같은 간단한 실험을 제작했다.</p>
-
-
-<ol>
-   <li>네브래스카 주 오마하라는 작은 도시에 사는 주민 296명에게 메사추세츠 주 보스턴의 은행가로 가는 편지를 전달시키는 것이 이 실험의 목적이다.</li>
-   <li>전달은 반드시 전달자가 직접적으로 친밀한 사람에게만 (first-name basis) 가능하다. 즉, 최종 수신인은 정해져있는 상황에서, 최종 수신인을 모르는 경우에 그 사람을 가장 잘 알만한 자신의 지인들에게 이 편지를 전달하는 것이다.</li>
-   <li>매번 편지가 전달될 때마다 편지에 보내는 사람의 이름과 서명을 첨부하고, 또한 하버드로 엽서를 따로 보내 traking을 용이하게 하였다.</li>
-</ol>
-
-
-<p><p>이 실험은 결국 미국이라는 network에서 지리적, 사회적으로 가장 고립되었을 것이라고 예상되는 두 node로 이동하기 위해서 평균적으로 얼마나 많은 step이 요구되는가를 측정하기 위한 실험이다. 결과는 어땠을까? 10? 20? 100? 아래 그래프가 그 결과이다.<p>
-<img src="/images/post/32-3.png" width="400">
-<p>당연한 얘기지만 가로축은 얼마나 많은 사람을 거쳤는가를 의미하고, 세로축은 해당 거리에 해당하는 사람이 얼마나 많은가를 의미한다. 이 실험은 총 217개의 편지 중에서 64개의 편지만 최종적으로 도달하게 되었고 (성공확률 약 30%) 평균 거리는 약 5.2이며 중간값은 6이었다. 때문에 이 실험결과를 일컬어 모든 사람들이 6step으로 이어져있다고 해석해 6단계 분리이론이라고도 부르기도 한다. 이 실험이 완벽하지 않고 logic whole이 존재한다고 주장하는 일부 비판적인 시선이 있는 것은 사실이지만, 이 실험은 충분히 의미가 있고, 무엇보다 실제로 이를 실험적으로 증명하는 것을 시도한 첫 번째 실험이라는 점에서 의미가 있다.</p>
-<p>이와 비슷한 다른 예시가 있다. 수학에서 <a href="http://ko.wikipedia.org/wiki/%EC%97%90%EB%A5%B4%EB%90%98%EC%8B%9C_%EC%88%98">에르도쉬 숫자</a>라는 것이 존재하는데, 이 사람은 엄청나게 많은 공동연구를 진행한 사람이고, 그래서 업적이 뛰어난 사람일수록 이 사람과 공저자를 한 경험이 많다고 한다. 그래서 그 아이디어를 차용해 그 사람이 얼마나 학계에서 권위가 있는지를 측정하는 지표로 쓰이는 것이 이 숫자인데, 에르도쉬 본인은 이 숫자가 0이다. 그리고 에르도쉬와 공저를 한 경험이 있는 연구자의 숫자는 1이다. 만약 내가 직접적으로 에르도쉬와 공저를 하지 않았더라도, 에르도쉬 넘버가 1인 사람과 공저를 한 경우에 내 에르도쉬 넘버는 2가 된다. 즉, 내가 얼마나 에르도쉬라는 사람과 가까운 관계인지를 측정하는 수단인 것이다. 참고로 나는 조만간 에르도쉬 넘버가 3이 될텐데, <a href="https://sites.google.com/site/mijirim/">내 지도교수님</a>의 <a class="red tip" title="Erdos - Tetali - Shin">에르도쉬 넘버가 2</a>이기 때문이다.</p>
-<p>비슷한 숫자로 케빈베이컨 숫자라는 것이 있는데, 이번에는 논문 공저자라는 다소 strict한 rule이 아니라 영화 배우 케빈베이컨과 같이 영화를 출연한 사람에게 (엑스트라도 포함) 같은 방식으로 숫자를 매기는 것이다. 꽤 재미있는 것은, 미국의 그 어떤 영화배우도 이 배우와 거리가 6이하라고 한다. <a href="http://oracleofbacon.org/">인터넷 웹사이트</a>도 있다. 사실 케빈 베이컨이 가장 뛰어난 배우이거나 많은 작품을 출연했기 때문이 아니라 그 어떤 배우를 대상으로 하여도 비슷한 결과가 나온다고 한다. (이 사이트에 의하면 평균을 취했을 때 가장 평균 거리가 짧은 배우는 <a href="http://oracleofbacon.org/center_list.php">Harvey Keitel</a>이라고 한다)</p>
-<h5 id="32-4-regularnet">Mathmetical Approach &ndash; Regular Network</h5>
-<p>자 이게 과연 정말 뜨악스럽고 놀랄만한 일일까? 정말 간단한 수학적 모델로 한 번 검증을 시도해보자. 가정을 하나 해보자. 만약 &lsquo;모든 사람&#8217;이 아는 사람이 딱 10명 씩 있다고 가정해보자. 뭐 어느 정도는 납득해볼만한 가정이지 않은가? (나중에 얘기하겠지만 틀린 얘기다.) 그렇다면 한 단계 더 건너면 10 * 10 = 100, 또 한 단계를 건너면 10 * 10 * 10 = 100, 그리고 만약 내가 6 step 만큼 건너갔을 때 아는 사람의 숫자는 (10<sup>7</sup>), 즉 1000만 명의 사람과 연결이 되어있는 것이다. 이것을 보고 정규 네트워크 (regular network) 라고 부르며, 이렇게 문제를 가정하고 생각하면 생각보다 문제가 간단해진다. 이 방법이 에르도쉬가 문제를 풀이한 방법이다. network 내부에서 node와 node가 연결되는 것은 확률의 문제이고, 만약 모든 사람들이 이 확률을 비슷하게 가지고 있다고 가정하면, 위와 같은 정규 네트워크가 나오게 되는 것이다. (구체적으로는 node가 연결되는 숫자가 정규분포로 나오기 때문에 정규 네트워크라고 한다.) 이 네트워크의 모양은 아래와 같다.</p>
-<img src="/images/post/32-4.png" width="300">
-<p>근데 정말 세상은 이렇게 구성이 되어있다고 말할 수 있을까? 실제 세상은 과연 정말 정규 네트워크일까? 당연한 얘기지만 그렇지 않다.</p>
-<h5 id="32-5-realnet">Mathmetical Approach &ndash; Real Network</h5>
-<p>일단 정규 네트워크는 가정 자체가 글러먹었다. 모든 사람이 평균적으로 같은 숫자의 친구를 가지고 있다? 안타깝게도 사람마다 친구의 숫자가 천차만별이고, 구체적으로 말하자면 사람마다 가지고 있는 node를 형성할 probability나 node가 형성될 기회의 숫자가 차이가 나기 때문에 차이가 발생하게 된다. 특히 실제 모형의 확률은 정규 분포가 아니라 Power-law distribution이라는 것이 실제 연구를 통해서 밝혀졌으며, 이 분포를 따르게 되면 친구의 숫자가 최대 수백에서 수천배까지도 나게 된다. 따라서 이런 네트워크에서는 connection이 한 지점으로 몰리는 Hub가 존재하는데, 이 사실은 모든 node가 같은 connection을 가진다는 정규 네트워크의 가설과는 매우 다르다.</p>
-<img src="/images/post/32-5.jpeg" width="300">
-<p>Power-law distribution은 위의 그림에서 자세히 확인이 가능하다. 또한 이런 분포로 만들어진 네트워크의 모양은 아래 그림과 같다. Hub가 존재한다는 사실을 다시 한 번 생각해보고 그림을 보면 이해가 잘 될 것이다.</p><br/>
-<img src="/images/post/32-6.jpg" width="300">
-<img src="/images/post/32-7.png" width="300">
-<p>이제 이런 경우에 대해서 node당 평균 10개의 connection이 있다고 다시 가정해보자. 비록 평균 connection이 10개가 있더라도, 정규 네트워크와는 다르게, power-law 네트워크는 한 node가 그 connection을 독식할 수도 있다. 즉, 이전에는 10개의 connection을 가진 1000개의 node가 있었다고 해보면, 지금은 그 중 하나의 connection이 모두 한 node에 쏠려 한 node가 1000개의 connection을 가지고 있는 셈이다.</p>
-<p>이런 특이한 모양 (topology라고 한다) 때문에 생기는 특성 중 하나로는 확산의 형태가 다르다는 점이다. 정규 네트워크는 네트워크에서 어떤 무언가가 전파되는 데에 (간단하게 전염병이라고 생각해보자) 모두가 같은 connection을 가지고 있으므로 시간이 오래 걸리거나 일정 threshold를 넘지 못하면 전체 네트워크가 전염되지 않지만, Power-law Network에서는 그 threshold가 비교적 매우 작고, 몇 개의 hub만 감염이 되어도 모든 node가 influence될 수 있는 가능성이 엄청나게 커지는 것이다. 이 특성을 특정 hub를 격리하거나 백신을 투여해 전염병의 효율적 예방을 하는 데에 쓸 수도 있고, 마케팅의 측면에서 소비자 행동양식 변화 혹은 물건 구매 등으로 주변에 영향력이 큰 몇 명의 핵심 사용자들에게 무료로 물건을 나누어주거나 후기를 작성하게하는 등의 마케팅도 가능할 것이다.</p>
-<p>이렇듯 실제 네트워크에서 발생하는 특성들을 사용하면 재미있는 결과가 나오게 된다. 과연 어떤 특성들이 있으며, 수학적으로 어떻게 증명하거나 접근해야하는지, 그리고 마지막으로 이런 특성들을 어떻게 사용할 것인지에 대해서는 다음 포스팅에서 자세히 다루도록 하겠다.</p></p>
-</div>
-  
-  
-
-<hr>
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1421,6 +1413,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/89/">Recurrent Neural Network Regularization</a>
+      </li>
+    
+      <li class="post">
         <a href="/74/">Machine Learning 스터디 (18) Neural Network Introduction</a>
       </li>
     
@@ -1434,10 +1430,6 @@ $(function() {
     
       <li class="post">
         <a href="/70/">Machine Learning 스터디 (14) EM Algorithm</a>
-      </li>
-    
-      <li class="post">
-        <a href="/69/">Machine Learning 스터디 (13) Clustering (K-means, Gaussian Mixture Model)</a>
       </li>
     
   </ul>
