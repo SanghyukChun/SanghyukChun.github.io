@@ -110,14 +110,12 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><p>최근 머신러닝 분야에서 가장 주목받고 있는 분야는 Deep learning이다. Recurrent Neural Network, 혹은 RNN은 Deep learning 연구 분야 중에서도 요즘 가장 활발하게 연구가 진행되고 있는 분야 중 하나이다. RNN은 sequencial data를 처리하는데에 적합한 형태로 디자인 되어있으며, 현재 language model, speech recognition, machine translation 등에서 우수한 결과를 성취하고 있는 neural network model 중 하나이다. 이 논문은 popular한 RNN 중 하나인 LSTM 모델을 regularization 시켜서 보다 기존 결과들보다 더 잘 동작하는 결과를 제안한다.</p>
+<div class="entry-content"><p>이번에 review할 논문은 <a href="http://arxiv.org/abs/1409.2329">Recurrent neural network regularization</a>이라는 논문이다. 아직 학회나 저널에 publish된 논문은 아니지만 ICLR 2015 review를 기다리는 모양. 이 논문은 최근 머신러닝 분야에서 가장 주목받고 있는 분야는 Deep learning, 그 중에서도 요즘 가장 활발하게 연구 중인 Recurrent Neural Network, 혹은 RNN에 관한 논문이다. RNN은 sequencial data를 처리하는데에 적합한 형태로 디자인 되어있으며, 현재 language model, speech recognition, machine translation 등에서 우수한 결과를 성취하고 있는 neural network model 중 하나이다. 이 논문은 popular한 RNN 중 하나인 LSTM 모델을 regularization 시켜서 보다 기존 결과들보다 더 잘 동작하는 결과를 제안한다.</p>
 
 
 
 
 <h5>Motivation: Regularization of Recurrent Neural Network</h5>
-
-
 
 
 <p>RNN이 sequencial data에 대해 꽤 좋은 성능을 보이고 있는 것은 사실이지만, RNN을 regularization하는 방법은 많이 제안되어있지 않은 상황이다. 기존 MLP (Multi-Layer Perceptron, 혹은 feed-forward network) 쪽에서는 Dropout, ReLU 등의 컨셉들이 연구되면서 상당한 발전이 있었지만, 아직 RNN에는 Dropout조차 제대로 적용되지 않고 있다고 한다. Dropout을 붙이면 오히려 성능이 떨어지기 때문에 아직은 LSTM (Long-Short-Term-Memory) 모델에 dropout없이 연구가 진행되고 있는 모양이다. 이 논문에서는 LSTM에 dropout을 RNN의 특성을 잘 살린 형태로 적용하여 dropout이 잘 동작하도록 하는 방법을 제안한다.</p>
@@ -126,8 +124,6 @@ $(function() {
 
 
 <h5 id="RNN-intro">RNN Introduction</h5>
-
-
 
 
 <p>본 논문을 소개하기 전에 먼저 RNN에 대해 간단하게 설명을 하고 넘어가도록 하겠다. 이름에서도 알 수 있듯 일반적인 Feed-forward network와 RNN의 차이는 recurrent한 loop의 존재 유무이다. 이는 자기 자신을 향한 self-loop일 수도 있고, 아니면 cycle 형태이거나 아니면 undirected edge의 형태일 수도 있다. 보통 일반적으로 RNN이라 하면 아래 그림과 같이 hidden unit에 self-loop이 있는 형태를 일컫는 듯하다. (출처: Bengio Deep Learning book)</p>
@@ -143,11 +139,7 @@ $(function() {
 <h5>Long-Short-Term-Memory (LSTM) Architecture</h5>
 
 
-
-
 <p>기존 vanilla RNN은 long-term dependency를 가지도록 learnig을 하게되면 gradient vanishing이나 exploding 문제에 직면하기 쉬워진다. 이유는 dependency를 더 long-term으로 가져갈수록 gradient 값이 시간에 따른 곱하기 형태가 되어 gradient growth가 exponential해지기 때문이다 (역시 위와 마찬가지로 나중에 더 자세하게 다루도록 하겠다). 때문에 이를 해결하기 위한 아이디어 중 하나로 LSTM이라는 것이 존재한다.</p>
-
-
 
 
 <p>LSTM은 historical information을 저장하기 위한 다소 복잡한 dynamics를 가지고 있다. &#8220;long term&#8221; memory라는 것은 memory cell (\(c_t\))에 저장되며, 시간에 따라, 그리고 주어진 input data에 따라 저장해둔 information을 얼마나 간직하고 있을지 forget gate (\(f_t\)) 라는 것을 통해 결정하게 된다. LSTM을 그림으로 표현하면 아래 그림과 같다. (출처: 논문)</p>
@@ -174,8 +166,6 @@ $(function() {
 <h5>Dropout Regularization for LSTM</h5>
 
 
-
-
 <p>저자들은 RNN에 Dropout을 붙였을 때 잘 동작하지 않는 이유가 dropout이 지워버리면 안되는 과거 information까지 전부 지워버리기 때문이라고 주장한다. 때문에 RNN에 Dropout을 적용하기 위해서는 recurrent connection이 아닌 connection 들에 대해서만 Dropout을 적용해야한다고 논문에서는 주장하고 있다. 아래 식에 조금 더 자세하게 적혀있다. 이때 \(\mathbf D\) 는 dropout operator라는 것으로, 주어진 argument의 random subset을 0으로 만들어버리는 operator이다. 즉, \(\mathbf D (h)\) 라고 한다면 vector \(h\) 중 random하게 고른 일부를 (보통 50%) 0으로 설정하라는 뜻이다.</p>
 
 
@@ -197,8 +187,6 @@ $(function() {
 
 
 <h5>Experiments</h5>
-
-
 
 
 <p>논문에서는 총 4개의 실험을 진행한다. Language Modeling (Penn Tree Bank - PTB dataset), Speech Recognition, Machine Translation 그리고 마지막으로 Image Caption Generation이 그것이다. 결과는 순서대로 아래 Table 1,2,3,4에 나열되어있다.</p>
@@ -297,6 +285,10 @@ $(function() {
     </p>
     
     
+    <p class="meta">
+      <a class="url-title basic-alignment right" href="/90/" title="Next Post: Playing Atari with Deep Reinforcement Learning (NIPS 2013)">&raquo; Playing Atari with Deep Reinforcement Learning (NIPS 2013)</a>
+    </p>
+    
     </p>
   </footer>
 </article>
@@ -329,6 +321,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/90/">Playing Atari With Deep Reinforcement Learning (NIPS 2013)</a>
+      </li>
+    
+      <li class="post">
         <a href="/89/">Recurrent Neural Network Regularization</a>
       </li>
     
@@ -337,15 +333,11 @@ $(function() {
       </li>
     
       <li class="post">
-        <a href="/88/">Batch Normalization</a>
+        <a href="/88/">Batch Normalization (ICML 2015)</a>
       </li>
     
       <li class="post">
         <a href="/72/">Machine Learning 스터디 (16) Dimensionality Reduction (PCA, LDA)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/70/">Machine Learning 스터디 (14) EM Algorithm</a>
       </li>
     
   </ul>

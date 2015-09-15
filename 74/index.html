@@ -217,7 +217,7 @@ $(function() {
 
 <ul>
     <li><p>sum of squares (Euclidean) loss: \(\sum_{i=1}^d (x_i - t_i)^2 \)</p></li>
-    <li><p>softmax loss: \(-\sum_{i=1}^d t_i * \log (\frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }) \)</p></li>
+    <li><p>softmax loss: \(-\sum_{i=1}^d \bigg[ t_i \log \big(\frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }\big) + (1 - t_i) \log \big(1 - \frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }\big) \bigg] \)</p></li>
     <li><p>cross entropy loss: \(\sum_{i=1}^d [ -t_i \log x_i - (1-t_i) \log (1-x_i) ]\)</p></li>
     <li><p>hinge loss: \(\max(0,1-t \cdot x)\), 이때 \(\cdot\)은 내적을 의미한다.</p></li>
 </ul>
@@ -477,7 +477,7 @@ $(function() {
     
     
     <p class="meta">
-      <a class="url-title basic-alignment left" href="/88/" title="Previous Post: Batch Normalization">&laquo; Batch Normalization</a>
+      <a class="url-title basic-alignment left" href="/88/" title="Previous Post: Batch Normalization (ICML 2015)">&laquo; Batch Normalization (ICML 2015)</a>
     </p>
     
     
@@ -517,6 +517,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/90/">Playing Atari With Deep Reinforcement Learning (NIPS 2013)</a>
+      </li>
+    
+      <li class="post">
         <a href="/89/">Recurrent Neural Network Regularization</a>
       </li>
     
@@ -525,15 +529,11 @@ $(function() {
       </li>
     
       <li class="post">
-        <a href="/88/">Batch Normalization</a>
+        <a href="/88/">Batch Normalization (ICML 2015)</a>
       </li>
     
       <li class="post">
         <a href="/72/">Machine Learning 스터디 (16) Dimensionality Reduction (PCA, LDA)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/70/">Machine Learning 스터디 (14) EM Algorithm</a>
       </li>
     
   </ul>

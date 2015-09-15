@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Research | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/research/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-14T20:41:17+09:00</updated>
+  <updated>2015-09-15T22:57:46+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -14,18 +14,225 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Playing Atari with Deep Reinforcement Learning (NIPS 2013)]]></title>
+    <link href="http://SanghyukChun.github.io/90/"/>
+    <updated>2015-09-15T19:56:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/90</id>
+    <content type="html"><![CDATA[<p>이번에 리뷰할 논문은 Google DeepMind가 NIPS 2013에 발표한 Deep Learning과 Reinforcement Learning을 결합한 <a href="http://arxiv.org/abs/1312.5602">Playing Atari with Deep Reinforcement Learning</a> 이라는 논문이다. 그 전에도 DNN과 RL을 결합하려는 시도는 있었지만, 거의 사람이 플레이하는 수준으로 의미있는 수준까지 도달한 work은 이 work이 처음인듯 하다. 글을 시작하기 전에 먼저 이 논문에서 한 결과부터 살펴보자. Atari라는 게임 콘솔을 가지고 이 논문의 method를 적용한 결과이다. 2분 5초부터 시작되는 터널링 전략이 진짜 걸작이다.</p>
+
+
+
+
+<div style="text-align: center;"><iframe width="420" height="315" align="middle" src="https://www.youtube.com/embed/iqXKQf2BOSE" frameborder="0" allowfullscreen></iframe></div>
+
+
+
+
+<p>충격적인 사실은 다른 hand-coding feature나 parameter 튜닝 없이 오직! vision data만 사용해서 이런 결과를 냈다는 사실이다. 빨간 공이 object고  빨간 판이 내가 움직이는거라는 기본적인 hand-craft feature 조차 없이 이런 결과를 냈다는 것이다. Deep leanring이 RL에서 뛰어난 성과를 보이지 못한 이유가 주로 데이터에 관련된 것이었음을 생각해보면 대단한 결과라고 할 수 있다. 최근에는 이 work을 기반으로 <a href="http://arxiv.org/abs/1406.6247">Image Attention (NIPS 2015)</a> 이라고 부르는 work도 나온 것 같다. Image Attention 논문은 다음에 정리해보도록하겠다.</p>
+
+
+
+
+<h5>Background</h5>
+
+
+<p>이 논문은 RL 중에서도 MDP에 초점을 맞추고 있으며 (사실 MDP가 아닌 RL은 거의 없다고 봐도 무방하지만) 그 중에서도 model-free technique 중 하나인 <a href="https://en.wikipedia.org/wiki/Q-learning">Q-learning algorithm</a>을 neural network를 통해 해결하고 있다. 이 글은 RL에 대해 어느 정도 기초적인 지식이 있다고 가정하고 쓸 것이기 때문에 조금 더 자세한 내용은 추후 작성할 RL 관련 포스트나 다른 reference들을 참고하면서 읽으면 좋을 것 같다.</p>
+
+
+<p>Reinforcement Learning을 위해서는 먼저 환경 \(\mathcal E\)을 정의해야한다. 이 논문에서는 Atari 에뮬레이터가 환경이 될 것이다. Atari 에뮬레이터 환경을 구성하는 요소는 action의 sequence들, observe하는 화면과 최종 reward (점수)가 될 것이다. 그림으로 표현하면 다음과 같은 식이다.</p>
+
+
+<p><img src="/images/post/90-6.png" width="600"></p>
+
+<p>매 시간마다 agent는 legal game action \(\mathcal A = \{1, \ldots, K\}\) 중에서 action \(a_t\)를 하나 선택한다. 예를 들어 아래 그림과 같은 컨트롤러의 버튼 중 어떤 버튼을 누를 거인지를 결정하는 것이다. 옆으로 움직이는 버튼, 기타 다른 버튼들 하나하나가 \(\mathcal A\)의 element이며, 그 중 하나가 action \(a_t\)가 되는 것이다.</p>
+
+
+<p><img class="center" src="/images/post/90-1.png" width="200"></p>
+
+<p>게임을 하는 동안 컨트롤러의 버튼을 누르는 action들이 모이게 되면 현재 점수에 어떻게든 영향을 주게 되고, 그 결과로 최종 점수가 결정된다. 즉, Atari 게임 환경에서 reward \(r_t\)는 게임 score이며, 현재 내가 선택한 action은 바로 reward에 반영되는 것이 아니라 엄청나게 나중에 반영될 수도 있는 것이다.</p>
+
+
+<p>또한 게임 조작을 통해 변화하는 것 중 우리가 관측할 수 있는 것은 실제 게임 화면의 pixel 값들 뿐이다 (이 논문에서는 time stamp \(t\)에서의 픽셀 값을 \(x_t\)라고 정의하였다). 때문에 이 논문에서는 vision 데이터를 사용해서 state를 정의하는데, state를 정의하는 방식이 상당히 재미있다. 간단하게 \(x_t\)를 state로 삼으면 될 것 같지만, 실제로는 화면 하나만 보고 알 수 있는 정보가 제한적이고 현재 상태를 정확하게 판단하기 위해서는 vision정보와 내가 행한 action을 포함한 과거 history들까지 모두 있지 않으면 안되기 때문에 이 논문은 state \(s_t\)를 action과 image의 sequence로 정의한다. 예를 들어 아래 스크린샷에서 공은 왼쪽으로 움직일까 오른쪽으로 움직일까? 만약 관성을 implement한 게임이라면 (움직이는 버튼에서 손을 떼도 조금 움직이는 게임이라면) 과연 play agent는 위로 올라가고 있을까 아니면 아래로 내려가고 있을까 그것도 아니면 멈춰있을까? 이렇듯 한 time stamp에 대한 vision 데이터로는 파악할 수 있는 데이터가 너무 제한적이기 때문에 모든 history가 반드시 필요하다.</p>
+
+
+<p><img class="center" src="/images/post/90-2.png" width="300"></p>
+
+<p>다시 말해서, \(s_t  = x_1, a_1, \ldots, a_{t-1}, x_t\) 가 된다. 이런 방식으로 modeling을 하게 되면 policy 혹은 strategy를 learning할 때 모든 과거 sequence를 고려해서 strategy가 결정되게 된다. 게임은 언젠가 끝나게 되어있기 때문에 모든 \(s_t\)는 finite한 길이를 가지고 있으며 (비록 어마어마하게 크지만) \(s_t\)의 domain 역시 유한하다. 따라서 이 모델은 엄청나게 large하지만 어쨌거나 finite한 Markov dicision process(MDP)가 된다.</p>
+
+
+<p>우리의 목표는 에뮬레이터에 agent가 어떤 strategy를 통해 게임을 조작하여, 최종적으로 게임이 끝났을 때 게임에서 가장 높은 점수를 획득하는 것이다. 즉, reward에 대한 수학적 정의만 있다면 이 문제는 간단한 optimization 문제가 된다. 게임은 보통 시간 마다 reward를 받는다. 하지만 일반적으로 시간이 오래 지날수록 해당 reward의 가치는 점점 내려가는데 이를 고려하기 위하여 discount factor \(\gamma\)가 정의된다. 시간 \(t\)의 reward를 t라고 한다면 time \(T\)에서의 discount factor를 고려한 future reward는 다음과 같이 정의한다.</p>
+
+
+<p>\[R_t = \sum_{t^\prime=t}^T \gamma^{t^\prime-t} r_{t^\prime}.\]</p>
+
+
+<p>Reward function을 정의했으니 Q-function (action-value function) 역시 정의할 수 있다. \(\pi\)를 \(s_t\)에서 \(a_t\)를 mapping하는 policy function이라하면, optimal Q-function \(Q^*\)는 다음과 같이 정의할 수 있다.</p>
+
+
+<p>\[Q^*(s,a) = \max_\pi \mathbb E \big[ R_t \big| s_t = s, a_t = a, \pi \big]. \]</p>
+
+
+<p>MDP에서는 이 optimal action value function 혹은 optimal Q-function 하나만 제대로 알고 있다면 언제나 주어진 state에 대해 가장 \(Q^*\)의 값을 크게 만드는 action을 고르는 간단한 policy만으로도 반드시 항상 optimal한 action을 고를 수 있다는 이론적 결과가 있기 때문에 Q-function은 매우매우 중요하다. 이 논문에서도 \(Q^*\)를 찾는 neural network를 만들어서 문제를 해결하고 있으니, Q-function에 대한 이해가 필수적이다.</p>
+
+
+<p>다시 본문으로 돌아와서, Optimal Q-function은 <a href="https://en.wikipedia.org/wiki/Bellman_equation">Bellman equation</a>이라는 중요한 특성을 따르게 된다. 이 equation을 intuition은 대충 이런식이다: seqeunce \(s^\prime\)의 다음 time stamp에서의 optimal Q-function \(Q^* (s^\prime, a^\prime)\) 값이 모든 action \(a^\prime\)에 대해서 알려져 있다면, optimal strategy는 \(r + \gamma Q^* (s^\prime, a^\prime)\)의 expected value를 maximize하는 것이라는 것이다. 이를 수식으로 표현하면 다음과 같다.</p>
+
+
+<p>\[Q^*(s,a) = \mathbb E_{s^\prime \sim \mathcal E} \bigg[ r + \gamma Q^* (s^\prime, a^\prime) ~\big|~ s,a \bigg].\]</p>
+
+
+<p>많은 RL algorithm 들에서는 Q-function을 estimate하기 위하여 이 Bellman equation을 value iteration algorithm이라는 것을 통해 iterative update하여 구하게 된다. Value iteration algorithm에서는 매 \(i\) 번쨰 iteration마다 다음과 같은 procedure를 수행하게 된다.</p>
+
+
+<p>\[Q_{i+1} (s,a) = \mathbb E \bigg[ r + \gamma Q^* (s^\prime, a^\prime) ~\big|~ s,a \bigg].\]</p>
+
+
+<p>이런 value iteration algorithm은 MDP에서 \(Q_i \to Q^* \mbox{ as } i\to\infty\)라는 것이 알려져 있다. 그러나 이런 방식은 이론적으로는 의미가 있을지 몰라도 실제로는 완전히 impractical한데, 이 과정을 모든 seqeunce에 대해 독립적으로 시행해야하기 때문이다. 따라서 보통은 action-value function을 다음과 같은 식으로 적절한 approximator를 사용하여 approximation한다.</p>
+
+
+<p>\[Q(s,a;\theta) \simeq Q^* (s,a).\]</p>
+
+
+<p>보통 linear function으로 approximation하지만, 간혹 non-linear function으로 모델링하는 경우도 있다. 예를 들어 deep network를 쓰는 방법이 있는데, 이 논문은 기존 방법들에 비해 RL에 적합한 Deep Network 모델을 제안하여 뛰어난 non-linear function approximator를 제안한다.</p>
+
+
+<p>일반적으로 RL에 deep learning approach를 바로 적용했을 때 몇 가지 이슈가 생기게 되는데, 먼저 deep learning을 하기 위해서는 엄청나게 많은 hand labelled training data가 필요하지만, RL에서는 모든 state와 action에 대한 labelled data가 없기 때문에 이를 어떻게 handle해야할지를 모델에서 고려해야만한다. 또한 현재까지 연구된 많은 deep learning structure들은 data가 i.i.d.하다고 가정하지만, 실제 RL 환경에서는 state들이 엄청나게 correlated되어있기 때문에 제대로 된 learning이 어렵다. 예를 들어 위 핑퐁 게임 화면에서 한 프레임 더 지난 화면과 지금 화면은 정말 엄청나게 높은 correlation을 가지지만, standard feed-forward deep learning은 그것을 처리할 수 있는 모델이 아니기 때문에 문제가 발생한다. 이 논문은 그 문제를 experience replay라는 것으로 해결하는데, 자세한 내용은 다음 section에서 다루도록 하겠다.</p>
+
+
+
+
+<h5>Deep Q-Learning</h5>
+
+
+<p>앞에서 정의한 Q-function을 modeling한 network를 (\(Q(s,a;\theta) \simeq Q^* (s,a)\), 이때 \(\theta\)는 weight나 bias 등 neural network의 model parameter들) 이 논문에서는 Q-network라고 부르고 있다. 만약 parameter가 \(\theta\)가 정해진다면, 우리는 state \(s\)와 action \(a\)를 Q-network에 넣어서 forward pass를 돌리게 되면 해당하는 Q-value를 얻을 수 있을 것이다. 따라서 parameter가 정해진다면 주어진 \(s\)에 대해 모든 \(a\)에서의 Q-value를 얻을 수 있고, 이를 통해서 \(Q^*\)의 값과 그것을 achieve하는 action \(a^*\)를 구하는 것도 가능해진다. 다시 말해서 이 Q-network를 올바른 방향으로 update하는 알고리즘을 design하기만 한다면 주어진 문제를 해결할 수 있는 것이다. 이 논문에서는 Q-network가 우리가 원하는 목적대로 train되도록 하기 위하여 i 번째 iteration에서 아래와 같은 loss function을 가지도록 design한다. 이 논문은 현재 Q-network가 항상 target Q-value에 가까워지도록 loss를 설정함으로써 마치 value iteration이 converge하듯 Q-network의 update가 converge할 때 까지 iterative algorithm을 돌리도록 하는 것이다. 이때 \(y_i\)는 iteration i의 target value이고, \(\rho(s,a)\)는 sequence \(s\)와 action \(a\)의 probability distribution이며, 이를 이 논문에서는 behaviour distribution이라고 정의한다.</p>
+
+
+<p>\[L_i (\theta_i) = \mathbb E_{s,a\sim \rho(\cdot)} \bigg[ \big(y_i - Q(s,a;w_i) \big)^2 \bigg], \]</p>
+
+
+<p>\[\mbox{where, }y_i = \mathbb E_{s^\prime \sim \mathcal E} \bigg[r + \gamma \max_{a^\prime} Q(s^\prime, a^\prime;w_{i-1}) ~\big|~ s, a \bigg]. \]</p>
+
+
+<p>주의할 점은, optimization 과정에서 parameter \(\theta\)가 update되는 동안 loss function \(L_i(\theta_i)\) 의 이전 iteration paramter \(\theta_{i-1}\)은 고정된다는 것이다. 이를 'freeze target Q-network' 라고 부르는데, 이렇게하는 이유는 supervised learning과는 다르게, target의 값이 \(\theta\)의 값에 (민감하게) 영향을 받기 때문에 stable한 learning을 위하여 \(\theta\)값을 고정하는 것이다. 이건 아래에서 조금 더 자세하게 설명하도록 하겠다. 이제 loss function을 정의되었으므로 gradient값만 있다면 그 값을 사용해서 backpropagation을 돌리면 쉽게 update할 수 있다. 이 network의 loss의 gradient는 다음과 같이 구할 수 있다.</p>
+
+
+<p>\[\nabla_{\theta_i} L_i (\theta_i) = \mathbb E_{s,a\sim \rho(\cdot); s^\prime \sim \mathcal E} \bigg[ \big( r + \gamma \max_{a^\prime} Q(s^\prime, a^\prime; \theta_{i-1}) - Q(s,a;\theta_i) \big) \nabla_{\theta_i} Q(s,a;\theta_i)\bigg]\]</p>
+
+
+<p>하지만 이렇게 build한 Deep RL을 바로 사용할 수는 없고, 아래와 같은 몇 가지 이슈들을 처리해야한다.</p>
+
+
+<ul>
+<li>Deep Learning은 데이터가 i.i.d.하다고 가정하지만 실제 RL input의 데이터는 sequential하고 highly correlated 되어있다.</li>
+<li>Policy 변화에 따른 (이 경우는 w의 변화에 따른) Q-value의 변화량이 너무 크기 때문에 policy가 oscillate하기 쉽다.</li>
+<li>위와 같은 세팅에서는 reward와 Q-value의 값이 엄청나게 커질 수 있기 때문에 stable한 SGD 업데이트가 어려워진다.</li>
+</ul>
+
+
+<p>첫 번째 이슈는 이미 전 문단에서 간단하게 언급했었으니 생략한다. 두 번째 문제도 크게 어렵지 않게 생각할 수 있는데, 게임을 하는 방식을 아주 조금만 바꾸더라도 게임의 결과가 완전히 크게 바뀌기 때문에 이런 현상이 발생한다. 핑퐁 게임에서 움직이는 속도를 조금 늦춘다거나 했다가는 바로 한 점을 잃게 될 것이다. 또한 앞에서 설명한 것 처럼 supervised learning과는 다르게 target의 값이 parameter에 영향을 아주 민감하게 받기 때문에, 이 값을 고정해주는 과정이 필요하다. 마지막 조건은 좀 practical한 이슈인데, Q-value의 값이 얼마나 커질지 모르기 때문에 stable update가 힘들 수도 있다. 이 논문에서는 다음과 같은 세 가지 방법으로 각각의 issue를 handling한다</p>
+
+
+<ul>
+<li>Experience replay</li>
+<li>Freeze target Q-network</li>
+<li>Clip reward or normalize network adaptively to sensible range</li>
+</ul>
+
+
+<p>이 중에서 두 번째 idea는 이미 설명했고 (update하는 동안 target을 계산하기 위해 사용하는 paramter를 고정), 세 번째 idea는 reward의 값을 [-1,0,1] 중에서 하나만 선택하도록 강제하는 아이디어이다. 즉, 내가 100점을 얻거나 10000점을 얻거나 항상 reward는 +1 이다. 'highest' score를 얻는 것은 불가능하지만, 이렇게 설정함으로써 조금 더 stable한 update가 가능해진다. 그리고 그와는 별개로 모든 게임에 적용가능한 DQL을 learning할 수 있다는 장점도 있다. 실제로 실험에서는 모든 게임을 단 하나의 네트워크로만 learning해서 기존의 모든 방법을 beating한다.</p>
+
+
+<p>그럼 이제 마지막으로 이 논문의 핵심 아이디어라고 할 수 있는 experience replay에 대해 살펴보자. Experience replay는 agent의 experine를 각 time stamp마다 다음과 같은 튜플 형태로 메모리 \(\mathcal D = e_1, \ldots, e_N\) 에 저장한 후 이를 다시 사용하는 것이다.</p>
+
+
+<p>\[e_t = (s_t, a_t, r_t, s_{t+1}).\]</p>
+
+
+<p>Experience replay는 이렇게 experience \(e_t\)를 메모리 \(\mathcal D\)에 저장해두었다가, 일부를 uniformly random하게 sample하여 mini-batch를 구성한 다음 parameter \(\theta\)를 mini-batch에 대해 backpropagation으로 update하는 과정을 의미한다.</p>
+
+
+<p>Experience replay를 사용함으로써 data의 correlation을 깰 수 있고, 조금 더 i.i.d.한 세팅으로 network를 train할 수 있게 된다. 또한 방대한 과거 데이터가 한 번만 update되고 버려지는 비효율적 접근이 대신에, 지속적으로 추후 update에도 영향을 줄 수 있도록 접근하기 때문에 데이터 사용도 훨씬 효율적이라는 장점이 있다. 실제로 실험에서는 메모리 용량의 한계 때문에 bucket을 \(N\)으로 고정하고, FIFO 형태로 저장을 한 모양이다.</p>
+
+
+<p>Experience replay가 끝난 후 agent는 action을 \(\epsilon\)-greedy policy라는 것을 사용해 선택하고 실행한다. 이 방법은 action을 \(\epsilon\)의 확률로 random하게 고르거나 \(1-\epsilon\)의 확률로 MDP의 optimal action selection criteria인 \(a_t = \arg\max_a Q^*(s_t, a;\theta) \)로 고르는 policy를 의미한다.</p>
+
+
+<p>참고로, arbitrary length의 input을 다루는 것이 general feed-forward network에서는 어렵기 때문에, 이 논문에서는 function \(\phi\)라는 것을 정의해서 모든 \(s_t\)의 length를 fix한다. 이 알고리즘을 수식적으로 기술하면 다음과 같이 기술할 수 있다.</p>
+
+
+<p><img src="/images/post/90-3.png" width="600"></p>
+
+<p>Equation 3은 위에서 증명한 gradient 값이고, 함수 \(\phi\)는 다음과 같다: 주어진 history 중에서 가장 마지막 4개의 frame을 stack으로 쌓는 것. 이때 각각의 frame은 원래 128색 210 by 160 픽셀으로 구성되어있지만, gray-scale로 만들고 110 by 84로 down sampling한 후 84 by 84로 크롭한다. 이때 크롭을 하는 이유는 주어진 툴에서 정사각형 사진만 GPU 연산이 되기 때문이라고..</p>
+
+
+<p>이렇게 experience replay라는 아이디어를 사용한 DQL은 몇 가지 이점이 있다.</p>
+
+
+<ul>
+<li>각각의 experience가 potentially 많은 weight update에 reuse되기 때문에 experience를 weight update 한 번에만 사용하는 기존 방법보다 훨씬 data efficiency하다.</li>
+<li>두 번째로, mini-batch를 만드는 sampling 과정을 통해 데이터들 간의 high correlation을 효율적으로 관리하고, 이를 통해 보다 효율적인 update를 할 수 있다. 이 방법은 random하게 sample을 뽑아서 mini-batch로 구성하기 때문에 이런 high correlation을 break해서 update의 효율성을 높이기 때문이다.</li>
+<li>마지막으로 이 방법을 통해 parameter를 update하게 되면 다음 training을 위한 data sample을 어느 정도 determine할 수 있다. 예를 들어서 내가 지금 오른쪽으로 움직이는 쪽으로 action을 고른다면 다음 sample들은 내가 오른쪽에 있는 상태의 sample들이 dominate하게 나올 것이라고 예측할 수 있다. 따라서 이 방법을 통해 training을 위한 다음 데이터를 무작정 뽑는 것이 아니라 현재 action을 고려하여 효율적으로 뽑을 수 있다.</li>
+</ul>
+
+
+<p>몇 가지 주의점이라면 freeze target Q-network, 혹은 off-policy가 반드시 필요하다는 점 정도가 있겠다. 한계점으로는 메모리의 한계 때문에 앞에서 말한 것처럼 모든 history를 저장하지 못한다는 점과, uniform sampling을 사용하기 때문에 모든 과거 experience가 동일한 weight를 가진다는 점이다. 이 논문에서는 조금 더 wise한 sampling을 하게 되면 성능 향상이 있을 수도 있다고 언급하고 있다.</p>
+
+
+
+
+<h5>Model Architecture of DQL and Experiment</h5>
+
+
+<p>이제 구체적으로 어떤 neural network 모델을 사용해 learning을 하게 될지 알아보자. 항상 관심있게 살펴봐야 할 내용은 (1) input data는 무엇인가 (2) output data는 무엇인가 (3) 구체적인 network 구조는 어떻게 되는가 정도가 있겠다. 이 논문에서는 input으로 \(\phi(s_t)\)를 받고, output으로 가능한 모든 action에 대한 Q-value를 출력한다. 즉, 버튼이 4개 있다면 output은 4개이고, 12개 있다면 output은 12개이다. 실제 논문에서는 게임 종류에 따라 action을 4개에서 18개 사이에서 고른 것 같다. 이렇게 모델을 고르게 되면 \(Q^*\)를 단 한번의 forward pass 만으로 구할 수 있다는 장점이 있기 때문에 이 논문에서는 이러한 방법을 선택하였다. 구체적인 네트워크는 CNN을 사용한다. 인풋 데이터는 \(\phi(s_t)\)를 넣는다고 했으므로 84 by 84로 크롭한 후에 4개의 history를 stack으로 쌓은 데이터가 들어오게 된다. 그러니까 대충 다음과 같은 식이다.</p>
+
+
+<p><img src="/images/post/90-5.png" width="600"></p>
+
+<p>이 네트워크를 사용한 자세한 실험 결과는 다음 표에 나와있다. 각각의 숫자는 모두 reward를 의미하기 때문에 값이 클 수록 좋은 결과이다.</p>
+
+
+<p>
+<img src="/images/post/90-4.png" width="600"></p>
+
+<p>Breakout, Enduro, Pong은 심지어 사람보다도 좋은 것을 알 수 있고, Space Invaders를 제외하면 기존 모델들보다 best 뿐 아니라 avg 까지 뛰어난 것을 볼 수 있다. 논문에서는 Q*bert, Seaquest, Spae Invaders 등의 게임에서 사람의 performance에 한참 미치지 못하는 이유로 이 게임들은 전략이 엄청나게 긴 time scale로 필요하기 때문에 조금 더 challenge한 문제라고 주장하고 있다. 아마 하드웨어의 발달과 모델의 발달로 언젠가는 극복할 수 있을 것으로 보인다.</p>
+
+
+
+
+<h5>Summary of DQL</h5>
+
+
+<ul>
+<li>문제 정의 자체가 흥미롭다. 특히 state space를 sequence of iamges and action으로 구성했다는 점이 흥미롭다.</li>
+<li>State에 대한 hand-craft feature가 전혀 없다. 오직 이미지 sequence만을 사용해서 CNN으로 feature를 자동으로 만들어내는 방법으로 이를 해결하고 있다는 점이 흥미롭다.</li>
+<li>Q-function을 learning하는 neural network를 구성하였는데 몇 가지 stable update를 위하여 &lsquo;off-policy'를 사용하고, 'experience replay&rsquo; 기법을 사용한다.</li>
+<li>Experience replay는 매 시간마다 experience tuple (e_t)를 메모리에 저장하고, 메모리에서 (e_t)를 uniformly sample하여 뽑아 mini-batch를 구성하고 이를 (off-policy를 적용한 채로 혹은 target network를 freeze하고) 사용해 parameter를 update하는 아이디어이다.</li>
+<li>서로 다른 Atari 게임 7개에 대한 policy를 learning하기 위해 단 하나의 neural network만을 사용했고, 그 결과가 기존 결과를 outperform한다.</li>
+</ul>
+
+
+<h5>Reference</h5>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1312.5602">Mnih, Volodymyr, et al. &ldquo;Playing atari with deep reinforcement learning.&rdquo; NIPS (2013).</a></li>
+<li><a href="http://www.iclr.cc/lib/exe/fetch.php?media=iclr2015:silver-iclr2015.pdf">Deep Reinforcement Learning &ndash; ICLR 2015 tutorial</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Recurrent Neural Network Regularization]]></title>
     <link href="http://SanghyukChun.github.io/89/"/>
     <updated>2015-09-14T19:26:00+09:00</updated>
     <id>http://SanghyukChun.github.io/89</id>
-    <content type="html"><![CDATA[<p>최근 머신러닝 분야에서 가장 주목받고 있는 분야는 Deep learning이다. Recurrent Neural Network, 혹은 RNN은 Deep learning 연구 분야 중에서도 요즘 가장 활발하게 연구가 진행되고 있는 분야 중 하나이다. RNN은 sequencial data를 처리하는데에 적합한 형태로 디자인 되어있으며, 현재 language model, speech recognition, machine translation 등에서 우수한 결과를 성취하고 있는 neural network model 중 하나이다. 이 논문은 popular한 RNN 중 하나인 LSTM 모델을 regularization 시켜서 보다 기존 결과들보다 더 잘 동작하는 결과를 제안한다.</p>
+    <content type="html"><![CDATA[<p>이번에 review할 논문은 <a href="http://arxiv.org/abs/1409.2329">Recurrent neural network regularization</a>이라는 논문이다. 아직 학회나 저널에 publish된 논문은 아니지만 ICLR 2015 review를 기다리는 모양. 이 논문은 최근 머신러닝 분야에서 가장 주목받고 있는 분야는 Deep learning, 그 중에서도 요즘 가장 활발하게 연구 중인 Recurrent Neural Network, 혹은 RNN에 관한 논문이다. RNN은 sequencial data를 처리하는데에 적합한 형태로 디자인 되어있으며, 현재 language model, speech recognition, machine translation 등에서 우수한 결과를 성취하고 있는 neural network model 중 하나이다. 이 논문은 popular한 RNN 중 하나인 LSTM 모델을 regularization 시켜서 보다 기존 결과들보다 더 잘 동작하는 결과를 제안한다.</p>
 
 
 
 
 <h5>Motivation: Regularization of Recurrent Neural Network</h5>
-
-
 
 
 <p>RNN이 sequencial data에 대해 꽤 좋은 성능을 보이고 있는 것은 사실이지만, RNN을 regularization하는 방법은 많이 제안되어있지 않은 상황이다. 기존 MLP (Multi-Layer Perceptron, 혹은 feed-forward network) 쪽에서는 Dropout, ReLU 등의 컨셉들이 연구되면서 상당한 발전이 있었지만, 아직 RNN에는 Dropout조차 제대로 적용되지 않고 있다고 한다. Dropout을 붙이면 오히려 성능이 떨어지기 때문에 아직은 LSTM (Long-Short-Term-Memory) 모델에 dropout없이 연구가 진행되고 있는 모양이다. 이 논문에서는 LSTM에 dropout을 RNN의 특성을 잘 살린 형태로 적용하여 dropout이 잘 동작하도록 하는 방법을 제안한다.</p>
@@ -34,8 +241,6 @@
 
 
 <h5 id="RNN-intro">RNN Introduction</h5>
-
-
 
 
 <p>본 논문을 소개하기 전에 먼저 RNN에 대해 간단하게 설명을 하고 넘어가도록 하겠다. 이름에서도 알 수 있듯 일반적인 Feed-forward network와 RNN의 차이는 recurrent한 loop의 존재 유무이다. 이는 자기 자신을 향한 self-loop일 수도 있고, 아니면 cycle 형태이거나 아니면 undirected edge의 형태일 수도 있다. 보통 일반적으로 RNN이라 하면 아래 그림과 같이 hidden unit에 self-loop이 있는 형태를 일컫는 듯하다. (출처: Bengio Deep Learning book)</p>
@@ -51,11 +256,7 @@
 <h5>Long-Short-Term-Memory (LSTM) Architecture</h5>
 
 
-
-
 <p>기존 vanilla RNN은 long-term dependency를 가지도록 learnig을 하게되면 gradient vanishing이나 exploding 문제에 직면하기 쉬워진다. 이유는 dependency를 더 long-term으로 가져갈수록 gradient 값이 시간에 따른 곱하기 형태가 되어 gradient growth가 exponential해지기 때문이다 (역시 위와 마찬가지로 나중에 더 자세하게 다루도록 하겠다). 때문에 이를 해결하기 위한 아이디어 중 하나로 LSTM이라는 것이 존재한다.</p>
-
-
 
 
 <p>LSTM은 historical information을 저장하기 위한 다소 복잡한 dynamics를 가지고 있다. "long term" memory라는 것은 memory cell (\(c_t\))에 저장되며, 시간에 따라, 그리고 주어진 input data에 따라 저장해둔 information을 얼마나 간직하고 있을지 forget gate (\(f_t\)) 라는 것을 통해 결정하게 된다. LSTM을 그림으로 표현하면 아래 그림과 같다. (출처: 논문)</p>
@@ -82,8 +283,6 @@
 <h5>Dropout Regularization for LSTM</h5>
 
 
-
-
 <p>저자들은 RNN에 Dropout을 붙였을 때 잘 동작하지 않는 이유가 dropout이 지워버리면 안되는 과거 information까지 전부 지워버리기 때문이라고 주장한다. 때문에 RNN에 Dropout을 적용하기 위해서는 recurrent connection이 아닌 connection 들에 대해서만 Dropout을 적용해야한다고 논문에서는 주장하고 있다. 아래 식에 조금 더 자세하게 적혀있다. 이때 \(\mathbf D\) 는 dropout operator라는 것으로, 주어진 argument의 random subset을 0으로 만들어버리는 operator이다. 즉, \(\mathbf D (h)\) 라고 한다면 vector \(h\) 중 random하게 고른 일부를 (보통 50%) 0으로 설정하라는 뜻이다.</p>
 
 
@@ -105,8 +304,6 @@
 
 
 <h5>Experiments</h5>
-
-
 
 
 <p>논문에서는 총 4개의 실험을 진행한다. Language Modeling (Penn Tree Bank - PTB dataset), Speech Recognition, Machine Translation 그리고 마지막으로 Image Caption Generation이 그것이다. 결과는 순서대로 아래 Table 1,2,3,4에 나열되어있다.</p>
@@ -135,7 +332,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Batch Normalization]]></title>
+    <title type="html"><![CDATA[Batch Normalization (ICML 2015)]]></title>
     <link href="http://SanghyukChun.github.io/88/"/>
     <updated>2015-08-25T21:25:00+09:00</updated>
     <id>http://SanghyukChun.github.io/88</id>
@@ -350,7 +547,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[LMNN(Large Margin Nearest Neighbors) LMCA(Large Margin Component Anaylsis)]]></title>
+    <title type="html"><![CDATA[LMNN(Large Margin Nearest Neighbors) (NIPS 2006) LMCA(Large Margin Component Anaylsis) (NIPS 2007)]]></title>
     <link href="http://SanghyukChun.github.io/38/"/>
     <updated>2014-03-03T15:21:00+09:00</updated>
     <id>http://SanghyukChun.github.io/38</id>
@@ -545,31 +742,6 @@
 
 
 <ul><li>Liu Yang, Distance Metric Learning: A Comprehensive Survey, 2005</li><li>Liu Yang, An Overview of Distance Metric Learning, 2007</li><li>Bellet, A., Habrard, A., and Sebban, M. A Survey on Metric Learning for Feature Vectors and Structured Data, 2013</li><li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006).InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li></ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[당신이 수학을 공부해야만 하는 이유]]></title>
-    <link href="http://SanghyukChun.github.io/24/"/>
-    <updated>2013-11-03T02:02:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/24</id>
-    <content type="html"><![CDATA[<p>학부를 들어와서 선배들이나 교수님들에게 들었던 많은 잔소리가 있지만 그 중에서 가장 이해가 안되던 잔소리는 '수학공부 열심히 해라' 였다. 학부 입학부터 지겹게 듣던 얘기지만 그 당시 나는 '아니 나는 전자공학을 공부할건데 도대체 수학이랑 무슨 상관이지?' 라는 생각을 가지고 있었다. 학부 4년 동안 전공 공부를 해봐도 내 전공은 수학과 전혀 상관이 없어보였다. 그러다가 학부 5학년이 되어 내 진로가 컴퓨터 쪽으로 바뀌게 되면서 그때부터 다시 그 잔소리가 나를 따라오기 시작했다. '프로그래밍을 잘하려면 수학을 잘 해야해' 음.. 도대체 프로그래밍이랑 수학은 또 무슨 관계란 말인가. 그리고 이제 학부의 마지막을 바라보고 석사에 진학하기 직전인 지금 돌이켜 생각해보니 역시 학부 떄는 수학 공부를 열심히 해야한다.</p>
-
-
-<p>수학을 잘 해야하는 이유는 사실 굉장히 단순하다. 대부분의 engineering 문제를 수학으로 접근하면 접근 자체가 쉬워지거나, 혹은 확신할 수 없었던 문제를 확신할 수 있다. 예를 하나 들어보자. 어느 멀리 떨어진 지점과 디지털 신호로 통신을 해야하는 상황이다. 그런데 통신망에 어느 정도인지는 모르지만 노이즈가 존재해서 가끔씩 데이터가 제대로 도달할 수 없는 상황이라고 해보자. 만약 데이터가 제대로 도달하지 않았다면? 그렇다면 보내는 쪽에서 데이터를 다시 보내야 할 것이다. 그런데 문제는, 이렇게 재전송을 통해서 내가 보내고 싶은 모든 정보를 안전하게 유한한 시간 안에 보낼 수 있는지에 대한 확신이 없다는 점이다. 실제로 1950년 이전에는 노이즈가 존재하는 통신망에서 정보를 안전하게 유한한 시간 내로 보낼 수 있다는 사실이 증명이 되지 않아 통신을 위한 디지털 신호처리 분야가 존재하지 않았다. 그런데 1949년 클로드 섀넌이 '화기 제어 시스템에서 데이터의 예측과 평활' 이라는 논문을 통해 방금 말한 상황에서 유한하게 잡음이 있는 통신망으로 디지털 신호를 보낼 수 있음을 수학적으로 증명해내었다. 만약 섀넌이 이를 수학적으로 증명하지 않았다면 신호 처리 분야는 존재하지 않았거나 매우 늦게 시작되었을 것이다. 이전에 내가 적었던 포스트 중에서 <a href="http://SanghyukChun.github.io/14#Gradient_Descent">Gradient Descent Method에 대해 간략하게 다룬 글</a>이 있었다. 그 글에서도 언급했듯, 경우에 따라서는 Gradient Descent Method Algorithm자체가 converge하지 않을 수도 있다. 이를 알지 못한다면 아직 optima를 향해 계속 step이 진행 중인 것인지 아니면 정말 converge하지 않는 것인지 알 수 있는 방법이 없다. (Gradient descent method는 local한 method이기 때문에 전체 function의 모양 등을 알 수가 없다.) 따라서 만약 우리가 이 method가 converge하는 조건을 미리 알 수 있다면 쓸데없는 계산없이 필요할 때에만 해당 method를 적용하는 것이 가능할 것이다. (혹시 그 정답을 궁금해 하는 사람이 있을까봐 정답을 적어주자면 <a class="red tip" title="링크를 클릭하면 굉장히 수학적으로 이를 풀어놓은 설명을 볼 수 있다." href="http://blogs.princeton.edu/imabandit/2013/04/04/orf523-strong-convexity/">l-Lipschitz &amp; Strongly Convex function</a>이면 Gradient descent method가 반드시 Global optima로 수렴하게 된다.)</p>
-
-
-<p>그러나 사실 모든 연구자들이 문제를 수학적으로 접근하지는 않는다. 수학으로 문제를 해결하는 것은 이론을 연구하는 연구자들이 주로 하는 일이지 시스템을 디자인하거나 새로운 회로를 설계하는 등의 연구를 하는 경우에는 수학을 사용해 문제를 해결하지는 않는다. 나 역시 수학을 직접 사용하지 않는 사람 중 하나였고 (연구를 하는 것은 아니었지만) 수학이 나에게 필요한 이유를 이해하지 못했었다. 하지만 수학은 단순히 문제를 푸는 수단일 뿐 아니라 문제를 접근하고 해결하는 좋은 이념이 되기도 한다. 무슨 얘기이냐 하면, 수학 자체가 좋은 문제 해결 수단으로 쓰일 수 있기 때문에 수학 공부를 열심히 해야하는 것은 맞지만, 수학 문제를 직접적으로 푸는 것이 아니더라도, 수학적 문제 해결 방식을 많이 접하다보면 다른 문제를 해결할 때에도 도움이 된다는 의미이다. 수학으로 문제를 해결하게 되면 반드시 논리가 성립해야 다음 단계로 진행할 수 있다. z = x + y 라는 것이 확실해야 a + z = a + x + y 라고 할 수 있는 것이지, 갑자기 아무 조건도 없이 a + z = x가 될 수는 없다. 즉, 수학적으로 문제를 해결한다면 (과정이 옳다면) 논리에 빈틈이 없어지고 그 문제는 반박할 여지 없이 완벽한 해답을 가지게 되는 것이다. 꼭 위에서 언급했던 대로 수학으로 문제를 해결하지 않더라도 이런 문제 해결 방법을 많이 접하는 것 만으로도 자연스럽게 논리적으로 사고하는 훈련이 된다는 의미이다. 그리고 대부분의 연구자들은 논리적인 사고력이 매우 중요하다.</p>
-
-
-<p>마찬가지 이유에서 <a class="red tip" title=" 내가 생각했을 때 프로그래밍을 잘 하기 위해 필요한 것은 수학과 글쓰기 능력 두 가지인데, 이 중 글쓰기 능력에 대해서는 나중에 꼭 포스팅하도록 하겠다.">프로그래밍에서도 수학이 중요하다.</a> 사실 프로그래밍이라는 것이 별게 아니고 어떤 로직을 만들고 그 로직을 컴퓨터가 이해할 수 있는 언어로 옮겨적는 것일 뿐이다. 간단한 Hello World 프로그램부터 복잡한 OS까지 모든 프로그래밍에 가장 중요한 것은 흔히 말하는 '코딩 스킬' 이 아니라 '로직' 이다. 내가 무엇을 프로그래밍해야하는지 이해하고 코딩을 시작해야지, 내가 무엇을 만들어야하는지 이해도 못한 상태에서 코딩을 해서는 좋은 프로그램이 나올 수가 없다. 그리고 프로그래밍에서 매우 중요한 문제 중 하나가 '성능 (performance)'인데, 좋은 성능을 가지는 프로그램을 만들기 위해서는 반드시 좋은 설계가 필요하다. 같은 역할을 하는 프로그램을 만들더라도 어떻게 설계하느냐에 따라서 그 결과가 크게 달라진다. 흔히 알고리듬 수업에서 많이 배우는 Sorting에 대해서 잠깐 살펴보자. 우리가 가장 간단하게 생각할 수 있는 무작위로 주어진 숫자들을 순서대로 배열하는 방법은 맨 앞에서부터 하나하나 비교하면서 값을 swap하는 방법일 것이다. 이렇게 sorting algorithm을 설계하게 되면 최악의 경우 n개의 element가 있을 때 n^2번 연산을 수행해야만한다. 하지만 <a class="red tip" title="Quick sort">보다 좋은 알고리듬</a>을 사용하면 n^2를 n log n으로까지 줄일 수 있다. 즉, 같은 역할 (순서대로 정렬) 을 하는 두 개의 프로그램이 해당 역할을 전부 수행하기까지 걸리는 시간이 아주 크게 차이가 날 수 있는 것이다. 이는 프로그램 설계 뿐 아니라 데이터베이스 설계에도 마찬가지이고 더 좋은 설계를 통해 더 빠르고 더 좋은 프로그램을 만들 수 있게 된다. '과연 지금 설계가 가장 최선의 설계인가?', '지금 설계를 개선시키기 위해서 필요한 것은 무엇이지?', '지금 프로그램에서 문제가 되는 부분은 어디지?' 이런 질문을 할 수 있느냐 없느냐 그리고 그에 대한 답을 내릴 수 있느냐 없느냐가 프로그래머의 입장에서 더 좋은 프로그램을 할 수 있느냐 없느냐 혹은 얼마나 더 좋은 로직을 설계할 수 있느냐 없느냐의 차이가 되는 것이다. 그리고 바로 전 단락에서 설명했듯, 이런 능력을 훈련할 수 있는 가장 좋은 방법은 수학이다.</p>
-
-
-<p>수학을 통해 문제를 해결하는 것 뿐이니라 현상을 이해하고 더 나아가 현상을 예측하는 것 또한 할 수 있다. 어느 정도 눈치가 빠른 사람이라면 눈치챘겠지만, 수학을 공부해야하는 마지막 이유는 Modeling이다. 과연 우리는 이 세상을 얼마나 많이 이해하고 있을까? 아마 모르긴 몰라도 거의 대부분의 현상들을 완벽하게는 이해할 수 없을 것이다. 예를 들어서 지구에 있는 모든 사람들은 단 7다리만 건너도 서로를 알고 있다고 한다. 이를 어떻게 증명할 수 있을까? 이런 문제를 해결하기 위해서는 모델링이라는 것이 필요하다. 모델링을 간단하게 설명하면, 어떠한 현상을 이해하기 위해 그 문제를 간단하게 바꾸어 설명하는 것이다. 예를 들어서, 방금 전 문제를 간단한 수학적 모델링을 사용해 풀어보자. 만약 모든 사람들이 10명의 친구를 가지고 있다면, 내 친구의 친구는 모두 100명이고, 내 친구의 친구의 친구는 1,000명... 이런 식으로 친구가 점점 늘어나서 일곱 번째 다리를 건너면 총 10^7의 사람과 알게 되는 것이다. 이런식으로 설명하게 된다면 전 세계 인구가 70억명일 때 모든 사람이 친구를 26명만 가지고 있다면 일곱 다리만에 세상의 모든 사람들과 연결 될 수 있는 것이다. 물론 실제 세상에서는 이와 같은 컨셉은 적용되지 않는다. 사실 이 모델은 심각한 오류가 있다 모든 사람이 친구를 동일하게 n명 가지고 있다는 가정은 틀린 것이고 실제로는 어떤 사람들은 친구가 엄청 많고 어떤 사람은 친구가 엄청 적기 때문에 방금전과 같은 방법으로 문제를 접근하면 잘못된 결과를 얻게 된다. (실제로는 거듭제곱 분포를 그린다. 자세한 내용은 추후 적게 될 단기강좌-인터넷 속의 수학 요약 포스팅에서 다루도록 하겠다.) 수학적 모델링을 통해 어떤 현상을 잘 설명할 수 있다면, 그 모델에서 일어날 수 있는 또 다른 현상들을 예측하는 것이 가능하다. 예를 들어 사람들이 서로에게 어떻게 영향을 미치는지 알 수 있고 어떤 사람이 가장 영향력이 강한지 알 수 있다면 그 사람이 무언가를 행했을 때 다른 사람들에게 어떤 영향을 끼칠지 수학적 모델링 결과를 통해 예측할 수 있게 되는 것이다.</p>
-
-
-<p>수학공부하라고 한 마디만 하면 되는 것이, 참 길고 긴 잔소리가 되었다. 학부 5년 동안 수학 공부랑 담쌓고 지내다가 요즈음 들어 갑자기 수학 공부에 집중해야하는 상황이 되니 이제서야 내가 왜 수학을 필요로 하고 수학을 어떻게 사용해야하는지 눈에 보이기 시작했다. 하지만 수학은 어디까지나 기본적인 내용이고 내 머리에 깔려있는 내용이어야지, 수학을 주력으로 공부할 시간이 많이 없어서 요즈음 많이 고생을 하고 있다. 뒤늦게나마 깨닫고 더 늦기 전에 수학을 공부하고 있지만, 주변에 수학이 왜 필요한지 모르고 수학을 경시하거나, 수학을 공부하기는 하는데 도대체 이걸 왜 필요로 하는지 모르는 후배들이 참 많이 보인다. 그런 후배들은 이 포스트를 읽고 조금이나마 갈피를 잡을 수 있으면 한다. 만약 자신이 대학원에 진학해서 연구를 하겠다는 생각이 있거나, 논리적인 일을 필요로 하는 사람이라면 학부 동안 수학을 정말 열심히 공부해서 위에서 언급했던 능력들을 기르고 대학원을 진학해서 혹은 자신이 공부 하고 싶은 분야을 공부하면서 그 능력 들을 사용하는 것이 가장 좋은 길이 아닐까라는 생각을 해본다.</p>
 
 ]]></content>
   </entry>

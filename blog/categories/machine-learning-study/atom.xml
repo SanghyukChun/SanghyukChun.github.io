@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning-Study | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-14T20:41:17+09:00</updated>
+  <updated>2015-09-15T22:57:46+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -125,7 +125,7 @@
 
 <ul>
     <li><p>sum of squares (Euclidean) loss: \(\sum_{i=1}^d (x_i - t_i)^2 \)</p></li>
-    <li><p>softmax loss: \(-\sum_{i=1}^d t_i * \log (\frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }) \)</p></li>
+    <li><p>softmax loss: \(-\sum_{i=1}^d \bigg[ t_i \log \big(\frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }\big) + (1 - t_i) \log \big(1 - \frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }\big) \bigg] \)</p></li>
     <li><p>cross entropy loss: \(\sum_{i=1}^d [ -t_i \log x_i - (1-t_i) \log (1-x_i) ]\)</p></li>
     <li><p>hinge loss: \(\max(0,1-t \cdot x)\), 이때 \(\cdot\)은 내적을 의미한다.</p></li>
 </ul>
