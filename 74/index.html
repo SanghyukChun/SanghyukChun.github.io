@@ -272,7 +272,7 @@ $(function() {
 
 
 
-<h5>Stochastic Gradient Descent</h5>
+<h5 id="sgd">Stochastic Gradient Descent</h5>
 
 
 <p>Gradient를 계산했으니 이제 직접 Gradient Descent를 써서 parameter만 update하면 된다. 그러나 문제가 하나 있는데, 일반적으로 neural network의 input data의 개수가 엄청나게 많다는 것이다. 때문에 정확한 gradient를 계산하기 위해서는 모든 training data에 대해 gradient를 전부 계산하고, 그 값을 평균 내어 정확한 gradient를 구한 다음 &#8216;한 번&#8217; update해야한다. 그러나 이런 방법은 너무나도 비효율적이기 때문에 Stochastic Gradient Descent (SGD) 라는 방법을 사용해야한다.</p>
@@ -351,6 +351,23 @@ $(function() {
 
 
 
+<h5>Backpropagation Algorithm: In Practice</h5>
+
+
+<p>실제 backpropagtion을 계산해야한다고 가정해보자. 편의상 \(l\)번째 hidden layer를 \(y_l\) 이라고 해보자. 이 경우 각 layer에 대해 backpropagation algorithm을 위해 계산해야할 것은 총 두 가지 이다. Loss를 \(E\)라고 적었을 때 먼저 layer \(l\)의 parameter \(\theta_l\)의 gradient인 \(\frac{\partial E}{\partial w_l }\)을 구해야한다. 이 값은 \(\frac{\partial E}{\partial w_l } = \frac{\partial E}{\partial y_{l} } \frac{\partial y_{l} }{\partial w_{l} } \)을 통해 계산한다. 이때, \(\frac{\partial E}{\partial y_{l} } = \frac{\partial E}{\partial y_{l+1} } \frac{\partial y_{l+1} }{\partial y_{l} } \)이므로 \(\frac{\partial E}{\partial y_{l} }\)은 바로 전 layer에서 넘겨준 \(\frac{\partial E}{\partial y_{l+1} }\)의 값을 사용하여 계산하게 된다. 정리하면 실제 계산해야하는 값은 \(\frac{\partial y_{l+1} }{\partial y_{l}},\frac{\partial y_{l} }{\partial w_{l} } \) 두 가지이고, 이 값들을 사용해 \(\frac{E}{\partial y_{l}}, \frac{E}{\partial w_{l}}\)을 return하게 된다. 앞의 값은 다음 layer에 넘겨줘서 다음 input으로 사용하고, 두 번째 값은 저장해두었다가 gradient descent update할 때 사용한다.</p>
+
+
+<p>두 가지 예를 들어보자. 먼저 Inner Product layer 혹은 fully connected layer이다. 이 layer가 inner product layer라고 불리는 이유는 input \(y_l\)에 대해 output \(y_{l+1}\)이 간단한 inner product 들이 모여있는 형태로 표현되기 때문이다. 예를 들어 \(y_{l+1, i}\)를 l+1 번째 layer의 i 번째 node라고 한다면, \(y_{l+1, i} = \sum_{j} w_{ij} y_{l, j}\)으로 표현할 수 있음을 알 수 있다. 그런데 이 값은 사실 vector \(w\)와 \(y_{l}\)의 inner product로 표현됨을 알 수 있다. 그렇기 때문에 fully connected layer를 inner product라고 부른다. 다시 본론으로 돌아와서 inner product의 output은 input과 weight의 matrix-vector multiplication인 \(y_{l+1} = W_l * y_l\)으로 표현할 수 있다.</p>
+
+
+<p>따라서 \(\frac{\partial y_{l+1} }{\partial y_{l}} = W_l^\top\)이고, \(\frac{\partial y_{l} }{\partial W_{l} } = y_l\)이다. 이 값을 통해 실제 return하는 값은 \(\frac{\partial E }{\partial y_{l} } = \frac{\partial E }{\partial y_{l+1} } * W_l^\top \)와 \(\frac{\partial E }{\partial w_{l} } = \frac{\partial E }{\partial y_{l+1} } * y_{l} \)이 된다.</p>
+
+
+<p>두 번째로 많이 사용하는 ReLU non-linearity의 gradient를 계산해보자. 이때 activation function은 마치 하나의 layer가 더 있는 것처럼 생각할 수 있다. 즉 \(y_{l+1} = max(0, y_{l})\)로 표현할 수 있을 것이다. Parameter는 없으니까 생략하면 만약 \(y_{l} \geq 0\)라면 \(\frac{\partial y_{l+1} }{\partial y_{l} = 1} \)이고, 아니라면 0이 될 것이다. 따라서 \(y_{l} \geq 0\)라면 \(\frac{\partial E }{\partial y_{l} } = \frac{\partial E }{\partial y_{l+1} } \)이 되고, 0보다 작다면 0이 될 것이다.</p>
+
+
+
+
 <h5>정리</h5>
 
 
@@ -365,6 +382,7 @@ $(function() {
 <ul>
 <li>2015년 9월 13일: 글 등록</li>
 <li>2015년 9월 14일: 오타수정, SGD 내용 추가 등</li>
+<li>2015년 9월 20일: BP in practice 추가</li>
 </ul>
 
 
@@ -374,6 +392,7 @@ $(function() {
 <ul>
 <li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
 <li>wiki (<a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks">링크</a>)</li>
+<li><a href="http://courses.cs.tau.ac.il/Caffe_workshop/Bootcamp/pdf_lectures/Lecture%203%20CNN%20-%20backpropagation.pdf">Caffe workshop &ndash; CNN backpropagation</a></li>
 </ul>
 
 
@@ -403,7 +422,7 @@ $(function() {
 <li><a href="/72">Dimensionality Reduction (LDA, PCA)</a></li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li><a href="/74">Neural Network Introduction</a></li>
-<li>Deep Learning</li>
+<li><a href="/75">Deep Learning</a></li>
 <li>Reinforcement Learning</li>
 </ul>
 
@@ -517,6 +536,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/75/">Machine Learning 스터디 (19) Deep Learning - RBM, DBN, CNN</a>
+      </li>
+    
+      <li class="post">
         <a href="/91/">Recurrent Models of Visual Attention (NIPS 2014)</a>
       </li>
     
@@ -530,10 +553,6 @@ $(function() {
     
       <li class="post">
         <a href="/74/">Machine Learning 스터디 (18) Neural Network Introduction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/88/">Batch Normalization (ICML 2015)</a>
       </li>
     
   </ul>
