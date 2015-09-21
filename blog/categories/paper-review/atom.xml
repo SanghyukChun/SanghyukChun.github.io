@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Paper-Review | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/paper-review/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-21T00:16:29+09:00</updated>
+  <updated>2015-09-21T15:40:08+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -176,7 +176,7 @@
 <h5>Background</h5>
 
 
-<p>이 논문은 RL 중에서도 MDP에 초점을 맞추고 있으며 (사실 MDP가 아닌 RL은 거의 없다고 봐도 무방하지만) 그 중에서도 model-free technique 중 하나인 <a href="https://en.wikipedia.org/wiki/Q-learning">Q-learning algorithm</a>을 neural network를 통해 해결하고 있다. 이 글은 RL에 대해 어느 정도 기초적인 지식이 있다고 가정하고 쓸 것이기 때문에 조금 더 자세한 내용은 추후 작성할 RL 관련 포스트나 다른 reference들을 참고하면서 읽으면 좋을 것 같다.</p>
+<p>이 논문은 RL 중에서도 MDP에 초점을 맞추고 있으며 (사실 MDP가 아닌 RL은 거의 없다고 봐도 무방하지만) 그 중에서도 model-free technique 중 하나인 <a href="https://en.wikipedia.org/wiki/Q-learning">Q-learning algorithm</a>을 neural network를 통해 해결하고 있다. 이 글은 RL에 대해 어느 정도 기초적인 지식이 있다고 가정하고 쓸 것이기 때문에 조금 더 자세한 내용은 <s>추후 작성할 RL 관련 포스트나</s> <a href="http://SanghyukChun.github.io/76">이 포스트</a>나 다른 reference들을 참고하면서 읽으면 좋을 것 같다.</p>
 
 
 <p>Reinforcement Learning을 위해서는 먼저 환경 \(\mathcal E\)을 정의해야한다. 이 논문에서는 Atari 에뮬레이터가 환경이 될 것이다. Atari 에뮬레이터 환경을 구성하는 요소는 action의 sequence들, observe하는 화면과 최종 reward (점수)가 될 것이다. 그림으로 표현하면 다음과 같은 식이다.</p>

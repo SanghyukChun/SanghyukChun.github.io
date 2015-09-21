@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning-Study | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-21T00:16:29+09:00</updated>
+  <updated>2015-09-21T15:40:08+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,271 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (20) Reinforcement Learning]]></title>
+    <link href="http://SanghyukChun.github.io/76/"/>
+    <updated>2015-09-21T15:33:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/76</id>
+    <content type="html"><![CDATA[<h5>들어가며</h5>
+
+
+<p><a href="http://SanghyukChun.github.io/57">첫 글</a>에서 Machine Learning은 크게 세 가지로 구분된다는 얘기를 했었지만, 지금까지 다뤘던 주제들은 모두 supervised learning이거나 unsupervised learning이었다. Reinforcement learning은 그 둘과는 구분되는 명백히 다른 task이지만, machine learning에서 그만큼 대중적인 분야는 아니다. 아직까지 reinforcement learning을 사용한 적절한 application이 많이 제안된 것도 아니라서 practical하게 많이 사용지도 않는다. 그러나 reinforcement learning을 사용하면 supervised, unsupervised learning와는 전혀 다른 방법으로 문제를 접근하는 것이 가능하다. 최근 deep learning과 reinforcement learning을 결합한 재미있는 연구주제들도 나오고 있는 만큼 (<a href="http://SanghyukChun.github.io/90">Atari 리뷰</a>, <a href="http://SanghyukChun.github.io/91">Visual Attention 리뷰</a>), 앞으로 더 재미있는 방향으로 연구될 수 있는 주제가 아닐까 생각한다.</p>
+
+
+<p>이 글은 Andrew Ng. 교수가 Stanford에서 강의하는 CS229 Machine Learning 수업의 <a href="http://cs229.stanford.edu/notes/cs229-notes12.pdf">lecture note</a>를 바탕으로 쓰여졌다. 이 글이 조금 부족하다고 느끼는 경우에는 해당 reference를 읽어보면 큰 도움이 될 것으로 생각된다.</p>
+
+
+
+
+<h5>Reinforcement Learning: Problem Definition</h5>
+
+
+<p>Supervised learning은 주어진 데이터의 label을 mapping하는 function을 찾는 문제이다. 이 경우 알고리즘은 얼마나 label을 정확하게 분류하느냐 혹은 정해진 loss function을 minimize시킬 수 있느냐에만 초점을 맞추어 모델을 learning하게 된다. 분명 supervised learning은 상당히 많은 application들에 응용될 수 있는 방법이다. 하지만 모든 문제들이 이런 방식으로 해결할 수 있는 것은 아니다. 예를 들어 2족 보행을 하는 알고리즘을 디자인한다고 생각해보자. 우리가 알고 싶은 것은 어떻게 로봇의 관절들을 움직여야 로봇이 넘어지지 않고 잘 걸을 수 있을까이다. 이 경우 우리는 관절의 움직임을 control하는 function을 learning해야한다. 이 문제를 머신러닝으로 풀기 위해서는 어떻게 문제를 정의해야할까? <a href="http://SanghyukChun.github.io/57">첫 글</a>에서 머신러닝 문제는 (1) 데이터 (2) output (3) target function (4) loss를 minimize하는 algorithm이 필요하다고 언급했었다. 먼저 데이터는 현재 관절들의 상태(각도, 위치 등)와 주변 환경(흙 위인지 아스팔트 위인지 앞에 벽이 있는지 등등)을 데이터라고 정의하자. 우리는 지금 보행을 learning하는 알고리즘을 찾고 있으므로 원하는 output은 지금 상태 다음의 관절 상태가 될 것이다. 즉, [f: 현재 관절 상태, 환경 -> 다음 관절 상태]라는 target function까지 정의할 수 있다. Loss는 특정 시간 이후 얼마나 많이 걸었는지 등으로 판단할 수 있을 것이다.</p>
+
+
+<p>그렇다면 이 문제는 supervised learning이나 unsupervised learning으로 풀 수 있을까? 데이터만 무한하게 있다면 가능할지도 모르지만 현실적으로는 그럴 수 없다는 것을 알 수 있다. 왜냐하면 (data, output)의 조합이 너무 많기 때문에 의미있는 learning을 할 수 있을 정도로 많은 데이터를 모을 수 없기 때문이다. 즉, 어떤 action이 'correct' action인가 판단하는 것이 불가능하다. 대신에 이렇게 생각해보면 어떨까? 우리가 알고 싶은 것은 관절 상황과 환경이 주어졌을 때 로봇이 어떻게 action을 취해야하는가라는 policy이다. 매 action을 주어진 policy를 통해 시행하고 나면 다음 state가 정의된다. 만약 성공적으로 걸었다면 +1 점을 주고 넘어졌다면 -1점을 주는 방식을 통해 매 action의 reward를 정의할 수 있을 것이다. 그렇다면 static한 데이터 셋에서 거의 무한하게 많이 필요한 (data, output)를 사용해 learning하는 방법 대신에, 직접 매 순간 action을 실행해 reward를 받으면서 최종적으로 맨 마지막에 모든 reward의 합이 가장 좋게 만드는 policy를 learning하는 것이다.</p>
+
+
+<p>이런 식으로 reinforcement learning을 high level로 설명할 수 있다. 그렇다면 RL을 조금 더 formal하게 정의해보자.</p>
+
+
+
+
+<h5 id="76-mdp">Markov Decision Process (MDP): Problem definition</h5>
+
+
+<p>앞에서 설명한 방식대로 RL을 정의하면 RL problem은 정말 여러가지 형태로 정의할 수 있지만, 보통 RL문제를 푼다고 하면 Markov Decision Process (MDP)를 의미한다. MDP는 \( (S, A, \{P_{sa}\}, \gamma, R ) \) 이라는 것들의 튜플이다. 각각에 대해 알아보도록 하자.</p>
+
+
+
+
+<ul>
+    <li><p>\(S\) - state들의 set을 의미한다. 앞에서 예를 든 2족 보행 로봇의 경우 모든 가능한 관절의 상태와 환경 등이 state가 된다. 참고로 state와 다음에 기술한 action의 개수가 유한하다면 \(|S| < \inf, |A| < \inf\), 주어진 MDP를 finite MDP라고 부른다.</p></li>
+    <li><p>\(A\) - action들의 set을 의미한다. 2족 보행 로봇의 경우 어떻게 관절을 control할 것인가를 의미한다.</p></li>
+    <li><p>\(P_{sa}: (s_t, a_t) \to s_{a_t}\) - State의 transition probability로, 특정 state에서 특정 action을 취했을 떄 다음 state는 어떤 state가 될지에 대한 확률 값이다.</p></li>
+    <li><p>\(R: S \times A \to \mathbb R\) - 주어진 state에 action을 수행했을 때 얻게 되는 reward를 function으로 표현한 것이다. Reinforcement learning의 목표는 시간이 \(T\)만큼 흘렀을 때 최종적으로 얻게 되는 모든 reward들의 합을 (정확하게는 그것의 expectation을) maximization하는 policy를 learning하는 것이다.</p></li>
+    <li><p>\(\gamma \in [0,1) \) - 앞에서 설명한 reward의 discount factor로, 시간이 지날수록 reward의 가치를 떨어뜨리고, 처음 받은 reward의 가치를 더 키워주는 역할을 한다. 즉, time \(t\)에서 얻은 reward를 \(r_t\)라고 했을 때, 전체 reward \(R_{tot}\)는 \(\sum_{t=0}^T \gamma^t r_t\)가 된다.</p></li>
+</ul>
+
+
+
+
+<p>MDP의 dynamics는 다음과 같은 식이다. 먼저 initial state \(s_0\)에서 어떤 초기 action \(a_0\)를 수행하게 된다. 이 행동으로 인하여 주어진 probability \(P_{s_0 a_0}\)에 따라 다음 state \(s_1\)이 확률적으로 결정된다. 그리고 그 결과로 reward \(R(s_0, a_0)\)를 얻게 된다. 이를 다시 \(s_1\)에 대해 반복하면서 state가 terminal state에 도달할 때 까지 이 과정을 반복하게 된다. 이때, MDP의 Markov property 때문에 다음 step의 reward와 transition probability는 오직 지금 state와 지금 action에 의해서만 결정된다.</p>
+
+
+<p>\[s_0 \xrightarrow{a_0} s_1 \xrightarrow{a_1} s_2 \xrightarrow{a_2} \ldots.\]</p>
+
+
+<p>이때, 앞에서 설명한 바와 같이 매 action을 취할 때 마다 reward가 결정된다. 이때 최대한 빠르게 좋은 reward를 받을수록 좋기 때문에 나중에 얻은 reward보다 일찍 얻은 reward의 값이 같더라도, 일찍 얻은 reward가 더 valuable하다고 가정한다. 이것을 우리는 discount factor를 통해 조절하게 되며, 그 결과 우리가 maximization하고 싶은 최종 reward는 discount factor \(\gamma\)에 의해 다음과 같이 결정된다. (참고로 이 값을 sum of discounted reward라고 부른다.)</p>
+
+
+<p>\[R(s_0, a_0) + \gamma R(s_1, a_1) + \gamma^2 R(s_2, a_2) + \ldots.\]</p>
+
+
+<p>하지만 아무리 같은 state와 action으로 시작했다고 하더라도 이 과정은 전부 \(P_{sa}\)에 의해 확률적으로 결정되는 값이기 때문에, 실제로 maximization하기 위한 target은 그 값의 expectation으로 주어진다.</p>
+
+
+<p>\[\mathbb E[ R(s_0, a_0) + \gamma R(s_1, a_1) + \gamma^2 R(s_2, a_2) + \ldots ].\]</p>
+
+
+<p>우리가 위 expectation을 maximization하기 위해 learning해야하는 것이 바로 policy \(\pi: S \to A\) 이다. Policy는 state에서 action으로 mapping되는 function이다 (즉, \(a_t = \pi (s_t)\).  앞에서 설명했던 transition probability는 현재 state와 action을 다음 state와 mapping해주는 function이었고, policy는 지금 state에서 내가 어떤 action을 취해야하는지 mapping해주는 function인 것이다. 즉, policy가 어떻게 변화하느냐에 따라 최종 reward가 크게 바뀌게 된다.</p>
+
+
+
+
+<h5 id="76-bellman">Value function and Bellman Equation</h5>
+
+
+<p>그럼 어떻게 reward를 maximize하는 policy를 learning할 수 있을까? 그것을 설명하기에 앞서, 먼저 policy \(\pi\)의 value function \(V^\pi (s)\)이라는 것을 정의해보자. 이때 앞으로 reward \(R(s,a)\)는 state에 의해서만 결정된다고 가정하고, notation을 \(R(s)\)로 바꾸도록 하겠다. 만약 action과 state 둘 다에 의해 reward가 결정되는 경우는 앞으로 설명하게 될 value function \(V\)가 아니라 <a href="76-qfunction">action-value function \(Q\)</a>라는 것을 정의하고 그것에 대한 Bellman Equation을 구해 아래와 같은 방식을 그대로 적용하는 것이 가능하다.</p>
+
+
+<p>olicy \(\pi\)의 value function \(V^\pi (s)\)은 다음과 같이 정의된다.</p>
+
+
+<p>\[ V^\pi (s) = \mathbb E[ R(s_0) + \gamma R(s_1) + \gamma^2 R(s_2) + \ldots | s_0 = s, \pi ]. \]</p>
+
+
+<p>이 값은 즉, 간단하게 이야기 하여 주어진 state \(s\)를 initial state로 두고 action을 policy \(\pi\)를 사용하여 고르게 되었을 때 우리가 얻게되는 reward의 expectation 값이 된다. 이렇게 정의했을 경우 fixed policy \(\pi\)에 대해 value function은 다음과 같은 관계식을 가진다. 증명은 크게 어렵지 않으므로 생략하겠다.</p>
+
+
+<p>\[ V^\pi (s) = R(s) + \gamma \sum_{s^\prime \in S} P_{s \pi(s)} (s^\prime) V^\pi (s^\prime). \]</p>
+
+
+<p>이 관계식을 Bellman Equation이라고 부르며, 이 관계식을 통해 우리는 \(V^\pi (s)\)과 다음과 같은 두 가지 성분으로 표현된다는 것을 알 수 있다. 첫째로 immediate reward \(R(s, \pi(s))\)이다. 이 값은 우리가 처음 state \(s\)에서 바로 얻을 수 있는 reward를 의미한다. 다음으로 future reward의 expectation이다. 이 값에 discount factor를 곱하고 immediate reward를 더하게 되면 우리가 원하는 \(V^\pi (s)\)를 구하는 것이 가능하다. 이때, future reward term은 사실 \( \mathbb E_{s^\prime \sim P_{s \pi(s)}} [V^\pi (s^\prime)] \) 으로 표현할 수 있는데, 다시 말해 future reward term은 처음 state \(s\)에서 policy \(\pi\)로 정해진 다음 state \(s^\prime\)의 distribution에 대한 sum of discounted reward의 expectation 값과 같다는 것을 알 수 있다. 그러므로 두 번째 term은 MDP의 한 step이 지나고 난 이후에 발생하는 모든 sum of discounted reward들의 expectation이라는 것을 알 수 있는 것이다.</p>
+
+
+<p>Bellman Equation을 사용하면 finite MDP에 대해 value function \(V^\pi (s)\)를 효율적으로 계산할 수 있다. 만약 finite MDP에 대해 문제를 풀고 있다고 가정해보자. 그렇다면 주어진 모든 state \(s\)에 대해 \(V^\pi (s)\)의 Bellman Equation을 적는 것이 가능한데, 이렇게 되면 우리는 \(|S|\)개의 linear equation과 \(|S|\)개의 variable들 (이 경우는 각 state에 대한 \(V^\pi (s)\)들)이 존재하기 때문에 간단한 연립방적식으로 value function의 값을 찾는 것이 가능하다.</p>
+
+
+<p>하지만 우리가 처음부터 원했던 것은 optimal policy \(\pi^*\)이지, 주어진 \(\pi\)에 대한 expectation of sum of discounted reward가 아니다. 하지만 이 optimal policy 역시 Bellman Equation을 사용하면 계산할 수 있다. 이것을 어떻게 하는지 설명하기 전에 앞서, 먼저 optimal value function \(V^* (s)\)를 다음과 같이 정의해보자.</p>
+
+
+<p>\[ V^*(s) = \max_\pi V^\pi (s). \]</p>
+
+
+<p>즉, optimal value function은 모든 policy \(\pi\)에 대한 value function \(V^\pi (s)\) 중에서 가장 reward를 maximize시키는 policy를 통해 얻게 된 reward가 된다. Optimal value function 역시 Bellman Equation을 증명할 수 있는데, 그 식은 다음과 같다.</p>
+
+
+<p></p>
+
+<p>\[ V^* (s) = R(s) + \max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^\prime). \]</p>
+
+
+<p></p>
+
+<p>앞의 term은 위와 동일하고, 두 번째 term은 모든 expected future sum of discounted reward를 action \(a\)에 대해 maximize한 결과이다. 즉, 모든 action 중에서 reward를 가장 maximize하는 action을 선택하였을 때 얻게되는 reward의 값이다. 그런데 그런 action을 고르는 방법이 바로 optimal policy \(\pi^*\)이므로, optimal policy는 다음과 같이 구할 수 있다.</p>
+
+
+<p>\[ \pi^*(s) = \arg\max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^\prime). \]</p>
+
+
+<p>모든 state \(s\)와 모든 policy \(\pi\)에 대해 우리는 다음과 같은 관계식을 얻을 수 있다.</p>
+
+
+<p>\[V^*(s) = V^{\pi^*}(s) \geq V^\pi (s).\]</p>
+
+
+<p>첫번째 관계식은 optimal policy \(\pi\)에 대한 value function \(V^{\pi^*}(s)\)와 optimal value function \(V^*(s)\)가 모든 state \(s\)에 대해 equivalent하다는 것을 보여준다. 이 내용이 중요한 이유는, 초기 state가 무엇인지와 관계없이 항상 같은 optimal policy \(\pi^*\)를 사용해 optimal value function을 구할 수 있다는 의미가 되기 때문이다. 즉, 만약 optimal policy를 구할 수 있는 algorithm이 있다면 그 알고리즘의 initial state로 어느 state를 고르더라도 우리는 항상 같은 policy를 얻게된다는 사실을 암시한다. 그리고 두 번째 equation은 모든 policy \(\pi\)에 대한 value function보다 \(V^{\pi^*}(s)\)의 값이 더 크거나 같다는 것을 의미한다. 만약 optimal policy를 구하는 algorithm이 value function을 monotonically increase 시키는 방향으로 learning한다고 했을때, update되는 값의 upper bound가 존재하므로 항상 converge하게 된다는 것을 알 수 있다.</p>
+
+
+<p>Finite MDP의 optimal policy를 구하는 대표적인 두 알고리즘으로는 value iteration과 policy iteration이라는 알고리즘이 존재한다. 두 알고리즘은 이름에서 알 수 있듯 모두 iterative algorithm이며, 위에서 언급한 intuition이 그대로 적용되는 알고리즘들이다. 즉, initial state에 invariant하며 iteration 동안 value function이 monotonically increase한다. 그리고 그 값이 converge하게 되면 우리가 원하는 optimal policy를 구할 수 있다.</p>
+
+
+
+
+<h5>Value Iteration</h5>
+
+
+<p>Value iteration 알고리즘은 다음과 같다.</p>
+
+
+<ol>
+    <li><p>Initialize \(V(s) = 0, ~\mbox{ for all } s\).</p></li>
+    <li>Repeat until converge</li>
+    <p>\[V(s) = R(s) + \max_{a\in A} \gamma \sum_{a^\prime} P_{sa} (s^\prime) V(s^\prime), ~\mbox{ for all } s. \]</p>
+</ol>
+
+
+<p>이 알고리즘은 앞서 설명했던 Bellman Equation에서 optimal value function의 관계식을 iterative하게 반복하면서 찾아나가는 알고리즘이다. 이 알고리즘의 두 번째 state는 synchronous update와 asynchronous update 총 두 가지 방법으로 접근이 가능하다. 먼저 synchronous update는 모든 \(s\)에 대해 value function \(V(s)\) 값 을 계산하고 그 값들을 한 번에 update하는 방법이고, asynchronous update는 한 state \(s\)에 대해 \(V(s)\)를 구하고 바로 update를 하는 방법이다. 쉽게 생각하면 asynchronous update는 stochastic gradient descent같은 방법이라 생각하면 된다. 이 두 가지 방법 모두 finite하고 polynomial time 안에 \(V\)가 optimal value function \(V^*\)으로 수렴한다는 것을 증명할 수 있다. 이렇게 구해진 \(V^*\)를 사용하면 앞에서 구했던 다음 관계식을 통해 optimal policy를 구할 수 있다.</p>
+
+
+<p>\[ \pi^*(s) = \arg\max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^prime). \]</p>
+
+
+
+
+<h5>Policy Iteration</h5>
+
+
+<p>이번에는 policy iteration 알고리즘에 대해 살펴보자. 알고리즘은 다음과 같다.</p>
+
+
+<ol>
+    <li><p>Initialize \(\pi\) randomly</p></li>
+    <li>Repeat until converge</li>
+    <ul>
+        <li><p>Let \(V = V^\pi\).</p></li>
+        <li><p>For each state \(s\), let \(\pi(s) = \arg\max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^prime). \)</p></li>
+    </ul>
+</ol>
+
+
+<p>Value iteration이 value function의 값을 update하는 알고리즘이라면 policy iteration은 policy를 udpate하는 iterative algorithm이다. 두 알고리즘 모두 Bellman equation을 통해 얻어지는 알고리즘이다. Policy iteration에서 \(\pi(s)\)를 업데이트하는 방식을 주어진 value function \(V\)에 대해 greedy한 policy update rule이라고 부른다. Policy iteration 역시 polynomial time 안에 optimal policy로 수렴하게 된다.</p>
+
+
+<p>Value iteration과 policy iteration은 모두 MDP를 해결하는 알고리즘이며, 둘 중 무엇이 더 좋냐를 비교할 수는 없다. 그러나 일반적으로 small MDP에 대해서는 policy iteration이 빠른 시간 안에 효과적으로 수렴하고, large MDP의 경우에는 policy iteration에서 greedy policy rule update가 비효율적일 수 있기 때문에 value iteration으로 문제를 푸는 것이 computationally 좀 더 efficient하다고 한다.</p>
+
+
+<p>다만 value iteration과 policy iteration은 이론적으로 optimal value function을 계산할 수 있도록 보장하는 알고리즘이기는 하지만, 실제 세상의 large MDP에 적용하기에는 모든 state와 action에 대한 경우 수를 계산하는 이런 알고리즘들은 다소 비효율적이다. 대신 다른 방법으로 value function을 update할 수 있는 알고리즘을 제안하기도 하는데, 예를 들면 지난 번에 리뷰했던 <a href="http://SanghyukChun.github.io/90">Playing Atari With Deep Reinforcement Learning (NIPS 2013)</a> 논문을 예로 들 수 있을 것 같다.</p>
+
+
+
+
+<h5 id="76-qfunction">Action Value Function</h5>
+
+
+<p>Reward가 state, action 둘 다에 의해 결정될 경우, value function \(V^\pi (s)\)가 아니라 action value function \(Q^\pi (s,a)\)를 사용하여야한다. Q function은 다음과 같이 정의할 수 있다.</p>
+
+
+<p>\[ Q^\pi (s,a) = \mathbb E[ R(s_0, a_0) + \gamma R(s_1, a_1) + \gamma^2 R(s_2, a_2) + \ldots | s_0 = s, a_0 = a, \pi ]. \]</p>
+
+
+<p>이 값을 사용하게 되면 initial state와 action에 대해 앞에서 value function에 대해 계산했던 것들을 그대로 반복할 수 있다. 먼저 \(Q^* (s,a) = \max_\pi Q^\pi (s,a)\)이고, optimal action value function의 Bellman Equation은 다음과 같이 주어진다.</p>
+
+
+<p>\[ Q^* (s,a) = R(s,a) + \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) \max_{a\in A} Q^* (s^\prime, a). \]</p>
+
+
+<p>남은 부분은 value function으로 진행했던 내용과 동일하게 진행하면 된다.</p>
+
+
+
+
+<h5>Learning Model for MDP</h5>
+
+
+<p>지금까지 앞에서 살펴봤던 내용은 모두 MDP의 state transition probability와 reward function이 전부 주어진 상태라고 가정하고 문제를 푸는 방법이었다. 하지만 실제로는 transition probability와 reward가 직접적으로 알려져있지않고, 실제 action을 수행하기 전까지 알 수 없는 것들이 훨씬 많다. 이 경우 data를 통해 transition probability와 reward function을 estimate해야한다. 이 경우 각각의 state에 대해 모든 action을 반복적으로 수행하면서 probability의 approximation 값을 구하고, reward 역시 같은 방법으로 계산해야한다.</p>
+
+
+
+
+<h5>정리</h5>
+
+
+<p>이 글에서는 reinforcement learning의 가장 기본적인 모델인 MDP에 대해 다루었다. MDP는 state, action, reward function, transition matrix와 discount factor로 구성된 튜플이며, optimal policy를 구하기 위해서 value function이라는 개념을 도입하고, 이 optimal value function을 계산할 수 있다면 optimal policy를 구할 수 있다. Optimal value function을 update하기 위해서 Bellman Equation이라는 관계식을 사용해 value iteration과 policy iteration이라는 알고리즘까지 살펴보았다. 이 경우 모든 reward와 transition matrix는 이미 알려져있다고 가정하였고, 만약 모르는 경우 finite MDP에서는 실제 estimation을 통해 model을 leanring해야한다는 얘기까지 하였다. 실제로 MDP 문제를 다루게 될 경우 이것보다 훨씬 복잡한 문제를 다뤄야할 일이 많지만, 근본적으로는 value iteration 등을 사용하여 optimal value function 혹은 optimal action value function의 값을 구해 optimal policy를 구한다는 기본적인 아이디어는 같다.</p>
+
+
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2015년 9월 21일: 글 등록</li>
+</ul>
+
+
+<h5>Reference</h5>
+
+
+<ul>
+<li><a href="http://cs229.stanford.edu/notes/cs229-notes12.pdf">Reinforcement Learning Lecture Note &ndash; Stanford CS229 Lecture Note by Andrew Ng</a></li>
+</ul>
+
+
+<hr>
+
+
+<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
+<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
+<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Ensemble Learning (Random Forest, Ada Boost)</li>
+<li>Graphical Model</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+<li>Hidden Markov Model</li>
+<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
+<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
+<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
+<li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine learning 스터디 (19) Deep Learning - RBM, DBN, CNN]]></title>
@@ -363,6 +628,14 @@
 
 
 
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2015년 9월 21일: 글 등록</li>
+</ul>
+
+
 <h5>Reference</h5>
 
 
@@ -406,7 +679,7 @@
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
-<li>Reinforcement Learning</li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
 </ul>
 
 ]]></content>
@@ -730,7 +1003,7 @@
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
-<li>Reinforcement Learning</li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
 </ul>
 
 ]]></content>
@@ -909,7 +1182,7 @@
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
-<li>Reinforcement Learning</li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
 </ul>
 
 ]]></content>
@@ -1035,169 +1308,7 @@
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
-<li>Reinforcement Learning</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (13) Clustering (K-means, Gaussian Mixture Model)]]></title>
-    <link href="http://SanghyukChun.github.io/69/"/>
-    <updated>2015-03-25T03:20:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/69</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
-<p><a href="57-4-ClassML">첫 번째 글</a>에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 앞서 이미 그 중 <a href="http://SanghyukChun.github.io/64">Supervised Learning</a>을 간략하게 다룬 글이 있었고, 이 글에서는 그 중 Unsupervised Learning의 가장 대표적인 예시인 Clustering 대해 다룰 것이며 가장 대표적이고 간단한 두 가지 알고리즘에 대해서 역시 다룰 것이다.</p>
-
-
-<h5>What is Clustering?</h5>
-
-
-<p><a href="http://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a>은 <a href="http://en.wikipedia.org/wiki/Unsupervised_learning">Unsupervised Learning</a>의 일종으로, label 데이터 없이 주어진 데이터들을 가장 잘 설명하는 cluster를 찾는 문제이다. 왜 클러스터링이 필요할까? Classification을 하기 위해서는 데이터와 각각의 데이터의 label이 필요하지만, 실제로는 데이터는 존재하지만 그 데이터의 label이나 category가 무엇인지 알 수 없는 경우가 많기 때문에 classfication이 아닌 다른 방법을 통해 데이터들을 설명해야하는 경우가 발생한다. 아래 그림은 클러스터링이 어떤 것인지 잘 보여주는 그림이다.</p>
-
-
-<p><img src="/images/post/69-1.png" width="500"></p>
-
-<p>우리에게 처음 주어진 것은 왼쪽 파란 데이터이다. 각각의 데이터에 대한 정보는 아무 것도 없는 상태에서 주어진 데이터들을 가장 잘 설명하는 클러스터를 찾아내는 것이 클러스터링의 목적이다. 따라서 클러스터링은 대부분 Optimization 문제를 푸는 경우가 많다. 이는 클러스터링 뿐 아니라 다른 많은 unsupervised learning에서도 역시 마찬가지이다.</p>
-
-
-<p><a href="http://SanghyukChun.github.io/57">첫 번째 글</a>과 <a href="http://SanghyukChun.github.io/64">이전 글</a>에서 머신러닝 문제는 먼저 주어진 데이터에 대한 가정을 하고, 해당 가정을 만족하는 best hypothesis를 찾는 문제라고 언급한 적이 있다. Clustering 문제 역시 Machine Learning 문제이므로 데이터에 대한 가정을 먼저 해야하고, best hypothesis를 찾는 과정을 거친다. 따라서 각각의 서로 다른 clustering algorithm들은 서로 다른 assumption을 가지고 있으며, 해당 assumption을 가장 잘 만족하는 function parameter를 계산하는 과정이다. 앞으로 설명하게 될 알고리즘들에 대한 설명을 읽을 때 데이터에 대해 어떤 가정을 하였는지 꼼꼼히 확인하면서 읽으면 알고리즘을 이해하기 한결 수월할 것이다.</p>
-
-
-<h5>K-means</h5>
-
-
-<p>클러스터를 정의하는 방법에는 여러 가지가 있을 수 있지만, 가장 간단한 정의 중 하나는 클러스터 내부에 속한 데이터들이 서로 '가깝다'라고 정의하고, '가장 가까운' 내부 거리를 가지는 클러스터를 고르는 것이다. <a href="http://en.wikipedia.org/wiki/K-means_clustering">K-means</a>는 같은 클러스터에 속한 데이터는 서로 '가깝다' 라고 가정한다. 이때 각각의 클러스터마다 '중심'이 하나씩 존재하고, 각각의 데이터가 그 중심과 '얼마나 가까운가'를 cost로 정의한다. K-means는 이렇게 정의된 cost를 가장 줄이는 클러스터를 찾는 알고리즘이다. 수식으로 적으면 다음과 같다.</p>
-
-
-<p>$$ \min_{b,w} \sum_i^n \sum_j^k w_{ij} \| x_i - b_j \|_2^2 \text{ s.t. } \sum_j w_{ij} = 1, \forall j$$</p>
-
-
-<p>데이터는 \(n\)개 있으며 클러스터는 \(k\)개 있다고 가정했다. 이때, \(b_j\)는 \(j\) 번째 클러스터의 '중심'을 의미하며, \(w_{ij}\)는 \(i\) 번째 데이터가 \(j\) 번째 클러스터에 속하면 1, 아니면 0을 가지는 binary variable이다. 또한 뒤에 붙는 조건은 반드시 각 데이터 별로 한 개의 클러스터에 assign이 되어야한다는 constraint이다.</p>
-
-
-<p>이 문제는 풀기 쉬운 문제가 아니다. Binary variable \(w_{ij}\) 때문에, 모든 cluster 조합을 하나하나 확인해야만 optimal한 값을 구할 수 있다. 즉, jointly optimize하는 것이 매우 어렵다. 그러나 재미있게도 \(b\)와 \(w\) 둘 중 하나를 고정하고 나머지 하나를 update하는 것은 매우 간단하다. 나머지 값이 고정되었을 때 \(b_j\)의 optimal값은 \(j\) 번째 클러스터의 'mean'을 계산하는 것이다 (이 때문에 '\(k\)' 개의 'mean'을 찾는다고 해서 k-means 알고리즘이다). \(w_{ij}\)의 optimal 값은 모든 데이터 i에 대해, 각각 모든 클러스터 중에서 \(x_i - b_j\)가 가장 작은 클러스터에 assign하는 것이 optimal한 solution이다. 이렇듯 만약 다른 변수 하나를 정확하게 알고 있다고 생각하면 아주 간단한 방법으로 alternative optimization이 가능하다. 사실 이 개념은 예전에 적은 <a href="http://SanghyukChun.github.io/63">convex optimization</a>글에서 잠깐 언급했던 coordinate descent 방법과 거의 유사하다. K-means 알고리즘은 이렇게 \(b\)와 \(w\)를 alternative하게 계속 update하면서 \(b\)와 \(w\)가 더 이상 바뀌지 않을 때 까지 계산을 반복하는 알고리즘이다. 안타깝게도 K-means는 global optimum에 수렴하지 않고 local한 optimum에 수렴하므로 initialization에 매우매우 취약하다는 단점이 존재한다.</p>
-
-
-<p>또한 여담으로 K-means objective function에 사용한 \(\ell_2\) norm의 제곱이 outlier 혹은 noise에 매우 취약하기 때문에 조금 더 outlier에 덜 sensitive한 'robust한' norm을 사용하는 방법도 존재한다. 예를 들어 \(\ell_2\) norm의 제곱을 \(\ell_1\) norm으로 바꾸면 'mean' 대신에 'median'을 찾는 문제로 바뀌게 된다. 이를 <a href="http://en.wikipedia.org/wiki/K-medians_clustering">k-median</a>이라고 부른다. 그 밖에도 k-means의 robustness를 개선하기 위한 다양한 방법들이 개발이 되어있지만 이 글에서는 다루지 않도록 하겠다.</p>
-
-
-<h5>Gaussian Mixture Model</h5>
-
-
-<p>K-means algorithm의 key idea는 'alternative update'이다. 즉, coordinate wise로 다른 변수들을 고정한 채로 'alternative'하게 변수들을 update함으로써 jointly optimization을 할 수 없는 문제를 푸는 것이다. 비록 그 결과가 global하지 않은 local에 converge하더라도, 찾지 못하는 것보다는 훨씬 낫기 때문에 실제로 이런 방법이 많이 쓰인다. 이번 섹션에서는 이런 방법을 사용하는 또 다른 알고리즘을 하나 소개하도록 하겠다.</p>
-
-
-<p>Gaussian Mixture Model, Mixture of Gaussian, GMM, 혹은 MoG는 데이터가 'Gaussian'의 'Mixture'로 구성이 되어있다고 가정한다. 보통 GMM이라고 많이 부르며, 이 글에서 다루는 GMM은 가장 optimal한 GMM을 찾는 알고리즘을 의미한다. 즉, 데이터가 \(k\)개의 gaussian으로 구성되어있다고 했을 때, 가장 데이터를 잘 설명하는 \(k\)개의 평균과 covariance를 찾는 알고리즘이다. 아래 그림은 3개의 gaussian으로 구성되어있다고 가정하고 그 gaussian 분포들을 찾은 결과이다.</p>
-
-
-<p><img src="/images/post/69-2.png" width="500"></p>
-
-<p>모든 machine learning 문제는 'performance measure'를 가진다고 예전에 얘기한 적이 있다. GMM의 performance measure는 log likelihood function이다. 즉, 주어진 paramter에 대해 데이터 X의 확률을 가장 크게 만드는 parameter를 찾는 것이 목표가 된다. log likelihood는 \(\ln p(X|\theta)\)로 정의가 된다. 우리가 찾아야하는 parameter \(\theta\)는 각각의 gaussian의 평균 \(\mu_j\), covariance \(\Sigma_j\), 그리고 마지막으로 각각의 데이터가 각각의 gaussian에 속할 확률 \(\pi_j\)로 구성된다. 따라서 주어진 \(\mu_j, \Sigma_j\)에 대한 \(x_i\)의 multinomial gaussian distribution을 \(N(x_i|\mu_j, \Sigma_j)\)라고 정의한다면 log likelihood function은 다음과 같이 기술할 수 있다.</p>
-
-
-<p>$$ \ln p(X|\pi, \mu, \Sigma) = \sum_i^n \ln \sum_j^k \pi_j N (x_i | \mu_j, \Sigma_j) $$</p>
-
-
-<p>그러나 역시 이 문제도 jointly update가 매우매우 어려운 문제이다. 그러나 K-means와 비슷하게도 \(\pi\)를 고정하고 \(\mu, \Sigma\)를 계산하는 것은 쉬우며, 그 반대 역시 쉽다. 따라서 비슷하게 alternative update를 통해 문제를 해결하는 알고리즘을 어렵지 않게 디자인 할 수 있다. 역시 이 알고리즘도 global로 수렴하지 않고 local로만 수렴하게 된다. GMM을 풀기 위해서 사용되는 알고리즘 중 가장 유명한 알고리즘으로는 <a href="http://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm">'EM' 알고리즘</a>이 존재한다. 이 알고리즘에 대해서는 <a href="http://SanghyukChun.github.io/70">다음 글</a>에서 더 자세하게 설명하도록 하고, 이 글에서는 EM 알고리즘이라는 것을 알고 있는 상태에서 어떻게 각 step을 해결할 수 있는지에 대해서만 다루도록 하겠다. E-step에서는 현재 주어진 \(\mu, \Sigma, \pi\)들을 사용해 가장 'expectation'이 높은 latent variable의 값을 찾아내며, M-step에서는 새로 estimate된 latent variable을 사용해 그 값을 maximize하는 \(\mu, \Sigma, \pi\)를 찾는다. EM 알고리즘은 E-step과 M-step이 계속 번갈아 진행되며, 더 이상 값이 변하지 않을 때 까지 반복된다. K-means를 이런 관점으로 바라보게 된다면, cluster information \(w_{ij}\)를 update하는 과정이 E-step, \(b\)를 update하는 과정을 M-step이라고 할 수 있다. (그러나 K-means을 푸는 알고리즘은 엄밀하게 말하면 EM 알고리즘이 아니다)</p>
-
-
-<p>사실 엄밀하게 설명하면 GMM을 푸는 EM에서 E-step 때 update하는 것은 정확하게 \(\pi\)와 같은 것은 아니다. EM으로 이 문제를 풀기 위해서 우리는 새로운 'latent' variable을 introduce해야한다. latent variable은 쉽게 생각하면 graphical model에서 hidden variable에 해당하는 값이다. 다음에 EM 알고리즘에 대해 자세히 다룰 때 다시 설명하겠지만, 이렇게 latent variable을 설정하는 이유는 어떤 특정 variable의 marginal distribution을 optimize하는 것은 어려울 때, latent variable을 사용해 그 variable과 latent variable의 joint distribution을 다루는 것은 간단할 수 있기 때문이다. GMM에서는 latent variable \(z\)를 introduce하게 된다. \(z\)는 \(k\)-ary variable로, \(z\)의 \(j\) 번째 dimension인 \(z_j\)는 Binary random variable이며, \(p(z_j=1) = pi_j, \) where \(\sum_j z_j = 1\) and \(\sum_j \pi_j = 1\) 이라는 조건을 가지고 있다. \(z\)의 marginal probability는 \(p(z) = \prod_j \pi_j^{z_j}\)로 어렵지 않게 계산할 수 있으며, 비슷하게 주어진 데이터 \(x\)에 대한 conditional distribution 역시 간단하게 다음과 같이 표현된다. \(p(x|z) = \prod_j N(x|\mu_j, \Sigma_j)^{z_j}\).</p>
-
-
-<p>따라서 앞선 식들로부터 joint distribution을 얻을 수 있고, 그 값을 marginalize해 다음과 같은 결과를 얻을 수 있다.</p>
-
-
-<p>$$ p(x) = \sum_z p(x,z) = \sum_z p(z)p(x|z) = \sum_j \pi_j N(x|\mu_j, \Sigma_j) $$</p>
-
-
-<p>정리하자면, 각각의 data point \(x_i\) in GMM의 graphical representation은 다음과 같이 표현할 수 있다.</p>
-
-
-<p><img src="/images/post/69-3.png" width="300"></p>
-
-<p>위의 결과들을 토대로 이제 간단하게 EM algorithm을 돌릴 수 있다. 먼저 E step에서는 \(p(z_j = 1|x)\)를 계산할 것이다. 각 데이터에 대해 \(j\) 번째 클러스터에 속할 확률, 혹은 posterior를 계산하는 과정이다. 이 값은 Bayes rule을 통해 간단하게 다음과 같이 계산할 수 있다.</p>
-
-
-<p>$$ p(z_j = 1|x) = \frac{p(z_j=1)p(x|z_j=1)}{\sum_j^k p(z_j=1)p(x|z_j=1)} = \frac{\pi_j N(x|\mu_j, \Sigma_j)}{\sum_j^k \pi_j N(x|\mu_j \Sigma_j)} $$</p>
-
-
-<p>다음으로 \(z\)를 fix했을 때 다음과 같이 나머지 paramter를 계산할 수 있다.</p>
-
-
-<p>$$ \mu_j = \frac{1}{\sum_i p(z_j=1|x)} \sum_i p(z_{ij}=1|x) x_i$$</p>
-
-
-<p>$$ \Sigma_j = \frac{1}{\sum_i p(z_j=1|x)} \sum_i p(z_{ij}=1|x) (x_i-\mu_j) (x_i-\mu_j)^\top$$</p>
-
-
-<p>$$ \pi_j = \frac{\sum_i p(z_j=1|x)}{N}$$</p>
-
-
-<p>정리하자면, GMM을 풀기 위한 EM 알고리즘은, 먼저 각각의 데이터가 어느 클러스터에 속할지에 대한 정보를 update해 (\(z\)를 업데이트 하여) expectation을 계산하고, 다음으로 업데이트 된 정보들을 사용해 나머지 값들로 가장 log likelihood를 최대화하는 parameter들을 (\(\mu, \Sigma, \pi\)를) 찾아낸다. 알고리즘을 돌리면 아래처럼 iteration이 지날 때 마다 점점 좋은 값을 찾아준다. (출처: <a href="http://kipl.tistory.com/64">Geometry & Recognition :: Gaussian Mixture Model & K-means</a>)</p>
-
-
-<p><img src="/images/post/69-4.gif" width="500"></p>
-
-<p>EM 알고리즘에 대한 심도있는 이해 없이 이 글을 이해하는 것은 조금 어려울 수 있다. 이 글이 잘 이해가 되지 않는다면 먼저 EM 알고리즘에 대해 설명한 <a href="http://SanghyukChun.github.io/70">다음 글</a>을 읽어본 다음 다시 읽어보기를 권한다.</p>
-
-
-<h5>정리</h5>
-
-
-<p>Clustering은 unsupervised learning 분야에서 가장 활발히 연구되는 분야 중 하나이다. 이 글에서는 여러 종류의 클러스터링 알고리즘 중에서 optimization function을 (1) 거리 기반으로 세우고 그것을 푸는 알고리즘과 (2) 확률과 확률분포를 기반으로 세우고 그것을 푸는 알고리즘을 소개하였다. 특히 GMM은 다음 글에서 다룰 주제인 EM algorithm과 밀접하게 관련되는 내용이므로 한 번 쯤은 책이나 렉쳐노트를 정독하는 것을 권한다.</p>
-
-
-
-
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 3월 25일: 글 등록</li>
-<li>2015년 6월 14일: EM 알고리즘 링크 추가 및 설명 변경</li>
-</ul>
-
-
-<h5>Reference</h5>
-
-
-<ul>
-<li>Bishop, Christopher M. Pattern recognition and machine learning. Vol. 4. No. 4. New York: springer, 2006. Chapter 9</li>
-<li><a href="http://kipl.tistory.com/64">Geometry &amp; Recognition :: Gaussian Mixture Model &amp; K-means</a></li>
-</ul>
-
-
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
-
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
-<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
-<li>Reinforcement Learning</li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
 </ul>
 
 ]]></content>
