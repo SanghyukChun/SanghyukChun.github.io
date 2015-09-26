@@ -253,7 +253,7 @@ $(function() {
 <p>이 알고리즘은 앞서 설명했던 Bellman Equation에서 optimal value function의 관계식을 iterative하게 반복하면서 찾아나가는 알고리즘이다. 이 알고리즘의 두 번째 state는 synchronous update와 asynchronous update 총 두 가지 방법으로 접근이 가능하다. 먼저 synchronous update는 모든 \(s\)에 대해 value function \(V(s)\) 값 을 계산하고 그 값들을 한 번에 update하는 방법이고, asynchronous update는 한 state \(s\)에 대해 \(V(s)\)를 구하고 바로 update를 하는 방법이다. 쉽게 생각하면 asynchronous update는 stochastic gradient descent같은 방법이라 생각하면 된다. 이 두 가지 방법 모두 finite하고 polynomial time 안에 \(V\)가 optimal value function \(V^*\)으로 수렴한다는 것을 증명할 수 있다. 이렇게 구해진 \(V^*\)를 사용하면 앞에서 구했던 다음 관계식을 통해 optimal policy를 구할 수 있다.</p>
 
 
-<p>\[ \pi^*(s) = \arg\max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^prime). \]</p>
+<p>\[ \pi^*(s) = \arg\max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^\prime). \]</p>
 
 
 
@@ -269,7 +269,7 @@ $(function() {
     <li>Repeat until converge</li>
     <ul>
         <li><p>Let \(V = V^\pi\).</p></li>
-        <li><p>For each state \(s\), let \(\pi(s) = \arg\max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^prime). \)</p></li>
+        <li><p>For each state \(s\), let \(\pi(s) = \arg\max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^\prime). \)</p></li>
     </ul>
 </ol>
 
@@ -441,6 +441,10 @@ $(function() {
     </p>
     
     
+    <p class="meta">
+      <a class="url-title basic-alignment right" href="/87/" title="Next Post: Kaggle competition - Poker rule induction">&raquo; Kaggle competition - Poker rule induction</a>
+    </p>
+    
     </p>
   </footer>
 </article>
@@ -473,6 +477,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/87/">Kaggle Competition - Poker Rule Induction</a>
+      </li>
+    
+      <li class="post">
         <a href="/76/">Machine Learning 스터디 (20) Reinforcement Learning</a>
       </li>
     
@@ -486,10 +494,6 @@ $(function() {
     
       <li class="post">
         <a href="/90/">Playing Atari With Deep Reinforcement Learning (NIPS 2013)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/89/">Recurrent Neural Network Regularization</a>
       </li>
     
   </ul>

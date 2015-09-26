@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-21T15:40:08+09:00</updated>
+  <updated>2015-09-26T15:09:05+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Kaggle competition - Poker rule induction]]></title>
+    <link href="http://SanghyukChun.github.io/87/"/>
+    <updated>2015-09-26T15:10:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/87</id>
+    <content type="html"><![CDATA[<p>이 글은 2015년 봄 내가 조교를 했었던 KAIST 빅데이터 분석개론 수업에서 중간 프로젝트로 나왔었던 Kaggle Competition을 내가 개인적으로 진행해보면서 느꼈던 점들을 시간 순서에 맞춰 적은 일종의 개발기이다. <a href="https://github.com/SanghyukChun/kaggle-poker_rule">깃허브 레포지토리</a>도 있으니 코드가 궁금하다면 이 레포지토리를 확인하면 될 것 같다. 깃허브 기준으로 이 프로젝트는 2015년 3월 20일부터 4월 19일까지 대략 한 달간 진행하였다.</p>
+
+
+<p>이 competition을 위하여 4가지 정도의 아이디어를 냈었다. 먼저 normal KNN을 최대한 튜닝해보는 것, 문제가 'rule'이라는 것에 초점을 맞추어 rule을 정의하고 그것을 learning하는 방법, 세 번째로 card set에 대한 확률모델을 정의하여 likelihood를 maximization하는 방법, 마지막으로 기존 KNN의 input을 적당하게 바꾸어 KNN으로 처리하는 방법이었다. 이 중 실제로 submission까지 이어진 아이디어는 처음과 마지막 아이디어인데, 첫 번째는 0.67575, 두 번째에는 0.96908을 달성하였다. 이 글에서는 각각의 아이디어를 생각하게 된 계기와 왜 실패했고, 왜 성공했는지에 대해 정리해보도록하겠다.</p>
+
+
+<p>이 competition을 시작하게 된 계기는, 내가 조교를 맡고 있던 수업에서 프로젝트로 <a href="https://www.kaggle.com">Kaggle competition</a>의 poker rule induction 문제를 풀기로 했기 때문이었다. (<a href="https://www.kaggle.com/c/poker-rule-induction">competition 링크</a>). 문제 자체가 간단하고, 마음만 먹으면 99% 이상을 찍는 단순한 알고리즘을 만드는 것이 어렵지 않은 문제였기 때문에, 나름의 조건으로 poker rule이 아니라 그 어떤 카드 게임에도 general하게 learning 결과를 적용할 수 있는 framework을 만들자는 것과, 또 하나는 deep learning을 사용하지 않고, 학생들이 이미 알고있는 기초적인 framework에 재미있을 법한 아이디어들을 섞어보기로 하였다. 그렇기 때문에 시작은 가장 간단하고 직관적인 KNN부터 적용해보는 것으로 시작해보았다. training set을 8:2로 나눠서 validation 실험을 진행해본 결과, 그냥 raw data를 사용하고 그냥 KNN을 사용하게 되면, 결과가 50% 정도 밖에 나오지 않았다. 여기에서 내가 해볼 수 있는 가장 간단한 개선은 k의 개수를 조절하는 것과 metric을 바꾸는 것, 그리고 input data를 바꾸는 것이다.</p>
+
+
+<h5>첫 번째 아이디어 KNN</h5>
+
+
+<p>K를 이리저리 조절해보아도 크게 차이가 나지는 않았다. 잘 선택하니 55% 언저리도 나오기는 했지만, K와는 다른 문제가 있어보였다. 그 문제를 해결하기 위해 먼저 input data를 5차원 데이터로 바꿔보았다. 즉, 지금은 5개의 카드 각각에 대해 rank와 suit를 따로 표현하여 10차원 데이터로 표현이 되지만, rank와 suit를 합쳐보는 것이다. 그리고 knn을 해보니 결과는 50% 미만. 왜 이럴까 생각을 해보니 당연히 1~52까지 카드가 배치가 될텐데, 이 숫자는 인덱스를 의미하지 진짜 '거리'를 의미하지 않기 때문에 문제가 발생한다는 것을 알 수 있었다. 따라서 input data는 real number여서는 안되고, 52차원짜리 binary로 개선해야겠다는 생각을 하게 되었다. 즉, 원래 10차원 real value data가 이제 52차원 binary data로 바뀌게 되었다. 같은 카드가 두 번 나오지 않기 때문에 반드시 binary임이 보장된다. 그러나 52차원은 너무 크기 때문에 PCA를 사용하여 차원을 조금 더 낮은 차원으로 보내보기도 하였다. 정리하자면 인풋을 binary로 정의하고, distance는 cosine으로 바꿔보고 PCA에 사용할 low dimension을 잘 선택하고 K를 잘 조절해본 결과 8:2 세팅에서 68.233%까지 성능이 향상되는 것을 볼 수 있었다. 2015년 3월 20일 새벽 2시 반, 리소스 문제로 인해 아직 test data를 서버에 제출하지는 못하였다. 아무래도 코드를 개선해야할 것 같다.</p>
+
+
+<h5>두 번째 아이디어 'rule' learning</h5>
+
+
+<p>그러나 이런 식의 방법을 사용해 KNN의 성능을 개선시킬 수는 있지만, 이는 근본적이 해결책이 되지 못한다. 문제를 해결하기 위해서는 조금 더 문제를 잘 정의하고, 좋은 알고리즘을 찾아야만 한다. 즉, 문제를 어떻게 모델링하느냐에 대한 이슈가 아직 해결되지 않은 것이다. 우리는 무엇을 찾아야하는가? 나는 여기에서 한 가지 생각을 했다. 결국 우리가 찾고 싶은 것은 Poker rule이다. 즉, 만약 우리가 rule에 대한 전체 domain을 정의할 수 있고, 각각의 rule에 대한 performance measure를 정의할 수 있다면, 가장 좋은 rule을 찾는 알고리즘을 디자인 할 수 있지 않을까? 생각이 여기까지 진행되니 바로 자연스럽게 다음 질문이 나오게 되었다. 'rule'은 어떻게 정의해야할까? 처음에는 이렇게 생각했다. 결국 카드게임은 카드들을 비교하여 좋은 '조합'을 가진 사람이 이기는 게임이다. 따라서 나는 5장의 카드들로 이루어진 모든 pair 조합만큼의 dimension을 가지고 (즉, \(5 \choose 2\) = 10개) 두 카드를 비교하는 rule의 개수가 \(n\)개라고 했을 때 각각의 piar들에게 n개 중의 하나에 대응시키게 되면, 우리는 10차원 real value vector로 rule을 표시할 수 있지 않을까? 그런데 문제가 있었다. 앞에서 본 것 처럼, rule의 개수를 \(n\)개 라고 한다고 해서, 1번째 rule과 100번째 rule이 어떤 우열관계가 있는게 아니다. 따라서 결국 binary로 만들어야할 것 같다. 그래서 어떻게 두 카드 사이의 rule을 binary로 만들 수 있을지 가만 생각해보니, 결국 rule이라는 것은 현재 이 카드가 다른 카드 어떤 것과 대응되는지 되지 않는지가 아닌가라는 생각이 들었다. 예를 들어 우리가 52개의 카드를 가지고 있을 때, 같은 숫자를 가진다는 rule은, 총 52 * 52개의 모든 카드 조합 중에서 정확하게 4*13 = 52개의 조합들을 의미하는 것이 아닐까. 다시 말해서, (1, 1), (1, 14), (1, 27), (1,40), (2,2), ... 이런 식으로 정의가 된다고 생각할 수 있는 것이다. 그렇게 생각하게 되면 총 52*52 = 2704개의 rule이 필요하게 되더라.</p>
+
+
+<p>이렇게 문제를 단순화시키고나니 문제의 목적은 'rule'을 찾는 것이며, rule은 다음과 같은 binary operation으로 정의할 수 있었다. 먼저 우리는 임의의 두 개의 카드 pair에 대해 총 52 * 52 = 2704개의 rule을 가진다. 왜냐하면 1부터 52까지 범위를 가지는 숫자 두 개를 연결하는 방법이 52*52개 만큼 있기 때문이다. 그리고 그 중 k개의 rule을 뽑아내고, k-1개의 binary operation을 사용해 각 점수에 대한 rule을 구해낸다. 예를 들어 카드의 값을 1부터 52까지 대응시켰을 때, 1 pair rule을 이 operation으로 나타내보면, (A 카드의 값이 1이고, B 카드의 값이 1인 rule) or (A 카드의 값이 2이고, B 카드의 값이 2인 rule) or .... 이 될 것이다. 이 경우 k는 13이고, k-1개의 operation들은 모두 or이다. 마찬가지로 2에 대해서 rule을 구하고, 계속해서 9까지 rule을 구한다.</p>
+
+
+<p>우리가 모든 card set을 가지고 있다면 위의 문제를 direct하게 풀면 문제를 완벽하게 풀 수 있지만, 그렇지 않기 때문에 overfitting이 일어나게 된다. 따라서 나는 이 문제를 어떻게 더 generalize시킬 수 있느냐를 고민해보았다. 이 문제는 Rule의 총 개수를 2704개 보다 훨씬 더 적은 양으로 mapping할 수 있다면 비교적 쉽게 풀 수 있다. 나머지는 전부 training data에서 optimization으로 해결할 수 있는 문제들이니까.</p>
+
+
+<p>그러나 이윽고 나는 다른 문제에 부딪히게 되었다. Rule이 이것보다 훨씬 많다는 것을 깨달았기 때문이다. Rule은 and operation으로만 이어지는 것이 아니라 or operation으로도 이어질 뿐 아니라 연산 순서 역시 중요했었다. 예를 들어 Rule = (Rule 1 and Rule 2 and Rule 3) or Rule 4 or (Rule 5 and Rule 6) 같은 지저분한 rule도 있을 수 있었기 때문이다. 즉, 내가 문제를 너무 단순하게 봤었다. 이렇게 문제를 생각하게 되면 rule에 대한 강력한 assumption이 없는 이상 더 이상의 generalization은 불가능하고, 직접적으로 rule을 learning하는 것이 어렵다는 결론에 도달하였다.</p>
+
+
+<h5>세 번째 아이디어 grapical probability model</h5>
+
+
+<p>다음으로 내가 생각했던 것은, 확률 모델로 문제를 디자인해보자는 것이었다. 주어진 데이터를 \(X\)라고 한다면 \(p(y|X)\)가 제일 큰 \(y\)를 고르면 되도록 말이다. 여러가지 확률 모델들이 있지만 (예를 들어 naive baysian도 확률모델이다) 내가 생각했던 아이디어는 각각의 \(y\)마다 확률 모델을 만들고, \(X\)가 \(y\)인지 아닌지 binary로 판단하게 하는 방식이었다. 이렇게 생각한 이유는, 실제로 rule이 중복해서 나올 수 있기 때문이다. 예를 들어 Triple은 two pair이기도 하고, four card는 triple이면서 two pair이기도 하다. 이렇게 모델을 정의하고 모든 \(y\)에 대해 지금 \(X\)를 대입한 후, 특정 threshold를 넘는 \(y\) 중에서 가장 큰 숫자를 고르게 하는 것이다.</p>
+
+
+<p>이 아이디어를 실행하기 위해 가장 중요한 것은 어떤 probability model을 선택하느냐는 것이었다. 내가 처음 생각한 아이디어는 RBM이었지만, RBM은 주어진 데이터에 대한 joint probability만 표현할 수 있지, 어떤 데이터가 그것에 속하지 않는지 learning하는 것이 어려웠다. 이 문제가 근본적으로 기존 방법들로 접근하기 어려운 이유는 sample bias가 너무 심하기 때문이다. 즉, 0점 짜리가 거의 대부분에 속하고 그 다음으로 1점, 2점... 순서로 가기 때문에 각 sample들이 uniform하게 분포하지 않고, 그 때문에 일반적인 방법으로 접근하게 되었을 때 과도하게 0에 치중된 모델이 나오게된다는 점이었다. 나는 이 때문에 각각의 점수별로 모델을 따로 가져가고, 대신 binary로 모델을 풀고 bias를 최대한 해결할 수 있는 방법을 생각해보려 했었다.</p>
+
+
+<p>그러나 conditional probabilty를 이런 방식으로 leanring할 수 있는 모델이 (학생들이 알 수 있거나 생각할 수 있을법한) 모델 중에서는 도저히 떠오르지 않아서 이 방법도 선택하지 않게 되었다.</p>
+
+
+<h5>마지막 아이디어 결국 다시 KNN</h5>
+
+
+<p>그래서 결국 다시 KNN으로 돌아가게 되었다. 학생 중 하나가 나에게 sorting을 하는 방법에 대해서 물어봤었고, suit를 차라리 없애는 것이 훨씬 결과가 잘 나온다는 얘기를 들었기에 그렇게 한 번 진행해보았다. 그런데 결과가 너무 잘 나오는게 아닌가 (0.96908) 심지어 1-NN을 선택했고, 내가 한 것이라고는 suit를 무시하고 rank만 5개 고르고 5개를 sorting한 것을 넣은 것에 불과했는데. 도저히 이해가 안되서 하루쯤 생각해보니 이게 왜 잘 동작하는지 알 수 있었다. KNN 세팅에서 binary로 바꾸고 하는 과정을 거치지 않았을 때 50%의 성공을 거뒀던 것에 비해 너무 말도 안되는 성능 향상이었기 때문이다. 게다가 1-NN이 아니라 2-NN이나 3-NN의 퍼포먼스가 형편없다는 것도 이해할 수 없었다.</p>
+
+
+<p>실제 poker rule에서 suit와 카드 순서에 영향을 받는 룰은 Flush 와 straight, 그리고 Royal flush 뿐이지만, 이 녀석들은 거의 나타나지 않는 녀석들이었다. 이렇게 input 데이터를 sorting하게 되면 전체 경우수는 오직 ( 13 choose 5 - 13 ) = 1274 개 뿐이다. 13을 뺸 이유는 같은 rank가 같은 경우는 오직 4개 뿐이기 때문이다. 그런데 training 데이터의 개수는 25,000개 넘기 때문에 엄청 높은 확률로 rank만 고려했을 때 training 데이터와 정확하게 같은 training 데이터가 존재하게 되는 것이다. 이 말은 다시 말하면 왜 K=1 일때만 제대로 동작하는지를 증명하는 말이기도 하다. 즉, 아주 높은 확률로 항상 '정확하게 같은' 데이터 셋을 training데이터에서 고를 수 있으니 당연히 K=1을 선택해야만 제대로 결과가 동작하게 되는 것이다.</p>
+
+
+<p>나는 여기까지만 시도하고 그만두었다. 이때부터 엄청 바빠지기도 했고, 내가 처음 걸었던 조건처럼 poker에 대한 가정을 최소화한 상태로 학생들도 알 수 있는 간단한 아이디어로 이 문제를 해결하는 것이 어렵다고 느꼈었기 때문이다. 그래도 최종 결과를 96% 정도 달성하였으니 이 정도면 나름 나쁘지 않은 결과가 아닐까 생각한다.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[블룸버그 폰 인터뷰 후기]]></title>
@@ -283,42 +344,6 @@ iface p2p1 inet static
 
 
 <p>운영체제는 당연히 Ubuntu Server. 예전에는 정말 아무것도 몰라서 Ubuntu Desktop을 깔고 왜 자꾸 에러가 나고 리소스가 부족한지 한숨짓고는 했는데, 이제는 그런 실수는 안하겠지 하하. 13은 너무 버그가 많기도 하고 LTS가 아직 안나온 것 같아서 그냥 12.04LTS로 결정. 이제 서버만 도착하면 될 것 같은데 ㅎㅎ</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[블로그에서 Latex 수식 사용하기(MathJax)]]></title>
-    <link href="http://SanghyukChun.github.io/25/"/>
-    <updated>2013-11-05T19:26:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/25</id>
-    <content type="html"><![CDATA[<p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
-
-
-<p>방법은 매우 간단하다. 아래와 같은 코드를 head에 넣으면 끝. </p>
-
-
-<p>```</p>
-
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-<p>```</p>
-
-<p>이제 준비는 끝났다. 이제 수식을 넣어보자.</p>
-
-
-<p>사용법은 어렵지 않다. 만약 \( E=mc^2 \)를 쓰고 싶으면 </p>
-
-
-<p><code>
-\( E=mc^2 \)
-</code></p>
-
-<p>라고 적으면 된다. 위에 E=mc^2를 적은 곳에 다른 Latex 문법을 넣으면 다른 수식을 표현할 수 있다.</p>
-
-
-<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292">블로그에서 수식 표현하기</a></p>
 
 ]]></content>
   </entry>
