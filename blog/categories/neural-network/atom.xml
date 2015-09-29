@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neural-Network | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/neural-network/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-26T15:09:05+09:00</updated>
+  <updated>2015-09-29T17:43:46+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,220 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The Basic Principles in Deep Neural Networks]]></title>
+    <link href="http://SanghyukChun.github.io/54/"/>
+    <updated>2015-09-29T19:23:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/54</id>
+    <content type="html"><![CDATA[<h5>들어가기 전에</h5>
+
+
+<p>이 포스트는 2014년 6월 16일 카이스트에서 당시 Yoshua Bengio 교수님 연구실에서 포닥 과정을 밟고 계신 장민석 박사님의 The Basic Principles in Deep Neural Networks 라는 이름의 세미나를 요약한 내용이다. 내용은 주로 Deep learnining을 supervised learning, unsupervised learning의 관점에서 각각 바라보면서 어떤 컨셉들이고, 어떤 연구들이 진행이 되어있는지 훑어보는 정도의 간단한 내용이었다.</p>
+
+
+<p>어쩌다보니 1년 넘게 포스팅을 못하다가 이제와서 포스트를 등록하게 되었는데, 이 글을 제대로 정리할 정도로 여유가 없기도 했고, 내가 이 내용을 이해할 수 있을 정도의 내공이 없기 때문이기도 했다. 지금은 어느 정도 여유가 생기기도 했고, 내가 내용을 대략이나마 이해하고 있기 때문에 일 년 전 내용이기는 하지만, 다시 한 번 내용을 정리해서 올려본다.</p>
+
+
+<p>이 세미나는 크게 네 가지 파트로 나뉘어진다. 먼저 Deep learning이 무엇인지 간단한 introduction part, supervised deep learning, unsupervised deep learning, 마지막으로 아직 연구가 진행 중인 advanced topic이다. 이 글에서는 introduction과 supervised learning part에 대해서 주로 다루고, 나머지 부분에 대해서는 간단하게 훑고 지나가기만 하도록 하겠다.</p>
+
+
+
+
+<h5>Part 1 - Introduction</h5>
+
+
+<p>Deep Learning이 무엇인지 알기 전에 먼저 Machine Learning이 무엇인지 알 필요가 있다. Machine Learning에 대해 보다 깊게 알고 싶다면 내가 아직 계속 작성 중인 <a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning Study</a> 글들을 읽어보아도 좋고, 다른 좋은 글들을 참고해도 좋을 것 같다. 이 세미나에서는 Machine Learning이 주 주제가 아니기 때문에, 머신러닝이라는 것을 '데이터를 통해 모델을 learning하고 learning한 모델을 사용해 주어진 query에 대답하는 것'이라고 정의하였다. 결국 내가 <a href="http://SanghyukChun.github.io/57">예전 글</a>에서 아래 그림에서 정의했던 것과 크게 차이는 없다.</p>
+
+
+<p><img class="center" src="/images/post/57-2.png" width="500"></p>
+
+<p>Deep Learning에 대해 설명하기 전에 먼저 perception이라는 문제에 대해 살펴보자. Perception이란 우리말로 하면 '인지' 정도로 해석할 수 있다. 이 문제는 주어진 정보에 대해 내가 필요한 어떤 특정 정보를 inference 하는 것이다. 예를 들어서 이 포스트의 글자가 무엇인지 읽어들이는 문제는 간단한 문제이지만, 이 문장들을 바탕으로 어떤 의미를 가지고 있는지 inference하는 것은 어려운 문제이다. 또 다른 예로는 vision 데이터를 하나 주고 주어진 vision data가 어떤 object인지 classification하는 문제도 perceptron이다. 이 문제는 사람에게는 아주 간단한 문제이지만 컴퓨터에게는 엄청나게 어려운 문제이다. Deep learning은 사람이 perception하는 방식을 모방하여, 사람만큼 perception을 해보자는 취지로 만들어진 model이라고 생각할 수 있다. 사람은 뇌의 neuron과 synapse 등으로 대표되는 일어나는 일렬의 화학적, 전기적 신호 전달 과정을 통해 perception을 하게 된다. 이것을 수학적 모델로 표현하고, 그것을 조금 deep하게 만든 것이 deep learning이다. (Neural Network와 이에 대한 intuition을 조금 더 자세히 알고 싶다면 내가 쓴 <a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a>과, <a href="http://SanghyukChun.github.io/75">Deep Learning 1</a>을 읽어보기를 권한다.)</p>
+
+
+<p>Deep Learning이라는 분야는 최근 10년 동안 엄청나게 hot해진 분야이다. 그런데 사실 deep learning이라는 분야, 혹은 neural network는 사실 4-50년도 넘은 엄청 오래된 분야이다.</p>
+
+
+<ul>
+<li>1958 Rosenblatt proposed perceptrons</li>
+<li>1980 Neocognitron (Fukushima, 1980)</li>
+<li>1982 Hopfield network, SOM (Kohonen, 1982), Neural PCA (Oja, 1982)</li>
+<li>1985 Boltzmann machines (Ackley et al., 1985)</li>
+<li>1986 Multilayer perceptrons and backpropagation (Rumelhart et al., 1986) 1988 RBF networks (Broomhead&amp;Lowe, 1988)</li>
+<li>1989 Autoencoders (Baldi&amp;Hornik, 1989), Convolutional network (LeCun, 1989) 1992 Sigmoid belief network (Neal, 1992)</li>
+<li>1993 Sparse coding (Field, 1993)</li>
+</ul>
+
+
+<p>즉 우리가 지금 쓰고 있는 Neural network의 기본적인 연구는 이미 90년대 이전에 다 끝나있었다. (심지어 1995년에 Machine Learning에 어마어마한 연구 결과를 남긴 Vapnik과 Jackel이 10년 뒤인 2005년에 아무도 Neural net을 쓰고 있지 않을 것이라고 내기를 했을 정도라고 한다) 근데 갑자기 Deep learning이 왜 이렇게 hot해졌을까? 이는 내가 <a href="http://SanghyukChun.github.io/75">Machine Learning 스터디 (19) Deep Learning - RBM, DBN, CNN</a> 글에서 자세히 다뤘으므로 이 글에서는 간단하게 결론만 말하도록 하겠다. 그 이유는 Deep Learning이 ImageNet에서 기존 결과를 거의 박살을 냈기 때문이다. Deep Learning이 나오기 전에는 error가 0.27 ~ 0.30정도, 그러니까 27%에서 30% 정도였다고 한다. 기존 computer vision 연구자들은 이 정도 결과가 거의 한계치라고 여겨지고 있었는데 갑자기 2012년에 Deep convolutional neural network를 하는 팀이 0.153으로 거의 2배 가까운 성능 향상을 보여주었다고 한다. 그리고 그 다음 해에는 상위 20개 팀에서 2개 팀 빼고 전부 Deep learning을 써서 Classification을 했는데, 최고 성능은 또 0.117로 개선되었다고 한다. 그 결과 computer vision을 비롯한 기존 학계에서 엄청나게 주목을 받게 되었다고 한다.</p>
+
+
+<p>Deep learning에 주목하는 것은 학계만이 아니다. Deep learning을 기본 기술로 사용하는 스타트업도 엄청나게 늘어나고 있고, (<a href="http://techcrunch.com/2014/01/26/google-deepmind/">Deep learning 기술 회사인 Deep mind M 이상에 인수</a>, <a href="http://techneedle.com/archives/15662">Captcha 퍼즐 암호 99.8% 성공률로 해석</a>, <a href="http://www.technologyreview.com/news/525586/facebook-creates-software-that-matches-faces-almost-as-well-as-you-do/">사람의 얼굴 인식 능력을 상회하는 소프트웨어 개발</a>) 심지어 현재 구글이나 애플 등에서 음성 인식에 쓰는 알고리듬도 deep learning이다. 이렇듯 deep learning은 학계에서만 관심을 가지는 분야가 아니라 실제 산업에서도 아주 빠르게 적용되고 사용되고 있는 분야이기 때문에 더더욱 주목할만하다. 보통 학계에서 연구한 결과가 실제 산업에서 적용되기까지의 시간이 분야마다 조금씩 다른데, deep learning은 오히려 산업에서 먼저 개발하고 학계에 발표할 정도로 학계와 산업이 함께 집중하고 있는 분야이다.</p>
+
+
+<h5>What is 'Deep' Learning?</h5>
+
+
+<p>기존 machine learning 문제를 푸는 방법은 크게 3단계로 구분 할 수 있다.</p>
+
+
+<ol>
+<li>Feature Engineering: 주어진 데이터를 사용해 machine learning tool에서 사용할 수 있는 feature를 뽑아내는 과정. 이 과정은 machine learning이 아니며, domain knowledge와 engineer의 knowhow가 강하게 drive하는 과정</li>
+<li>Learning: 1에서 주어진 feature 데이터를 사용해 machine learning model을 train하는 과정</li>
+<li>Inference: 2에서 학습한 model을 사용해 새로운 데이터를 inference하는 과정</li>
+</ol>
+
+
+<p>첫 번째 단계는 machine learning은 아니지만, 실제 최종 performance에 큰 영향을 미치는 과정이다. 예를 들어 우리가 SVM을 사용해 image를 학습한다고 가정해보자. 100만 화소짜리 이미지를 사용해 learning을 해야하는 경우, 1번 과정이 없으면 우리는 엄청나게 high dimensional data를 사용해 SVM을 풀어야하지만, 이렇게 높은 dimension의 데이터를 사용하게 되면 <a href="http://SanghyukChun.github.io/59#59-4-cd">curse of dimensionality</a> 등의 문제로 인해 나쁜 performance를 얻게 될 확률이 크다. 그 밖에도 특정 pattern의 noise가 계속 등장하고 그 noise로 인해 outlier가 많이 생기는 등의 상황도 생길 수 있다. 특히 여러 multi media 데이터를 처리하기 위해서는 이 feature engineering이 중요한 문제이며, 단순히 feature를 잘 고르는 것 만으로도 어려운 모델을 사용하지 않고 가장 간단한 linear 모델만으로도 문제가 해결되는 경우도 많이 있다 (예: 지문 인식). 때문에 이 과정은 절대 무시할 수 없는 과정이지만 domain knowledge에 너무 크게 dependency가 있고, general purpose machine learning과 분리가 된다는 문제가 존재한다. 그러나 여기에서 중요한 점은, domain knowledge를 반영하는 것이 그렇지 않은 것에 비해 훨씬 더 우수한 결과를 낸다는 점이다.</p>
+
+
+<p>그렇기 때문에 우리는 feature 역시 machine learning technique를 사용해 learning해보자는 idea를 제안할 수 있다. 예를 들어 앞에서 제안한 image같은 경우, PCA 등의 dimensionality reduction technique들을 사용한다면 더 낮은 차원의 데이터로 문제를 해결할 수 있다.</p>
+
+
+<p>1-a. Feature Engineering: domain knowledge를 반영하여 representation learning의 input으로 사용할 feature를 생성하는 과정
+1-b. Feature/Representation Learning: 1-a의 결과를 사용해 PCA 등의 unsupervised feature learning을 뽑아내는 과정
+2. Learning: 생략
+3. Inference: 생략</p>
+
+<p>이 경우 feature extraction에서도 general machine learning 방법론을 적용할 수 있다는 장점이 존재하지만, 여전히 representation learning은 domain knowledge를 반영하지 못하기 때문에 domain knowledge와 general machine learning 간의 간극이 발생한다. 다시 말해서, PCA는 Image data의 특성을 살릴 수 없는 learning 모델이기 때문에, 결국 domain knowledge를 반영하기 위한 새로운 feature engineering 과정이 필요하다는 의미이다.</p>
+
+
+<p>Deep learning은 이런 문제를 해결하기 위하여 아래와 같은 모델을 제안한다.</p>
+
+
+<ol>
+<li>Jointly learning everything: 한 번에 모델 하나로 feature engineering, representation learning, model learning까지 끝내는 과정</li>
+<li>Inference</li>
+</ol>
+
+
+<p>우리가 domain knowledge를 반영하여 모델을 하나 설계한 다음, 나머지 feature engineering이나 representation learning 등의 과정을 한 번에 짬뽕해서 해결하자는 것이다. 이것이 가능한 이유는 deep learning 모델의 특성 때문이라고 할 수 있다. Neural network 모델은 아래 그림처럼 layer가 쌓여있는 형태로 구성이 되어있는데, 마치 각각의 layer를 feature extraction 과정으로 바꿔서 생각할 수 있다. 위로 올라갈수록 점점 우수한 feature를 뽑아내게 되고, 맨 마지막 layer에서 linear classifier를 learning하는 과정처럼 생각할 수 있는 것이다.</p>
+
+
+<p><img src="/images/post/74-3.png" width="600"></p>
+
+<p>또한 중요한 것은, PCA 등의 unsupervised feature extraction을 결합한 경우에는 feature extraction이 unsupervised learning이기 때문에 데이터나 최종 output loss function에 영향을 받지 못하는데 반해서, deep learning model은 모든 것들을 하나의 loss function으로 한 번에 handle하기 때문에 모든 것들을 jointly learning한다고 표현할 수 있는 것이다. 이를 가장 잘 표현하는 말이 Yoshua Bengio 교수의 "Let the data decides"라고 할 수 있다. 어떤 모델을 써야 좋은 feature를 뽑을 수 있을까에 신경쓰지말고, 처음부터 deep learning 모델처럼 좋은 모델을 사용해 데이터에서부터 좋은 결과를 낼 수 있도록 데이터가 알아서 하도록 하라는 취지의 말인데, 개인적으로 이 얘기는 특히 CNN 모델에 잘 맞는 얘기라고 생각한다. <a href="http://SanghyukChun.github.io/75#75-cnn">예전 글</a>에서도 다뤘듯이 CNN은 모델은 vision 데이터의 특성을 최대한 활용하여 feature map을 만들어내는 것이 목적이다보니, convolution과 polling layer는 최대한 feature를 만들어 내는 과정으로 쓰이고, fully connected layer에서 해당 feature를 사용하여 classification을 하는 형태가 된다. 그렇기 때문에 한 번에 preprocessing 혹은 feature engineering part와 learning하는 part가 합쳐진 형태가 되는 것이 아닐까 추측해본다.</p>
+
+
+<p>그러나 단순히 deep learning을 사용하면 feature extraction과 결합된 형태로 모델을 learning할 수 있다는 이유로 아무도 쓰지 않던 deep learning을 많이 쓰기 시작한 것은 아니다. Deep learning을 많이 연구하게 된 원인으로 박사님은 두 가지 이유를 꼽았는데, 하나는 서로 다른 분야라고 생각하면서 연구되었던 PCA, Neural PCA, Probabilistic PCA, Autoencoder, Belief Network, Restricted Boltzmann Machine 등의 분야가 사실은 서로 각자의 특수한 케이스이거나 혹은 다른 표현형이라는 것이 알려지면서 결국 한 분야로 수렴하였다는 것과, 또 하나는 예전에는 알려지지 않았던 것들이 이제는 많이 알려져서 예전에는 어렵게 접근했던 것들을 이제는 쉽게 learning할 수 있다고 한다. 그 중에서 특히 non-convex optimization에 대해 많은 기술들이 연구되어서 non convex optimization이기 때문에 optimization이 불가능하다고 두려워 할 필요가 없다는 것이 가장 큰 이유라고 한다. 또한 inference와 training사이의 interaction에 대해서도 더 많이 이해하고 있다는 점도 꼽을 수 있으며, GPU 등의 하드웨어 발전으로 인해 예전보다 computation power가 exponential하게 증가한 것도 그 중의 한 원인이라고 한다.</p>
+
+
+<p><img src="/images/post/54-4.png" width="600"></p>
+
+<p>위의 그림은 각 종과 현재 개발된 NN들의 뉴런 개수를 비교한 것이다 (y 축 뉴런 개수의 스케일은 log scale이다). 맨 처음 DBN이 나올 때만 해도 편충보다 뉴런이 조금 많고 거머리보다 10배 적었다. 2012년 ImageNet에서 우수한 성과를 거둔 AlexNet의 neuron 개수는 개미보다 조금 많고 벌에 비해서 한참 적다. 그리고 2014년 기준으로 가장 큰 AdamNet의 뉴런 개수는 아직도 개구리의 뉴런 개수보다 적다. 그렇기 때문에 앞으로 사람이 가지고 있는 뉴런의 개수만큼 뉴런을 가지는 NN 모델이 개발되려면 많은 시간이 남았다고 전망하고 있다. 뉴런의 개수가 많을수록 좋은 모델이 된다는 것은 이미 알고 있지만 뉴런의 개수를 단순하게 많이 늘릴 수 없는 이유는 learning time이 엄청나게 오래걸리기 때문이다. 개인적으로는 이 부분이 아직까지도 deep learning이 발전할 여지가 많이 있다는 것을 의미한다고 생각한다. 왜냐하면 뉴런의 개수를 늘리는 일은 computation cost가 엄청나게 많이 드는 일이고, parameter 역시 exponential하게 증가하기 때문에 overfitting issue를 handle하는 것이 점점 더 중요해지기 때문이다. 더 이상의 regularization은 없다고 생각할 수도 있지만, 최근에 나온 <a href="http://SanghyukChun.github.io/88">Batch Normalization</a> work이 dropout 등의 기존 성과를 뛰어넘는 좋은 performance를 내고 있는 것을 보면, 충분히 더 좋은 접근 방법이 나올 수 있을 것이라고 믿는다.</p>
+
+
+
+
+<h5>Part 2 - Supervised Neural Network</h5>
+
+
+<p>Deep learning도 machine learning의 일종이기 때문에 supervised/unsupervised/reinforcement learning의 세 가지 접근 방법으로 바라보는 것이 가능하다. 이 part에서는 neural network로 supervised learning, 특히 classification을 어떻게 푸는지에 대해서 주로 다뤘었다. 세미나에서는 multilayer perceptron과 그것의 learning, regularization, 그리고 기타 등등에 대해 다뤘었지만, 이 글에서는 learning algorithm인 back-propagation에 대한 설명은 <a href="http://SanghyukChun.github.io/74#backprop">예전에 쓴 글의 링크</a>로 대체하고, 주로 어떻게 MLP를 regularization할 수 있는지 등에 대해서 다룰 것이다.</p>
+
+
+<p>예전에도 설명했듯 neural network는 back-propagation이라는 알고리즘을 사용해 model parameter를 찾는다. 이 알고리즘은 any cost function이 주어졌을 때, 그 문제를 풀기 위한 gradient descent method를 chain rule을 사용해 간단하게 바꾼 알고리즘이라고 할 수 있다. 이 알고리즘을 사용하게 되면 모든 노드의 derivative를 전부 계산할 필요가 없고, 대신 매우 적은 양의 계산으로 마치 전체의 gradient를 계산한 것과 같은 효과를 얻을 수 있기 때문에 NN update는 거의 이 방법을 사용한다. 또한 모든 data에 대한 gradient를 계산하여 완벽한 gradient를 찾는 대신, batch라는 개념을 도입해 stochastic gradient descent method를 사용해 문제를 해결한다. 원래 문제가 Convex가 아니기 때문에 제대로 된 gradient descent와 SGD가 서로 다른 곳으로 수렴하기는 하지만, 이 점은 크게 중요한 이슈는 아니라고 한다.</p>
+
+
+<p>여기에서 질문이 하나 나왔었다. 이렇게 할 수 있는 이유는 neural network에서 chain rule을 적용할 수 있기 때문인데 혹시 그렇다뎐 Hessian을 계산할 수는 없을까라는 질문이 나왔다. 왜냐하면 second derivative method가 gradient method보다 훨씬 좋다는 것은 이미 잘 알려진 사실이기에, 만약 Hessian을 efficient하게 계산할 수 있다면 learning 속도를 크게 향상시킬 수 있을 것으로 기대할 수 있기 때문이다. 그러나 아직까지는 실제 NN에서 Hessian 등의 2nd derivative를 계산하는 것은 Hessian Matrix를 계산해야할 뿐 아니라, 그것의 inverse까지 계산해야하므로 매우 expensive하다고 하고, 구현도 복잡하다고 한다. 그렇기 때문에 대신 Hessian matrix를 직접 구하지 않고 그것의 inverse를 estimate하는 방법들이 있지만, 그러나 여전히 큰 NN에는 부적합하기 때문에 보통 Gradient를 사용한다고 한다 (여기에서 언급된 Hessian matrix의 inverse를 estimate하는 방법을 Hessian-Free optimization이라고 부른다).</p>
+
+
+
+
+<h5>Regularization</h5>
+
+
+<p>Regularization을 Bayesian 관점에서 바라본다면 좋은 prior를 제안하는 것과 같다. 예를 들어 '모델이 이렇게 복잡할리 없으니 모델의 complexity를 penalty term으로 추가해야겠다' 라는 regularization method도 model complexity에 대한 prior를 반영한 것이라 할 수 있다. Neural Network에서도 마찬가지로 여러 prior를 바탕으로 다양한 regularization 방법들이 존재한다.</p>
+
+
+<h6>Weight Decay</h6>
+
+
+<ul>
+    <li>Prior: Weight의 값이 너무 크지 않을 것이다 (이를 model이 sharp하지 않고 smooth하다 라고 표현한다).</li>
+    <li>Approach: 다음과 같은 형태로 optimization objective를 바꾼다.</li>
+    <p>\[\min_w E(w) + \lambda w^\top w.\]</p>
+    <li>Gradient update rule은 다음과 같이 바뀐다</li>
+    <p>\[w(t+1) = w(t) (1 - 2 \eta \lambda) - \eta \nabla E (w(t)). \]</p>
+</ul>
+
+
+
+
+<h6>Smoothness and Noise Injection</h6>
+
+
+<ul>
+    <li><p>Prior: Smoothness, \(f(x)\)와 \(f(x+\varepsilon)\)은 거의 비슷할 것이다.</p></li>
+    <li><p>Approach: noise에 대한 change를 줄이는 것은 곧, \(\min \sum_i | \frac{\partial f(x_i)}{\partial x} |^2\) 과 같다.</p></li>
+    <li>따라서 위 식을 optimization function에 추가하여 문제를 풀게 되는데, Bishop 책에 따르면, 이 regularization term을 넣고 optimization하는 것은, random Gaussian noise를 input에 추가하여 learning하는 것과 equivalent하다는 것이 알려져 있으므로, input data에 random Gaussian noise를 섞는 것으로 대체할 수 있다.</li>
+</ul>
+
+
+
+
+<h6>Dropout (Hinton 2012)</h6>
+
+
+<ul>
+    <li>Prior: 하나의 classifier를 learning하는 것 보다, 여러 개의 classifier를 learning하고 이를 ensemble하여 classification하는 것이 더 좋다.</li>
+    <li>Approach: 하나의 neural network 모델에서 여러 개의 모델을 learning할 수 있도록, NN의 node를 random하게 지운다. 이 경우 lower bound optimization과 같은 효과를 내기 때문에 조금 더 general한 model을 학습하는 것이 가능하며, dropout을 선택하는 것과 그렇지 않은 것은 약 10~20%의 성능 차이를 보인다. Drop하는 node는 보통 50%를 선택한다 (이 값도 제일 좋은 값을 learning해보려고 시도해봤는데 모두 0.5로 converge하였다고 한다).</li>
+</ul>
+
+
+
+
+<h5 id="54-common-recipe">Common Recipe for DNN.</h5>
+
+
+<p>세미나에서 박사님은 앞에서 살펴본 regularization과 optimization method들을 바탕으로 아래와 같은 common recipe를 제안하였다.</p>
+
+
+<ol>
+<li>Rectifier나 Maxout을 사용해라 (이 방법은 dropout처럼 값이 음수인 뉴런은 drop하고, 양수인 뉴런만 존재한다고 생각하면 계속 다른 NN을 사용하는 것처럼 생각할 수 있다. 이런 접근 방식을 사용하게 되면 differentiable하지는 않지만 sub-gradient를 사용하여 문제를 풀 수 있다고 한다).</li>
+<li>Preprocess data and choose features carefully (각 데이터 domain에 맞는 preprocessing을 취하자)
+
+<ul>
+<li>Image: Whitening, Raw, SIFT, HoG?</li>
+<li>Speech: Raw? Spectrum?</li>
+<li>Text: Characters? words? tree?
+*General: z-Normalization?</li>
+</ul>
+</li>
+<li>Dropout이나 다른 regularization method들을 사용하자.</li>
+<li>데이터가 적은 경우라면 Unsuperviesd Pretraining (Hinton et al 2006) 을 사용해보자. 그러나 데이터가 많으면 오히려 나쁜 결과를 내게 되므로 쓰지 말자.</li>
+<li>Carefully search for hyperparameters (Random search, Bayesian optimization + Greedy search는 hyperparameter가 exponential하게 많으므로 불가능하다.)</li>
+<li>Often, deeper the better (이미지 &ndash; 레이어 7개 이상, 스피치 &ndash; 12개, 14개,&hellip;, 그 이외에는 hyper parameter라고 한다. 박사님은 2개부터 시작한다고 한다. + 참고로 지금 이미지에서는 VGG등의 최신 논문들은 19개까지 쌓기도 하고, Google의 Inception의 경우 어마어마하게 깊다.)</li>
+<li>Build an ensemble of neural networks</li>
+<li>Use GPU. (좋은 파워와 메인보드가 필요하고, 쿨링과 전기세를 조심하라고 조언해주셨다)</li>
+</ol>
+
+
+<p>그러나 중요한 점은, 아무도 vanilla MLP (모든 layer가 fully connected layer인 NN)는 사용하지 않는다는 사실이다. 그 대신 domain knowledge가 많이 반영된 CNN이나 RNN등의 모델을 선택하여 사용한다. 최근 work들을 보면 Image등의 static한 데이터는 보통 CNN을 사용하고, sequencial data는 거의 RNN을 사용한다. CNN과 RNN에 대한 설명은 생략하도록 하겠다.</p>
+
+
+<p>박사님은 deep learning의 좋은 점으로, 모델을 만들 때 부터 domain knowledge를 적용해서 CNN이나 RNN 등의 새로운 모델을 만들 수 있다는 점을 꼽았다. 만약 SVM 등의 기존 방법들을 사용한다면 모델 자체에서 그런 아이디어를 적용하지 어렵지만, deep learning은 그러기에 용이하다는 것이다. 예를 들어 Convolutional Neural Network의 Translation, Rotation, Temporal, Frequency invariance 등을 꼽을 수 있을 것이다. 이렇게 만든 CNN은, convolution layer와 pooling layer를 엄청나게 deep하게 쌓아 좋은 feature를 뽑아내고 마지막에 그것에 fully connected layer를 붙여서 linear classifier를 learning하는 방식으로 'deep' CNN을 구성할 수 있다. 반면 RNN은 time을 길게 가져가는 방식으로 'deep' RNN을 구성할 수 있는데, 이렇듯 'deep'하게 만드는 방식도 모델 특성을 따라가기 때문에 domain knowledge가 잘 반영된 모델이 deep해졌을 때도 잘 동작할 수 있는 것 같다고 생각한다.</p>
+
+
+
+
+<h5>나머지 part들</h5>
+
+
+<p>Unsupervised Learning 파트는 RBM, DNN 그리고 NADE에 대해 설명하고 마지막에 manifold leraning과 denoising autoencoder를 다루는 것으로 끝났다.</p>
+
+
+<p>Advanced Topics 파트는 Deep Reinforcement Learning에 대해 다루고 (<a href="http://SanghyukChun.github.io/90">Atari 논문</a>을 다뤘다), 당시에 막 연구가 되고 있던 NLP 연구에 대해 잠시 언급했다 (1년이 지난 지금은 NLP 쪽으로 많은 연구가 진행되었다). 그 밖에 optimization 관점에서, local minima라고 여겼던 부분이 사실 local minima가 아니라 flat한 부분이었다는 관측결과가 많이 나오고 있다는 말과, 적당하게 2nd order method를 섞으면 성능이 크게 향상된다는 말까지 언급하였다 (그러나 아직까지 2nd order optimization을 많이 사용하는 것 같지는 않다). 마지막으로 deep learning의 최대 약점으로 꼽히던 이론적인 분석 결과에 대해 많은 연구가 진행되고 있다는 얘기까지 잠깐 언급하고 세미나가 마무리 되었다.</p>
+
+
+
+
+<h5>정리</h5>
+
+
+<p>이 글은 내가 거의 1년 3개월 전에 들었던 세미나를 바탕으로 쓰여진 글이다. 박사님이 해주신 얘기도 많이 섞여있고 내 개인적인 의견도 많이 섞여있지만, 맨 처음 deep learning을 접할 때 큰 도움이 되었던 세미나인 만큼, 공유할 수 있으면 좋을 것 같아 정리해서 올려본다.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine learning 스터디 (19) Deep Learning - RBM, DBN, CNN]]></title>
@@ -413,7 +627,7 @@
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
 <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
 </ul>
 
@@ -873,330 +1087,6 @@
 <ul>
 <li><a href="http://arxiv.org/abs/1409.2329">Zaremba, Wojciech, Ilya Sutskever, and Oriol Vinyals. &ldquo;Recurrent neural network regularization.&rdquo; arXiv preprint arXiv:1409.2329 (2014).</a></li>
 <li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (18) Neural Network Introduction]]></title>
-    <link href="http://SanghyukChun.github.io/74/"/>
-    <updated>2015-09-13T23:13:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/74</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
-<p>최근 Machine Learning 분야에서 가장 뜨거운 분야는 누가 뭐래도 Deep Learning이다. 엄청나게 많은 사람들이 관심을 가지고 있고, 공부하고 응용하고 있지만, 체계적으로 공부할 수 있는 자료가 많이 없다는 것이 개인적으로 조금 안타깝다. 이제 막 각광받기 시작한지 10년 정도 지났고, 매년 새로운 자료들이 쏟아져나오기 때문에 책이나 정리된 글을 찾기가 쉽지가 않다. 그러나 Deep Learning은 결국 artificial neural network를 조금 더 복잡하게 만들어놓은 모델이고, 기본적인 neural network에 대한 이해만 뒷받침된다면 자세한 내용들은 천천히 탑을 쌓는 것이 가능하다고 생각한다. 이 글에서는 neural network의 가장 기본적인 model에 대해 다루고, model paramter를 update하는 algorithm인 backpropagation에 대해서 다룰 것이다. 조금 더 advanced한 topic들은 이 다음 글에서 다룰 예정이다. 이 글의 일부 문단은 <a href="http://SanghyukChun.github.io/blog/categories/neural-network/">이전 글들</a>을 참고하였다.</p>
-
-
-<h5>Motivation of Neural Network</h5>
-
-
-<p>이름에서부터 알 수 있듯 neural network는 사람의 뇌를 본 따서 만든 머신러닝 모델이다 (참고: 원래 neural network의 full name은 artificial neural network이지만, 일반적으로 neural network라고 줄여서 부른다). 본격적으로 neural network에 대해 설명을 시작하기 전에 먼저 인간보다 컴퓨터가 훨씬 잘 할 수 있는 일들이 무엇이 있을지 생각해보자.</p>
-
-
-<ul>
-<li>1부터 10000000까지 숫자 더하기</li>
-<li>19312812931이 소수인지 아닌지 판별하기</li>
-<li>주어진 10000 by 10000 matrix 의 determinant값 계산하기</li>
-<li>800 페이지 짜리 책에서 &lsquo;컴퓨터&rsquo; 라는 단어가 몇 번 나오는지 세기</li>
-</ul>
-
-
-<p>반면 인간이 컴퓨터보다 훨씬 잘 할 수 있는 일들에 대해 생각해보자</p>
-
-
-<ul>
-<li>다른 사람과 상대방이 말하고자하는 바를 완벽하게 이해하면서 내가 하고 싶은 말을 상대도 이해할 수 있도록 전달하기</li>
-<li>주어진 사진이 고양이 사진인지 강아지 사진인지 판별하기</li>
-<li>사진으로 찍어보낸 문서 읽고 이해하기</li>
-<li>주어진 사진에서 얼마나 많은 물체가 있는지 세고, 사진에 직접 표시하기</li>
-</ul>
-
-
-<p>컴퓨터가 잘 할 수 있는 0과 1로 이루어진 사칙연산이다. 기술의 발달로 인해 지금은 컴퓨터가 예전보다도 더 빠른 시간에, 그리고 더 적은 전력으로 훨씬 더 많은 사칙연산을 처리할 수 있다. 반면 사람은 사칙연산을 컴퓨터만큼 빠르게 할 수 없다. 인간의 뇌는 오직 빠른 사칙연산만을 처리하기 위해 만들어진 것이 아니기 때문이다. 그러나 인지, 자연어처리 등의 그 이상의 무언가를 처리하기 위해서는 사칙연산 그 너머의 것들을 할 수 있어야하지만 현재 컴퓨터로는 인간의 뇌가 할 수 있는 수준으로 그런 것들을 처리할 수 없다.</p>
-
-
-<p>예를 들어 아래와 같이 주어진 사진에서 각각의 물체를 찾아내는 문제를 생각해보자 (출처: <a href="http://www.engadget.com/2014/09/08/google-details-object-recognition-tech/">링크</a>). 사람에게는 너무나 간단한 일이지만, 컴퓨터가 처리하기에는 너무나 어려운 일이다. 어떻게 어디부터 어디까지가 'tv or monitor'라고 판단할 수 있을까? 컴퓨터에게 사진은 단순한 0과 1로 이루어진 픽셀 데이터에 지나지 않기 때문에 이는 아주 어려운 일이다.</p>
-
-
-<p><img class="center" src="/images/post/74-2.jpg" width="400"></p>
-
-<p>그렇기 때문에 자연언어처리, 컴퓨터 비전 등의 영역에서는 인간과 비슷한 성능을 내는 시스템을 만들 수만 있다면 엄청난 기술적 진보가 일어날 수 있을 것이다. 그렇기 때문에 인간의 능력을 쫓아가는 것 이전에, 먼저 인간의 뇌를 모방해보자라는 아이디어를 낼 수 있을 것이다. Neural Network는 이런 모티베이션으로 만들어진 간단한 수학적 모델이다. 우리는 이미 인간의 뇌가 엄청나게 많은 뉴런들과 그것들을 연결하는 시냅스로 구성되어있다는 사실을 알고 있다. 또한 각각의 뉴런들이 activate되는 방식에 따라서 다른 뉴런들도 activate 되거나 activate되지 않거나 하는 등의 action을 취하게 될 것이다. 그렇다면 이 사실들을 기반으로 다음과 같은 간단한 수학적 모델을 정의하는 것이 가능하다.</p>
-
-
-<h5>Model of Neural Network: neuron, synapse, activation function</h5>
-
-
-<p>먼저 뉴런들이 node이고, 그 뉴런들을 연결하는 시냅스가 edge인 네트워크를 만드는 것이 가능하다. 각각의 시냅스의 중요도가 다를 수 있으므로 edge마다 weight를 따로 정의하게 되면 아래 그림과 같은 형태로 네트워크를 만들 수 있다. (출처: <a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks/Activation_Functions">위키</a>)</p>
-
-
-<p><img src="/images/post/74-1.png" width="600"></p>
-
-<p>보통 neural network는 directed graph이다. 즉, information propagation이 한 방향으로 고정된다는 뜻이다. 만약 undirected edge를 가지게 되면, 혹은 동일한 directed edge가 양방향으로 주어질 경우, information propagation이 recursive하게 일어나서 결과가 조금 복잡해진다. 이런 경우를 recurrent neural network (RNN)이라고 하는데, 과거 데이터를 저장하는 효과가 있기 때문에 최근 음성인식 등의 sequencial data를 처리할 때 많이 사용되고 있다. 이번 ICML 2015에서도 RNN 논문이 많이 발표되고 있고, 최근들어 연구가 활발한 분야이다. 이 글에서는 일단 가장 간단한 'multi layer perceptron (MLP)'라는 구조만 다룰 것인데, 이 구조는 directed simple graph이고, 같은 layer들 안에서는 서로 connection이 없다. 즉, self-loop와 parallel edge가 없고, layer와 layer 사이에만 edge가 존재하며, 서로 인접한 layer끼리만 edge를 가진다. 즉, 첫번째 layer와 네번째 layer를 직접 연결하는 edge가 없는 것이다. 앞으로 layer에 대한 특별한 언급이 없다면 이런 MLP라고 생각하면 된다. 참고로 이 경우 information progation이 'forward'로만 일어나기 때문에 이런 네트워크를 feed-forward network라고 부르기도 한다.</p>
-
-
-<p>다시 일반적인 neural network에 대해 생각해보자. 실제 뇌에서는 각기 다른 뉴런들이 activate되고, 그 결과가 다음 뉴런으로 전달되고 또 그 결과가 전달되면서 최종 결정을 내리는 뉴런이 activate되는 방식에 따라 정보를 처리하게 된다. 이 방식을 수학적 모델로 바꿔서 생각해보면, input 데이터들에 대한 activation 조건을 function으로 표현하는 것이 가능할 것이다. 이것을 activate function이라고 정의한다. 가장 간단한 activation function의 예시는 들어오는 모든 input 값을 더한 다음, threshold를 설정하여 이 값이 특정 값을 넘으면 activate, 그 값을 넘지 못하면 deactivate되도록 하는 함수일 것이다. 일반적으로 많이 사용되는 여러 종류의 activate function이 존재하는데, 몇 가지를 소개해보도록 하겠다. 편의상 \(t = \sum_i w_i * x_i\) 라고 정의하겠다. (참고로, 일반적으로는 weight 뿐 아니라 bais도 고려해야한다. 이 경우 \(t = \sum_i (w_i * x_i + b_i) \)로 표현이 되지만, 이 글에서는 bais는 weight와 거의 동일하기 때문에 무시하고 진행하도록 하겠다. - 예를 들어 항상 값이 1인 \(x_0\)를 추가한다면 \(w_0\)가 bais가 되므로, 가상의 input을 가정하고 weight와 bais를 동일하게 취급하여도 무방하다.)</p>
-
-
-
-
-<ul>
-    <li><p>sigmoid function: \(f(t) = \frac{1}{1+ e^{-t}}\)</p></li>
-    <li><p>tanh function: \(f(t) = \frac{e^t - e^{-t}}{e^t + e^{-t} }\)</p></li>
-    <li><p>absolute function: \(f(t) = \|t\|\)</p></li>
-    <li><p>ReLU function: \(f(t) = max(0, t)\)</p></li>
-</ul>
-
-
-
-
-<p>보통 가장 많이 예시로 드는 activation function으로 sigmoid function이 있다. (출처는 위의 <a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks/Activation_Functions">위키</a>와 같음)</p>
-
-
-<p><img class="center" src="/images/post/74-4.png" width="300"></p>
-
-<p>이 함수는 미분이 간단하다거나, 실제 뉴런들이 동작하는 것과 비슷하게 생겼다는 등의 이유로 과거에는 많이 사용되었지만, 별로 practical한 activation function은 아니고, 실제로는 ReLU를 가장 많이 사용한다 (2012년 ImageNet competition에서 우승했던 <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">AlexNet</a> publication을 보면, ReLU와 dropout을 쓰는 것이 그렇지 않은 것보다 훨씬 더 우수한 결과를 얻는다고 주장하고 있다. 이에 대한 자세한 내용은 다른 포스트를 통해 보충하도록 하겠다). 참고로 neuron을 non-linearity라고 부르기도 하는데, 그 이유는 activation function으로 linear function을 사용하게 되면 아무리 여러 neuron layer를 쌓는다고 하더라도 그것이 결국 하나의 layer로 표현이 되기 때문에 non-linear한 activation function을 사용하기 때문이다.</p>
-
-
-<p>따라서 이 모델은 처음에 node와 edge로 이루어진 네트워크의 모양을 정의하고, 각 node 별 activation function을 정의한다. 이렇게 정해진 모델을 조절하는 parameter의 역할은 edge의 weight가 맡게되며, 가장 적절한 weight를 찾는 것이 이 수학적 모델을 train할 때의 목표가 될 것이다.</p>
-
-
-
-
-<h5>Inference via Neural Network</h5>
-
-
-<p>먼저 모든 paramter가 결정되었다고 가정하고 neural network가 어떻게 결과를 inference하는지 살펴보도록하자. Neural network는 먼저 주어진 input에 대해 다음 layer의 activation을 결정하고, 그것을 사용해 그 다음 layer의 activation을 결정한다. 이런 식으로 맨 마지막까지 결정을 하고 나서, 맨 마지막 decision layer의 결과를 보고 inference를 결정하는 것이다 (아래 그림 참고, 빨간 색이 activate된 뉴런이다).</p>
-
-
-<p><img src="/images/post/74-3.png" width="600"></p>
-
-<p> 이때, classification이라고 한다면 마지막 layer에 내가 classification하고 싶은 class 개수만큼 decision node를 만든 다음 그 중 하나 activate되는 값을 선택하는 것이다. 예를 들어 0부터 9까지 손글씨 데이터를 (MNIST라는 유명한 dataset이 있다) classification해야한다고 생각해보자. 그 경우는 0부터 9까지 decision이 총 10개이므로 마지막 decision layer에는 10개의 neuron이 존재하게 되고 주어진 데이터에 대해 가장 activation된 크기가 큰 decision을 선택하는 것이다.</p>
-
-
-
-
-<h5 id="backprop">Backpropagation Algorithm</h5>
-
-
-<p>마지막으로 이제 weight를 어떻게 찾을 수 있는지 weight paramter를 찾는 알고리즘에 대해 알아보자. 먼저 한 가지 알아두어야 할 점은 activation function들이 non-linear하고, 이것들이 서로 layer를 이루면서 복잡하게 얽혀있기 때문에 neural network의 weight optimization이 non-convex optimization이라는 것이다. 따라서 일반적인 경우에 neural network의 paramter들의 global optimum을 찾는 것은 불가능하다. 그렇기 때문에 보통 gradient descent 방법을 사용하여 적당한 값까지 수렴시키는 방법을 사용하게 된다.</p>
-
-
-<p>Neural network (이 글에서는 multi-layer feed-forward network)의 parameter를 update하기 위해서는 backpropagation algorithm이라는 것을 주로 사용하는데, 이는 단순히 neural network에서 gradient descent를 chain rule을 사용하여 단순화시킨 것에 지나지 않는다 (Gradient descent에 대해서는 이전에 쓴 <a href="http://SanghyukChun.github.io/63">Convex Optimization글</a>에서 자세히 다루고 있으니 참고하면 좋을 것 같다). 모든 optimization 문제는 target function이 정의되어야 풀 수 있다. Neural network에서는 마지막 decision layer에서 우리가 실제로 원하는 target output과 현재 network가 produce한 estimated output끼리의 loss function을 계산하여 그 값을 minimize하는 방식을 취한다. 일반적으로 많이 선택하는 loss에는 다음과 같은 함수들이 있다. 이때 우리가 원하는 <a class="red tip" title="만약 MNIST라면 d=10">d-dimensional</a> target output을 \(t=[t_1, \ldots, t_d]\)로, estimated output을 \(x=[x_1, \ldots, x_d]\) 로 정의해보자.</p>
-
-
-
-
-<ul>
-    <li><p>sum of squares (Euclidean) loss: \(\sum_{i=1}^d (x_i - t_i)^2 \)</p></li>
-    <li><p>softmax loss: \(-\sum_{i=1}^d \bigg[ t_i \log \big(\frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }\big) + (1 - t_i) \log \big(1 - \frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }\big) \bigg] \)</p></li>
-    <li><p>cross entropy loss: \(\sum_{i=1}^d [ -t_i \log x_i - (1-t_i) \log (1-x_i) ]\)</p></li>
-    <li><p>hinge loss: \(\max(0,1-t \cdot x)\), 이때 \(\cdot\)은 내적을 의미한다.</p></li>
-</ul>
-
-
-
-
-<p>상황에 따라 조금씩 다른 loss function을 사용하지만, classification에 대해서는 보통 softmax loss가 gradient의 값이 numerically stable하기 때문에 softmax loss를 많이 사용한다. 이렇게 loss function이 주어진다면, 이 값을 주어진 paramter들에 대해 gradient를 구한 다음 그 값들을 사용해 parameter를 update하기만 하면 된다. 문제는, 일반적인 경우에 대해 이 paramter 계산이 엄청 쉬운 것만은 아니라는 것이다.</p>
-
-
-<p>Backpropagtaion algorithm은 chain rule을 사용해 gradient 계산을 엄청 간단하게 만들어주는 알고리즘으로, 각각의 paramter의 grdient를 계산할 때 parallelization도 용이하고, 알고리즘 디자인만 조금 잘하면 memory도 많이 아낄 수 있기 때문에 실제 neural network update는 이 backpropagtaion 알고리즘을 사용하게 된다.</p>
-
-
-<p>Gradient descent method를 사용하기 위해서는 현재 parameter에 대한 gradient를 계산해야하지만, 네트워크가 복잡해지면 그 값을 바로 계산하는 것이 엄청나게 어려워진다. 그 대신 backpropataion algorithm에서는 먼저 현재 paramter를 사용하여 loss를 계산하고, 각각의 parameter들이 해당 loss에 대해 얼마만큼의 영향을 미쳤는지 chain rule을 사용하여 계산하고, 그 값으로 update를 하는 방법이다. 따라서 backpropagation algorithm은 크게 두 가지 phase로 나눌 수가 있는데, 하나는 propagation phase이며, 하나는 weight update phase이다. propagation phase에서는 training input pattern에서부터 에러, 혹은 각 뉴런들의 변화량을 계산하며, weight update phase에서는 앞에서 계산한 값을 사용해 weight를 update시킨다.</p>
-
-
-<h6>Phase 1: Propagation</h6>
-
-
-<ol>
-    <li>Forward propagation: input training data로부터 output을 계산하고, 각 ouput neuron에서의 error를 계산한다. (input -> hidden -> output 으로 정보가 흘러가므로 'forward' propagation이라 한다.)</li>
-    <li>Back propagation: output neuron에서 계산된 error를 각 edge들의 weight를 사용해 바로 <a class="red tip" title="이 경우는 hidden layer가 하나이므로 hidden layer를 지칭한다.">이전 layer</a>의 neuron들이 얼마나 error에 영향을 미쳤는지 계산한다. (output -> hidden 으로 정보가 흘러가므로 'back' propagation이라 한다.)</li>
-</ol>
-
-
-<h6>Phase 2: Weight update</h6>
-
-
-<ol>
-    <li>Chain rule을 사용해 paramter들의 gradient를 계산한다.</li>
-</ol>
-
-
-<p>이때, chain rule을 사용한다는 의미는 아래 그림에서 나타내는 것처럼, 앞에서 계산된 gradient를 사용해 지금 gradient 값을 update한다는 의미이다. (그림은 bengio의 <a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">deep learning book</a> <a href="http://www.iro.umontreal.ca/~bengioy/dlbook/mlp.html">Ch6</a> 에서 가져왔다.)</p>
-
-
-<p><img src="/images/post/74-6.png" width="400"></p>
-
-<p>두 그림 모두 \(\frac{\partial z}{\partial x}\)를 구하는 것이 목적인데, 직접 그 값을 계산하는 대신, \(y\) layer에서 이미 계산한 derivative인 \(\frac{\partial z}{\partial y}\)와 \(y\) layer와 \(x\)에만 관계있는 \(\frac{\partial y}{\partial x}\)를 사용하여 원하는 값을 계산하고 있다. 만약 \(x\) 아래에 \(x^\prime\)이라는 parameter가 또 있다면, \(\frac{\partial z}{\partial x}\)와 \(\frac{\partial x}{\partial x^\prime}\)을 사용하여 \(\frac{\partial z}{\partial x^\prime}\)을 계산할 수 있는 것이다. 때문에 우리가 backpropagation algorithm에서 필요한 것은 내가 지금 update하려는 paramter의 바로 전 variable의 derivative와, 지금 paramter로 바로 전 variable을 미분한 값 두 개 뿐이다. 이 과정을 output layer에서부터 하나하나 내려오면서 반복된다. 즉, output -> hidden k, hidden k -> hidden k-1, ... hidden 2 -> hidden 1, hidden 1 -> input의 과정을 거치면서 계속 weight가 update되는 것이다. 예를 들어서 decision layer와 가장 가까운 weight는 직접 derivative를 계산하여 구할 수 있고, 그보다 더 아래에 있는 layer의 weight는 그 바로 전 layer의 weight와 해당 layer의 activation function의 미분 값을 곱하여 계산할 수 있다. 이해가 조금 어렵다면 아래의 <a href="74#example">예제</a>를 천천히 읽어보기를 권한다.</p>
-
-
-<p>이 과정을 맨 위에서 아래까지 반복하면 전체 gradient를 구할 수 있고, 이 gradient를 사용해 parameter들을 update할 수 있다. 이렇게 한 번의 iteration이 진행되고, 충분히 converge했다고 판단할 때 까지 이런 iteration을 계속 반복하는 것이 feed-forward network의 parameter를 update하는 방법이다.</p>
-
-
-<p>이를 그림으로 표현하면 아래와 같다. (출처: <a href="http://tex.stackexchange.com/questions/162326/drawing-back-propagation-neural-network">링크</a>)</p>
-
-
-<p><img src="/images/post/42-1.png" width="600"></p>
-
-<p>이렇듯 backpropagation은 직접 weight를 바로 변화시키는 것이 아니라 오직 error만을 보고 gradient descent method based approach를 사용해 error를 minimize하는 방향으로 계속 weight를 update시키는 것이다. 또한 한 번 error가 연산된 이후에는 output layer에서부터 그 이전 layer로 '역으로' 정보가 update되기 때문에 이를 backpropagation, 한국어로는 역전사라고 하는 것이다.</p>
-
-
-
-
-<h5 id="sgd">Stochastic Gradient Descent</h5>
-
-
-<p>Gradient를 계산했으니 이제 직접 Gradient Descent를 써서 parameter만 update하면 된다. 그러나 문제가 하나 있는데, 일반적으로 neural network의 input data의 개수가 엄청나게 많다는 것이다. 때문에 정확한 gradient를 계산하기 위해서는 모든 training data에 대해 gradient를 전부 계산하고, 그 값을 평균 내어 정확한 gradient를 구한 다음 '한 번' update해야한다. 그러나 이런 방법은 너무나도 비효율적이기 때문에 Stochastic Gradient Descent (SGD) 라는 방법을 사용해야한다.</p>
-
-
-<p>SGD는 모든 데이터의 gradient를 평균내어 gradient update를 하는 대신 (이를 'full batch'라고 한다), 일부의 데이터로 'mini batch'를 형성하여 한 batch에 대한 gradient만을 계산하여 전체 parameter를 update한다. Convex optimization의 경우, 특정 조건이 충족되면 SGD와 GD가 같은 global optimum으로 수렴하는 것이 증명되어있지만, neural network는 convex가 아니기 때문에 batch를 설정하는 방법에 따라 수렴하는 조건이 바뀌게 된다. Batch size는 일반적으로 메모리가 감당할 수 있을 정도까지 최대한 크게 잡는 것 같다.</p>
-
-
-
-
-<h5 id="example">Backpropagation Algorithm: example</h5>
-
-
-<p>이전에 chain rule로 gradient를 계산한다고 언급했었는데, 실제 이 chain rule이 어떻게 적용되는지 아래의 간단한 예를 통해 살펴보도록하자. 이때 계산의 편의를 위해 각각의 neuron은 sigmoid loss를 가지고 있다고 가정하도록 하겠다.</p>
-
-
-<p><img src="/images/post/74-5.png" width="600"></p>
-
-<p>이때 각각의 neuron의 input으로 들어가는 값을 \(in_{o_5}\), output으로 나가는 값을 \(out_{h_3}\)와 같은 식으로 정의해보자 (이렇게 된다면 in과 out은 \(out_{h_3} = \sigma(in_{h_3})\) 으로 표현 가능하다. - 이때 \(\sigma\)는 sigmoid function). 먼저 error를 정의하자. error는 가장 간단한 sum of square loss를 취하도록 하겠다. 우리가 원하는 target을 \(t\)라고 정의하면 loss는 \(E = \frac{1}{2}(t_5-out_{o_5})^2 + \frac{1}{2}(t_6-out_{o_6})^2\)가 될 것이다 (1/2는 미분한 값을 깔끔하게 쓰기 위해 붙인 상관없는 값이므로 무시해도 좋다). 그리고 우리가 원하는 값들은 \(\frac{\partial E}{\partial w_{13}}, \frac{\partial E}{\partial w_{14}}, \ldots, \frac{\partial E}{\partial w_{46}}\)이 될 것이다. 이제 가장 먼저 \(\frac{\partial E}{\partial w_{35}}\) 부터 계산해보자.</p>
-
-
-<p>\[\frac{\partial E}{\partial w_{35}} = \frac{\partial E}{\partial out_{o_5}} * \frac{\partial out_{o_5}}{\partial in_{o_5}} * \frac{\partial in_{o_5}}{\partial w_{35}}. \]</p>
-
-
-<p>즉, 우리가 원하는 derivative를 계산하기 위해서는 세 개의 다른 derivative (\(\frac{\partial E}{\partial out_{o_5}}, \frac{\partial out_{o_5}}{\partial in_{o_5}}, \frac{\partial in_{o_5}}{\partial w_{35}}\))를 계산해야한다. 각각을 구하는 방법은 다음과 같다.</p>
-
-
-<ul>
-    <li><p>\(\frac{\partial E}{\partial out_{o_5}}\): error를 \(E = \frac{1}{2}(t_5-out_{o_5})^2 + \frac{1}{2}(t_6-out_{o_6})^2\)라고 정의했으므로, \(\frac{\partial E}{\partial out_{o_5}} = out_{o_5} - t_5\)이다. - 이때 \(out_{o_5}\)와 \(t_5\)는 weight update이전 propagation step에서 계산된 값이다.</p></li>
-    <li><p>\(\frac{\partial out_{o_5}}{\partial in_{o_5}}\): \(o_5\)는 sigmoid activation function을 사용하므로 \(out_{o_5} = \sigma(in_{o_5})\)이다. 또한 sigmoid function의 미분 값은 \(\frac{\partial \sigma(x)}{\partial x} = \sigma(x) (1 - \sigma(x))\)으로 주어지므로, 이 값을 대입하면 \(\frac{\partial out_{o_5}}{\partial in_{o_5}} = out_{o_5} (1 - out_{o_5})\)가 된다. - 역시 여기에서도 미리 계산한 \(out_{o_5}\)를 사용한다.</p></li>
-    <li>\(\frac{\partial in_{o_5}}{\partial w_{35}}\): \(o_5\)로 들어온 값의 총 합은 앞선 layer의 output과 \(o_5\)로 들어오는 weight를 곱하면 되므로 \(in_{o_5} = w_{35} out_{h_3} + w_{45} out_{h_4}\)이고, 이것을 통해 \(\frac{\partial in_{o_5}}{\partial w_{35}} = out_{h_3}\)가 됨을 알 수 있다. - \(out_{h_3}\) 역시 이전 propagation에서 계산된 값이다.</li>
-</ul>
-
-
-<p>따라서 \(\frac{\partial E}{\partial w_{35}}\)의 derivative 값은 위의 세 값을 모두 곱한 것으로 계산 할 수 있다. 그림으로 표현하면 아래와 같은 그림이 될 것이다. 즉, 'backward' 방향으로 derivative에 대한 정보를 'propagation'하면서 parameter의 derivative를 계산하는 것이다. 마찬가지 방법으로 \(w_{36}, w_{45}, w_{46}\)에 대한 derivative도 계산할 수 있다.</p>
-
-
-<p><img src="/images/post/74-7.png" width="300"></p>
-
-<p>그럼 이번에는 그 전 layer의 paramter들 중 하나인 \(w_{13}\)의 derivative를 계산해보자. 이번에 계산할 과정도 위와 비슷한 그림으로 표현해보면 아래와 같다.</p>
-
-
-<p><img src="/images/post/74-8.png" width="300"></p>
-
-<p>그러면 이제 \(\frac{\partial E}{\partial w_{13}}\)을 구해보자.</p>
-
-
-<p>\[\frac{\partial E}{\partial w_{13}} = \frac{\partial E}{\partial out_{h_3}} * \frac{\partial out_{h_3}}{\partial in_{h_3}} * \frac{\partial in_{h_3}}{\partial w_{13}}.\]</p>
-
-
-<p>마찬가지로 각각을 구하는 방법에 대해 적어보자.</p>
-
-
-<ul>
-    <li><p>\(\frac{\partial E}{\partial out_{h_3}}\): \(E = \frac{1}{2}(t_5-out_{o_5})^2 + \frac{1}{2}(t_6-out_{o_6})^2\)를 \(E = E_{o_5} + E_{o_6}\)로 decompose 하면 이 미분 식은 \(\frac{\partial E_{o_5}}{\partial out_{h_3}} + \frac{\partial E_{o_6}}{\partial out_{h_3}}\)로 쓸 수 있다. 각각의 계산은 다음과 같다.</p></li>
-    <ul>
-        <li><p>\(\frac{\partial E_{o_5}}{\partial out_{h_3}} = \frac{\partial E_{o_5}}{\partial in_{o_5}} * \frac{\partial in_{o_5}}{\partial out_{h_3}}\)으로 쓸 수 있다. 이 중 앞의 값인 \(\frac{\partial E_{o_5}}{\partial in_{o_5}}\)은 이미 전 과정에서 계산했던 \(\frac{\partial E}{\partial out_{o_5}}\)과 \(\frac{\partial out_{o_5}}{\partial in_{o_5}}\)의 곱으로 계산가능하다. 뒤의 값은 \(\frac{\partial in_{o_5}}{\partial out_{h_3}} = w_{35}\)이므로 간단하게 계산할 수 있다.</p></li>
-        <li><p>\(\frac{\partial E_{o_6}}{\partial out_{h_3}}\)도 위와 같은 방법으로 연산이 가능하다.</p></li>
-    </ul>
-    <li><p>\(\frac{\partial out_{h_3}}{\partial in_{h_3}}\): \(\frac{\partial out_{o_5}}{\partial in_{o_5}}\)와 같다. 따라서 \(out_{h_3} (1-out_{h_3})\)이다.</p></li>
-    <li><p>\(\frac{\partial in_{h_3}}{\partial w_{13}}\): \(\frac{\partial in_{o_5}}{\partial w_{35}}\)와 같다. 따라서 \(out_{i_1}\)이다.</p></li>
-</ul>
-
-
-<p>이렇게 \(\frac{\partial E}{\partial out_{h_3}}\)에서는 앞에서 계산했던 값들을 재활용하고, 아래의 값들은 activation function과 network의 topological property에 맞는 derivative를 곱하는 방식으로 \(\frac{\partial E}{\partial w_{13}}\)을 구할 수 있다.</p>
-
-
-<p>이렇듯 backpropagation algorithm은 forward propagation을 통해 필요한 값들을 미리 저장해두고, backward propagation이 진행되면서 위에서부터 loss에 대한 derivative를 하나하나 계산해나가면서 다음 layer에서 바로 전 layer에서 계산한 값들과 각 neuron 별로 추가적으로 필요한 derivative들을 곱해나가면서 weight의 derivative를 계산하는 알고리즘이다.</p>
-
-
-<p>이렇게 한 번 전체 gradient를 계산한 다음에는 learning rate를 곱하여 전체 parameter의 값을 update한 다음, 다시 처음부터 이 과정을 반복한다. 보통 에러가 감소하는 속도를 관측하면서 '이 정도면 converge한 것 같다' 하는 수준까지 돌린다.</p>
-
-
-<p>익숙해지려면 다소 시간이 걸리지만, 개념적으로 먼저 'error를 먼저 계산하고, 그 값을 아래로 전달해나가면서 바로 전 layer에서 계산한 미분값들을 사용해 현재 layer의 미분값을 계산한 다음, 그 값을 사용해 다음 layer의 미분값을 계산한다.' 라고 개념만 이해해두고 다시 차근차근 chain rule을 계산해나가면서 계산하면 조금 편하게 익숙해 질 수 있을 것이다.</p>
-
-
-
-
-<h5>Backpropagation Algorithm: In Practice</h5>
-
-
-<p>실제 backpropagtion을 계산해야한다고 가정해보자. 편의상 \(l\)번째 hidden layer를 \(y_l\) 이라고 해보자. 이 경우 각 layer에 대해 backpropagation algorithm을 위해 계산해야할 것은 총 두 가지 이다. Loss를 \(E\)라고 적었을 때 먼저 layer \(l\)의 parameter \(\theta_l\)의 gradient인 \(\frac{\partial E}{\partial w_l }\)을 구해야한다. 이 값은 \(\frac{\partial E}{\partial w_l } = \frac{\partial E}{\partial y_{l} } \frac{\partial y_{l} }{\partial w_{l} } \)을 통해 계산한다. 이때, \(\frac{\partial E}{\partial y_{l} } = \frac{\partial E}{\partial y_{l+1} } \frac{\partial y_{l+1} }{\partial y_{l} } \)이므로 \(\frac{\partial E}{\partial y_{l} }\)은 바로 전 layer에서 넘겨준 \(\frac{\partial E}{\partial y_{l+1} }\)의 값을 사용하여 계산하게 된다. 정리하면 실제 계산해야하는 값은 \(\frac{\partial y_{l+1} }{\partial y_{l}},\frac{\partial y_{l} }{\partial w_{l} } \) 두 가지이고, 이 값들을 사용해 \(\frac{E}{\partial y_{l}}, \frac{E}{\partial w_{l}}\)을 return하게 된다. 앞의 값은 다음 layer에 넘겨줘서 다음 input으로 사용하고, 두 번째 값은 저장해두었다가 gradient descent update할 때 사용한다.</p>
-
-
-<p>두 가지 예를 들어보자. 먼저 Inner Product layer 혹은 fully connected layer이다. 이 layer가 inner product layer라고 불리는 이유는 input \(y_l\)에 대해 output \(y_{l+1}\)이 간단한 inner product 들이 모여있는 형태로 표현되기 때문이다. 예를 들어 \(y_{l+1, i}\)를 l+1 번째 layer의 i 번째 node라고 한다면, \(y_{l+1, i} = \sum_{j} w_{ij} y_{l, j}\)으로 표현할 수 있음을 알 수 있다. 그런데 이 값은 사실 vector \(w\)와 \(y_{l}\)의 inner product로 표현됨을 알 수 있다. 그렇기 때문에 fully connected layer를 inner product라고 부른다. 다시 본론으로 돌아와서 inner product의 output은 input과 weight의 matrix-vector multiplication인 \(y_{l+1} = W_l * y_l\)으로 표현할 수 있다.</p>
-
-
-<p>따라서 \(\frac{\partial y_{l+1} }{\partial y_{l}} = W_l^\top\)이고, \(\frac{\partial y_{l} }{\partial W_{l} } = y_l\)이다. 이 값을 통해 실제 return하는 값은 \(\frac{\partial E }{\partial y_{l} } = \frac{\partial E }{\partial y_{l+1} } * W_l^\top \)와 \(\frac{\partial E }{\partial w_{l} } = \frac{\partial E }{\partial y_{l+1} } * y_{l} \)이 된다.</p>
-
-
-<p>두 번째로 많이 사용하는 ReLU non-linearity의 gradient를 계산해보자. 이때 activation function은 마치 하나의 layer가 더 있는 것처럼 생각할 수 있다. 즉 \(y_{l+1} = max(0, y_{l})\)로 표현할 수 있을 것이다. Parameter는 없으니까 생략하면 만약 \(y_{l} \geq 0\)라면 \(\frac{\partial y_{l+1} }{\partial y_{l} = 1} \)이고, 아니라면 0이 될 것이다. 따라서 \(y_{l} \geq 0\)라면 \(\frac{\partial E }{\partial y_{l} } = \frac{\partial E }{\partial y_{l+1} } \)이 되고, 0보다 작다면 0이 될 것이다.</p>
-
-
-
-
-<h5>정리</h5>
-
-
-<p>Deep learning을 다루기 위해서는 가장 먼저 aritifitial neural network의 model에 대한 이해와 gradient descent라는 update rule에 대한 이해가 필수적이다. 이 글에서는 가장 기초적이라고 생각하는 feed-forward network의 model을 먼저 설명하고, paramter를 update하는 gradient descent algorithm의 일종인 backpropagation에 대한 개념적인 설명을 다루었다. 조금 어려울 수 있는 내용이니 다른 글들을 계속 참고하면서 보면 좋을 것 같다.</p>
-
-
-
-
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 9월 13일: 글 등록</li>
-<li>2015년 9월 14일: 오타수정, SGD 내용 추가 등</li>
-<li>2015년 9월 20일: BP in practice 추가</li>
-</ul>
-
-
-<h5>Reference</h5>
-
-
-<ul>
-<li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
-<li>wiki (<a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks">링크</a>)</li>
-<li><a href="http://courses.cs.tau.ac.il/Caffe_workshop/Bootcamp/pdf_lectures/Lecture%203%20CNN%20-%20backpropagation.pdf">Caffe workshop &ndash; CNN backpropagation</a></li>
-</ul>
-
-
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
-
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
-<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
 </ul>
 
 ]]></content>

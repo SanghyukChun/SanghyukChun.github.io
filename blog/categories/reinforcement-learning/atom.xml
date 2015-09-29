@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Reinforcement-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/reinforcement-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-26T15:09:05+09:00</updated>
+  <updated>2015-09-29T17:43:46+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -271,7 +271,7 @@
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
 <li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
 <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
 </ul>
 
