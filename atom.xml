@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-29T17:43:46+09:00</updated>
+  <updated>2015-10-14T00:56:24+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -14,9 +14,249 @@
 
   
   <entry>
+    <title type="html"><![CDATA[고흐의 그림을 따라그리는 Neural Network, A Neural Algorithm of Artistic Style (2015)]]></title>
+    <link href="http://SanghyukChun.github.io/92/"/>
+    <updated>2015-10-14T00:57:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/92</id>
+		<content type="html"><![CDATA[<p>얼마 전, <a href="http://arxiv.org/abs/1508.06576 ">&#8216;A Neural Algorithm of Artistic Style &#8217;</a> 이라는 이름의 충격적인 논문이 arXiv에 업로드되었다. 기술 전문 잡지나 신문이 아닌 스브스뉴스 같은 일반적인 기사를 보도하는 매체에서도 보도가 되었을 정도로 요즘 꽤 이슈가 되고 있는 논문이다.</p>
+
+
+<ul>
+<li><a href="http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149">스브스뉴스: &ldquo;이건 &lsquo;반 고흐&#8217;의 그림이 아닌 &#8216;컴퓨터&#8217;의 그림입니다.&rdquo;</a></li>
+<li><a href="http://www.dailymail.co.uk/sciencetech/article-3214634/The-algorithm-learn-copy-artist-Neural-network-recreate-snaps-style-Van-Gogh-Picasso.html">DailyMail: &ldquo;The algorithm that can learn to copy ANY artist: Neural network can recreate your snaps in the style of Van Gogh or Picasso&rdquo;</a></li>
+<li><a href="http://www.theguardian.com/technology/2015/sep/02/computer-algorithm-recreates-van-gogh-painting-picasso">The Guardian: &ldquo;Computer algorithm recreates Van Gogh painting in one hour&rdquo;</a></li>
+</ul>
+
+
+<p>자고로 백문이 불여일견이라, 이게 도대체 무슨 contribution이 있길래 사람들의 이목이 쏠리고 있는지 논문에 첨부되어있는 그림을 먼저 보자.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/92-1.jpg" width="600"></p>
+
+<p>이 그림들은 모두 사람이 그린 것이 아니라 neural network를 사용하여 generate한 것이다. 이 논문은 제목 그대로, &#8216;artistic style&#8217;을 learning하는 neural network algorithm을 제안한다. 여기에서 artistic style이라는 것을 어떻게 정의하였는지는 나중에 조금 더 자세히 살펴보도록하자. 위 그림은 이 논문에서 제안한 알고리즘을 사용하여 report한 결과이다. 원본이 되는 A가 독일의 튀빙겐이라는 곳에서 찍은 &#8216;사진&#8217;이다. B부터 F는 유명한 거장들의 그림 &#8216;style&#8217;과 A의 &#8216;content&#8217;를 가지는 그림을 generate한 결과이다. 순서대로 B는 J.M.W. 터너의 &#60;미노타우르스 호의 난파&#62;, C는 그 유명한 빈센트 반 고흐의 &#60;별이 빛나는 밤&#62;을, D는 뭉크의 &#60;절규&#62;, E는 피카소의 &#60;앉아 있는 나체의 여성&#62;, F는 칸딘스키의 &#60;구성 VII&#62;이다. 놀랍게도 알고리즘을 통해 얻은 그림은 원본 사진의 content는 거의 그대로 보존하면서, 동시에 다른 그림의 style을 특징을 잘 살려서 가지고 있다.</p>
+
+
+<p>이 짧은 논문이 사람들에게 얼마나 큰 충격을 주었는지는 길게 적지 않아도 알 수 있을 것이라고 생각한다. 논문이 나오고 얼마 지나지 않아 <a href="https://github.com/jcjohnson">jcjohson</a> 이라는 github user가 torch 기반으로 만든 <a href="https://github.com/jcjohnson/neural-style">&#8216;neural style&#8217;</a>이라는 프로젝트를 github에 공개하였다. 논문이 정말 좋은 결과를 낸 것인지 사람들이 이런 저런 사진과 그림들을 사용해 실험해본 결과, 논문에서 이야기하는 것 처럼 실제로 아무 사진을 적당히 골라서 적당한 그림을 넣어주면 사진의 내용은 보존한 채로 질감만 바꿔서 출력해주는 것을 알 수 있었다. 아래 그림은 <a href="https://github.com/jcjohnson/neural-style">&#8216;neural style&#8217;</a>을 사용해 금문교 사진과 여러 예술가들의 그림을 사용해 generate한 결과이다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/92-3.png" width="600"></p>
+
+<p>이 논문이 나온게 9월 말이었는데, 벌써 한국 개발팀에서 스마트폰 app까지 개발했을 정도로 관심이 뜨겁다. (<a href="http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149">스브스뉴스: 이건 &#8216;반 고흐&#8217;의 그림이 아닌 &#8216;컴퓨터&#8217;의 그림입니다.</a>)</p>
+
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/92-4.jpg" width="300"></p>
+
+<p>꽤나 흥미로운 논문인 만큼, 어떤 아이디어를 사용했고, 어떤 방법론을 사용했는지까지 한 번 차근차근 살펴보도록 하자.</p>
+
+
+
+
+<h5>Content &#38; Style Reconstruction using CNN</h5>
+
+
+
+
+<p>Deep learning이 지금처럼 급부상하게 된 배경에는 (비전 분야를 중심으로 한) <a class="red tip" title="Convolutional Neural Network">CNN</a>의 엄청난 힘이 있었다. CNN이 비전에서 월등한 성능을 내는 이유를 여러가지로 설명할 수 있겠지만, 일반적으로는 CNN은 각각의 layer가 &#8216;feature&#8217;의 의미를 지니기 때문이라고 설명한다. 각각의 layer가 feature를 생성해내고, 이 feature들이 hierarchy하게 쌓이면서 더 높은 layer로 갈수록 더 좋은 feature를 만들어낸다는 것이다. CNN은 이 feature를 hard-coding하여 뽑아내는대신, 데이터에서부터 &#8216;가장 좋은&#8217; 최종 feature를 만들도록 학습시키기 때문에 아주 좋은 feature를 사용해 perceptron 등의 간단한 classifier로 높은 performance를 얻게 되는 것이다 (CNN에 익숙하지 않다면 <a href="http://SanghyukChun.github.io/75/#75-cnn">CNN에 대해 설명했었던 이전 글</a>을 참고하면 좋을 것 같다). 그렇기 때문에 각각의 convolution layer의 output은 흔히 feature map으로 표현이 된다.</p>
+
+
+<p>주어진 이미지에서 feature를 뽑아내는 것은 CNN을 통하여 지금까지 항상 하던 일이었다. 그렇다면 반대로 할 수도 있지 않을까? 즉, CNN의 중간 feature map을 사용하여 원래 이미지를 복원하는 작업을 하는 것이다. 이렇게 feature map에서부터 이미지를 reconstruction 할 수만 있다면, deep CNN에서 layer를 지면서 어떤 재미있는 일들이 벌어지고 있는지 사람이 직접 눈으로 확인할 수 있을 것이다. 이런 visualization에 대한 motivation 때문에 그 동안 CNN의 convolution layer에서 원래 이미지를 reconstruction하는 작업들은 꾸준하게 제안되어 왔다. 그 중 가장 유명한 work으로 다음과 같은 work이 있다.</p>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1412.0035">Mahendran, Aravindh, and Andrea Vedaldi. &ldquo;Understanding deep image representations by inverting them.&rdquo; arXiv preprint arXiv:1412.0035 (2014).</a></li>
+</ul>
+
+
+<p>이 논문은 주어진 feature map에서 image를 복원하는 방법을 제안한다. 단순히 이미지를 복원하는 것이 아니라, 이미지를 특정 목적에 맞게 변형하는 work도 진행되어왔다. 대표적인 예가 아래 논문과 Google DeepMind의 <a href="http://googleresearch.blogspot.kr/2015/06/inceptionism-going-deeper-into-neural.html">Deep Dream</a>이다.</p>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1412.1897">Nguyen, Anh, Jason Yosinski, and Jeff Clune. &ldquo;Deep neural networks are easily fooled: High confidence predictions for unrecognizable images.&rdquo; arXiv preprint arXiv:1412.1897 (2014).</a></li>
+</ul>
+
+
+<p>이 논문은 deep CNN이 거의 100% 확률로 오답을 발생시키도록 이미지를 조작한 work이다. 예를 들어 주어진 이미지가 &#8216;새&#8217; 라는 label을 가지고 있다고 판별했을 때, &#8216;문어&#8217;라는 label을 100% 로 가지도록 이미지를 조작하는 것이다. 사람이 봤을 때는 여전히 &#8216;새&#8217; 사진이지만, CNN은 &#8216;문어&#8217;라고 판별해버리는 것이다.</p>
+
+
+<p>이렇듯, 다양한 목적으로 CNN이 이미 주어져 있을 때, 특정 목적에 따라 이미지를 update하는 방법론들은 이미 예전부터 연구가 계속 진행되어왔다. 위에 링크한 3개의 work은 꽤 흥미로운 주제들이기 때문에 나중에 또 따로 포스팅할 수 있도록 하겠다. 이 논문의 contribution은 각 convolution layer에서부터 style과 content를 reconstruct하는 방법론을 제안했다는 것이다. 이 방법은 앞에서 언급한 <a href="http://arxiv.org/abs/1412.0035">Understanding deep image representations by inverting them</a> 논문 처럼 현재 feature map에서 원래 이미지를 최대한 복원하는 content reconstruction과, 아래 논문 등에서 제안되어왔던 (neural network 기반 work은 아니다) texture 분석과 생성 등을 복원하는 texture reconstruction을 결합한 것인데, 자세한건 뒤에서 더 다루도록하자.</p>
+
+
+<ul>
+<li><a href="http://www.cns.nyu.edu/heegerlab/content/publications/Heeger-siggraph95.pdf">Heeger, David J., and James R. Bergen. &ldquo;Pyramid-based texture analysis/synthesis.&rdquo; Proceedings of the 22nd annual conference on Computer graphics and interactive techniques. ACM, 1995.</a></li>
+<li><a href="http://dl.acm.org/citation.cfm?id=363108">Portilla, Javier, and Eero P. Simoncelli. &ldquo;A parametric texture model based on joint statistics of complex wavelet coefficients.&rdquo; International Journal of Computer Vision 40.1 (2000): 49-70.</a></li>
+</ul>
+
+
+<p>이 논문에서 제안하는 두 가지 reconstruction 방법을 CNN의 각 layer에 대해 적용해보면 다음과 같은 결과를 얻을 수 있다. 참고로 이 논문에서는 CNN 모델로 <a href="http://arxiv.org/abs/1409.1556">VGG 19</a>를 선택했다. 이 네트워크는 총 16개의 convolution layer와 3개의 fully connected layer로 이루어져있다. 이 네트워크에 대한 설명은 method 부분에서 더 자세히 다루도록 하겠다.</p>
+
+
+
+
+<p><img id="92-reconst-img" src="http://SanghyukChun.github.io/images/post/92-5.png" width="600"></p>
+
+
+
+
+<p>위 그림은 CNN 하나에서 서로 다른 두 가지 방법으로 각각 style과 content를 layer 별로 reconstruction한 결과이다. 하나의 같은 CNN에 대해 두 가지 다른 reconstruction을 진행한 것인데, 위쪽 그림은 고흐의 &#60;별이 빛나는 밤&#62;의 style을 layer 별로 reconstruction한 것이고, 아래 그림은 튀빙겐에서 찍은 사진의 content를 layer 별로 reconstruction한 것이다.</p>
+
+
+<p>먼저 style reconstruction에서 알 수 있는 것은 layer가 얕을수록 원래 content 정보는 거의 무시하고 &#8216;texture&#8217;를 복원한다는 것이다. 반면 깊은 layer로 가게 될수록 점점 원래 content 정보가 포함이 되는 것을 볼 수 있다. 이런 현상이 발생하는 이유는 이 논문에서는 style을 같은 layer에 있는 feature map들 간의 correlation으로 정의하기 때문이다. 이를 구체적으로 어떻게 수학적으로 정의하였는지는 뒤에서 좀 더 자세하게 살펴보도록 하자. Style을 correlation으로 생각하기 때문에, 가장 style이 복원이 잘되는 얕은 layer에서는 원본 content가 거의 무시되고 correlation을 가장 좋게하는 style만 나오는 것이고, 깊은 layer로 갈수록 style이 제대로 복원이 되지 않을 것이므로 원본 content의 정보가 증가해 correlation이 작아지는 결과를 얻게 되는 것이다.</p>
+
+
+<p>다음으로 content reconstruction을 보자. 이 그림을 통해 낮은 level의 layer는 거의 완벽하게 원본 이미지를 보존하고 있고 layer가 깊어질수록 원본 이미지의 정보는 조금씩 소실되지만, 가장 중요한 high-level content는 거의 유지가 되는 것을 볼 수 있다.</p>
+
+
+<p>이 논문은 같은 CNN이라고 할지라도 content와 style에 대한 representation이 분리가 되어있다는 것을 중요하게 언급하고 있다. 그렇기 때문에 같은 network을 사용하여 서로 다른 이미지에서 서로 다른 content와 style을 reconstruction해서 그 둘을 섞는 것이 가능한 것이다. 이것이 중요한 이유는 실제로 reconstruction을 하는 과정은 임의의 image를 input으로 삼고, image를 parameter로 하여 목표하는 style과 content에 대한 loss를 minimize하는 optimization 과정이기 때문이다. 이 두 가지 다른 optimization process를 오직 하나의 network만 사용하여 진행할 수 있기 때문에 \(A\)(혹은 튀빙겐에서 찍은 사진)이라는 input의 content를 가지면서 \(B\)(혹은 고흐의 &#60;별이 빛나는 밤&#62;)이라는 input의 style을 가지도록하는 방향으로 input 이미지의 gradient를 구할 수 있는 것이다. 수식으로 나타내보자. input image를 \(x\)라고 해보자. 우리 목표는 \(x\)와 \(A\) 간의 content가 얼마나 다른지 표현하는 loss function \(\mathcal L_{content} (x,A)\)와 \(x\)와 \(B\) 간의 style이 얼마나 다른지 표현하는 loss function \(\mathcal L_{style (x,A)}\)를 minimize하는 \(x\)를 찾는 것이다. 따라서 우리가 풀고 싶은 optimization problem은 다음과 같다.</p>
+
+
+<p>\[x = \arg\max_x \alpha\mathcal L_{content} (x,A) + \beta\mathcal L_{style} (x,B)\]</p>
+
+
+<p>이런 식으로 식을 쓸 수 있을 것이다 (\(\alpha\)와 \(\beta\)는 적당한 상수라고 하자). 이런 optimization을 푸는 가장 간단한 방법으로 \(x\)에 대한 gradient를 구하고 gradient descent optimization을 하는 것인데, 두 loss를 같은 network에 대해 design할 수 있기 때문에 gradient가 간단해지는 것이다. 그러면 이제 구체적으로 어떻게 각각의 loss가 정의되었는지 살펴보자.</p>
+
+
+
+
+<h5>Methods</h5>
+
+
+<p>이 paper에서는 CNN 모델로 <a href="http://arxiv.org/abs/1409.1556">VGG 19</a> 네트워크를 사용한다. 이 네트워크는 옥스포드의 VGG(Visual Geometry Group)에서 만든 네트워크로, <a href="http://SanghyukChun.github.io/88">Batch Normalization</a>이 적용되기 이전 inception network (혹은 GoogleNet) 등에 비해 꽤 우수한 성능을 보이는 네트워크이다. 아래 논문을 통해 발표하였다.</p>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1409.1556">Simonyan, Karen, and Andrew Zisserman. &ldquo;Very deep convolutional networks for large-scale image recognition.&rdquo; arXiv preprint arXiv:1409.1556 (2014).</a></li>
+</ul>
+
+
+<p>자세한 method를 설명하기에 앞서 VGG 19 네트워크 자체에 대해 다뤄야하는데, 이 네트워크는 총 16개의 convolution layer, 5개의 pooling layer, 3개의 fully connected layer로 구성되어있다. 이 논문은 제공된 16개의 convolution layer에서 생성되는 feature map을 사용해 style loss와 content loss를 계산한다. 이 네트워크는 다음과 같은 형태로 구성되어있다.</p>
+
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/92-6.png" width="400"></p>
+
+<p>이 논문에서 사용한 VGG 19는 E에 해당하며, conv 2개 - pooling - conv 2개 - pooling - conv 4개 &#8230; 이런 식으로 구성되어있다. 각각의 conv layer들은 pooling layer를 기준으로, 순서대로 conv 1_1, conv 1_2, conv 2_1, conv 2_2, conv 3_1, conv 3_2, conv 3_3, &#8230; conv 5_4 라는 이름을 가지고 있다. 즉, conv 5_1 이면 4번쨰 pooling layer 바로 다음 conv layer를 말하는 것이다.</p>
+
+
+<p>이 논문에서는 fully connected layer는 사용하지 않고, 16개의 conv layer와 5개의 pooling layer만 사용하는데, image reconstruction에 있어서는 max pooling보다는 average pooling을 고르는 것이 그림이 조금 더 자연스럽고 좋아보이는 결과로 나오기 때문에 max pooling 대신 average pooling을 사용하였다고 한다.</p>
+
+
+
+
+<p>그럼 먼저 비교적 간단한 content loss 부터 살펴보도록하자. 이 논문은 feature map을 \(F^l \in \mathcal R^{N_l \times M_l}\)으로 정의하였다. 이때 \(N_l\)은 \(l\) 번째 레이어의 filter 개수이고, \(M_l\)은 각각의 filter의 가로와 세로를 곱한 값이며, 즉 각 filter들의 output 개수이다. 또한 \(F^l_{ij}\)는 \(i\) 번째 필터의 \(j\) 번째 output을 의미하게 된다. 이제 우리가 비교하려는 두 가지 이미지를 각각 \(p\)와 \(x\)라 하고, 각각의 \(l\) 번째 layer의 feature representation을 \(P^l, F^l\)로 정의하자. 이렇게 정의하였을 때, \(l\) 번째 layer의 content loss는 다음과 같이 간단하게 정의된다.</p>
+
+
+<p>\[ \mathcal L_{content} (p, x, l) = \frac{1}{2} \sum_{ij} \big( F^l_{ij} - P^l_{ij} \big)^2. \]</p>
+
+
+<p>즉, \(p\)와 \(x\)에 대해 각각 feature map \(P^l, F^l\)을 계산하고, 이 둘의 차의 Frobenius norm (\(\| P^l - F^l \|_F\))을 loss로 선택한 것이다. 이 error를 각각의 layer에 대해 따로 정의하게 된다. 이제 튀빙겐에서 찍은 사진 \(p\)의 \(l\) 번째 layer의 representation을 사용해 image reconstruction을 한다고 가정해보자. 이때 \(l\) 번째 layer에서 복원한 이미지를 \(x^l\)라고 하자. 앞서 정의한 loss를 minimize하는 \(x^l\)를 찾아야하므로, 우리는 다음과 같은 식을 얻는다.</p>
+
+
+<p>\[x^l = \arg\max_x \mathcal L_{content} (p, x, l). \]</p>
+
+
+<p>이 식을 풀기 위한 가장 간단한 방법은 \(x^l\)을 random image로 initialize하고 \(\frac{\mathcal L_{content} (p, x, l)}{x}\)를 게산해 gradient descent method를 사용하는 것이다. Loss를 layer의 각각의 activation으로 미분한 결과는 다음과 같다.</p>
+
+
+<p>\[ \frac{\partial \mathcal L_{content} (p, x, l)}{\partial F^l_{ij}} = (F^l_{ij} - P^l_{ij})_{ij} \mbox{ if } F^l_{ij} > 0, \mbox{ otherwise, } 0.\]</p>
+
+
+<p>이 값을 사용하면 전체 gradient를 back-propagation 알고리즘을 사용해 간단하게 계산할 수 있게 된다. <a href="#92-reconst-img">앞서 봤던 reconstruction 그림</a>의 아래 부분에서 복원한 5개의 이미지는 각각 conv 1_1, conv 2_2, conv 3_1, conv 4_1, conv 5_1에서 loss를 계산하여 복원한 것이다.</p>
+
+
+
+
+<p>다음으로, style에 대한 loss를 정의해보자. 이 논문에서 style이라는 것은 같은 layer의 서로 다른 filter들끼리의 correlation으로 정의한다. 즉, filter가 \(N_l\)개 있으므로 이것들의 correlation은 \(G^l \in \mathcal R^{N_l \times N_l}\)이 될 것이다. 이때, correlation을 계산하기 위하여 각각의 filter의 expectation 값을 사용하여 correlation matrix를 계산한다고 한다. 즉, \(l\)번째 layer에서 필터가 100개 있고, 각 필터별로 output이 400개 있다면, 각각의 100개의 필터마다 400개의 output들을 평균내어 값을 100개 뽑아내고, 그 100개의 값들의 correlation을 계산했다는 것이다. 이렇게 계산한 matrix를 Gram matrix라고 하며 \(G^l_{ij}\)라고 적으며 다음과 같이 계산할 수 있다.</p>
+
+
+<p>\[ G^l_{ij} = \sum_{k} F^l_{ik} F^l_{kj}.\]</p>
+
+
+<p>두 개의 image \(a\)와 \(x\) 간의 style이 얼마나 다른지를 나타내는 style loss \(\mathcal L_{style}\)은 \(G^l_{ij}\)를 사용하여 다음과 같이 정의된다.</p>
+
+
+<p>\[ \mathcal L_{style} (a,x) = \sum_{l=0}^L w_l E_l \]</p>
+
+
+<p>\(L\)은 loss에 영향을 주는 layer 개수, \(w_l\)은 전부 더해서 1이 되는 weight이고, \(E_l\)은 layer \(l\)의 style loss contribution이다. 이 값은 다음과 같이 정의된다.</p>
+
+
+<p>\[ E_l = \frac{1}{4 N_l^2 M_l^2} \sum_{i,j} \big( G^l_{ij} - A^l_{ij} \big)^2. \]</p>
+
+
+<p>역시 마찬가지로, \(p\), 혹은 고흐의 &#60;별이 빛나는 밤&#62;의 layer 별 style reconstruction 역시 이 \(\mathcal L_{style} (a,x)\)를 minimize하는 \(x\)를 찾는 것으로 풀 수 있으며 이 문제는 back-propagation algorithm으로 풀 수 있다.</p>
+
+
+<p>\[ \frac{\partial \mathcal E_l}{\partial F^l_{ij}} = \frac{1}{N_l^2 M_l^2} \sum_{i,j} \big( \big(F^l)^\top \big( G^l_{ij} - A^l_{ij} \big)\big)_{ji} \mbox{ if } F^l_{ij} > 0 \mbox{ otherwise } 0. \]</p>
+
+
+<p>다시 한 번 <a href="#92-reconst-img">앞서 봤던 reconstruction 그림</a>의 윗 부분에서 복원한 이미지를 살펴보면, 순서대로 loss 계산을 위해 conv 1_1만 사용하여 복원한 그림, conv 1_1, conv 2_1을 사용한 그림, conv 1_1, conv 2_1, conv 3_1을 사용한 그림, conv 1_1, conv 2_1, conv 3_1, conv 4_1을 선택한 그림 &#8230; 이런 식으로 선택하여 복원을 한 그림이다. 이때 &#8216;선택&#8217; 한다는 것의 개념은 선택한 layer의 \(w_l\)의 값을 0이 아닌 같은 값으로 두고 나머지는 전부 0으로 설정하는 것이다. 예를 들어 c 그림은 4개만 영향을 주므로 conv 1_1, conv 2_1, conv 3_1, conv 4_1만 \(w_l = 0.25\)이고 나머지는 0이다.</p>
+
+
+<p>이제 마지막으로 이 두 가지 loss를 한 번에 optimization하는 과정만 남았다. \(\alpha\)와 \(\beta\)는 content와 style 중 어느 쪽에 더 초점을 둘 것인지 조정하는 파라미터로, 보통 \(\alpha/\beta\)으로 \(10^{-3}\)이나 \(10^{-4}\) 정도를 고른다고 한다.</p>
+
+
+<p>\[\mathcal L_{total} (p,a,x) = \alpha \mathcal L_{content} (p, x) + \beta \mathcal L_{style} (a,x)\]</p>
+
+
+<p></p>
+
+<p>논문에서는 style에 얼마나 많은 layer를 고려하는지에 따라, 그리고 \(\alpha/\beta\)의 값을 조정함에 따라 다음과 같이 결과가 달라진다고 report하고 있다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/92-7.png" width="600"></p>
+
+<p>x 축이 \(\alpha/\beta\), y축은 순서대로 앞에서처럼 conv 1_1, conv 2_1, conv 3_1, conv 4_1, conv 5_1을 선택한 것이다 (A: 1_1, B: 1_1, 2_1, C: 1_1, 2_1, 3_1, &#8230;) 이 값들을 어떻게 조정하느냐에 따라 style과 content의 적당한 trade-off를 조정할 수 있다. Layer를 더 많이 사용할수록, 그리고 \(\alpha/\beta\) 값이 작아질수록 content보다는 style에 더 치중된 결과가 나오게 된다. 그리고 당연히 layer를 더 적게 사용하거나 \(\alpha/\beta\)의 값을 키울수록 그 반대의 결과가 나오게 된다.</p>
+
+
+<p><img src="http://SanghyukChun.github.io/images/post/92-2.png" width="600"></p>
+
+<p>위 그림은 앞에서 언급한 <a href="https://github.com/jcjohnson/neural-style">&#8216;neural style&#8217;</a>을 사용해 만든 그림이다. 원본 content 이미지로 브래드 피트의 사진을 넣고, style 이미지로 피카소의 &#60;자화상&#62;을 넣은 다음, \(\alpha/\beta\) 값을 조정하면서 값이 변하는 것을 관측한 것이다.</p>
+
+
+<p>맨 처음 글을 시작하며 보았던 그림에서는, content representation은 conv 4_2의 것만을 사용하고, style representation은 conv 1_1, 2_1, 3_1, 4_1, 5_1 에 각각 \(w_l = 1/5\), 나머지는 \(w_l=0\)으로 하여 사용했다. 또한 B,C,D 그림은 \(\alpha/\beta = 10^{-3}\), E,D 그림은 \(\alpha/\beta = 10^{-4}\)를 사용하였다고 한다.</p>
+
+
+
+
+<h5>Comments</h5>
+
+
+<ul>
+<li>개인적인 생각으로는, 이 논문의 결과는 고흐나 뭉크 등의 &lsquo;스타일&#8217;이 분명한 인상주의, 표현주의, 야수파 화풍의 화가들의 그림을 더 잘 generate할 것으로 생각된다. 나중에 사람들이 실험해본 결과도 그렇고, 대체로 고흐 등의 경우 스타일이 특색이 뚜렷해서 그러한지 꽤 그럴싸한 결과가 나오는 반면, 피카소 등으로 대변되는 입체파 처럼 &#8216;스타일&#8217;을 넘어서는 그 무언가가 존재하는 경우 기대만큼 좋은 결과로 이어지는 것 같지는 않다. 원래 이 논문에서 제안하는 알고리즘의 목적 자체가 그림의 texture를 learning하여 content는 유지한 상태로 texture만 변경시키는 것이므로, 내용 자체가 변화하는 입체파 등의 독특한 그림을 제대로 따라하는 것은 불가능하기 떄문에 그런 것으로 보인다. (+ 글을 쓰면서 개인적으로 궁금해진게, 캐리커쳐는 어떻게 반응할지 궁금해졌다. 나중에 public하게 공개된 코드를 사용해서 실험해봐야겠다)</li>
+<li>왜 method에서 전체 conv layer를 사용하는 것이 아니라 일부만 사용하는 것인지 다소 아리송하다. 또한 왜 style reconstruction을 위해 conv 1_1, 2_1, &hellip; 5_1 의 정보만 사용했고, content는 왜 conv 4_2를 사용하였는지 역시 의아하다. 아마 제일 잘 되는 것을 골랐을텐데, 왜 그것들이 제일 잘되는 것일까 궁금해진다.</li>
+<li>CNN에 대한 이해가 충분히 있어야 쉽게 읽을 수 있는 논문이었다. 추가로 VGG network에 대한 이해도도 있으면 도움이 되는 것 같다. 맨 처음 논문을 읽을 때는 이런 것들에 대해 감이 좀 약해서 읽어도 이해하기가 어려웠는데, CNN 공부를 다시 끝내고 다른 선행 연구들을 적당히 이해한 채로 다시 읽어보니 쉽게 이해할 수 있었다.</li>
+</ul>
+
+
+<h5>Summary of A Neural Algorithm of Artistic Style</h5>
+
+
+<ul>
+<li>CNN의 conv layer가 feature map이라는 것에서부터 착안하여, feature map에서 style과 content를 reconstruct하는 optimization problem을 제안하였다.</li>
+<li>하나의 CNN에서 content와 style representation이 separable하므로 style과 content를 한 번에 update하는 알고리즘을 만들 수 있다.</li>
+<li>Content loss는 두 이미지 각각의 feature matrix의 차의 frobenius norm으로 표현이 된다. 최종 결과를 위해서는 conv 4_2 만 사용하였다.</li>
+<li>Style loss는 두 이미지 각각의 Gram matrix의 차의 frobenius norm으로 표현이 된다. 최종 결과를 위해서는 conv 1_1, 2_1, 3_1, 4_1, 5_1 만 사용하였다.</li>
+<li>이때 style loss가 Gram matrix가 되는 이유는 style을 한 레이어 안에 있는 filter들의 correlation으로 정의했기 때문이다. 이때 correlation 계산은 각각의 filter들의 expectation 값들을 사용한다.</li>
+<li>VGG 19 네트워크를 사용했으며, FC layer는 제거하고 max pooling 대신 avg pooling을 사용하였다.</li>
+<li>Content loss와 Style loss의 비율을 조정하여 style과 content 중에서 어느 것에 집중할지 선택할 수 있다. 논문에서는 0.001 정도를 사용하였다.</li>
+</ul>
+
+
+<h5>Reference</h5>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1508.06576">Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. &ldquo;A Neural Algorithm of Artistic Style.&rdquo; arXiv preprint arXiv:1508.06576 (2015).</a></li>
+<li><a href="https://github.com/jcjohnson/neural-style">&lsquo;neural style&rsquo;</a></li>
+<li><a href="http://arxiv.org/abs/1409.1556">Simonyan, Karen, and Andrew Zisserman. &ldquo;Very deep convolutional networks for large-scale image recognition.&rdquo; arXiv preprint arXiv:1409.1556 (2014).</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[The Basic Principles in Deep Neural Networks]]></title>
     <link href="http://SanghyukChun.github.io/54/"/>
-    <updated>2015-09-29T19:23:00+09:00</updated>
+    <updated>2015-09-29T17:45:00+09:00</updated>
     <id>http://SanghyukChun.github.io/54</id>
 		<content type="html"><![CDATA[<h5>들어가기 전에</h5>
 
@@ -2757,101 +2997,6 @@
 
 
 <p>한 마디로 간단하게 만들 수 있는 웹은 이 녀석으로 대략 커버가 가능하다는 점, 그리고 반응형에 대한 이슈를 내가 따로 고민할 필요가 없다는 점이 너무 마음에 들었다. <a href="http://getwebplate.com/documentation">Document</a>링크를 첨부할테니 관심있는 사람들은 한 번 읽어봤으면 좋겠다. 최근 이걸 사용해 따로 개발할 웹이 없어서 정작 내가 사용해볼 수가 없다는게 아쉽기는하다.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[모바일 시대 Platform에 대한 고찰]]></title>
-    <link href="http://SanghyukChun.github.io/77/"/>
-    <updated>2014-10-10T02:27:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/77</id>
-		<content type="html"><![CDATA[<p>얼마 전 MS에서 윈도우10의 preview를 발표하였다. <a href="http://www.bloter.net/archives/208421">블로터 기사</a>를 참고하면 알 수 있 듯, 아직 테크니컬 프리뷰 단계이기는 하지만 MS가 어떤 철학을 가지고 이런 운영체제를 디자인했는가는 어렵지 않게 예상할 수 있다. 스마트폰과 태블릿 데스크톱 그리고 콘솔 등에 이르는 수 많은 isolate 되어있는 기기들을 통합으로 관리할 수 있는 하나의 거대한 통합 플랫폼을 만들어내겠다라는 의지가 바로 그것이다. <a class="red tip" title="소문에 의하면 95,98 버전 확인을 windows 9가 포함이 되었느냐 아니냐로 하기 떄문이라고.">왜 8다음에 10이냐는 이슈는 넘어가고</a> 과연 MS의 이런 행보가 어떤 파장을 일으킬 수 있을지에 대해 생각해보고 싶어졌다.</p>
-
-
-<h5>모바일 모바일 모바일</h5>
-
-
-<p>그래 바야흐로 모바일의 시대가 도래하였다고 해도 과언이 아니다. 내 블로그에 붙여놓은 google analytics를 보니까 내 블로그는 PC가 약 75%, 모바일이 약 18%, 그리고 태블릿이 약 7% 정도의 접속률을 보이고 있다. 즉, 내 블로그를 읽는 사람들의 행동 양식만 보고 비교를 하자면 아직은 PC로 웹을 보는 사람들이 모바일이나 태블릿 (합쳐서 모바일이라 하자) 으로 웹을 보는 사람들에 비해 약 5배 정도 많다. 그러나 이것은 내 블로그가 특수한 환경에 처한 것이고 (대부분의 유입이 구글 검색이고 키워드가 머신러닝이니까..) 실제 전체 웹을 보게 되면 상황이 많이 달라진다. StatCounter의 <a href="http://gs.statcounter.com/#all-comparison-ww-monthly-201309-201409">global stats page</a>를 참고해보면 모바일의 비중이 거의 30% 가까이를 차지하고 있으며, 태블릿까지 포함하면 약 37~8% 정도에 육박한다는 사실을 알 수 있다.</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/77-1.png" width="500"></p>
-
-<p>이 속도가 엄청나게 빠르게 증가하고 있다는 사실이 바로 그것인데, 불과 1년 사이에 모바일 뷰가 17%에서 거의 30%까지 증가한 것이다. 거의 75% 가까이 증가한 셈이다. 지역을 한국으로 좁혀서 보게 되면 (<a href="http://gs.statcounter.com/#all-comparison-KR-monthly-201309-201409">링크</a>) 우리는 상대적으로 태블릿의 점유율은 엄청 낮은 대신, 모바일의 비중이 매우 높다는 것을 알 수 있다.</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/77-2.png" width="500"></p>
-
-<p>그리고 어느 정도 1년 동안의 변화 정도가 일정한 것을 알 수 있다. 경험적으로 비춰보았을 때, PC를 거의 사용하지 않고 모바일로만 보는 사람들이 그만큼 많아졌다는 뜻이 아닐까라고 생각된다.</p>
-
-
-<p>그리고 또 이렇게 general하게 전체 웹 view만 보는 것이 아니라 큰 서비스로 시선을 돌리면 또 얘기가 달라진다. <a href="http://www.nasmedia.co.kr/">나스미디어</a>의 <a href="http://lib.nasmedia.co.kr/file/534f5d4242381">2014년 NPR (Netizen Profile Research)</a> 에 의하면, PC 인터넷 이용자의 스마트폰 이용률이 현재 88.1%에 육박하며 이는 전년 대비 11.5% 상승한 결과라고 한다. 그리고 사실 정말 재미있는 지표는 11쪽에 있는 SNS 접속 디바이스인데, 싸이, 미투, 구글플러스와 같은 마이너한 서비스는 제외하고 (심지어 미투데이는 올해 서비스를 종로했다 ㅠㅠ) 아래에서 볼 수 있듯 모바일의 비중이 매우 높다는 것을 알 수 있다.</p>
-
-
-<p><img src="http://SanghyukChun.github.io/images/post/77-3.png" width="600"></p>
-
-<p>즉, 이제 모바일은 절대로 무시할 수 없는 현실이라는 것을 데이터가 보여주고 있는 것이다.</p>
-
-
-<p></p>
-
-<h5>모바일 사용자, PC 사용자</h5>
-
-
-<p>그런데 내 생각에 저런 수치들이 제대로 반영하지 못하는 하나의 현실이 더 있다. 바로 극명하게 다른 PC 사용자와 모바일 사용자들의 성향이다. 모바일 사용자는 처음 몇 번의 시도 후 제대로 동작하지 않는 것 같다고 느끼면 그냥 서비스에서 이탈해버리고 다시 돌아오지 않는 경우가 많다. 즉, 이탈률이 매우 높다. 따라서 이탈을 하지 않도록 사용자에게 빠르게 지속적으로 동작을 유도해야한다. 또한 PC에 비해 모바일의 화면이 더 작아 너무 많은 정보를 한 번에 받는 것에 대해 부담을 느낀다. 마지막으로 그 둘의 역할이 많이 분리가 되었다. 간단한 검색이나 기사 읽기 등 &#8216;이건 내가 모바일로도 할 수 있겠다&#8217; 하는 일들이라면 모바일에서 처리하는 유저의 비중이 높은 반면, 복잡한 멀티프로세싱을 해야하는 경우라면 PC가 더 사용률이 높다. 다시 말해, PC와 모바일은 비슷해보일지 몰라도 자세히 보면 완전히 다른 성향을 가지고 있는 별개의 플랫폼이다. 즉, 어떤 서비스를 개발했을 때, 완전히 다른 두 개의 플랫폼에서 이 서비스를 동시에 지원할지 말아야할지 염두해두어야하며, 만약 동시에 지원하는 경우 이 작업을 꼭 PC앞에서 해야하는 강력한 motive 가 있는게 아니라면 많은 사람들은 모바일로 그 서비스를 접근하려 할 것이라는 말이다. 그게 웹이되었거나 앱이 되었거나.</p>
-
-
-<h5>Mobile First</h5>
-
-
-<p>Start up 쪽에서 흔히 많이 하는 말 중에 Lean Start up 이라거나, Mobile first 등의 용어가 있다. [Mobile first: <a href="http://www.lukew.com/ff/entry.asp?933">링크1</a>, <a href="http://study.gnuboard.org/wiki/read/studygroup/rwd/Mobile-First-and-RWD">링크2</a>, <a href="http://h30458.www3.hp.com/kr/ko/discover-performance/it-execs/2012/oct/1243352.html">링크3</a>], [Lean Startup: <a href="http://theleanstartup.com/">링크1</a>, <a href="http://www.jimmyrim.com/153">링크2</a>, <a href="http://platum.kr/archives/tag/%EB%A6%B0%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85">링크3</a>]</p>
-
-
-<p>Mobile first는 간단히 얘기하면 처음 시작점을 무조건 모바일에 맞춰서 시작을 하라는 의미이다. 이유는 (1) 모바일이 점점 거대해지고 있으며 (2) 모바일 개발에만 치중하면서 적은 리소스를 한 곳에 집중할 수 있을 뿐더라 (3) 모바일에 포함되는 많은 기술들이 (GPS, Multi-touch UI 등) 기존 웹에서 사용되는 javascript 기반의 PC-based Web보다 더 많은 사용자 경험을 줄 수 있기 때문이라는 것이다. 내 생각에도 지금 같은 서비스를 사용하더라도 많은 사람들이 mobile로 그 서비스를 access하는 경우가 점점 늘어나고 있으며, 만약 모바일과 웹이 있을 때 하나를 선택하라고 했을 때 모바일로 접속을 하는 사람들이 많아지고 있는 지금, 웹을 먼저 개발하기 보다는 모바일에 먼저 치중한 이후 나중에 웹으로 확장을 하는 편이 더 좋다고 생각된다. (때에 따라서는 PC 지원을 아예 하지 않는 경우도 존재한다) 하지만 Mobile first를 할 때 주의해야할 점들이 몇 가지가 있는데, 가장 중요한 것은 품질관리이다. 모바일은 아주 빠르게 변화하는 곳이기 떄문에 더 빠른 업데이트와 대응이 필수적인데, 자칫잘못했다가는 제품의 품질이 떨어지고 앱의 평점과 리뷰가 부정적인 방향으로 바뀔 수 있기 때문이다. 또한 현재 모바일 앱의 특성상 나쁜 리뷰와 별점은 추가적인 앱 다운로드에 악영향을 미친다. 따라서 이 <a href="http://h30458.www3.hp.com/kr/ko/discover-performance/it-execs/2012/oct/1243352.html">Mobile first: 링크3</a>에서 제안하는 방법은 애자일 프로세스이다. 기존의 느린 의사결정 방식으로 모바일 애플리케이션을 대해서는 안된다는 의미이다. 더 빠르고 더 기민하게 움직여야만한다. 그리고 난 그런 흐름 속에서 Mobile first가 Lean startup과의 시너지를 도모할 수 있다고 본다. 하지만 애자일을 도입해도 근본적인 제약조건이 존재하는데, (1) 작은 화면, (2) 네트워크 품질 (3) 기기의 성능 이 그것이다. 이 부분에 대해서는 뒤에 더 자세히 다뤄보도록하자.</p>
-
-
-<p>Lean startup은 일종의 프로덕트 개발 방법론 중 하나인데, 애자일한 개발, 완성되지 않은 프로토타입의 시장 진출, 고객과의 긴밀한 피드백루프 구축 등으로 구성이 되어있다. 기본적인 아이디어는 waterfall 식의 느린 의사결정으로 회사를 운영하거나, 제품을 개발하지 말고, 최대한 lean하게, 혹은 애자일하게 일단 빨리 빨리 무엇을 만들어보고 시장의 반응을 보고 버리거나 다른 식으로 develop을 하라는 얘기이다. 때문에 방금 전에 언급했던 Mobile first와 상당한 시너지를 일으킬 수 있는데 기본적으로 애자일 방법론을 기반으로 하기 때문에 위에서 언급했던 빠른 대응이나 지속적인 배포를 하기에 매우 용이하며, 프로토타입 단계에서 시장에 대한 가설을 테스트할 때에도 모바일에서 먼저 가설을 테스트해보고 더 크기를 키워도 되겠다는 결정을 내리고 나서 웹이나 다른 플랫폼으로의 확장을 결정하라는 것이다. 린스타트업에 대해 파고들어가기 시작하면 너무나 많은 얘기를 해야하기 때문에 깊은 얘기는 가급적 피하도록 하겠지만, 분명 린스타트업은 모바일퍼스트와 궁합이 잘 맞는 조합임에 분명하다.</p>
-
-
-<p>모바일퍼스트니, 린스타트업이니 하는 거창한 얘기를 하지 않더라도 내가 어떤 서비스를 만든다고 하면 이제는 항상 모바일에 대한 생각을 하지 않을 수 없다. 이 서비스를 지금은 모바일에서 지원할 예정이 없더라도 추후 모바일에서도 지원할지, 아니면 모바일에서만 지원할지 나중에 웹으로 확장을 할 것인지. 네이티브 앱으로 만들 것인지 아니면 웹으로 만들어서 모바일 뷰를 따로 만들 것인지. 모바일 뷰를 따로 만들 것인지 아니면 반응형으로 만들어서 하나의 통합 url로 관리를 하게 할 것인지. 이 모든 것들을 반드시 처음에 한 번 쯤은 생각을 해야만 한다.</p>
-
-
-<h5>모바일의 제약조건</h5>
-
-
-<p>그런데 모바일이 만능 키인 것은 아니다. 모바일은 근본적으로 하드웨어에서부터 기인하는 여러 문제점들을 떠안고 있기 때문이다. (1) 작은 화면 (2) 모바일 네트워크 (3) 기기의 성능이 그것이었다.</p>
-
-
-<p>먼저 작은 화면은 UI적인 측면에서 엄청난 변혁을 일으켰다. 기존의 PC-based 서비스들은 (웹 기반인 경우) 처음 보이는 웹에 굉장히 많은 정보들을 넣고 사용자가 그 정보들을 알아서 고르게하는 방식을 선택했었다면, 모바일로 넘어오고 나서는 그 화면의 크기가 어마어마하게 줄었기 때문에 (간단하게 생각해보면 22인치 모니터에서 5.5인치 아이폰6플러스는 화면의 크기가 16배 차이가 난다.) 처음 보여주는 정보의 양도 제한적일 수밖에 없고 또한 UI 역시 2차원적인 UI가 아니라 스크롤이 들어가는 1차원 세로형 UI가 강제 된다. 때문에 모바일에 익숙하지 않은 상태에서 UX를 web을 만들듯 디자인을 하게 되면 사용자 입장에서는 별로 좋지 못한 UX를 경험할 수 밖에 없는 것이다. 하지만 화면이 작기 때문에 채워야하는 정보의 양도 적고, 내가 어떤 정보를 보여줘야 더 효율적일지 더 고민할 수 있는 여지가 있기 때문에 오히려 작은 화면이 더 좋은 서비스를 개발하는데에 도움이 된다는 주장도 존재한다.</p>
-
-
-<p>다음으로 모바일 네트워크의 문제는 LTE로 넘어오면서 거의 해결이 되었다. 하지만 아직도 다른 국가들을 봤을 때 3G 이상의 망이 이렇게 보급이 된 곳은 많이 없고, 또한 모바일 유저는 데이터 소모에 매우 민감하기 때문에 앱을 설계할 때 네트워크 리소스에 대한 고민을 해야할 필요가 여전히 존재한다.</p>
-
-
-<p>마지막으로 기기의 성능 문제가 있다. 이건 꽤나 치명적인데, Web을 생각해보자. 웹은 서버에서 모든 로직이 실행되고 사용자 컴퓨터의 성능에 좌우되는 것은 랜더링을 하는 브라우져 뿐이었다. 즉, 동적으로 무언가를 생성하는 스크립트 등의 속도가 다소 느려질 수 있는 문제를 제외하면 대부분의 속도에 관련된 문제는 서버side에서 해결해야하는 경우가 대다수였다. 하지만 모바일로 넘어오면서 얘기가 완전히 달라졌는데, 먼저 PC보다 브라우져의 성능이 크게 저하되었고, 스마트폰의 여러 리소스를 사용하는 일은 그만큼 배터리 소모를 빠르게하고 스마트폰의 성능을 저하하는 요소가 되었기 때문에 상당히 많은 부분에서 희생을 해야한다. 물론 서비스를 한다는 것 부터가 이미 서버를 사용한다는 의미가 되기 때문에 크게 문제가 없을 수도 있지만, 이는 분명 PC에 비해 어마어마한 단점이다.</p>
-
-
-<h5>결론1: 모바일을 대하는 우리의 자세</h5>
-
-
-<p>이제 모바일은 절대로 무시할 수 없는 거대한 공룡이 되어가고 있다. 새로운 서비스를 시작할 때 거의 99.9% 이상 모바일퍼스트를 선택해야하며 이에 따라 필연적으로 애자일방법론, 더 나아가 린스타트업을 적용해야할 필요가 있다. 그러나 근본적으로 모바일의 제약조건이 존재한다는 점은 꽤나 치명적인데, 그만큼 한 서비스를 만들 때 처음부터 모바일에 모든 리소스를 부어가며 시작할 필요가 있다는 것이다. 그리고 모바일 이외의 환경으로 확장하는 것도 항상 염두를 하며 서비스 아키텍쳐 설계를 할 때 이에 대한 문제를 항상 생각을 할 필요가 있을 것이다.</p>
-
-
-<h5>결론2: 통합 플랫폼을 만드려는 MS의 행보는 어떤 결과를 가져올까</h5>
-
-
-<p>앞서 설명했듯 MS는 새로운 통합 플랫폼에 대한 원대한 야망을 가지고있다. 하지만 나는 이것이 별로 효과가 없을 것이라고 생각하는데, (1) 모바일과 웹을 동시에 지원하는 것이 아니라 어차피 모바일에만 집중해야하는데 두 개를 전부 고려해서 설계를 하면 리소스가 분산이 되기 쉽다. (2) 모바일과 PC의 사용자 성향은 극도로 다르기 때문에 PC에서 주었던 경험을 모바일에서 그대로 주는 것이 항상 능사는 아니다. (3) PC와 모바일 둘 다 이미 어느정도 정형화된 경험이 존재하는데, 그 경험을 깨어가면서까지 새로운 윈도우를 사용하게할 유인요소가 보이지 않는다. 결론적으로 서비스를 만드는 입장에서 결론적으로는 모바일과 PC는 함께 가져가야할지 모르지만, 처음 시작하는 단계에서부터 반드시 같이 가져가야하는 것은 아니기 때문에 나는 윈도우10 역시 좋은 평가를 받지 못할 것이라 생각된다.</p>
-
-
-
-
-<h5>References</h5>
-
-
-<ul>
-<li>StatCounter <a href="http://gs.statcounter.com/#all-comparison-ww-monthly-201309-201409">global stats page</a></li>
-<li><a href="http://www.nasmedia.co.kr/">나스미디어</a>의 <a href="http://lib.nasmedia.co.kr/file/534f5d4242381">2014년 NPR (Netizen Profile Research)</a></li>
-</ul>
 
 ]]></content>
   </entry>

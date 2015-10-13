@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Deep-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/deep-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-09-29T17:43:46+09:00</updated>
+  <updated>2015-10-14T00:56:24+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,246 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[고흐의 그림을 따라그리는 Neural Network, A Neural Algorithm of Artistic Style (2015)]]></title>
+    <link href="http://SanghyukChun.github.io/92/"/>
+    <updated>2015-10-14T00:57:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/92</id>
+    <content type="html"><![CDATA[<p>얼마 전, <a href="http://arxiv.org/abs/1508.06576 ">'A Neural Algorithm of Artistic Style '</a> 이라는 이름의 충격적인 논문이 arXiv에 업로드되었다. 기술 전문 잡지나 신문이 아닌 스브스뉴스 같은 일반적인 기사를 보도하는 매체에서도 보도가 되었을 정도로 요즘 꽤 이슈가 되고 있는 논문이다.</p>
+
+
+<ul>
+<li><a href="http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149">스브스뉴스: &ldquo;이건 &lsquo;반 고흐'의 그림이 아닌 '컴퓨터'의 그림입니다.&rdquo;</a></li>
+<li><a href="http://www.dailymail.co.uk/sciencetech/article-3214634/The-algorithm-learn-copy-artist-Neural-network-recreate-snaps-style-Van-Gogh-Picasso.html">DailyMail: &ldquo;The algorithm that can learn to copy ANY artist: Neural network can recreate your snaps in the style of Van Gogh or Picasso&rdquo;</a></li>
+<li><a href="http://www.theguardian.com/technology/2015/sep/02/computer-algorithm-recreates-van-gogh-painting-picasso">The Guardian: &ldquo;Computer algorithm recreates Van Gogh painting in one hour&rdquo;</a></li>
+</ul>
+
+
+<p>자고로 백문이 불여일견이라, 이게 도대체 무슨 contribution이 있길래 사람들의 이목이 쏠리고 있는지 논문에 첨부되어있는 그림을 먼저 보자.</p>
+
+
+<p><img src="/images/post/92-1.jpg" width="600"></p>
+
+<p>이 그림들은 모두 사람이 그린 것이 아니라 neural network를 사용하여 generate한 것이다. 이 논문은 제목 그대로, 'artistic style'을 learning하는 neural network algorithm을 제안한다. 여기에서 artistic style이라는 것을 어떻게 정의하였는지는 나중에 조금 더 자세히 살펴보도록하자. 위 그림은 이 논문에서 제안한 알고리즘을 사용하여 report한 결과이다. 원본이 되는 A가 독일의 튀빙겐이라는 곳에서 찍은 '사진'이다. B부터 F는 유명한 거장들의 그림 'style'과 A의 'content'를 가지는 그림을 generate한 결과이다. 순서대로 B는 J.M.W. 터너의 &#60;미노타우르스 호의 난파&#62;, C는 그 유명한 빈센트 반 고흐의 &#60;별이 빛나는 밤&#62;을, D는 뭉크의 &#60;절규&#62;, E는 피카소의 &#60;앉아 있는 나체의 여성&#62;, F는 칸딘스키의 &#60;구성 VII&#62;이다. 놀랍게도 알고리즘을 통해 얻은 그림은 원본 사진의 content는 거의 그대로 보존하면서, 동시에 다른 그림의 style을 특징을 잘 살려서 가지고 있다.</p>
+
+
+<p>이 짧은 논문이 사람들에게 얼마나 큰 충격을 주었는지는 길게 적지 않아도 알 수 있을 것이라고 생각한다. 논문이 나오고 얼마 지나지 않아 <a href="https://github.com/jcjohnson">jcjohson</a> 이라는 github user가 torch 기반으로 만든 <a href="https://github.com/jcjohnson/neural-style">'neural style'</a>이라는 프로젝트를 github에 공개하였다. 논문이 정말 좋은 결과를 낸 것인지 사람들이 이런 저런 사진과 그림들을 사용해 실험해본 결과, 논문에서 이야기하는 것 처럼 실제로 아무 사진을 적당히 골라서 적당한 그림을 넣어주면 사진의 내용은 보존한 채로 질감만 바꿔서 출력해주는 것을 알 수 있었다. 아래 그림은 <a href="https://github.com/jcjohnson/neural-style">'neural style'</a>을 사용해 금문교 사진과 여러 예술가들의 그림을 사용해 generate한 결과이다.</p>
+
+
+<p><img src="/images/post/92-3.png" width="600"></p>
+
+<p>이 논문이 나온게 9월 말이었는데, 벌써 한국 개발팀에서 스마트폰 app까지 개발했을 정도로 관심이 뜨겁다. (<a href="http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149">스브스뉴스: 이건 '반 고흐'의 그림이 아닌 '컴퓨터'의 그림입니다.</a>)</p>
+
+
+<p><img class="center" src="/images/post/92-4.jpg" width="300"></p>
+
+<p>꽤나 흥미로운 논문인 만큼, 어떤 아이디어를 사용했고, 어떤 방법론을 사용했는지까지 한 번 차근차근 살펴보도록 하자.</p>
+
+
+
+
+<h5>Content &#38; Style Reconstruction using CNN</h5>
+
+
+
+
+<p>Deep learning이 지금처럼 급부상하게 된 배경에는 (비전 분야를 중심으로 한) <a class="red tip" title="Convolutional Neural Network">CNN</a>의 엄청난 힘이 있었다. CNN이 비전에서 월등한 성능을 내는 이유를 여러가지로 설명할 수 있겠지만, 일반적으로는 CNN은 각각의 layer가 'feature'의 의미를 지니기 때문이라고 설명한다. 각각의 layer가 feature를 생성해내고, 이 feature들이 hierarchy하게 쌓이면서 더 높은 layer로 갈수록 더 좋은 feature를 만들어낸다는 것이다. CNN은 이 feature를 hard-coding하여 뽑아내는대신, 데이터에서부터 '가장 좋은' 최종 feature를 만들도록 학습시키기 때문에 아주 좋은 feature를 사용해 perceptron 등의 간단한 classifier로 높은 performance를 얻게 되는 것이다 (CNN에 익숙하지 않다면 <a href="http://SanghyukChun.github.io/75/#75-cnn">CNN에 대해 설명했었던 이전 글</a>을 참고하면 좋을 것 같다). 그렇기 때문에 각각의 convolution layer의 output은 흔히 feature map으로 표현이 된다.</p>
+
+
+<p>주어진 이미지에서 feature를 뽑아내는 것은 CNN을 통하여 지금까지 항상 하던 일이었다. 그렇다면 반대로 할 수도 있지 않을까? 즉, CNN의 중간 feature map을 사용하여 원래 이미지를 복원하는 작업을 하는 것이다. 이렇게 feature map에서부터 이미지를 reconstruction 할 수만 있다면, deep CNN에서 layer를 지면서 어떤 재미있는 일들이 벌어지고 있는지 사람이 직접 눈으로 확인할 수 있을 것이다. 이런 visualization에 대한 motivation 때문에 그 동안 CNN의 convolution layer에서 원래 이미지를 reconstruction하는 작업들은 꾸준하게 제안되어 왔다. 그 중 가장 유명한 work으로 다음과 같은 work이 있다.</p>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1412.0035">Mahendran, Aravindh, and Andrea Vedaldi. &ldquo;Understanding deep image representations by inverting them.&rdquo; arXiv preprint arXiv:1412.0035 (2014).</a></li>
+</ul>
+
+
+<p>이 논문은 주어진 feature map에서 image를 복원하는 방법을 제안한다. 단순히 이미지를 복원하는 것이 아니라, 이미지를 특정 목적에 맞게 변형하는 work도 진행되어왔다. 대표적인 예가 아래 논문과 Google DeepMind의 <a href="http://googleresearch.blogspot.kr/2015/06/inceptionism-going-deeper-into-neural.html">Deep Dream</a>이다.</p>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1412.1897">Nguyen, Anh, Jason Yosinski, and Jeff Clune. &ldquo;Deep neural networks are easily fooled: High confidence predictions for unrecognizable images.&rdquo; arXiv preprint arXiv:1412.1897 (2014).</a></li>
+</ul>
+
+
+<p>이 논문은 deep CNN이 거의 100% 확률로 오답을 발생시키도록 이미지를 조작한 work이다. 예를 들어 주어진 이미지가 '새' 라는 label을 가지고 있다고 판별했을 때, '문어'라는 label을 100% 로 가지도록 이미지를 조작하는 것이다. 사람이 봤을 때는 여전히 '새' 사진이지만, CNN은 '문어'라고 판별해버리는 것이다.</p>
+
+
+<p>이렇듯, 다양한 목적으로 CNN이 이미 주어져 있을 때, 특정 목적에 따라 이미지를 update하는 방법론들은 이미 예전부터 연구가 계속 진행되어왔다. 위에 링크한 3개의 work은 꽤 흥미로운 주제들이기 때문에 나중에 또 따로 포스팅할 수 있도록 하겠다. 이 논문의 contribution은 각 convolution layer에서부터 style과 content를 reconstruct하는 방법론을 제안했다는 것이다. 이 방법은 앞에서 언급한 <a href="http://arxiv.org/abs/1412.0035">Understanding deep image representations by inverting them</a> 논문 처럼 현재 feature map에서 원래 이미지를 최대한 복원하는 content reconstruction과, 아래 논문 등에서 제안되어왔던 (neural network 기반 work은 아니다) texture 분석과 생성 등을 복원하는 texture reconstruction을 결합한 것인데, 자세한건 뒤에서 더 다루도록하자.</p>
+
+
+<ul>
+<li><a href="http://www.cns.nyu.edu/heegerlab/content/publications/Heeger-siggraph95.pdf">Heeger, David J., and James R. Bergen. &ldquo;Pyramid-based texture analysis/synthesis.&rdquo; Proceedings of the 22nd annual conference on Computer graphics and interactive techniques. ACM, 1995.</a></li>
+<li><a href="http://dl.acm.org/citation.cfm?id=363108">Portilla, Javier, and Eero P. Simoncelli. &ldquo;A parametric texture model based on joint statistics of complex wavelet coefficients.&rdquo; International Journal of Computer Vision 40.1 (2000): 49-70.</a></li>
+</ul>
+
+
+<p>이 논문에서 제안하는 두 가지 reconstruction 방법을 CNN의 각 layer에 대해 적용해보면 다음과 같은 결과를 얻을 수 있다. 참고로 이 논문에서는 CNN 모델로 <a href="http://arxiv.org/abs/1409.1556">VGG 19</a>를 선택했다. 이 네트워크는 총 16개의 convolution layer와 3개의 fully connected layer로 이루어져있다. 이 네트워크에 대한 설명은 method 부분에서 더 자세히 다루도록 하겠다.</p>
+
+
+
+
+<p><img id="92-reconst-img" src="http://SanghyukChun.github.io/images/post/92-5.png" width="600"></p>
+
+
+
+
+<p>위 그림은 CNN 하나에서 서로 다른 두 가지 방법으로 각각 style과 content를 layer 별로 reconstruction한 결과이다. 하나의 같은 CNN에 대해 두 가지 다른 reconstruction을 진행한 것인데, 위쪽 그림은 고흐의 &#60;별이 빛나는 밤&#62;의 style을 layer 별로 reconstruction한 것이고, 아래 그림은 튀빙겐에서 찍은 사진의 content를 layer 별로 reconstruction한 것이다.</p>
+
+
+<p>먼저 style reconstruction에서 알 수 있는 것은 layer가 얕을수록 원래 content 정보는 거의 무시하고 'texture'를 복원한다는 것이다. 반면 깊은 layer로 가게 될수록 점점 원래 content 정보가 포함이 되는 것을 볼 수 있다. 이런 현상이 발생하는 이유는 이 논문에서는 style을 같은 layer에 있는 feature map들 간의 correlation으로 정의하기 때문이다. 이를 구체적으로 어떻게 수학적으로 정의하였는지는 뒤에서 좀 더 자세하게 살펴보도록 하자. Style을 correlation으로 생각하기 때문에, 가장 style이 복원이 잘되는 얕은 layer에서는 원본 content가 거의 무시되고 correlation을 가장 좋게하는 style만 나오는 것이고, 깊은 layer로 갈수록 style이 제대로 복원이 되지 않을 것이므로 원본 content의 정보가 증가해 correlation이 작아지는 결과를 얻게 되는 것이다.</p>
+
+
+<p>다음으로 content reconstruction을 보자. 이 그림을 통해 낮은 level의 layer는 거의 완벽하게 원본 이미지를 보존하고 있고 layer가 깊어질수록 원본 이미지의 정보는 조금씩 소실되지만, 가장 중요한 high-level content는 거의 유지가 되는 것을 볼 수 있다.</p>
+
+
+<p>이 논문은 같은 CNN이라고 할지라도 content와 style에 대한 representation이 분리가 되어있다는 것을 중요하게 언급하고 있다. 그렇기 때문에 같은 network을 사용하여 서로 다른 이미지에서 서로 다른 content와 style을 reconstruction해서 그 둘을 섞는 것이 가능한 것이다. 이것이 중요한 이유는 실제로 reconstruction을 하는 과정은 임의의 image를 input으로 삼고, image를 parameter로 하여 목표하는 style과 content에 대한 loss를 minimize하는 optimization 과정이기 때문이다. 이 두 가지 다른 optimization process를 오직 하나의 network만 사용하여 진행할 수 있기 때문에 \(A\)(혹은 튀빙겐에서 찍은 사진)이라는 input의 content를 가지면서 \(B\)(혹은 고흐의 &#60;별이 빛나는 밤&#62;)이라는 input의 style을 가지도록하는 방향으로 input 이미지의 gradient를 구할 수 있는 것이다. 수식으로 나타내보자. input image를 \(x\)라고 해보자. 우리 목표는 \(x\)와 \(A\) 간의 content가 얼마나 다른지 표현하는 loss function \(\mathcal L_{content} (x,A)\)와 \(x\)와 \(B\) 간의 style이 얼마나 다른지 표현하는 loss function \(\mathcal L_{style (x,A)}\)를 minimize하는 \(x\)를 찾는 것이다. 따라서 우리가 풀고 싶은 optimization problem은 다음과 같다.</p>
+
+
+<p>\[x = \arg\max_x \alpha\mathcal L_{content} (x,A) + \beta\mathcal L_{style} (x,B)\]</p>
+
+
+<p>이런 식으로 식을 쓸 수 있을 것이다 (\(\alpha\)와 \(\beta\)는 적당한 상수라고 하자). 이런 optimization을 푸는 가장 간단한 방법으로 \(x\)에 대한 gradient를 구하고 gradient descent optimization을 하는 것인데, 두 loss를 같은 network에 대해 design할 수 있기 때문에 gradient가 간단해지는 것이다. 그러면 이제 구체적으로 어떻게 각각의 loss가 정의되었는지 살펴보자.</p>
+
+
+
+
+<h5>Methods</h5>
+
+
+<p>이 paper에서는 CNN 모델로 <a href="http://arxiv.org/abs/1409.1556">VGG 19</a> 네트워크를 사용한다. 이 네트워크는 옥스포드의 VGG(Visual Geometry Group)에서 만든 네트워크로, <a href="http://SanghyukChun.github.io/88">Batch Normalization</a>이 적용되기 이전 inception network (혹은 GoogleNet) 등에 비해 꽤 우수한 성능을 보이는 네트워크이다. 아래 논문을 통해 발표하였다.</p>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1409.1556">Simonyan, Karen, and Andrew Zisserman. &ldquo;Very deep convolutional networks for large-scale image recognition.&rdquo; arXiv preprint arXiv:1409.1556 (2014).</a></li>
+</ul>
+
+
+<p>자세한 method를 설명하기에 앞서 VGG 19 네트워크 자체에 대해 다뤄야하는데, 이 네트워크는 총 16개의 convolution layer, 5개의 pooling layer, 3개의 fully connected layer로 구성되어있다. 이 논문은 제공된 16개의 convolution layer에서 생성되는 feature map을 사용해 style loss와 content loss를 계산한다. 이 네트워크는 다음과 같은 형태로 구성되어있다.</p>
+
+
+<p><img class="center" src="/images/post/92-6.png" width="400"></p>
+
+<p>이 논문에서 사용한 VGG 19는 E에 해당하며, conv 2개 - pooling - conv 2개 - pooling - conv 4개 ... 이런 식으로 구성되어있다. 각각의 conv layer들은 pooling layer를 기준으로, 순서대로 conv 1_1, conv 1_2, conv 2_1, conv 2_2, conv 3_1, conv 3_2, conv 3_3, ... conv 5_4 라는 이름을 가지고 있다. 즉, conv 5_1 이면 4번쨰 pooling layer 바로 다음 conv layer를 말하는 것이다.</p>
+
+
+<p>이 논문에서는 fully connected layer는 사용하지 않고, 16개의 conv layer와 5개의 pooling layer만 사용하는데, image reconstruction에 있어서는 max pooling보다는 average pooling을 고르는 것이 그림이 조금 더 자연스럽고 좋아보이는 결과로 나오기 때문에 max pooling 대신 average pooling을 사용하였다고 한다.</p>
+
+
+
+
+<p>그럼 먼저 비교적 간단한 content loss 부터 살펴보도록하자. 이 논문은 feature map을 \(F^l \in \mathcal R^{N_l \times M_l}\)으로 정의하였다. 이때 \(N_l\)은 \(l\) 번째 레이어의 filter 개수이고, \(M_l\)은 각각의 filter의 가로와 세로를 곱한 값이며, 즉 각 filter들의 output 개수이다. 또한 \(F^l_{ij}\)는 \(i\) 번째 필터의 \(j\) 번째 output을 의미하게 된다. 이제 우리가 비교하려는 두 가지 이미지를 각각 \(p\)와 \(x\)라 하고, 각각의 \(l\) 번째 layer의 feature representation을 \(P^l, F^l\)로 정의하자. 이렇게 정의하였을 때, \(l\) 번째 layer의 content loss는 다음과 같이 간단하게 정의된다.</p>
+
+
+<p>\[ \mathcal L_{content} (p, x, l) = \frac{1}{2} \sum_{ij} \big( F^l_{ij} - P^l_{ij} \big)^2. \]</p>
+
+
+<p>즉, \(p\)와 \(x\)에 대해 각각 feature map \(P^l, F^l\)을 계산하고, 이 둘의 차의 Frobenius norm (\(\| P^l - F^l \|_F\))을 loss로 선택한 것이다. 이 error를 각각의 layer에 대해 따로 정의하게 된다. 이제 튀빙겐에서 찍은 사진 \(p\)의 \(l\) 번째 layer의 representation을 사용해 image reconstruction을 한다고 가정해보자. 이때 \(l\) 번째 layer에서 복원한 이미지를 \(x^l\)라고 하자. 앞서 정의한 loss를 minimize하는 \(x^l\)를 찾아야하므로, 우리는 다음과 같은 식을 얻는다.</p>
+
+
+<p>\[x^l = \arg\max_x \mathcal L_{content} (p, x, l). \]</p>
+
+
+<p>이 식을 풀기 위한 가장 간단한 방법은 \(x^l\)을 random image로 initialize하고 \(\frac{\mathcal L_{content} (p, x, l)}{x}\)를 게산해 gradient descent method를 사용하는 것이다. Loss를 layer의 각각의 activation으로 미분한 결과는 다음과 같다.</p>
+
+
+<p>\[ \frac{\partial \mathcal L_{content} (p, x, l)}{\partial F^l_{ij}} = (F^l_{ij} - P^l_{ij})_{ij} \mbox{ if } F^l_{ij} > 0, \mbox{ otherwise, } 0.\]</p>
+
+
+<p>이 값을 사용하면 전체 gradient를 back-propagation 알고리즘을 사용해 간단하게 계산할 수 있게 된다. <a href="#92-reconst-img">앞서 봤던 reconstruction 그림</a>의 아래 부분에서 복원한 5개의 이미지는 각각 conv 1_1, conv 2_2, conv 3_1, conv 4_1, conv 5_1에서 loss를 계산하여 복원한 것이다.</p>
+
+
+
+
+<p>다음으로, style에 대한 loss를 정의해보자. 이 논문에서 style이라는 것은 같은 layer의 서로 다른 filter들끼리의 correlation으로 정의한다. 즉, filter가 \(N_l\)개 있으므로 이것들의 correlation은 \(G^l \in \mathcal R^{N_l \times N_l}\)이 될 것이다. 이때, correlation을 계산하기 위하여 각각의 filter의 expectation 값을 사용하여 correlation matrix를 계산한다고 한다. 즉, \(l\)번째 layer에서 필터가 100개 있고, 각 필터별로 output이 400개 있다면, 각각의 100개의 필터마다 400개의 output들을 평균내어 값을 100개 뽑아내고, 그 100개의 값들의 correlation을 계산했다는 것이다. 이렇게 계산한 matrix를 Gram matrix라고 하며 \(G^l_{ij}\)라고 적으며 다음과 같이 계산할 수 있다.</p>
+
+
+<p>\[ G^l_{ij} = \sum_{k} F^l_{ik} F^l_{kj}.\]</p>
+
+
+<p>두 개의 image \(a\)와 \(x\) 간의 style이 얼마나 다른지를 나타내는 style loss \(\mathcal L_{style}\)은 \(G^l_{ij}\)를 사용하여 다음과 같이 정의된다.</p>
+
+
+<p>\[ \mathcal L_{style} (a,x) = \sum_{l=0}^L w_l E_l \]</p>
+
+
+<p>\(L\)은 loss에 영향을 주는 layer 개수, \(w_l\)은 전부 더해서 1이 되는 weight이고, \(E_l\)은 layer \(l\)의 style loss contribution이다. 이 값은 다음과 같이 정의된다.</p>
+
+
+<p>\[ E_l = \frac{1}{4 N_l^2 M_l^2} \sum_{i,j} \big( G^l_{ij} - A^l_{ij} \big)^2. \]</p>
+
+
+<p>역시 마찬가지로, \(p\), 혹은 고흐의 &#60;별이 빛나는 밤&#62;의 layer 별 style reconstruction 역시 이 \(\mathcal L_{style} (a,x)\)를 minimize하는 \(x\)를 찾는 것으로 풀 수 있으며 이 문제는 back-propagation algorithm으로 풀 수 있다.</p>
+
+
+<p>\[ \frac{\partial \mathcal E_l}{\partial F^l_{ij}} = \frac{1}{N_l^2 M_l^2} \sum_{i,j} \big( \big(F^l)^\top \big( G^l_{ij} - A^l_{ij} \big)\big)_{ji} \mbox{ if } F^l_{ij} > 0 \mbox{ otherwise } 0. \]</p>
+
+
+<p>다시 한 번 <a href="#92-reconst-img">앞서 봤던 reconstruction 그림</a>의 윗 부분에서 복원한 이미지를 살펴보면, 순서대로 loss 계산을 위해 conv 1_1만 사용하여 복원한 그림, conv 1_1, conv 2_1을 사용한 그림, conv 1_1, conv 2_1, conv 3_1을 사용한 그림, conv 1_1, conv 2_1, conv 3_1, conv 4_1을 선택한 그림 ... 이런 식으로 선택하여 복원을 한 그림이다. 이때 '선택' 한다는 것의 개념은 선택한 layer의 \(w_l\)의 값을 0이 아닌 같은 값으로 두고 나머지는 전부 0으로 설정하는 것이다. 예를 들어 c 그림은 4개만 영향을 주므로 conv 1_1, conv 2_1, conv 3_1, conv 4_1만 \(w_l = 0.25\)이고 나머지는 0이다.</p>
+
+
+<p>이제 마지막으로 이 두 가지 loss를 한 번에 optimization하는 과정만 남았다. \(\alpha\)와 \(\beta\)는 content와 style 중 어느 쪽에 더 초점을 둘 것인지 조정하는 파라미터로, 보통 \(\alpha/\beta\)으로 \(10^{-3}\)이나 \(10^{-4}\) 정도를 고른다고 한다.</p>
+
+
+<p>\[\mathcal L_{total} (p,a,x) = \alpha \mathcal L_{content} (p, x) + \beta \mathcal L_{style} (a,x)\]</p>
+
+
+<p></p>
+
+<p>논문에서는 style에 얼마나 많은 layer를 고려하는지에 따라, 그리고 \(\alpha/\beta\)의 값을 조정함에 따라 다음과 같이 결과가 달라진다고 report하고 있다.</p>
+
+
+<p><img src="/images/post/92-7.png" width="600"></p>
+
+<p>x 축이 \(\alpha/\beta\), y축은 순서대로 앞에서처럼 conv 1_1, conv 2_1, conv 3_1, conv 4_1, conv 5_1을 선택한 것이다 (A: 1_1, B: 1_1, 2_1, C: 1_1, 2_1, 3_1, ...) 이 값들을 어떻게 조정하느냐에 따라 style과 content의 적당한 trade-off를 조정할 수 있다. Layer를 더 많이 사용할수록, 그리고 \(\alpha/\beta\) 값이 작아질수록 content보다는 style에 더 치중된 결과가 나오게 된다. 그리고 당연히 layer를 더 적게 사용하거나 \(\alpha/\beta\)의 값을 키울수록 그 반대의 결과가 나오게 된다.</p>
+
+
+<p><img src="/images/post/92-2.png" width="600"></p>
+
+<p>위 그림은 앞에서 언급한 <a href="https://github.com/jcjohnson/neural-style">'neural style'</a>을 사용해 만든 그림이다. 원본 content 이미지로 브래드 피트의 사진을 넣고, style 이미지로 피카소의 &#60;자화상&#62;을 넣은 다음, \(\alpha/\beta\) 값을 조정하면서 값이 변하는 것을 관측한 것이다.</p>
+
+
+<p>맨 처음 글을 시작하며 보았던 그림에서는, content representation은 conv 4_2의 것만을 사용하고, style representation은 conv 1_1, 2_1, 3_1, 4_1, 5_1 에 각각 \(w_l = 1/5\), 나머지는 \(w_l=0\)으로 하여 사용했다. 또한 B,C,D 그림은 \(\alpha/\beta = 10^{-3}\), E,D 그림은 \(\alpha/\beta = 10^{-4}\)를 사용하였다고 한다.</p>
+
+
+
+
+<h5>Comments</h5>
+
+
+<ul>
+<li>개인적인 생각으로는, 이 논문의 결과는 고흐나 뭉크 등의 &lsquo;스타일'이 분명한 인상주의, 표현주의, 야수파 화풍의 화가들의 그림을 더 잘 generate할 것으로 생각된다. 나중에 사람들이 실험해본 결과도 그렇고, 대체로 고흐 등의 경우 스타일이 특색이 뚜렷해서 그러한지 꽤 그럴싸한 결과가 나오는 반면, 피카소 등으로 대변되는 입체파 처럼 '스타일'을 넘어서는 그 무언가가 존재하는 경우 기대만큼 좋은 결과로 이어지는 것 같지는 않다. 원래 이 논문에서 제안하는 알고리즘의 목적 자체가 그림의 texture를 learning하여 content는 유지한 상태로 texture만 변경시키는 것이므로, 내용 자체가 변화하는 입체파 등의 독특한 그림을 제대로 따라하는 것은 불가능하기 떄문에 그런 것으로 보인다. (+ 글을 쓰면서 개인적으로 궁금해진게, 캐리커쳐는 어떻게 반응할지 궁금해졌다. 나중에 public하게 공개된 코드를 사용해서 실험해봐야겠다)</li>
+<li>왜 method에서 전체 conv layer를 사용하는 것이 아니라 일부만 사용하는 것인지 다소 아리송하다. 또한 왜 style reconstruction을 위해 conv 1_1, 2_1, &hellip; 5_1 의 정보만 사용했고, content는 왜 conv 4_2를 사용하였는지 역시 의아하다. 아마 제일 잘 되는 것을 골랐을텐데, 왜 그것들이 제일 잘되는 것일까 궁금해진다.</li>
+<li>CNN에 대한 이해가 충분히 있어야 쉽게 읽을 수 있는 논문이었다. 추가로 VGG network에 대한 이해도도 있으면 도움이 되는 것 같다. 맨 처음 논문을 읽을 때는 이런 것들에 대해 감이 좀 약해서 읽어도 이해하기가 어려웠는데, CNN 공부를 다시 끝내고 다른 선행 연구들을 적당히 이해한 채로 다시 읽어보니 쉽게 이해할 수 있었다.</li>
+</ul>
+
+
+<h5>Summary of A Neural Algorithm of Artistic Style</h5>
+
+
+<ul>
+<li>CNN의 conv layer가 feature map이라는 것에서부터 착안하여, feature map에서 style과 content를 reconstruct하는 optimization problem을 제안하였다.</li>
+<li>하나의 CNN에서 content와 style representation이 separable하므로 style과 content를 한 번에 update하는 알고리즘을 만들 수 있다.</li>
+<li>Content loss는 두 이미지 각각의 feature matrix의 차의 frobenius norm으로 표현이 된다. 최종 결과를 위해서는 conv 4_2 만 사용하였다.</li>
+<li>Style loss는 두 이미지 각각의 Gram matrix의 차의 frobenius norm으로 표현이 된다. 최종 결과를 위해서는 conv 1_1, 2_1, 3_1, 4_1, 5_1 만 사용하였다.</li>
+<li>이때 style loss가 Gram matrix가 되는 이유는 style을 한 레이어 안에 있는 filter들의 correlation으로 정의했기 때문이다. 이때 correlation 계산은 각각의 filter들의 expectation 값들을 사용한다.</li>
+<li>VGG 19 네트워크를 사용했으며, FC layer는 제거하고 max pooling 대신 avg pooling을 사용하였다.</li>
+<li>Content loss와 Style loss의 비율을 조정하여 style과 content 중에서 어느 것에 집중할지 선택할 수 있다. 논문에서는 0.001 정도를 사용하였다.</li>
+</ul>
+
+
+<h5>Reference</h5>
+
+
+<ul>
+<li><a href="http://arxiv.org/abs/1508.06576">Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. &ldquo;A Neural Algorithm of Artistic Style.&rdquo; arXiv preprint arXiv:1508.06576 (2015).</a></li>
+<li><a href="https://github.com/jcjohnson/neural-style">&lsquo;neural style&rsquo;</a></li>
+<li><a href="http://arxiv.org/abs/1409.1556">Simonyan, Karen, and Andrew Zisserman. &ldquo;Very deep convolutional networks for large-scale image recognition.&rdquo; arXiv preprint arXiv:1409.1556 (2014).</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine learning 스터디 (19) Deep Learning - RBM, DBN, CNN]]></title>
@@ -873,330 +1113,6 @@
 <ul>
 <li><a href="http://arxiv.org/abs/1409.2329">Zaremba, Wojciech, Ilya Sutskever, and Oriol Vinyals. &ldquo;Recurrent neural network regularization.&rdquo; arXiv preprint arXiv:1409.2329 (2014).</a></li>
 <li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (18) Neural Network Introduction]]></title>
-    <link href="http://SanghyukChun.github.io/74/"/>
-    <updated>2015-09-13T23:13:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/74</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
-<p>최근 Machine Learning 분야에서 가장 뜨거운 분야는 누가 뭐래도 Deep Learning이다. 엄청나게 많은 사람들이 관심을 가지고 있고, 공부하고 응용하고 있지만, 체계적으로 공부할 수 있는 자료가 많이 없다는 것이 개인적으로 조금 안타깝다. 이제 막 각광받기 시작한지 10년 정도 지났고, 매년 새로운 자료들이 쏟아져나오기 때문에 책이나 정리된 글을 찾기가 쉽지가 않다. 그러나 Deep Learning은 결국 artificial neural network를 조금 더 복잡하게 만들어놓은 모델이고, 기본적인 neural network에 대한 이해만 뒷받침된다면 자세한 내용들은 천천히 탑을 쌓는 것이 가능하다고 생각한다. 이 글에서는 neural network의 가장 기본적인 model에 대해 다루고, model paramter를 update하는 algorithm인 backpropagation에 대해서 다룰 것이다. 조금 더 advanced한 topic들은 이 다음 글에서 다룰 예정이다. 이 글의 일부 문단은 <a href="http://SanghyukChun.github.io/blog/categories/neural-network/">이전 글들</a>을 참고하였다.</p>
-
-
-<h5>Motivation of Neural Network</h5>
-
-
-<p>이름에서부터 알 수 있듯 neural network는 사람의 뇌를 본 따서 만든 머신러닝 모델이다 (참고: 원래 neural network의 full name은 artificial neural network이지만, 일반적으로 neural network라고 줄여서 부른다). 본격적으로 neural network에 대해 설명을 시작하기 전에 먼저 인간보다 컴퓨터가 훨씬 잘 할 수 있는 일들이 무엇이 있을지 생각해보자.</p>
-
-
-<ul>
-<li>1부터 10000000까지 숫자 더하기</li>
-<li>19312812931이 소수인지 아닌지 판별하기</li>
-<li>주어진 10000 by 10000 matrix 의 determinant값 계산하기</li>
-<li>800 페이지 짜리 책에서 &lsquo;컴퓨터&rsquo; 라는 단어가 몇 번 나오는지 세기</li>
-</ul>
-
-
-<p>반면 인간이 컴퓨터보다 훨씬 잘 할 수 있는 일들에 대해 생각해보자</p>
-
-
-<ul>
-<li>다른 사람과 상대방이 말하고자하는 바를 완벽하게 이해하면서 내가 하고 싶은 말을 상대도 이해할 수 있도록 전달하기</li>
-<li>주어진 사진이 고양이 사진인지 강아지 사진인지 판별하기</li>
-<li>사진으로 찍어보낸 문서 읽고 이해하기</li>
-<li>주어진 사진에서 얼마나 많은 물체가 있는지 세고, 사진에 직접 표시하기</li>
-</ul>
-
-
-<p>컴퓨터가 잘 할 수 있는 0과 1로 이루어진 사칙연산이다. 기술의 발달로 인해 지금은 컴퓨터가 예전보다도 더 빠른 시간에, 그리고 더 적은 전력으로 훨씬 더 많은 사칙연산을 처리할 수 있다. 반면 사람은 사칙연산을 컴퓨터만큼 빠르게 할 수 없다. 인간의 뇌는 오직 빠른 사칙연산만을 처리하기 위해 만들어진 것이 아니기 때문이다. 그러나 인지, 자연어처리 등의 그 이상의 무언가를 처리하기 위해서는 사칙연산 그 너머의 것들을 할 수 있어야하지만 현재 컴퓨터로는 인간의 뇌가 할 수 있는 수준으로 그런 것들을 처리할 수 없다.</p>
-
-
-<p>예를 들어 아래와 같이 주어진 사진에서 각각의 물체를 찾아내는 문제를 생각해보자 (출처: <a href="http://www.engadget.com/2014/09/08/google-details-object-recognition-tech/">링크</a>). 사람에게는 너무나 간단한 일이지만, 컴퓨터가 처리하기에는 너무나 어려운 일이다. 어떻게 어디부터 어디까지가 'tv or monitor'라고 판단할 수 있을까? 컴퓨터에게 사진은 단순한 0과 1로 이루어진 픽셀 데이터에 지나지 않기 때문에 이는 아주 어려운 일이다.</p>
-
-
-<p><img class="center" src="/images/post/74-2.jpg" width="400"></p>
-
-<p>그렇기 때문에 자연언어처리, 컴퓨터 비전 등의 영역에서는 인간과 비슷한 성능을 내는 시스템을 만들 수만 있다면 엄청난 기술적 진보가 일어날 수 있을 것이다. 그렇기 때문에 인간의 능력을 쫓아가는 것 이전에, 먼저 인간의 뇌를 모방해보자라는 아이디어를 낼 수 있을 것이다. Neural Network는 이런 모티베이션으로 만들어진 간단한 수학적 모델이다. 우리는 이미 인간의 뇌가 엄청나게 많은 뉴런들과 그것들을 연결하는 시냅스로 구성되어있다는 사실을 알고 있다. 또한 각각의 뉴런들이 activate되는 방식에 따라서 다른 뉴런들도 activate 되거나 activate되지 않거나 하는 등의 action을 취하게 될 것이다. 그렇다면 이 사실들을 기반으로 다음과 같은 간단한 수학적 모델을 정의하는 것이 가능하다.</p>
-
-
-<h5>Model of Neural Network: neuron, synapse, activation function</h5>
-
-
-<p>먼저 뉴런들이 node이고, 그 뉴런들을 연결하는 시냅스가 edge인 네트워크를 만드는 것이 가능하다. 각각의 시냅스의 중요도가 다를 수 있으므로 edge마다 weight를 따로 정의하게 되면 아래 그림과 같은 형태로 네트워크를 만들 수 있다. (출처: <a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks/Activation_Functions">위키</a>)</p>
-
-
-<p><img src="/images/post/74-1.png" width="600"></p>
-
-<p>보통 neural network는 directed graph이다. 즉, information propagation이 한 방향으로 고정된다는 뜻이다. 만약 undirected edge를 가지게 되면, 혹은 동일한 directed edge가 양방향으로 주어질 경우, information propagation이 recursive하게 일어나서 결과가 조금 복잡해진다. 이런 경우를 recurrent neural network (RNN)이라고 하는데, 과거 데이터를 저장하는 효과가 있기 때문에 최근 음성인식 등의 sequencial data를 처리할 때 많이 사용되고 있다. 이번 ICML 2015에서도 RNN 논문이 많이 발표되고 있고, 최근들어 연구가 활발한 분야이다. 이 글에서는 일단 가장 간단한 'multi layer perceptron (MLP)'라는 구조만 다룰 것인데, 이 구조는 directed simple graph이고, 같은 layer들 안에서는 서로 connection이 없다. 즉, self-loop와 parallel edge가 없고, layer와 layer 사이에만 edge가 존재하며, 서로 인접한 layer끼리만 edge를 가진다. 즉, 첫번째 layer와 네번째 layer를 직접 연결하는 edge가 없는 것이다. 앞으로 layer에 대한 특별한 언급이 없다면 이런 MLP라고 생각하면 된다. 참고로 이 경우 information progation이 'forward'로만 일어나기 때문에 이런 네트워크를 feed-forward network라고 부르기도 한다.</p>
-
-
-<p>다시 일반적인 neural network에 대해 생각해보자. 실제 뇌에서는 각기 다른 뉴런들이 activate되고, 그 결과가 다음 뉴런으로 전달되고 또 그 결과가 전달되면서 최종 결정을 내리는 뉴런이 activate되는 방식에 따라 정보를 처리하게 된다. 이 방식을 수학적 모델로 바꿔서 생각해보면, input 데이터들에 대한 activation 조건을 function으로 표현하는 것이 가능할 것이다. 이것을 activate function이라고 정의한다. 가장 간단한 activation function의 예시는 들어오는 모든 input 값을 더한 다음, threshold를 설정하여 이 값이 특정 값을 넘으면 activate, 그 값을 넘지 못하면 deactivate되도록 하는 함수일 것이다. 일반적으로 많이 사용되는 여러 종류의 activate function이 존재하는데, 몇 가지를 소개해보도록 하겠다. 편의상 \(t = \sum_i w_i * x_i\) 라고 정의하겠다. (참고로, 일반적으로는 weight 뿐 아니라 bais도 고려해야한다. 이 경우 \(t = \sum_i (w_i * x_i + b_i) \)로 표현이 되지만, 이 글에서는 bais는 weight와 거의 동일하기 때문에 무시하고 진행하도록 하겠다. - 예를 들어 항상 값이 1인 \(x_0\)를 추가한다면 \(w_0\)가 bais가 되므로, 가상의 input을 가정하고 weight와 bais를 동일하게 취급하여도 무방하다.)</p>
-
-
-
-
-<ul>
-    <li><p>sigmoid function: \(f(t) = \frac{1}{1+ e^{-t}}\)</p></li>
-    <li><p>tanh function: \(f(t) = \frac{e^t - e^{-t}}{e^t + e^{-t} }\)</p></li>
-    <li><p>absolute function: \(f(t) = \|t\|\)</p></li>
-    <li><p>ReLU function: \(f(t) = max(0, t)\)</p></li>
-</ul>
-
-
-
-
-<p>보통 가장 많이 예시로 드는 activation function으로 sigmoid function이 있다. (출처는 위의 <a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks/Activation_Functions">위키</a>와 같음)</p>
-
-
-<p><img class="center" src="/images/post/74-4.png" width="300"></p>
-
-<p>이 함수는 미분이 간단하다거나, 실제 뉴런들이 동작하는 것과 비슷하게 생겼다는 등의 이유로 과거에는 많이 사용되었지만, 별로 practical한 activation function은 아니고, 실제로는 ReLU를 가장 많이 사용한다 (2012년 ImageNet competition에서 우승했던 <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">AlexNet</a> publication을 보면, ReLU와 dropout을 쓰는 것이 그렇지 않은 것보다 훨씬 더 우수한 결과를 얻는다고 주장하고 있다. 이에 대한 자세한 내용은 다른 포스트를 통해 보충하도록 하겠다). 참고로 neuron을 non-linearity라고 부르기도 하는데, 그 이유는 activation function으로 linear function을 사용하게 되면 아무리 여러 neuron layer를 쌓는다고 하더라도 그것이 결국 하나의 layer로 표현이 되기 때문에 non-linear한 activation function을 사용하기 때문이다.</p>
-
-
-<p>따라서 이 모델은 처음에 node와 edge로 이루어진 네트워크의 모양을 정의하고, 각 node 별 activation function을 정의한다. 이렇게 정해진 모델을 조절하는 parameter의 역할은 edge의 weight가 맡게되며, 가장 적절한 weight를 찾는 것이 이 수학적 모델을 train할 때의 목표가 될 것이다.</p>
-
-
-
-
-<h5>Inference via Neural Network</h5>
-
-
-<p>먼저 모든 paramter가 결정되었다고 가정하고 neural network가 어떻게 결과를 inference하는지 살펴보도록하자. Neural network는 먼저 주어진 input에 대해 다음 layer의 activation을 결정하고, 그것을 사용해 그 다음 layer의 activation을 결정한다. 이런 식으로 맨 마지막까지 결정을 하고 나서, 맨 마지막 decision layer의 결과를 보고 inference를 결정하는 것이다 (아래 그림 참고, 빨간 색이 activate된 뉴런이다).</p>
-
-
-<p><img src="/images/post/74-3.png" width="600"></p>
-
-<p> 이때, classification이라고 한다면 마지막 layer에 내가 classification하고 싶은 class 개수만큼 decision node를 만든 다음 그 중 하나 activate되는 값을 선택하는 것이다. 예를 들어 0부터 9까지 손글씨 데이터를 (MNIST라는 유명한 dataset이 있다) classification해야한다고 생각해보자. 그 경우는 0부터 9까지 decision이 총 10개이므로 마지막 decision layer에는 10개의 neuron이 존재하게 되고 주어진 데이터에 대해 가장 activation된 크기가 큰 decision을 선택하는 것이다.</p>
-
-
-
-
-<h5 id="backprop">Backpropagation Algorithm</h5>
-
-
-<p>마지막으로 이제 weight를 어떻게 찾을 수 있는지 weight paramter를 찾는 알고리즘에 대해 알아보자. 먼저 한 가지 알아두어야 할 점은 activation function들이 non-linear하고, 이것들이 서로 layer를 이루면서 복잡하게 얽혀있기 때문에 neural network의 weight optimization이 non-convex optimization이라는 것이다. 따라서 일반적인 경우에 neural network의 paramter들의 global optimum을 찾는 것은 불가능하다. 그렇기 때문에 보통 gradient descent 방법을 사용하여 적당한 값까지 수렴시키는 방법을 사용하게 된다.</p>
-
-
-<p>Neural network (이 글에서는 multi-layer feed-forward network)의 parameter를 update하기 위해서는 backpropagation algorithm이라는 것을 주로 사용하는데, 이는 단순히 neural network에서 gradient descent를 chain rule을 사용하여 단순화시킨 것에 지나지 않는다 (Gradient descent에 대해서는 이전에 쓴 <a href="http://SanghyukChun.github.io/63">Convex Optimization글</a>에서 자세히 다루고 있으니 참고하면 좋을 것 같다). 모든 optimization 문제는 target function이 정의되어야 풀 수 있다. Neural network에서는 마지막 decision layer에서 우리가 실제로 원하는 target output과 현재 network가 produce한 estimated output끼리의 loss function을 계산하여 그 값을 minimize하는 방식을 취한다. 일반적으로 많이 선택하는 loss에는 다음과 같은 함수들이 있다. 이때 우리가 원하는 <a class="red tip" title="만약 MNIST라면 d=10">d-dimensional</a> target output을 \(t=[t_1, \ldots, t_d]\)로, estimated output을 \(x=[x_1, \ldots, x_d]\) 로 정의해보자.</p>
-
-
-
-
-<ul>
-    <li><p>sum of squares (Euclidean) loss: \(\sum_{i=1}^d (x_i - t_i)^2 \)</p></li>
-    <li><p>softmax loss: \(-\sum_{i=1}^d \bigg[ t_i \log \big(\frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }\big) + (1 - t_i) \log \big(1 - \frac{e^{x_i} }{\sum_{j=1}^d e^{x_j} }\big) \bigg] \)</p></li>
-    <li><p>cross entropy loss: \(\sum_{i=1}^d [ -t_i \log x_i - (1-t_i) \log (1-x_i) ]\)</p></li>
-    <li><p>hinge loss: \(\max(0,1-t \cdot x)\), 이때 \(\cdot\)은 내적을 의미한다.</p></li>
-</ul>
-
-
-
-
-<p>상황에 따라 조금씩 다른 loss function을 사용하지만, classification에 대해서는 보통 softmax loss가 gradient의 값이 numerically stable하기 때문에 softmax loss를 많이 사용한다. 이렇게 loss function이 주어진다면, 이 값을 주어진 paramter들에 대해 gradient를 구한 다음 그 값들을 사용해 parameter를 update하기만 하면 된다. 문제는, 일반적인 경우에 대해 이 paramter 계산이 엄청 쉬운 것만은 아니라는 것이다.</p>
-
-
-<p>Backpropagtaion algorithm은 chain rule을 사용해 gradient 계산을 엄청 간단하게 만들어주는 알고리즘으로, 각각의 paramter의 grdient를 계산할 때 parallelization도 용이하고, 알고리즘 디자인만 조금 잘하면 memory도 많이 아낄 수 있기 때문에 실제 neural network update는 이 backpropagtaion 알고리즘을 사용하게 된다.</p>
-
-
-<p>Gradient descent method를 사용하기 위해서는 현재 parameter에 대한 gradient를 계산해야하지만, 네트워크가 복잡해지면 그 값을 바로 계산하는 것이 엄청나게 어려워진다. 그 대신 backpropataion algorithm에서는 먼저 현재 paramter를 사용하여 loss를 계산하고, 각각의 parameter들이 해당 loss에 대해 얼마만큼의 영향을 미쳤는지 chain rule을 사용하여 계산하고, 그 값으로 update를 하는 방법이다. 따라서 backpropagation algorithm은 크게 두 가지 phase로 나눌 수가 있는데, 하나는 propagation phase이며, 하나는 weight update phase이다. propagation phase에서는 training input pattern에서부터 에러, 혹은 각 뉴런들의 변화량을 계산하며, weight update phase에서는 앞에서 계산한 값을 사용해 weight를 update시킨다.</p>
-
-
-<h6>Phase 1: Propagation</h6>
-
-
-<ol>
-    <li>Forward propagation: input training data로부터 output을 계산하고, 각 ouput neuron에서의 error를 계산한다. (input -> hidden -> output 으로 정보가 흘러가므로 'forward' propagation이라 한다.)</li>
-    <li>Back propagation: output neuron에서 계산된 error를 각 edge들의 weight를 사용해 바로 <a class="red tip" title="이 경우는 hidden layer가 하나이므로 hidden layer를 지칭한다.">이전 layer</a>의 neuron들이 얼마나 error에 영향을 미쳤는지 계산한다. (output -> hidden 으로 정보가 흘러가므로 'back' propagation이라 한다.)</li>
-</ol>
-
-
-<h6>Phase 2: Weight update</h6>
-
-
-<ol>
-    <li>Chain rule을 사용해 paramter들의 gradient를 계산한다.</li>
-</ol>
-
-
-<p>이때, chain rule을 사용한다는 의미는 아래 그림에서 나타내는 것처럼, 앞에서 계산된 gradient를 사용해 지금 gradient 값을 update한다는 의미이다. (그림은 bengio의 <a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">deep learning book</a> <a href="http://www.iro.umontreal.ca/~bengioy/dlbook/mlp.html">Ch6</a> 에서 가져왔다.)</p>
-
-
-<p><img src="/images/post/74-6.png" width="400"></p>
-
-<p>두 그림 모두 \(\frac{\partial z}{\partial x}\)를 구하는 것이 목적인데, 직접 그 값을 계산하는 대신, \(y\) layer에서 이미 계산한 derivative인 \(\frac{\partial z}{\partial y}\)와 \(y\) layer와 \(x\)에만 관계있는 \(\frac{\partial y}{\partial x}\)를 사용하여 원하는 값을 계산하고 있다. 만약 \(x\) 아래에 \(x^\prime\)이라는 parameter가 또 있다면, \(\frac{\partial z}{\partial x}\)와 \(\frac{\partial x}{\partial x^\prime}\)을 사용하여 \(\frac{\partial z}{\partial x^\prime}\)을 계산할 수 있는 것이다. 때문에 우리가 backpropagation algorithm에서 필요한 것은 내가 지금 update하려는 paramter의 바로 전 variable의 derivative와, 지금 paramter로 바로 전 variable을 미분한 값 두 개 뿐이다. 이 과정을 output layer에서부터 하나하나 내려오면서 반복된다. 즉, output -> hidden k, hidden k -> hidden k-1, ... hidden 2 -> hidden 1, hidden 1 -> input의 과정을 거치면서 계속 weight가 update되는 것이다. 예를 들어서 decision layer와 가장 가까운 weight는 직접 derivative를 계산하여 구할 수 있고, 그보다 더 아래에 있는 layer의 weight는 그 바로 전 layer의 weight와 해당 layer의 activation function의 미분 값을 곱하여 계산할 수 있다. 이해가 조금 어렵다면 아래의 <a href="74#example">예제</a>를 천천히 읽어보기를 권한다.</p>
-
-
-<p>이 과정을 맨 위에서 아래까지 반복하면 전체 gradient를 구할 수 있고, 이 gradient를 사용해 parameter들을 update할 수 있다. 이렇게 한 번의 iteration이 진행되고, 충분히 converge했다고 판단할 때 까지 이런 iteration을 계속 반복하는 것이 feed-forward network의 parameter를 update하는 방법이다.</p>
-
-
-<p>이를 그림으로 표현하면 아래와 같다. (출처: <a href="http://tex.stackexchange.com/questions/162326/drawing-back-propagation-neural-network">링크</a>)</p>
-
-
-<p><img src="/images/post/42-1.png" width="600"></p>
-
-<p>이렇듯 backpropagation은 직접 weight를 바로 변화시키는 것이 아니라 오직 error만을 보고 gradient descent method based approach를 사용해 error를 minimize하는 방향으로 계속 weight를 update시키는 것이다. 또한 한 번 error가 연산된 이후에는 output layer에서부터 그 이전 layer로 '역으로' 정보가 update되기 때문에 이를 backpropagation, 한국어로는 역전사라고 하는 것이다.</p>
-
-
-
-
-<h5 id="sgd">Stochastic Gradient Descent</h5>
-
-
-<p>Gradient를 계산했으니 이제 직접 Gradient Descent를 써서 parameter만 update하면 된다. 그러나 문제가 하나 있는데, 일반적으로 neural network의 input data의 개수가 엄청나게 많다는 것이다. 때문에 정확한 gradient를 계산하기 위해서는 모든 training data에 대해 gradient를 전부 계산하고, 그 값을 평균 내어 정확한 gradient를 구한 다음 '한 번' update해야한다. 그러나 이런 방법은 너무나도 비효율적이기 때문에 Stochastic Gradient Descent (SGD) 라는 방법을 사용해야한다.</p>
-
-
-<p>SGD는 모든 데이터의 gradient를 평균내어 gradient update를 하는 대신 (이를 'full batch'라고 한다), 일부의 데이터로 'mini batch'를 형성하여 한 batch에 대한 gradient만을 계산하여 전체 parameter를 update한다. Convex optimization의 경우, 특정 조건이 충족되면 SGD와 GD가 같은 global optimum으로 수렴하는 것이 증명되어있지만, neural network는 convex가 아니기 때문에 batch를 설정하는 방법에 따라 수렴하는 조건이 바뀌게 된다. Batch size는 일반적으로 메모리가 감당할 수 있을 정도까지 최대한 크게 잡는 것 같다.</p>
-
-
-
-
-<h5 id="example">Backpropagation Algorithm: example</h5>
-
-
-<p>이전에 chain rule로 gradient를 계산한다고 언급했었는데, 실제 이 chain rule이 어떻게 적용되는지 아래의 간단한 예를 통해 살펴보도록하자. 이때 계산의 편의를 위해 각각의 neuron은 sigmoid loss를 가지고 있다고 가정하도록 하겠다.</p>
-
-
-<p><img src="/images/post/74-5.png" width="600"></p>
-
-<p>이때 각각의 neuron의 input으로 들어가는 값을 \(in_{o_5}\), output으로 나가는 값을 \(out_{h_3}\)와 같은 식으로 정의해보자 (이렇게 된다면 in과 out은 \(out_{h_3} = \sigma(in_{h_3})\) 으로 표현 가능하다. - 이때 \(\sigma\)는 sigmoid function). 먼저 error를 정의하자. error는 가장 간단한 sum of square loss를 취하도록 하겠다. 우리가 원하는 target을 \(t\)라고 정의하면 loss는 \(E = \frac{1}{2}(t_5-out_{o_5})^2 + \frac{1}{2}(t_6-out_{o_6})^2\)가 될 것이다 (1/2는 미분한 값을 깔끔하게 쓰기 위해 붙인 상관없는 값이므로 무시해도 좋다). 그리고 우리가 원하는 값들은 \(\frac{\partial E}{\partial w_{13}}, \frac{\partial E}{\partial w_{14}}, \ldots, \frac{\partial E}{\partial w_{46}}\)이 될 것이다. 이제 가장 먼저 \(\frac{\partial E}{\partial w_{35}}\) 부터 계산해보자.</p>
-
-
-<p>\[\frac{\partial E}{\partial w_{35}} = \frac{\partial E}{\partial out_{o_5}} * \frac{\partial out_{o_5}}{\partial in_{o_5}} * \frac{\partial in_{o_5}}{\partial w_{35}}. \]</p>
-
-
-<p>즉, 우리가 원하는 derivative를 계산하기 위해서는 세 개의 다른 derivative (\(\frac{\partial E}{\partial out_{o_5}}, \frac{\partial out_{o_5}}{\partial in_{o_5}}, \frac{\partial in_{o_5}}{\partial w_{35}}\))를 계산해야한다. 각각을 구하는 방법은 다음과 같다.</p>
-
-
-<ul>
-    <li><p>\(\frac{\partial E}{\partial out_{o_5}}\): error를 \(E = \frac{1}{2}(t_5-out_{o_5})^2 + \frac{1}{2}(t_6-out_{o_6})^2\)라고 정의했으므로, \(\frac{\partial E}{\partial out_{o_5}} = out_{o_5} - t_5\)이다. - 이때 \(out_{o_5}\)와 \(t_5\)는 weight update이전 propagation step에서 계산된 값이다.</p></li>
-    <li><p>\(\frac{\partial out_{o_5}}{\partial in_{o_5}}\): \(o_5\)는 sigmoid activation function을 사용하므로 \(out_{o_5} = \sigma(in_{o_5})\)이다. 또한 sigmoid function의 미분 값은 \(\frac{\partial \sigma(x)}{\partial x} = \sigma(x) (1 - \sigma(x))\)으로 주어지므로, 이 값을 대입하면 \(\frac{\partial out_{o_5}}{\partial in_{o_5}} = out_{o_5} (1 - out_{o_5})\)가 된다. - 역시 여기에서도 미리 계산한 \(out_{o_5}\)를 사용한다.</p></li>
-    <li>\(\frac{\partial in_{o_5}}{\partial w_{35}}\): \(o_5\)로 들어온 값의 총 합은 앞선 layer의 output과 \(o_5\)로 들어오는 weight를 곱하면 되므로 \(in_{o_5} = w_{35} out_{h_3} + w_{45} out_{h_4}\)이고, 이것을 통해 \(\frac{\partial in_{o_5}}{\partial w_{35}} = out_{h_3}\)가 됨을 알 수 있다. - \(out_{h_3}\) 역시 이전 propagation에서 계산된 값이다.</li>
-</ul>
-
-
-<p>따라서 \(\frac{\partial E}{\partial w_{35}}\)의 derivative 값은 위의 세 값을 모두 곱한 것으로 계산 할 수 있다. 그림으로 표현하면 아래와 같은 그림이 될 것이다. 즉, 'backward' 방향으로 derivative에 대한 정보를 'propagation'하면서 parameter의 derivative를 계산하는 것이다. 마찬가지 방법으로 \(w_{36}, w_{45}, w_{46}\)에 대한 derivative도 계산할 수 있다.</p>
-
-
-<p><img src="/images/post/74-7.png" width="300"></p>
-
-<p>그럼 이번에는 그 전 layer의 paramter들 중 하나인 \(w_{13}\)의 derivative를 계산해보자. 이번에 계산할 과정도 위와 비슷한 그림으로 표현해보면 아래와 같다.</p>
-
-
-<p><img src="/images/post/74-8.png" width="300"></p>
-
-<p>그러면 이제 \(\frac{\partial E}{\partial w_{13}}\)을 구해보자.</p>
-
-
-<p>\[\frac{\partial E}{\partial w_{13}} = \frac{\partial E}{\partial out_{h_3}} * \frac{\partial out_{h_3}}{\partial in_{h_3}} * \frac{\partial in_{h_3}}{\partial w_{13}}.\]</p>
-
-
-<p>마찬가지로 각각을 구하는 방법에 대해 적어보자.</p>
-
-
-<ul>
-    <li><p>\(\frac{\partial E}{\partial out_{h_3}}\): \(E = \frac{1}{2}(t_5-out_{o_5})^2 + \frac{1}{2}(t_6-out_{o_6})^2\)를 \(E = E_{o_5} + E_{o_6}\)로 decompose 하면 이 미분 식은 \(\frac{\partial E_{o_5}}{\partial out_{h_3}} + \frac{\partial E_{o_6}}{\partial out_{h_3}}\)로 쓸 수 있다. 각각의 계산은 다음과 같다.</p></li>
-    <ul>
-        <li><p>\(\frac{\partial E_{o_5}}{\partial out_{h_3}} = \frac{\partial E_{o_5}}{\partial in_{o_5}} * \frac{\partial in_{o_5}}{\partial out_{h_3}}\)으로 쓸 수 있다. 이 중 앞의 값인 \(\frac{\partial E_{o_5}}{\partial in_{o_5}}\)은 이미 전 과정에서 계산했던 \(\frac{\partial E}{\partial out_{o_5}}\)과 \(\frac{\partial out_{o_5}}{\partial in_{o_5}}\)의 곱으로 계산가능하다. 뒤의 값은 \(\frac{\partial in_{o_5}}{\partial out_{h_3}} = w_{35}\)이므로 간단하게 계산할 수 있다.</p></li>
-        <li><p>\(\frac{\partial E_{o_6}}{\partial out_{h_3}}\)도 위와 같은 방법으로 연산이 가능하다.</p></li>
-    </ul>
-    <li><p>\(\frac{\partial out_{h_3}}{\partial in_{h_3}}\): \(\frac{\partial out_{o_5}}{\partial in_{o_5}}\)와 같다. 따라서 \(out_{h_3} (1-out_{h_3})\)이다.</p></li>
-    <li><p>\(\frac{\partial in_{h_3}}{\partial w_{13}}\): \(\frac{\partial in_{o_5}}{\partial w_{35}}\)와 같다. 따라서 \(out_{i_1}\)이다.</p></li>
-</ul>
-
-
-<p>이렇게 \(\frac{\partial E}{\partial out_{h_3}}\)에서는 앞에서 계산했던 값들을 재활용하고, 아래의 값들은 activation function과 network의 topological property에 맞는 derivative를 곱하는 방식으로 \(\frac{\partial E}{\partial w_{13}}\)을 구할 수 있다.</p>
-
-
-<p>이렇듯 backpropagation algorithm은 forward propagation을 통해 필요한 값들을 미리 저장해두고, backward propagation이 진행되면서 위에서부터 loss에 대한 derivative를 하나하나 계산해나가면서 다음 layer에서 바로 전 layer에서 계산한 값들과 각 neuron 별로 추가적으로 필요한 derivative들을 곱해나가면서 weight의 derivative를 계산하는 알고리즘이다.</p>
-
-
-<p>이렇게 한 번 전체 gradient를 계산한 다음에는 learning rate를 곱하여 전체 parameter의 값을 update한 다음, 다시 처음부터 이 과정을 반복한다. 보통 에러가 감소하는 속도를 관측하면서 '이 정도면 converge한 것 같다' 하는 수준까지 돌린다.</p>
-
-
-<p>익숙해지려면 다소 시간이 걸리지만, 개념적으로 먼저 'error를 먼저 계산하고, 그 값을 아래로 전달해나가면서 바로 전 layer에서 계산한 미분값들을 사용해 현재 layer의 미분값을 계산한 다음, 그 값을 사용해 다음 layer의 미분값을 계산한다.' 라고 개념만 이해해두고 다시 차근차근 chain rule을 계산해나가면서 계산하면 조금 편하게 익숙해 질 수 있을 것이다.</p>
-
-
-
-
-<h5>Backpropagation Algorithm: In Practice</h5>
-
-
-<p>실제 backpropagtion을 계산해야한다고 가정해보자. 편의상 \(l\)번째 hidden layer를 \(y_l\) 이라고 해보자. 이 경우 각 layer에 대해 backpropagation algorithm을 위해 계산해야할 것은 총 두 가지 이다. Loss를 \(E\)라고 적었을 때 먼저 layer \(l\)의 parameter \(\theta_l\)의 gradient인 \(\frac{\partial E}{\partial w_l }\)을 구해야한다. 이 값은 \(\frac{\partial E}{\partial w_l } = \frac{\partial E}{\partial y_{l} } \frac{\partial y_{l} }{\partial w_{l} } \)을 통해 계산한다. 이때, \(\frac{\partial E}{\partial y_{l} } = \frac{\partial E}{\partial y_{l+1} } \frac{\partial y_{l+1} }{\partial y_{l} } \)이므로 \(\frac{\partial E}{\partial y_{l} }\)은 바로 전 layer에서 넘겨준 \(\frac{\partial E}{\partial y_{l+1} }\)의 값을 사용하여 계산하게 된다. 정리하면 실제 계산해야하는 값은 \(\frac{\partial y_{l+1} }{\partial y_{l}},\frac{\partial y_{l} }{\partial w_{l} } \) 두 가지이고, 이 값들을 사용해 \(\frac{E}{\partial y_{l}}, \frac{E}{\partial w_{l}}\)을 return하게 된다. 앞의 값은 다음 layer에 넘겨줘서 다음 input으로 사용하고, 두 번째 값은 저장해두었다가 gradient descent update할 때 사용한다.</p>
-
-
-<p>두 가지 예를 들어보자. 먼저 Inner Product layer 혹은 fully connected layer이다. 이 layer가 inner product layer라고 불리는 이유는 input \(y_l\)에 대해 output \(y_{l+1}\)이 간단한 inner product 들이 모여있는 형태로 표현되기 때문이다. 예를 들어 \(y_{l+1, i}\)를 l+1 번째 layer의 i 번째 node라고 한다면, \(y_{l+1, i} = \sum_{j} w_{ij} y_{l, j}\)으로 표현할 수 있음을 알 수 있다. 그런데 이 값은 사실 vector \(w\)와 \(y_{l}\)의 inner product로 표현됨을 알 수 있다. 그렇기 때문에 fully connected layer를 inner product라고 부른다. 다시 본론으로 돌아와서 inner product의 output은 input과 weight의 matrix-vector multiplication인 \(y_{l+1} = W_l * y_l\)으로 표현할 수 있다.</p>
-
-
-<p>따라서 \(\frac{\partial y_{l+1} }{\partial y_{l}} = W_l^\top\)이고, \(\frac{\partial y_{l} }{\partial W_{l} } = y_l\)이다. 이 값을 통해 실제 return하는 값은 \(\frac{\partial E }{\partial y_{l} } = \frac{\partial E }{\partial y_{l+1} } * W_l^\top \)와 \(\frac{\partial E }{\partial w_{l} } = \frac{\partial E }{\partial y_{l+1} } * y_{l} \)이 된다.</p>
-
-
-<p>두 번째로 많이 사용하는 ReLU non-linearity의 gradient를 계산해보자. 이때 activation function은 마치 하나의 layer가 더 있는 것처럼 생각할 수 있다. 즉 \(y_{l+1} = max(0, y_{l})\)로 표현할 수 있을 것이다. Parameter는 없으니까 생략하면 만약 \(y_{l} \geq 0\)라면 \(\frac{\partial y_{l+1} }{\partial y_{l} = 1} \)이고, 아니라면 0이 될 것이다. 따라서 \(y_{l} \geq 0\)라면 \(\frac{\partial E }{\partial y_{l} } = \frac{\partial E }{\partial y_{l+1} } \)이 되고, 0보다 작다면 0이 될 것이다.</p>
-
-
-
-
-<h5>정리</h5>
-
-
-<p>Deep learning을 다루기 위해서는 가장 먼저 aritifitial neural network의 model에 대한 이해와 gradient descent라는 update rule에 대한 이해가 필수적이다. 이 글에서는 가장 기초적이라고 생각하는 feed-forward network의 model을 먼저 설명하고, paramter를 update하는 gradient descent algorithm의 일종인 backpropagation에 대한 개념적인 설명을 다루었다. 조금 어려울 수 있는 내용이니 다른 글들을 계속 참고하면서 보면 좋을 것 같다.</p>
-
-
-
-
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 9월 13일: 글 등록</li>
-<li>2015년 9월 14일: 오타수정, SGD 내용 추가 등</li>
-<li>2015년 9월 20일: BP in practice 추가</li>
-</ul>
-
-
-<h5>Reference</h5>
-
-
-<ul>
-<li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
-<li>wiki (<a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks">링크</a>)</li>
-<li><a href="http://courses.cs.tau.ac.il/Caffe_workshop/Bootcamp/pdf_lectures/Lecture%203%20CNN%20-%20backpropagation.pdf">Caffe workshop &ndash; CNN backpropagation</a></li>
-</ul>
-
-
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
-
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
-<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
 </ul>
 
 ]]></content>
