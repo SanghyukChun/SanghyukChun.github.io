@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neural-Network | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/neural-network/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-10-14T00:56:24+09:00</updated>
+  <updated>2015-10-15T16:56:10+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -78,10 +78,11 @@
 <p>이 논문은 deep CNN이 거의 100% 확률로 오답을 발생시키도록 이미지를 조작한 work이다. 예를 들어 주어진 이미지가 '새' 라는 label을 가지고 있다고 판별했을 때, '문어'라는 label을 100% 로 가지도록 이미지를 조작하는 것이다. 사람이 봤을 때는 여전히 '새' 사진이지만, CNN은 '문어'라고 판별해버리는 것이다.</p>
 
 
-<p>이렇듯, 다양한 목적으로 CNN이 이미 주어져 있을 때, 특정 목적에 따라 이미지를 update하는 방법론들은 이미 예전부터 연구가 계속 진행되어왔다. 위에 링크한 3개의 work은 꽤 흥미로운 주제들이기 때문에 나중에 또 따로 포스팅할 수 있도록 하겠다. 이 논문의 contribution은 각 convolution layer에서부터 style과 content를 reconstruct하는 방법론을 제안했다는 것이다. 이 방법은 앞에서 언급한 <a href="http://arxiv.org/abs/1412.0035">Understanding deep image representations by inverting them</a> 논문 처럼 현재 feature map에서 원래 이미지를 최대한 복원하는 content reconstruction과, 아래 논문 등에서 제안되어왔던 (neural network 기반 work은 아니다) texture 분석과 생성 등을 복원하는 texture reconstruction을 결합한 것인데, 자세한건 뒤에서 더 다루도록하자.</p>
+<p>이렇듯, 다양한 목적으로 CNN이 이미 주어져 있을 때, 특정 목적에 따라 이미지를 update하는 방법론들은 이미 예전부터 연구가 계속 진행되어왔다. 위에 링크한 3개의 work은 꽤 흥미로운 주제들이기 때문에 나중에 또 따로 포스팅할 수 있도록 하겠다. 이 논문의 contribution은 각 convolution layer에서부터 style과 content를 reconstruct하는 방법론을 제안했다는 것이다. 이 방법은 앞에서 언급한 <a href="http://arxiv.org/abs/1412.0035">Understanding deep image representations by inverting them</a> 논문 처럼 현재 feature map에서 원래 이미지를 최대한 복원하는 content reconstruction과, 아래 논문 등에서 제안되어왔던 texture 분석과 생성 등을 복원하는 texture reconstruction을 결합한 것이다. 참고로 이 work들은 맨 처음 논문을 제외하면 neural network 기반 work은 아니다 (첫 번째 논문은 이 논문을 작성한 연구팀이 이 논문을 arXiv에 올리기 3개월 전에 arXiv에 올린 다른 논문이다). 자세한건 뒤에서 더 다루도록하자.</p>
 
 
 <ul>
+<li><a href="http://arxiv.org/abs/1505.07376">Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. &ldquo;Texture synthesis and the controlled generation of natural stimuli using convolutional neural networks.&rdquo; arXiv preprint arXiv:1505.07376 (2015).</a></li>
 <li><a href="http://www.cns.nyu.edu/heegerlab/content/publications/Heeger-siggraph95.pdf">Heeger, David J., and James R. Bergen. &ldquo;Pyramid-based texture analysis/synthesis.&rdquo; Proceedings of the 22nd annual conference on Computer graphics and interactive techniques. ACM, 1995.</a></li>
 <li><a href="http://dl.acm.org/citation.cfm?id=363108">Portilla, Javier, and Eero P. Simoncelli. &ldquo;A parametric texture model based on joint statistics of complex wavelet coefficients.&rdquo; International Journal of Computer Vision 40.1 (2000): 49-70.</a></li>
 </ul>
