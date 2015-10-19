@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Research | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/research/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-10-15T16:56:10+09:00</updated>
+  <updated>2015-10-19T18:19:38+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,351 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Show, Attend and Tell: Neural Image Caption Generation with Visual Attention (ICML2015)]]></title>
+    <link href="http://SanghyukChun.github.io/93/"/>
+    <updated>2015-10-19T18:20:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/93</id>
+    <content type="html"><![CDATA[<p>주어진 이미지에 대한 설명을 하는 문장, 혹은 캡션을 생성하는 문제를 image caption 문제라고 한다. 이 문제는 여러 가지 문제들이 복합적으로 얽혀있는 문제라고 할 수 있는데, 먼저 이미지가 어떤 것에 대한 이미지인지 판별하기 위하여 object recognition을 정확하게 할 수 있어야한다. 그 다음에는 detect한 object들 사이의 관계를 추론하여 이미지가 나타내는 event가 무엇인지 알아내어야 하고, 마지막으로 event를 caption으로, 즉 natural language로 재생성해야한다. 얼핏 생각하면 간단한 문제같지만 자그마치 비전과 NLP 분야의 핵심 문제들이 복합적으로 얽혀있는 복잡한 문제인 것이다. <s>방금 너희들이 본 건 간단해 보이지만 자그마치 3개의 퀑 기술이 합쳐진 컴비네이션!</s> 예를 들어보자.</p>
+
+
+<p></p>
+
+<p><img class="center" src="/images/post/93-1.jpg" width="400"></p>
+
+<p>이 사진을 보고 우리는 '오바마가 청소부와 인사를 하고 있다' 라고 바로 문장으로 풀어낼 수 있지만, 이런 문제를 푸는 알고리즘을 디자인하기 위해서는 먼저 이 사진에서 오바마와 청소부라는 핵심 object를 detect 해야한다. 그러나 아직까지는 어떤 object가 중요한지 알 수 없으므로, 먼저 복도에 있는 보좌관들, 기둥, 바닥, 뒤에 보이는 계단 난간, 전등, 복도 등등을 모두 detect 해야한다. 그러므로, caption을 만들기 위해서 가장 먼저 우리는 높은 수준의 object detection과 segmentation을 필요로 하다. 다음으로는 segmentation된 정보를 사용해서 여러 event를 알아내야 한다. '오바마와 청소부가 인사를 하고 있다' '보좌관이 복도를 걷고 있다' '한 남자가 책을 읽고 있다' '사람이 기둥 뒤에 서있다' <s>'기둥 뒤에 공간이 있다'</s> 등의 여러 event를 추정해야하고, 그 중에서 가장 가능성이 높은 event를 판별해야한다. 마지막으로 해당 event를 설명하는 문장을 generate해야한다.</p>
+
+
+<p>현재 caption generation 문제를 해결하는 방법들 중에서 가장 널리 쓰이고 있고, 가장 잘 동작하는 (state-of-art) 방법들은 neural network를 사용한 접근 방식들이다. Neural network를 사용하지 않은 기존 접근 방법은 크게 두 가지가 있었다. 하나는 object detection과 attribute discovery를 먼저 진행한 후에, 그것들을 사용해 미리 만들어놓은 caption template을 채우는 것이고, 또 하나는 비슷한 이미지 들의 caption 데이터를 사용해 지금 image에 적합한 caption으로 수정하는 방식이었다고 한다. Reference들을 보면 약 2010년부터 2013년 정도까지 연구가 활발하게 진행되었던 모양이지만, 지금은 전부 neural network 기반의 work에게 밀려서 사용되지 않는다고 한다.</p>
+
+
+<p>현재 state-of-art를 찍고 있는 Neural network 기반 image description generator 모델들은 주로 2014년쯤부터 활발하게 연구가 진행되고 있다. Image caption 문제를 해결하기 위해 기존 deep learning 연구 그룹들은 마치 image를 하나의 language처럼 취급하고 실제 언어로 'translate' 하는 concept을 도입해서 문제를 machine traslation의 연장선으로 바라보는 접근 방법을 취한다고 한다. 그래서 대부분의 neural network 기반의 work들은 machine translation에서 사용하는 encoder-decoder 아이디어를 활용하여 caption generation을 한다고 한다. 보통 encoder-decoder 과정에서 이미지 하나를 그대로 사용하는 대신, CNN을 사용하여 이미지 하나를 single feature vector로 표현하고, 그 feature vector를 model에서 사용하는 방식을 취하고 있다.</p>
+
+
+<p>올해 초, 기존 state-of-art를 뛰어넘는 RNN visual attention 기반 caption generation model이 <a href="http://arxiv.org/abs/1502.03044">Xu, Kelvin, et al. "Show, attend and tell: Neural image caption generation with visual attention." ICML 2015</a>이라는 work을 통해 제안되었다. 이 논문은 기본적으로 기존의 방법들처럼 encoder-decoder 개념을 사용하지만, 추가로 visual attention이라는 개념을 caption generator에 도입하여 image caption 문제를 해결한다. Attention이란 사람이 시각 정보를 처리할 때 일부 데이터에 'focus'하면서 계속 focus되는 대상이 움직이는 현상을 일컫는다. 최근 RNN을 사용하여 visual attention을 반영한 새로운 모델 들이 여기저기에서 등장하고 있는데, 이는 기존 CNN 기반 접근 방법들이 모든 이미지 픽셀을 그대로 사용하는 것과 대조적이라 할 수 있다. 참고로, 이미 앞선 <a class="tip" title="Recurrent Models of Visual Attention (NIPS 2014)" href="http://SanghyukChun.github.io/91">다른 work</a>에서도 visual attention이라는 개념을 사용해 classification 문제를 해결했었다.</p>
+
+
+<p>이 논문의 가장 큰 contribution은 visual attention을 "hard" attention과 "soft" attention, 두 가지 attention machanism을 제안하고 새로운 방식의 two attention-based image caption generator 모델을 제안했다는 것이다.</p>
+
+
+<ul>
+<li>&ldquo;Soft&rdquo; attention은 deterministic machanism으로, standard back-propagation 방법으로 train할 수 있기 때문에 전체 모델이 end-to-end로 learning된다. Soft attention model은 hard attention model의 approximation model이라고 생각하면 된다.</li>
+<li>&ldquo;Hard&rdquo; attention은 stochastic mechanism이며, reinforcement learning으로 train할 수 있다. Hard attention model은 매 iteration마다 데이터를 sampling을 해야하고, reinforcement learning과 neural network 부분이 분리되어있어 end-to-end learning이 아니라는 단점이 있다.</li>
+</ul>
+
+
+<p>(+ 이 논문을 처음 읽을 때는 두 가지 모델을 '섞어서' 한 모델에서 soft와 hard attention이 복합적으로 작용하는 모델을 만드는 것이라고 생각했었지만, 논문을 자세히 읽어보니, 먼저 hard attention을 제안한 후에, 이 모델의 approximation version으로 soft attention이라는 모델을 추가로 제안한 것이었다.)</p>
+
+
+<p>그럼 이제 모델이 구체적으로 어떻게 구성이 되어있는지 자세하게 알아보도록 하자.</p>
+
+
+
+
+<h5>Image Caption Generation with Attention Mechanism: Model details</h5>
+
+
+
+
+<p>먼저 이 논문에서 제안하는 caption generation task를 정의하자. 이 논문은 caption의 길이를 \(C\)로, 사용할 수 있는 단어의 개수를 \(K\)로 고정시킨채 문제를 해결한다. 이 정의에 따라 caption을 vector \(y\)로 표현할 수 있다.</p>
+
+
+
+
+<p>\[ y = \{y_1, \ldots, y_c \}, y_i \in \mathbb R^K. \]</p>
+
+
+
+
+<p>이 식에서 각 \(y_i\)는 단어 하나를 의미한다. 즉, 이 논문의 목적은 '적절한' caption vector \(y\)를 생성하는 것이다. 이 논문은 '적절한' caption vector를 hard loss와 soft loss 두 가지 loss function을 사용해 정의하고 있으며, 여기에서 attention 개념이 사용된다. 자세한 설명은 아래에서 마저 설명하도록 하겠다.</p>
+
+
+
+
+<p>이제 자세한 모델 설명을 해보자. 앞에서도 잠깐 언급했듯, 이 논문 역시 다른 기존 deep learning caption generator model들처럼 image에서 caption을 생성하는 과정을 image라는 언어에서 caption이라는 언어로 'translatation' 하는 개념을 사용한다. 따라서 이 논문은 machine translation의 encoder-decoder 개념을 사용하게 되는데, encoder는 우리가 잘 알고 있는 CNN을 사용하고, decoder로 RNN, 정확히는 LSTM을 사용하게 된다. 이 논문의 핵심이라고 할 수 있는 attention 개념은 LSTM에서 사용된다.</p>
+
+
+<p>이 논문에서 제안하는 모델을 그림으로 표현하면 다음과 같다.</p>
+
+
+<p><img class="center" src="/images/post/93-8.png" width="450"></p>
+
+<h5>Encoder: CNN</h5>
+
+
+
+
+<p>Encoder CNN은 주어진 이미지를 input으로 받아, output으로 feature vector \(a\)를 내보낸다. 이 CNN의 마지막 layer는 총 \(L\) 개의 filter로 이루어져있으며, 각각의 filter마다 \(D\) 개의 neuron을 가지도록 설계하였다. 즉, 다음과 같이 쓸 수 있다</p>
+
+
+
+
+<p>\[ a = \{ a_1, \ldots, a_L \}, a_i \in \mathbb R^D. \]</p>
+
+
+
+
+<p>이 논문에서는 encoder를 위한 CNN으로 VGG network를 선택하였는데, 이 네트워크는 바로 <a href="http://SanghyukChun.github.io/92">전 글</a>에서 다뤘으니 자세한 설명은 생략하도록 하겠다. 19 layer짜리를 사용한 것 같고, VGG11 layer로 pre-training만 시키고 fine-tunning은 하지 않은 상태로 사용했다고 한다. 당연한 얘기지만, VGG 네트워크말고도 다른 네트워크도 사용가능하다.</p>
+
+
+
+
+<h5>Decoder: LSTM</h5>
+
+
+
+
+<p>이 논문은 decoder로 LSTM을 사용한다. 이 LSTM은 매 time stamp \(t\) 마다 caption vector \(y\)의 한 element \(y_t\)를 생성한다. 즉, 전체 'unfold' 하게되는 시간은 caption의 길이 \(C\)와 같다. 즉 이 LSTM은 한 time stamp \(t\) 마다 바로 전 hidden state \(h_{t-1}\)과 바로 전에 generate된 단어 \(y_{t-1}\)을 input으로 받아서 지금 time stamp에 해당하는 단어 \(y_t\)를 생성하는 것이다. 이 논문에서 사용하는 LSTM 모델은 다음과 같다.</p>
+
+
+<p><img class="center" src="/images/post/93-2.png" width="450"></p>
+
+<p>LSTM에 대한 자세한 설명은 생략하도록 하겠다. 추후 다른 포스트를 통해 LSTM 자체에 대해 자세히 다뤄보도록하겠다. \(T_{s,t}: \mathbb R^s \to \mathbb R^t\)를  간단한 affine transformation이라고 정의해보자 (\(T_{n,m} (x) = W x + b\)라는 의미이다). 그러면 LSTM은 다음과 같이 간단하게 표현할 수 있다.</p>
+
+
+<p><img class="center" src="/images/post/93-3.png" width="300"></p>
+
+<p>이때 1번 식의 \(i_t,f_t ,c_t ,o_t ,h_t \)는 각각 input, forget, memory, output, hidden state를 의미한다. 이 논문은 LSTM의 initial memory state와 hidden state를 \(a\)의 평균 \(\bar a = \frac{1}{L}\sum_i^L a_i\)을 input으로 하는 두 개의 MLP (\(f_{init,c}\) \(f_{init,h}\))로 estimate한다고 한다.</p>
+
+
+<p>그럼 이제 LSTM cell 하나에 input으로 들어오는 \(Ey_{t-1}, h_{t-1}, \hat z_t\)에 대해 알아보자. \(h_{t-1}\)은 바로 전 hidden state이니 제외하고, \(Ey_{t-1} \)는 \(t-1\) 시점에서 생성된 caption \(y_{t-1}\)을 embedding matrix \(E \in \mathbb R^{m \times K}\)로 embedding한 \(m\) dimensional vector이다. \(E\)는 맨 처음에 randomly initialize를 한 이후 train 과정에서 update되는 parameter이다. 마지막으로 \(\hat z \in \mathbb R^D\)는 context vector라고 하는데, 이 context vector는 attention model들에 의해서 결정된다.</p>
+
+
+
+
+<p>Context vector \(\hat z_t\)는 CNN encoder output \(a\)와 바로 전 hidden state \(h_{t-1}\)에 의해 다음과 같이 결정된다.</p>
+
+
+
+
+<p>\[ \hat z_t = \phi (a, \alpha_t), \mbox{ where } \alpha_{ti} = \frac{\exp(f_{att}(a_i, h_{t-1}))}{\sum_{k=1}^L \exp(f_{att}(a_k, h_{t-1}) )}. \]</p>
+
+
+
+
+<p>먼저 \(\alpha_t\)는 time \(t\)에서의 \(a\)의 weight vector를 의미하며, \(\alpha_{ti}\)는 time \(t\)에서의 \(a\)의 \(i\)번째 element \(a_i\)에 해당하는 weight value값이다. 이때 weight란, 우리가 주어진 annotation (CNN의 output) 중에서 어느 location에 focus를 맞출 것인지, 혹은 어떤 것이 중요하지 않은지를 결정하는 값으로, 모델에서 'attention' 개념이 적용된 부분이다. 위의 식에서 알 수 있듯, softmax로 정의가 되기 때문에, weight \(\alpha_t\)의 element-wise summation은 1이다. \(f_{att}\)는 attention model이라는 것으로, weight vector \(\alpha\)를 계산하기 위한 모델이며, 이 논문은 이 모델을 hard와 soft 두 가지로 정의하였다. \(\phi\) function은 주어진 \(a\)와 그것의 weight vector \(\alpha_t\)를 사용해 \(\hat z_t\)를 계산하기 위한 function이다. 정리해보면 다음과 같다.</p>
+
+
+
+
+<ul>
+    <li><p>\(\alpha_t\): \(a\)의 weight vector로, 어디에 'attend' 할지 결정하는 값. 모두 더하면 1.</p></li>
+    <li><p>\(f_{att}\): \(a\)와 \(h_{t-1}\)을 사용해 weight vector \(\alpha\)를 계산하기 위한 attention model.</p></li>
+    <li><p>\(\phi\): \(a\)와 \(\alpha_t\)를 받아 \(\hat z\)를 계산하는 mechanism (예: \(\phi(a,\alpha_t) = \sum_i\alpha_{ti} a\)).</p></li>
+</ul>
+
+
+
+
+<p>마지막으로, 모델이 주어졌을 때, time \(t\)에서의 단어 \(y_t\)는 다음과 같이 바로 전 context vector \(\hat z_{t-1}\)와 그 동안의 LSTM의 state를 저장하고 있는 hidden state \(h_t\), 그리고 바로 직전 단어 \(y_{t-1}\)에 관련된 확률에 의해 결정된다.</p>
+
+
+
+
+<p>\[p (y_t | a, y^{t-1}_1) \propto \exp(L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)). \]</p>
+
+
+
+
+<p>여기에서 \(L_o \in \mathbb R^{K \times m}, L_h \in \mathbb R^{m \times n} L_z \in \mathbb R^{m \times D}, E \in \mathbb R^{m \times K} \)는 train과정에서 learning하는 parameter들이다.</p>
+
+
+
+
+<p>이제 이 논문의 핵심인 attention model \(f_{att}\)들을 살펴보도록하자.</p>
+
+
+
+
+<h5>Stochastic "Hard" Attention</h5>
+
+
+
+
+<p>캡션 모델이 i번째 단어를 생성하기 위해 focus attention해야 하는 위치를 \(s_t\)라고 하는 location variable을 사용해 표현해보자. 우리가 원하는 벡터는 정확하게 focus해야하는 부분 한 부분만 값이 1이고 나머지는 전부 0인 벡터이다.</p>
+
+
+<p>첫 번째 attention model인 stochastic "hard" attention은 attention location \(s_t\)를 latent variable로 취급한 다음, 이 값을 \(\alpha_t\)로 multinoulli distiribution parameterize시킨다. 다시 말하면, 주어진 시간 \(t\)에서, \(s_t\)의 \(i\)번째 element s_{ti}의 값이 1이 될 확률이 \(\alpha_{ti}\)이 되는 것이며, 주어진 시간 \(t\)에서 모든 \(i\)에 대해 \(\alpha_{ti}\)를 더하면 그 값은 1이 된다. 즉, \(\sum_i \alpha_{ti} = 1\) 이다. \(s_t\)와 \(\alpha_t\)를 정의하게 되면 \(\hat z_t\)라는 새로운 random variable을 다음과 같이 정의할 수 있다.</p>
+
+
+
+
+<p>\[p(s_{ti} = 1 | s_{j &#60; t, a}) = \alpha_{ti} \mbox{ and } \hat z_t = \sum_i s_{ti} a_i. \]</p>
+
+
+
+
+<p>우리의 목표는 주어진 feature vector \(a\)에 대해 가장 확률이 높은 caption \(y\)를 고르는 것이다. 이 작업은 간단하게 maximum log likelihood \(\max_y \log p(y|a)\)를 계산하는 것으로 구할 수 있는데, 이 값을 직접 계산하는 대신, 앞에서 정의한 attention location \(s_t\)를 사용하게 된다면 log likelihood의 lower bound를 다음과 같이 계산할 수 있으며, 이 값을 새로운 objective function \(L_s\)로 정의한다.</p>
+
+
+
+
+<p>\[ L_s = \sum_s p(s|a) \log p(y|s,a) \leq \log \sum_s p(s|a) p(y|s,a) = \log p(y|a).\]</p>
+
+
+
+
+<p>\(L_s\)가 log likelihood의 lower bound이므로, 이 값을 증가시키게 되면 likelihood 역시 함께 증가할 것이다. 따라서 log-likelihood의 maximum값을 구하는 대신, \(L_s\)의 maximum 값을 구하는 것으로 문제를 대략적으로 풀 수 있다 (하지만 엄밀하게 증명해본 것은 아니지만, 아마도 \(L_s\)가 local optimum으로 converge한다고 해서 원래 log likelihood가 converge할 것 같지는 않기 때문에 정확한 문제의 solution을 찾게 되는 것은 아닌 것 같다. 그러나 이미 neural network 쪽 algorithm들이 그러하듯, 정확한 답보다는 그 답을 향해 진행하는 것이 훨씬 중요하기 때문에 이 work에서는 큰 문제가 될 것 같지는 않다). Parameter \(W\)에 대한 \(L_s\)의 미분값은 다음과 같이 주어지며, 이 값을 사용하면 gradient descent를 통해 \(\max L_s\) 문제를 해결할 수 있다. </p>
+
+
+
+
+<p>\[ \frac{\partial L}{\partial W} = \sum_s p(s|a) \left[ \frac{\partial p(y| s,a)}{\partial W} + \log p(y|s,a)\frac{\partial p(s|a)}{\partial W} \right]. \]</p>
+
+
+
+
+<p>이 미분 값을 직접 구하기 위해서는 모든 attention location \(s\)에 대해 summation 기호 안에 있는 연산을 계산해야하기 때문에 computation이 간단하지 않다. 이미 많은 기존 deep learning approach들에서 '정확한' 값을 구하는 데에 시간이 오래걸린다면, 그냥 '적당히' 빠르게 근사하는 것이 더 낫다는 것이 알려져 있는 만큼, 이 논문에서는 정확한 값을 계산하는 대신 Monte Carlo based sampling을 사용해 이 값을 다음과 같이 근사하고 있다. 이때, \(\tilde s_t \sim \mbox{Multinouli}_L (\alpha)\)로 주어진 값이다.</p>
+
+
+
+
+<p>\[ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \log p(y| \tilde s^n,a)\frac{\partial p(\tilde s^n |a)}{\partial W} \right]. \]</p>
+
+
+
+
+<p>Monte Carlo based sampling을 사용해 gradient를 근사하게 되면, 굉장히 효율적이고 빠르게 gradient를 근사할 수 있지만, 그렇게 계산된 gradient는 variance가 크기 때문에 이를 handle하기 위한 추가적인 아이디어들이 도입되게 된다. 먼저 moving average를 사용한다. 이 논문에서는 moving average baseline을 다음과 같이 이전 log likelihood들의 exponential decay를 사용한 합으로 표현하였다.</p>
+
+
+
+
+<p>\[ b_k = 0.9 \times b_{k-1} + 0.1 \times \log p (y | \tilde s_k, a). \]</p>
+
+
+
+
+<p>여기에 또 varinace를 줄이기 위하여 entroy term \(H[s]\)를 더한다. 그뿐 아니라 주어진 이미지에 0.5의 확률로 sampled attention location \(\tilde s\)의 값을 \(\tilde s\)의 기대값인 \(\alpha\)로 설정한다. 이 방법들을 사용하게 되면 stochastic attention learning algorithm의 robustness를 증대시킬 수 있다고 한다. 이 방법들을 모두 섞으면, 기존의 gradient는 다음과 같이 바뀐다.</p>
+
+
+
+
+<p>\[ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \lambda_r (\log( p(y|\tilde s^n, a) - b)\frac{\partial p(\tilde s^n |a)}{\partial W} + \lambda_e \frac{H[\partial \tilde s^n]}{\partial W} \right]. \]</p>
+
+
+
+
+<p>이렇게 구해진 식은, reinforcement learning의 update rule과 같다. 그렇기 때문에 hard visual attention을 reinforcement learning을 사용해 learning할 수 있다고 이야기하는 것이다. Action은 attention의 위치를 고르는 것이 될 것이고, reward는 log-likelihood의 lower bound인 \(L_s\)가 된다.</p>
+
+
+<p>Hard attention model은 매 순간마다 \(\hat z\)를 'hard choice'를 통해 계산하게 된다. 여기에서 hard choice란, 주어진 시간 \(t\)에서 \(\alpha\)로 parameterize된 multinouilli distribution에서 \(a_i\)를 sampling하여 얻게되는 choice를 의미한다.</p>
+
+
+
+
+<h5>Deterministic "Soft" Attention</h5>
+
+
+<p>Hard attention은 train phase의 매 timestamp마다 attention location \(s_t\)를 매 번 sampling해줘야하기 때문에, 이 논문에서는 hard attention 대신 soft attention이라는 개념을 추가로 도입한다. Soft attention은 stochastic하게 매 번 sampling을 하는 대신 deterministic하게 context vecot \(\hat z_t\)을 계산한다. Soft attention \(\phi\)는 다음과 같이 표현된다.</p>
+
+
+<p></p>
+
+<p>\[\phi (\{ a_i \}, \{ \alpha_i \}) = \sum_i^L \alpha_i a_i. \]</p>
+
+
+
+
+<p>이렇게 표현되는 이유는 \(\hat z_t\)의 expectation이 \(\alpha, a\)로 다음과 같이 직접 계산할 수 있기 때문이라고 한다.</p>
+
+
+
+
+<p>\[ \mathbb E_{p(s_t|a)}p[\hat z_t] = \sum_{i=1}^L \alpha_{ti} a_i. \]</p>
+
+
+
+
+<p>따라서 이 방법을 취하게 되면 전체 모델이 좀 더 smooth해지고, differentiable해지기 때문에 back-propagation을 사용해서 end-to-end로 learning이 가능하다는 장점이 있다. Deterministic attention, 혹은 soft attention 역시 앞에서 구한 likelihood \(p(y|a)\)를 \(s_t\)를 사용하여 구한 approximation을 optimizing하는 것으로 구할 수 있다. 이 논문에 따르면 \(h_t\)가 stochatic context vector \(\hat z_t\)를 tanh를 사용한 linear projection이기 때문에, \(\mathbb E_{p(s_t|a)[h_t]}\)를 1st order Taylor approximation하게 되면 이 값은 \(\hat z_t\)의 expectation인 \(\mathbb E_{p(s_t|a)}p[\hat z_t]\)를 사용하여 forward propagation을 한 번 진행하여 \(h_t\)를 구한 값과 같아진다고 한다. \(n_t = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)\)로 정의하고 (\(p (y_t | a, y^{t-1}_1)\)를 approximation했을 때 쓰인 값과 같다), \(n_{ti}\)를 \(a_i\)를 사용하여 계산한 random variable \(\hat z_t\)를 대입하여 구한 \(n_{t}\)값이라고 해보자. 이 값들을 사용하여 이 논문은 k번째 word prediction을 위한 NWGM (Normalized Weighted Geometric Mean)이라는 것을 다음과 같이 정의한다.</p>
+
+
+
+
+<p>\[NWGM[p(y_t = k | a)] = \frac{\prod_i \exp(n_{tki})^{p(s_{ti}=1|a)}}{\sum_j \prod_i \exp(n_tji)^{p(s_{ti}=1|a)}} = \frac{\exp(\mathbb E_{p(s_t|a)}[n_{tk}])}{\sum_j\exp(\mathbb E_{p(s_t|a)}[n_{tj}])}.\]</p>
+
+
+
+
+<p>정의에 따라 \(\mathbb E [n_t] = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)\)이 되므로, 이 식을 통해 우리는 caption prediction을 위한 NWGM이 expected context vector를 사용하여 approximate된다는 것을 알 수 있다. 이전의 다른 work에 의하면, NWGM은 (softmax acivation일 때만) \(\mathbb E [ p(y_t = k | a)]\)로 근사가 된다고 한다. 이 말은 바꿔 말하면, 모든 가능한 attention location \(s_t\)에 대해 구한 output의 expectation이 expected context vector \(\mathbb E [\hat z_t]\)를 사용하여 간단한 feedforward propagation으로 계산된다는 의미가 된다.</p>
+
+
+
+
+<p>또한 이 논문에서는 doubly stochastic attention이라는 개념도 같이 제안한다. \(\alpha\)의 정의에 따라 우리는 \(\sum_i \alpha_{ti} = 1\) 이라는 관계식을 가진다. 이 논문이 주장하는 것은, \(\sum_t \alpha_{ti} \approx 1\) 이라는 조건을 하나 더 추가하는 것이 실제 실험결과 더 좋은 성능을 낸다는 것이다. 그 이유는 모델이 모든 이미지의 모든 부분을 전체 기간 동안 보는 것을 방해하기 때문에 더 focus된 attention이 가능하기 때문이라고 한다. 그리고 추가로, soft attention model에 </p>
+
+
+
+
+<p>결론적으로, 이 모델은 아래와 같은 negative log-likelihood를 minimize하는 방식으로 end-to-end learning을 할 수 있다.</p>
+
+
+<p>\[ L_d = -\log (p(y|x)) + \lambda \sum_i^L \left(1 - \sum_t^C \alpha_{ti} \right)^2. \]</p>
+
+
+
+
+<h5>Experiment</h5>
+
+
+<p>다음 그림은 실제 hard attention과 soft attention이 어떻게 동작하는지 잘 보여주는 그림이다. 가장 왼쪽의 주어진 이미지에 대해 soft attnetion과 hard attention 모두 'a bird flying over a body of water.' 이라는 caption을 생성했는데, soft와 hard attention 각각 경우에 대해 caption generation 모델이 어느 곳을 attend하도록 동작했는지 표현되어있다.</p>
+
+
+<p><img src="/images/post/93-5.png" width="600"></p>
+
+<p>위의 그림이 deterministic하게 attention을 계산하는 soft attention이다. 정확한 'attention location'이 존재하는 것이 아니라, 하얗게 mapping된 부분을 전반적으로 attend한다고 생각하면 된다. 반면 아래에 있는 hard attention을 보면, 매 번 정확한 attention location을 고르는 것을 알 수 있다. 이 과정을 매 번 확률적으로, sampling based approximaiton을 취하기 때문에 hard attention model은 stochastic machanism이다.</p>
+
+
+<p>다음 그림을 통해, 실제 각 word 별로 어느 곳을 attend하는지 대략적으로 확인할 수 있다.</p>
+
+
+<p></p>
+
+<p><img src="/images/post/93-6.png" width="600"></p>
+
+<p>Attend하는 위치가 비교적 굉장히 정확한 곳을 고르는 것을 알 수 있다. 좀 더 많은 예시가 gif로 <a href="http://kelvinxu.github.io/projects/capgen.html">이 링크</a>에 업로드되어있으니 참고하면 좋을 것 같다. 이 논문은 성공했을 때 뿐 아니라 실패했을 경우의 attention도 아래 그림과 같이 기재하여두었다.</p>
+
+
+<p><img src="/images/post/93-7.png" width="600"></p>
+
+<p>이 사진들을 통해 저자들은, 이 모델이 attend하는 위치는 잘 골랐으나, 각 object를 조금 잘못 classification했기 때문에 실패하는 경우가 나온다고 주장하고 있다. 예를 들어 위 실패 경우를 보면 바이올린을 스케이트 보드라고 했거나, 돛을 서핑보드라고 분류하여 잘못된 caption 결과가 나왔음을 알 수 있다.</p>
+
+
+<p>좀 더 많은 이미지 데이터셋에 대해 hard attention과 soft attention을 사용한 caption generator의 성능은 다음 표에 잘 나타나있다. 점수는 높을수록 좋다.</p>
+
+
+<p><img src="/images/post/93-4.png" width="600"></p>
+
+<p>기존에 알려진 모델들에 비해 attention based model들의 성능이 훨씬 좋은 것을 알 수 있다.</p>
+
+
+
+
+<h5>Summary of Show, Attend and Tell</h5>
+
+
+<ul>
+<li>Image caption 문제는 상당히 어려운 문제이며, 기존 deep learning 기법들은 machine translation에서 사용하는 encoder-decoder concept를 사용해 문제를 해결한다.</li>
+<li>이 논문 역시 encoder-decoder 개념을 사용하지만, decoder에서 attention이라는 개념을 추가로 사용하여 새로운 모델을 제안하고 있다.</li>
+<li>Encoder는 CNN을 사용한다. 실제 실험에서는 CNN 모델로 VGG 네트워크를 선택하여 사용하고 있다.</li>
+<li>Decoder는 RNN, 정확히 말하면 LSTM을 사용하는데, 바로 전 state h, 바로 전 caption word y, 그리고 attention model을 통해 생성되는 context vector z가 LSTM cell의 input이 된다.</li>
+<li>Context vector z는 hard attention과 soft attention 두 가지 방법 중에 한 가지 방법을 선택하여 생성하게 된다. Hard attention은 stochastic machanism이고, soft attention은 deterministic machanism이다.</li>
+<li>Hard attention은 먼저 location variable s를 정의하고, 이것을 사용해 log-likelhood의 lower bound Ls를 계산한다. Ls를 optimization하기 위해 gradient를 구해야하는데, 이 값을 정확하게 구하는 것이 까다롭기 때문에 Monte Carlo based sampling approximation을 사용해 문제를 해결하게 된다. 이 update rule은 reinforcement learning의 update rule과 일치한다.</li>
+<li>Soft attention은 매 iteration마다 sampling을 하는 대신, s의 확률 alpha를 직접 사용하여 z를 계산한다.</li>
+<li>Attention based caption generation model은 기존 image caption generation 모델들에 비해 훨씬 좋은 성능을 보인다.</li>
+</ul>
+
+
+<h5>Reference</h5>
+
+
+<ul>
+    <li><p><a href="http://arxiv.org/abs/1406.6247">Mnih, Volodymyr, Nicolas Heess, and Alex Graves. "Recurrent models of visual attention." Advances in Neural Information Processing Systems. 2014.</a></p></li>
+    <li><a href="http://kelvinxu.github.io/projects/capgen.html">http://kelvinxu.github.io/projects/capgen.html</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[고흐의 그림을 따라그리는 Neural Network, A Neural Algorithm of Artistic Style (2015)]]></title>
@@ -707,221 +1052,6 @@
 <ul>
 <li><a href="http://arxiv.org/abs/1409.2329">Zaremba, Wojciech, Ilya Sutskever, and Oriol Vinyals. &ldquo;Recurrent neural network regularization.&rdquo; arXiv preprint arXiv:1409.2329 (2014).</a></li>
 <li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Batch Normalization (ICML 2015)]]></title>
-    <link href="http://SanghyukChun.github.io/88/"/>
-    <updated>2015-08-25T21:25:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/88</id>
-    <content type="html"><![CDATA[<p>Batch Normalization은 현재 <a href="http://image-net.org/challenges/LSVRC/2015/">ImageNet competition</a>에서 state-of-art (Top-5 error: 4.9%)를 기록하고 있는 Neural Network model의 기본 아이디어이다. 이 글에서는 arXiv에 제출된 (그리고 ICML 2015에 publish된) <a href="http://arxiv.org/abs/1502.03167">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a> 논문을 리뷰하고, batch normalization이 어떤 기술이고, 어떤 원리에 의해 작동하는지 등에 대해 다룰 것이다.</p>
-
-
-<h5>Motivation: Deep learning의 속도를 어떻게 더 빠르게 만들 수 있을까?</h5>
-
-
-<p>Deep learning이 잘 동작하고, 뛰어난 성능을 보인다는 것은 이제 누구나 알고 있다. 그러나 여전히 deep learning은 굉장히 시간이 오래 걸리는 작업이고, 그만큼 computation power도 많이 필요로 한다. 그 동안의 연구 결과를 보면, converge한 것 처럼 보이더라도 더 많이 돌리게 된다면 더 좋은 결과로 수렴한다는 것을 알 수 있는 만큼, deep neural network의 train 속도를 높이는 것은 전체적인 성능 향상에 도움이 될 것이다.</p>
-
-
-<p>보통 Deep learning을 train할 때에는 stochastic gradient descent (SGD) method를 사용한다. SGD의 속도를 높이는 가장 naive한 방법은 learning rate를 높이는 것이지만, 높은 learning rate는 보통 gradient vanishing 혹은 gradient exploding problem을 야기한다는 문제가 있다.</p>
-
-
-<p>Gradient vanishing은 backpropagation algorithm에서 아래 layer로 내려갈수록, 현재 parameter의 gradient를 계산했을 때 앞에서 받은 미분 값들이 곱해지면서 그 값이 거의 없어지는 (vanish하는) 현상을 의미한다. Gradient exploding은 learning rate가 너무 높아 diverge하는 현상을 말한다. Learning rate의 값이 크면 이 두 가지 현상이 발생할 확률이 높기 때문에 우리는 보통 작은 learning rate를 고르게 된다. 그러나 우리는 이미 일반적으로 learning rate의 값이 diverge하지 않을 정도로 크면 gradient method의 converge 속도가 향상된다는 것을 알고 있다. 따라서 이 논문이 던지는 질문은 다음과 같다. 자연스럽게 나오는 궁금증은 Gradient vanishing/exploding problem이 발생하지 않도록 하면서 learning rate 값을 크게 설정할 수 있는 neural network model을 design할 수 있는가?</p>
-
-
-<h5>Internal Covariate Shift: learning rate의 값이 작아지는 이유</h5>
-
-
-<p>Gradient vanishing problem이 발생하는 이유에 대해서는 여러가지 설명이 가능하지만 (exploding은 그냥 우리가 값을 작게 설정하여 해결할 수 있다) 이 논문에서는 internal covariate shift라는 개념을 제안한다. Covariate shift는 machine learning problem에서 아래 그림과 같이 train data와 test data의 data distribution이 다른 현상을 의미한다. 아래 그림 참고 (<a href="http://blog.bigml.com/2014/01/03/simple-machine-learning-to-detect-covariate-shift/">출처</a>)</p>
-
-
-<p><img src="/images/post/88-1.jpg" width="500"></p>
-
-<p>이 논문에서는 단순히 train/test input data의 distribution이 변하는 것 뿐 아니라, 각각의 layer들의 input distribution이 training 과정에서 일정하지 않기 때문에 문제가 발생한다고 주장하며, 이렇게 각각의 layer들의 input distribution이 consistent하지 않은 현상을 internal convariate shift라고 정의한다. 이 논문에서 이것이 문제가 된다고 주장하는 이유는, 각각의 layer parameter들은 현재 layer에 들어오는 input data 뿐만 아니라 다른 model parameter들에도 영향을 받기 때문이라고한다. 즉, gradient vanishing problem이 발생하는 이유를 backpropagation 과정에서 아래로 내려갈수록 이전 gradient들의 영향이 더 커져서 지금 parameter가 거의 update되지 않는다고 설명하는 것과 같은 맥락이다.</p>
-
-
-<p>기존에는 이런 현상을 방지하기 위하여 ReLU neuron을 사용하거나 (Nair & Hinton, 2010), cafeful initialization을 사용하거나 (Bengio & Glorot, 2010; Saxe et al., 2013), leanring rate를 작게 취하는 등의 전략을 사용했지만, 그런 방법이 아닌 다른 방법을 통해 internal covariate shift 문제가 해결이 된다면 더 높은 learning rate를 선택하여 learning 속도를 빠르게하는 것이 가능할 것이다.</p>
-
-
-<p></p>
-
-<h5>Navie approach: Whitening</h5>
-
-
-<p>따라서 이 논문의 목표는 internal covariate shift를 줄이는 것이다. 그렇다면 internal covariate shift는 어떻게 줄일 수 있을까? 이 논문에서는 엄청 간단하게 input distribution을 zero mean, unit variance를 가지는 normal distribution으로 normalize 시키는 것으로 문제를 해결하며, 이를 whitening이라한다 (LeCun 1998, Wiesler & Ney 2011). 주어진 column data \(X\in R^{d\times n}\)에 대해 whitening transform은 다음과 같다.</p>
-
-
-<p>\[\hat{X} = Cov(X)^{-1/2} X, Cov(X) = E[( X - E[X] ) ( X - E[X] )^\top ].\]</p>
-
-
-<p>그러나 이런 naive한 approach에서는 크게 두 가지 문제점들이 발생하게 된다.</p>
-
-
-<ol>
-<li>multi variate normal distribution으로 normalize를 하려면 inverse의 square root를 계산해야 하기 때문에 필요한 계산량이 많다.</li>
-<li>mean과 variance 세팅은 어떻게 할 것인가? 전체 데이터를 기준으로 mean/variance를 training마다 계산하면 계산량이 많이 필요하다.</li>
-</ol>
-
-
-<p>따라서 이 논문에서는 이런 문제점들을 해결할 수 있으면서, 동시에 everywhere differentiable하여 backpropagation algorithm을 적용하는 데에 큰 문제가 없는 간단한 simplification을 제안한다.</p>
-
-
-<h5>Batch Noramlization Transform</h5>
-
-
-<p>앞서 제시된 문제점들을 해결하기 위하여 이 논문에서는 두 가지 approach를 제안한다.</p>
-
-
-<ol>
-<li>각 차원들이 서로 independent하다고 가정하고 각 차원 별로 따로 estimate를 하고 그 대신 표현형을 더 풍성하게 해 줄 linear transform도 함께 learning한다</li>
-<li>전체 데이터에 대해 mean/variance를 계산하는 대신 지금 계산하고 있는 batch에 대해서만 mean/variance를 구한 다음 inference를 할 때에만 real mean/variance를 계산한다</li>
-</ol>
-
-
-<p>먼저 naive approach에서 covariance matrix의 inverse square root를 계산해야했던 이유는 모든 feature들이 서로 correlated되었다고 가정했기 때문이지만, 각각이 independent하다고 가정함으로써, 단순 scalar 계산만으로 normalization이 가능해진다. 이를 수식으로 표현하면 다음과 같다.</p>
-
-
-<p></p>
-
-<p>d dimensional data \(x = (x^{(1)}, x^{(2)}, \ldots, x^{(d)})\)에 대해 각각의 차원 \(k\) 마다 다음과 같은 식을 계산하여 \(\hat x\)를 계산한다</p>
-
-
-<p>\[\hat{x}^{(k)} = \frac{x^{(k)} - E[x^{(k)}]}{\sqrt{Var[x^{(k)}]}}.\]</p>
-
-
-<p>그러나 이렇게 correlation을 무시하고 learning하는 경우 각각의 관계가 중요한 경우 제대로 되지 못한 training을 하게 될 수도 있으므로 이를 방지하기 위한 linear transform을 각각의 dimension \(k\)마다 learning해준다. 이 transform은 scaling과 shifting을 포함한다.</p>
-
-
-<p>\[y^{(k)} = \gamma \hat{x}^{(k)} + \beta.\]</p>
-
-
-<p>이때 parameter \(\gamma, \beta\)는 neural network를 train하면서 마치 weight를 update하듯 같이 update하는 model parameter이다.</p>
-
-
-<p>두 번째로, 전체 데이터의 expectation을 계산하는 대신 주어진 mini-batch의 sample mean/variance를 계산하여 대입한다.</p>
-
-
-<p></p>
-
-<p>이제 앞서 설명한 두 가지 simplification을 적용하여 다음과 같은 batch normalization transform이라는 것을 정의할 수 있다.</p>
-
-
-<p><img src="/images/post/88-2.png" width="500"></p>
-
-<p>이때, backpropagation에 사용되는 \(\gamma, \beta\) 그리고 layer를 위한 chain rule은 다음과 같이 계산된다.</p>
-
-
-<p><img src="/images/post/88-4.png" width="500"></p>
-
-<h5>Train/Inference with BN network</h5>
-
-
-<p>앞에서 batch normalization transform을 각각의 layer input을 normalization하는데에 사용할 것이라는 설명을 했었다. 다시말해서 BN network는 기존 network에서 각각의 layer input 앞에 batch normalization layer라는 layer를 추가한 것과 구조가 동일하다.</p>
-
-
-<p><img src="/images/post/88-5.png" width="500"></p>
-
-<p>이때 자세한 알고리즘은 다음과 같다.</p>
-
-
-<p><img src="/images/post/88-3.png" width="500"></p>
-
-<p>주의해야할 점 하나는 train 과정에서는 mini-batch의 sample mean/variance를 사용하여 BN transform을 계산하였지만, inference를 할 때에도 같은 규칙을 적용하게 되면 mini-batch 세팅에 따라 inference가 변할 수도 있기 때문에 각각의 test example마다 deterministic한 결과를 얻기 위하여 sample mean/variance 대신 그 동안 저장해둔 sample mean/variance들을 사용하여 unbiased mean/variance estimator를 계산하여 이를 BN transform에 이용한다.</p>
-
-
-<h5>BN network의 장점</h5>
-
-
-<p>저자들이 주장하는 BN network의 장점은 크게 두 가지이다.</p>
-
-
-<ol>
-<li>더 큰 learning rate를 쓸 수 있다. internal covariate shift를 감소시키고, parameter scaling에도 영향을 받지 않고, 더 큰 weight가 더 작은 gradient를 유도하기 때문에 parameter growth가 안정화되는 효과가 있다.</li>
-<li>Training 과정에서 mini-batch를 어떻게 설정하느냐에 따라 같은 sample에 대해 다른 결과가 나온다. 따라서 더 general한 model을 learning하는 효과가 있고, drop out, l2 regularization 등에 대한 의존도가 떨어진다.</li>
-</ol>
-
-
-<p>논문을 살펴보면 BN transform이 scale invariant하고, 큰 weight에 대해 작은 gradient가 유도되기 때문에 paramter growth를 안정화시키는 효과가 있다는 언급이 있다. 또한 regularization효과를 더 강화하기 위하여 매 mini-batch마다 training data를 shuffling하여 input으로 넣는데, 이때 한 mini-batch 안에서는 같은 데이터가 중복으로 나오지 않도록 shuffling하여 대입한다.</p>
-
-
-<h5>실험</h5>
-
-
-<p>먼저 BN network가 주장하는대로 잘 동작하는지 보여주는 실험이다.</p>
-
-
-<p><img src="/images/post/88-6.png" width="500"></p>
-
-<p>가장 왼쪽은 MNIST data에 대해 BN을 쓴 것과 쓰지 않은 것의 convergence speed를 비교한 것이며, 다음 그림들은 BN을 사용했을 때와 사용하지 않았을 때, internal covariate shift가 어떻게 변화하는지를 보여주는 것이다. 한 뉴런의 training 동안 activation value의 변화를 plot한 것으로, 가운데 있는 선이 평균 값이고, 위 아래가 variance를 의미한다고 생각하면 된다. BN을 사용하면 처음부터 끝까지 거의 비슷한 distribution을 가진다는 것을 알 수 있다.</p>
-
-
-<p></p>
-
-<p>다음으로 single network에 대해 inception network와의 성능을 비교한 실험이다</p>
-
-
-<p><img src="/images/post/88-7.png" width="500"></p>
-
-<p>세팅은 전부 같고 inception network와 비교하여 BN이 추가되었는지 여부와 learning rate가 몇 배인지 (x5는 5배의 leanring rate를 취한 것이다) 여부만 다르게 설정하였음에도 불구하고 convergence speed와 심지어 최종 max acc까지 차이가 나는 것을 볼 수 있다.</p>
-
-
-<p>이런 결과들을 기반으로 약간의 paramter tunning을 거쳐 아래와 같은 ImageNet state-of-art를 기록했다고 한다.</p>
-
-
-<p><img src="/images/post/88-8.png" width="500"></p>
-
-<h5>BN 네트워크 성능 accelerating하기</h5>
-
-
-<p>BN을 추가하는 것 만으로 성능 개선이 엄청나게 일어나는 것은 아니며 다음과 같은 parameter tunning이 추가로 필요하다고 한다.
-1. learning rate 값을 키운다 (0.0075 &ndash;> 0.045, 5)
-2. drop out을 제거한다 (BN이 regularization 효과가 있기 때문이라고 한다)
-3. l2 weight regularization을 줄인다 (BN이 regularization 효과가 있기 때문이라고 한다)
-4. learning rate decay를 accelerate한다 (6배 더 빠르게 가속한다)
-5. local response normalization을 제거한다 (BN에는 적합하지 않다고 한다)
-6. training example의 per-batch shuffling을 추가한다 (BN이 regularization 효과를 증폭시키기 위함이다)
-7. photometric distortion을 줄인다 (BN이 속도가 더 빠르고 더 적은 train example을 보게 되기 때문에 실제 데이터에 더 집중한다고 한다)</p>
-
-<p>이런 parameter tunning이 추가로 이루어지고 나면, 기존 neural network보다 ImageNet에서 훨씬 좋은 성능을 내는 neural network를 구성할 수 있다고 한다.</p>
-
-
-<h5>Summary of BN network</h5>
-
-
-<ul>
-<li>아이디어: 각 nonlinearity의 input으로 BN transform을 추가한다</li>
-<li>BN transform은 다음과 같은 두 가지 simplification으로 구성된다
-
-<ul>
-<li>각 feature들의 correlation을 무시하고 각각 따로 normalize 하고 각각에 대한 linear transform을 같이 learning한다</li>
-<li>Mini-batch의 sample mean/variance로 normalize 한다</li>
-</ul>
-</li>
-<li>BN network의 train/inference에서는 다음과 같은 특이점이 있다
-
-<ul>
-<li>Train/inference의 forward rule이 다르다 (각각이 사용하는 mean/variance가 다르다)</li>
-<li>Train 과정에서 mini-batch를 (중복없이) shuffling하여 train시킨다</li>
-</ul>
-</li>
-<li>BN network를 사용함으로써 다음과 같은 효과를 볼 수 있다
-
-<ul>
-<li>Learning rate를 큰 값으로 설정할 수 있어 converge가 빠르다</li>
-<li>Generalized model을 learning하는 효과가 있다</li>
-</ul>
-</li>
-</ul>
-
-
-<h5>Reference</h5>
-
-
-<ul>
-<li><a href="http://arxiv.org/abs/1502.03167">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a>, Sergey Ioffe, Christian Szegedy, ICML 2015</li>
 </ul>
 
 ]]></content>
