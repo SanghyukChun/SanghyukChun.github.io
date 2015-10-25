@@ -9,7 +9,9 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Coursera Neural Networks for Machine Learning Week2 - Perceptron Mar 21st, 2014 | Comments 들어가기 전에 이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 &hellip;">
+  <meta name="description" content="Mar 21 2014
+Coursera Neural Networks for Machine Learning Week2 - Perceptron
+Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 Neural Networks for Machine &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +23,7 @@
   <link rel="canonical" href="http://SanghyukChun.github.io/blog/page/5">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -76,1389 +78,154 @@ $(function() {
   <li><a href="/archives">Archives</a></li>
   <li><a href="/search">Search</a></li>
   <li><a href="http://sanghyuk.kaist.ac.kr/">Homepage</a></li>
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
 </ul>
 </nav>
     <div id="content">
       <div class="blog-index">
   
   
-  
-    <article>
-      
-  <header>
+  <article class="mB40">
     
-      <h1 class="entry-title"><a href="/40/">Coursera Neural Networks for Machine Learning Week2 - Perceptron</a></h1>
+<p><time datetime="2014-03-21T07:21:00+09:00" pubdate><span class='month'>Mar</span> <span class='day'>21</span> <span class='year'>2014</span></time><br>
+<span class="archive-title"><a href="/40/">Coursera Neural Networks for Machine Learning Week2 - Perceptron</a></span><br>
+Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 Neural Networks for Machine Learning 강의 2주차 요약글</p>
+
+<span class="categories"><a class='category' href='/blog/categories/cousera-nn/'>Cousera-NN</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/neural-network/'>Neural-Network</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
+<p><time datetime="2014-03-17T23:23:00+09:00" pubdate><span class='month'>Mar</span> <span class='day'>17</span> <span class='year'>2014</span></time><br>
+<span class="archive-title"><a href="/39/">Coursera Neural Networks for Machine Learning Week1 - Neural Network and Machine Learning</a></span><br>
+Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 Neural Networks for Machine Learning 강의 첫 주차 요약글</p>
+
+<span class="categories"><a class='category' href='/blog/categories/cousera-nn/'>Cousera-NN</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/neural-network/'>Neural-Network</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
-      <p class="meta text-right mB50">
-        
+<p><time datetime="2014-03-03T15:21:00+09:00" pubdate><span class='month'>Mar</span> <span class='day'>03</span> <span class='year'>2014</span></time><br>
+<span class="archive-title"><a href="/38/">LMNN(Large Margin Nearest Neighbors) (NIPS 2006) LMCA(Large Margin Component Anaylsis) (NIPS 2007)</a></span><br>
+NIPS 2006에 발표된 LMNN, 그리고 2007년에 발표된 LMCA 정리</p>
+
+<span class="categories"><a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/paper-review/'>Paper-Review</a>, <a class='category' href='/blog/categories/research/'>Research</a></span>
 
 
 
 
-
-
-
-
+  </article>
   
-
-
-<time datetime="2014-03-21T07:21:00+09:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time>
-        
-         | <a href="/40/#disqus_thread">Comments</a>
-        
-      </p>
+  <article class="mB40">
     
-  </header>
+<p><time datetime="2014-03-02T20:24:00+09:00" pubdate><span class='month'>Mar</span> <span class='day'>02</span> <span class='year'>2014</span></time><br>
+<span class="archive-title"><a href="/37/">Distance Metric Learning</a></span><br>
+Distance Metric Learning에 대해 설명하는 글</p>
 
+<span class="categories"><a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/research/'>Research</a></span>
 
-  <div class="entry-content"><h5>들어가기 전에</h5>
 
 
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 2주차 강의를 요약한 글이다. 첫 주 강의에서 Neural Network란 무엇이며 어떤 종류의 Neural Network들이 있는지 등에 대해 간략하게 다뤘다면, 이 강의에서는 가장 오래된 Neural Network 중 하나인 Perceptron을 설명하는 내용이 주가 된다.</p>
 
-
-<h5>An overview of the main types of neural network architecture</h5>
-
-
-<p><a href="/39">이전 글</a>에서 Neuron들에는 어떤 종류가 있을 수 있는가 다뤘었다. 대충 linear neuron, linear threshold neuron, binary neuron, binary threshold neuron, sigmod neuron 등이 있었다. 그렇다면 neuron들로 구성된 neural network에는 어떤 type들로 구분되는가도 간략하게 알아보도록 해보자.</p>
-
-
-<p>일단 가장 간단한 형태의 network로 Feed-forward neural network가 존재한다. 가장 일반적으로 쓰이고 실제 어플리케이션에 적용되는 neural network들도 대부분이 feed-forward라고 한다. 이 네트워크는 상당히 간단한 구조인데, 첫 번째 layer는 input이며 가장 마지막 layer는 output이다. 그리고 중간의 input과 output으로 관찰되지 않는 영역을 &#8220;hidden&#8221; layer라고 하는데, 당연히 visuable하지 않으므로 (우리가 직접 관측하는 영역이 아니므로) hidden이라고 불리는 것이다. 만약 hidden layer가 하나보다 많이 존재한다면 이 network는 &#8220;deep&#8221; neural network라고 불린다.</p>
-
-
-<p><img src="/images/post/40-1.png" width="350"></p>
-
-<p>위의 그림이 Feed-forward neural network의 간단한 예시이다. (이 그림은 Hinton 교수의 slide에서 가져왔다.)</p>
-
-
-<p>이보다 조금 더 복잡한 network로는 Recurrent network라는 것이 존재한다. &#8220;Recurrent&#8221;라는 이름이 붙은 이유는 graph에 cycle이 존재하기 때문인데, 이 말인 즉슨, 이 network에서는 arrow를 계속 따라가다보면 어느 순간 같은 장소를 계속 돌고 있을 수도 있다는 의미이다. 당연히 일반적인 방법으로 이것을 학습하는 것은 매우 복잡한 일이고 어려운 일이다. 그럼에도 일단 이 네트워크는 가장 &#8220;biologically&#8221; 현실적인 네트워크라고 한다.</p>
-
-
-<p><img src="/images/post/40-2.png" width="200"></p>
-
-<p>위와 같이 directed cycle이 존재하는 경우 recurrent network라고 하는데, 이 방법을 사용해서 sequential data를 modeling할 수 있다고 한다. 그런 행위가 가능한 근본적인 이유는 이 방법 자체가 일종의 시간 축으로 very deep한 network로 치환이 가능하기 때문이다. 그림으로 보면 아래와 같은 형태가 된다.</p>
-
-
-<p><img src="/images/post/40-3.png" width="250"></p>
-
-<p>자 다시 위의 그림을 보면서 차근차근 설명하자면, 위의 그림은 매 시간마다 하나의 hidden layer를 가지는 네트워크이며, 각 hidden layer는 그 다음 hidden layer에 무언가 information을 주는 형태이다. 즉, 자기 자신이 자기 자신에게 정보를 주는 cycle이 존재하는 형태이며, 매 시간마다 input과 output이 존재한다고 생각할 수 있다. 이런 이유로 recurrent network를 이런 형태의 network로 치환하여 생각할 수 있는 것이다. 당연히 실제로 학습하기는 무지하게 어렵지만, 실제 이런 network가 계속 연구가 되고 있으며 2011년 Ilya Sutskever의 연구에서 이런 형태의 network를 사용해 wikipedia의 단어들을 학습해 자동으로 sentence를 generate하는 모듈을 만들어서 실행시킨 결과, 다음과 같은 문장을 얻었다고 한다.</p>
-
-
-<p>In 1974 Northern Denver had been overshadowed by CNL, and several Irish intelligence agencies in the Mediterranean region. However, on the Victoria, Kings Hebrew stated that Charles decided to escape during an alliance. The mansion house was completed in 1882, the second in its bridge are omitted, while closing is the proton reticulum composed below it aims, such that it is the blurring of appearing on any well-paid type of box printer.</p>
-
-
-<p>물론, 완전한 형태의 영어는 아니지만, 매 순간 단 하나의 단어만을 generate한 결과임에도 불구하고 엄청나게 뛰어난 성능을 보이고 있음을 알 수 있다. 일반적으로 이런 sentance generate을 위한 모델은 무지무지 복잡하고 여러 단어를 동시에 학습하거나 생성하거나 하는 등의 과정을 거치는데 이 논문에서는 오직 단어를 하나씩만 생성했음에도 꽤 그럴듯한 영어가 나왔다는 점이 고무적이라는 것이다.</p>
-
-
-<p>마지막으로 Symmetrically connected network가 있다. 이 network는 recurrent network의 special한 case라고 보아도 무방한데, 간단히 말하자면 이전의 neural network들은 모두 directed graph였지만, 이 symmetrically connected network는 undirected graph이다. 즉, 각 layer간에 symmetric한 edge, 다시 말하자면 양 방향으로 서로 같은 weight를 가지게 된다는 의미이다. 이런 network는 energy function이라는 것을 도입하면 recurrent network보다 훨씬 분석하기가 용이하며, performance도 powerful하다. 만약 hidden unit이 없다면 Hopfield network라고 부르며, hidden layer가 존재하면 Boltzmann machine 이라 부르는데, 이 녀석은 나중에 언젠가 다루게 될 Deep network에서 이 Boltzmann machine을 restrict시킨 형태인 Restricted Boltzmann Machine (RBM)을 설명할 때 다시 한 번 자세하게 다룰 예정이다. (Coursera lecture로 따지면 거의 맨 끝 즈음이다.)</p>
-
-
-<h5>Perceptrons: The first generation of neural networks</h5>
-
-
-<p>자, 어쨌거나 2주차 강의의 핵심은 바로 perceptron이다. 이 녀석은 가장 오래된 neural network 중 하나이며, 특정 상황에서는 정말 outperform한 결과를 보여주지만 그 한계가 분명한 알고리듬이다. 1690년대 Frank Rosenblatt에 의해 제안된 알고리듬으로 Artificial neural network을 태동하게 한 알고리듬이지만, 그 한계가 너무나 명백하여 한 동안 neural network 연구 자체가 이뤄지지 않게 한 원인이 되기도 한다. 1969년 Minsky가 perceptron이 linear가 아니면 아무것도 할 수 없다는 것을 증명했는데 (단적인 예로, xor조차 학습하지 못한다) 당시 multi layer perceptron에도 이 방식이 적용될 것이라 다소 과도한 추측을 하는 바람에 neural network 연구 자체가 한 동안 메일 스트림이 아니었다. 아무튼, perceptron은 엄청 간단한 feed-forward network의 일종이다. 무지무지 간단하게 그림 하나로 표현하면 아래와 같다 (그림은 google image에서 찾은 그림..)</p>
-
-
-<p><img src="/images/post/40-4.png" width="600"></p>
-
-<p>하나하나 간단하게 설명해보자. 일단 input layer가 있다. 맨 아래 \(x_o\)는 \(x_n\)의 오타로 추정된다. 맨 위의 1은 bias를 위한 term이다. 이전 글에서 bias에 대해 설명한 것을 기억하는지? input과 weight를 linear combination 형태로 정리하고 나서 거기에 상수 항으로 더해지는 값이 bias이다. 즉, input과 상관없이 늘 더해지는 값으로, \(b = 1 \times w_o\) 라고 봐도 무방한 것이다. 아무튼, 지금은 간단하게 input layer에서 원래 input vector x와 bias term 1을 weight vector와 곱한 형태인 \(z = \sum_i w_i x_i\)를 계산했다고 간단하게 생각해보자. perceptron의 decision rule은 간단한데, 방금 계산한 값이 어떤 threshold를 넘으면 값을 activate, 넘지 못하면 값을 deactive 시키는 것이다. 간단하게 얘기하면 perceptron에서는 binary threshold neuron을 사용하는 것이다. 이 threshold를 결정하는 것은? 바로 bias가 그 역할을 하게 된다. 그러므로 이 알고리듬에서 &#8220;learning&#8221;하는 것은 weight와 bias가 될 것이다. 음.. 뭔가 간단하게 bias는 무시하고 weight만 학습하는 방법은 없을까? 앞에서 bias를 weight로 간단하게 치환한 방법을 사용하면 이렇게 문제를 간단하게 만드는 것이 가능해진다. 원래 input vector에 value 1을 추가하여 마치 input vector가 하나 더 있고, 그 component에 대한 weight가 존재하는 것처럼 trick을 쓰는 것이 가능해진다. 따라서 bias도 weight와 같은 방법으로 자연스럽게 learning할 수 있게 되고, 더 이상 threshold에 대해 고민할 필요가 없어진다!</p>
-
-
-<p>perceptron이 weight를 학습하는 방법도 매우 간단하다. input vector가 들어왔을 때, 현재 weight로 맞는 값이 나온다면 weight는 update되지 않는다. (\(w_{t+1} = w_t\)) 만약 1이 나와야하는데 0이 나온다면 weight vector에 input vector를 더해준다. (\(w_{t+1} = w_t + v\)) 만약 0이 나와야하는데 1이 나온다면 weight vector에서 input vector를 빼주는 방식으로 weight를 update한다. (\(w_{t+1} = w_t - v\))</p>
-
-
-<p>조금 더 잘 describe해보자면, input x에 대해서 output(label) y는 다음과 같은 수식으로 표현된다 -아래 수식에서는 편의를 위해 y = {-1,1} 이라고 하자-</p>
-
-
-<p>$$ y = sign( \sum_{i=0}^n w_i x_i ) \hskip 1em where, x_0 = 1 \hskip 0.3em and \hskip 0.3em w_0 = -b$$</p>
-
-
-<p>즉, label y는 vector w와 x의 inner product로 나타낼 수 있으며 이 때 bias b는 \(x_0 = 1\), \(w_0 = -b\)라는 형태로 간단한 weight vector와 input vector의 linear combination으로 표현할 수 있게 되는 것이다. 이 때 update rule은 다음과 같다</p>
-
-
-<p>$$ w_{t+1} = w_t + y_n x_n, \hskip 1em when \hskip 0.3em misclassified $$</p>
-
-
-<p>misclassified가 발생했을 때만 update가 일어나며, update rule은 원래 y와 x를 곱해서 원래 vector에 더해주는 것이다. 즉, 1이 나와야하는데 -1이 나왔다면 w에 +x를 취해주고, -1이 나와야하는데 1이 나왔다면 w에 -x를 취해주는 것이다. 그리고 step을 진행시키면서 (t가 점점 증가하면서) misclassified point가 발견될 때 마다 이 알고리듬을 반복한다. 이렇게 설명하면 조금 더 깔끔하게 수식적으로 설명이 가능해진다.</p>
-
-
-<h5>A geometrical view of perceptrons</h5>
-
-
-<p>위와 같은 update rule이 선택되는 이유는 무엇인가? 왜 하필이면 input vector를 합해야할까? 이런 질문들은 모두 geometric하게 해석할 수 있다. feature가 n개일 때, input vector와 weight vector는 some n-dimensional vectors이므로, 이 vector들이 존재하는 vector space를 정의하는 것이 가능해지기 때문이다. 여기에서는 weight space라는 새로운 형태의 space를 정의해서 perceptron을 해석할 것이다. 따라서 원래 수식과 대조하여 생각해보면 우리가 궁극적으로 찾고자하는 truth weight vector는 올바른 answer에 대한 어떤 hyperplane일 것이라는 것도 충분히 추측할 수 있다. 무슨 소리냐하면, input vector와 weight vector의 inner product의 sign이 y를 결정한다는 의미는, 곧 그 내각이 90도보다 크냐 작으냐로 생각할 수 있고 (물론 n-dimensional vector에서는 각도 개념이 정의하기 나름이지만) 아마도 대부분의 input vector들에 대해서 올바른 label을 가지게 하는 어떤 hyperplane이 우리가 찾고자하는 궁극적인 weight vector들이라는 것이다. 그림으로 설명해보자.</p>
-
-
-<p><img src="/images/post/40-5.png" width="600"></p>
-
-<p>위의 그림에서 correct answer가 1이라면 input vector와 weight vector의 inner product를 구했을 때 올바른 값이 나오기 위해서는 당연히 초록색 vector이어야한다는 사실을 알 수 있을 것이다. 이유는 위에서 언급했듯 사이각이 90도 보다 작은 두 벡터의 inner product는 언제나 0보다 크기 때문이다. 따라서 input vector에 orthogonal한 plane을 그리고, 그 plane을 기준으로 weight vector가 올바른 곳에 존재하는지 그렇지 않은지 간단하게 알 수 있을 것이다. 다음에는 correct answer가 0인 경우 (-1인 경우)를 살펴보자. 이 경우에는 두 벡터의 사이 각이 90도보다 커야하므로, input vector에 orthogonal한 plane의 반대 부분이 올바른 weight vector의 위치가 됨을 알 수 있다. 그렇다면 올바르지 않은 (misclassified된) weight vector를 올바른 영역으로 옮기기 위해서 어떤 행동을 취할 수 있을까? 조금만 생각해보면 정말 간단한 vector sum으로 hyperplane의 반대쪽으로 보낼 수 있다는 것을 알 수 있다. 왼쪽 상황에서는 빨간 벡터를 초록 벡터로 만들기 위해서 간단하게 빨간 벡터에 파란 벡터를 대해주면 되고 (\(w_{t+1} = w_t + v\)) 오른쪽 경우는 빼주면 된다 (\(w_{t+1} = w_t - v\)). 이런 이유로 벡터를 더하고 빼는 것 만으로 weight가 &#8216;개선&#8217;되었다고 할 수 있는 것이다. 만약 weight들이 올바르게 learning되었다면 우리는 아래와 같은 결과를 얻게 될 것이다.</p>
-
-
-<p><img src="/images/post/40-6.png" width="300"></p>
-
-<p>즉, 올바른 weight는 서로 다른 input vector들이 모두 well-classified되게하는 어떤 vector임을 알 수 있다. Training을 하면서, 우리가 찾아내는 값은 바로 가장 올바른 weight vector를 찾는 것이며, 위의 그림에서 볼 수 있듯 우리는 space 위에 여러 hyperplane을 그릴 수 있고, 이를 이용하여 good weight들이 위치하는 hypercone을 그릴 수 있다. 재미있는 점은, 이 cone위의 vector는 convex하다는 것이다 (그 어떤 벡터 두 개를 골라도 그 중간에 존재하는 모든 벡터들이 cone안에 존재한다) 즉, 우리가 만약 이 문제를 convex하게 해결한다면 항상 우리는 global optimum값을 찾을 수 있게 되는 것이다.</p>
-
-
-<h5>Why the learning works</h5>
-
-
-<p>위에서 geometric view로 perceptron을 서술하였으니, 이번에는 도대체 왜 이런 알고리듬이 작동하는지 알아보도록 해보자. 사실 엄밀한 수학적 증명이 강의에 나오지 않기 때문에 복잡한 증명은 생략하고, 간단하게 그림으로 설명해보도록 하겠다. 일단 아래 그림을 보면서 진행해보도록하자.</p>
-
-
-<p><img src="/images/post/40-7.png" width="500"></p>
-
-<p>아래 그림의 상황은 current weight vector와 any feasible한 weight vector 사이의 거리 \(d_a^2+d_b^2\)을 고려해보도록 하자. 만약 이런 상황에서 perceptron이 misclassified된다면, learning 알고리듬이 current vector를 조금 더 feasible한 weight vecotr에 가까워지도록 움직여줄 것이다. 하지만 문제가 생기는데, 거의 plane에 근접하게 있는 point를 생각해보자. 이 그림에서는 노란색 점이 그것이다. 이 점은 분명 조금 더 &#8220;feasible vector&#8221;에 가깝게 움직여질 필요성이 있지만, 노란색 점은 이미 feasible region 위에 위치하기 때문에 아무리 알고리듬이 running하더라도 절대로 feasible point 근처로 옮겨지지 않는 것이다. 이런 문제점을 해결하기 위해서 &#8216;margin&#8217;이라는 컨셉이 도입된다.</p>
-
-
-<p><img src="/images/post/40-8.png" width="300"></p>
-
-<p>위의 그림에는 margin이라는 것이 표현되어 있는데, 이 margin은 feasible한 weight vector를 조금 더 strict하게 정해주는 역할이다. 즉, feasible region을 plane에서 margin 보다 더 멀리 떨어진 위치로 정의하고, 이 region안에 존재하는 vector를  &#8220;generously feasible&#8221;한 weight vecotr로 정의하는 것이다. 즉, 이제는 노란색 vector가 margin보다 더 조금 떨어져 있기 때문에 더 이상 &#8220;feasible&#8221;한 vector가 아니므로 perceptron algorithm을 사용하여 이 벡터를 옮기는 것이 가능해지는 것이다.</p>
-
-
-<p>이런 가정하에, 이 알고리듬이 converge한다는 것이 증명가능하다고 하는데, 구체적인 증명과정은 강의에 설명되어있지는 않고, 간단한 아이디어만 서술되어있다. 그 아이디어는 크게 세 개인데, perceptron이 feasible region에 존재하지 않는 weight vector를 update하고, update마다 missclassified vector와 feasible vector사이의 distnace가 감소되는 방향으로 update가 될 것이다. 또한 이 거리는 매 번 최소한 input vector의 lenght의 제곱근만큼은 감소한다는 것이다. 따라서 유한한 숫자의 iteration안에 weight vector가 반드시 feasible region안에 위치하게 된다는 것이다. 물론 이 모든 것은 그러한 feasible region이 존재하는 경우에만 동작하는 것은 당연할 것이다.</p>
-
-
-<h5 id="what-perceptrons-cant-do">What perceptrons can&#8217;t do</h5>
-
-
-<p>하지만 perceptron은 너무나도 명확한 한계점이 존재한다. input vector가 binary이기 때문에 모든 input을 binary feature로 바꾸어야한다는 점도 문제이지만, 가장 큰 문제는 linearly separable하지 않은 dataset들은 learning할 수가 없다는 것이다. 엄청나게 간단한 예를 살펴보도록하자. xor은 binary 연산의 가장 기본적인 연산 중 하나이다. 두 값이 같으면 0, 다르면 1을 return하는 것인데, 이를 2차원 평면에 포함하면 아래와 같은 상황이 되어버린다.</p>
-
-
-<p><img src="/images/post/40-9.png" width="300"></p>
-
-<p>초록색 label이 된 점들이 output이 0인 점들, 빨간색 점들은 ouput이 1인 점들이다. 당연하게도, 이 점들을 구분할 수 있는 &#8216;단 하나의&#8217; plane은 존재하지 않는다. 단순히 이 결과만 보더라도 perceptron이 얼마나 제한적인 상황에 대해서만 동작하는지 분명하게 알 수 있다. 또한 perceptron의 decision making은 summation으로 이루어지기 때문에, 만약 n 차원 벡터의 패턴이 아래와 같으면 구분이 불가능한 것이다</p>
-
-
-<p><img src="/images/post/40-10.png" width="300"></p>
-
-<p>pattern A는 점들의 set이 1, 1, 2로 존재해야하고, pattern B는 2, 2로 존재해야하는데 둘 다 합이 4이기 때문에 perceptron으로는 이를 구분하는 것이 불가능하다.</p>
-
-
-<p>이렇듯 perceptron은 그 한계가 너무나 명확하다. 그러나 이는 single layer perceptron에 한정된 문제이지 neural network 전체의 문제는 아니다. 이를 해결하는 방법은 생각보다 간단한데, 바로 hidden unit을 learning하는 것이다. multiple hidden layer는 neural network가 더 이상 linear하지 않고 non-linear하게 해주는 역할을 하는데, non-linear해지기 때문에 learning하기가 힘들어지지만, 만약 learning이 가능하다면 그 만큼 powerful해지는 것이다. 그렇다면 이런 net을 learning하는 것은 가능할까? 결론부터 얘기하자면 엄청나게 어렵다. 때문에 이에 대한 연구가 활발히 이루어지고 있으며 꽤 성공적인 결과들이 존재한다. 또한 hidden layer의 weights를 learning하는 것은 feature를 learning하는 것과 같아지기 때문에 더 이상 feature에 대한 문제도 없어지고, 여러모로 hidden unit을 learning하면 그 한계를 깰 수 있는 network가 될 수 있는 것이다.</p>
-
-
-
-
-<h5>Coursera Neural Networks for Machine Learning</h5>
-
-
-<p>다른 요약글들 보기 (<a href="/blog/categories/cousera-nn/">카테고리로 이동</a>)</p>
-
-
-<ul>
-    <li>Lecture 1: <a href="/39">Introduction</a></li>
-    <li>Lecture 2: <a href="/40">The Perceptron learning procedure</a></li>
-    <li>Lecture 3: <a href="/42">The backpropagation learning proccedure</a></li>
-    <li>Lecture 4: <a href="/43">Learning feature vectors for words</a></li>
-    <li>Lecture 5: <a href="/43">Object recognition with neural nets</a></li>
-    <li>Lecture 6: Optimization: How to make the learning go faster</li>
-    <li>Lecture 7: Recurrent neural networks</li>
-    <li>Lecture 8: More recurrent neural networks</li>
-    <li>Lecture 9: Ways to make neural networks generalize better</li>
-    <li>Lecture 10: Combining multiple neural networks to improve generalization</li>
-    <li>Lecture 11: Hopfield nets and Boltzmann machines</li>
-    <li>Lecture 12: Restricted Boltzmann machines (RBMs)</li>
-    <li>Lecture 13: Stacking RBMs to make Deep Belief Nets</li>
-    <li>Lecture 14: Deep neural nets with generative pre-training</li>
-    <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
-    <li>Lecture 16: Recent applications of deep neural nets</li>
-</ul>
-
-</div>
+  </article>
   
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
+  <article class="mB40">
     
-      <h1 class="entry-title"><a href="/39/">Coursera Neural Networks for Machine Learning Week1 - Neural Network and Machine Learning</a></h1>
+<p><time datetime="2013-12-16T08:49:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>16</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/36/">서버를 구축해보자 - 웹서버 구축 스크립트 만들기</a></span><br>
+기본 유틸 설치도 끝났으니 이제 웹서버 구축을 해보자. 아파치, mysql, php 등과 redmine, xe, wiki등을 설치해본다.</p>
+
+<span class="categories"><a class='category' href='/blog/categories/common/'>Common</a>, <a class='category' href='/blog/categories/development/'>Development</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
+<p><time datetime="2013-12-14T23:24:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>14</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/35/">우분투에 Matlab과 JDK 깔기</a></span><br>
+자칫 잘못하면 삽질하기 딱 좋은 우분투에 Matlab과 JDK를 까는 방법에 대한 글</p>
+
+<span class="categories"><a class='category' href='/blog/categories/common/'>Common</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
-      <p class="meta text-right mB50">
-        
+<p><time datetime="2013-12-12T16:48:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>12</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/34/">인터넷 속의 수학 - Can I really reach anyone in 6 steps? (2/2)</a></span><br>
+단기강좌 인터넷 속의 수학에서 첫째날 강의인 &#8216;Can I really reach anyone in 6 steps?&#8217; 의 요약글 2 중 2</p>
+
+<span class="categories"><a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a>, <a class='category' href='/blog/categories/modeling/'>Modeling</a>, <a class='category' href='/blog/categories/network/'>Network</a></span>
 
 
 
 
-
-
-
-
+  </article>
   
-
-
-<time datetime="2014-03-17T23:23:00+09:00" pubdate data-updated="true">Mar 17<span>th</span>, 2014</time>
-        
-         | <a href="/39/#disqus_thread">Comments</a>
-        
-      </p>
+  <article class="mB40">
     
-  </header>
+<p><time datetime="2013-12-12T01:15:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>12</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/33/">서버를 구축해보자 - ip 세팅과 유틸 설치</a></span><br>
+개인용 서버의 기본.. 이제 기본 유틸을 설치해보자</p>
 
-
-  <div class="entry-content"><h5>들어가기 전에</h5>
-
-
-<p>약 반 년 전에 <a href="https://www.coursera.org/">Coursera</a>에서 <a href="https://class.coursera.org/ml-003/lecture">Andrew Ng 교수의 Machin Learning Class</a>를 수강한 적이 있다. 사실 당시에 이 course를 수강할 때, 이 course는 introduction course로만 듣고, Geoffrey Hinton 교수의 Neural Network 강의를 들을 생각이었는데, 시간에 쫓기다보니 어느새 나는 석사생이 되었고, 아직도 이 강의를 듣지 못한 상태였다. 그러다가 최근 우연하게 이 강의를 다시 들여다 볼 일이 생기게 되었고, 약 2-3주 동안 이 강의를 듣고 요약글을 꾸준하게 올려 볼 생각이다. <a href="/10">예전 글</a>에서 언급했지만, 내가 너무 쉽다고 생각되면 과감하게 중간부터 요약을 관둘 생각이다.</p>
-
-
-<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 첫 주차 강의를 요약한 글이다. 첫 주차이기 때문에 아주 간단한 introduction course이며, 주로 machine learning과 neural network는 무엇인지 아주 간략하게 설명하는 내용이 주가 된다.</p>
-
-
-<h5>Why do we need machine learning?</h5>
-
-
-<p>사실 이 질문은 물론이고, machine learning이란 무엇인지 내가 <a href="/3" class="red tip" title="Machine Learning Week1 - What Is Machine Learning">아주</a> <a href="/21" class="red tip" title="빅데이터 이야기: 데이터 수집에서 분석까지">많은</a> <a href="/30" class="red tip" title="인터넷 속의 수학 - How Does Netflix Recommend Movies?">글</a>에서 다뤘었기에 자세한 언급은 되도록 피하도록 하겠다. 다만 이 lecture에서는 주로 patterns recognition, anomalies recognition, 그리고 prediction 등의 문제에 집중을 하고 있으며, 특히 image를 classification하는 문제에 focus가 되어있다. 이런 문제의 대표적인 예는 MNIST (hand write letter data base), Face recognition 등이 있다. 실제로 내가 예전에 공부했었던 Neural Network의 대부분은 이런 image process에 focus되어있었다.</p>
-
-
-<h5>What are neural network?</h5>
-
-
-<p>그렇다면 neural network란 무엇인가? 이 질문에 대답하기 이전에 먼저 인간의 뇌가 어떻게 동작하는가에 대해 간략하게 알아보자. 인간의 뇌는 아주 많은 neuron(신경)들로 이루어져 있다. 각 neuron들은 synapse라는 통로를 이용하여 information을 전달하게 되는데, 이런 real human neural network 구조를 아주아주 simplify하면, graph의 형태로 표현이 가능해진다! 즉, 각각의 neuron을 graph의 node, 그리고 synapse를 그 node들을 연결하는 edge로 표현하는 것이다. 여기에서 조금 더 real-likely한 modeling을 하기 위해서 두 가지 factor가 추가된다. 하나는 weight이며 또 하나는 bias이다. 먼저 weight에 대해서 설명을 해보자. 실제 neural network 사이에서 information은 ion이 pumping이 되거나 하는 방식으로 이동하게 된다. 그런데 이 information이 모든 상황에 똑같이 전달되는 것이 아니라, 적절한 학습을 통해서 그 양이 조절이 된다. 즉, 우리가 &#8216;컴퓨터&#8217;라는 물체가 무엇인지 인지하는 과정에서 우리의 뇌로 들어오는 시각정보를 처리하기 위해서 각각의 신경세포들이 서로 다른 양의 information을 전달하게 된다는 것이다. 예를 들어서 우리가 컴퓨터를 봤을 때 모든 시각 정보를 총 동원해서 이것이 컴퓨터다! 라고 판단하는 것이 아니라 일부 특정한 feature들 (예를 들어서 모니터와 키보드 마우스가 있는 모습)을 보고 내가 지금 보고 있는 것이 컴퓨터라는 결론을 내리 듯, 우리의 neural network는 자연스럽게 synatic weight를 학습함으로써 더 정확하고 빠른 연산 및 분류가 가능하도록 설계가 되어있는 것이다. 이런 synaptic weight는 우리가 &#8216;학습&#8217;이라고 부른 과정 동안 계속 update가 된다. 그리고 또 하나 bias에 대해 생각해보자. 만약 우리가 데이터 센터에서 근무를 한다면 아마도 상당히 많은 컴퓨터를 보게 될 것이며, 아마도 대충 네모네모하게 생긴 물건들은 컴퓨터일 가능성이 높지 않을까? 반면 내가 지금 등산 중이라면 아마도 내가 본 물체가 컴퓨터일 가능성은 극히 낮을 것이다. 즉, &#8216;input이 어떤 특정 결과에 가까울 것이다&#8217;를 indicate하는 factor일 뿐 아니라, 그 정도를 조절하기 위한 값이라고 할 수 있는 것이다. 그렇다면 이런 구조의 장점은 무엇일까? 사람의 뇌에는 자그마치 \(10^{11}\)개의 neuron이 존재한다고 한다. 또한 그 neuron들을 연결하는 link는 약 \(10^{14}\)개가 존재하게 된다. 그야말로 어마어마한 숫자의 신경들이 비록 하나의 computation power는 떨어질지 몰라도 이것들이 하나의 network를 형성하면서 엄청나게 빠른 parellel computation이 가능해지고 엄청나게 빠른 연산이 가능해지는 것이다. 거기에 각 neuron들이 information을 저장하고 있기 때문에 단순히 RAM으로 binary bit를 저장하는 것과는 차원이 다른 용량을 저장할 수 있게 되는 것이다.</p>
-
-
-<p>자 그러면 이제 human neural network가 어떻게 동작하는지 살펴보았다. 그렇다면 이런 뛰어난 model을 어떻게 real field적용할 수 있을까? 우리의 뇌가 그야말로 컴퓨터에 비해 outperformance를 보이는 분야에 이런 아이디어를 적용하면 좀 그 성능이 개선되지 않을까? 그야말로 많은 사람들이 얘기하듯 컴퓨터는 멍청하다. 인간이 만든 system에 정해진 input이 들어는 상황에서는 무엇보다 빠르고 정확한 computation을 보여주지만, 스스로 무언가를 &#8216;판단&#8217;할 수 없으며, 사람에 비해서 그 유연성이 매우 떨어진다. 때문에 AI를 연구하는 사람들에게 스스로 &#8216;학습&#8217;하는 machine learning이 새로운 대안으로 제시되고 이 분야가 AI에서부터 시작되었다는 점이 전혀 놀랍지 않은 것이다. 잠시 얘기가 샛길로 빠졌는데, 결국 사람이 컴퓨터에 비해서 엄청 잘 할수 있으며 실제 real field에서 수요가 많은 대표적인 문제가 바로 image processing이다. 컴퓨터는 image를 pixel map으로 밖에 인식할 수가 없다. 즉, 가장 많이 쓰이는 example인 MNIST handwrite database를 보면, 각 이미지는 28 by 28 pixel map이며, 다시 말해서 이미지 하나에 총 784개의 information이 존재한다는 것을 알 수 있다. 이 database는 흑백 사진이니깐 그냥 간단하게 까만 것과 하얀 것으로 구분하면, 총 784개의 binary 값을 component로 가지는 vector로 생각할 수 있을 것이다. 하지만 내가 위에서도 잠깐 언급했던 것 처럼 우리는 절대로 그 시각정보를 전부 활용하여 물체를 인지하지 않는다. 일부 &#8216;feature&#8217;를 인식해서 내가 지금 보고 있는 것이 무엇인지 판단하게 되는데, 안타깝게도 컴퓨터는 그런 작업이 불가능한 것이다.</p>
-
-
-<p><img src="/images/post/39-1.png" width="300"></p>
-
-<p>위의 사진이 바로 MNIST dataset의 일부분인데, 우리는 바로 각 글씨가 무엇을 의미하는지 바로 인지할 수 있지만, 멍청한 컴퓨터는 이 글씨들을 10개의 digit으로 바로 인지하는 것이 아니라 784 차원의 vector로 인식하게 되는 것이다. 앗 잠깐, 그런데 우리가 &#8216;바로&#8217; 인지하는 것도 사실 뇌가 연산을 한 결과가 아닌가? 그렇다면 뇌가 어떻게 동작하는지를 &#8216;모방&#8217;하면 기존의 방법들보다 더 나은 새로운 방법이 나올 수 있지 않을까? 그렇다! 이것이 바로 artifitial neural network의 motivation이다. 인간의 뇌는 엄청나게 빠르고 엄청나게 많은 연산을 자그마치 &#8216;parellel&#8217;하게 처리한다! 이는 정말 optimal한 system이 아닐 수 없다. 때문에 neural network의 application의 대다수는 이런 vision 문제를 해결하기 위해 사용이 된다.</p>
-
-
-<h5>Some simple models of neurons</h5>
-
-
-<p>이제 neural network의 필요성과 기본적인 구조는 알았으니, 구체적으로 우리가 그것을 구현하기 위한 모델을 만들어보자. 앞서 얘기했듯 우리의 artifitial neural network는 input이 들어오고, 각 graph의 weight와 맨 처음 설정한 bias를 통해 output을 얻어내는 구조이다. 즉, input을 x, weight를 w, bias를 b, output을 y라고 한다면, </p>
-
-
-<p>$$ y = b + \sum_i x_i w_i $$</p>
-
-
-<p>와 같은 식을 얻을 수 있을 것이다. 여기에서 \(x_i\)는 i번 째 input을 의미한다. 즉, MNIST에서 24 by 24, 784개의 input들에 대해서 모든 component들 (각 pixel들)의 값에 weight를 곱하고 그걸 모두 더한 다음 bias를 더해준 결과가 output인 것이다. 매우 간단한 시스템이다. 그렇다면 소제목인 &#8216;Some simple models of neurons&#8217;은 무슨 의미란 말인가?? 별건 아니고, output을 바로 사용할 것이냐 아니면 무언가 다른 형태로 modeling하여 사용할 것이냐에 대한 문제이다. 앞서 설명한 수식은 neuron들을 계산한 결과가 바로 최종 output이 된다. 그러나 실제로는 이것 말고도 많은 모델들이 존재하는데, 예를 들어서 \(z = b + \sum_i x_i w_i\) 라고 했을 때 y의 값을 z가 0보다 크면 z값을 그대로 사용하고 0보다 작으면 0이라고 할 수도 있을 것이다. 이런 모델을 Rectified Linear Neurons이라고 하며 linear threshold neuron이라고 하기도 한다. 또한 0보다 작으면 0, 0보다 크면 1이 되도록 하는 binary threshold neuron도 생각할 수 있다. 실제로 우리가 사용하게 될 model은 바로 sigmoid neuron이다. Sigmoid function은 매우 간단한데, 다음과 같은 모양이다. \(y = \frac 1 {1+e^{-z}}\) 이런 형태가 되면, z가 양의 방향으로 무한하게 커진다면 아래 항이 1이 되므로 값이 1이 되고, z가 무한하게 음의 방향으로 커진다면 아래 항이 무한하게 발산하게 되어 전체 식의 값이 0이 되는 것이다. 즉, 아래와 같은 모양을 띄게 되는 것이다.</p>
-
-
-<p><img src="/images/post/39-2.png" width="320"></p>
-
-<p>대부분의 경우 우리가 필요한 output은 binary이므로 (0또는 1이므로) 이 함수의 결과가 output의 확률을 나타내는 stochastic binary neuron을 생각하는 것이 가능하다. 즉, \(p(y=1) = \frac 1 {1+e^{-z}}\) 로 표현하고 output의 값을 stochastic하게 예측하는 방법을 사용할 수 있는 것이다. 아마 앞으로 neural network라 하면 이런 stochastic model이 중심이 된다고 생각하면 될 것이다.</p>
-
-
-<h5>A simple example of learning</h5>
-
-
-<p>이 부분은 사실 크게 설명할 것은 많이 없고, 그렇다면 이런 neural network를 실제 이미지 recognition에 어떻게 사용할 것이냐.. 에 대한 부분이다. MNIST를 예로 들면 임의의 784 pixel map이 들어왔을 때 10개의 class (0~9) 중에서 어느 class에 해당하는지 어떻게 예측할 것이고 어떻게 decision을 내릴 것인가! 에 대한 실제 예시를 다루는 것이다. 이미 class가 정해진 이미지들을 가지고 neural network의 weight들을 학습하고, 그 결과를 통해 class를 구분하는 것이다. 한 가지 방법은, neural network를 layer처럼 쌓는다고 생각했을 때 (아래의 첫 번째 그림) 만약 이 network에서 맨 마지막 layer에서 어떤 특정한 shape으로 수렴하도록 만들었을 때 그 수렴한 결과를 이용해 class를 구분할 수 있을 것이다 (마찬가지 아래 두 번째 그림).</p>
-
-
-<p><img src="/images/post/39-3.png" width="400">
-<img src="/images/post/39-4.png" width="600"></p>
-
-<p>이렇게 복잡하게 해야하는 이유는 몇 개의 간단한 알고리듬, 예를 들어서 아래 삐침 글자가 오른쪽으로 뻗으면 &#8216;2&#8217; 라고 하는 등의 간단한 rule을 각각의 class에 대해 만들어서 이 rule에 의해 determistic하게 결정하는 무지무지 간단한 heuristic algorithm이 아니라 neural network을 쓰는 이유는, 실제 우리가 생각할 수 있는 것보다 엄청나게 많은 variation이 존재하고 (심지어 숫자임에도 불구하고!) 이 때문에 이런 heuristic한 방법으로는 좋은 performance가 나오기 힘들기 때문이다. 특히 MNIST에는 갈겨 쓴 글씨가 많아서 더 그럴지도..</p>
-
-
-<h5>Three types of learning</h5>
-
-
-<p>machine learnig에는 supervised learning, reinforcement learning, unsupervised learning 총 세 가지 큰 범주가 존재한다. 각각에 대한 설명은.. 워낙 많이 했기에 생략하고 (reinforcement learning은 한 적은 없지만, neural network의 main interest가 아니다) 간단하게 설명하면, neural network로 supervised learning을 하는 것이 앞의 절반, 그리고 unsupervised learning을 하는 것이 뒤의 절반이 될 예정이다. 특히 엄청나게 오래되고 old한 neural network가 재조명을 받고 연구가 활발하게 된 가장 큰 이유가 Deep learning 등의 unsupervised learning임을 감안해봤을 때, 매우 기대가 되는 부분이다. (대부분의 교재는 supervised learning에 대해서만 다룬다.)</p>
-
-
-<h5>Conclusion</h5>
-
-
-<p>이 렉쳐는 워낙 intro level이고.. 예전에 중복해서 다룬 개념이 너무 많아서 생략한 내용이 좀 많다. 최대한 자세하게 적으려 노력했지만, 의아한 부분이 있으면 위키피디아 등에 자세히 설명이 되어있으니 그 글들을 참고해주길 바란다.</p>
+<span class="categories"><a class='category' href='/blog/categories/common/'>Common</a>, <a class='category' href='/blog/categories/development/'>Development</a></span>
 
 
 
 
-<h5>Coursera Neural Networks for Machine Learning</h5>
-
-
-<p>다른 요약글들 보기 (<a href="/blog/categories/cousera-nn/">카테고리로 이동</a>)</p>
-
-
-<ul>
-    <li>Lecture 1: <a href="/39">Introduction</a></li>
-    <li>Lecture 2: <a href="/40">The Perceptron learning procedure</a></li>
-    <li>Lecture 3: <a href="/42">The backpropagation learning proccedure</a></li>
-    <li>Lecture 4: <a href="/43">Learning feature vectors for words</a></li>
-    <li>Lecture 5: <a href="/43">Object recognition with neural nets</a></li>
-    <li>Lecture 6: Optimization: How to make the learning go faster</li>
-    <li>Lecture 7: Recurrent neural networks</li>
-    <li>Lecture 8: More recurrent neural networks</li>
-    <li>Lecture 9: Ways to make neural networks generalize better</li>
-    <li>Lecture 10: Combining multiple neural networks to improve generalization</li>
-    <li>Lecture 11: Hopfield nets and Boltzmann machines</li>
-    <li>Lecture 12: Restricted Boltzmann machines (RBMs)</li>
-    <li>Lecture 13: Stacking RBMs to make Deep Belief Nets</li>
-    <li>Lecture 14: Deep neural nets with generative pre-training</li>
-    <li>Lecture 15: Modeling hierarchical structure with neural nets</li>
-    <li>Lecture 16: Recent applications of deep neural nets</li>
-</ul>
-
-</div>
+  </article>
   
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
+  <article class="mB40">
     
-      <h1 class="entry-title"><a href="/38/">LMNN(Large Margin Nearest Neighbors) (NIPS 2006) LMCA(Large Margin Component Anaylsis) (NIPS 2007)</a></h1>
+<p><time datetime="2013-12-03T17:58:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>03</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/32/">인터넷 속의 수학 - Can I really reach anyone in 6 steps? (1/2)</a></span><br>
+단기강좌 인터넷 속의 수학에서 첫째날 강의인 &#8216;Can I really reach anyone in 6 steps?&#8217; 의 요약글 2 중 1</p>
+
+<span class="categories"><a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a>, <a class='category' href='/blog/categories/modeling/'>Modeling</a>, <a class='category' href='/blog/categories/network/'>Network</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
-    
-      <p class="meta text-right mB50">
-        
+<p><time datetime="2013-12-02T21:43:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>02</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/31/">인터넷 속의 수학 - How does Netflix recommend movies? (2/2)</a></span><br>
+단기강좌 인터넷 속의 수학에서 둘째날 강의인 &#8216;How does Netflix recommend movies?&#8217; 의 요약글 2 중 2</p>
+
+<span class="categories"><a class='category' href='/blog/categories/big-data/'>Big-Data</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a></span>
 
 
 
 
-
-
-
-
+  </article>
   
-
-
-<time datetime="2014-03-03T15:21:00+09:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2014</time>
-        
-         | <a href="/38/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>KNN은 machine learning에서 general하게 많이 쓰이는 알고리듬이다. 이 알고리듬은 아이디어도 매우 간단하고 구현하기도 간단하고 성능도 어느 정도 이상 나오는 꽤나 훌륭한 알고리듬이기 때문이다. <a href="/37">이전 글</a>에서 distance metric learning의 대략적인 컨셉을 설명했었고, 그 중에서도 optimization을 통해 metric을 learning하는 category에 대해 간략하게 언급했었다. 이 글에서는 그런 알고리듬 중에서 LMNN (Large Margin Nearest Neighbors) 그리고 이 방법의 단점을 보완한 LMCA (Large Margin Component Analysis) 라는 알고리듬을 소개할 것이다.</p>
-
-
-<h5>LMNN - Introduction</h5>
-
-
-<p>먼저 LMNN이라는 아이디어는 2006년 <a class="red tip" title="Advances in Neural Information Processing Systems">NIPS</a>에 발표된 Distance metric learning for large margin nearest neighbor classification이라는 논문에 소개된 기법이다. 이 알고리듬은 distance metric learning에 대해 설명했던 <a href="/37">이전 글</a>에 잠깐 언급했던 Mahalanobis Metric을 직접 학습하는 알고리듬이다. 이 Metric은 지난 번에 설명했기 때문에 자세한 설명은 생략하도록 하겠다.</p>
-
-
-<p>이 논문에서는 거리가 제곱근 형태가 아니라 제곱 들의 합으로 표현을 했다. 즉, Mahalanobis Metric을 \(D(\vec x_i , \vec x_j )=(\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j )\) 꼴로 표현하게 된다. 혹은 \(D(\vec x_i , \vec x_j )= ||L(\vec x_i - \vec x_j)||^2 \)으로 표현된다.</p>
-
-
-<h5>LMNN - Cost function</h5>
-
-
-<p>이 방법의 핵심 아이디어는, 위에서 표현한 Metric을 평가하는 Cost function을 design하고 이 function을 minimize시키는 Metric을 찾아내는 것이다. 매우 간단한 컨셉이고, 만약 운이 좋아서 optimization 문제가 반드시 하나의 global solution으로 수렴한다는 것이 보장만 된다면 가장 최고의 성능을 낼 수 있을 것이라는 것은 자명한 일이다. (<a href="/31/">이전에 작성한 글</a>에서 이러한 좋은 문제 중 하나인 convex optimization에 대해 간략하게 언급했었다.) 자, 그러면 이 논문에서 Cost function을 어떻게 정의했는지 한 번 알아보자.</p>
-
-
-<p>$$ \varepsilon (\mathbf L ) = \sum_{ij} \eta_{ij} ||L(\vec x_i - \vec x_j)||^2 + c \sum_{ijl} \eta_{ij} (1-y_{il}) h[ 1 + ||L(\vec x_i - \vec x_j)||^2 - ||L(\vec x_i - \vec x_l)||^2 ] $$</p>
-
-
-<p>이때, 각 notation이 의미하는 바는 아래와 같다</p>
-
-
-<p></p>
-
-<ol>
-    <li>\({(\vec x_i , y_i )}_{i=1}^n\): training set을 의미한다. 벡터 x는 input data를, scalar y는 label을 의미한다. (binary class가 아니어도 상관없다.)</li>
-    <li>\(\eta_{ij}\): \(\vec x_j\)가 \(\vec x_i\)의 target neighbor인가 아닌가를 나타내는 binary variable. 맨 처음 learning할 때 고정되는 값이며 알고리듬이 돌아가는 동안 변하지 않는 값이다.</li>
-    <li>\(y_{ij}\): label \(y_i\)와 \(y_j\)가 서로 일치하는가 하지 않는가를 나타내는 binary variable이다. 역시 변하지 않는다.</li>
-    <li>h(x): hinge function으로, 간단하게 표현하면 \(h(x) = max(0,x) \)이다. 즉, 0보다 작으면 0, 아니면 원래 값을 취하는 함수이다.</li>
-    <li>c: 0보다 큰 임의의 상수로, 끌어당기는 term과 밀어내는 term사이의 trade-off를 조정한다. 보통 cross validation으로 결정한다.</li>
-    <li>Target neighbor: 임의의 \(x_i\)와 같은 label을 가진 데이터들 중에서 가장 가까운 k개의 데이터들을 의미하며 k는 사용자가 세팅할 수 있다</li>
-</ol>
-
-
-<p>뭔가 복잡해보이지만, 일단 간단하게 설명하자면 앞의 항은 같은 label끼리 서로 끌어오는 term이고, 뒷 항은 서로 다른 label끼리 밀어내는 term이다. 이유는 간단한데, 먼저 앞과 뒷항 모두 포함되어있는 \(\eta_{ij}\)는 i와 j가 서로 target data일 때만 해당 항을 남기고, 아니면 0으로 만들어버리기 때문에 이 모든 연산은 target neighbor들에 대해서만 진행이 되게 된다. 따라서 앞의 항은 target neighbor들끼리의 거리를 의미하므로, 이 값을 minimization한다는 것은 서로 같은 label들끼리 최대한 가깝게 모아준다는 의미와 같게 되는 것이다. 그럼 오른쪽 항은? 이 항은 잘 보면 summation factor가 i,j,l인데, 일단 먼저 target neighbor i와 j에 대해서 이와는 다른 label을 가진 (\((1-y_{il})\)가 0이 되지 않는) l들에 대해서 최대한 그 거리를 멀어지게 하도록 하는 항이다. 이 값은 사실 그냥 나온 값이 아니라 아래 식을 통해서 나오게 된 값이다.</p>
-
-
-<p>$$ d(\vec x_i , \vec x_j) + 1 \le d(\vec x_i , \vec x_l) $$</p>
-
-
-<h5>LMNN - Optimization</h5>
-
-
-<p>위의 식에 대해서 간단히 언급을 하자면, 모든 i와 j들에 대해서, label이 다른 l과의 거리보다 label이 같은 데이터들끼리의 거리가 무조건 1만큼은 작아야한다는 식이다. 이 식을 살짝 전개하면 원래 cost function의 오른쪽 항과 같은 모양을 얻을 수 있을 것이다.</p>
-
-
-<p>자! 이제 cost function을 정의했으니 optimize를 해보자. 근데 문제가 하나 있는데, 이 cost function은 <a class="red tip" title="Convex Optimization은 solution이 무조건 하나다. 나중에 블로그에서 자세하게 다뤄보도록 하겠다.">convex</a>가 아니다. 때문에 L에 대해 문제를 해결했을 때 정확한 global minimum을 찾을 수가 없게 된다. 하지만 이 논문은 아주 간단하게 이 문제를 convex 문제로 바꾸게 된다. convex 문제 중에서 semidefinite programming이라는 문제가 있는데 (간단하게 SDP라고 한다) 이 문제는 &#8216;어떤 조건&#8217;을 가장 잘 만족하는 positive semidefinite matrix를 찾는 문제이다. 이 문제에 대해 언급하면 포스트가 너무 길어지니 <a href="http://en.wikipedia.org/wiki/Semidefinite_programming">위키 링크</a>로 대체하도록 하겠다.</p>
-
-
-<p>그러면 이 문제를 어떻게 SDP로 바꿀 수 있을까? 해결법은 Metric을 L로 표현하는 대신에 M으로 표현하고, 이 M에 대해 문제를 푸는 것이다. 이렇게 표현하게 되면 문제가 아래와 같이 변하게 되며 이는 SDP로 간단하게 해결할 수 있는 문제가 된다.</p>
-
-
-<p>$$ \mathbf {Minimize} \sum_{ij} \eta_{ij} (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) + c \sum_{ij} \eta_{ij} (1-y_{il}) \xi_{ijl} \ \mathbf {subject} \ \mathbf {to:} $$</p>
-
-
-<p style="margin-left:15%"> (1) \( (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) - (\vec x_i - \vec x_j )^\top \mathbf M (\vec x_i - \vec x_j ) \geq 1- \xi_{ijl} \)</p>
-
-
-<p style="margin-left:15%"> (2) \( \xi_{ijl} \geq 0 \)</p>
-
-
-<p style="margin-left:15%"> (3) \( \mathbf M \succeq 0 \)</p>
-
-
-<p>여기에서 \(\xi_{ij}\)는 slack variable로, 이전 식의 hinge function과 완전히 같은 동작을 하도록 &#8220;mimick&#8221;을 하는 변수이다. 이 문제는 앞에서 언급한 SDP로 해결할 수 있는 format이기 때문에 이제 이 문제를 해결해서 적절한 \(\mathbf M\)을 찾아내면 우리가 찾고자하는 적절한 Metric을 찾을 수 있게 되는 것이다.</p>
-
-
-<h5>LMNN - Result</h5>
-
-
-<p>자 이제 LMNN의 실제 performance를 measure해보자. 참고로 이 알고리듬은 저자가 직접 버전관리하는 소스코드가 존재한다. <a href="http://www.cse.wustl.edu/~kilian/code/code.html">링크</a>에서 간단하게 다운로드 받을 수 있다. 이 Metric learning이 well-working하는지 판단하기 위해서 이 논문에서는 총 4개의 알고리듬을 비교한다. (1) Euclidean distance를 사용하는 기존의 KNN (2) Optimization을 통해 얻은 Metric을 사용해 Mahaloanobis distance를 사용한 KNN (3) 앞에서 얻은 Metric을 계산할 때 사용한 Cost function을 가장 최소화시키는 label을 고르는 Energy-based classification (4) Multiclass SVM 이렇게 총 네가지 알고리듬을 사용한다. 그런데, 만약 dimension이 높은 경우에는 위의 Optimization식이 Overfitting이 될 위험성이 존재한다. 따라서 이를 방지하기 위하여 feature가 많은 문제는 PCA를 사용하여 dimension을 낮추는 작업을 하게 되는데, 이 문제가 결국 다음에 설명할 LMCA의 Motive가 된다. 아무튼 이런 방법을 사용하여 얻은 결과는 아래 표와 같다.</p>
-
-
-<p><img src="/images/post/38-1.png" width="600"></p>
-
-<p>대체로 Energy-based classification이 가장 좋은 결과를 보이는 것을 알 수 있으며, 이 논문의 방법을 통해 계산한 Metric이 분명 기존의 다른 방법들보다 더 나은 방법을 제시한다고 할 수 있을 것이다. 그러나 이 방법의 근본적인 문제점이라면 Optimization으로 Metric을 구하기 때문에 Overfitting문제에 매우 취약하다는 것이며, 특히 dimension이 높고 sample개수가 적으면 이 문제가 매우매우 심각해진다. 다만, face, hand-write letter, spoken letter 등등 매우 다양한 데이터셋에 전부 개선된 performance를 보이는 것은 충분히 고무적인 결과라고 할 수 있을 것이다.</p>
-
-
-<h5>LMCA - Motivation</h5>
-
-
-<p>하지만, Feature가 1000단위가 넘어가는 high dimension 상황에서는 문제가 발생할 수 있다. 기본적으로 Optimization 문제라는 것은 언제나 Overfitting issue에서 벗어날 수 없다. 특히 LMNN이 정의한 Optimization문제는 정사각행렬 M을 학습해야하므로, dimension이 높아질수록 Optimization을 통해 찾아내야하는 항이 제곱 스케일로 늘어난다. 즉, 당장 차원이 100단위만 넘어도 찾아내야하는 항의 수가 10000개가 넘어가게 된다는 의미이다. 따라서 우리가 실제 이 문제를 적용하는 경우에, 어쩔 수 없이 dimension reduction technology를 사용할 수 밖에 없어진다. LMNN 논문에서는 PCA를 사용하여 dimension을 낮춘 이후에 Optimization문제를 풀게 되는데, 이 PCA라는 것이 물론 좋고 많은 사람들이 사용하는 dimesion reduction 방법이지만, 이 방법으로 인해 발생하는 오차가 매우 크고 실제로 더 좋은 performance를 낼 수 있음에도 불구하고 그 성능이 크게 저하되는 요인이 된다는 것이 LMCA의 Motivation이다. 실제로 PCA를 사용하게되면 Dominant한 term을 뽑아내기는 하지만 그 dimension이 낮아지거나 혹은 기존에 가지고 있는 input vector들이 bais가 된 경우에는 좋은 결과를 얻지 못할수도 있기 때문에 이 문제는 꽤나 큰 문제가 될 수 있다.</p>
-
-
-<h5>LMCA - Idea</h5>
-
-
-<p>그렇다면 어떻게 PCA등의 별다른 dimension reduction technology없이 Overfitting 문제를 해결할 수 있을까? 사실 이 논문에서 주장하는 내용은 매우 간단하다. 이전 논문인 LMNN에서 찾고자하는 Metric인 L이 dimension을 변화시키기 않는 transformation이었던 것에 반해, LMCA에서는 L을 원래 차원 D에서 더 낮은 차원 d로 보내는 L을 찾겠다는 것이다. 하지만 여기에서 문제가 생긴다. Full rank가 아닌 \( \mathbf M = \mathbf L^top \mathbf L\) 은 이제 더 이상 Semidefinite programming문제가 아니게 된다. 이유는 원래 SDP 문제에서 rank = d라는 조건이 추가되기 때문인데, 이렇게 되면 M이 convex domain이 아니게 되기 때문에 더 이상 이 문제가 convex problem이 아니게 되고, 따라서 이 문제는 더 이상 global optimum으로 수렴하지 않는다!</p>
-
-
-<p>그렇다면 해결책은 없는 것일까? 이 논문에서는 그냥 원래 non convex인 L에 대한 cost function을 그냥 gradient descent method를 사용하여 optimize시킨다. 물론 이렇게 계산된 값은 local optimum이다. 때문에 LMNN이 무조건 global solution을 찾았던 것과 비해서 매우 performance가 떨어질 것 같지만, 저자들은 다음과 같은 2가지 장점이 있기 때문에 오히려 이 방법이 더 performance가 높다고 주장한다. 첫째, 원래 Full rank M을 찾을 때는 unknown component들이 D by D만큼 존재했었지만, 지금은 차원을 더 낮추었기 때문에 찾아야하는 값이 더 적어진다. 마치 Matrix completion의 장점과 비슷한 것이다. 둘째, 원래 LMNN은 Optimization을 할 때 parameter들이 굉장히 많은데 이런 여러 요소 없이 바로 Optimization이 가능해진다는 것이다. 물론 당연히 이 논리의 기본 가정은 high dimension data에 PCA를 사용해 low dimension으로 만들었을 때 이미 information loss가 많이 발생하거나 이미 tranining data에 overfitting되기 때문에 성능에 무조건적인 저하를 불러일으키게 되기 때문에 Optimization을 PCA를 사용하지 않은 Full dimension에 대해서 실행했다는 가정 하에 성립할 것이다.</p>
-
-
-<h5>LMCA - Results</h5>
-
-
-<p>그렇다면 결과를 한 번 확인해보자.</p>
-
-
-<p><img src="/images/post/38-2.png" width="600"></p>
-
-<p>위의 그림은 high dimension dataset에 대한 것이고 아래 결과는 low dimension dataset에 대한 결과이다. 아무래도 high dimension에서는 저자들이 주장한 대로 LMNN에 비해 결과가 많이 개선된 것을 확인할 수 있다. (이 그림에서는 kernelized된&#8230; 즉 non-linear method 역시 함께 evaluation된 결과이기 때문에 LMNN과 비교해야할 대상은 linear method이다) 하지만 low dimension에 대해서는 항상 더 높은 것 만은 아니며, 일부 경우에 대해서는 LMNN이 더 좋은 결과를 보임을 알 수 있다. 즉, 이 방법은 overfitting issue가 발생했을 때 global optimum은 아니지만 그와 유사한 (그러나 절대 같다고 하거나 그와 유사하다고 할 수도 없는) local optimum을 찾는 방법이기 때문에, overfitting issue가 적은 low dimension에서는 LMNN보다 성능이 떨어질 수도 있는 것이다.</p>
-
-
-<h5>Non-linear LMNN, LMCA</h5>
-
-
-<p>지금까지 언급한 방법들은 모두 &#8216;linear&#8217;한 transformation을 찾는 문제였다. 하지만 세상에는 엄청나게 많은 non-linear metric이 존재하며, 분명 linear보다 성능이 더 좋은 non-linear metric을 찾을 수 있을 것이라고 생각할 수 있다. 그렇다면 이 논문들에서 과연 그런 방법을 다루지 않을까? 일단 LMNN은 NIPS에 제출된 원래 논문에는 non-linear problem이 언급이 되어있지않지만, 나중에 GB-LMNN (Gradient Boost LMNN)이라는 방법을 소개하며, 이 방법의 powerful함은 LMNN code에서 직접 확인할 수 있을 것이다. 이 방법은 Gradient Boost라는 방법을 사용하여 non-linear metric을 찾아내는데, 문제는 이 방법이 non-convex하다. 따라서 초기값에 따라서 그 결과가 상이하게 달라지게 되는데, 해당 논문에서는 LMNN을 통해 학습한 L을 초기값으로 사용하여 Optimum값을 찾는 아이디어를 제시해 L의 성능을 개선시킨다고 명시되어있다. 분명 Optimize를 시키기 때문에 본래 값보다는 더 좋은 값으로 수렴할 것이며 성능도 어느정도 올라갈 것이라고 예측이 가능할 것이다. Gradient boost는 regression tree라는 것을 학습하여 non-linear transformation을 찾아내는데, 이 tree의 node개수나 level등등을 어떻게 학습시킬 것이냐에 따라 그 running time과 overfitting issue가 결정되는 듯 하다. 더 자세한 점은 해당 논문을 읽어보기를 권한다.</p>
-
-
-<p>또한 LMCA는 원 논문에 non-linear method까지 언급이 되어있다. 본래 아이디어 자체가 그냥 gradient descent를 사용해서 local optimum L을 찾는 문제이기 때문에 kernel에 대해서도 이 문제를 동일하게 풀 수 있는 듯하다. 다만 그 update rule을 어떻게 결정하느냐의 문제가 있는지 논문에서 cost function의 gradient방향으로 내려가는 것이 올바른 update rule이라는 것을 Lemma를 증명해놓았다. 아무튼 당연한 얘기지만 이 방법이 linear method보다 그 결과가 좋다. 자세한 점은 마찬가지로 해당 논문을 참고하길 바란다.</p>
-
-
-<h5>Conclusion</h5>
-
-
-<p>KNN은 엄청 직관적인 method이지만 분명 powerful하고 easy to implement한 방법이다. 또한 이론적으로 그 bound가 가장 optimal한 case에 bayes risk와 같다는 것이 증명이 되어있기 때문에 사실 굉장히 좋은 방법이라고 할 수 있다. 그러나 실제 우리가 이 방법을 적용하는 대부분의 상황에서는 metric learning이 performance에 크게 영향을 끼칠 수 밖에 없다. LMNN과 LMCA는 Optimization problem을 solve함으로써 상당히 좋은 결과를 얻어낼 수 있는 좋은 Metric learning알고리듬이라고 할 수 있다. 물론 이 방법들에는 overfitting issue가 존재하고, 이 때문에 적절한 상황이 아닌 경우에 특히 high dimension, low sample problem에서 well working하지 않는다는 단점이 존재하기는 한다. 하지만 저자가 구현한 implement하기 좋은 matlab code도 존재하고, 여러모로 괜찮은 방법이 아닌가 하는 생각이 든다.</p>
-
-
-<p>References</p>
-
-
-<ul>
-    <li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006) .InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li>
-    <li>Torresani, L., & Lee, K. (2007). Large margin component analysis. Advances in Neural Information Processing</li>
-    <li><a href="http://www1.cse.wustl.edu/~xuzx/research/publications/gb-lmnn.pdf">Kedem, D., Xu, Z., & Weinberger, K. (n.d.). Gradient Boosted Large Margin Nearest Neighbors</a></li>    
-</ul>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/37/">Distance Metric Learning</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-02T20:24:00+09:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2014</time>
-        
-         | <a href="/37/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Machine Learning 분야에는 KNN 등의 input data의 <a class="red tip" title="간단하게 생각해서 distance function이라 생각하면 된다. 자세한 설명은 뒤에서 계속">distance metric</a>을 어떻게 설정하냐 따라에 크게 영향을 받는 알고리듬들이 종종 존재한다. 그런데, 대부분 이런 method들에서 주로 사용하는 distance metric은 Euclidean distance로, 이 metric은 근본적으로 데이터 하나와 다른 데이터 하나와의 관계만을 나타내기 때문에 실제 distribution으로 존재하는 데이터에는 적합하지 않은 경우가 많다. 때문에 데이터들의 분포 등을 고려하여 이런 &#8216;거리&#8217;를 새로 정의하는 분야가 존재하는데 이를 일컬어 Distance Metric Learning이라 한다.</p>
-
-
-<p>그렇다면 distance metric이란 무엇인가부터 간단하게 짚고 넘어가자. Distance metric은 쉽게 생각하면 distance를 정의하는 방법이라고 할 수 있다. 몇 가지 규칙이 존재하는데, 자세한 내용은 <a href="http://en.wikipedia.org/wiki/Metric_(mathematics)">위키피디아 페이지</a>를 참고하길 바란다. 역시 가장 간단한 예시는 Euclidean distance로, 우리가 가장 많이 알고 있는 거리를 측정하는 방법일 것이다. 이 함수는 간단하게 \(d(p,q)=\sqrt{(p_1-q_1)^2+(p_2-q_2)^2+&#8230;}\)로 정의된다. 그 밖에도 두 점의 값이 정확히 일치하면 1, 일치하지 않는다면 0으로 표시하는 binary distance등도 존재한다.</p>
-
-
-<p>이 밖에도 중요한 distance metric으로는 Mahalanobis Distance Metric이라는 것이 있다. 이 distance metric은 Euclidean distance metric이 data set의 correlation을 하나도 고려하지 않은 문제점을 해결할 수 있고, 또한 scale-invariant한 특성을 가지고 있다. 이 metric은 \(d(p,q)=\sqrt{(\vec p - \vec q)^\top \Omega (\vec p - \vec q)}\)로 정의된다. 이 때 \(\Omega\)는 semidefinite matrix이다. <a href="http://en.wikipedia.org/wiki/Mahalanobis_distance">위키피디아</a>에서 발췌한 보다 정확한 정의는 앞서 나왔던 수식에서 \(\Omega\)가 covariance matrix인 metric이다. 따라서 이 metric이 data set의 correlation을 포함하여 거리를 표현할 수 있는 것이다. 하지만 실제 분포를 알 수 없는 임의의 데이터들에 대해서 올바른 covariance matrix를 계산하는 것은 매우 어렵다. 따라서 이 Mahalanobis metric의 \(\Omega\)를 learning하는 method들도 존재하는데, 대표적으로 LMNN(Large Margin Nearest Neighbor) classification이 있다. 이 논문에 대해서는 추후에 따로 포스트를 하도록 하겠다.</p>
-
-
-<p>아무튼, distance metric learning은 input data space에서 data들에 가장 적합한 형태의 어떤 metric을 learning하는 알고리듬이다. 여기에서 data는 각 pair 별로 similar/dissimilar가 정의되어 있는 형태의 데이터이다. 즉, metric learning은 similar한 point끼리는 더 가까운 거리로 판단하게 하고, dissimilar한 point는 더 먼 거리로 판단하게 하는 어떤 metric을 학습하는 것이다. 당연히 KNN 등의 알고리듬들은 그 성능이 크게 개선될 수 있다.</p>
-
-
-<p>아래는 distance metric learning을 간략하게 그림으로 나타낸 것이다. 그림은 Bellet, A., Habrard, A., and Sebban, M. A Survey on Metric Learning for Feature Vectors and Structured Data, 2013 에서 발췌하였다.</p>
-
-
-<p><img src="/images/post/37-1.png" width="500"></p>
-
-<p>즉, 우리가 metric learning을 하는 가장 큰 이유는 KNN 등의 metric에 크게 좌우되는 algorithm들의 성능을 개선시키기 위함인 것이다.</p>
-
-
-<p>그렇다면 distance metric learning의 종류는 어떻게 되는가? 일반적인 machine learning 분류처럼 supervised/unsupervised learning이 존재한다. 먼저 supervised learning은 constraints나 label이 이미 주어진 상태에서 metric을 학습하게 된다. 즉, 이미 우리는 모든 데이터들의 관계를 알 고 있고, 이 관계에서 가장 적합한 distance metric을 찾는 알고리듬인 것이다. 대표적으로 NCA, RCA 등의 알고리듬 들이 존재한다고 한다. 이에 반해 unsupervised learning은 아무런 사전지식없이 metric을 learning하는데, 주로 dimension reduction technique으로 많이 사용한다. 예를 들어서 PCA가 이 범주에 들어가게 된다.</p>
-
-
-<p>내가 읽은 두 개의 survery에서는 (Liu Yang, Distance Metric Learning: A Comprehensive Survey, 2005 그리고 Liu Yang, An Overview of Distance Metric Learning, 2007) 이 두 가지 분류 뿐 아니라 두 가지 분류를 더 추가하였다. 하나는 Maximum margin based distance learning이고, 또 하나는 kernel method이다. 일단 kernel 쪽은 내가 잘 모르기도 하고, 내 관심사는 maximum margin based distance learning이므로, 이 부분에 조금 더 집중해서 설명하도록 하겠다.</p>
-
-
-<p>위의 survey에서 정의하는 Maximum margin based learning은 다음과 같다. <a class="red">&#8220;Formulate distance metric learning as a constrained convex programming problem, and attempt to learn complete distance metric from training data&#8221;</a> 즉, Convex optimization을 통해서 가장 최적의 metric을 찾아내는 method라는 것이다. 여기에서 convex optimization은 이전에 블로그에서 다룬 적이 없기 때문에 나중에 이에 대한 글을 쓰게 되면 여기에 추가 랑크를 달도록 하고 지금은 일단 위키피디아 링크로 설명을 대체하도록 하겠다. <a href="http://en.wikipedia.org/wiki/Convex_optimization">링크</a></p>
-
-
-<p>이 방법은 주어진 input에 대해서 가장 최고의 performance를 내는 metric을 찾아내기 때문에 가장 성능이 좋아보일 것 같지만, 실제로는 몇 가지 문제점들을 가지고 있다. 하나, convex optimization은 대부분 gradient descent method를 사용하여 그 계산하는데, 이 계산량이 다른 method들에 비해서 많이 비싸다. 둘째, input training data들에 대해서 optimize한 결과로 metric을 정의하기 때문에 overfitting 문제가 발생할 수 있다. 특히 이 overfitting은 dimesion이 높아질 수록, traing sample의 숫자가 줄어들 수록 더더욱 문제가 된다. 때문에 이런 문제점을 해결하기 위해서 dimension을 reduction한 이후에 metric을 learning하는 등의 technique들이 사용되고 있다. 하지만 이 역시 문제가 있는데, 이 문제에 대해서는 나중에 포스팅하게 될 LMCA 논문에서 다루도록 하겠다.</p>
-
-
-<p>아무튼 maximum margin based learning의 대표적인 예는 LMNN method로, 이 method는 위에서 설명했던 Mahalanobis metric을 직접 learning하며, non-convex problem을 Semidefinite problem으로 바꾸어 global optimum을 찾는 문제로 바꾸어서 계산을 하게 된다. 이 논문에 대해서는 나중에 다시 포스팅하도록 하겠다.</p>
-
-
-<p>혹시 이 부분에 대해서 더 자세히 알고 싶다면, 아래에 링크해놓은 tutorial들을 읽어보길 바란다.</p>
-
-
-<p>Tutorials</p>
-
-
-<ul>
-    <li><a href="http://www.iip.ist.i.kyoto-u.ac.jp/member/cuturi/Teaching/KAIST/kaist_2013.pdf">Marco Cuturi. KAIST Machine Learning Tutorial Metrics and Kernels A few recent topics, 2013</a></li>
-    <li><a href="http://cseweb.ucsd.edu/~naverma/talks/metric_learning_tutorial_verma.pdf">Nakul Verma, A tutorial on Metric Learning with some recent advances</a></li>
-    <li><a href="http://www-bcf.usc.edu/~bellet/misc/metric_learning_tutorial.pdf">Aurelien Ballet, Tutorial on Metric Learning, 2013</a></li>
-    <li><a href="http://compscicenter.ru/sites/default/files/materials/2012_05_03_MachineLearning_lecture_09.pdf">Brian Kulis. Tutorial on Metric Learning. International Conference on Machine Learning (ICML) 2010</a></li>
-</ul>
-
-
-<p>References</p>
-
-
-<ul><li>Liu Yang, Distance Metric Learning: A Comprehensive Survey, 2005</li><li>Liu Yang, An Overview of Distance Metric Learning, 2007</li><li>Bellet, A., Habrard, A., and Sebban, M. A Survey on Metric Learning for Feature Vectors and Structured Data, 2013</li><li>K.Q.Weinberger,J.Blitzer,andL.K.Saul(2006).InY.Weiss,B.Schoelkopf, and J. Platt (eds.), Distance Metric Learning for Large Margin Nearest Neighbor Classification, Advances in Neural Information Processing Systems 18 (NIPS-18). MIT Press: Cambridge, MA.</li></ul>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/36/">서버를 구축해보자 - 웹서버 구축 스크립트 만들기</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-16T08:49:00+09:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time>
-        
-         | <a href="/36/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="33">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고&#8230; 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/">이음 블로그</a> 참고&#8230; 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
-
-
-<p>일단, apache만 가지고 되는건 거의 없다. 기본적으로 php + mysql 기반으로 굴러가는 모듈이 워낙 많기 때문에 이 녀석들도 깔아주도록하자. 아래와 같은 스크립트를 만들어서 돌리면 편하다</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>apt-get -y install apache2 libapache2-mod-passenger
-</span><span class='line'>apt-get -y install mysql-server mysql-client
-</span><span class='line'>apt-get -y install php5-common php5 libapache2-mod-php5
-</span><span class='line'>apt-get -y install php5-mysql
-</span><span class='line'>apt-get -y install phpmyadmin</span></code></pre></td></tr></table></div></figure>
-
-
-<p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐&#8230; 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
-
-
-<p>Default</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;VirtualHost *:80&gt;
-</span><span class='line'>  ServerAdmin webmaster@localhost
-</span><span class='line'>
-</span><span class='line'>  DocumentRoot /var/www
-</span><span class='line'>  &lt;Directory /&gt;
-</span><span class='line'>      Options FollowSymLinks
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>  &lt;Directory /var/www/&gt;
-</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>  &lt;Directory /var/www/redmine&gt;
-</span><span class='line'>    RailsBaseURI /redmine
-</span><span class='line'>    PassengerResolveSymlinksInDocumentRoot on
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-</span><span class='line'>  &lt;Directory "/usr/lib/cgi-bin"&gt;
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      Allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  ErrorLog ${APACHE_LOG_DIR}/error.log
-</span><span class='line'>
-</span><span class='line'>  # Possible values include: debug, info, notice, warn, error, crit,
-</span><span class='line'>  # alert, emerg.
-</span><span class='line'>  LogLevel warn
-</span><span class='line'>
-</span><span class='line'>  CustomLog ${APACHE_LOG_DIR}/access.log combined
-</span><span class='line'>&lt;/VirtualHost&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>passenger.conf</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_passenger.c&gt;
-</span><span class='line'>  PassengerDefaultUser www-data
-</span><span class='line'>  PassengerRoot /usr
-</span><span class='line'>  PassengerRuby /usr/bin/ruby
-</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>apt-get install redmine redmine-mysql
-</span><span class='line'>cp passenger.conf /etc/apache2/mods-available/passenger.conf
-</span><span class='line'>ln -s /usr/share/redmine/public /var/www/redmine
-</span><span class='line'>cp default /etc/apache2/sites-available/default</span></code></pre></td></tr></table></div></figure>
-
-
-<p>참 쉽다.. 참고로 이건 전부다 그냥 기본 설정이라 이렇게 한거지, 만약 설정이 되어있는 상태라면 위에 링크한 글대로 하기를 바란다. 혹시나 default설정 싹 날리거나 그러지 말고&#8230; 이제 service apache2 restart를 때려주면 레드마인이 돌아간다 올레</p>
-
-
-<p>음 그리고 이번에는 xe를 깔아보자. BBS 모듈이 필요할 때가 간간히 있기 때문에 xe는 깔아서 손해볼게 없다. (워드프레스도 쓸만하지만 단순 BBS로는 xe가 낫다.) 자 이번에도 스크립트.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>git clone https://github.com/xpressengine/xe-core.git
-</span><span class='line'>mv xe-core /var/www/xe
-</span><span class='line'>chmod 707 -R /var/www/xe
-</span><span class='line'>svn checkout http://xe-board.googlecode.com/svn/trunk/ board
-</span><span class='line'>mv board /var/www/xe/modules/board</span></code></pre></td></tr></table></div></figure>
-
-
-<p>뭐.. 이렇게 하고 ~~/xe 들어가서 설치하면 xe랑 board 모듈까지 설치 끝&#8230; 아 기본 설정인 경우에는 설정-고급-짧은 주소 사용에 아니오를 선택하고 캐시를 리로드해야한다. 이거 몰라서 한 1시간은 삽질했는데.. 이거 싫으면 따로 뭐를 깔아야하길래 그게 더 귀찮아서 그냥 설정을 바꿔줬다.</p>
-
-
-<p>마지막으로 위키를 깔아보자. 위키는 미디아위키를 사용한다.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
-</span><span class='line'>mv core /var/www/wiki
-</span><span class='line'>chmod 707 -R /var/www/wiki</span></code></pre></td></tr></table></div></figure>
-
-
-<p>아 참고로 xe도 wiki도 설치 후에 아파치를 한번 리스타트 해줘야할거다&#8230; 역시 이것도 /wiki로 들어가서 설치를 해주고 나온 php파일을 ftp로 /var/www/wiki에 다시 넣어주면 끝</p>
-
-
-<p></p>
-
-<p>전반적으로 크게 난해한 세팅도 없고.. 애당초 이번에 설치한 녀석들이 꽤 모듈로 잘 나온 놈들을 쓴 거라.. 크게 어렵지 않게 세팅했다. 지금 추가로 해볼까 고민 중인 것들은 개인 레포지토리를 뚫느냐 마느냐. 별로 큰 이득이 없어서 안할 것 같기는 하지만, 그래도 일단 만들어서 손해볼 것도 없고, 공부 삼아서 해볼까 고민 중이다. gui로 웹에서 접근 가능한 녀석을 만들어볼까하는데, 엄청 어려울 것 같지는 않고 그냥 엄청 귀찮을거 같아서 고민이다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/35/">우분투에 Matlab과 JDK 깔기</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-14T23:24:00+09:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
-        
-         | <a href="/35/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>맨 처음 우분투 desktop을 메인 컴퓨터로 사용하겠다고 삽질하던 시절, Matlab 하나 까는 것도 무지막지 고생스러웠던 시절이 있다. 최근 다시 우분투를 메인 컴으로 사용하면서 매트랩 설치에 삽질을 하는 사람이 있을까싶어 이 글을 남겨본다. 기준은 2011B 버전이며, Linux Mac Solaris 호환 버전을 기준으로 한다.</p>
-
-
-<p>맨 처음 파일을 받고 압축을 풀게 되면 (tar.gz파일을 받은 상태라고 가정한다. + 참고로 저는 학교 라이센스를 사용합니다.) 폴더안에 install이라는 파일이 있는 것을 확인할 수 있다. 이 파일은 간단한 shell script인데, chmod로 사용할 수 있도록 바꿔주어야한다.. 거기에다가 이 녀석이 자기 폴더 내부에 있는 java 파일을 사용하는데 이놈이 뭔가 권한이 없는지 에러를 슝슝 뱉는다. 잘못하면 삽질하기 딱 좋은 상황. 그러나 간단하게 아래 명령어 하나로 해결할 수 있다.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>chmod -R +x Mathworks_2011B_Linux_Mac_Solaris</span></code></pre></td></tr></table></div></figure>
-
-
-<p>이렇게 한 줄 치고,</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo ./Mathworks_2011B_Linux_Mac_Solaris/install</span></code></pre></td></tr></table></div></figure>
-
-
-<p>하면 깔끔하게 해결된다.</p>
-
-
-<p>+ install sudo로 안하면 파일 생성이 안된다</p>
-
-
-<p>아 그리고 JDK 설치도 삽질하기 딱 좋은데 이건 <a href="http://whatwant.tistory.com/438">정말 정리가 잘 된 포스트</a>가 있어서 링크로 대체하도록 하겠다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/34/">인터넷 속의 수학 - Can I Really Reach Anyone in 6 Steps? (2/2)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-12T16:48:00+09:00" pubdate data-updated="true">Dec 12<span>th</span>, 2013</time>
-        
-         | <a href="/34/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>본 포스팅은 <a href="/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
-
-
-<h5 id="34-1-review">Review of last post</h5>
-
-
-<p><a href="/32">지난 포스트</a>에서는 전반적인 강의의 개요 및 간단한 Network Problem들에 대해 다뤘다. 특히 그 중에서 밀그램의 편지 실험에 대해 다시 한번 살펴보자. 이 실험은 사람과 사람 사이의 사회적 거리를 측정하기 위한 실험이다. 여기에서 사회적 거리 혹은 social distance는 우리가 흔히 &#8216;distance&#8217;라는 컨셉에서 쉽게 생각할 수 있는 유클리언 distance와는 조금 다른 개념인데, 유클리언 distance가 지리적, 공간적인 거리의 개념이라면 social ditance는 내가 이 사람과 얼마나 가까우냐에 대한 얘기이다. 즉, 내가 미국에 유학가있는 친구와 유클리언 거리는 무지막지 멀지만 사회적거리는 엄청 가깝고, 옆 연구실의 학생분들은 유클리언 거리는 매우 가깝지만 안타깝게도 사회적 거리는 엄청 먼 셈이다. 구체적으로 social distance를 정의해보자. 이 값은 social network 위에서 내 node에서 다른 목표 node로 이동할 때 이동해야하는 총 거리를 의미한다. 즉, 밀그럼의 실험에서 실험 참가자들의 평균적인 사회적 거리는 약 5 정도가 되는 것이다. (이전에도 언급했듯, Facebook에서 같은 실험을 해보면 4.74가 나온다.)</p>
-
-
-<p>자, 다시 한번 이전에 설명했던 실제 네트워크, 허브라는 개념 등에 대해서 생각해보자. 이렇게 전혀 상관없어 보이는 사람들 사이의 사회적 거리가 짧게나오는 이유는 사회적 네트워크의 토폴로지가 (그래프의 모양이) 독특하기 때문이다. 아래 그림을 봤을 때 구조적으로 멀어 보이는 지점을 이어주는 엄청나게 긴 장거리 연결 링크 (long-range link)가 존재한다는 것을 알 수 있다.</p>
-
-
-<p><img src="/images/post/32-7.png" width="300"></p>
-
-<p>그리고 실제 네트워크는 뭉침현상(clustering)이 존재한다. 무슨 얘기이냐 하면, 특정 노트들끼리 뭉쳐있을 수 가 있다는 (cluster를 형성한다는) 의미이다. 따라서 밀그럼의 편지 실험에서 아무에게나 마구잡이로 편지를 전달하게 된다면 성공할 확률이 극히 낮아질 수 있다. (내부 cluster안에서만 편지가 빙빙 돌다가 실험이 끝날 수 있다.) 따라서 목표 지점과 현재 위치라는 굉장히 제한된 정보를 가지고 편지를 전달하기 위한 전략이 필요하고, 이를 다시 문제로 바꾸어서 생각해보면, 국지적인 정보만을 가지고 네트워크의 특정 지점에서 다른 특정 지점을 연결하는 가장 짧은 경로를 찾는 social search algorithm을 구현하기 위해서는 단순히 random하게 정보를 전달하는 것이 아니라, 어떤 특정한 rule이 필요하다는 것이다. 몇 가지 아이디어가 있는데, 대표적인 아이디어 중 하나는 사람들끼리의 연결은 그 정도가 같지 않다는 것이다. 즉, 내가 최종적으로 편지를 전달해야하는 사람이 은행가이므로 내 친구 중에서 간호사와 주식거래인이 있을 때 간호사보다는 주식거래인이 은행가와 확률적으로 사회적 거리가 더 짧을 것이라고 예측할 수 있을 것이다. 이런 식으로 특정 rule을 가지고 search를 하는 것이 매우 중요하다.</p>
-
-
-<h5 id="34-2-smallworld">Small world & Network Modeling</h5>
-
-
-<p>자, 이제 중요한 개념 몇 개를 다시 정리해보자.</p>
-
-
-<ul>
-    <li>Social Distance: Social Network에서 특정 node에서 다른 특정 node로 가기 위해 이동해야하는 가장 짧은 경로의 총 거리</li>
-    <li>Clustering coefficient: Social Netwrok에서 특정 node들끼리 얼마나 cluster를 형성할 것인지를 결정하는 계수. 이 값이 클 수록 cluster를 더 많이 형성한다. 수학적으로 다시 정의하자면 Network에서 node들의 connection이 connected triple을 일고 있을 확률을 의미한다. 아래 그림을 참고하면 더 이해가 쉬울 것이다.</li>
-    <li><img src="/images/post/34-1.png" width="500"></li>
-    <li>Diameter: Social Network에서 가장 긴 Social Distance의 길이</li>
-    <li>Length of Network(L): 모든 social distance의 중간값. 일반적으로 그래프의 크기가 커지면 같이 커진다</li>
-    <li>Small World: Network의 크기가 증가하는 속도보다 L이 증가하는 속도가 더 느린 형태의 네트워크 (보통 증가비율이 Logarithm scale이면 small network라고 한다.)</li>
-</ul>
-
-
-<p>위의 용어들을 다시 명시한 채로 (몇 개는 새로 정의하였다) Real network를 생각해보자. 이전 실험들을 통해서 우리는 real network의 diameter는 매우 작은 편이라는 것을 알고 있고, 또한 clustering coefficient는 크다는 것을 알 수 있다. 그리고 중요한 컨셉 중 하나가 모든 social distance의 중간값인 L인데, 실제 네트워크에서는 그 네트워크의 크기가 커지는 속도보다 L이 더 천천히 증가한다. 이를 위에서도 언급했듯 Small World라고 한다.</p>
-
-
-<p>근데 문제는 이런 Small world를 (한국어로는 좁은 세상이라고 한다) 수학적으로 모델링하는 것이 쉽지 않다. Power-Law 분포를 가진 네트워크를 앞에서 설명헀었는데, 이 모델을 (푸아송 모델이라고 한다) 적용해서 문제를 바라보게 되면 거리 혹은 지름이 짧다는 점에서 사실적지만, 모든 node가 independent possibility로 연결되어 있어서 뭉침계수가 작다는 점에서는 사실적이지 않다. 다시 뭉침계수를 설명하자면, 이어진 세 마디가 삼각형을 이루고 있을 확률이 뭉침계수이다. 그렇다면 Regular Network는 어떨까? 이 경우는 Clustering coefficient는 크지만 Diameter 역시 크다는 점에서 unrealistic하다. (이를 보완하기 위해서 그 둘을 적절하게 섞은 The Watts-Strogatz-Newman Model이라는 것이 있다. 이에 대해서는 아래에서 자세히 설명하도록 하겠다.)</p>
-
-
-<h5 id="34-3-poissonregularnetwork">Poisson Network vs Regular Network</h5>
-
-
-<p>푸아송 네트워크는 각 마디가 power-law distribution을 가지는 p라는 independent possibility로 연결이 되어있는 형태이다. random한 연결이 많기 때문에 diameter가 많다는 것은 충분히 이해할 수 있을 것이다. 그러나 이 경우에는 모든 마디가 p의 확률로 연결이 되기 떄문에, 엄청나게 약한 연결도 &#8216;연결&#8217;이 되기 때문에 cluster coefficient가 \(C=p\)로 작아서 사실적인 네트워크 모델이 될 수 없다. 반면 정규 네트워크는 네트워크 자체가 원형으로 구성되며 자기 자신과 가까운 c명에게 연결하고 있는 형태이다. 이 경우 cluster coefficient는 \(C=\frac {3(c-2)} {4(c-1)}\)로 크지만 (c의 값이 2명 값이 0이고 4면 0.5, 무한대로 가면 0.75가 된다. 이 정도면 엄청나게 높은거다.) diameter가 크기 때문에 사실적인 모형이 아니다. 때문에 이 둘을 적절히 결합한 The Watts-Strogatz-Newman Model이라는 것이 등장하게 되는데, 제일 가까운 c명과 연결이 되어있으면서 (regular network의 성질, 이로 인해 높은 clustering coefficient를 가지는 것이 가능하다.) 또한 특정한 independent possibility p로 random한 node와 link를 가지고 있다. (poisson network의 성질, 이로 인해 낮은 diameter를 가지는 것이 가능하다.) 이 모델은 얼마나 random하게 link를 형성하느냐에 따라 그 네트워크의 topology나, 성질 등이 달라지게 될 것이다. (아래 그림을 보면 이해가 될 것이다.)</p>
-
-
-<p><img src="/images/post/34-2.png" width="400">
-<img src="/images/post/34-3.jpeg" width="400"></p>
-
-<p>아래 그림은 <a href="http://www.scholarpedia.org/article/Small-world_network">scholarpedia</a>에서 가져온 그림이다. p가 0이면 정규 네트워크처럼 diameter와 clustering coefficient가 모두 높지만, p를 증가시키면 점점 Poisson network와 비슷해지는 것을 알 수 있다. 따라서 적절한 p를 고르는 것이 small world를 모델링하기 위해 매우 중요하다고 할 수 있다.</p>
-
-
-<p><img src="http://www.scholarpedia.org/w/images/9/97/Swlc.png" width="400"></p>
-
-<h5 id="34-4-socialsearch">Fining paths - social search</h5>
-
-
-<p>그러면 이제 다시 local information만을 가지고 global shortest path를 찾는 문제로 돌아가서 생각해보자. 사실 이 문제는 optimization 문제로 치환해서 생각이 가능하지만, 안타깝게도 convex model이 아니기 떄문에 마냥 쉽게 적용하기는 쉽지 않다. 아무튼 다시 본론으로 돌아서, 가장 쉽게 생각할 수 있는 알고리듬은 greedy search algorithm이다. 내 neighbor 중에서 목표 node와 가장 가까울 것으로 생각되는 node로 넘어가고, 그 node에서도 마찬가지 과정을 반복하는 것이다. 하지만 당연한 얘기지만 이 알고리듬은 완벽하지 않다. 쉽게 생각해서, 내가 은행가와 가장 가까울 것이라고 예측한 주식거래인은 그 은행가를 직접적으로 모르지만, 간호사가 알고보니 그 은행가와 고등학교 동문이라 바로 연결이 되는 상황이라면? 이런 경우는 greedy algorithm이 global optima를 보장할 수 없게되는 것이다.</p>
-
-
-<p>search algorithm을 위해 도임되는 모델 중에서 클라인버그(Kleinberg) 검색 모델이라는 것도 있다. 이 모형은 국지적으로 connection을 가지고 있고 거리 r에 따라 멀리 있는 사람과 \(C * r^{-a}\)의 확률로 connection을 가지고 있다고 가정한다. 이 모델에 따르면 \(a = 2\) 일 때만 빠른 전달이 가능한데 그 모델링을 통해 예측한 결과는 아래 그래프와 같다.</p>
-
-
-<p><img src="/images/post/34-4.gif" width="400"></p>
-
-<p>그 이외에도 사람 사이의 관계를 tree로 정의하고 social ditance를 tree에서 거쳐야 하는 단계 수로 정의하는 Watts-Dodds-Newman Model이라는 것도 존재한다. 이 모델의 Social distance를 정의하는 두 사람이 서로를 알 확률 \(p_m\)은 \(p_m = K 2^{\alpha m}\) 로 정의가 된다. 이 모델에서 level의 길이는 \(log_2 \frac n g\)로 정의가 되고, 평균적인 최단 거리도 계산이 가능하지만, 식이 꽤 복잡하기도 하고 이 모델의 reference도 찾지 못해 이 포스트에서는 생략을 하도록 하겠다 (직관적인 값이 아니라 이해를 위해 래퍼를 찾아봤는데 나오지 않는다) 아무튼 이 모델의 평균적인 최단거리에 node의 개수가 g이고 전체 사람이 n, a = 1이라는 특수한 경우로 문제를 바꾸어 생각해보면 평균 최단거리는 \(log^2 ( \frac n g )\) 에 비례한다. 특이점이라면, 이 모델은 tree 구조로 생각을 했기 때문에 Hub의 존재는 고려가 되지 않는다는 점이다.</p>
-
-
-<h5 id="34-5-conclusion">Conclusion</h5>
-
-
-<p>degree와 clustering을 동시에 만족하는 Network model은 현재까지는 없기 때문에 높은 clustering을 가지는 random distribution을 만드는 것도 활발한 연구 주제 중 하나라고 한다. 아무튼 network search의 핵심은 단순히 국지적인 정보만을 가지고 있어도 모든 Network에 정보 전파가 가능하다는 것이다. 아직도 연구가 활발히 진행되고 있는 분야이고, 정답도 없는 분야인 만큼 더 공부가 필요한 부분이라고 생각이 들었다. 이 포스트가 잘 이해가 되지 않거나 네트워크라는 것에 대해 흥미가 생긴다면 Linked: The New Science of Networks (Albert-laszlo Barabasi, Jennifer Frangos) 를 참고하면 될 것 같다.</p>
-
-
-<p>+ 추가로 정송 교수님의 comment를 추가하고 글을 마무리 짓도록 하겠다.</p>
-
-
-<p>Network search algoritm을 주변 resource를 검색하는 것으로 해석할 수 있을 것 같다. (ex 동물들의 먹이 탐색활동) genetic algorithm.. 현재 search space 내에서 solution에 대한 initial guess를 가지고 solution을 가지고 찾다가 간헐적으로 mutation이 일어나 다른 candidate space에서 solution을 찾는 모델이 있음. 지금 network search에 대한 설명을 들어보니 그와 비슷한 것 같다. 클라인버그 검색 모형에서도 a에 따라 a 세팅을 잘못하면 국지적으로 값을 찾을 수 없거나 혹은 너무 mutation이 자주 일어나서 잦은 swing현상으로 인해 최적화가 안된다.</p>
-
-
-<p>Modern network에 P2P같은 형태가 존재한다. 움직임에 의한 연결. 둘이 움직이다가 연결이 일어난다고 생각해보자. 만약 네브라스카가 움직이지 않는 static한 network라면 그 contact이 없지만, 만약 그 사람 중 하나가 mobility를 가지고 예를 들어 여행을 많이 다니는 사람이 하나 있어서 그 connection이 많이 일어나는 사람이 있다면 그 사람이 Network의 key가 되며 이것에 대한 수학적 모델링을 통한 연구가 이뤄지고 있다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/33/">서버를 구축해보자 - Ip 세팅과 유틸 설치</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-12T01:15:00+09:00" pubdate data-updated="true">Dec 12<span>th</span>, 2013</time>
-        
-         | <a href="/33/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>사실 서버용 컴퓨터를 구매한 것은 벌써 거의 <a href="/28">2주도 더 이전에 있었던 일</a>이지만, 근래에 좀 많이 바빠서 이제서야 기본적인 세팅을 하게 되었다. 지난번에 설치한 우분투 서버에 뭔가 문제가 있었는지 장소를 옮겨서 부팅하자마자 OS가 뻗어버리는&#8230; 그래서 오늘 다시 다 밀어버리고 처음부터 다시 세팅했다.</p>
-
-
-<p>서버를 설치하면서는 뭐 크게 신경 쓸 만한 옵션은 많이 없긴한데.. 난 개인적으로 내가 관리하는 편이 좋아서 파티션에서 <a href="http://www.fis.unipr.it/pub/linux/redhat/9/en/doc/RH-DOCS/rhl-cg-ko-9/ch-lvm-intro.html">LVM</a>도 끄고, 자동 업데이트도 끄고.. 유틸도 전부 안깔고 진행했다. 그리고 ip 세팅만 해줬는데, 나는 학교에서 할당 받은 ip만 사용할 수 있는 상황이니깐, 이게 나름 중요하다. 맨 처음 세팅할 때 ip를 입력하게 되면 별로 머리아플 일이 없기는 하지만, 실수로 세팅을 하지 않은 상황이거나 하면&#8230; 나중에 설치가 끝난 이후에 /etc/network/interfaces와 /etc/resolv.conf만 고쳐주면 간단하다. 아래는 내 interfaces 파일</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># This file describes the network interfaces available on your system
-</span><span class='line'># and how to activate them. For more information, see interfaces(5).
-</span><span class='line'>
-</span><span class='line'># The loopback network interface
-</span><span class='line'>auto lo
-</span><span class='line'>iface lo inet loopback
-</span><span class='line'>
-</span><span class='line'># The primary network interface
-</span><span class='line'>auto p2p1
-</span><span class='line'>iface p2p1 inet static
-</span><span class='line'>  address 143.248.53.74
-</span><span class='line'>  netmask 255.255.255.0
-</span><span class='line'>  network 143.248.53.0
-</span><span class='line'>  broadcast 143.248.53.255
-</span><span class='line'>  gateway 143.248.53.1
-</span><span class='line'>  dns-nameservers 8.8.8.8
-</span><span class='line'>  dns-search kaist.ac.kr</span></code></pre></td></tr></table></div></figure>
-
-
-<p>이게 맨 처음에 설치할 떄 잡아줬더니 p2p1이라고 잡아줬는데, 평소에는 그냥 따로 추가할 필요없이 아래같은 format으로 적어주면 그만. 이걸 적고 service networking restart를 해주면 dns도 같이 잡힌다. (알아서 resolv.conf가 업데이트 된다.) 이제 인터넷도 끝.</p>
-
-
-<p>이제 유틸을 깔 차례. apt-get으로 설치 가능한 유틸은 대충 깔고&#8230; 문제는 아파치, mysql, php등등인데, <a href="http://karasix.blog.me/10090152926">이거에 관련된 블로그</a>를 찾았다. 별로 어렵지는 않고, 그냥 가끔 헷갈릴 때 보면 괜찮은 듯.</p>
-
-
-<p>지금 아파치를 설치 중인데, APR이 없다고 에러가 뜬다.. <a href="http://stackoverflow.com/questions/9436860/apache-httpd-setup-and-installation">stackoverflow</a>를 보니 <a href="http://apr.apache.org/">APR</a>이란 놈을 깔아야하는 모양. 아 이건 좀 귀찮다. 여기서부터는 내일부터.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/32/">인터넷 속의 수학 - Can I Really Reach Anyone in 6 Steps? (1/2)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-03T17:58:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2013</time>
-        
-         | <a href="/32/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>본 포스팅은 <a href="/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
-
-
-<h5 id="32-1-intro">Introduction</h5>
-
-
-<p>흔히 이 세상의 모든 사람들은 나와 6다리 만 건너면 이어져있다고들 말한다. (밀그램의 편지실험) 심지어 나와 상관없어보이는 버락 오바마 대통령도 사회적 거리가 생각보다 가까울 수 있다는 것이다. Facebook의 조사결과에 따르면 Facebook 상에서 연결된 <a href="http://arxiv.org/abs/1111.4570">다리의 평균값은 4.74</a> 정도라고 한다. 근데, 진짜 정말로 모든 사람들과 6 steps로 연결이 가능할까? 이 글에서는 이런 현상에 대해서 설명하고, 실제 사람과 사람 간의 네트워크가 어떤 식으로 구성되고, 그것을 수학적으로 어떻게 모델링하고 있는지를 다루게 될 것이다.</p>
-
-
-<p>최근 10년 사이 네트워크는 사람들의 생활에 정말 정말 큰 영향을 미치고 있다. 특히 소셜 네트워크 혹은 SNS라고 불리는 새로운 형태의 서비스의 등장으로 인해 사람들과 사람들 사이의 긴밀한 연결이 더 가능해졌다. 이런 네트워크가 파생된 것은 사실 생각보다 역사가 짧은데, 실제 정보를 전달할 때는 전기신호로 보내야하고, 그 신호를 보내는 channel이 굉장히 noisy한데, 과연 이런 nosiy channel로 realistic한 시간 안으로 정보를 온전하게 전달할 수 있을까? 당연히 정보가 손실되면 retransmission을 시도해서 상대편이 정보를 다시 받을 수 있도록 할 수 있지만, 그 반복해서 보내는 retransmission이 실제 의미있는 숫자 이내로 성공할 수 있겠냐는 문제에 대해 아무도 답을 할 수가 없었기 때문에 연구가 지지부진한 상태였다. 그러나 지금으로부터 약 60여년 전 클로이 섀넌이라는 기라성같은 연구자가 noisy한 channel에서 error-free communication이 가능하다는 것을 증명해냈고, 그 이후로 통신학의 급격한 발전이 이루어졌다. 우리가 쓰는 인터넷은 군대 및 연구기관의 &#8216;알파넷&#8217;이라는 통신 기술이 그 전신인데, 이 기술은 전쟁으로 인해 한 기관이 파괴되어도 다른 곳에서 정보를 전송할 수 있도록 분산시킬 용도로 개발되었다고 한다. 지금 우리가 사용하는 스위칭, 패킷 등의 기술도 이때 개발 되었다. 우리가 진짜 &#8216;인터넷&#8217; 이라고 부르는 월드 와이드 웹은 유럽의 입자 가속기 연구서 (CERN)에서 데이터 교환의 용이성을 위해 처음 등장하게 되었다. 그리고 수 많은 사람들의 노력으로 우리가 현재 쓰는 모습의 인터넷 네트워크가 탄생한 것이다.</p>
-
-
-<h5 id="32-2-graph">Network Problems - Graph Theory</h5>
-
-
-<p>앞서 네트워크의 역사에 대해 간략하게 설명했는데, 그렇다면 실제 이런 네트워크를 잘 구성하기 위해서 우리가 풀어야하는 몇 가지 문제점들이 존재한다. 특히 네트워크에 요구되는 사항들을 충족시키려면 네트워크를 잘 이해하는 것이 필요하고 이런 것을 위해 네트워크 과학이라는 분야까지 생겼을 정도로 문제가 생각보다 광대하다. 몇 가지를 꼽아보자면, 좋은 네트워크는 (1) 효율적인 소통을 해야하고, (2) 외부의 공격에 견고하게 방어를 할 수 있어야하고, (3) 복잡성이 낮고 간결해야 한다. 그렇다면 이런 사항들을 충족시키기 위한 몇 가지 문제들을 살펴보자. 최초의 네트워크 문제는 쾨니히스베르크의 다리라고 불리는 문제이다. 누가 처음 만들었는지는 모르고 언제부터 존재했는지는 모르지만, 1735년 오일러가 이를 수학적으로 증명해낸 문제이다. 이 문제에서 부터 사실 네트워크 이론이 나왔다고 해도 과언이 아니다. 문제는 간단하다. 아래의 그림을 보면서 자세히 설명해보자.</p>
-
-
-<p><img src="/images/post/32-1.png" width="400"></p>
-
-<p>오래전에 프로이센이라는 국가의 <a class="red tip" title="지금의 러시아 칼리닌그라드">쾨니히스베르크</a>라는 자그마한 도시가 하나 있었다. 이 도시의 지식인들이 그냥 도시를 산책하다가 심심했던 모양인지 생각해낸 문제이다. 쾨니히스베르크에는 프레겔 강이 흐르고 있고, 이 강에는 두 개의 큰 섬이 있다. 그리고 이 섬들과 도시의 나머지 부분을 연결하는 7개의 다리가 있다. 이때 7개의 다리들을 한 번만 건너면서 처음 시작한 위치로 돌아오는 길이 있는가 하는 것이 문제이다. (출처: <a class="red tip" title="http://ko.wikipedia.org/wiki/%EC%BE%A8%EB%8B%88%ED%9E%88%EC%8A%A4%EB%B2%A0%EB%A5%B4%ED%81%AC%EC%9D%98_%EB%8B%A4%EB%A6%AC_%EB%AC%B8%EC%A0%9C">위키피디아</a>) 이 문제가 꽤 오랜 기간 동안 풀리지 않은채로 존재하다가 오일러가 이를 엄청나게 간단한 방법을 통해 해결을 해버렸다.</p>
-
-
-<p><img src="/images/post/32-2.jpg" width="400"></p>
-
-<p>다리와 섬을 위의 그림처럼 &#8216;그래프&#8217;로 표현하게 되면 문제가 엄청나게 쉬워진다. 이 그래프가 한붓그리기가 가능하기 위해서는 엣지가 홀수 개인 노드가 1개만 있어야하는데 이 그림에서 볼 수 있듯 그보다 그런 노드가 많음을 알 수 있다. 오일러의 이 풀이로 인해 &#8216;그래프 이론&#8217;이라는 새로운 분야가 창조되었고, 이는 우리가 풀고싶은 네트워크 문제를 해결하기 위해 필요한 가장 기본적이고 필수적인 분야 중 하나라고 할 수 있을 것이다.</p>
-
-
-<h5 id="32-3-milgramexp">Network Problems - 6 degree of separation</h5>
-
-
-<p>또 다른 실험을 하나 살펴보자. 1967년, 미국의 스탠리 밀그램은 아래와 같은 간단한 실험을 제작했다.</p>
-
-
-<ol>
-   <li>네브래스카 주 오마하라는 작은 도시에 사는 주민 296명에게 메사추세츠 주 보스턴의 은행가로 가는 편지를 전달시키는 것이 이 실험의 목적이다.</li>
-   <li>전달은 반드시 전달자가 직접적으로 친밀한 사람에게만 (first-name basis) 가능하다. 즉, 최종 수신인은 정해져있는 상황에서, 최종 수신인을 모르는 경우에 그 사람을 가장 잘 알만한 자신의 지인들에게 이 편지를 전달하는 것이다.</li>
-   <li>매번 편지가 전달될 때마다 편지에 보내는 사람의 이름과 서명을 첨부하고, 또한 하버드로 엽서를 따로 보내 traking을 용이하게 하였다.</li>
-</ol>
-
-
-<p><p>이 실험은 결국 미국이라는 network에서 지리적, 사회적으로 가장 고립되었을 것이라고 예상되는 두 node로 이동하기 위해서 평균적으로 얼마나 많은 step이 요구되는가를 측정하기 위한 실험이다. 결과는 어땠을까? 10? 20? 100? 아래 그래프가 그 결과이다.<p>
-<img src="/images/post/32-3.png" width="400">
-<p>당연한 얘기지만 가로축은 얼마나 많은 사람을 거쳤는가를 의미하고, 세로축은 해당 거리에 해당하는 사람이 얼마나 많은가를 의미한다. 이 실험은 총 217개의 편지 중에서 64개의 편지만 최종적으로 도달하게 되었고 (성공확률 약 30%) 평균 거리는 약 5.2이며 중간값은 6이었다. 때문에 이 실험결과를 일컬어 모든 사람들이 6step으로 이어져있다고 해석해 6단계 분리이론이라고도 부르기도 한다. 이 실험이 완벽하지 않고 logic whole이 존재한다고 주장하는 일부 비판적인 시선이 있는 것은 사실이지만, 이 실험은 충분히 의미가 있고, 무엇보다 실제로 이를 실험적으로 증명하는 것을 시도한 첫 번째 실험이라는 점에서 의미가 있다.</p>
-<p>이와 비슷한 다른 예시가 있다. 수학에서 <a href="http://ko.wikipedia.org/wiki/%EC%97%90%EB%A5%B4%EB%90%98%EC%8B%9C_%EC%88%98">에르도쉬 숫자</a>라는 것이 존재하는데, 이 사람은 엄청나게 많은 공동연구를 진행한 사람이고, 그래서 업적이 뛰어난 사람일수록 이 사람과 공저자를 한 경험이 많다고 한다. 그래서 그 아이디어를 차용해 그 사람이 얼마나 학계에서 권위가 있는지를 측정하는 지표로 쓰이는 것이 이 숫자인데, 에르도쉬 본인은 이 숫자가 0이다. 그리고 에르도쉬와 공저를 한 경험이 있는 연구자의 숫자는 1이다. 만약 내가 직접적으로 에르도쉬와 공저를 하지 않았더라도, 에르도쉬 넘버가 1인 사람과 공저를 한 경우에 내 에르도쉬 넘버는 2가 된다. 즉, 내가 얼마나 에르도쉬라는 사람과 가까운 관계인지를 측정하는 수단인 것이다. 참고로 나는 조만간 에르도쉬 넘버가 3이 될텐데, <a href="https://sites.google.com/site/mijirim/">내 지도교수님</a>의 <a class="red tip" title="Erdos - Tetali - Shin">에르도쉬 넘버가 2</a>이기 때문이다.</p>
-<p>비슷한 숫자로 케빈베이컨 숫자라는 것이 있는데, 이번에는 논문 공저자라는 다소 strict한 rule이 아니라 영화 배우 케빈베이컨과 같이 영화를 출연한 사람에게 (엑스트라도 포함) 같은 방식으로 숫자를 매기는 것이다. 꽤 재미있는 것은, 미국의 그 어떤 영화배우도 이 배우와 거리가 6이하라고 한다. <a href="http://oracleofbacon.org/">인터넷 웹사이트</a>도 있다. 사실 케빈 베이컨이 가장 뛰어난 배우이거나 많은 작품을 출연했기 때문이 아니라 그 어떤 배우를 대상으로 하여도 비슷한 결과가 나온다고 한다. (이 사이트에 의하면 평균을 취했을 때 가장 평균 거리가 짧은 배우는 <a href="http://oracleofbacon.org/center_list.php">Harvey Keitel</a>이라고 한다)</p>
-<h5 id="32-4-regularnet">Mathmetical Approach &ndash; Regular Network</h5>
-<p>자 이게 과연 정말 뜨악스럽고 놀랄만한 일일까? 정말 간단한 수학적 모델로 한 번 검증을 시도해보자. 가정을 하나 해보자. 만약 &lsquo;모든 사람&#8217;이 아는 사람이 딱 10명 씩 있다고 가정해보자. 뭐 어느 정도는 납득해볼만한 가정이지 않은가? (나중에 얘기하겠지만 틀린 얘기다.) 그렇다면 한 단계 더 건너면 10 * 10 = 100, 또 한 단계를 건너면 10 * 10 * 10 = 100, 그리고 만약 내가 6 step 만큼 건너갔을 때 아는 사람의 숫자는 (10<sup>7</sup>), 즉 1000만 명의 사람과 연결이 되어있는 것이다. 이것을 보고 정규 네트워크 (regular network) 라고 부르며, 이렇게 문제를 가정하고 생각하면 생각보다 문제가 간단해진다. 이 방법이 에르도쉬가 문제를 풀이한 방법이다. network 내부에서 node와 node가 연결되는 것은 확률의 문제이고, 만약 모든 사람들이 이 확률을 비슷하게 가지고 있다고 가정하면, 위와 같은 정규 네트워크가 나오게 되는 것이다. (구체적으로는 node가 연결되는 숫자가 정규분포로 나오기 때문에 정규 네트워크라고 한다.) 이 네트워크의 모양은 아래와 같다.</p>
-<img src="/images/post/32-4.png" width="300">
-<p>근데 정말 세상은 이렇게 구성이 되어있다고 말할 수 있을까? 실제 세상은 과연 정말 정규 네트워크일까? 당연한 얘기지만 그렇지 않다.</p>
-<h5 id="32-5-realnet">Mathmetical Approach &ndash; Real Network</h5>
-<p>일단 정규 네트워크는 가정 자체가 글러먹었다. 모든 사람이 평균적으로 같은 숫자의 친구를 가지고 있다? 안타깝게도 사람마다 친구의 숫자가 천차만별이고, 구체적으로 말하자면 사람마다 가지고 있는 node를 형성할 probability나 node가 형성될 기회의 숫자가 차이가 나기 때문에 차이가 발생하게 된다. 특히 실제 모형의 확률은 정규 분포가 아니라 Power-law distribution이라는 것이 실제 연구를 통해서 밝혀졌으며, 이 분포를 따르게 되면 친구의 숫자가 최대 수백에서 수천배까지도 나게 된다. 따라서 이런 네트워크에서는 connection이 한 지점으로 몰리는 Hub가 존재하는데, 이 사실은 모든 node가 같은 connection을 가진다는 정규 네트워크의 가설과는 매우 다르다.</p>
-<img src="/images/post/32-5.jpeg" width="300">
-<p>Power-law distribution은 위의 그림에서 자세히 확인이 가능하다. 또한 이런 분포로 만들어진 네트워크의 모양은 아래 그림과 같다. Hub가 존재한다는 사실을 다시 한 번 생각해보고 그림을 보면 이해가 잘 될 것이다.</p><br/>
-<img src="/images/post/32-6.jpg" width="300">
-<img src="/images/post/32-7.png" width="300">
-<p>이제 이런 경우에 대해서 node당 평균 10개의 connection이 있다고 다시 가정해보자. 비록 평균 connection이 10개가 있더라도, 정규 네트워크와는 다르게, power-law 네트워크는 한 node가 그 connection을 독식할 수도 있다. 즉, 이전에는 10개의 connection을 가진 1000개의 node가 있었다고 해보면, 지금은 그 중 하나의 connection이 모두 한 node에 쏠려 한 node가 1000개의 connection을 가지고 있는 셈이다.</p>
-<p>이런 특이한 모양 (topology라고 한다) 때문에 생기는 특성 중 하나로는 확산의 형태가 다르다는 점이다. 정규 네트워크는 네트워크에서 어떤 무언가가 전파되는 데에 (간단하게 전염병이라고 생각해보자) 모두가 같은 connection을 가지고 있으므로 시간이 오래 걸리거나 일정 threshold를 넘지 못하면 전체 네트워크가 전염되지 않지만, Power-law Network에서는 그 threshold가 비교적 매우 작고, 몇 개의 hub만 감염이 되어도 모든 node가 influence될 수 있는 가능성이 엄청나게 커지는 것이다. 이 특성을 특정 hub를 격리하거나 백신을 투여해 전염병의 효율적 예방을 하는 데에 쓸 수도 있고, 마케팅의 측면에서 소비자 행동양식 변화 혹은 물건 구매 등으로 주변에 영향력이 큰 몇 명의 핵심 사용자들에게 무료로 물건을 나누어주거나 후기를 작성하게하는 등의 마케팅도 가능할 것이다.</p>
-<p>이렇듯 실제 네트워크에서 발생하는 특성들을 사용하면 재미있는 결과가 나오게 된다. 과연 어떤 특성들이 있으며, 수학적으로 어떻게 증명하거나 접근해야하는지, 그리고 마지막으로 이런 특성들을 어떻게 사용할 것인지에 대해서는 다음 포스팅에서 자세히 다루도록 하겠다.</p></p>
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/31/">인터넷 속의 수학 - How Does Netflix Recommend Movies? (2/2)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-02T21:43:00+09:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2013</time>
-        
-         | <a href="/31/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>본 포스팅은 <a href="/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
-
-
-<h5>Recall: Machine Learning</h5>
-
-
-<p><a href="/21">이전의</a> <a href="/30">많은</a> <a href="/blog/categories/machine-learning">포스트 들</a>에서도 설명했듯이 Machine Learning은 데이터를 통해 새로운 시스템을 만드는 것을 의미한다. 그렇다면 굳이 사람이 아니라 기계가 이런 일을 해야하는 이유가 있을까? 무엇보다 기계는 사람보다 단순 계산을 훨씬 빠르게 할 수 있다. 간단한 예를 하나 들어보자. 페르마 숫자라는 문제가 있다.</p>
-
-
-<p>$$ {F_n} = 2^{2^n} +1 $$</p>
-
-
-<p>이 숫자는 위와 같이 표현이 되는데, 페르마는 모든 n에 대해서 이 숫자가 소수라는 주장을 하였다. 그러나 100년 뒤 오일러가 이의 반례를 찾아냈다.</p>
-
-
-<p>$$ {F_5} = 2^{2^5} + 1 = 2^{32} +1 = 4294967297 = 641 * 6700417 $$</p>
-
-
-<p>사람이 이를 증명하는 데에 100년이라는 시간이 걸렸지만, 컴퓨터를 사용하면 이 문제는 고작 몇 분안에 끝나는 간단한 문제이다. 이런 문제에서 컴퓨터 혹은 기계를 사용하는 것이 매우 효율적인 것이다. 다시 Machine Learning으로 돌아가보자. Machine Learing algorithm은 주어진 training data에서 특정한 시스템을 만들고 각종 model parameter들을 optimize하여 주어진 training data에 가장 잘 들어맞는 system을 만든다. 이런 과정을 위해서는 이런 optimize problem이 reasonable한 시간 안에 풀 수 있는 문제인지 그렇지 않은 문제인지 반드시 알아야만 한다. 만약 한 문제를 optimize하는데에 엄청 오랜 시간.. 예를 들어서 몇십만년 단위의 시간이 걸린다면 실전에서 사용할 수 없을 것이다.</p>
-
-
-<p>과연 컴퓨터로 풀 수 있는 문제란 무엇이 있을까? 컴퓨터는 Turing에 의해 1936년에 처음 제시가 되었고 (Turing Machine) 이 덕분에 지금까지 하드웨어 문제에 불과했던 성능에 관련된 문제가 수학적인 문제로 치환될 수 있었다. 또한 1971년 Computational classes (NP complete) 가 Cook에 의해 define되었다. 여기에서 정의된 P와 NP problem을 사용하면 우리가 처음 제시한 질문: 이 문제를 컴퓨터로 풀 수 있는가? 에 대한 질문에 답을 할 수 있는 것이다.</p>
-
-
-<p>다음에 대한 설명을 하기 전에 먼저 P와 NP problem에 대해 잠시 설명하도록 하겠다. 먼저 P는 금방 문제의 정답을 찾을 수 있는 문제이다. 또한 NP는 해답이 있을 때 이 해답이 맞는지 아닌지 verify할 수 있는 문제를 뜻한다. 예를 들어 어떤 주어진 여러 개의 Path 중에서 특정한 path를 찾는 문제는 P problem이다. 또한 NP problem은 path가 있을 때 그 path를 따라갈 수 있는가에 대한 문제가 되는 것이다. 이 두 개의 문제에 해당하지 않는 문제도 엄청나게 많으며, 재미삼아 말해주자면, P이면 NP인가? 라는 질문은 Seven Millennium Prize Problems 중 하나일 정도로 수학에서 상당히 중요한 영역을 차지하고 있다.</p>
-
-
-<p>P problem의 대표적인 예는 Convex Optimization이다. Convex Optimization은 mimimum value를 찾는 문제 중에서 매우 특수한 경우를 의미하며, 함수가 convex하고 domain 역시 convex한 경우를 의미한다. 간단하게 생각하면 convex와 &#8216;볼록하다&#8217; 가 같은 말이며, convex function이란 모든 구간에서 볼록한 함수를 의미한다. (Convex Optimization에 대해서는 나중에 더 자세한 포스팅으로 설명을 할 수 있도록 하겠다.) 간단히 예를 들어보면</p>
-
-
-<p><img src="/images/post/31-1.jpg" width="400"></p>
-
-<p>위의 그림에서 아래 함수는 일부 구간에서 볼록하지 않기 때문에 convex하지 않고 위 함수는 convex하다. 위의 그림을 보면 알 수 있듯, convex function에서는 local한 minimum value만 찾더라도 global한 mimimum값을 찾을 수 있다. 때문에 Convex optimization은 optimization 중에서도 매우 특수한 경우이며 P, NP problem 중에서 P에 속하는 문제이다. 이를 수식적으로 표현해보면</p>
-
-
-<p>
-$${minimize}\quad{f(x)}$$
-$${subject}\,{to}\,{x} \in D \subseteq {R^n}$$
-</p>
-
-
-<p>으로 표현하는 것이 가능하다. Netflix 알고리듬에서 언급하게 될 3개의 알고리듬 중에서 Baseline predictor와 Matrix factorization 알고리듬에서 이런 Convex Optimization을 활용하게 된다.</p>
-
-
-<h5>Recall: Netflix Recommendation Problem</h5>
-
-
-<p>Netflix problem의 목적은 간단하다. Netflix Matrix라는 user와 movie의 조합으로 이루어진 Matrix에서 아직 알려지지 않은 부분의 값을 유추하는 것이다. 이 문제에 대한 설명은 지난번에 적은 글에 자세히 적혀있으니 생략하도록 하겠다. 그렇다면, 새로운 알고리듬이 더 좋은 알고리듬인지 아닌지 어떻게 판단할 수 있을까? 여러가지 방법이 있을 수 있지만, Netflix에서는 RMSE (Root Mean Squared Error) 를 정의한다. RMSE는 \(\sqrt{MSE} = \sqrt{\frac 1 n \sum_{i=1}^n ( \hat{X_i}-X_i )^2}\)로 표현이 가능하며, 쉽게 생각하면 예측치가 실제 값과 얼마나 차이가 나는지를 측정하는 역할을 한다고 생각하면 간단하다. 즉, Netflix의 Recommendation problem은 Netflix Matrix에서 알려져 있는 entry를 사용해 training set과 problem set을 만들고 RMSE를 계산해서 그 RMSE를 최대한 낮추는 문제인 것이다. 이 글에서는 이런 RMSE의 값을 10% 줄이기 위한 3가지 알고리듬: Baseline Predictor, Neighborhood method, Matrix Factorization에 대해 다루게 될 것이다.</p>
-
-
-<h5>Algorithm 1: Baseline Predictor</h5>
-
-
-<p>첫 번째 알고리듬은 Baseline Predictor이다. 이 알고리듬은 각각의 영화 혹은 사람마다 기본적으로 정해진 Baseline이 존재한다는 가정에서부터 시작된다. 즉, 각각 영화마다 평점이 높은 영화가 있을 수도 있으며. 또 평점을 잘 주는 사람이 있을 수도 있고 짜게 주는 사람도 있을 수 있다. 또한 비교적 popular 한 영화라면 rating이 높을 것이고, 이 사람이 이전에 준 rating의 값의 평균이 낮다면 앞으로 줄 rating의 값 또한 작을 것이라는 가설을 세울 수 있을 것이다. 그렇다면 이런 baseline을 사람에 대한 혹은 영화에 대해서 각각 만들 수 있을 것이며 이를 모으면 vector로 표현하는 것이 가능할 것이다. \(b_i\)를 movie에 대한 baseline, \(b_u\)를 user에 대한 baseline이라고 가정하고, 이 baseline이 높으면 rating을 잘 받는 영화 / 잘 주는 사람 이라고 생각하자. 그렇다면
-$$\hat r_{ui} = {\overline r} + b_u + b_i$$
-로 정의한다면, baseline을 찾는 문제는
-$${minimize}\,\sum {(r_{ui} - \hat r_{ui})^2} $$
-을 만족하는 \(b_u\)와 \(b_i\)를 찾는 문제로 바꿀 수 있다. 그리고 여기에서 가장 중요한 점은 이것이다. 이 문제는 Convex optimization으로 풀 수 있다는 것이다.</p>
-
-
-<p>Baseline Predictor는 기존의 데이터를 가장 잘 설명할 수 있는 model parameter를 찾는 문제이며 성능이 아주 썩 좋은 편은 아니지만 random guessing보다는 훨씬 좋으며 어느 정도의 가중치를 줄 수 있다는 장점이 존재한다. 특히 temporal model과 결합하여 baseline predictor를 사용하면 꽤 강력한 결과를 얻을 수 있는데, Baseline Predictor with Temporal Models는 User의 rating은 day에 dependent할 수 있다는 가정을 깔고 movie의 trend가 시간에 따라 변한다고 가정한다. 그리고 이에 대한 적절한 변수를 시간마다 주고 \(b_u(t),\,b_i(t)\)를 가장 잘 설명할 수 있는 baseline의 값을 찾음으로써 시간에 대한 정보까지 고려할 수 있는 알고리듬을 설계하는 것이 가능한 것이다.</p>
-
-
-<p>그러나, 기본적으로 parameter를 fitting하는 문제이기 때문에 Overfitting problem이 발생할 수 있다. Overfitting problem이란 현재 parameter들이 training data에 너무 optimization되어 오히려 future data에 대해서는 값이 제대로 맞지 않는 경우를 의미한다. 이는 전체 데이터가 아닌 일부의 데이터만 봤기에 생길 수도 있는 문제이며 data에 noise가 끼어 noise까지 fitting이 되었었을 수도 있다. 아무튼 overfitting problem은 현재에 너무 과도하게 집중하면 미래 data를 설명하는 데에 문제가 생길 수 있다는 것을 의미한다. Baseline Predictor에서 Model parameter를 너무 optimize시키면 지금까지의 known data에는 정말 잘 맞지만, test data에서는 error가 엄청 커질 수도 있는 것이다. 이를 막기 위해서 위에서 제시했던 minimzation problem을
-$${minimize}\,\sum {(r_{ui} - \hat r_{ui})^2 + \lambda (\sum_u {b_u}^2 + \sum_i {b_i}^2)} $$
-처럼 \(\lambda\)와 관련된 추가적인 term을 추가한 다음 풀게 된다면, overfitting문제가 어느 정도 해결된다. 여기에서 overfitting을 막기 위해 사용한 \(\lambda\)가 증가하게 되면 점점 test data error가 떨어지다가 어느 정도 지나면 test data error가 다시 increase 된다. 따라서 적절한 \(\lambda\)를 선택하는 것도 매우 중요하다는 것을 알 수 있다.</p>
-
-
-<h5>Algorithm 2: Neighborhood Method</h5>
-
-
-<p>지난 포스트에서도 설명했던 것 처럼 이 알고리듬에서는 각각의 movie마다 movie 간의 유사도 정보를 가지고 있다고 가정하고 각각의 movie i와 j마다 \(d_{ij}\)라는 distance term을 정의하여 그 distance를 통해 얼마나 유사한지를 판별하게 된다. 즉 이 아이디어는 rating을 user가 영화 i를 좋아했으면 j도 좋아하지 않겠느냐.. 라는 idea를 기반으로 measure를 하게 된다. 이 알고리듬에서 distance function은
-$$ d_{ij} = \frac{({r_i} * {r_j})}{(|r_i| * |r_j|)} $$
-위와 같이 정의한다. 이 때 \(r_i\)와 \(r_j\)는 모든 user의 movie rating을 모아둔 vector이다. 즉, \(r_i = [2, 1, 3, 4, &#8230;]\) 등으로 표현된다는 것이다. 이때 임의의 두 vector사이 unknown factor가 다를 수 있으므로 두 vector에서 모두 알고 있는 값들을 모아 reduced form을 구해서 이 값을 계산하게 된다고 한다. distance가 두 벡터의 내적을 2-norm으로 나눈 것으로 정의가 되기 때문에 \(d_{ij}\)는 두 vector 사이 angle에 cosine을 취한 값이 된다. 즉, 두 벡터가 가까우면 가까울 수록 1에 근접해지고 멀어질 수록 값이 작아지게 된다. 즉, 이렇게 거리를 정의함으로써 두 벡터 간의 유사성이 얼마나 되느냐를 측정하는 척도가 될 수 있는 것이다.</p>
-
-
-<p>NH method는 이 알고리듬 자체만 사용하게 되었을 때 결과가 그닥 좋지는 못하다. 그러나 Baseline Predictor랑 같이 결합해서 사용할 수 있으며 Baseline predictor를 계산하고 알고 있는 값과의 error를 계산하고 이 에러 값을 사용해서 NM을 사용하면 훨씬 결과가 좋게 나오게 된다. 이렇게 사용하기 위해서는 \(\hat r_{ui} = \sum \frac {(d_{ij} * r_{ij})} {\sum (d_{ij})}\) 와 같은 형태로 r을 정의하고 predict를 하게 된다. 이 경우 영화의 개수가 많아질수록 연산량이 어마어마하게 늘어나기 때문에 이 알고리듬은 모든 영화에 대해 전부 다 적용하는 것이 아니라 top 50 movie 중에서 i와 similar한 movie를 일부 골라서 적용한다고 한다.</p>
-
-
-<h5>Algorithm 3: Matrix Factorization</h5>
-
-
-<p>만약 알려진 거대한 Matrix가 있을 때 이를 더 작은 Matrix의 multiplication으로 표현할 수 있다면 우리는 더 적은 값을 measure해서 전체 값을 추측할 수 있을 것이다. 이것이 Matrix Factorization의 기본 아이디어이며, 이 알고리듬은 성능이 매우 뛰어나서 다른 알고리즘 없이도 8% 정도까지 개선이 가능하다고 한다.</p>
-
-
-<p><img src="/images/post/30-1.png" width="400"></p>
-
-<p>우리의 문제에서 각각의 Matrix를 R, P, Q라고 정의하자. 그리고 P와 Q 각각의 row의 개수와 column의 개수를 k라고 하자. 그렇다면 R은 480000 by 18000, P는 48000 by k, Q는 k by 18000 Matrix일 것이며, R = PQ가 될 것이다. 당연히 k의 값이 클 수록 낮은 에러로 원래의 데이터를 복구하기 쉬워지겠지만, k가 커질수록 overfitting issue가 존재하게 될 것이다. 실제로 Netflix에서는 약 20정도의 k를 사용한다고 한다. 당연한 얘기지만 실제로는 P, Q가 존재하지 않을 수도 있다. 따라서 이 문제는 아래와 같이 치환이 가능하다.
-$${minimize_{PQ}}\quad{|R-PQ|^2} = {minimize_{PQ}}\quad{(r_{ui} - p_u q_i)^2} $$
-이 문제는 P인가? 불행히도 이 문제는 함수 \(f(P,Q)=|R-RQ|^2\) 자체가 convex가 아니기 때문에 Convex optimization problem이 아니며, P역시 아니다. 대신 이 문제를 convex optimization으로 근사하는 방법이 가능하다.</p>
-
-
-<p>첫 번째 방법은 \(minimize |R - PQ|\) 를 \(minimize |R - A|^2 \hskip 1em where \hskip 0.3em rank(A) = k… \) 로 바꾸는 것이다. \(|R-A|^2\)은 convex function이기 때문에 convex optimization으로 푸는 것이 가능해 보인다. 그런데 domain인 rank(A) = k가 convex set이 아니기 때문에 이 문제는 불행히도 convex optimization은 아니다. 따라서 이를 가장 유사한 convex optimization problem으로 바꾸면, rank(A) = k라는 조건 대신에 &#8216;sum of singular values of A is at most h&#8217; 라는 조건으로 문제를 풀면 된다. 이는 정확히 같은 조건은 아니고 거의 유사한 조건이다. 이렇게 문제를 non convex optimization에서 convex optimization으로 근사해서 원래 문제의 답을 추측하는 것이 가능한 것이다.</p>
-
-
-<p>또 하나의 방법은 \(minimize_{P,Q} |R-PQ|^2\) 을 푸는 것이다. 이 때 \(f(P,Q) = |R-PQ|^2\)은 convex function은 아니지만, P를 constant로 두면 Q에 대해 convex하고 Q를 constant로 두면 P에 대해 convex해지게 된다. 이를 bi convex라고 하며 둘 모두에 대해 convex하면 joint convex라고 한다. 아무튼 이제 이 방법 두 개를 모두 사용해서 Q를 고정하고 가장 잘 설명하는 P를 찾고, P를 고정하고 가장 잘 설명하는 Q를 찾는 과정을 반복적으로 왔다갔다 하면서 값을 찾는다. 이 방법을 이론적으로 분석하는 것이 엄청 어렵고 힘들어서 논문으로 많이 나오지는 않았지만 실전에서 엄청 많이쓰는 방법이다. 앞서 설명한 방법보다 이 방법이 더 성능도 잘 나온다. 최근 [Sujay et al. 2013] 에서 앞서 언급한 approach보다 이 approach가 좋은지는 모르겠지만 최소한 나쁘지 않다라는 것을 증명하였다고 한다. (구체적으로는 global optima convergence condition for R을 증명하였다고 한다.)</p>
-
-
-<h5>Summary and Questions</h5>
-
-
-<p>마지막으로 <a class="red tip" title="Neighborhood method">NH</a>와 <a class="red tip" title="Matrix factoriztion">MF</a>에 대해 잠시 비교해보자. NM은 local structure를 찾아서 recommendation problem을 풀겠다는 컨셉이고 MF는 global structure를 찾아서 recommendation problem을 풀겠다는 컨셉이다. 당연히 local한 solution보다 global한 structure를 찾는 컨셉이 더 정확할 것이다. 실제로 다른 알고리듬 하나도 없이 MF만 적용을 해봐도 Cinematch에 비해 8% 정도 improved 된 결과를 취할 수가 있게 된다. 하지만 역시 맨 처음 제시되었던 10%를 달성하려면 <a class="red tip" title="Baseline predictor with temporal models">BP</a>를 적용한 NH와 MF 둘을 잘 combine해야만 달성이 가능하다.</p>
-
-
-<p>이런 알고리듬들에 대해서 몇 가지 Further Questions이 있을 수 있을 것이다.</p>
-
-
-<ul>
-<li> R = PQ를 풀기 위한 R의 entries 숫자는 얼마나 될 것인가</li>
-<li> MF를 더 빠르게 design할 수 있겠느냐, 더 나은 다른 algorithm도 있을 수 있겠느냐..</li>
-<li> NM과 MF를 같이 조합했을 때 왜 결과가 좋은 이유가 무엇이냐, 이론적인, mathematical answer 를 줄 수 있느냐</li>
-</ul>
-
-
-<p>등의 question 들이 있을 수 있으며 이와 관련된 많은 연구가 활발하게 진행되고 있다고 한다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
+  <p class="mB40">subscribe via <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></p>
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/6/">&larr; Older</a>
-    
-    <a href="/archives">Blog Archives</a>
-    
-    <a class="next" href="/blog/page/4/">Newer &rarr;</a>
+    <a href="/archives">&rarr;&nbsp;See More Posts</a>
     
   </div>
 </div>
-<!--
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/92/">고흐의 그림을 따라그리는 Neural Network, a Neural Algorithm of Artistic Style (2015)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/54/">The Basic Principles in Deep Neural Networks</a>
-      </li>
-    
-      <li class="post">
-        <a href="/87/">Kaggle Competition - Poker Rule Induction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/76/">Machine Learning 스터디 (20) Reinforcement Learning</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'SanghyukChun',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
 
 
 
 
-
-  
-</aside>
-//&#8211;>
     </div>
   </div>
   <footer role="contentinfo"><p>

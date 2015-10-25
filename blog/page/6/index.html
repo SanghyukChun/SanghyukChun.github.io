@@ -9,7 +9,9 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2) Nov 27th, 2013 | Comments 본 포스팅은 단기강좌 인터넷 속의 수학의 강의 들을 요약하는 포스트입니다. Introduction Netflix라는 미국의 &hellip;">
+  <meta name="description" content="Nov 27 2013
+인터넷 속의 수학 - How does Netflix recommend movies? (1/2)
+단기강좌 인터넷 속의 수학에서 둘째날 강의인 &#8216;How does Netflix recommend movies?&#8217; 의 요약글 2 중 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +23,7 @@
   <link rel="canonical" href="http://SanghyukChun.github.io/blog/page/6">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 500px)" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -76,860 +78,154 @@ $(function() {
   <li><a href="/archives">Archives</a></li>
   <li><a href="/search">Search</a></li>
   <li><a href="http://sanghyuk.kaist.ac.kr/">Homepage</a></li>
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
 </ul>
 </nav>
     <div id="content">
       <div class="blog-index">
   
   
-  
-    <article>
-      
-  <header>
+  <article class="mB40">
     
-      <h1 class="entry-title"><a href="/30/">인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2)</a></h1>
+<p><time datetime="2013-11-27T15:17:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>27</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/30/">인터넷 속의 수학 - How does Netflix recommend movies? (1/2)</a></span><br>
+단기강좌 인터넷 속의 수학에서 둘째날 강의인 &#8216;How does Netflix recommend movies?&#8217; 의 요약글 2 중 1</p>
+
+<span class="categories"><a class='category' href='/blog/categories/big-data/'>Big-Data</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
+<p><time datetime="2013-11-27T15:00:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>27</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/29/">인터넷 속의 수학 - 개요</a></span><br>
+2013년 10월 31일, 11월 1일 양일간 진행되었던 단기강좌 인터넷 속의 수학에 대한 전체 개요글</p>
+
+<span class="categories"><a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/math-in-internet/'>Math-in-Internet</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
-      <p class="meta text-right mB50">
-        
+<p><time datetime="2013-11-26T00:11:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>26</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/28/">서버를 구축해보자</a></span><br>
+개인용 서버를 구축하기 위한 첫 스타트. 일단 서버부터 구매해보자</p>
+
+<span class="categories"><a class='category' href='/blog/categories/common/'>Common</a>, <a class='category' href='/blog/categories/development/'>Development</a></span>
 
 
 
 
-
-
-
-
+  </article>
   
-
-
-<time datetime="2013-11-27T15:17:00+09:00" pubdate data-updated="true">Nov 27<span>th</span>, 2013</time>
-        
-         | <a href="/30/#disqus_thread">Comments</a>
-        
-      </p>
+  <article class="mB40">
     
-  </header>
+<p><time datetime="2013-11-19T21:30:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>19</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/27/">캐시버타이징, 당신이 지갑을 열어야 하는 101가지 이유</a></span><br>
+캐시버타이징, 당신이 지갑을 열어야 하는 101가지 이유를 읽고 쓰는 간단한 서평</p>
+
+<span class="categories"><a class='category' href='/blog/categories/book/'>Book</a></span>
 
 
-  <div class="entry-content"><p>본 포스팅은 <a href="/29">단기강좌 인터넷 속의 수학</a>의 강의 들을 요약하는 포스트입니다.</p>
 
 
-<h5>Introduction</h5>
-
-
-<p>Netflix라는 미국의 DVD rental 업체가 있다. <a href="/21">이전 포스트</a>에서 다뤘던 기업 중에 하나인데, 다시 한번 간략하게 설명을 하자면 Netflix는 미국의 온라인 DVD rental 업체이다. 1997년 시작한 DVD rental business이며 초기 BM은 간단했다. 한달에 고정적인 비용을 내고 video나 dvd를 빌릴 수 있도록 하며 번거로운 연체료가 없는 모델이었다. 이렇게 하면 return률이 감소하는 단점이 있는데 이런 단점을 새로운 dvd를 빌리려면 다시 return해야 빌릴 수 있는 rule을 만들어 크게 성공하였다. <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788963708041&orderClick=LAH&Kc">디멘드</a>를 읽어보면 이에 대해서는 자세히 알 수 있을 것이다. 이후 2007년에 <a class="red tip" title="internet 상에서 VOD감상이 가능하도록 하는 서비스">VOD(video on demand)</a> service를 시작하였고, 2008년 9 million이던 user가 VOD 이후 30 million으로 폭증하였다. 현재 미국 traffic 25%는 Netflix VOD 때문에 발생할 정도로 거대한 기업이 되었다. 이렇게 Netflix가 크게 성장하게 된 배경에는 Recommendation system이 존재하는데, Netflix의 추천 시스템은 User prior video history를 기반으로 새 영화를 추천하고 사용자들이 더 다양하고 많은 비디오를 빌려볼 수 있도록 유도하고 있다. 이런 추천시스템은 Amazon, Youtube, GeoLife in MS 등도 적용하고 있는 많은 기업들에게 중요하게 인식되고 있는 시스템이다.</p>
-
-
-<p>잠시 본 글로 넘어가기 이전에 Recommendation, 혹은 추천이라는 문제에 대해서 잠시 생각해보고 넘어가보자. 세상에는 정말 많은 Recommendation problem이 존재한다. 정말 간단한 현실 속의 예를 들어보자면 소개팅을 예를 들 수 있다. 소개팅을 주선해 줄 때 어떤 상대를 소개시켜주는 것이 가장 적절할까? 가만 생각해보면 소개팅을 상대방과 잘 맞을 것으로 예상되는 사람을 &#8216;추천&#8217; 해주는 문제로 변경해서 해결해 볼 수 있다. 예를 들어서 내가 소개팅을 시켜주려는 상대가 이전에 A라는 타입을 좋아했었다면 이번 소개팅에서도 A 타입을 추천해주는 방식으로 문제 해결이 가능한 것이다. 이런 것이 일종의 recommend question이다.</p>
-
-
-<p>스포츠를 좋아하는 사람들을 위해 다른 예시를 들어보자면, 야구에서도 추천 문제로 생각할 수 있는 경우가 존재한다. 예를 들어서 현재 대타를 내세워야하는 상황이라고 생각해보자. 감독이 이런 중요한 순간에 A, B, C 타자 중 어떤 타자로 교체할지 decision making을 하는 것도 일종의 recommend question으로 생각이 가능하다. 예를 들어서 과거 대타 성공률을 기준으로 recommend를 하거나 아니면 출장 경기 기준 혹은 최근 몇 경기 실적 등으로 판단할 수가 있는 것이다.</p>
-
-
-<p>이런 Recommendation problem은 Machine Learning 분야 중 굉장히 각광받고 주목받는 영역 중의 하나이다. 이 글에서는 ML의 컨셉이란 무엇인지에 대해 간략하게 다루고, 이런 recommend problem이 ML에서 어떤 positioning을 지니는지에 대해 얘기를 할 것이다.</p>
-
-
-<h5>Machine Learning</h5>
-
-
-<p>Machine Learning이란 무엇인가? 이 블로그에서 다뤘던 <a href="/blog/categories/machine-learning">수 많은 글들</a>이 Machine Learning에 대해 다루고 있지만, 역시 간략하게 다시 언급을 하자면 Machine Learning은 Data로 부터 system을 구성하는 것이라고 할 수 있다. 위키피디아의 설명을 참고하자면 <a href="http://en.wikipedia.org/wiki/Machine_learning">&#8216;Machine learning, a branch of artificial intelligence, concerns the construction and study of systems that can learn from data.&#8217;</a> 라고 한다.</p>
-
-
-<p>이해를 돕기 위해 사람이 새로운 정보를 습득하는 과정에 대해서 생각해보자. 학교에서 새로운 지식을 배울 때, 우리는 수업과 책을 읽고 정보를 습득한다. 그리고 내가 제대로 배웠는지 판단하기 위해서 시험을 치고 그 결과에 따라서 이 정보를 잘 습득했다, 혹은 그렇지 못했다를 판단할 수 있는 것이다. 이때 공부를 위해서 sample exam을 계속 치면서 자신의 이해도를 판단하고 자신의 공부 방법을 개선해서 더 나은 학습을 하는 것이 가능하다. (시험을 수능, sample exam을 모의고사라고 생각하면 이해가 빠를 것이다)</p>
-
-
-<p>Machine Learning도 크게 다르지 않다. 예를 들어 spam filter를 구성하는 ML algorithm을 작성한다고 생각해보면, 이 algorithm을 사용하는 system은 사용자가 spam mail이라고 report한 기존의 정보들을 습득하고 그 정보를 기반으로 새로운 email이 spam인지 아닌지 판별을 하게 된다. 이때 제대로 판단을 했느냐 하지 못했느냐로 해당 알고리듬이 얼마나 우수한지 판별할 수 있을 것이다. 사람으로 비유를 하자면 이 과정은 수능을 쳐서 자신이 얼마나 공부했는지를 판별하는 과정과 유사하다. 알고리듬의 개선을 위해서 지속적으로 test set을 통해 알고리듬의 변수들을 조정하여 더 나은 알고리듬을 만들어낼 수 있는데, 이 과정은 사람이 모의고사로 공부를 하는 과정과 유사하다.</p>
-
-
-<p>이렇듯 Machine Learning에서 중요한 것은 system을 학습시키는 traing data가 존재하며, 해당 data를 기반으로 system이 구성이 된 이후 training data가 아닌 <a class="red tip" title="test data라고 한다">새로운 data</a>를 사용해 맞는 결과인지 아닌지를 확인하고 이 정보를 feedback해 현재 알고리듬을 개선한다. 즉, tranining data를 사용해서 ML algorithm에서 사용할 model과 rule을 만들고 test data를 사용해 해당 algorithm의 우수성을 판단하고 system을 개선시키는 것이 Machine Learning의 기본 컨셉이다.</p>
-
-
-<p>그렇다면 왜 이제와서 Machine Learning인가? 최근 ML이 꽤 hot한 field로 주목받고 있지만, 사실 ML자체는 컨셉이 처음 나온지 벌써 <a class="red tip" title="처음에는 AI(인공지능)의 해결책으로 제시되었던 컨셉이었다.">2-30년이 된 생각보다 오래된 학문</a>이다. 이런 현상이 일어나게 된 것에는 흔히 말하는 Big data의 등장이 있다. Big data가 등장함으로 인해 ML에서 가장 중요한 data가 그야말로 엄청나게 많아지고 또한 접근성도 좋아지면서 이를 통해 의미있는 무언가를 찾아내기 용이해졌다. 이런 데이터를 통해 새로운 information을 도출할 수 있다면 분명 여러 분야에서 큰 도움이 될 것으로 예상할 수 있을 것이다. 이런 motivation으로 최근 ML이 크게 각광받고 있는 상황이며 흔히 말하는 빅데이터가 사실은 ML을 의미하는 경우도 많다. 이 글에서 얘기하게 될 Netflix는 ML과 Big Data의 가장 훌륭하고 성공적인 realistic한 BM example로 손꼽히고 있다.</p>
-
-
-<h5>Recommendation Problem in Netflix</h5>
-
-
-<p>사용자의 과거 영화 열람 기록을 기반으로 영화를 추천하기 위해서는 이 문제를 풀이가 가능한 형태로 바꾸는 과정이 먼저 필요할 것이다. 여러 방법이 있을 수 있겠지만, 여기에서는 간단한 하나의 Matrix로 문제를 바꾸어서 생각해보자.</p>
-
-
-<p><a align="center" href="http://www.codecogs.com/eqnedit.php?latex=movie.&space;{\begin{matrix}&space;1&space;&&space;2&space;&&space;3&space;&&space;4&space;&&space;5&space;&6&space;&&space;7&space;&&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&&space;5&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;*&space;&&space;2&space;\\&space;*&space;&&space;3&space;&&space;5&space;&&space;1&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;3&space;\\&space;4&space;&&space;1&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;3&space;&&space;2&space;\\&space;5&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;2&space;&&space;3&space;&&space;*&space;&&space;*&space;\\&space;*&space;&&space;2&space;&&space;4&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;1&space;&&space;2&space;\\&space;5&space;&&space;*&space;&&space;*&space;&&space;5&space;&&space;4&space;&*&space;&&space;*&space;&&space;4&space;\\&space;1&space;&&space;*&space;&&space;5&space;&&space;2&space;&&space;3&space;&1&space;&&space;5&space;&&space;3&space;\\&space;*&space;&&space;3&space;&&space;2&space;&&space;1&space;&&space;4&space;&&space;*&space;&&space;*&space;&&space;*&space;\\&space;\end{bmatrix}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?movie.&space;{\begin{matrix}&space;1&space;&&space;2&space;&&space;3&space;&&space;4&space;&&space;5&space;&6&space;&&space;7&space;&&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&&space;5&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;*&space;&&space;2&space;\\&space;*&space;&&space;3&space;&&space;5&space;&&space;1&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;3&space;\\&space;4&space;&&space;1&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;3&space;&&space;2&space;\\&space;5&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;2&space;&&space;3&space;&&space;*&space;&&space;*&space;\\&space;*&space;&&space;2&space;&&space;4&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;1&space;&&space;2&space;\\&space;5&space;&&space;*&space;&&space;*&space;&&space;5&space;&&space;4&space;&*&space;&&space;*&space;&&space;4&space;\\&space;1&space;&&space;*&space;&&space;5&space;&&space;2&space;&&space;3&space;&1&space;&&space;5&space;&&space;3&space;\\&space;*&space;&&space;3&space;&&space;2&space;&&space;1&space;&&space;4&space;&&space;*&space;&&space;*&space;&&space;*&space;\\&space;\end{bmatrix}" title="movie. {\begin{matrix} 1 & 2 & 3 & 4 & 5 &6 & 7 & 8\end{matrix}} \\ \left\{\begin{matrix} user 1 \\ user 2 \\ user3 \\ user4 \\ user5 \\ user6 \\ user7 \\user8\, \end{matrix}\right. \begin{bmatrix} 3 & 5 & * & 4 & 1 &* & * & 2 \\ * & 3 & 5 & 1 & 2 & * & * & 3 \\ 4 & 1 & * & 4 & 1 &* & 3 & 2 \\ 5 & 2 & * & * & 2 & 3 & * & * \\ * & 2 & 4 & 2 & * & * & 1 & 2 \\ 5 & * & * & 5 & 4 &* & * & 4 \\ 1 & * & 5 & 2 & 3 &1 & 5 & 3 \\ * & 3 & 2 & 1 & 4 & * & * & * \\ \end{bmatrix}" /></a></p>
-
-<p>위의 matrix에서 각각의 element는 user가 movie를 rating한 결과를 의미하고 각 column은 하나의 movie를 의미하고 각 raw는 user를 의미한다고 생각해보자. 다시 말해서 맨 처음 element는 1번 user가 1번 영화에 별점을 3점을 줬다는 것을 의미한다고 생각해보자. 마찬가지로 8번 user는 4번 영화에 1점을 준 것이라고 생각할 수 있을 것이다. *은 아직 영화에 평점을 주지 않았다는 것을 의미하고, 우리의 목표는 평점이 주어지지 않은 영화에 user가 과연 평점을 어떻게 매길까를 최대한 결과와 비슷하도록 예측을 하는 것이다. (이 Matrix를 Netflix Matrix라고 하자, 참고로 이 Matrix의 크기는 user가 480,000명, movie가 18,000개 존재하는 엄청나게 큰 Matrix이며 우리가 알고 있는 데이터는 이 중에서 1% 밖에 되지 않는다고 한다.)</p>
-
-
-<p>즉, 영화 recommendation 문제는 일부 element가 소실되어 있는 matrix의 원본을 복원하는 recovery문제로 바꾸어서 생각할 수 있는 것이다. 이제 Unknown data를 알아내기 위해 Machine learning algorithm이 필요한 것이다. 주어진 data pattern에서 알려지지 않은 새로운 데이터를 추측하는 것이니 이 역시 ML문제라고 생각할 수 있는 것이다.</p>
-
-
-<p>당연한 얘기지만 접근 방법은 무수히 많을 것이다. 그렇다면 여기에서 궁금증이 생기는데, 과연 그 수많은 알고리듬 중 어느 알고리듬이 우수한지 어떻게 평가할 수 있을까? 여러 algorithm 중에서 가장 좋은 system을 선택하기 위한 evaluation이 필요한 것이다. 실제 정보와 차이를 기반으로 평가를 할 수도 있지만, 일일이 그렇게 평가하는 것은 꽤 어렵기 떄문에 RMSE(Root Mean Squared Error)를 사용한다. RMSE는 \(\sqrt{MSE} = \sqrt{\frac 1 n \sum_{i=1}^n ( \hat{X_i}-X_i )^2}\) 로 표현이 되는데, 다시 말해서 전체 평균과 각각의 정보가 얼마나 많이 차이가 나는가를 평가하는 것이다. 당연히 RMSE는 작을수록 좋고 이 알고리듬을 evaluation하기 위해서 알고리듬의 결과로 나온 predicted result를 ground truth label과 비교하는 것이다.</p>
-
-
-<h5>Netflix Prize</h5>
-
-
-<p>Netflix는 자체 추천 알고리듬을 이미 가지고 있었지만, Netflix prize라는 것을 만들어서 이미 가지고 있는 알고리듬을 개선시키고자 하였다. 문제는 간단했다. 현재 Netflix의 recommend system의 RMSE를 10% 가량 개선시킬 수 있느냐? 문제가 2006년 10월에 공지되었으니 알고리듬은 그 당시를 기준으로 평가를 하였다. 이 prize를 위해서 1995 ~ 2005년 동안의 data를 사용해 Training set 100 million (책), probe set 1.4 million (문제집), quiz set 1.4 million (모의고사), test set 1.4 million (수능) 만큼의 data를 제공하였는데 이 정도의 데이터는 Personal Computer에서 돌릴 수 있을만큼 정도의 Data set이었다. 개발자들이 자신의 알고리듬을 평가하기 위해 하루에 한 번 정도 (Maximum 1번) Quiz set에 내 algorithm을 적용시켜 RMSE를 알 수도 있었다. ML 기법을 적용시키고 실제 RMSE를 개선시키는 것이 이 상의 목적이었고 상금은 한화로 약 10억원정도의 금액이었다.</p>
-
-
-<p><p>그렇다면 과연 이 문제가 10억 이상의 가치가 있었는가라는 질문이 생길 수 있는데, 결론적으로만 말하면 그렇다고 대답할 수 있다. 일단 RMSE의 값을 0.01만 감소시켜도 top 10 recommendation이 달라질 정도로 이 값을 바꾸는 것은 실제 Netflix에 크게 영향을 미칠 수 있다. 또한 문제가 10억원을 내걸 정도로 꽤나 어려운 문제였는데, 이 문제가 완전히 풀리는데 3년이라는 시간이 걸렸으니 결코 쉬운 문제는 아니었던 것이다. 본래 Netflix가 가지고 있던 알고리듬은 Cinemath라는 고유 알고리듬이었는데, 이 알고리듬은 벌써 0.9514 RMSE를 가지고 있었다. 이 값의 10%를 개선하려면 RMSE가 0.8563보다 작은 알고리듬을 개발해야하는데, 아무 사전 지식이 없었던 참여자들이 Cinemath를 beating하는 데에 (따라잡는 데에) 겨우 1주일이 걸렸으며, 8.26%를 beating하는 데에도 겨우 10개월이라는 시간이 걸렸다. (team BellKor, 2007) 첫 해에 결국 8.43%의 결과를 달성했으며 이 값만 봐서는 정말 금방 마무리 될 것 처럼 보였으나&hellip; 0.8616까지 도달하는건 1년이 더 걸리고 (2008년) 결국 당시 leading team이던 BellKor와 BigChaos라는 팀이 결합해서 2009년 6월에 10%에 도달할 수 있었다. 여기까지 도달하는 데에 3년이라는 시간이 걸린 셈이다.
-<p>Netflix prize는 총 5000개 이상의 팀이 도전했고 quiz set이 총 44,000 번 test되었다. 가장 먼저 10%를 달성한 팀은 방금전 설명한 BellKor, BigChaos 그리고 Pragmatic Theory 세 팀의 연합 팀이었는데, 10% 달성 이후 30일의 여유 기간에서 Ensemble이라는 다른 팀이 또 10%를 달성하게 되었다. 최종 평가를 위해 알고리듬을 돌려본 결과 두 팀의 RMSE값이 같았는데, BellKor, BigChaos, Pragmatic Thoery 연합팀의 알고리듬이 20분 더 빨라서 결국 상금은 이 팀이 가져가게 되었다.</p>
-<h5>Key ideas in the winner of the prize</h5>
-<p>사실 10%를 달성하기 위한 마지막 1%에는 정말 어마어마한 efforts를 들이부어서 algorithm을 tuning한 결과이다. 하지만 10%의 performance 중 8~9% 정도의 performance improvement를 위해서는 몇 개 안되는 key idea들만을 사용해서 충분히 그 결과를 얻어낼 수 있다. 이 글에서는 크게 두 개의 아이디어를 소개할 예정이다. 하나는 Neighborhood Method이고, 또 하나는 Matrix Factorization이다.</p>
-<p>Neighborhood Method는 각각의 영화들이 얼마나 연관성이 있으며 user끼리는 어떤 연관성이 있는가에 대한 질문에서 시작된 알고리듬이며, 방금 말한 영화 혹은 사용자 간의 유사성을 통해 사용자의 결과를 예측한다. 만약 Machine Learning 중 Clustering에 관심이 있다면 collaborative filtering과 비슷하다고 느낄텐데, 사실 거의 같은 알고리듬이라고 생각하면 된다. 이 알고리듬은 사용자들을 그룹핑하고 (pair를 만들고) 그 그룹 안에 속한 유저가 내린 rating이 다른 user와 얼마나 비슷한지 혹은 다른지 (즉 상관도가 얼마나 있는지) 측정하고 그 측정 값을 기반으로 추천을 하는 알고리듬이다. 즉, 이전에 봤었던 Netflix Matrix에서 비어있는 entry를 그 주변 entry 들의 값을 보고 복구하는 방법이라고 생각할 수 있다.</p>
-<p>컨셉만 놓고 비교하자면 Neighborhood Method가 훨씬 간단하지만 Matrix Factorization는 이보다 더 강력한 성능을 자랑한다. 다른 알고리듬 없이 이 알고리듬만 잘 구현한다면 기존 Netflix의 성능을 8-9% 정도 개선하는 것이 가능하다. 이 알고리듬의 기본 아이디어는 크게 어렵지 않다. 이 알고리듬이 기본적으로 사람들의 type 혹은 class가 생각보다 많지 않다는 것을 가정한다. 즉, drama를 얼마나 좋아하느냐, action을 얼마나 좋아하느냐 등등의 요소들이 각 유저들의 rating을 결정한다는 의미이다. 만약 전체 점수를 S라고 하고 각 factor를 fi 라고 하고 각각의 factor마다 개인이 가지는 가중치를 ai 라고 가정하자. 그리고 전체 n개의 factor가 있다고 한다면, 한 사람이 rating하게 될 점수의 예상치를</p>
-$$ S = \sum_{i}^{n} {a_i * f_i} $$
-<p>로 표현할 수 있을 것이다. 이런 몇 개의 basic classes의 combination으로 user의 rating이 표현이 될 수 있다면, Basic한 몇 개의 요소로 rating이 결정된다 라고 설명할 수도 있으며 약간 수학적으로 설명을 하자면 Netflix Matrix가 몇 안되는 factor들을 통해 표현할 수 있다는 의미가 되므로 Netflix Matrix가 low rank를 가지고 있다라고 표현할 수 있는 것이다. 이 statement가 Matrix Factorization algorithm의 기본 가정이다.</p>
-<img src="/images/post/30-1.png" width="400">
-<p>이 알고리듬의 목표는 각각의 &lsquo;class i of ratings&rsquo; 를 알아내는 것이다. 이 알고리듬이 실제 의미가 있기 위해서는 Netflix Matrix에서 알고 있는 데이터가 어느 정도 많아야 한다. 실제로 해당 decomposed 된 matrix에 들어있는 entry보다는 많은 데이터를 알고 있어야 하는데, 위의 그림에서 우리는 18,000개의 영화와 480,000명의 유저의 정보를 2개의 class로 표현했으므로 우리가 이미 알고 있는 1%의 정보를 사용하면, 총 48000 * 18000 * 0.01개, 약 8백만개 정도의 데이터를 사용해서 2 * 48000 + 18000 * 2 개, 즉 13만 2천개의 entry를 알아내야 한다. 8백만개의 정보에서 13만 2천개의 정보를 뽑아내는 것은 데이터의 양이 충분하다고 할 수 있을 것이다. 물론 지금은 rank가 2이라고 가정했으므로 2를 곱했고 13만 2천이라는 숫자를 얻게 되었지만, 실제로는 이보다는 더 많은 rank를 가졌다고 가정하고 때문에 더 많은 정보를 알아내야하기는 하지만, 그래도 8백만개에 비하면 충분히 작은 숫자가고 할 수 있을 것이다.</p>
-<p>이 이외에도 다양한 아이디어가 있는데 예를 들어 Implicit feedback 아이디어는 사용자가 영화를 자주 봤음에도 불구하고 rating을 하지 않은 경우에 대해서 Netflix Matrix에 반영되지 않은 implicit한 data까지 사용해서 rating을 예측하는 아이디어이며, Temporal dynamics 아이디어는 Netflix Matrix가 불변하는 static한 Matrix가 아니라 실제로는 사람마다 영화 취향이 바뀔 수 있고 매번 유행하는 영화가 바뀌는 등 temporal하게 봤을 때 dynamic한 matrix라고 가정하고, 시간 축 상에서 entry들이 변화하는 양을 measure하여 이를 rating에 반영하는 아이디어이다. 이 밖에도 다양한 아이디어들이 있고 이런 추가적인 아이디어은 실제 8~9% 이상의 무언가를 달성하기 위한 알고리듬 튜닝에 쓰였다고 한다.</p>
-<p>이상으로 Netflix prize와 실제로 그 목표를 달성한 알고리듬의 brief한 소개를 마치도록 하겠다. 이보다 더 자세한 내용은 두 번째 글에서 다루도록 하겠다</p></p>
-</div>
+  </article>
   
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
+  <article class="mB40">
     
-      <h1 class="entry-title"><a href="/29/">인터넷 속의 수학 - 개요</a></h1>
+<p><time datetime="2013-11-19T18:06:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>19</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/21/">빅데이터 이야기: 데이터 수집에서 분석까지</a></span><br>
+Big Data기술이란 무엇이며 왜 중요한지 그리고 앞으로 어떻게 진행이 될 것인가에 대한 내 생각을 간략히 적은 포스트</p>
+
+<span class="categories"><a class='category' href='/blog/categories/big-data/'>Big-Data</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
+<p><time datetime="2013-11-12T05:54:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>12</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/26/">게임은 정말 사회악인가? 한국 게임업계는 정말 반성할 것이 없는가?</a></span><br>
+최근 큰 논란이 되고 있는 게임의 유해성에 대한 내 짧은 의견과 한국 게임업계가 그 동안 잘못하고 있던 일들은 없는가 얘기해보고자 한다</p>
+
+<span class="categories"><a class='category' href='/blog/categories/common/'>Common</a>, <a class='category' href='/blog/categories/game/'>Game</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
-      <p class="meta text-right mB50">
-        
+<p><time datetime="2013-11-05T19:26:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>05</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/25/">블로그에서 Latex 수식 사용하기(MathJax)</a></span><br>
+블로그나 일반 웹 페이지에서 Latex 문법을 사용하는 방법에 대해 설명합니다</p>
+
+<span class="categories"><a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a></span>
 
 
 
 
-
-
-
-
+  </article>
   
-
-
-<time datetime="2013-11-27T15:00:00+09:00" pubdate data-updated="true">Nov 27<span>th</span>, 2013</time>
-        
-         | <a href="/29/#disqus_thread">Comments</a>
-        
-      </p>
+  <article class="mB40">
     
-  </header>
+<p><time datetime="2013-11-03T02:02:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>03</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/24/">당신이 수학을 공부해야만 하는 이유</a></span><br>
+수학은 도대체 왜 공부해야하는가? 수학을 배워서 도대체 어디에 써먹는 것일까? 근 몇 달간 내가 수학에 대해 느낀 점을 공유해서 이런 물음에 대한 답을 내려보고자 한다.</p>
+
+<span class="categories"><a class='category' href='/blog/categories/research/'>Research</a></span>
 
 
-  <div class="entry-content"><p>이 포스팅을 해야겠다고 마음을 먹은지 벌써 한 달 가까이 지나갔다. 그간 너무 바쁘고 마음에 여유가 없어서 이런 규모가 큰 글을 적는 것이 크게 부담스러웠기 때문이다. 특히 이 단기강좌 요약글은 나에게 꽤나 중요한 글이기도 해서, 마음에 여유가 생겼을 때 시간을 들여서 작성하고 싶었다.</p>
 
 
-<p>하지만 사람 일이 그렇게 마음대로 되는 것이 아니지않은가 ㅎㅎ 결론적으로 얘기하자면 시간이 가면 갈수록 여유가 생기기는 커녕 점점 더 바빠지고 있어서 더 바빠지기 전에 중요한 몇 개의 강좌라도 빠르게 요약해두는 편이 좋을 것 같다고 결론지었다.</p>
-
-
-<p>강좌는 10월 31일과 11월 1일 양일간 진행되었으며 강좌 내용은 아래와 같다.</p>
-
-
-<h5>첫째날</h5>
-
-
-<p>Can I really reach anyone in 6 steps?</p>
-
-
-<p>인터넷이나 웹의 모양을 나타낸 그림들을 보면 그 연결 패턴의 복잡성에 놀라게 된다. 그러므로 이렇게 복잡한 네트워크로부터 우리가 원하 는 정보를 찾거나 친한 친구에게 메시지를 전달한다는 것이 어떻게 가능한지 궁금해지지 않을 수 없다. 이것을 가능하게 하는 것은 이른바 &#8220;좁은 세상&#8221;이라는 성질인데, 여기에서는 복잡한 네트워크가 좁은 세상 성질을 갖게 되는 원리를 살펴보고 그것을 이용해 어떻게 원하는 정 보를 찾고 메시지를 보낼 수 있는지 이해한다.</p>
-
-
-<p>How do I influence people on Facebook and Twitter?</p>
-
-
-<p>소셜네트워크의 발달로 우리는 모두 네트워킹된 삶을 살고 있으며, 그에 따라 내가 아는 사람과 나를 아는 사람들 사이에서는 끊임없는 상 호작용이 일어나 서로가 서로에게 영향력을 끼치고 있다. 이러한 사회적 현상은 사람과 사람의 연결을 나타내는 그래프와 그 위에서 일어나 는 기능들로 모델링하여 수학적 분석이 가능하다. 본 강좌에서는 SNS상에서의 통계적 성질, 개인별 영향력의 측정방법, 실제로 사람들에게 영향력을 끼치기 위한 방법 등에 대한 이론과 실제에 대해서 살펴본다.</p>
-
-
-<p>How does Google rank webpages?</p>
-
-
-<p>구글 검색엔진의 엄청난 성공은 기존의 틀을 깨고 웹의 하이퍼링크 구조를 이용하여 웹페이지 순위를 매기는 아이디어에 기반을 두고 있다. 본 강좌에서는 지금의 구글을 있게 한 웹페이지 순위 계산방법인 Google PageRank의 원리를 Markov Chain 이론 등을 통하여 알아본다.</p>
-
-
-<hr>
-
-
-<h5>둘째날</h5>
-
-
-<p>How does Netflix recommend movies?</p>
-
-
-<p>최근 빅데이타를 활용한 기업 이윤 창출의 가장 큰 성공 사례로 뽑히는 미국 온라인 DVD 대여 업체인 Netflix사의 자동 추천 시스템에 대해 서 소개한다. 현재 사용되고 있는 시스템의 근간에 어떤 수학적인 원리가 숨어있는지, 더 향상된 시스템 개발을 위해서 어떠한 수학 문제가 해결되어야하는지 알아본다.</p>
-
-
-<p>Netflix, iTunes, IPTV: which way to watch video?</p>
-
-
-<p>동영상 시청은 많은 사람들 생활의 큰 부분을 차지하고 있으며 특히 최근에는 PC, 스마트폰, 태블릿 등을 이용하여 시공간의 제약을 뛰어 넘어 모바일 비디오를 시청하고 있다. 이러한 영화, TV 프로그램 및 비디오 데이터는 대부분이 인터넷, IP네트워크, 클라우드 네트워크에서 제공되고 있으나, 인터넷은 &#8220;best effort&#8221;를 제공, 바꿔 말하여 &#8220;아무런 노력도 하지 않는 서비스&#8221;를 제공하고 있다. 이러한 인터넷을 통하여 지연에 매우 민감하고 주로 대용량인 비디오 데이터가 우리에게 어떻게 효율적으로 전달되고 있는지, 본 강좌에서 알아보도록 한다.</p>
-
-
-<p>Why is WiFi faster at home than at a hotspot?</p>
-
-
-<p>최근들어 WiFi는 셀룰러 네트워크와 더불어 현대인의 무선 라이프스타일에 있어 매우 중요한 역할을 하고 있으며 무선 데이터 트래픽의 폭 발적 증가로 인하여 그 중요도는 더욱더 증가하고 있다. WiFi의 효율적 운용 및 발전 기술 개발을 위해서는 WiFi 동작의 이해가 필수적이며 따라서 본 강좌에서는 WiFi에서 medium access control (MAC) 프로토콜을 중심으로 한 WiFi 동작 원리의 소개와 함께 그 성능 분석을 통하 여 WiFi에 대한 이해를 높이고자 한다.</p>
-
-
-<hr>
-
-
-<p>이 중에서 내가 관심있는 영역은 순서대로 둘째날의 첫번째 강의(How does Netflix recommend movies?) 그리고 첫째날의 강의들이다. 아마 그 순서대로 강좌를 요약하게 될 것 같고, 첫 번째 요약글은 How does Netflix recommend movies? 가 될 것이다.</p>
-
-
-<p>이 강좌는 전반적으로 어떻게 수학적으로 인터넷, 이 중 내가 관심있는 부분은 네트워크..가 구성이 되어있느냐에 대한 얘기들이다. 첫째날 앞의 두 개의 강좌는 각각 사람간의 네트워크가 수학적으로 어떻게 구성이 되고 그것을 어떻게 모델링하고 분석하느냐에 대한 이슈이고, 그 다음 강좌는 구글의 Page Rank 알고리듬에 대해 자세히 설명하는 강좌였다. 둘째날의 첫번째 강좌는 머신러닝을 사용한 추천 알고리듬 구현에 대한 강좌였고, 뒤의 두 개는 각각 인코딩과 와이파이에 대한 얘기였다.</p>
-
-
-<p>나는 인코딩이나 와이파이에 대해서는 별로 관심도 없고, 별로 advanced한 주제도 아니였기 때문에 (교과서에 있는 내용 정도였다) 아마 앞의 네 개의 강좌를 요약하게 될 것 같다.</p>
-
-</div>
+  </article>
   
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
+  <article class="mB40">
     
-      <h1 class="entry-title"><a href="/28/">서버를 구축해보자</a></h1>
+<p><time datetime="2013-10-25T20:12:00+09:00" pubdate><span class='month'>Oct</span> <span class='day'>25</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/23/">좋은 논문 리뷰를 쓰자</a></span><br>
+NDSL에서 있었던 Paper review session에서 나왔던 교수님의 Comment를 정리하고 논문 리뷰는 어떻게 적는 것인가를 다룹니다</p>
+
+<span class="categories"><a class='category' href='/blog/categories/research/'>Research</a></span>
+
+
+
+
+  </article>
+  
+  <article class="mB40">
     
-    
-      <p class="meta text-right mB50">
-        
+<p><time datetime="2013-10-22T16:48:00+09:00" pubdate><span class='month'>Oct</span> <span class='day'>22</span> <span class='year'>2013</span></time><br>
+<span class="archive-title"><a href="/22/">그래비티 - 스케일이 다른 재난 영화(스포)</a></span><br>
+영화 그래비티에 대한 짤막한 감상평</p>
+
+<span class="categories"><a class='category' href='/blog/categories/movie/'>Movie</a></span>
 
 
 
 
-
-
-
-
+  </article>
   
-
-
-<time datetime="2013-11-26T00:11:00+09:00" pubdate data-updated="true">Nov 26<span>th</span>, 2013</time>
-        
-         | <a href="/28/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>최근 연구실 초기 세팅을 위해서 고군분투하고 있는데, 갑자기 연구실용이 아니라 내 전용 서버를 하나 두면 재미있을 것 같다는 생각이 들었다. 용도는 크게.. 네 가지 정도</p>
-
-
-<ul>
-    <li>내 개인 웹서버 - 간단한 나에 대한 소개 등등을 하는 개인 페이지나 내가 개발하는 웹 어플리케이션을 배포하기 위한 용도.. 대충 아래에 있는 목록 정도를 배포하지 않을까 싶다</li>
-    <ul>
-        <li>현재 <a href="sanghyukchun.github.io/aboutMe">sanghyukchun.github.io/aboutMe</a>에 있는 내 PR페이지</li>
-        <li>연구를 하고 그 기록을 보관하기 위한 개인 BBS.. 이건 XE 써서 만들면 간단할 것 같다</li>
-        <li>연구 및 개인 스케쥴 관리를 위한 레드마인</li>
-        <li>내가 필요한 내용을 정리하기 위한 개인 Wiki</li>
-        <li>예전부터 생각만 하고 있고 구현은 하고 있지 않은 맛집 DB 및 추천용 웹 어플리케이션</li>
-    </ul>
-    <li>맥 이외의 다른 머신에서도 개발할 수 있기 위한 개인 개발용 서버 (SSH client를 사용해서 접속하는 방식으로..)</li>
-    <li>개인 파일 서버 - 원래는 그냥 SFTP정도로 끝내려고 했지만, 동영상을 저장해서 실시간 스트리밍이 가능한 어플리케이션을 만들어볼까 고민 중이다</li>
-    <li>개인 메일 서버 - 필요하지는 않지만, sanghyuk@sanghyuk.kaist.ac.kr 이나.. 나중에 혹시 다양한 사람들을 위한 웹어플리케이션을 만들 경우에 supports@sanghyuk.kaist.ac.kr 이런 식으로 메일을 만드는 것도 가능하다!</li>
-    <li>개인 메일링 리스트 서버 - 개인적으로 메일링 리스트를 구축해야할 일이 얼마나 있을지는 모르겠지만, 그래도 세팅해두고 메일링 리스트로 관심분야를 정리하면 굉장히 좋을 것 같다는 생각이 든다</li>
-</ul>
-
-
-<p>등을 해보고자 한다.</p>
-
-
-<p>전반적으로 연산 자원을 많이 요구하지 않으니깐 듀얼코어 i3면 충분할 거라고 생각했고 (그리고 듀얼코어가 파워 컨섬션도 적고 발열도 적다), 마찬가지 이유로 RAM도 4GB 한 개만 사기로 했다. 이걸 사는 이유는 그냥 나중에 필요하면 다른 컴퓨터로 옮겨 낄 수도 있고 팔기에도 2GB보다는 4GB가 잘 팔리니깐. 파일 서버를 세팅을 하기는 하겠지만, 아마 TB단위 이상으로 필요할 것 같지는 않고, 만약 필요하다면 요즘 하드 가격도 많이 떨어졌으니 간단하게 확장하면 되니깐 그냥 WD 1TB만 구매하기로 결정. 이 이외의 다른 세팅은 필요없을 것 이라고 판단하고 과감하게 보드도 저렴한 녀석으로 구매했다. 어차피 비싼 보드라는게 결국 포트가 더 많이 들어있거나 더 좋은 성능의 무언가가 들어간 경우 (USB3.0, SPDIF, 예전엔 SATA3등등..) 근데 나는 그냥 랜선만 있으면 된다. 랜카드를 더 박거나 GPU가 필요하지도 않으니 그냥 과감하게 저렴한 녀석으로 결정!</p>
-
-
-<p>그래서 견적이 이렇게 나왔다.</p>
-
-
-<p><img src="/images/post/28-1.png" width="400"></p>
-
-<p>오늘 주문했고 배송도 되었으니 아마 빠르면 내일 오후 늦으면 내일 모레 도착할 것 같다. 조립하기 귀찮아서 조립비도 그냥 낼까 했는데, 부품도 몇 개 없어서 그냥 내가 조립하기로 했다. 정말 금방 끝날 것 같아서..</p>
-
-
-<p>운영체제는 당연히 Ubuntu Server. 예전에는 정말 아무것도 몰라서 Ubuntu Desktop을 깔고 왜 자꾸 에러가 나고 리소스가 부족한지 한숨짓고는 했는데, 이제는 그런 실수는 안하겠지 하하. 13은 너무 버그가 많기도 하고 LTS가 아직 안나온 것 같아서 그냥 12.04LTS로 결정. 이제 서버만 도착하면 될 것 같은데 ㅎㅎ</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/27/">캐시버타이징, 당신이 지갑을 열어야 하는 101가지 이유</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-19T21:30:00+09:00" pubdate data-updated="true">Nov 19<span>th</span>, 2013</time>
-        
-         | <a href="/27/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>사람들은 흔히 멋진 광고, 작품성있는 광고에 열광하고는 한다. 하지만 그런 광고가 정말 좋은 광고일까? 잠깐 좋은 광고란 무엇인지에 대해 생각해보고 넘어가보자. 광고란 무엇일까? 사전적인 의미의 광고는 다음과 같다. (당연한 얘기지만 출처는 <a href="http://ko.wikipedia.org/wiki/%EA%B4%91%EA%B3%A0">위키피디아</a>)</p>
-
-
-<blockquote>광고(廣告, 영어: advertising)는 명시적인 광고주가 매체를 통해 의사전달을 하는 단방향 의사소통 방법이며 광고를 접하는 수용자의 태도를 변화시키기 위한 목적을 가진다.</blockquote>
-
-
-<p>말이 너무 어려운가? 그럼 이건 어떤가?</p>
-
-
-<blockquote>&#8220;광고&#8221;라는 한자어는 &#8220;널리 알리다&#8221;라는 뜻을 가지고 있다.</blockquote>
-
-
-<p>그렇다. 광고라는 것은 기본적으로 무언가를 널리 알라는 것을 의미한다. 자 그렇다면 여기에서 &#8216;무엇&#8217;을 광고하느냐가 달라지는 것인데, 기업 입장에서 생각하면 크게 두 가지 종류로 나눌 수 있을 것이다. 하나는 특정 product를 홍보하는 것, 또 하나는 특정 product가 아닌 자사의 (상대적인) 가치를 높이기 위해 자사를 홍보하는 것. 즉, 광고는 내가 새로 만든 물건을 끝내주게 잘 알리거나 혹은 자사의 이미지를 높여주는 역할을 한다는 얘기다. 그게 광고의 본질이다. 자 그러면 다시 좋은 광고 얘기로 넘어가보자.</p>
-
-
-<p>애당초 광고란 상업성이 짙을 수 밖에 없는 현상이다. 광고의 필요성이 대두된 이유부터가 회사들이 수익을 더 많이 내기 위해서가 아니었는가? 그런데 흔히 말하는 &#8216;작품성있는&#8217; 혹은 &#8216;예술적인&#8217; 광고는 그 본질과 다소 초점이 다르다. 물론 예술적이면서 상업적이고 효과적인 광고를 만드는 것도 가능하다. 그러나 더 쉬운 방법으로 더 저렴하게 효과적인 홍보를 할 수 있음에도 구태여 어려운 문구를 사용하고 소비자가 한 번에 이해할 수 없는 광고를 만드는 것이 과연 회사 입장에서 회사를 더 성장시킬 수 있는 방법일까? 이 책, 캐시버타이징은 이런 광고계의 현실에 쓴 소리를 던진다.</p>
-
-
-<blockquote>
-    <p>광고의 99퍼센트는 아무것도 팔지 못하고 있다.</p>
-    <small>David Ogilvy, <cite title="Source Title">Founder of Ogilvy &amp; Mather</cite></small>
-</blockquote>
-
-
-<p>이 책은 사람들의 기본적인 8가지 욕구를 가지고 있다고 주장하며 좋은 광고를 만들기 위해서는 이 욕구들을 잘 활용해야한다고 주장한다. 그 욕구는 아래와 같다</p>
-
-
-<ul>
-    <li>생존, 사는 즐거움, 수명 연장</li>
-    <li>먹고 마시는 즐거움</li>
-    <li>공포와 고통과 위험으로부터의 자유</li>
-    <li>성적 만족</li>
-    <li>안락한 생활 조건</li>
-    <li>남보다 우월해지고 싶고, 이기고 싶고, 뒤떨어지지 않게 따라가고 싶은 마음</li>
-    <li>사랑하는 사람들에 대한 관심과 보호</li>
-    <li>사회적 인정</li>
-</ul>
-
-
-<p>과연 누가 이런 8가지 기본적인 욕구가 옳다 그르다 얘기할 수 있을까? 이 욕구들은 정말 기본적이고 사람이라면 응당 가지고 있는 욕구들이다. 이는 생각보다 큰 영향을 미치는데, 위의 욕구를 반영해 &#8216;Art of Controversy&#8217;라고 제목지어진 지금까지 한 권도 팔리지 않은 책의 이름을, &#8216;How to Argue Logically&#8217;로 바꾸어 &#8216;남보다 우월해지고 싶은&#8217; 여섯번째 기본욕구를 반영해 바꾸어보니, 연간 판매부수가 0에서 3만으로 크게 뛰었다. 이 8가지 욕구가 결코 무시할 수 없는 조건이라는 것이다.</p>
-
-
-<p>하지만 실제로 사람들은 더 많은 욕구를 가지고 있으며, 2차적, 후천적인 욕구를 가지고 있다. 이 책에서는 아래 9가지를 나열하였다.</p>
-
-
-<ul>
-    <li>지식을 획득하고 교육을 받고 싶다.</li>
-    <li>호기심을 충족시키고 싶다.</li>
-    <li>몸과 환경이 깨끗하면 좋겠다.</li>
-    <li>매사에 능률적이고 싶다.</li>
-    <li>수고를 덜고 싶다.</li>
-    <li>남을 믿고싶다/다른 사람들과 똑같아 지고 싶지 않다.</li>
-    <li>스타일을 멋지게 표현하고 싶다.</li>
-    <li>경제적이고 싶다/이익이 있으면 좋겠다.</li>
-    <li>유리한 거래를 하고 싶다.</li>
-</ul>
-
-
-<p>그러나 이 후천적 욕구는 아무리 대단한 욕구라 할지라도 기본적인 8가지 욕구를 따라갈 수 없다. 이 책은 앞서 언급한 8가지 기본 욕구를 활용하여 좋은 (잘 팔리는) 광고 카피를 뽑아내는 법에 대해 다룬다. 사실 많은 사람들이 멋있는 광고를 찬양할지라도 사실 정말 팔리는 광고는 이런 소비자들의 심리를 잘 파악해 그 취약점을 파고드는 광고인 것이다. 내가 당신한테 무엇을 해줄 수 있는지! 내 물건을 구매했을 때 당신한테 어떤 멋진 내일이 찾아오는지! 내 물건을 구매하면 어떻게 당신에게 찾아올 끔찍한 미래를 피할 수 있는지! 이런 광고가 정말 먹히는 광고이고 정말 물건을 팔아주는 광고인 것이다.</p>
-
-
-<p>요즘 마케팅에 심취한 후배들을 만나보면 많은 후배들이 &#8216;멋있는 광고&#8217; 혹은 &#8216;Creative한 광고&#8217;를 하고 싶어하고 그런 일에 꽂혀있는 경우가 허다하다. 하지만 결국 광고의 본질, 마케팅의 본질은 자신의 물건을 소비자들에게 판매하는 것이고, 멋있는 광고보다는 잘 팔리는 광고가 사실 훨씬 더 중요하다는 사실을 절대 잊어서는 안될 것이다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/21/">빅데이터 이야기: 데이터 수집에서 분석까지</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-19T18:06:00+09:00" pubdate data-updated="true">Nov 19<span>th</span>, 2013</time>
-        
-         | <a href="/21/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>빅데이터란 말 그대로 데이터의 양이 엄청나게 많은 것을 의미한다. 이때 빅데이터라고 불릴 정도로 데이터의 양이 많으려면 <a class="red tip" title="Peta Byte">PB</a> 정도의 데이터가 필요하다. 우리에게 친숙한 TB 단위는 빅데이터라고 언급하기에는 좀 작은 편이다. 이 PB라는 단위가 도대체 얼마나 큰 단위이냐하면.. 그야말로 어마어마하다. 1PB는 1,000TB이고, 1,000TB면 1,000,000GB이다. 이는 <a class="red tip" title="정확하게 말하면 Computer world에서는 10진법이 아니라 2진법을 사용하기 때문에 1000씩 곱해지는 것이 아니라 1024씩 곱해져야한다. 그러니깐 1024*1024*1024=1073741824MB가 된다.">1,000,000,000MB</a>라는 도대체 감도 오지 않을 정도로 거대한 값이 된다. 조금 친숙한 단위로 바꾸어서 생각해보자. 일반적으로 3분 남짓한 고음질 MP3 파일이 약 10MB정도 된다. 이를 1PB에 대해 동일한 비율로 계산해보면 300,000,000분 즉, 570년 이상의 재생 시간을 가지는 무지막지하게 거대한 음악파일이 된다. 이 정도면 조금 감이 잡히려나?</p>
-
-
-<p>이제 데이터가 중요한 것은 누구나 알고 있다. <a href="http://forumblog.org/2012/02/the-2012-top-10-emerging-technologies/">세계 경제 포럼 2012년 Global Emerging Technology</a>에도 <a class="red tip" title="본문에는 Informatics for adding value to information라고 적혀있는데, 사실 Big Data라는 말은 그 출처가 불분명한 모호한 용어이다. 사실 이는 단순히 데이터가 많이 있음을 의미하는 말이며, 그 안에서 의미를 분석하는 기술은 informatics, data mining등으로 부른다. 이 글에서는 빅데이터를 앞에서 정의한대로 데이터의 양이 많음으로 정의하고, 빅데이터를 수집하는 방법과 분석하는 방법에 대해 설명할 것이다.">데이터 분석이 당당히 1위를 차지하고 있다.</a> 그러나 실제 그 중요한 데이터를 활용하는 사람들은 많지 않다. 데이터를 활용해 비즈니스 정보를 도출해내는 것이 기술적으로 굉장히 어렵고 고난이도의 도전을 요구하기 떄문이다. 구체적으로 말하자면 크게 두 가지 측면에서 문제가 된다. 하나는 그 많은 데이터를 어디에, 그리고 어떻게 저장할 것이냐라는 문제, 두 번째는 그렇게 모은 데이터를 어떻게 분석하고, 어떻게 더 빠르고 정확하게 분석하느냐라는 이슈가 있다. 지금 흔히 빅데이터라고 불리는 기술은 사실 빅데이터 저장 기술, 그리고 빅데이터 분석 기술 이렇게 크게 두 가지가 혼용되서 언급이 되고 있는 것이다. 이 글에서는 Big data storage technology와 Big data analysis technology란 무엇이고, 내가 연구 혹은 개발했던 경험들에 기반하여 내 개인적인 코멘트를 할 생각이다.</p>
-
-
-<h3>Big Data Storage</h3>
-
-
-<p>데이터 저장은 두 가지 측면에서 Challenge하다. 먼저, 들어오는 데이터가 너무 많은 경우에는 이 데이터를 저장하는 행위 자체가 어려울 수 있다. 또한 저장한 데이터의 분석을 용이하게 하기 위해서 어떤 Data structure를 가져갈 것인지에 대해서도 고민이 필요하. 둘 다 쉬운 문제는 아니며 최근 관련 연구가 활발하게 진행되고 있는 분야이다.</p>
-
-
-<p>데이터가 엄청나게 많아져서 계속 저장해야하는 양 자체가 너무 늘어나게 되면, 그 데이터를 아무 preprocessing없이 저장하는 일 조차 엄청나게 어렵다. Facebook을 예를 들어보자. 현재 Facebook을 사용하는 유저는 세계적으로 10억명이 넘는다. 이 사람들 중에서 동시 접속을 10%만 한다고 생각해도 1억 명이고 이 사람들이 Timeline에서 like나 comment 혹은 post를 평균 1분에 한 번씩 한다고 해도 자그마치 1분에 1억 번의 traffic을 감내해야한다. 이게 얼마나 큰 값이냐하면, 만약 한 Packet당 크기를 편의상 1kByte라고 한다고 하면 매분 1천억Byte, 혹은 100TB의 Packet이 Facebook Data center로 흘러들어오는 것이다. 이렇게 되면 Server side에서 logic처리만 하더라도 전체 리소스가 부족한데 거기에 로깅까지 하려면 정말 엔지니어 입장에서는 그야말로 미쳐버릴 노릇이 되어버린다.</p>
-
-
-<p>이렇게 Real-Time으로 어마어마한 데이터를 Capture하고 Storing하는 것이 가장 어려운 이유는, 실제 Disk에 작성을 할 때 Disk의 Bandwidth가 Network Bandwidth보다 훨씬 작기 때문이다. 네트워크가 maximum으로 들어온다고 가정했을 때 보통 <a class="red tip" title="1 Giga bit per s 즉, Byte로 환산하면 약 1-200 MB/s가 된다">1G</a> 정도를 상한선으로 잡으니 우리도 네트워크 인풋이 1Gbps라고 가정해보자. 1Gbps는 125MBps와 같은 값이니 1초에 125MB의 데이터가 들어오는 셈이다. 반면 일반적인 HDD의 쓰기 속도는 100MB/s가 되지 않는다. 결국 초당 1G의 data가 들어오게 된다면 하나의 하드디스크로만 사용하여 데이터를 저장하는 것이 어렵다. 이는 하드웨어의 한계이기 때문에, 더 좋은 하드웨어를 사용하거나 (예를 들어 SSD는 HDD보다 읽기 쓰기 속도가 훨씬 빠르다), 소프트웨어로 하드웨어를 여러 개 사용해 Scalability를 높이도록 설계하는 방법 밖에 없다. 당연히 아직 하드웨어를 업그레이드하는 것은 매우 비싸고, 데이터 속도가 더 빨라지면 다시 하드웨의 한계에 언젠가 부딪힌다는 문제가 있다. 물론 돈만 있다면 가장 간단한 해결방안이다. 그보다 더 일반적인 해결방안은 소프트웨어를 사용해 Scalability를 높이는 것이다. Multi-threading Programming을 통해 연산해야하는 계산량을 분산하고 굉장히 latency가 큰 disk I/O를 따로 처리할 수 있는 것이다. Multi Machine으로 확장하는 가장 쉬운 방법은 Map-Reduce를 사용하는 것이다. Map-Reduce는 functional language의 map operation과 reduce operation에서 따온 이름인데, 실제 functional language에서 사용하듯 operation을 여러 개의 작은 operation으로 나누어 각각의 머신에서 처리하고 다시 이 작은 operation들을 한 머신에서 취합하는 방식이다. 물론 실제로 이를 적용하기에는 많은 문제점이 있다. Overhead가 어디이며 얼마나 많은 데이터를 처리할 수 있을 것인가, multi-threading program은 보통 1개의 머신에서 작동하도록 설계가 되는데 더 분산 설계를 많이 고려해서 multiple machine에서도 동작할 수 있도록 설계를 할 수 있는가, 만약 각각의 연산 unit이 한 번에 처리할 수 있는 capacity가 달라서 load balancing이 성능 뿐 아니라 corectness에 또한 중요한 요소가 되는 상황에 과연 적절한 load balancing 설계가 가능한가 등의 문제가 생길 수 있을 것이다. 모두 절대 간단한 질문이 아니며 System에 대한 조예가 깊어야 해결할 수 있는 문제가 많다. 대부분의 경우 데이터를 계속 기록하다가 이렇게 하드웨어의 한계에 도달하는 경우 이를 확장하지 못해 더 이상 기록하는 것을 포기하거나 아니면 일부만 기록하는 경우가 허다하다.</p>
-
-
-<p>단순히 데이터를 저장만 하는 것도 어렵지만 사실 데이터를 어떤 format으로 저장하느냐 역시 중요하다. 아무 의미 없어보이는 불규칙한 데이터를 분석하는 것과 이미 대략적으로 entry를 가지고 있고 분류가 되어있는 데이터를 분석하는 것은 큰 차이가 있다. 예를 들어서 &#8216;ㅇㅇㅇ 고객은 ㅁㅁ대학교에 재학 중인 대학생이며 한달 평균 지출액은 약 10만원 정도이며 이와 비슷한 다른 고객들은 대략 5만원을 사용하는 것을 고려해보았을 때 ㅇㅇㅇ 고객은 우리가 중요하게 생각해야하는 고객이다&#8217; 라는 raw text data를 저장하는 것과, {이름: ㅇㅇㅇ, 직업: 대학생, 직업_세부사항: ㅁㅁ대학교, 한달 지출액: 10만원} 의 key-value format으로 저장하는 것이 분석하기가 훨씬 편할 것이다. 여러 format을 사용할 수 있으나, 대표적으로 떠올릴 수 있는 형태는 예시로도 들었던 key-value storage일 것이다. 만약 우리가 분석해야하는 데이터가 정형화되어있고, 분석 역시 일부 데이터에서만 하게 된다면 key-value storage는 매우 좋은 선택이 될 것이다. 그러나 데이터 logging이라는 특성을 고려해본다면 항상 key-value가 좋기만 한 것은 아니다. logging은 상황에 따라 format이 바뀔 수 있다. 예를 들어서 {이름: ㄴㄴㄴ, 직업: 회사원, 한달 지출액: 20만원, 주 관심 카테고리: 차량} 등의 형태로 형태가 변화할 수도 있다. (이 경우는 주 관심 카테고리가 추가되었다) 만약 MySQL 등의 strict한 key-value storage라면 매번 entry를 추가해야한다. 만약 갑자기 로깅 skeme을 변경하겠다는 결정이 내려지면 MySQL을 사용하고 있던 서비스는 새로운 DB를 생성해야만 할 것이다. 이런 문제점을 방지하기 위해서 NoSQL이라는 것이 등장했고 MongoDB, Redis, Cassandra 등이 이에 속한다. 자세한 내용은 나중에 한번쯤 다뤄보도록 하겠다. NoSQL을 사용하면 SQL보다 유연하게 formatting을 할 수 있고 조금 더 분산환경에 적합하다. 아무튼 생각보다 데이터를 formatting하는 것이 어렵다. 가장 큰 이유는 데이터를 기록하기 시작할 때 부터 어떤 분석이 필요할 것이라고 예측하는 것이 쉽지 않기 떄문이다. 구글이 검색어 로그를 수집할 때 해당 검색어가 독감 지도가 되고 대선 지표가 될 것이라고 예측할 수 있었을까? 아마 아닐 것이다. 빅데이터의 가장 큰 아름다움은, 아무 의미없고 연관성 없어보이는 여러 사실들이 데이터를 통해서 얽히고 섥혀 한 순간에 모든 사실을 데이터가 꿰뚫는 순간인 것이다. 이런 순간을 미리 예측한다는 것은 거의 불가능에 가깝다. 이 분야는 내 주요 관심분야도 아니고, 내가 많이 해본 적은 없지만, 내가 알기로는 점점 strict한 format은 줄어들고 보다 유연하고 쉽게 바꾸기 쉬운 형태의 format으로 옮겨가고 있는 추세로 알고 있다. 그만큼 데이터가 어떤 방향으로 변할지 예측하는 것이 어렵다는 것이다.</p>
-
-
-<p>우리는 이제 사방에 데이터가 넘쳐나는 환경에 살고 있어서 데이터라는 것을 얕잡아보기 쉽지만, 이 데이터의 양이 무지막지해지면 데이터를 저장하고 적절한 formatting을 하는 것만으로도 수 많은 기술적 challenge를 요구한다. 하지만 사실 우리가 관심있는 부분은 데이터를 저정하는 것이 아니라 데이터를 분석하는 것이다. 다음 paragraph부터는 실제 데이터를 분석하는 방법들과 예시들에 대해 얘기해보겠다.</p>
-
-
-<h3>Big Data Analysis</h3>
-
-
-<p>&#8216;구슬이 서말이어도 꿰어야 보배다&#8217; 빅데이터 분석과 가장 잘 어울리는 속담이 아닐까? 아무리 데이터를 많이 가지고 있어도 그 데이터를 분석하지 못한다면 아무런 의미가 없다. 데이터를 분석하는 여러가지 방법이 존재하지만, 이 글에서는 주로 내가 공부하고 있는 Machine Learning을 중심으로 설명하려고 한다. 다른 방법들에 대해서는 내가 잘 알지 못하고 데이터가 많은 경우에 잘 동작하지 않는 등 제한된 조건에서만 동작하는 방법이 많기 때문이다.</p>
-
-
-<p>그러면 Machine Learning이란 무엇인가? 마치 사람이 새로운 학습 정보를 받아들여 자신의 행동을 개선하듯, 머신이 데이터를 통해 decision making을 더 개선해나가는 과정을 의미한다. <a href="http://ko.wikipedia.org/wiki/%EA%B8%B0%EA%B3%84_%ED%95%99%EC%8A%B5" taget="new">위키</a>를 참고해서 말하자면 머신러닝은 컴퓨터가 학습할 수 있도록 하는 알고리즘과 기술을 개발하는 분야를 말한다. 더 자세한 내용은 <a href="/3">이전에 내가 정리한 글</a>을 참고하길 바란다. (참고로, Data mining이라는 용어도 존재하는데, 내가 앞으로 설명하려는 내용과 거의 일치한다. 사실 Data Mining은 데이터에서부터 의미를 캐내는-mining하는-모든 것을 통틀어서 말하는 것이며, 대부분의 경우 Machine Learning Technology를 사용해서 분석을 하는 경우가 많다. 때문에 이 글에서는 딱히 그 둘을 구분하지 않고 혼용해서 적도록 하겠다.) 그렇다면 머신러닝이 데이터 분석에 어떤 식으로 기여할 수 있을까? 머신러닝을 사용하면 데이터의 패턴을 파악하는 것이 가능해진다. 다시 말해서 내가 알고 있는 정보를 사용해서 내가 모르는 정보를 얻을 수 있다는 의미이다. 간단한 예를 들어보자, 만약에 아래와 같은 데이터가 있다고 가정해보자.</p>
-
-
-<p><img src="/images/post/14-1.png" width="400"></p>
-
-<p>음.. 쉽게 생각해서 가로축은 내가 게임에서 사용한 돈의 액수를 의미하고, 세로축을 그 게임에서 내가 가지고 있는 좋은 아이템의 개수라고 생각해보자. 아마 돈을 많이 쓸 수록 좋은 아이템을 많이 가지게 될 것이다. 그렇다면 내가 돈을 11만큼 썼을 때 내가 얼마나 많은 아이템을 얻을 수 있을까? 위의 데이터를 토대로 추정해보자면 아마 약 11에 근접한 값을 얻게 될 것이다. 머신러닝은 이런 방식으로 주어진 정보만을 토대로 아직 알고있지 못한 정보를 추정하게 된다. 자 이제 대략적인 설명은 충분한 것 같다. 그렇다면 실제 이렇게 머신러닝을 사용해서 데이터를 분석하고 있는 예시는 무엇이 있을까?</p>
-
-
-<p></p>
-
-<p>미국에 Netflix라는 기업이 있다. 이 기업에서 제공하는 주요 서비스는 영화와 관련된 서비스 들이다. 시작은 1997년 시작한 DVD 대여 사업에서부터 시작했지만, 지금은 북미에서 스트리밍되는 대부분의 영화를 독식하고 있는 어마어마하게 거대한 기업이다. 실제로 지금 미국에서 발생하는 트래픽의 25%가 Netflix에 의해서 생겨난 트래픽이라고 하니, 이 기업이 얼마나 사람들에게 영향을 미치고 있는지 알 수 있을 것이다. 이 기업이 거대하게 성장하게 된 배경에는 &#8216;추천&#8217;이라는 시스템이 자리잡고 있다. 이 추천 문제는 사실 Machine Learning에서 상당히 중요하게 다뤄지는 문제 중에 하나이다. 추천이라는 것을 사용자의 다른 정보들을 사용하여, 아직 밝혀지지 않은 사용자의 기호를 추정하는 문제로 생각하면 Machine Learning 기법을 사용하여 문제를 해결하는 것이 가능하기 때문이다. Netflix는 이런 접근 방식을 통해 실제 Big Data와 Machine Learning을 사용한 가장 성공적인 사례로 손꼽히는 기업이다. Netflix에서는 영화를 대여하거나 시청하게 되면 자동으로 관련되거나 사용자가 관심있어할만한 영화를 자동으로 추천해준다. 특히 Netflix에서는 영화를 scoring하는 것이 가능한데, 과거에 내가 점수를 매겼던 history를 기반으로 하여 새로운 영화에 내가 몇 점을 매길 것인지를 꽤 정확한 확률로 추천해준다. 내가 해리포터와 마법사의 돌, 해리포터와 비밀의 방, 그리고 해리포터와 아즈카반의 죄수라는 영화를 재미있게 봤다면 내가 해리포터와 불의 잔이라는 영화를 좋아할 가능성이 높다고 추천해주고, 이런 추천을 통해 사용자들의 추가적인 과금을 유도하는 형식이다. 이런 방식의 추천 시스템은 아마존 등에도 적용이 되어있으며 마찬가지로 매우 효과적인 결과를 얻고 있다고 한다. 이런 추천 시스템을 구축하기 위해서 Netflix는 엄청나게 복잡하고 많은 머신러닝 기법들을 사용한다. 이 시스템은 2006년 Netflix prize라는 이름으로 추천 시스템의 성능을 향상시키는 대회가 열렸는데, 이 대회에서 우승을 했던 시스템이 기반이 되어 만들어졌다. Netflix prize에 대해서는 조만간 글을 쓸 예정이므로 여기에서는 자세한 언급은 피하도록 하겠다. 마찬가지로 이 대회에서 우승을 한 알고리듬을 자세히 설명하는 것도 다른 글에서 다룰 수 있도록 하겠다. 중요한 것은 Netflix에서 상당히 높은 수준으로 추천이 되는 영화들이 사람이 인위적으로 작성한 리스트에 따라서 추천이 되거나 하는 것이 아니라, 온전히 Machine Learning Technology를 사용하여 추천을 하고 있다는 것이다. Netflix는 흩뿌려져 있는 것 처럼 보이는 데이터를 수집해서 그 데이터에서 의미있는 결과를 도출하고 그 결과를 통해 실제로 돈을 벌 수 있다는 것을 보여주는 아주 좋은 예시이다. (한국에서 <a href="http://watcha.net">왓챠</a>라는 유사한 서비스가 있다. 카이스트 선배님이 CEO로 계신 회사인데, 이 서비스도 상당히 좋은 서비스이니 관심있다면 한 번쯤 이용해보는 것도 재미있을 것이다.)</p>
-
-
-<p>오바마 대통령의 재선 캠프에 있었던 데이터 분석팀 역시 빅데이터를 잘 활용한 좋은 예시로 손꼽힌다. 미국은 정말 많은 인종과 사람들이 존재하는 나라이다. 그리고 국토도 <a title="미국 9,826,675제곱킬로미터, 남한 99,720제곱킬로미터" class="red tip">남한의 98배가 넘을 정도로</a> 워낙 방대하기 때문에 한정된 시간동안 많은 사람들을 대상으로 하는 대선운동을 하는 것이 쉽지 않다. 우리나라에서 대선을 하는 동안에도 어느 지역에 어떤 자원을 투자하느냐가 이슈가 되는데, 하물며 우리보다 거의 100배나 거대한 미국에서는 어떠하겠는가? 우리나라도 지역별로 선호하는 후보나 당이 분명하게 구분이 되는 것처럼 미국도 지역별로 공화당 혹은 민주당 중에서 더 선호되는 당이 다르다. 하지만 남한 만큼 거대한 주가 51개 주 중 37개에 달하는 만큼, 우리나라처럼 지방 하나가 거의 동일한 색채를 띄고 있지 않다. 또한 우리나라는 인구 밀집도가 특정 지역이나 도시에 몰려있는 반면, 미국은 인구 밀집도가 많이 낮은 편이다. 때문에 직접 선거 운동을 할 수 있는 지역은 극히 제한된다. 오바마 선거 운동팀은 그 동안 근사적으로만 접근하던 모든 데이터를 수치화하고 그 값을 바탕으로 효율적인 자원분배를 이뤄냈다. 오바마 캠프의 데이터 분석팀이 가장 먼저 한 일은 현재 자세히 분류되어있지 않은 유권자들을 투표성향, 성별, 인종 등으로 나누어 새로운 유권자 명부를 작성한 것이다. 이렇게 작성된 명부를 바탕으로 하여 micro targeting이 이루어졌다. 강한 민주당 지지자이며 투표를 할 사람들, 강한 민주당 지지자이지만 투표를 하지 않을 사람들, 약한 민주당 지지자, 약한 공화당 지지자, 강한 공화당 지지자&#8230; 등의 분류를 하고, 각 분류별로 각기 다른 전략을 세워 유권자를 끌어모았다. TV광고도 단순히 사람들이 많이 볼 것으로 예상되는 시간에 편성하는 것이 아니라, 지역별로 사람별로 적당하다고 생각되는 채널에 광고를 편성하였다. 이전에는 사람들이 많이 보는 뉴스나 스포츠 경기에 광고를 하는 방식으로 홍보를 했다면, 이제는 특정 지역의 특정 계층의 사람들에게 타겟 광고를 하는 방식으로 바뀐 것이다. 예를 들어서 캘리포니아의 30대 여성들을 공략하기 위해 해당 계층이 가장 많이 보는 프로그램에 광고를 내보내는 것이다. 이는 선거 자금 모금 운동에도 동일하게 적용되었는데, 2012년 5월 조지 클루니의 자택에서 열린 선거 자금 모금 운동이나, 그로부터 한 달 뒤에 세라 제시카 파커(섹스 앤 더 시티의 출연자 중 하나)의 집에서 벌인 모금 운동 모두 40대 여성들을 겨냥한 데이터 팀의 분석 결과로부터 도출된 전략이었다. 또한 전화 선거 운동을 할 때에도 데이터 분석을 통해 사람들을 분류하고, 오바마를 지지할 가능성이 없는 사람들은 과감히 버리고 오바마를 지지할 가능성이 존재하거나, 오바마를 지지하지만 투표를 하지 않는 사람들을 중심으로 전화를 걸어서 맷 롬니 진영보다 훨씬 효율적으로 선거운동을 할 수 있었다. 이 밖에도 선거 운동을 하는 사람들을 위한 소프트웨어나 지속적인 모의 투표, 트래픽 폭주 상황에 대비한 Plan B 수립 등 데이터 팀이 오바마 캠프에 미친 영향은 지대하였다. 결국 오바마 캠프는 &#8216;데이터의 승리&#8217;라고 불릴 정도로 성공적인 데이터 분석 사례로 손꼽히게 되었다.</p>
-
-
-<p>이렇듯 Machine Learning은 데이터를 분석하는 방법 중에서 가장 많이 쓰이고 가장 각광받는 방법이다. 하지만 이것은 어디까지나 접근 방법에 대한 문제이고, 이런 알고리듬을 구현하고 적용하기 위해서 필요로 하는 기술들은 정말 많다. 특히 가장 필요로 하는 기술 중 하나는 parallel programming 혹은 distributed programming인데, 쉽게 생각하면 한 연산을 하나의 머신에서 처리하는 것이 아니라 여러 개의 분산된 머신에서 병렬적으로 이를 처리하는 방식이다. 앞서 설명했던 것과 같이 이런 기술이 필요한 이유는 간단하다. 머신 하나의 연산 처리 속도가 우리가 요구하는 연산 처리 속도보다 훨씬 느리기 때문에 software를 사용해 hardware의 기능을 확장해서 사용하는 것이다. 데이터 분석을 위해 현재까지 가장 많이 쓰이는 기술을 꼽자면 Hadoop과 Map-Reduce를 꼽을 수 있을 것이다. Map-Reduce는 앞에서 잠깐 언급했듯 연산을 여러 개의 분산되어있는 머신에게 분할해서 각자 연산을 따로 하게 하고, 그 결과를 다시 합쳐주는 방식이다. 현재 Google에서 개발한 Google Map-Reduce가 가장 많이 쓰이고 있다. 하둡은 일종의 파일시스템인데, 오픈 소스이기 때문에 많은 개발자들이 즐겨 사용하고 있다. 하둡 분산 파일시스템이 만족하는 요구사항이 몇 가지가 있는데, 분산 환경에서는 여러 개의 컴퓨터가 연합하여 연산을 수행하기 떄문에, 이 중 몇 개의 머신이 고장이 나더라도 전체 시스템에 문제가 생기지 않도록 빠른 복구를 요구하고, 자료 자체는 저장이 된 이후 (일반적으로) 다른 머신으로 옮겨가지 않기 때문에 데이터가 옮겨지는 것 보다 연산이 옮겨가는 것이 더 빠르게 설계하는 등의 요구사항을 만족하고 있다. 자세한 내용은 <a href="http://ko.wikipedia.org/wiki/%ED%95%98%EB%91%A1">하둡 위키</a>를 참고하길 바란다.</p>
-
-
-<p>데이터 분석은 데이터가 존재하는 모든 곳에서 적용가능한 발전 가능성이 무궁무진한 기술이라고 할 수 있다. Netflix라는 기업에서부터 미국 대선에 이르기 까지 실제로 이를 요구하는 기업이나 단체도 매우 많으며 또한 좋은 결과를 달성하고 있다. 이 밖에도 정말 많은 예시들이 있지만 이미 충분히 글이 길어진 것 같아서 이 쯤에서 줄이도록 하겠다.</p>
-
-
-<p>이렇게 간략하게나마 빅데이터를 수집하는 방법과 분석하는 방법에 대해서 다루어보았다. 생각보다 글이 길어지기는 했지만, 내가 알고 있는 빅데이터에 대한 개념과 실제 적용을 할 때 생기는 문제점들 그리고 실제 해당 기술들을 적용해 성공적으로 운영하고 있는 예제들도 간략하게나마 살펴보았다. 분명 데이터는 미래에 점점 더 중요한 자원이 될 것이며, 이 자원을 확보하기 위한, 그리고 확보한 자원에서 정보를 뽑아내기 위한 싸움이 치열하게 벌어질 것이다. Machine Learning을 연구하고 있는 사람 중 하나로써 새로 맞이하게 될 데이터 시대에서 큰 역할을 할 수 있기를 희망한다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/26/">게임은 정말 사회악인가? 한국 게임업계는 정말 반성할 것이 없는가?</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-12T05:54:00+09:00" pubdate data-updated="true">Nov 12<span>th</span>, 2013</time>
-        
-         | <a href="/26/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>알코올, 도박, 마약 그리고 게임. 이 네 가지 항목의 공통점은? 바로 이번 정부에서 발표한 일명 4대 중독법에서 규정하는 중독 규제 대상들이다. 자세한 내용은 <a href="http://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=105&oid=109&aid=0002652947">링크</a>에 기사를 첨부하였으니 읽어보면 된다. 이 글에서 얘기하고자 하는 얘기는 총 두 가지 이다.</p>
-
-
-<ol><li>첫째, 과연 게임이 중독법으로 관리를 해야할 만큼 사회에 해악만 끼치는 존재인가?</li>
-<li>둘째, 중독법과 상관없이, 우리 게임 업계는 과연 떳떳할 수 있는가?</li>
-</ol>
-
-
-<p>게임은 그야말로 폭발적으로 성장한 대표적인 콘텐츠 산업 중 하나이다. 콘텐츠 산업 자체가 역사가 긴 편은 아니지만 게임은 그 중에서도 짧은 편이라서 영화, 만화, 애니메이션, 음악 등과는 상대가 안될 정도로 최근에 생겼고, 또한 급속도로 성장하고 있는 산업이다. 최초의 비디오 게임이 1981년 개발된 갤러그이니 게임 산업이 태동한지 고작 30년이 갓 넘은 어린 산업이다. 하지만 <a href="http://www.inven.co.kr/webzine/news/?news=51109">2012 콘텐츠 산업 통계조사</a>에 따르면 게임은 콘텐츠 산업에서 18% 이상의 매출을 담당하고 있다. 음악과 영화가 내는 매출을 더한 것 보다도 많은 양이다. 세계 동향을 한 번 살펴보자면, 2012년 기준으로 약 600억 달러, 한국 돈으로는 6조가 넘는 엄청난 규모를 자랑한다 (출처: <a href="http://www.kocca.kr/knowledge/abroad/deep/1815399_4514.html">KOCCA</a>) 게다가 성장률도 매년 5% 가까이 유지하고 있다. 게임 산업에 대한 얘기는 구글링해보면 정말 많은 얘기들을 찾아볼 수 있을테니 &#8216;게임 산업이 절대로 무시할 수 없는 거대한 영역이며 세계적으로 봤을 때도 엄청나게 거대하고 폭발적으로 성장하는 콘텐츠 산업이다&#8217; 라는 정도에서 마무리하도록 하고, 그렇다면 정말 게임은 해로운가? 라는 질문으로 넘어가보자.</p>
-
-
-<p>게임은 정말 해로운가? 뉴스 사회면을 보다보면 가끔 게임 중독으로 부모님을 살해하거나 혹은 부모가 게임 중독이어서 아이를 방치해서 아이를 죽이는 경우, 게임을 너무 오래하다가 그 자리에서 사망한 경우 등을 다룬 기사들을 심심치 않게 확인할 수 있다. 아 게임은 정말 해로워보인다. 마치 마약과 같아서 관리를 해주지 않으면 사람들을 망쳐버리고 사람을 죽게 할 수도 있다! 라고 생각할 수 있다. 최소한 지금까지 얘기한 사실만 보면 그러하다. 하지만 단순히 생각해봐도, 롤을 즐기는 사람은 현재 7000만명이 넘어가고, 예전 와우가 가장 잘 나갈 때 &#8216;엑티브 유저&#8217;가 약 1000만 명 가까이 되었던 것으로 기억하고 있으니&#8230; (미국 자료 중 좋은 자료를 찾아서 <a href="http://www.inven.co.kr/board/powerbbs.php?come_idx=3340&l=40504">링크</a>한다) 젊은 세대 중에서 전혀 게임을 하지 않는 사람을 찾는 것이 어려울 정도로 이미 게임은 우리 삶 깊숙한 곳에 침투해있다. 때문에 &#8216;게임학&#8217;이라는 학문도 생겨나고, 사람들이 도대체 게임을 왜 하는 것이며, 어떻게 더 좋은 게임을 만들 것이며, 사람들이 게임을 통해서 무엇을 배울 수 있는가에 대한 연구 또한 활발히 진행되고 있다. TED에서 진행했던 <a href="http://www.ted.com/talks/lang/ko/jane_mcgonigal_gaming_can_make_a_better_world.html">&#8216;게임을 해서 더 좋은 세상을 만들 수 있습니다&#8217;</a>라는 영상을 보면 이미 미국에서는 고등학교를 졸업할 때 까지 평균적으로 10,000 시간을 게임에 소비한다고 하는데, 이는 미국의 고등학교 수업 시간과 거의 일치하며, 또한 아웃라이어에서도 소개되었던 10,000시간의 법칙에서 다루는 시간과 일치한다. 그렇다면 이제 고등학교를 졸업하고 어른이 되고 있는 세대는 게임의 대가이고, 게임을 통해 무언가를 할 수 있는 사람들인 것이다. 여러 가지 관점이 있을 수 있지만, 링크한 TED에서도 그렇고 국내 학계도 그러하고 (<a href="http://www.thisisgame.com/webzine/news/nboard/11/?n=31568">디스이즈게임 기사 링크</a>) 게임 유저들은 실패에 더 유연하고 즉각적인 피드백을 통한 긍정적 사고에 익숙하다고 한다. 아직 연구가 진행되고 있는 부분이며, 나 또한 이 분야의 전공자가 아니기 때문에 함부로 얘기할 수는 없지만, 분명 게임은 충분히 좋은 영향을 미칠 수 있는 것이다.</p>
-
-
-<p>사실 게임 중독을 어떻게 취급하느냐 또한 아직 학계에서 입장이 첨예하게 대립하고 있는 상황이다. 어떤 학자들은 게임을 하는 동안 마치 마약을 하는 듯한 신경 링크를 형성한다고 주장하는 학자들도 있고, 게임과 중독의 연관성을 찾을 수 없다고 주장하는 학자도 존재한다. 하지만 아직도 공식적인 입장은 명확하게 결정된 것이 없으며, 알코올이나 도박, 마약 처럼 직접적으로 신경계를 자극하여 중독을 유발하는 요소가 있는가에 대해 연구가 아직 진행 중이다. 단순히 게임에 열광하고 빠져있는 사람들을 중독자라고 지칭할 수는 없다. 게임 중독자라고 부를 정도라면 뉴스에서 언급하는 정도로 게임에 몰입하고 결국 그로 인해 문제가 발생하는 경우일 것이다. 근데 여기에서 궁금증이 하나 생긴다. 음란물도 중독된다. 음란물은 직접적으로 사람의 신경을 자극하여 순간적인 쾌락을 느끼게 하고 오랜 기간 음란물에 중독될수록 더 강한 자극을 요구하게 되고 심각한 경우에는 성범죄로 이어질 수 있는 위험성이 존재한다. 하지만 음란물은 규제 대상이 아니다. 하나 더 살펴보자면, 엄청나게 많은 사람들이 인터넷 중독에서 빠져나오지 못하고 있으며, 트위터나 페이스북에 중독되어 일 분에도 수십번 자신의 페이지를 확인하는 사람들도 많다. 쇼핑은 어떠한가? 쇼핑 역시 구매 후 순간적인 엔돌핀 분비가 사람들에게 계속 소비를 유도시킨다. 쇼핑 중독이 심각한 경우에는 대부업에 까지 손을 대서 쇼핑을 하는 경우도 존재하니 쇼핑도 가정 경제를 파탄내고 지하경제 양성화라는 정부의 원대한 목표에 방해가 되는 수단이다. 빙빙 돌려말하지 말고 요점만 말하자면, 게임도 다르지 않다. 다만 그 중독의 대상이 어린 학생들이고, 어른들이 이에 공감을 할 수 없기에 생겨난 촌극이라고 생각한다. 아직도 게임이 중독을 일으키는지 그렇지 않은지 명확하게 밝혀진 사실은 존재하지 않는다. 이런 상황에서 게임은 유해하다! 혹은 게임은 유해하지 않다! 라고 주장하는 것 자체가 의미 없는 행동 아닐까? 그렇더라도 내 짧은 의견을 말하자면, 난 게임이 충분히 강한 과몰입을 일으킬 수 있는 여지는 있지만, 알코올, 도박, 마약, 담배 등과 다르게 자신의 의지가 있다면 빠져나올 수 있고, 실제로 그것이 약물 치료를 하지않으면 안될 정도로 강하지 않기 때문에 정부에서 직접 규제를 할 필요는 없다고 생각한다.</p>
-
-
-<p>그렇다면 우리나라 게임 업계는 과연 이런 외압에 당당할 수 있을까? 우리 게임업계는 사실 오래전부터 다른 잘나가는 게임 배끼기 그 이상을 해온 적이 별로 없다. 흔히 말하는 &#8216;작품성있는&#8217; 게임과는 거리가 먼 것이다. 가장 큰 이유를 고르자면, 외국은 소규모 게임 스튜디오가 활성화되고 수 많은 인디게임 스튜디오가 있지만 우리나라에서 인디게임을 개발하는 스튜디오나 개발자가 거의 없다는 것 정도? 시장이 작은 것도 큰 원인이고, 사람들이 그런 게임을 원하지 않았던 탓도 있다. 우리나라에서 가장 잘 나갔던 게임은 MMORPG.. 가장 게임에서 재미없는 반복적 요소를 증대시키고 자유도는 떨어지는 게임 장르이지만, 특이하게도 한국에서는 과하다 싶을 정도로 MMORPG의 붐이 일었다. 지금은 전부 롤이 그 자리를 대체했지만, 몇 년전까지 PC방에 가면 스타를 제외하고는 전부 MMORPG이던 시절이 있었다. 그 시절에는 누가 더 빠르게 잘나가는 콘텐츠를 배껴서 게임에 이식하느냐가 이슈였고, 어떻게 더 좋은 게임을 만들까가 이슈가 아니라 어떻게 유저들에게 더 과금을 시키고 유저들이 게임에 묶이게 만들 수 있을까가 이슈였다. 부끄럽지만 사실이다. 그러다가 스마트폰 붐을 계기로 크게 지각변동이 생기는데, 우리나라는 스마트폰 도입도 외국에 비해 1년 이상 늦었고, 거기에다가 말도 안되는 사전 검열법으로 인해 게임 도입은 그 보다도 2년이라는 시간이 더 필요했었다. 결국 모바일 게임의 규제가 풀리고 카카오톡 게임 플랫폼이 생기면서 소셜 게임이 다른 나라들 보다 약 1년 늦게 붐이 터졌는데, 이때 게임 개발사의 이슈는 외국에서 이미 성공했고 잘 나갔던 소셜게임을 그대로 카카오톡에 이식을 얼마나 빨리하느냐였다. 즉 어차피 모바일 게임은 수명은 짧고 (3-4개월) 한번에 대박을 노릴 수 있는 영역이니 일단 배끼고 보자! 라는 분위기가 된 것이다. 이 얼마나 비극적인가. 우리나라는 게임의 다양성도 많지 않았는데 그나마 남은 게임들도 항상 표절이었다. 게임 전체를 배끼기 시작한 것은 비교적 최근의 일이지만 컨셉이나 기본 콘텐츠를 배끼는 것은 아주 당연한 일이었고 &#8216;벤치마크&#8217; 정도로 취급을 받거나, 게임성보다는 항상 수익성이 먼저였다. 대한민국은 가장 수익성있는 MMORPG를 만든 나라지만 정작 게임이라는 산업 전체로 경계를 확장하면 크게 기여한 것도 없는 나라인 것이다. 한국은 왜 Valve같은 회사가 없을까? 왜 한국에는 작품성 있고 게임성 좋은 게임이 없을까? 시장도 작고 시장에서 그런 게임을 원하지 않았으니깐 그리고 그 시장을 개척하려는 사람도 아무도 없었기 때문이 아닐까</p>
-
-
-<p>결국 게임도 생태계이며 진화를 거듭하지 않으면 도태되고 죽게 될 것이다. 셧다운제, 쿨링오프제, 심지어 매출액의 6%를 가져가고 4대 중독으로 규정을 하는 등의 규제가 없더라도 어쩌면 국산 게임은 자멸의 길을 걸어왔던 것일지도 모르겠다. 한국에도 더 많고 다양한 게임 스튜디오가 생기고 마찬가지로 사람들도 한 장르나 게임에 집중하는 것이 아니라 더 다양한 게임을 접하고 더 많은 경험을 할 수 있게 되는 건전하고 발전적인 게임 습관을 미리 들이지 않았기 때문에 와우와 롤이라는 강력한 적수에 대적하지 못하고 앵그리버드와 같은 세계적인 대 히트 모바일 게임을 만들지 못했으며 그들이 만들어낸 것들을 그저 답습하고 따라하기에 급급하며 사람들에게 즐거운 경험보다는 괴로움과 반복적인 작업을 강요하는 게임을 자꾸 만들어내고 그 게임의 수익성을 높이는 것에 급급했던 것이 우리 게임 업계의 현실이었다. 이런 상황에서 게임에 대한 올바른 인식이 자리잡을 수 있을리 없으며 얼마전 민주당 전병헌 의원이 &#8216;꼰대 발상&#8217;이라고 불렀던 부정적인 시선들만 자리잡게 되었던 것이 어쩌면 당연했을지도 모른다. 나는 다시 되물어보고 싶다. 우리 게임업계는 과연 이런 상황에서 전혀 책임이 없다고 느끼는가?</p>
-
-
-<p></p>
-
-<p>난 항상 국내 게임업계를 강하게 비판하는 쪽이었지만, 지금과 같은 상황이 계속된다면 90년대 종말을 맞이했던 만화와 같은 운명을 걷게 될 것이라는 것이라고 생각한다. 지금 일어나고 있는 말도 안되는 촌극이 빨리 끝나고, 게임 업계도 이번 위기를 발판삼아서 더 좋은 게임을 만드는 기회가 되었으면 좋겠다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/25/">블로그에서 Latex 수식 사용하기(MathJax)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-05T19:26:00+09:00" pubdate data-updated="true">Nov 5<span>th</span>, 2013</time>
-        
-         | <a href="/25/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
-
-
-<p>방법은 매우 간단하다. 아래와 같은 코드를 head에 넣으면 끝. </p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>이제 준비는 끝났다. 이제 수식을 넣어보자.</p>
-
-
-<p>사용법은 어렵지 않다. 만약 \( E=mc^2 \)를 쓰고 싶으면 </p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\( E=mc^2 \)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>라고 적으면 된다. 위에 E=mc^2를 적은 곳에 다른 Latex 문법을 넣으면 다른 수식을 표현할 수 있다.</p>
-
-
-<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292">블로그에서 수식 표현하기</a></p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/24/">당신이 수학을 공부해야만 하는 이유</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-03T02:02:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2013</time>
-        
-         | <a href="/24/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>학부를 들어와서 선배들이나 교수님들에게 들었던 많은 잔소리가 있지만 그 중에서 가장 이해가 안되던 잔소리는 &#8216;수학공부 열심히 해라&#8217; 였다. 학부 입학부터 지겹게 듣던 얘기지만 그 당시 나는 &#8216;아니 나는 전자공학을 공부할건데 도대체 수학이랑 무슨 상관이지?&#8217; 라는 생각을 가지고 있었다. 학부 4년 동안 전공 공부를 해봐도 내 전공은 수학과 전혀 상관이 없어보였다. 그러다가 학부 5학년이 되어 내 진로가 컴퓨터 쪽으로 바뀌게 되면서 그때부터 다시 그 잔소리가 나를 따라오기 시작했다. &#8216;프로그래밍을 잘하려면 수학을 잘 해야해&#8217; 음.. 도대체 프로그래밍이랑 수학은 또 무슨 관계란 말인가. 그리고 이제 학부의 마지막을 바라보고 석사에 진학하기 직전인 지금 돌이켜 생각해보니 역시 학부 떄는 수학 공부를 열심히 해야한다.</p>
-
-
-<p>수학을 잘 해야하는 이유는 사실 굉장히 단순하다. 대부분의 engineering 문제를 수학으로 접근하면 접근 자체가 쉬워지거나, 혹은 확신할 수 없었던 문제를 확신할 수 있다. 예를 하나 들어보자. 어느 멀리 떨어진 지점과 디지털 신호로 통신을 해야하는 상황이다. 그런데 통신망에 어느 정도인지는 모르지만 노이즈가 존재해서 가끔씩 데이터가 제대로 도달할 수 없는 상황이라고 해보자. 만약 데이터가 제대로 도달하지 않았다면? 그렇다면 보내는 쪽에서 데이터를 다시 보내야 할 것이다. 그런데 문제는, 이렇게 재전송을 통해서 내가 보내고 싶은 모든 정보를 안전하게 유한한 시간 안에 보낼 수 있는지에 대한 확신이 없다는 점이다. 실제로 1950년 이전에는 노이즈가 존재하는 통신망에서 정보를 안전하게 유한한 시간 내로 보낼 수 있다는 사실이 증명이 되지 않아 통신을 위한 디지털 신호처리 분야가 존재하지 않았다. 그런데 1949년 클로드 섀넌이 &#8216;화기 제어 시스템에서 데이터의 예측과 평활&#8217; 이라는 논문을 통해 방금 말한 상황에서 유한하게 잡음이 있는 통신망으로 디지털 신호를 보낼 수 있음을 수학적으로 증명해내었다. 만약 섀넌이 이를 수학적으로 증명하지 않았다면 신호 처리 분야는 존재하지 않았거나 매우 늦게 시작되었을 것이다. 이전에 내가 적었던 포스트 중에서 <a href="/14#Gradient_Descent">Gradient Descent Method에 대해 간략하게 다룬 글</a>이 있었다. 그 글에서도 언급했듯, 경우에 따라서는 Gradient Descent Method Algorithm자체가 converge하지 않을 수도 있다. 이를 알지 못한다면 아직 optima를 향해 계속 step이 진행 중인 것인지 아니면 정말 converge하지 않는 것인지 알 수 있는 방법이 없다. (Gradient descent method는 local한 method이기 때문에 전체 function의 모양 등을 알 수가 없다.) 따라서 만약 우리가 이 method가 converge하는 조건을 미리 알 수 있다면 쓸데없는 계산없이 필요할 때에만 해당 method를 적용하는 것이 가능할 것이다. (혹시 그 정답을 궁금해 하는 사람이 있을까봐 정답을 적어주자면 <a class="red tip" title="링크를 클릭하면 굉장히 수학적으로 이를 풀어놓은 설명을 볼 수 있다." href="http://blogs.princeton.edu/imabandit/2013/04/04/orf523-strong-convexity/">l-Lipschitz &amp; Strongly Convex function</a>이면 Gradient descent method가 반드시 Global optima로 수렴하게 된다.)</p>
-
-
-<p>그러나 사실 모든 연구자들이 문제를 수학적으로 접근하지는 않는다. 수학으로 문제를 해결하는 것은 이론을 연구하는 연구자들이 주로 하는 일이지 시스템을 디자인하거나 새로운 회로를 설계하는 등의 연구를 하는 경우에는 수학을 사용해 문제를 해결하지는 않는다. 나 역시 수학을 직접 사용하지 않는 사람 중 하나였고 (연구를 하는 것은 아니었지만) 수학이 나에게 필요한 이유를 이해하지 못했었다. 하지만 수학은 단순히 문제를 푸는 수단일 뿐 아니라 문제를 접근하고 해결하는 좋은 이념이 되기도 한다. 무슨 얘기이냐 하면, 수학 자체가 좋은 문제 해결 수단으로 쓰일 수 있기 때문에 수학 공부를 열심히 해야하는 것은 맞지만, 수학 문제를 직접적으로 푸는 것이 아니더라도, 수학적 문제 해결 방식을 많이 접하다보면 다른 문제를 해결할 때에도 도움이 된다는 의미이다. 수학으로 문제를 해결하게 되면 반드시 논리가 성립해야 다음 단계로 진행할 수 있다. z = x + y 라는 것이 확실해야 a + z = a + x + y 라고 할 수 있는 것이지, 갑자기 아무 조건도 없이 a + z = x가 될 수는 없다. 즉, 수학적으로 문제를 해결한다면 (과정이 옳다면) 논리에 빈틈이 없어지고 그 문제는 반박할 여지 없이 완벽한 해답을 가지게 되는 것이다. 꼭 위에서 언급했던 대로 수학으로 문제를 해결하지 않더라도 이런 문제 해결 방법을 많이 접하는 것 만으로도 자연스럽게 논리적으로 사고하는 훈련이 된다는 의미이다. 그리고 대부분의 연구자들은 논리적인 사고력이 매우 중요하다.</p>
-
-
-<p>마찬가지 이유에서 <a class="red tip" title=" 내가 생각했을 때 프로그래밍을 잘 하기 위해 필요한 것은 수학과 글쓰기 능력 두 가지인데, 이 중 글쓰기 능력에 대해서는 나중에 꼭 포스팅하도록 하겠다.">프로그래밍에서도 수학이 중요하다.</a> 사실 프로그래밍이라는 것이 별게 아니고 어떤 로직을 만들고 그 로직을 컴퓨터가 이해할 수 있는 언어로 옮겨적는 것일 뿐이다. 간단한 Hello World 프로그램부터 복잡한 OS까지 모든 프로그래밍에 가장 중요한 것은 흔히 말하는 &#8216;코딩 스킬&#8217; 이 아니라 &#8216;로직&#8217; 이다. 내가 무엇을 프로그래밍해야하는지 이해하고 코딩을 시작해야지, 내가 무엇을 만들어야하는지 이해도 못한 상태에서 코딩을 해서는 좋은 프로그램이 나올 수가 없다. 그리고 프로그래밍에서 매우 중요한 문제 중 하나가 &#8216;성능 (performance)&#8217;인데, 좋은 성능을 가지는 프로그램을 만들기 위해서는 반드시 좋은 설계가 필요하다. 같은 역할을 하는 프로그램을 만들더라도 어떻게 설계하느냐에 따라서 그 결과가 크게 달라진다. 흔히 알고리듬 수업에서 많이 배우는 Sorting에 대해서 잠깐 살펴보자. 우리가 가장 간단하게 생각할 수 있는 무작위로 주어진 숫자들을 순서대로 배열하는 방법은 맨 앞에서부터 하나하나 비교하면서 값을 swap하는 방법일 것이다. 이렇게 sorting algorithm을 설계하게 되면 최악의 경우 n개의 element가 있을 때 n^2번 연산을 수행해야만한다. 하지만 <a class="red tip" title="Quick sort">보다 좋은 알고리듬</a>을 사용하면 n^2를 n log n으로까지 줄일 수 있다. 즉, 같은 역할 (순서대로 정렬) 을 하는 두 개의 프로그램이 해당 역할을 전부 수행하기까지 걸리는 시간이 아주 크게 차이가 날 수 있는 것이다. 이는 프로그램 설계 뿐 아니라 데이터베이스 설계에도 마찬가지이고 더 좋은 설계를 통해 더 빠르고 더 좋은 프로그램을 만들 수 있게 된다. &#8216;과연 지금 설계가 가장 최선의 설계인가?&#8217;, &#8216;지금 설계를 개선시키기 위해서 필요한 것은 무엇이지?&#8217;, &#8216;지금 프로그램에서 문제가 되는 부분은 어디지?&#8217; 이런 질문을 할 수 있느냐 없느냐 그리고 그에 대한 답을 내릴 수 있느냐 없느냐가 프로그래머의 입장에서 더 좋은 프로그램을 할 수 있느냐 없느냐 혹은 얼마나 더 좋은 로직을 설계할 수 있느냐 없느냐의 차이가 되는 것이다. 그리고 바로 전 단락에서 설명했듯, 이런 능력을 훈련할 수 있는 가장 좋은 방법은 수학이다.</p>
-
-
-<p>수학을 통해 문제를 해결하는 것 뿐이니라 현상을 이해하고 더 나아가 현상을 예측하는 것 또한 할 수 있다. 어느 정도 눈치가 빠른 사람이라면 눈치챘겠지만, 수학을 공부해야하는 마지막 이유는 Modeling이다. 과연 우리는 이 세상을 얼마나 많이 이해하고 있을까? 아마 모르긴 몰라도 거의 대부분의 현상들을 완벽하게는 이해할 수 없을 것이다. 예를 들어서 지구에 있는 모든 사람들은 단 7다리만 건너도 서로를 알고 있다고 한다. 이를 어떻게 증명할 수 있을까? 이런 문제를 해결하기 위해서는 모델링이라는 것이 필요하다. 모델링을 간단하게 설명하면, 어떠한 현상을 이해하기 위해 그 문제를 간단하게 바꾸어 설명하는 것이다. 예를 들어서, 방금 전 문제를 간단한 수학적 모델링을 사용해 풀어보자. 만약 모든 사람들이 10명의 친구를 가지고 있다면, 내 친구의 친구는 모두 100명이고, 내 친구의 친구의 친구는 1,000명&#8230; 이런 식으로 친구가 점점 늘어나서 일곱 번째 다리를 건너면 총 10^7의 사람과 알게 되는 것이다. 이런식으로 설명하게 된다면 전 세계 인구가 70억명일 때 모든 사람이 친구를 26명만 가지고 있다면 일곱 다리만에 세상의 모든 사람들과 연결 될 수 있는 것이다. 물론 실제 세상에서는 이와 같은 컨셉은 적용되지 않는다. 사실 이 모델은 심각한 오류가 있다 모든 사람이 친구를 동일하게 n명 가지고 있다는 가정은 틀린 것이고 실제로는 어떤 사람들은 친구가 엄청 많고 어떤 사람은 친구가 엄청 적기 때문에 방금전과 같은 방법으로 문제를 접근하면 잘못된 결과를 얻게 된다. (실제로는 거듭제곱 분포를 그린다. 자세한 내용은 추후 적게 될 단기강좌-인터넷 속의 수학 요약 포스팅에서 다루도록 하겠다.) 수학적 모델링을 통해 어떤 현상을 잘 설명할 수 있다면, 그 모델에서 일어날 수 있는 또 다른 현상들을 예측하는 것이 가능하다. 예를 들어 사람들이 서로에게 어떻게 영향을 미치는지 알 수 있고 어떤 사람이 가장 영향력이 강한지 알 수 있다면 그 사람이 무언가를 행했을 때 다른 사람들에게 어떤 영향을 끼칠지 수학적 모델링 결과를 통해 예측할 수 있게 되는 것이다.</p>
-
-
-<p>수학공부하라고 한 마디만 하면 되는 것이, 참 길고 긴 잔소리가 되었다. 학부 5년 동안 수학 공부랑 담쌓고 지내다가 요즈음 들어 갑자기 수학 공부에 집중해야하는 상황이 되니 이제서야 내가 왜 수학을 필요로 하고 수학을 어떻게 사용해야하는지 눈에 보이기 시작했다. 하지만 수학은 어디까지나 기본적인 내용이고 내 머리에 깔려있는 내용이어야지, 수학을 주력으로 공부할 시간이 많이 없어서 요즈음 많이 고생을 하고 있다. 뒤늦게나마 깨닫고 더 늦기 전에 수학을 공부하고 있지만, 주변에 수학이 왜 필요한지 모르고 수학을 경시하거나, 수학을 공부하기는 하는데 도대체 이걸 왜 필요로 하는지 모르는 후배들이 참 많이 보인다. 그런 후배들은 이 포스트를 읽고 조금이나마 갈피를 잡을 수 있으면 한다. 만약 자신이 대학원에 진학해서 연구를 하겠다는 생각이 있거나, 논리적인 일을 필요로 하는 사람이라면 학부 동안 수학을 정말 열심히 공부해서 위에서 언급했던 능력들을 기르고 대학원을 진학해서 혹은 자신이 공부 하고 싶은 분야을 공부하면서 그 능력 들을 사용하는 것이 가장 좋은 길이 아닐까라는 생각을 해본다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/23/">좋은 논문 리뷰를 쓰자</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-25T20:12:00+09:00" pubdate data-updated="true">Oct 25<span>th</span>, 2013</time>
-        
-         | <a href="/23/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>어제 NDSL에서 paper review session이 있었다. 학생마다 논문 2개 정도를 골라서 실제 conference에서 review하듯 review를 하는 세션이었는데, 학생들의 review에 교수님께서 일일이 코멘트를 해주셨다. 많은 얘기가 있었지만, 그 중에서 많이 나왔던 얘기를 정리해보자면</p>
-
-
-<ul>
-    <li>논문의 내용을 지적할 때는 논리적으로 오류가 있는 경우를 지적하거나 혹은 그렇지 않은 것을 그렇다고 언급했거나 (없는 것을 있다고 말을 하거나) 하는 경우만이 유효하지, &#8216;내가 생각했을 때 이 결과는 부족하다&#8217; 등의 주관적인 내용이 review의 내용이 되면 안된다.</li>
-    <li>위와 같은 맥락인데, 내 주관으로 판단해 기준 미달이라 언급하면 안되고 부족하다면 부족한 이유나 뚜렷한 기준을 제시해야한다. 기준 없는 높다, 낮다는 절대 허용되지 않는다. 예를 들어 &#8216;이 실험 결과는 error rate가 너무 크다&#8217; 라고 하면 안된다. &#8216;이 error rate는 다른 xx실험에 비해 너무 높은 값인데, 이렇게 높은 error rate는 전혀 새롭지 않다.&#8217; 등으로 얘기해야한다.</li>
-    <li>&#8216;이 논문에서는 A case의 문제를 전혀 처리하지 않았다.&#8217; 가 아니라 &#8216;A case를 전혀 고려하지 않았는데 이렇게 했을 경우 B의 문제가 생길 수 있는데 이 논문은 그런 것에 대해 전혀 언급이 없어 문제가 될 수 있다.&#8217; 식으로 얘기해야한다.</li>
-    <li>논문이 너무 specific한 주제에 한정해 다룬 경우 (예를 들어 현실에서 거의 일어나지 않는 경우에 대한 논문일 경우) 이 논문이 general하게 적용할 수 없기 때문에 나쁘다는 식으로 얘기하는 것이 아니라 이 논문이 얘기하는 상황에 대해 이 논문이 얼마나 기여할 수 있는지에 대해 먼저 언급하고 정말 그 case가 realistic한지에 대해 review한다.</li>
-    <li>기존에 하지 않았다고 해서 새로운 것이 아니다. 새로운 아이디어인지 아닌지는 내가 논문을 읽고 이 논문에서 제시한 문제에 접근했을 때 이 논문을 통해서 새로운 것을 얼마나 배웠고 아이디어는 얼마나 좋으냐로 판단해야지, 기존에 없었다고 기여도가 있는 것이 아니다. 내가 밥을 먹을 때 젓가락이 아니라 이쑤시개를 사용해 밥을 먹었다고 그게 정말 도움이 되고 새로운 것이 아니다. 마찬가지 이유로 당연하고 널리 알려져 있는 내용을 길게 적는 페이퍼는 좋은 페이퍼가 아니다.</li>
-    <li>논문은 언제나 어떤 무언가의 이유를 해결하기 위한 논문인가? (WHAT) 논문에서 제시한 방법을 사용해 어떻게 해결했는가? (HOW) 실험 결과의 이유는 도대체 왜 도출된 것인가? (WHY) 이 세 개의 질문에 잘 대답해야한다. Review역시 그 세 개의 질문에서부터 시작해야한다.</li>
-    <li>Review는 그 review를 받았을 때 어떻게 고쳐야할지 감이 오는 review가 좋은 review지, writing이 좋지않다. 논문 아이디어가 좋지 못하다. 식의 너무 애매하고 러프한 review는 좋지 않다. 이런 경우 ~~문단의 ~~줄에서 ~~라는 단어가 무슨 말을 하는지 모르겠다. 논문 아이디어가 ~~의 상황에서 ~~한 것을 처리한 것 같은데 이 아이디어는 이미 ~~에 의해 해결이 되어있다 식으로 자세히 설명해야한다.</li>
-</ul>
-
-
-<p>이렇게 논문 리뷰에 대해 교수님이 해주신 말씀들을 정리하다보니 결국 논문이란 어떻게 써야하고, 어떤 논문이 좋은 논문인가에 대한 어느 정도의 outline이 나오게 되었다.</p>
-
-
-<p>그러니깐 결국 논문도 하나의 story이고 그 story를 독자에게 이해하는 목적인 하나의 &#8216;글&#8217;일 뿐이다. 그 전문성이 매우 높을 뿐 사실 우리가 일반적으로 논리적으로 글을 작성하는 것과 크게 다르지 않다는 것이다. 어떤 문제가 있었느냐 (WHAT) 어떻게 그 문제를 해결할 것이냐 (HOW) 해결을 하기 위해 제시한 방법론은 어떤 결과를 냈으며 그 결과의 이유는 무엇이냐 (WHY) 에 대해 논리적으로, 그리고 객관적인 정보를 통해 내 주장의 support해야하는 것이다. 그런 기본적인 것을 누락하고 논문을 작성하면 아이디어가 정말정말 좋아서 writing을 신경 쓸 필요가 없는 경우가 아니라면, (사실 요즘은 그런 경우라고 하더라도 writing이 너무 안 좋으면 reviewer가 읽다가 reject하게 된다) 무조건 writing에는 신경을 써야한다. 또한 남을 설득함에 있어 객관적으로 납득할 수 있는 결과를 제시해야지, 내 주관이 관여해서 &#8216;이 정도면 대충 충분하다&#8217; 식의 논문을 쓰면 안된다.</p>
-
-
-<p>또한 결국 논문은 남을 설득할 뿐 아니라 내 아이디어를 통해 무언가 기여를 해야하기 때문에 내 idea가 realistic해야한다. 내 idea가 realistic해야 그 아이디어를 발판 삼아서 더 나은 다른 연구도 나올 수 있는 것이지 내 논문이 실제 상황에 적용되지 못하거나 그런 것을 고려하지 않고 연구를 하고 논문을 쓰게 된다면 그 논문은, 아니 그 연구는 좋은 연구가 아닌 것이다.</p>
-
-
-<p>마지막으로 정말 Detail에 집중해야한다. Review는 내가 놓치고 지나간 Detail에서 Reject을 할 이유를 찾게 된다. 내가 한 실험이 정말 corner case를 모두 고려했는지, 이 실험 결과는 어째서 이렇게 나온 것인지 등에 대한 해석 역시 그렇기 때문에 매우 중요하며 Related work 등 일반적으로 크게 신경쓰지 않는 부분들도 detail에 신경써서 작성을 해야한다.</p>
-
-
-<p>역시 연구도 논문도 다 어려운 것 같다.</p>
-
-
-<p></p>
-</div>
-  
-  
-
-<hr>
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/22/">그래비티 - 스케일이 다른 재난 영화(스포)</a></h1>
-    
-    
-      <p class="meta text-right mB50">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-22T16:48:00+09:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2013</time>
-        
-         | <a href="/22/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>우주에서 사람이 과연 살아남을 수 있을까? 항상 공상과학영화를 보거나 혹은 소설을 읽다보면 드는 생각 중 하나였다. 이런 아이디어가 실제 영화로, 그것도 IMAX 3D로 구현되어 상당히 흥미로웠다. 아마 우리의 거의 대부분이 절대 죽을 때 까지 경험해 볼 수 없을 우주에서 일어나는 일들을 거의 완벽하게 시뮬레이션으로 구현한 영화라고 하여 더욱 기대가 갔다. 실제로 가서 관람해보니 <a title="문제가 있는 부분들은 실제 도입부에 문제가 되었던 위성 폭발이 영화에서 묘사되는 것 처럼 극적인 결과를 불러일으키지 않는다는 사실이고, 또 하나는 허블우주망원경의 위치와 ISS, 중국 우주정거장의 위치 등이 절대로 영화에서 묘사되는 만큼 가깝지가 않다는 점 정도.." class="red tip">일부 사실과 맞지 않는 문제</a>가 있는 부분이 있기는 하지만 대부분 무중력 상태에서 발생하는 상황을 매우 잘 고증해내어 놀랐다.우주에 대한 묘사도 아름다웠지만, 그 뿐 아니라 영화 전체적인 흐름이나 촬영기법 또한 정말 훌륭했다. 그 중에서 특히 인상 깊은 장면은 초반 도입부의 롱테이크 씬이었는데, 우주에서 바라본 지구의 모습을 롱테이크로 가져가면서 휴스턴과 교신하는 익스플로러 호와 허블 우주망원경이 점점 가까워지는 씬이었는데, 이 씬하나로 우주의 광활하고 고요한 장면을 극적으로 잘 묘사해낸 훌륭한 연출 방법이었다. 그 소름끼칠 정도의 적막함. 그리고 그 엄청나게 큰 우주에서 인간은 얼마나 작은 존재인지 도입부의 롱테이크 씬을 통해서 다시 한번 상기하게 되었다. 그리고 또 인상 깊었던 촬영 기법 중 하나는 주인공이 바라보는 시선과 주인공을 바라보는 시선을 자연스럽게 교차하며 보여주는 장면이었는데, 닥터 스톰이 패닉에 빠져있을 때 그 암울하고 당황스러운 상황을 관객들도 공유할 수 있도록 하는 정말 좋은 연출이었다고 생각한다.</p>
-
-
-<p>위에서 극찬한 우주에 대한 묘사나 촬영 기법 등의 기술과는 다르게 시놉시스는 매우 간단해서 허블 우주 망원경을 고치러 올라간 특수임무팀이 조난당해 지구로 목숨을 걸고 돌아가는 것이 전체 이야기 흐름의 전부이다. 그러나 실제 이야기가 흘러가는 과정은 긴박하기 그지없는데, 특히 첫 번째 충돌에서 방방거리면서 좋아하던 우주 비행사가 바로 파편에 맞아 즉사했을 뿐 아니라 익스플로러호도 파편에 충돌하면서 내부 승무원들이 전부 몰살당하는 장면은 비극적이고 소름끼치는 장면이었다. 그리고 화재와 두 번째 충돌 인해 ISS가 완전히 박살이 나는 장면은 이 영화의 하이라이트라고 할 수 있을 것 같은데 정말 처참하게 부서지고 또 너무나 적막하게 부서진다. 당연히 진공 상태인 우주에서는 소리를 전달할 매개체가 존재하지 않으므로 눈 앞에서 어마어마하게 큰 폭발이 일어나더라도 내 소유즈 안에서 나오는 소리만 들리고 폭발로 인해 발생하는 소음은 전혀 들리지 않고 소름끼칠 정도로 고요하고 적막한 것이다. 그 이외에도 긴박감을 극대화시킨 장면을 하나만 더 꼽자면 중국 우주 정거장이 대기권으로 추락하면서 불타 없어지는 장면인데, 이 장면 역시 매우 극적이었다.</p>
-
-
-<p>우리가 생각할 수 있는 외로움은 우주에서 조난 당한 것에 비해면 감히 견줄 수 없을 것이다. 내가 살 수 있는 가망이 전혀 없다는 것을 알고 있고 당연히 희망조차 존재하지 않는다. 죽고나서도 아무도 나의 위치를 알 수 없고 내 유해조차 수습할 수 없는 상황인 것이다. 생각만 해도 소름끼치게 무섭다. 그런데 <a class="red tip" title="배우: 조지 클루니">맷 코왈스키</a>는 그런 상황에서 냉철하게 자신을 버리고 <a class="red tip" title="배우: 산드라 블록">스톤 라이언</a>을 살린다. 물론 군인이고 이런 극단적인 돌발상황에 익숙하고 잘 훈련받았겠지만 그거랑 진짜 내가 죽는 것은 다른데 그렇게 할 수 있다는 것이 너무 충격적이었다. 물론 영화를 더 극적으로 만들기 위한 연출에 불과하지만.. 심지어 맷이 로프를 끊고 멀리 날아갈 때도 우주 유영 기록을 깰 수 있을 것 같다느니 겐지스 강 너머로 뜨는 해가 아름답다는 소리나 하고 있으니 자신의 상황과 얼마나 대조되는 행동인가. 심지어 자신이 죽어가는 그 와중에도 ISS에 들어갈 수 있도록 끝까지 독려하고 무선으로 지시하여 닥터가 ISS에 들어갈 수 있게 만들었으니 닥터 스톤이 살아남을 수 있었던 가장 큰 원동력이었던 셈이다. 그래서 중간에 갑자기 소유즈 내부로 맷이 도어를 오픈하고 들어왔을 때 당연히 이게 말이 안되는 상황이고 아닐 것이라는 생각이 들었지만 순간 진심으로 맷이 진짜 살아돌아온 것이기를 빌었다. 현실은 아 시밤 꿈이었지만.. 그래도 그 덕분에 닥터 스톤이 각성해서 살아날 수 있었고 허무하게 자신의 목숨을 내던지는 것이 아니라 끝내 탈출에 성공하고 지구로 돌아오지 않았는가.</p>
-
-
-<p>처음에 우주유영을 하는 장면에서 맷이 닥터 스톤에게 물어본다. 우주에서 뭐가 제일 좋냐고. 스톤은 딱 한 단어로 대답한다. &#8216;Silence&#8217; 하지만 조난당하고 모든 교신이 끊어지고 정말 우주를 증오한다고 말하는 모습을 보면 결국 자신이 우주에서 가장 좋았던 것이 자신을 가장 무섭고 공포에 처하게 했다는 사실이 아이러니 하다. 심지어 이 쥐 죽은 듯한 침묵은 영화의 가장 극적인 장면에서도 계속되는데, 잘 들어보면 심장소리를 제외하고는 아무런 소리도 들리지 않는다. ISS가 박살이 나고 우주 쓰레기가 주인공을 덮쳐도 쓸데없는 효과음은 없다. 이 영화의 가장 뛰어난 효과음은 바로 고요였다. 그래서인지 중간에 소유즈에서 지구와 통신이 되었을 때 개 짖는 소리와 아이 소리에 닥터가 그렇게 반응하고 끝내 울음을 터트리게 되었을 것이다. 또 재미있게도 닥터 스톤에게 다가온 맷의 환영이 말한 우주의 아름다움은, 마찬가지로 고요였다. 우주선의 모든 전원을 끄고 가만히 눈을 감고 있으면 세상과 완전히 분리되어 있는 그 기분. 아무도 나를 상처주지 않고 나도 남들에 의해 상처받지 않는 완벽한 상황. 이 영화에는 항상 그 Silence가 다양한 관점에서 계속 해석이 된다. 정말 고요함, 혹은 적막함 이상의 단어가 있으면 좋겠는데 불행히도 내 짧은 어휘실력으로는 이를 설명할 수 없다는 것이 안타깝다.</p>
-
-
-<p>이 영화는 더욱 더 극적인 효과를 위한 적절하고 완벽하다고 할 수 있는 촬영 기법과 연출을 선보였다. 그 뿐아니라 씬도 아주 훌륭하고, 비록 간단한 시놉시스임에도 불구하고 말로는 설명할 수 없는 긴박함으로 끝까지 긴장을 풀 수가 없다. 이 영화를 통해 바라본 우주는 너무나도 아름답지만 그 아름다움과는 대조적으로 너무 소름끼치게 무서웠다.</p>
-
-</div>
-  
-  
-
-<hr>
-    </article>
-  
+  <p class="mB40">subscribe via <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></p>
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/7/">&larr; Older</a>
-    
-    <a href="/archives">Blog Archives</a>
-    
-    <a class="next" href="/blog/page/5/">Newer &rarr;</a>
+    <a href="/archives">&rarr;&nbsp;See More Posts</a>
     
   </div>
 </div>
-<!--
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/92/">고흐의 그림을 따라그리는 Neural Network, a Neural Algorithm of Artistic Style (2015)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/54/">The Basic Principles in Deep Neural Networks</a>
-      </li>
-    
-      <li class="post">
-        <a href="/87/">Kaggle Competition - Poker Rule Induction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/76/">Machine Learning 스터디 (20) Reinforcement Learning</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'SanghyukChun',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
 
 
 
 
-
-  
-</aside>
-//&#8211;>
     </div>
   </div>
   <footer role="contentinfo"><p>
