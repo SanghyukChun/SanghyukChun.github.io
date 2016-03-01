@@ -152,7 +152,7 @@ $(function() {
 </ul>
 
 
-<p>위에서 기술한 세 가지 요소들로부터 Machine Learning problem을 다음과 같이 정의할 수 있다. &#8216;Experience \(E\)를 사용하여 (Learning하여) task \(T\)의 performance \(P\)가 개선이 되도록 하는 program (Algorithm)&#8217;. 다시 말해서 머신러닝 문제는 어떤 task \(T\)를 풀기 위한 알고리즘을 개발하는 분야인데 이 알고리즘의 performance measure가 &#8216;기계&#8217; 혹은 Compute program이 &#8216;Learning&#8217;할 수 있는 Experiment \(E\)를 사용해 개선될 수 있는 알고리즘을 개발하는 문제인 것이다. 스팸필터 문제로 돌아가보자. 스팸필터 문제에서 해결하고자 하는 Task는 새로운 메일을 받았을 때 해당 메일이 스팸메일인지 아니면 그렇지 않은지 판별하는 것이다. 따라서 algorithm의 performance measure \(P\)는 얼마나 정확하게 스팸을 골라냈는지 accuracy를 측정하면 간단하게 구할 수 있다. 또한 Experiment \(E\)는 예전에 받았던 이메일 들이 될 것이다. 또한 블랙리스트 등은 데이터가 많다고 해서 그 성능이 개선되는 것이 아니기 때문에 머신러닝이라고 할 수 없다. 우리가 하고 싶은 것은, 스팸인지 아닌지 판별하기 위해 예전 이메일들로 스팸 필터를 &#8216;학습&#8217; 시켜서 스팸 필터의 성능을 향상시키는 것이다.</p>
+<p>위에서 기술한 세 가지 요소들로부터 Machine Learning problem을 다음과 같이 정의할 수 있다. &#8216;Experience \(E\)를 사용하여 (Learning하여) task \(T\)의 performance \(P\)가 개선이 되도록 하는 program (Algorithm)&#8217;. 다시 말해서 머신러닝 문제는 어떤 task \(T\)를 풀기 위한 알고리즘을 개발하는 분야인데 이 알고리즘의 performance measure가 &#8216;기계&#8217; 혹은 Compute program이 &#8216;Learning&#8217;할 수 있는 Experience \(E\)를 사용해 개선될 수 있는 알고리즘을 개발하는 문제인 것이다. 스팸필터 문제로 돌아가보자. 스팸필터 문제에서 해결하고자 하는 Task는 새로운 메일을 받았을 때 해당 메일이 스팸메일인지 아니면 그렇지 않은지 판별하는 것이다. 따라서 algorithm의 performance measure \(P\)는 얼마나 정확하게 스팸을 골라냈는지 accuracy를 측정하면 간단하게 구할 수 있다. 또한 Experiment \(E\)는 예전에 받았던 이메일 들이 될 것이다. 또한 블랙리스트 등은 데이터가 많다고 해서 그 성능이 개선되는 것이 아니기 때문에 머신러닝이라고 할 수 없다. 우리가 하고 싶은 것은, 스팸인지 아닌지 판별하기 위해 예전 이메일들로 스팸 필터를 &#8216;학습&#8217; 시켜서 스팸 필터의 성능을 향상시키는 것이다.</p>
 
 
 <p>Machine Learnig이 하는 일은 주어진 <a class="red tip" title="스팸필터일 경우: 과거 이메일">&#8216;데이터&#8217;</a> \(X = (x_1, x_2, x_3, \ldots, x_n)\)와 각 데이터에 대응하는 실제 <a class="red tip" title="스팸필터일 경우: 각 이메일이 스팸인지 아닌지 알려주는 binary variable">&#8216;현상&#8217;</a> \(Y = (y_1, y_2, \ldots, y_n) \)에 대한 <a class="red tip" title="스팸필터일 경우: 어떤 이메일이 스팸인지 아닌지 판별하는 것">&#8216;관계&#8217;</a> function \(f\)를 찾는 과정과 같다. 정확한 함수 \(f\)를 찾기 위해 Machine Learnig 알고리즘들은 데이터에 대한 가정을 하고, 그 가정에 따라 주어진 데이터를 &#8216;최대한 잘 설명할 수 있는&#8217;, 함수 \(f&#8217;\)을 찾는다. 이때 이런 \(f&#8217;\)을 Hypothesis라고 한다.</p>
@@ -246,9 +246,9 @@ $(function() {
 <li><a href="/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
+<li><a href="/73">Recommendation System (Matrix Completion)</a></li>
 <li><a href="/74">Neural Network Introduction</a></li>
-<li><a href="/75">Deep Learning</a></li>
+<li><a href="/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
 <li><a href="/76">Reinforcement Learning</a></li>
 </ul>
 
@@ -364,6 +364,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/73/">Machine Learning 스터디 (17) Recommendation System (Matrix Completion)</a>
+      </li>
+    
+      <li class="post">
         <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
       </li>
     
@@ -377,10 +381,6 @@ $(function() {
     
       <li class="post">
         <a href="/87/">Kaggle Competition - Poker Rule Induction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/76/">Machine Learning 스터디 (20) Reinforcement Learning</a>
       </li>
     
   </ul>
@@ -426,7 +426,7 @@ $(function() {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Sanghyuk Chun -
+  Copyright &copy; 2016 - Sanghyuk Chun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

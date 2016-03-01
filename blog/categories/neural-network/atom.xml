@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neural-Network | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/neural-network/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2015-10-31T21:10:12+09:00</updated>
+  <updated>2016-03-01T17:58:00+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -1046,7 +1046,7 @@
 <p>먼저 convolution layer에 대해 설명해보자. Convolution layer를 설명하기 전에 먼저 convolution operation에 대해 알아보자. Convolution이란 signal processing 분야에서 아주 많이 사용하는 operation으로, 다음과 같이 표현된다.</p>
 
 
-<p>\[s(t) = (x * w)(t) = \int x(a)w(t-1) da.\]</p>
+<p>\[s(t) = (x * w)(t) = \int x(a)w(t-a) da.\]</p>
 
 
 <p>예를 들어 이 operation은 주어진 데이터 \(x\)에 filter \(w\)를 사용해 데이터를 처리할 때 사용된다. 이 operation을 적용한 간단한 예를 보자. (<a href="http://www.sfu.ca/~truax/conv.html">출처</a>)</p>
@@ -1212,7 +1212,7 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li>Recommendation System (Matrix Completion, Collaborative Filtering)</li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
 <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
