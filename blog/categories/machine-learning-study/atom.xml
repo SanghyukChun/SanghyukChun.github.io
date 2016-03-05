@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning-Study | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-01T17:58:00+09:00</updated>
+  <updated>2016-03-06T01:30:26+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,273 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (17-1) Recommendation System with Implicit Feedback]]></title>
+    <link href="http://SanghyukChun.github.io/95/"/>
+    <updated>2016-03-06T01:30:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/95</id>
+    <content type="html"><![CDATA[<h5>들어가며</h5>
+
+
+<p>이전 글<a href="http://SanghyukChun.github.io/73">[1]</a>에서 다룬 recommendation system은 사용자가 점수를 정확하게 매긴 경우에 대해, 즉 explicit feedback에 대해서만 문제를 푸는 방식이다. 그러나 실제로는 사용자가 점수를 직접 매기는 대신에 단순히 클릭했거나, 조회, 구매한 간접적인 정보, 즉 implicit feedback에만 의존하게 되는 경우도 빈번하게 발생하게 된다. 이 글에서는 그런 implicit feedback만 존재하는 상황에서 어떻게 matrix completion 문제를 디자인하고 해결하는지에 대해 총 세 개의 논문을 들어 설명할 것이다.</p>
+
+
+<p>이 글의 맨 앞은 implicit feedback이 정확히 무엇이고, 어떤 상황의 문제들이 있는지에 대해 설명할 것이다. 그리고 총 세 개의 논문에서 어떤 방법으로 문제를 접근하는가 설명하도록 할 것이다. 소개할 논문은 <a href="http://yifanhu.net/PUB/cf.pdf">Collaborative Filtering for Implicit Feedback Datasets [2]</a>, <a href="http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf">Logistic Matrix Factorization for Implicit Feedback Data [3]</a>, <a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf">Bayesian Personalized Ranking for Non-Uniformly Sampled Items [4]</a> 총 세가지이다.</p>
+
+
+
+
+<h5>Explicit Feedback and Implicit Feedback</h5>
+
+
+<p>본격적으로 논문들이 제안한 방법론을 살펴보기 전에, explicit feedback과 implicit feedback의 차이점에 대해 논해보도록 하겠다. 먼저 explicit feedback은 사용자가 정확하게 본인이 얼마나 이 item에 호감이 있는지를 수치로 feedback을 주는 것이다. 예를 들어서 Netflix problem의 별점 데이터는 정확하게 1점부터 5점 사이의 well-define된 범위를 가진다. 그러나 실제로는 사용자의 item에 대한 정확한 호감도를 요구하는 것이 어려울 때가 있다. 아마존의 상품 추천을 예로 들어보자. 아마존이 가질 수 있는 데이터는 사용자가 어떤 상품들을 조회하였는지와, 어떤 상품들을 구매하였는지 정도의 정보 밖에 가질 수 없다. 이 경우 사용자가 살펴본 물건들이 사용자가 정말 매력있게 느껴서 살펴본 것인지, 만약 그렇다면 얼마만큼의 호감도가 있는지 판별하는 것이 매우 어려울 것이다. 이런 종류의 데이터를 사용자가 직접적인 점수를 주는 대신 간접적인 정보만을 제공한다고 하여 implicit feedback이라 부른다. 이외에도 sound cloud나 youTube 등에서 사용자가 재생한 재생목록이나 반복하여 청취 혹은 시청한 횟수 등의 데이터도 마찬가지로 implicit feedback의 대표적인 예가 될 수 있다.</p>
+
+
+<p>Implicit feedback에서 관측 값은 click이나 재생 횟수 (0 혹은 0보다 큰 정수) 일 수도 있고, 음악 등의 item을 재생한 총 시간 (0 이상의 실수) 일 수도 있다. 한 가지 주의할 점은, explicit feedback처럼 사용자가 구체적으로 item에 대한 preference를 제공하지 않기 떄문에 사용자가 선호하지 않아서 선택하지 않은 item과 아직 관측하지 않은, 그러나 잠재적으로 흥미가 있는 item 모두 값이 0일 것이라는 점이다. 보통 사용자들이 item을 굉장히 조금만 click하거나 (뉴스) 사용하거나 (음악, 동영상) 구매하기 때문에 (쇼핑) 실제로는 matrix의 거의 대부분이 비어있고 아주 일부분의 데이터만 관측되기 때문에, negative observation이 positive observation의 수를 압도한게 되고, 때문에 이런 점을 고려하지 않고 모델을 설계하게 되면 아주 일부분의 positive 데이터와 거의 대부분의 negative observation (값이 0인 observation)들에의해 model이 overfitting된다. 또한, implicit feedback은 굉장히 노이즈가 많기 때문에 주어진 데이터를 얼마나 믿을 수 있을지 알 수 없다는 것이다. 예를 들어서 사용자가 물건을 하나 구매하였더라도, 이 물건에 대해 반드시 긍정적으로 생각할 것이라 기대할 수는 없을 것이다. 가끔은 구매한 물건이 아주 불만족스럽고 다시는 비슷한 물건을 구매하고 싶지 않을 수도 있지 않은가? 이런 두 가지 이슈 (negative observation, confidence)는 recommendation model이 implicit feedback을 처리하기 위해 반드시 고려되어야 할 이슈가 된다.</p>
+
+
+
+
+<h5>Recall: Matrix Factorization with Explicit Feedback</h5>
+
+
+<p>이전 글 <a href="http://SanghyukChun.github.io/73">[1]</a>에서 다뤘던 objective function은 다음과 같다.</p>
+
+
+<p>\[\min_{X,Y} \sum_{u,i \in \kappa} (r_{ui} - x_u^\top y_i)^2 + \lambda ( \| x_u \|_2^2 + \| y_i \|_2^2 ) .\]</p>
+
+
+<p>이전 글에서는 x,y 대신 p,q noataion을 사용했으나 이 글에서는 전부 x, y notation으로 통일하도록 하겠다. 이 objective에 대해서는 이전 글을 참고하면서 읽으면 좋을 것 같다. 원래는 bias term까지 포함해야하지만, 이 글에서는 편의상 bias term은 생략하도록 하겠다. 이 문제는 SGD (Stochastic Gradient Descent), ALS (Alternating Least Square) 등의 solver를 사용해 풀 수 있으며 이 글에서는 자세한 설명을 생략하도록 하겠다.</p>
+
+
+
+
+<h5><a href="http://yifanhu.net/PUB/cf.pdf">Collaborative Filtering for Implicit Feedback Datasets [2]</a></h5>
+
+
+<p>Implicit feedback을 처리하는 가장 기본적인 접근법을 소개해보자. 이 논문은 user u가 item i를 선호하는지 하지 않는지 여부를 가르키는 preference vector \(p_{ui}\)를 정의한다. \(p_{ui}\)의 값은 \(sign(r_{ui})\)으로 정의할 수 있다. sign 함수는 input 값의 'sign'을 return하는 함수로, 즉 input이 negative value면 -1, positive value면 1을 return한다. 따라서 perference의 값은 rating r이 0보다 크다면 1이고, r이 0이라면 p도 0이 되는 것이다.</p>
+
+
+<p>앞서 설명한 것 처럼, preference vector의 값을 항상 신뢰할 수 있는 것은 아니다. 때문에, 이 논문에서는 confience level \(c_{ui}\)라는 것을 정의하게 된다. 우리가 한 가지 가정할 수 있는 것은 만약 \(r_{ui}\)의 값이 크다면, 예를 들어 한 사용자가 한 항목을 엄청 많이 재구매했다거나 한다면, u는 i를 아주 높은 확률로 prefer한다는 사실을 가정할 수 있다. 따라서 confidence level은 r에 대한 increasing function으로 정의하는 것이 타당하다고 할 수 있다. 이 논문에서는 confidence level \(c_{ui}\)를 다양한 방식으로 정의할 수 있다고 언급하고 있으며, 실제 실험에서는 가장 직관적이고 단순한 increasing function은 linear function을 사용한다. 따라서 이 논문에서는 다음과 같은 confidence를 사용한다.</p>
+
+
+<p>\[c_{ui} = 1 + \alpha r_{ui}.\]</p>
+
+
+<p>혹은 \(c_{ui} = 1 + \alpha \log (1 + r_{ui}/ \varepsilon)\) 등의 confidence도 대안으로 제안하기는 하지만, 기본적으로 위에서 설명한 linear confidence를 사용하는 듯하다. 한 가지 짚고 넘어가야할 점은, \(c_{ui}\)는 실제 데이터 \(r_{ui}\)와 hyper-parameter \(\alpha\)에 의해서만 정의되므로 optimize해야 할 parameter가 아니라 한 번 confidence를 정의하기만하면 고정되는 constant라는 점이다. 따라서 confidence의 값을 어떻게 정의하더라도 전체 알고리즘의 로직을 바꾸거나 하지는 않는다.</p>
+
+
+<p>c를 정의하는 것에는 또 하나의 이점이 있다. Parameter \(\alpha\)가 positive observation과 negative observation의 중요도를 조절하는 역할을 하게 되면서, negative feedback에 대한 중요도를 조절할 수 있는 것이다. 예를 들어 \(\alpha\)의 크기가 작다면, positive와 negative observation의 confidence 차이가 큰 \(\alpha\)를 가질 때 보다 상대적으로 작을 것이라는 것을 기대할 수 있게 된다.</p>
+
+
+<p>이제 objective를 정의할 차례이다. Explicit feedback에서는 복원한 rating \(\hat r_{ui}\)와 관측한 데이터 \(r_{ui}\)의 RMSE를 바로 계산하였으나, 앞서 말한대로 이 값을 그대로 계산하기에는 confidence의 문제가 있다. 이 논문에서는 앞서 정의한 confidence를 고려하여 objective function은 다음과 같이 정의한다.</p>
+
+
+<p>\[\min_{X,Y} \sum_{u,i \in \kappa} c_{ui}(p_{ui} - x_u^\top y_i)^2 + \lambda ( \| x_u \|_2^2 + \| y_i \|_2^2 ) .\]</p>
+
+
+<p>맨 처음 objective와 달라진 점은, rating vector r (0 이상의 real value) 이 preference vector p (0 또는 1) 로 바뀌었다는 점과, 각각의 u,i pair에 대해 confidence \(c_{ui}\)가 곱해진다는 점이다. 이때, \(c_{ui}\)는 optimization parameter와는 상관없이 맨 처음 정해지고 변하지 않는 값이므로, 이렇게 바뀐 objective function을 풀기 위해서 이전 문제와 마찬가지로 살짝 변형된 SGD나 ALS 등을 사용할 수 있다. 논문에서는 조금 더 scalability를 고려한 방법론을 제안하는데, matrix product를 조금 더 효율적으로 하도록 matrix들을 decompose하여 조금 더 order가 낮은 연산을 하는 방법을 사용한다. 자세한 알고리즘은 논문을 참고하면 좋을 것 같다.</p>
+
+
+<p>정리하자면 이 논문은 rating vector r을 preference vector p로 변환하고, confidence level c를 정의한 후, p와 c를 사용해 RMSE objective function을 optimize하는 work인 것이다. 그리고 앞서 설명했던 두 가지 문제는 confidence level c를 정의하는 방법에 의해 해결할 수 있다.</p>
+
+
+
+
+<h5><a href="http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf">Logistic Matrix Factorization for Implicit Feedback Data [3]</a></h5>
+
+
+<p>앞선 논문 <a href="http://yifanhu.net/PUB/cf.pdf">[2]</a>에서는 RMSE를 minimize하는 objective를 설계하였지만, RMSE가 아닌 다른 형태의 objective를 optimize하는 것도 가능하다. 앞선 논문에서 RMSE를 minimize함으로써 얻을 수 있는 효과는 관측한 preference \(p_{ui}\)와 복원한 preference \(\hat p_{ui}\)가 서로 (RMSE의 관점에서) 최대한 비슷한 값을 가지도록 optimization이 된다는 것이다. 이 논문은 perference의 RMSE를 minimize하는 문제 대신, 관측 값 \(r\)과 optimization parameter \(\Theta = (x, y, b)\) 등의 posteriori를 maximization하는 방식을 취한다. 참고로 이 논문은 Spotify에서 발표한 논문으로, 실제 음악 추천에서 응용하고 있는 듯 하다.</p>
+
+
+<p>계속 강조하듯, 여기에서 실제 유저가 선호하는 것과 유저의 implicit feedback 결과는 다를 수 있다. 그렇기 때문에 이 논문은 u가 i를 좋아할 확률을 logistic function으로 확률적으로 정의한 후, 관측한 데이터로부터 posteriori를 maximize하는 방향으로 학습을 하게 된다. 그러기위해 이 논문은 \(\ell_{ui}\)이라는 새로운 notation을 introduce하고 이를 사용자 u가 item i를 선호하는 'event'로 정의한다. 어렵게 설명했지만, 그냥 'user u가 음악 i를 좋아한다 좋아하지 않는다'에 대한 0, 1 값이다. 이 논문은 주어진 \(\Theta (x, y, b)\)에 대해 \(\ell\)이 1이 될 확률 \(pr_{ui}\)를 다음과 같이 logistic form으로 정의한다.</p>
+
+
+<p>\[pr_{ui} := Pr[\ell_{ui} = 1 ~|~ \Theta] = \frac{\exp(x_u^\top y_i + b_u + b_i)}{1 + \exp(x_u^\top y_i + b_u + b_i)}. \]</p>
+
+
+<p>직관적으로 생각해보았을 때, 앞선 논문 [2]은 r의 값이 0보다 크기만 하면 항상 u가 i를 좋아한다고 생각하지만, 이 논문에서는 그것이 r의 값에 대한 확률로 나타난다는 점을 알 수 있다. Reconstructed rating \(\hat r\)을 \(\hat r_{ui} = x_u^\top y_i\)이라고 했을 때, 위의 함수는 \(\hat r_{ui}\)에 대한 증가함수이므로 (\(\hat r_{ui}\)의 값이 \(-\infty\)가 되면 함수값이 0이고, \(\hat r_{ui}\) 값이 \(\infty\)가 되면 함수값이 1이 된다), 위의 식은 rating 값이 더 크면 호감을 가질 확률이 더 높아지는 형태의 확률 함수가 된다.</p>
+
+
+<p>따라서 이 모델의 likelihood는 positive observation u,i의 set을 \(\mathcal S\)라 하였을 때 다음과 같이 쓸 수 있다.</p>
+
+
+<p>\[\mathcal L_{naive} (R ~|~ \Theta) = \prod_{u,i \in \mathcal S} pr_{ui} \prod_{u,i \notin \mathcal S} (1-pr_{ui})\]</p>
+
+
+<p>그러나 앞선 논문 [2]에서도 언급되었듯, negative feedback은 '싫어한다'와 다른 의미를 가지고 있기 때문에, 이 논문에서도 confidence라는 것을 정의하게 된다. [2]와의 차이점이라면 RMSE 관점이 아니라 앞에서 살펴본 likelihood function의 관점에서 정의를 한다는 점이다. 여기에서 \(c_{ui}\)는 \(\alpha r_{ui}\)로 사용하는데, 만약 hyper-parameter \(\alpha\)의 값이 크면 positive observation에 더 큰 비중을 두고, \(\alpha\)의 값이 작다면 negative observation에 더 큰 비중을 두는 식으로 다음과 같이 정의를 하게 된다.</p>
+
+
+<p>\[ \mathcal L (R ~|~ \Theta) = \prod_{u,i} Pr[ \ell_{ui} | \Theta]^{\alpha r_{ui}} (1 - Pr[ \ell_{ui} | \Theta]).\]</p>
+
+
+<p>위의 식에서 negative feedback에 대한 (즉, 만약 관측값 \(r_{ui}\)가 0이라면) likelihood 값은 \(\mathcal L (r_{ui} ~|~ \Theta ) = 1 - pr_{ui}\) 가 되므로 앞에서 계산한 naive한 likelihood function과 일치한다. 그러나 positive feedback에 대한 likelihood는 \(pr_{ui}^{\alpha r_{ui}} (1-pr_{ui}) \)가 되므로, \(\alpha\)의 값을 조절함에 따라 앞에서 계산한 값과 차이가 있다.</p>
+
+
+<p>개인적인 생각으로는 여기에서 저자가 증명을 잘못한 것이 아닐까 생각된다. 만약 Positive feedback의 likelihood에 weight를 주기위해 exponent c를 추가한다고 했을 때, likelihood 식은 다음과 같이 된다.</p>
+
+
+<p>\[ \mathcal L = \prod_{u,i \in \mathcal S} ( p_{ui}^{\ell_{ui}} (1-p_{ui})^{1-\ell_{ui}} )^{\alpha r_{ui}} \prod_{u,i \notin \mathcal S} p_{ui}^{\ell_{ui}} (1-p_{ui})^{1-\ell_{ui}}. \]</p>
+
+
+<p>이때, \(r_{ui} > 0\) 일 때 \(\ell = 1\)이고, 혹은 둘 다 0이라는 특성을 잘 사용하면 이 식은 다음과 같이 표현이 된다.</p>
+
+
+<p>\[\mathcal L = \prod_{u,i} p_{ui}^{\alpha r_{ui}} (1-p_{ui})^{1-\ell_{ui}}. \]</p>
+
+
+<p>즉, 만약 저자가 의도한대로 positive feedback의 likelihood에 exponent로 weight를 주고 싶었다면, positive feedback의 likelihood function에서 1-p 부분이 없어야한다는 점이다. 이 부분은 저자가 실수를 했거나 혹은 내가 이해를 잘못했을 가능성이 있다. 혹시 몰라서 논문을 좀 찾아봤는데, 약 한 달 전쯤 나온 <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004760">논문</a>에서 증명한 결과가 내가 증명한 결과와 같은걸 보면, 저자가 틀린게 맞는 것 같다.</p>
+
+
+<p>그리고 또 다른 문제는 \(pr_{ui}\)는 언제나 값이 0에서 1사이이기 때문에 \(c_{ui} = \alpha r_{ui}\)의 값이 크면 클수록 \(pr_{ui}\)의 값은 오히려 감소하게 된다는 것이다. 그래서 논문의 설명과는 반대로 \(\alpha\)의 값을 키우는 것이 오히려 positive observation의 weight를 낮추는 것이 아닌가하는 생각이 드는데, 논문을 여러 번 다시 읽어보고 계산을 해봐도 아직 아리송하다. 오히려 이렇게 하고 싶었다면, 최종 objective가 완전히 바뀌기는 하지만, 관측된 데이터 \(\mathcal S\)에 대해서 likelihood를 \( (1 + \alpha_{ui}) pr_{ui}\)와 같은 형태로 정의하는 편이 훨씬 좋지 않을까? 왜 base가 1보다 작은데, weight term을 exponent으로 올렸는지 이해가 되질 않는다. 이 부분은 혹시 나중에 이해가 완전히 되면 내용을 추가하도록 하겠다.</p>
+
+
+<p>다시 본문으로 돌아오자. Likelihood를 계산했으니, prior만 있다면 posteriori를 계산할 수 있게 된다. 이 논문은 \(x, y\)의 prior를 전부 0 mean Normal distribution으로 정의한다. 이렇게 정의할 경우, 나중에 log MAP 문제를 풀게 될 때, L2 regularization과 같은 형태의 식 \(\frac{\lambda}{2} (\| x \|^2 + \| y \|^2) \) 을 얻을 수 있다. 자세한 증명은 생략한다. Prior를 정했으니 이제 posteriori를 구해서 다음과 같이 log MAP 문제를 정의할 수 있다. (논문에서 증명한 결과로, 내가 증명한 결과와는 차이가 있다)</p>
+
+
+<p>\[ \log Pr[ \Theta | P ] = \sum_{u,i} c_{ui} \widehat r_{ui} - ( 1 + c_{ui} ) \log ( 1 + \exp \widehat r_{ui} ) - \frac{\lambda}{2} ( \| x_u\|^2 + \| y_i \|^2 ). \]</p>
+
+
+<p>이 문제 역시 다른 문제들 처럼 한 번에 update하기가 어렵기 떄문에 alternative하게 update를 하게 된다. 정확히는 coordinate gradient method를 사용한다 (maximize문제이므로 ascent가 될 것이다). 여기에서 한 가지 문제가 발생하는데, 앞에 붙어있는 summation term이 <b>모.든.</b> (u,i) pair에 대한 summation이기 때문에 한 번 gradient를 계산하는 비용이 어마어마해진다는 것이다. 정확히는 아이템의 개수 I와 유저의 숫자 U에 대해 linear한 비용이 필요하다. 보통 그 둘의 값은 몇 백만, 몇 천만이 될 정도로 크기 때문에 scalability 이슈가 굉장히 중요해진다. 이 논문은 그런 문제를 해결하기 위하여 (속도가 느리다는 문제) AdaGradient를 사용하라거나, 전체에 대해 summation을 하는 대신, 전체 positive pair (u,i)와 일부 negative pair (u,i)만 사용해서 문제를 해결하라고 언급되어있다.</p>
+
+
+<p>정리하자면 이 논문은 Matrix Factorization을 RMSE minimization 문제가 아닌 MAP 문제로 해결하려는 시도를 한 논문으로, MAP로 바꾸기 위하여 confidence가 포함된 likelihood function을 정의한다. (개인적으로는 이 likelihood function이 왜 이런 꼴을 하고 있는지 이해하지 못하였다) 알고리즘은 coordinate ascent를 사용하지만, 각각의 gradient 값이 아이템과 유저의 개수에 linear하기 때문에 실제 데이터에서 practical하지 못하다는 문제가 발생한다. 이런 문제를 해결하기 위하여 이 논문은 전체 matrix의 거의 대부분을 차지하는 negative observation을 전체 다 사용하는 대신, 일부만 sample하여 사용하는 방식을 제안하고 있다.</p>
+
+
+
+
+<h5><a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf">Bayesian Personalized Ranking for Non-Uniformly Sampled Items [4]</a></h5>
+
+
+<p>앞의 두 논문은 같은 문제의 objective function만 RMSE와 MAP로 서로 다르게 잡은 경우이지만, 이 논문은 앞의 방법들과 다소 다른 접근 방식을 취하고 있다. 이 논문은 먼저 선행 연구<a href="http://arxiv.org/abs/1205.2618">[5]</a>를 조금 발전 시킨 논문인데, 선행 연구에서는 partially observed pair-wise competition 문제를 푸는 Baysian Personalized Ranking (BPR) optimization과 그것을 푸는 알고리즘을 제안하고, 그것을 MF로 확장하고있다. 그리고 그 다음 논문 [4]에서는 원래 논문이 가지는 단점을 negative observation을 adaptive하게 sample하는 방식으로 개선하고 있다.</p>
+
+
+<p>먼저 핵심 notation들을 정의해보자. 관측된 (u,i) pair는 \(\mathcal S\)라는 set으로 정의된다. 여기에서 새로운 notation \(I_u^+\)와 \(U_i^+\) 2개가 introduce된다. \(I_u^+\)는 user u가 관측한 적 있는 item의 set이고, \(U_i^+\)는 item i를 관측한 적 있는 user u의 set이다. 그러면 이 set들을 통해 \(\mathcal D_S\)라는 triple을 다음과 같이 정의할 수 있다.</p>
+
+
+<p>\[D_S := {(u,i,j) ~|~ i \in I_u^+ \mbox{ and } j \notin I_u^+ }.\]</p>
+
+
+<p>즉, user u, user u가 관측한 item i와 관측하지 못한 item j 이렇게 셋의 triple인 것이다.</p>
+
+
+<p>이제 이 논문의 핵심아이디어인 pair-wise ranking에 대해 살펴보자. 이 논문은 먼저 각각의 user u에게 item i와 item j간의 pair-wise ranking이 존재한다고 가정한다. 이 논문에서는 user u가 item i를 j보다 높은 order를 가질 때 \(i &gt;_u j\)의 꼴로 표현한다. 이 pair-wise ranking은 (혹은 order는) totality, antisymmetry, transitivity를 만족하는 order로 정의된다. 자세한 수식은 논문에 있으니 생략한다.</p>
+
+
+<p>이 논문은 user u가 item i를 item j보다 더 높게 평가할 확률을 다음과 같이 가정하고 있다.</p>
+
+
+<p>\[Pr( i &gt;_u j | \Theta) = \sigma(\hat r_{uij} (\Theta)).\]</p>
+
+
+<p>여기에서 \(\hat r_{uij} := \hat r_{ui} - \hat r_{uj}\)로 정의되는 값이고, \(\sigma\)는 sigmoid function으로, \(\sigma(x) = \frac{1}{1+\exp(-x)}\)의 꼴로 정의된다. 각각의 user에 대해 pair-wise ranking에 대한 확률을 정의했고, 또한 실제 관측값도 있기 때문에, 우리는 ranking에 대한 likelihood를 정의할 수 있고, prior를 가정하게 되면 posteriori역시 계산할 수 있다. 먼저 likelihood \(\prod_u p(&gt;_u | \Theta)\)부터 계산해보자. (이전과 마찬가지로 user들은 전부 independent하다고 가정했기 때문에 곱으로 표현된다)</p>
+
+
+<p>\[\prod_u p(&gt;_u | \Theta) = \prod_{u,i,j} \prod_u p( i &gt;_u j | \Theta)^{I_{(u,i,j) \in \mathcal D_S}} (1 - p( i &gt;_u j | \Theta) )^{I_{(u,i,j) \notin \mathcal D_S}} \]</p>
+
+
+<p>\(I_x\)는 x가 true면 1이고 false면 0인 indicator function이다. 여기에서 order를 정의할 때 totality와 antisymmetry를 가정하였기 때문에, 위 식을 잘 건개하면 아래와 같은 간단한 식으로 표현하는 것이 가능하다고 한다.</p>
+
+
+<p>\[\prod_u p(&gt;_u | \Theta) = \prod_{(u,i,j) \in \mathcal D_S} p( i &gt;_u j | \Theta). \]</p>
+
+
+<p>[3]과 같이 prior를 zero mean normal distribution으로 정의하게 되면, log posteriori는 다음과 같이 표현된다.</p>
+
+
+<p>\[ \max \ln Pr(\Theta | &gt;_u) = \max \sum_{(u,i,j) \in \mathcal D_S} \ln \sigma(\hat x_{uij}) - \lambda \| \Theta \|^2. \]</p>
+
+
+<p>이 문제는 stochastic gradient descent로 푸는 것이 가능하다. 자세한 미분 값은 논문에 있으니 생략한다. 참고로 이 논문은 이 문제를 optimization했을 때 얻을 수 있는 solution이 AUC (area under the ROC curve, ROC curve는 <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">wiki</a> 참고)를 maximization하는 것과 비슷한 문제라는 것을 따로 증명해두었으니 관심이 있다면 한 번쯤 읽어보면 좋을 것 같다.</p>
+
+
+<p>[4]에서 제안한 BPR (baysian personalized ranking) problem을 풀기 위해서 SGD를 사용한다는 언급을 했는데, 문제가 하나 있다. 바로 triple \(\mathcal D_S\)의 개수가 너무 많아서 전부 uniform하게 뽑기에는 데이터가 너무너무 많다는 것이다. 그래서 [5]에서는 adapted sampling 방식을 제안하고 있다.</p>
+
+
+<p>\[ \max  \sum_{(u,i,j) \in \mathcal D_S} w_u w_i w_j \ln \sigma(\hat x_{uij}) - \lambda \| \Theta \|^2. \]</p>
+
+
+<p>이때 \(w_u = 1/| I_u^+ |\), \(w_i = 1\)로 정의가 된다. 즉, 관측한 아이템이 더 많은 유저는 적게 뽑고, 모든 positivie item은 uniform하게 뽑는다. 마지막으로 \(w_j = \frac{1}{|U||I|} \sum_{u} I_{j \in I_u^+}\)으로 취하게 되는데, 더 많이 사용자들이 관측한, 혹은 좋아한 데이터 위주로 sample을 뽑는 방식이다.</p>
+
+
+<p>정리해보면, BPR은 다른 논문들처럼 reconstructed error를 바로 measure하는 것이 아니라, pair-wise ranking을 정의하고, 복원된 rating \(\hat r_{ui}\)에 대해 user가 item i보다 j를 좋아할 확률을 sigmoid로 정의한다. 이 확률을 사용해 MAP문제를 정의하는데, 이 문제는 ROC curve의 넓이를 구하는 것과 비슷한 문제가 된다. 이때, sigmoid function을 step function으로 바꾸면 완전히 ROC curve의 넓이를 구하는 것과 같은 문제가 된다. Sigmoid가 step function의 가장 popular한 differentiable approximation 중 하나이기 때문에 sigmoid로 정의하게 되는 것이다. Algorithm은 SGD를 사용하는데, 데이터 셋이 user u가 관측한 item i와 관측하지 않은 item j의 triple이기 때문에 uniform sampling을 하게 되면 결과가 좋지 않을 수 있다. 때문에 adaptive하게 (u,i,j)에서 j 고를 때, popular한 j를 더 고르도록 sample을 하여 성능을 개선하고 있다.</p>
+
+
+
+
+<h5>정리</h5>
+
+
+<p>이 글에서는 Implicit feedback에 대해 recommendation을 어떻게 할 수 있을지 서로 다른 세 가지 접근방법을 소개했다. 첫 번째는 가장 기본적인 방법으로, confidence level \(c_{ui}\)를 정의하고, real value variable인 \(r_{ui}\)를 binary variable인 \(p_{ui}\)로 바꾼 다음 optimization을 푸는 방법에 대해 소개했다. 두 번째로는 RMSE를 optimization하는 대신, u가 i를 좋아할 확률을 모델링하고, 주어진 데이터에 대해 MAP를 푸는 방법에 대해 소개했다. 마지막으로는 각각의 user별로 item들끼리의 personalized pair-wise ranking을 정의하고, 역시 마찬가지로 u가 i보다 j를 좋아할 확률을 모델링하고 이것의 MAP를 구하는 방법에 대해 소개했다. 알고리즘은 SGD로 해결할 수 있지만, 조금 더 smart하게 item을 뽑는 adaptive sampling을 사용할 경우 성능이 더 올라간다고 한다.</p>
+
+
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2016년 3월 6일: 글 등록</li>
+</ul>
+
+
+<h5>References</h5>
+
+
+<ol class="reference">
+    <li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+    <li><a href="http://yifanhu.net/PUB/cf.pdf">Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets.", 2008</a></li>
+    <li><a href="http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf">Johnson, Christopher C. "Logistic matrix factorization for implicit feedback data.", 2014</a></li>
+    <li><a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf">Gantner, Zeno, et al. "Bayesian personalized ranking for non-uniformly sampled items.", 2012</a></li>
+    <li><a href="http://arxiv.org/abs/1205.2618">Rendle, Steffen, et al. "BPR: Bayesian personalized ranking from implicit feedback.", 2009</a></li>
+</ol>
+
+
+
+
+<hr>
+
+
+<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
+<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
+<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+<li>Regression and Logistic Regression</li>
+<li>PAC Learning &amp; Statistical Learning Theory</li>
+<li>Support Vector Machine</li>
+<li>Ensemble Learning (Random Forest, Ada Boost)</li>
+<li>Graphical Model</li>
+<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+<li>Hidden Markov Model</li>
+<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
+<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
+<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li>Multi-armed Bandit</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine learning 스터디 (17) Recommendation System (Matrix Completion)]]></title>
@@ -33,7 +300,7 @@
 <h5>Matrix Completion</h5>
 
 
-<p>그러면 이제 추천 문제를 보다 엄밀하게 정의해보도록 하자. 먼저 데이터에 대해 살펴보도록 하자. 이 문제에서는 사용자와 상품이라는 두 가지 요소들이 존재한다. 사용자 \(u\)가 아이템 \(i\)를 얼마나 좋아할 것인지 나타내는 값을 rating \(r_{ui}\)라 하자. 이때, 이 rating은 Netflix처럼 1에서 5 사이의 real value일수도 있으며, 아마존이나 페이스북처럼 클릭했는지 하지 않았는지에 대한 데이터일수도 있다. 앞선 경우는 사용자가 자신이 얼마나 이 아이템을 좋아하는지 '명시적으로' 나타냈기 때문에 explicit feedback이라 부르며, 후자의 경우는 사용자가 해당 상품을 좋아했는지 싫어했는지 표현을 직접적으로 하지 않으므로 'implicit feedback'이라고 부른다. 이에 대해서는 나중에 다른 글을 통해 더 자세히 다루도록 하겠다. 지금은 \(r_{ui}\)의 정확한 값을 알고 있고, 이 값이 전혀 noise가 없는 값이라고 가정하고 문제를 계속 설명하도록 하겠다. 이런 경우 우리가 가지고 있는 데이터는 \(r_{ui}\)들의 값이 될 것이고, 대략 아래와 같은 방식으로 matrix로 표현할 수 있을 것이다.</p>
+<p>그러면 이제 추천 문제를 보다 엄밀하게 정의해보도록 하자. 먼저 데이터에 대해 살펴보도록 하자. 이 문제에서는 사용자와 상품이라는 두 가지 요소들이 존재한다. 사용자 \(u\)가 아이템 \(i\)를 얼마나 좋아할 것인지 나타내는 값을 rating \(r_{ui}\)라 하자. 이때, 이 rating은 Netflix처럼 1에서 5 사이의 real value일수도 있으며, 아마존이나 페이스북처럼 클릭했는지 하지 않았는지에 대한 데이터일수도 있다. 앞선 경우는 사용자가 자신이 얼마나 이 아이템을 좋아하는지 '명시적으로' 나타냈기 때문에 explicit feedback이라 부르며, 후자의 경우는 사용자가 해당 상품을 좋아했는지 싫어했는지 표현을 직접적으로 하지 않으므로 'implicit feedback'이라고 부른다. 이에 대해서는 나중에 다른 글을 통해 더 자세히 다루도록 하겠다. (<a href="http://SanghyukChun.github.io/95">Implicit feedback에 대한 글</a>을 새로 추가하였다) 지금은 \(r_{ui}\)의 정확한 값을 알고 있고, 이 값이 전혀 noise가 없는 값이라고 가정하고 문제를 계속 설명하도록 하겠다. 이런 경우 우리가 가지고 있는 데이터는 \(r_{ui}\)들의 값이 될 것이고, 대략 아래와 같은 방식으로 matrix로 표현할 수 있을 것이다.</p>
 
 
 <p><a align="center" href="http://www.codecogs.com/eqnedit.php?latex=movie.&space;{\begin{matrix}&space;1&space;&&space;2&space;&&space;3&space;&&space;4&space;&&space;5&space;&6&space;&&space;7&space;&&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&&space;5&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;*&space;&&space;2&space;\\&space;*&space;&&space;3&space;&&space;5&space;&&space;1&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;3&space;\\&space;4&space;&&space;1&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;3&space;&&space;2&space;\\&space;5&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;2&space;&&space;3&space;&&space;*&space;&&space;*&space;\\&space;*&space;&&space;2&space;&&space;4&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;1&space;&&space;2&space;\\&space;5&space;&&space;*&space;&&space;*&space;&&space;5&space;&&space;4&space;&*&space;&&space;*&space;&&space;4&space;\\&space;1&space;&&space;*&space;&&space;5&space;&&space;2&space;&&space;3&space;&1&space;&&space;5&space;&&space;3&space;\\&space;*&space;&&space;3&space;&&space;2&space;&&space;1&space;&&space;4&space;&&space;*&space;&&space;*&space;&&space;*&space;\\&space;\end{bmatrix}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?movie.&space;{\begin{matrix}&space;1&space;&&space;2&space;&&space;3&space;&&space;4&space;&&space;5&space;&6&space;&&space;7&space;&&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&&space;5&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;*&space;&&space;2&space;\\&space;*&space;&&space;3&space;&&space;5&space;&&space;1&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;3&space;\\&space;4&space;&&space;1&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;3&space;&&space;2&space;\\&space;5&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;2&space;&&space;3&space;&&space;*&space;&&space;*&space;\\&space;*&space;&&space;2&space;&&space;4&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;1&space;&&space;2&space;\\&space;5&space;&&space;*&space;&&space;*&space;&&space;5&space;&&space;4&space;&*&space;&&space;*&space;&&space;4&space;\\&space;1&space;&&space;*&space;&&space;5&space;&&space;2&space;&&space;3&space;&1&space;&&space;5&space;&&space;3&space;\\&space;*&space;&&space;3&space;&&space;2&space;&&space;1&space;&&space;4&space;&&space;*&space;&&space;*&space;&&space;*&space;\\&space;\end{bmatrix}" title="movie. {\begin{matrix} 1 & 2 & 3 & 4 & 5 &6 & 7 & 8\end{matrix}} \\ \left\{\begin{matrix} user 1 \\ user 2 \\ user3 \\ user4 \\ user5 \\ user6 \\ user7 \\user8\, \end{matrix}\right. \begin{bmatrix} 3 & 5 & * & 4 & 1 &* & * & 2 \\ * & 3 & 5 & 1 & 2 & * & * & 3 \\ 4 & 1 & * & 4 & 1 &* & 3 & 2 \\ 5 & 2 & * & * & 2 & 3 & * & * \\ * & 2 & 4 & 2 & * & * & 1 & 2 \\ 5 & * & * & 5 & 4 &* & * & 4 \\ 1 & * & 5 & 2 & 3 &1 & 5 & 3 \\ * & 3 & 2 & 1 & 4 & * & * & * \\ \end{bmatrix}" /></a></p>
@@ -137,7 +404,7 @@
 <p>이 pair-wise optimization 문제는 non-convex 문제이지만, gradient descent method로 local optimum에 수렴하는 결과를 얻을 수 있으며 실제로 꽤 효율적으로 좋은 결과를 얻을 수 있다.</p>
 
 
-<p>또 다른 solver로는 Alternating Least Square (ALS) 라는 방법이 있다. 이 방법은 alternative하게 주어진 objective를 update하는 방법인데, 주어진 objective가 pairwise optimization으로 생각하면 non-convex이지만, p나 q 중 하나를 고정하고 나머지에 대해 optimization을 하게 되면 convex, 그것도 closed form으로 계산된다는 점을 이용한 방법이다. 따라서 이 방법을 사용해 예전에 설명했었던 k-means style의 알고리즘을 설계할 수 있는데, 이를 ALS라고 부르는 것이다. Gradient descent가 더 빠른 경우도 있지만, ALS를 사용하게 되면 각각의 element들이 다른 element에 independent하기 떄문에 분산처리가 간편하기 때문에 실제로는 ALS 방법도 많이 사용된다고 한다.</p>
+<p>또 다른 solver로는 Alternating Least Square (ALS) 라는 방법이 있다. 이 방법은 alternative하게 주어진 objective를 update하는 방법인데, 주어진 objective가 pairwise optimization으로 생각하면 non-convex이지만, p나 q 중 하나를 고정하고 나머지에 대해 optimization을 하게 되면 convex, 그것도 closed form으로 계산된다는 점을 이용한 방법이다. 따라서 이 방법을 사용해 예전에 설명했었던 k-means style의 알고리즘을 설계할 수 있는데, 이를 ALS라고 부르는 것이다. Gradient descent가 더 빠른 경우도 있지만, ALS를 사용하게 되면 각각의 element들이 다른 element에 independent하기 때문에 분산처리가 간편하기 때문에 실제로는 ALS 방법도 많이 사용된다고 한다.</p>
 
 
 <p>지금까지 설명한 방법은 그야말로 가장 기본이 되는 모델이고, 이 모델을 조금 더 확장해보도록 하자. 가장 간단하게 확장할 수 있는 방법은 bias term을 추가하는 것이다. 예를 들어서 어떤 user는 항상 모든 영화 평점을 비교적 '짜게' 주는 user가 있을 수 있고, 반대로 모든 영화에 점수를 후하게 주는 user도 있을 수 있다. 어떤 영화는 개봉 전부터 평단이나 기자들에게서 호평을 받았거나 유명 배우가 나와 기본 점수가 높을 수도 있고, 그 반대도 가능하다. 따라서 이런 현상들을 반영할 수 있는 bias term이 추가가 되는 것은 지극히 자연스럽다고 할 수 있다. user의 bias를 \(b_u\), item의 bias를 \(b_i\)라고 하면 (이 값들은 vector가 아니라 scalar value이다) user u의 item i에 대한 bias \(b_{ui}\)는 \(b_{ui} = \mu + b_u + b_i\)로 표현할 수 있을 것이다. 여기에서 \(\mu\)는 전체 모든 r_{ui}의 평균 값으로, bias라는 개념이 평균에서부터 얼마나 멀어지는 가에 대한 개념이므로 평균 값도 함께 고려하는 것이다. \(\mu\)는 데이터와 함께 주어지는 값이고, bias term들은 p,q처럼 optimization을 통해 찾아야하는 optimization parameter가 된다. 이를 사용하면 reconstructed rating \(\hat r_{ui}\)는 다음과 같이 표현된다.</p>
@@ -179,7 +446,7 @@
 <h5>정리</h5>
 
 
-<p>이 글에서는 recommendation 문제가 어떤 문제인지 설명하고, 보다 수학적으로 정의된 matrix completion 문제로 recommendation을 설명한다. 그 후 이 문제를 푸는 가장 popular한 방법인 matrix factorization에 대해서 다룬다. 해당 문제가 non-convex 문제이기 떄문에 convex relaxation을 통해 문제를 푸는 방법 (더 늦게 나온 방법이다), non-convex optimization을 바로 푸는 방법 (Netflix prize에서 실제 사용했던 방법) 두 가지를 소개하고 각각에 대해 간략하게 설명한다. 실제 recommendation은 matrix factorization 뿐 아니라 여러 다른 methodology들을 결합해서 문제를 풀게 되지만, 여전히 단일 model로 가장 좋은 performance를 보여주는 것은 matrix factorization을 기반으로 한 방법론들이기 떄문에 matrix factorization을 제대로 아는 것이 recommendation 문제를 풀기 위한 첫 걸음이라 할 수 있을 것이다.</p>
+<p>이 글에서는 recommendation 문제가 어떤 문제인지 설명하고, 보다 수학적으로 정의된 matrix completion 문제로 recommendation을 설명한다. 그 후 이 문제를 푸는 가장 popular한 방법인 matrix factorization에 대해서 다룬다. 해당 문제가 non-convex 문제이기 때문에 convex relaxation을 통해 문제를 푸는 방법 (더 늦게 나온 방법이다), non-convex optimization을 바로 푸는 방법 (Netflix prize에서 실제 사용했던 방법) 두 가지를 소개하고 각각에 대해 간략하게 설명한다. 실제 recommendation은 matrix factorization 뿐 아니라 여러 다른 methodology들을 결합해서 문제를 풀게 되지만, 여전히 단일 model로 가장 좋은 performance를 보여주는 것은 matrix factorization을 기반으로 한 방법론들이기 때문에 matrix factorization을 제대로 아는 것이 recommendation 문제를 풀기 위한 첫 걸음이라 할 수 있을 것이다.</p>
 
 
 
@@ -195,13 +462,13 @@
 <h5>References</h5>
 
 
-<ul>
-    <li><a href="http://SanghyukChun.github.io/30">[1] 인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2)</a></li>
-    <li><a href="http://SanghyukChun.github.io/31">[2] 인터넷 속의 수학 - How Does Netflix Recommend Movies? (2/2)</a></li>
-    <li><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">[3] Kennedy, Ryan. "Low-rank matrix completion.", 2013</a></li>
-    <li><a href="http://statweb.stanford.edu/~candes/papers/MatrixCompletion.pdf">[4] Candès, Emmanuel J., and Benjamin Recht. "Exact matrix completion via convex optimization.", 2009</a></li>
-    <li><a href="http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf">[5] Koren, Yehuda, Robert Bell, and Chris Volinsky. "Matrix factorization techniques for recommender systems.", 2009</a></li>
-</ul>
+<ol class="reference">
+    <li><a href="http://SanghyukChun.github.io/30">인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2)</a></li>
+    <li><a href="http://SanghyukChun.github.io/31">인터넷 속의 수학 - How Does Netflix Recommend Movies? (2/2)</a></li>
+    <li><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">Kennedy, Ryan. "Low-rank matrix completion.", 2013</a></li>
+    <li><a href="http://statweb.stanford.edu/~candes/papers/MatrixCompletion.pdf">Candès, Emmanuel J., and Benjamin Recht. "Exact matrix completion via convex optimization.", 2009</a></li>
+    <li><a href="http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf">Koren, Yehuda, Robert Bell, and Chris Volinsky. "Matrix factorization techniques for recommender systems.", 2009</a></li>
+</ol>
 
 
 
@@ -230,10 +497,20 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li>Multi-armed Bandit</li>
+</ul>
+</li>
 </ul>
 
 ]]></content>
@@ -1200,185 +1477,6 @@
 <li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
 <li>wiki (<a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks">링크</a>)</li>
 <li><a href="http://courses.cs.tau.ac.il/Caffe_workshop/Bootcamp/pdf_lectures/Lecture%203%20CNN%20-%20backpropagation.pdf">Caffe workshop &ndash; CNN backpropagation</a></li>
-</ul>
-
-
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
-
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
-<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (16) Dimensionality Reduction (PCA, LDA)]]></title>
-    <link href="http://SanghyukChun.github.io/72/"/>
-    <updated>2015-06-17T05:21:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/72</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
-<p>Machine Learning problem을 풀다보면, 종종 high dimensional 데이터를 다뤄야할 일이 생긴다. 그런데 dimension 높은 데이터를 다루다보면 여러 문제가 발생하는데, 높은 dimension으로 인해 생기는 대표적인 문제가 <a href="http://SanghyukChun.github.io/59#59-4-cd">예전 글</a>에서 다뤘던 Curse of dimensionality이다. 또한 많은 algorithm들에서 dimension이 complexity에 영향을 주는 경우가 많으므로 높은 dimension은 알고리즘의 성능에 악영향을 미치는 경우가 많다. 그렇기 때문에 많은 경우 데이터의 dimension이 높다면 다양한 방식의 dimenionality reduction 기술을 적용해 데이터의 차원을 낮추는 작업을 한다. 일반적으로 많이 사용하는 Dimensionality Reduction으로는 LDA와 PCA가 있으며, ICA, CCA 등의 방법도 종종 사용되며, 그 이외에도 RBM, Auto-encoder 등의 Neural network와 관련된 모델들도 존재한다. 이 글에서는 가장 많이 사용되는 방법들인 LDA와 PCA에 대해서만 다룰 것이다.</p>
-
-
-<h5>Recall: Curse of Dimensonality</h5>
-
-
-<p>Curse of Dimensionality는 데이터의 차원이 높아질수록 발생하는 여러 문제들을 통틀어 일컫는 말이다. 이런 문제가 발생하는 이유는 차원이 높아질수록 우리가 일반적으로 사용하는 Euclidean distance가 예상치 못한 방식으로 동작하기 때문이다. 예를 들어 d-차원 공간에서 임의의 점으로부터 거리가 1인 점들을 모아놓은 공간을 생각해봤을 때, d가 점점 커지면 커질수록 그 구의 대부분의 부피가 거의 surface에 가까운 엄청나게 얇은 shell에 존재한다는 것을 이미 예전 글에서 증명한바 있다. 다시 말해서 아주 높은 차원의 데이터는 우리가 원하지 않는 방향으로 움직일 가능성이 크다.</p>
-
-
-<h5>Feature Extraction</h5>
-
-
-<p>많은 상황에서 차원의 크기는 feature의 개수를 의미한다. 예를 들어 키, 몸무게, 나이, 성별이라는 네 가지 정보를 가지고 클러스터링을 한다고 생각해보자. 이 경우 데이터의 차원은 4이다. 그런데 아마도 이 네 가지 정보 이외에도 소득, 학력, 자산크기 등의 정보 등을 추가로 사용해 클러스터링을 한다면 더 좋은 클러스터링이 가능할지도 모른다. 문제는, 모든 feature가 전부 의미있는 feature는 아닐 수 있다는 것이다. 몸무게 정보를 사용하여 클러스터링한 것과 사용하지 않고 클러스터링한 것 중에서 몸무게 정보를 사용하지 않고 클러스터링 한 것이 더 좋을 수도 있다는 것이다. 이렇게 주어진 정보들 중에서 정말 의미 있는 feature를 뽑아내는 과정을 feature extration이라고 한다. 가장 간단한 feature extraction은 모든 feature를 사용해보기도 하고 사용해보지 않기도 하면서 \(2^d\) 개의 조합을 모두 확인해보는 것이다. 그러나 이 방법은 차원의 크기에 exponential할 뿐 아니라, 만약 기존 feature가 highly correlate되어있고, 여러 개의 feature를 묶어서 한 feature로 만들어야 성능이 좋아지는 경우 등에 대해 좋은 성능을 내기 어렵다. 따라서 이런 상황에서도 dimensionality reduction 방법을 사용해 feature를 뽑아낼 수 있다. 만약 우리가 100개의 feature를 가지고 있을 때, '가장 좋은' 30개의 feature만 뽑기 위해서 30차원으로 dimensionality reduction을 하는 것이다.</p>
-
-
-<h5>Dimensionality Reduction</h5>
-
-
-<p>데이터의 차원을 낮춘다는 것의 의미는, 현재 데이터가 존재하는 차원에서 그보다 낮은 다른 차원으로 데이터들을 mapping시키는 map을 찾는다는 것과 같다고 할 수 있다. 이때 어떤 임의의 차원에서 그보다 낮은 임의의 낮은 차원으로 가는 mapping은 셀 수 없이 많다. 그렇다면 우리는 어떤 mapping을 선택해야할까? 예를 들어 가장 간단한 방법으로, d 차원 데이터를 d' 차원으로 보내고 싶을 때, 앞에서 설명했던 간단한 방법처럼 임의의 d' 개의 축을 골라서 그 축만 사용하는 방법도 있을 수 있고, <a class="red tip" title="projection이라고도 한다.">d에서 d'으로 가는 linear map</a>을 임의로 하나 고르는 것도 가능하다. 물론 non linear map도 가능하지만, 이 글에서 다룰 LDA와 PCA 두 가지 방법은 모두 linear mapping을 찾는 알고리즘이다. LDA는 supervised learning이며, PCA는 unsupervised learning에 해당하게 된다. 모든 문제에서 데이터는 matrix \(X\)로 표기되며, 데이터의 차원은 d이고, 개수는 n개이다. 따라서 \(X\)는 d by n matrix가 된다.</p>
-
-
-<h5>LDA</h5>
-
-
-<p><a href="http://en.wikipedia.org/wiki/Linear_discriminant_analysis">Linear Discriminant Analysis (LDA)</a>는 Dimensionality reduction만을 위한 방법은 아니다. LDA로 약어가 표시되는 것들이 꽤 많아서 (예: Latent Dirichelt Allocation) 이 모델을 처음 제안한 사람의 이름을 따서 Fisher's LDA 라고 부르기도 한다. LDA는 여러 클래스가 존재할 때 그 클래스들을 최대한 잘 분리시키는 projection을 찾는다. 철학은 굉장히 단순한데, projection 시킨 데이터들에서 같은 클래스에 속하는 데이터들의 variance는 최대한 줄이고 (\(\sigma_{within}\)), 각 데이터들의 평균 값들의 variance는 최대한 키워서 (\(\sigma_{between}\)) 클래스들끼리 최대한 멀리 떨어지게 만드는 것이다. 이를 수식으로 표현하면 다음과 같은 수식을 얻을 수 있다.</p>
-
-
-<p>\[S = \frac{\sigma_{between}^2}{\sigma_{within}^2}\]</p>
-
-
-<p>일단 가장 간단한 상황인 클래스가 2개일 때의 상황만 고려해보도록하자. 참고로 LDA의 결과는 항상 클래스 개수 - 1 개까지의 벡터 밖에 찾을 수 없기 때문에, 이 상황에서 우리가 찾게 될 projection은 1차원 projection을 찾는 것이므로 간단하게 vector \(w\)로 기술하도록 하겠다. 클래스가 2개 뿐이라면, 위의 식은 엄청 간단한 수식으로 바뀌게 된다. 먼저 \(\sigma_{between}\)은 데이터가 단 두 개 뿐이기 때문에 간단하게 \( (w \cdot \mu_1 - w \cdot \mu_2 )^2 \)으로 표현이 된다. 이때, \(\mu_1, \mu_2\)는 각각 1번째 클래스와 2번째 클래스에 속한 데이터들의 평균 값이다. 다음으로 \(\sigma_{within}\) 역시 어렵지 않게 계산할 수가 있다. Projection을 하게 되면 데이터의 variance는 \(w^\top \Sigma w\)로 표현이 되기 때문에, 1번 클래스와 2번 클래스에 대해 이 값을 계산하고 더해주기만 하면 된다. 식을 정리해보면</p>
-
-
-<p>\[w = \arg\min_w \frac{\sigma_{between}^2}{\sigma_{within}^2} = \arg\min_w\frac{(w \cdot \mu_1 - w \cdot \mu_2 )^2}{w^\top \Sigma_1 w + w^\top \Sigma_2 w} \]</p>
-
-
-<p>그리고 위 식을 w에 대해 미분하고 좀 정리해보면 \(w \propto    (\Sigma_1 + \Sigma_2)^{-1}(\mu_1 - \mu_2) \) 라는 식을 얻을 수 있다.</p>
-
-
-<h5>Multiclass LDA</h5>
-
-
-<p></p>
-
-<p>그러면 클래스가 2개보다 많을 때, 벡터 \(w\)가 아닌 subspace \(U\)를 찾는 과정은 어떻게 되는지 살펴보도록하자. 다시 \(\sigma_{within}\)과 \(\sigma_{between}\)을 살펴보자. 먼저 \(\sigma_{between}\)은 위와 비슷한 형태로 표현할 수 없다. 그러나 우리가 각각의 클래스의 평균을 \(\mu_i\)라고 정의한다면, 그냥 이 값들의 variance를 계산하기만 하면 된다. 이 variance는 \(\sum_i (\mu_i - \mu)(\mu_i-\mu)^\top\)로 표현이 된다. 이때 \(\mu\)는 모든 평균들의 평균이다. 이 variance가 있으므로, projection하여 얻는 variance도 앞 뒤에 proejction matrix를 곱해 쉽게 계산할 수 있다. \(\sigma_{within}\)은 위와 비슷한 방식으로 \(\sigma_{within} = U^\top \left(\sum_i \Sigma_i \right) U \)로 표현할 수 있다. 이때 \(\Sigma_i\)는 i번째 클래스의 variance이다. 이 식을 정리해보면 다음과 같은 식을 얻는다.</p>
-
-
-<p>\[U = \arg\min_U \frac{\sigma_{between}^2}{\sigma_{within}^2} = \arg\min_U \frac{U^\top \left(\sum_i (\mu_i - \mu)(\mu_i-\mu)^\top\right) U}{U^\top \left(\sum_i \Sigma_i \right) U} = \arg\max_U \frac{U^\top A U}{U^\top B} \]</p>
-
-
-<p>\(A\)와 \(B\)는 각각 괄호 안에 있는 값을 의미한다. 위 식에서 보게 되면, 분자에 해당하는 부분이 rank가 클래스 개수 - 1 이기 때문에, 우리가 이 식을 풀었을 때도 \(U\)의 rank가 클래스 개수 - 1이 되므로 LDA가 구할 수 있는 subspace의 축 개수가 클래스 개수 - 1로 제한되는 것이다. 이 식을 풀기 위해서는 eigenvalue를 계산하는 것으로 간단하게 식을 풀 수 있다. 지금부터 왜 이 식이 eigenvalue를 푸는 것으로 해결이 가능한지를 살펴보자.</p>
-
-
-<h5>General Eigenvector problem</h5>
-
-
-<p>문제를 간단하게 하기 위해 전체 subspace가 아닌 vector \(w\)만 고려해보도록 하자. 따라서 식은</p>
-
-
-<p>\[\min_w \frac{w^\top A w}{w^\top B w}\]</p>
-
-
-<p>로 표현 가능하다. 이제 이 식을 w에 대해서 미분해보면 다음과 같은 식을 얻게 된다</p>
-
-
-<p>\[\left(w^\top B w\right)^2 \big[ 2A w \left( w^\top B w \right) - 2B w \left( w^\top A w \right) \big] = 0\]</p>
-
-
-<p>이를 잘 정리하면</p>
-
-
-<p>\[Aw = \frac{w^\top A w} {w^\top B w} B w\]</p>
-
-
-<p>로 표현이 되고, 우리가 원래 풀려고 했던 \(\frac{w^\top A w} {w^\top B w}\)를 \(\lambda\)라고 정의하면 식이 \(A w = \lambda B w\)라는 엄청 간단한 식이 나오게 된다. 이런 형태를 만족하는 \(\lambda\)를 찾는 문제를 general eigenvalue problem이라 부른다. 만약 \(B\)가 Identity matrix라면 우리가 아는 일반 eigenvalue problem이 된다. 따라서 원래 문제가 \(\lambda\)의 minimum을 찾는 것이었으니 이제 가장 작은 general eigenvalue를 찾기만 하면 우리가 풀고 싶었던 문제를 풀 수 있는 것이다.</p>
-
-
-<h5>PCA</h5>
-
-
-<p><a href="http://en.wikipedia.org/wiki/Principal_component_analysis">Principal Component Analysis (PCA)</a>는 Dimensionality reduction의 가장 대표적인 방법 중 하나이다. PCA는 projection된 데이터의 variance가 최대화되는 projection matrix를 찾는 문제이다. 그런데 <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition#Low-rank_matrix_approximation">Eckart–Young theorem</a>에 의해서, 이 문제의 답이 데이터 \(X\)에 대한 <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular value decomposition(SVD)</a>으로 계산할 수 있다는 것이 알려져 있다. 그래서 PCA를 variance를 maximize하는 원래 정의대로 설명이 하는 경우도 많고, low rank matrix 문제로 설명하는 경우도 있다. 이 글에서는 low rank matrix estimation 문제로 설명하도록 하겠다. 이 문제의 objective는 아래 식과 같다.</p>
-
-
-<p>\[\min_{rank(Z)=k} \| X - Z \|_F^2\]</p>
-
-
-<p>이때 \(\|A\|_F\)는 <a href="http://mathworld.wolfram.com/FrobeniusNorm.html">Frobenius norm</a>을 의미한다. 이 norm은 matrix의 모든 element들의 제곱을 더한 값이며, \(\| A \|_F^2 = {\tt tr} (A A^\top) = {\tt tr} (A^\top A) \) 라는 특성이 알려져있다. 이제 위의 식에서 \(Z\)를 UV decomposition한 후 대입해보면 다음과 같은 식을 얻는다.</p>
-
-
-<p>\[\min_{U\in R^{d \times k}, V\in R^{n \times k}, U^\top U = I} \|X - UV^\top\|_F^2\]</p>
-
-
-<p>이 식을 \(V\)에 대해 미분하면 optimal한 V는 \(V=X^\top U\)로 표현이 됨을 알 수 있으며, 이를 위의 식에 대입한 후, Frobenius norm의 성질을 잘 활용하면 아래와 같은 식이 나온다.</p>
-
-
-<p>\[\max_{U\in R^{d \times k}, U^\top U = I} {\tt tr} (U^\top X X^\top U)\]</p>
-
-
-<p>가 되며, 이 식의 답은 SVD를 통해 계산할 수 있다는 것을 알 수 있다. 그러나 만약 \(X\)의 mean이 0가 아니게 되면 UV decomposition을 하는 과정에서 문제가 생기게 되서 같은 방식으로 깔끔하게 구할 수가 없다. 이 과정은 다소 복잡하므로 생략하고 결과만 얘기하면, 그냥 \(\hat X = X - \frac{1}{n} X \mathbf 1\)을 SVD하면 된다. 뒤에 있는 term은 그냥 X의 평균값이다.</p>
-
-
-<p>정리하면, 임의의 데이터 X에 대한 PCA는 다음과 같이 구할 수 있다.</p>
-
-
-<ol>
-    <li>데이터 \(X\)의 empirical mean을 계산한 후 모든 데이터에서 평균을 빼준다.</li>
-    <li>새로 만들어진 데이터 \(\hat X\)의 가장 큰 singular value부터 k번째 큰 singular value까지에 대응하는 singular vector들을 구한다. (SVD를 통해)</li>
-    <li>뽑아낸 k개의 singular vector로 U를 구성하고 return한다.</li>
-</ol>
-
-
-<p>쉽지만 그만큼 강력하다. 하지만 PCA의 경우 Frobenius norm의 제곱값을 사용하므로 각 element들이 norm을 계산할 때 한 번 제곱되고, 다시 전체에 제곱을 취할 때 또 제곱이 취해지므로 조금이라도 원래 데이터와 다른 outlier가 존재하게 된다면 그 효과가 굉장히 극적으로 증폭되기 때문에 noise에 취약하다. 이를 방지하기 위해 objective의 norm을 1-norm으로 바꾸거나 하는 등의 robust PCA 연구도 활발하게 진행되고 있다.</p>
-
-
-<h5>정리</h5>
-
-
-<p>Dimensionality Reduction은 매우 유용하고 많이 쓰이는 툴이다. 특히 PCA는 굉장히 빈번하게 사용되고 알고리즘도 매우 간단하기 때문에 알아두면 쓰임새가 많다. 이 글에서는 LDA와 PCA만 다뤘지만, ICA, CCA, RBM 등 굉장히 많은 dimensionality reduction 기술들이 존재한다. 이 중 RBM은 추후에 다시 한 번 자세하게 설명하도록 하겠다.</p>
-
-
-
-
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 6월 17일: 글 등록</li>
-</ul>
-
-
-<h5>Reference</h5>
-
-
-<ul>
-<li>Nie, Feiping, Jianjun Yuan, and Heng Huang. &ldquo;Optimal mean robust principal component analysis.&rdquo; Proceedings of the 31st International Conference on Machine Learning (ICML-14). 2014.</li>
 </ul>
 
 
