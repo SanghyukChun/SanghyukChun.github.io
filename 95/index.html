@@ -246,13 +246,13 @@ $(function() {
 <p>앞의 두 논문은 같은 문제의 objective function만 RMSE와 MAP로 서로 다르게 잡은 경우이지만, 이 논문은 앞의 방법들과 다소 다른 접근 방식을 취하고 있다. 이 논문은 먼저 선행 연구<a href="http://arxiv.org/abs/1205.2618">[5]</a>를 조금 발전 시킨 논문인데, 선행 연구에서는 partially observed pair-wise competition 문제를 푸는 Baysian Personalized Ranking (BPR) optimization과 그것을 푸는 알고리즘을 제안하고, 그것을 MF로 확장하고있다. 그리고 그 다음 논문 [4]에서는 원래 논문이 가지는 단점을 negative observation을 adaptive하게 sample하는 방식으로 개선하고 있다.</p>
 
 
-<p>먼저 핵심 notation들을 정의해보자. 관측된 (u,i) pair는 \(\mathcal S\)라는 set으로 정의된다. 여기에서 새로운 notation \(I_u^+\)와 \(U_i^+\) 2개가 introduce된다. \(I_u^+\)는 user u가 관측한 적 있는 item의 set이고, \(U_i^+\)는 item i를 관측한 적 있는 user u의 set이다. 그러면 이 set들을 통해 \(\mathcal D_S\)라는 triple을 다음과 같이 정의할 수 있다.</p>
+<p>먼저 핵심 notation들을 정의해보자. 관측된 (u,i) pair는 \(\mathcal S\)라는 set으로 정의된다. 여기에서 새로운 notation \(I_u^+\)와 \(U_i^+\) 2개가 introduce된다. \(I_u^+\)는 user u가 관측한 적 있는 item의 set이고, \(U_i^+\)는 item i를 관측한 적 있는 user u의 set이다. 그러면 이 set들을 통해 \(\mathcal D_S\)라는 triplet을 다음과 같이 정의할 수 있다.</p>
 
 
-<p>\[D_S := {(u,i,j) ~|~ i \in I_u^+ \mbox{ and } j \notin I_u^+ }.\]</p>
+<p>\[D_S := \{(u,i,j) ~|~ i \in I_u^+ \mbox{ and } j \notin I_u^+ \}.\]</p>
 
 
-<p>즉, user u, user u가 관측한 item i와 관측하지 못한 item j 이렇게 셋의 triple인 것이다.</p>
+<p>즉, user u, user u가 관측한 item i와 관측하지 못한 item j 이렇게 셋의 triplet인 것이다.</p>
 
 
 <p>이제 이 논문의 핵심아이디어인 pair-wise ranking에 대해 살펴보자. 이 논문은 먼저 각각의 user u에게 item i와 item j간의 pair-wise ranking이 존재한다고 가정한다. 이 논문에서는 user u가 item i를 j보다 높은 order를 가질 때 \(i &gt;_u j\)의 꼴로 표현한다. 이 pair-wise ranking은 (혹은 order는) totality, antisymmetry, transitivity를 만족하는 order로 정의된다. 자세한 수식은 논문에 있으니 생략한다.</p>
@@ -285,7 +285,7 @@ $(function() {
 <p>이 문제는 stochastic gradient descent로 푸는 것이 가능하다. 자세한 미분 값은 논문에 있으니 생략한다. 참고로 이 논문은 이 문제를 optimization했을 때 얻을 수 있는 solution이 AUC (area under the ROC curve, ROC curve는 <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">wiki</a> 참고)를 maximization하는 것과 비슷한 문제라는 것을 따로 증명해두었으니 관심이 있다면 한 번쯤 읽어보면 좋을 것 같다.</p>
 
 
-<p>[4]에서 제안한 BPR (baysian personalized ranking) problem을 풀기 위해서 SGD를 사용한다는 언급을 했는데, 문제가 하나 있다. 바로 triple \(\mathcal D_S\)의 개수가 너무 많아서 전부 uniform하게 뽑기에는 데이터가 너무너무 많다는 것이다. 그래서 [5]에서는 adapted sampling 방식을 제안하고 있다.</p>
+<p>[4]에서 제안한 BPR (baysian personalized ranking) problem을 풀기 위해서 SGD를 사용한다는 언급을 했는데, 문제가 하나 있다. 바로 triplet \(\mathcal D_S\)의 개수가 너무 많아서 전부 uniform하게 뽑기에는 데이터가 너무너무 많다는 것이다. 그래서 [5]에서는 adapted sampling 방식을 제안하고 있다.</p>
 
 
 <p>\[ \max  \sum_{(u,i,j) \in \mathcal D_S} w_u w_i w_j \ln \sigma(\hat x_{uij}) - \lambda \| \Theta \|^2. \]</p>
@@ -294,7 +294,7 @@ $(function() {
 <p>이때 \(w_u = 1/| I_u^+ |\), \(w_i = 1\)로 정의가 된다. 즉, 관측한 아이템이 더 많은 유저는 적게 뽑고, 모든 positivie item은 uniform하게 뽑는다. 마지막으로 \(w_j = \frac{1}{|U||I|} \sum_{u} I_{j \in I_u^+}\)으로 취하게 되는데, 더 많이 사용자들이 관측한, 혹은 좋아한 데이터 위주로 sample을 뽑는 방식이다.</p>
 
 
-<p>정리해보면, BPR은 다른 논문들처럼 reconstructed error를 바로 measure하는 것이 아니라, pair-wise ranking을 정의하고, 복원된 rating \(\hat r_{ui}\)에 대해 user가 item i보다 j를 좋아할 확률을 sigmoid로 정의한다. 이 확률을 사용해 MAP문제를 정의하는데, 이 문제는 ROC curve의 넓이를 구하는 것과 비슷한 문제가 된다. 이때, sigmoid function을 step function으로 바꾸면 완전히 ROC curve의 넓이를 구하는 것과 같은 문제가 된다. Sigmoid가 step function의 가장 popular한 differentiable approximation 중 하나이기 때문에 sigmoid로 정의하게 되는 것이다. Algorithm은 SGD를 사용하는데, 데이터 셋이 user u가 관측한 item i와 관측하지 않은 item j의 triple이기 때문에 uniform sampling을 하게 되면 결과가 좋지 않을 수 있다. 때문에 adaptive하게 (u,i,j)에서 j 고를 때, popular한 j를 더 고르도록 sample을 하여 성능을 개선하고 있다.</p>
+<p>정리해보면, BPR은 다른 논문들처럼 reconstructed error를 바로 measure하는 것이 아니라, pair-wise ranking을 정의하고, 복원된 rating \(\hat r_{ui}\)에 대해 user가 item i보다 j를 좋아할 확률을 sigmoid로 정의한다. 이 확률을 사용해 MAP문제를 정의하는데, 이 문제는 ROC curve의 넓이를 구하는 것과 비슷한 문제가 된다. 이때, sigmoid function을 step function으로 바꾸면 완전히 ROC curve의 넓이를 구하는 것과 같은 문제가 된다. Sigmoid가 step function의 가장 popular한 differentiable approximation 중 하나이기 때문에 sigmoid로 정의하게 되는 것이다. Algorithm은 SGD를 사용하는데, 데이터 셋이 user u가 관측한 item i와 관측하지 않은 item j의 triplet이기 때문에 uniform sampling을 하게 되면 결과가 좋지 않을 수 있다. 때문에 adaptive하게 (u,i,j)에서 j 고를 때, popular한 j를 더 고르도록 sample을 하여 성능을 개선하고 있다.</p>
 
 
 
@@ -364,7 +364,7 @@ $(function() {
 <li><a href="/76">Reinforcement Learning</a>
 
 <ul>
-<li>Multi-armed Bandit</li>
+<li><a href="/96">Multi-armed Bandit</a></li>
 </ul>
 </li>
 </ul>
@@ -444,6 +444,10 @@ $(function() {
     </p>
     
     
+    <p class="meta">
+      <a class="url-title basic-alignment right" href="/96/" title="Next Post: Machine learning 스터디 (20-1) Multi-armed Bandit">&raquo; Machine learning 스터디 (20-1) Multi-armed Bandit</a>
+    </p>
+    
     -->
     </p>
   </footer>
@@ -477,6 +481,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/96/">Machine Learning 스터디 (20-1) Multi-armed Bandit</a>
+      </li>
+    
+      <li class="post">
         <a href="/95/">Machine Learning 스터디 (17-1) Recommendation System With Implicit Feedback</a>
       </li>
     
@@ -490,10 +498,6 @@ $(function() {
     
       <li class="post">
         <a href="/92/">고흐의 그림을 따라그리는 Neural Network, a Neural Algorithm of Artistic Style (2015)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/54/">The Basic Principles in Deep Neural Networks</a>
       </li>
     
   </ul>

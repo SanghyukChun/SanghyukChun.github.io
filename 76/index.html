@@ -210,12 +210,8 @@ $(function() {
 <p>즉, optimal value function은 모든 policy \(\pi\)에 대한 value function \(V^\pi (s)\) 중에서 가장 reward를 maximize시키는 policy를 통해 얻게 된 reward가 된다. Optimal value function 역시 Bellman Equation을 증명할 수 있는데, 그 식은 다음과 같다.</p>
 
 
-<p></p>
-
 <p>\[ V^* (s) = R(s) + \max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^\prime). \]</p>
 
-
-<p></p>
 
 <p>앞의 term은 위와 동일하고, 두 번째 term은 모든 expected future sum of discounted reward를 action \(a\)에 대해 maximize한 결과이다. 즉, 모든 action 중에서 reward를 가장 maximize하는 action을 선택하였을 때 얻게되는 reward의 값이다. 그런데 그런 action을 고르는 방법이 바로 optimal policy \(\pi^*\)이므로, optimal policy는 다음과 같이 구할 수 있다.</p>
 
@@ -361,10 +357,20 @@ $(function() {
 <li><a href="/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="/74">Neural Network Introduction</a></li>
 <li><a href="/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="/76">Reinforcement Learning</a></li>
+<li><a href="/76">Reinforcement Learning</a>
+
+<ul>
+<li><a href="/96">Multi-armed Bandit</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -479,6 +485,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/96/">Machine Learning 스터디 (20-1) Multi-armed Bandit</a>
+      </li>
+    
+      <li class="post">
         <a href="/95/">Machine Learning 스터디 (17-1) Recommendation System With Implicit Feedback</a>
       </li>
     
@@ -492,10 +502,6 @@ $(function() {
     
       <li class="post">
         <a href="/92/">고흐의 그림을 따라그리는 Neural Network, a Neural Algorithm of Artistic Style (2015)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/54/">The Basic Principles in Deep Neural Networks</a>
       </li>
     
   </ul>

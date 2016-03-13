@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Reinforcement-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/reinforcement-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-06T01:33:52+09:00</updated>
+  <updated>2016-03-13T19:28:48+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -463,12 +463,8 @@
 <p>즉, optimal value function은 모든 policy \(\pi\)에 대한 value function \(V^\pi (s)\) 중에서 가장 reward를 maximize시키는 policy를 통해 얻게 된 reward가 된다. Optimal value function 역시 Bellman Equation을 증명할 수 있는데, 그 식은 다음과 같다.</p>
 
 
-<p></p>
-
 <p>\[ V^* (s) = R(s) + \max_{a\in A} \gamma \sum_{s^\prime \in S} P_{sa} (s^\prime) V^* (s^\prime). \]</p>
 
-
-<p></p>
 
 <p>앞의 term은 위와 동일하고, 두 번째 term은 모든 expected future sum of discounted reward를 action \(a\)에 대해 maximize한 결과이다. 즉, 모든 action 중에서 reward를 가장 maximize하는 action을 선택하였을 때 얻게되는 reward의 값이다. 그런데 그런 action을 고르는 방법이 바로 optimal policy \(\pi^*\)이므로, optimal policy는 다음과 같이 구할 수 있다.</p>
 
@@ -614,10 +610,20 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>
