@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-13T19:28:48+09:00</updated>
+  <updated>2016-03-13T19:44:32+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -218,46 +218,39 @@
 
 
 
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+<h5>변경 이력</h5>
 
 
 <ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
-</ul>
-</li>
-<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
-</ul>
-</li>
+<li>2016년 3월 13일: 글 등록</li>
 </ul>
 
+
+<p><hr>
+<p><a href="/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+* <a href="/57">Machine Learning이란?</a>
+* <a href="/58">Probability Theory</a>
+* <a href="/59">Overfitting</a>
+* <a href="/60">Algorithm</a>
+* <a href="/61">Decision Theory</a>
+* <a href="/62">Information Theory</a>
+* <a href="/63">Convex Optimzation</a>
+* <a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a>
+* Regression and Logistic Regression
+* PAC Learning & Statistical Learning Theory
+* Support Vector Machine
+* Ensemble Learning (Random Forest, Ada Boost)
+* Graphical Model
+* <a href="/69">Clustering (K-means, Gaussian Mixture Model)</a>
+* <a href="/70">EM algorithm</a>
+* Hidden Markov Model
+* <a href="/72">Dimensionality Reduction (LDA, PCA)</a>
+* <a href="/73">Recommendation System (Matrix Completion)</a>
+	* <a href="/95">Recommendation System with Implicit Feedback</a>
+* <a href="/74">Neural Network Introduction</a>
+* <a href="/75">Deep Learning 1 - RBM, DNN, CNN</a>
+* <a href="/76">Reinforcement Learning</a>
+	* <a href="/96">Multi-armed Bandit</a></p>
 ]]></content>
   </entry>
   
@@ -463,14 +456,6 @@
 
 
 
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2016년 3월 6일: 글 등록</li>
-</ul>
-
-
 <h5>References</h5>
 
 
@@ -485,46 +470,39 @@
 
 
 
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+<h5>변경 이력</h5>
 
 
 <ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
-</ul>
-</li>
-<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
-</ul>
-</li>
+<li>2016년 3월 6일: 글 등록</li>
 </ul>
 
+
+<p><hr>
+<p><a href="/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+* <a href="/57">Machine Learning이란?</a>
+* <a href="/58">Probability Theory</a>
+* <a href="/59">Overfitting</a>
+* <a href="/60">Algorithm</a>
+* <a href="/61">Decision Theory</a>
+* <a href="/62">Information Theory</a>
+* <a href="/63">Convex Optimzation</a>
+* <a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a>
+* Regression and Logistic Regression
+* PAC Learning & Statistical Learning Theory
+* Support Vector Machine
+* Ensemble Learning (Random Forest, Ada Boost)
+* Graphical Model
+* <a href="/69">Clustering (K-means, Gaussian Mixture Model)</a>
+* <a href="/70">EM algorithm</a>
+* Hidden Markov Model
+* <a href="/72">Dimensionality Reduction (LDA, PCA)</a>
+* <a href="/73">Recommendation System (Matrix Completion)</a>
+	* <a href="/95">Recommendation System with Implicit Feedback</a>
+* <a href="/74">Neural Network Introduction</a>
+* <a href="/75">Deep Learning 1 - RBM, DNN, CNN</a>
+* <a href="/76">Reinforcement Learning</a>
+	* <a href="/96">Multi-armed Bandit</a></p>
 ]]></content>
   </entry>
   
@@ -719,48 +697,31 @@
 </ol>
 
 
-
-
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
-
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
-
-<ul>
-<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
-</ul>
-</li>
-<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
-
-<ul>
-<li>Multi-armed Bandit</li>
-</ul>
-</li>
-</ul>
-
+<p><hr>
+<p><a href="/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+* <a href="/57">Machine Learning이란?</a>
+* <a href="/58">Probability Theory</a>
+* <a href="/59">Overfitting</a>
+* <a href="/60">Algorithm</a>
+* <a href="/61">Decision Theory</a>
+* <a href="/62">Information Theory</a>
+* <a href="/63">Convex Optimzation</a>
+* <a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a>
+* Regression and Logistic Regression
+* PAC Learning & Statistical Learning Theory
+* Support Vector Machine
+* Ensemble Learning (Random Forest, Ada Boost)
+* Graphical Model
+* <a href="/69">Clustering (K-means, Gaussian Mixture Model)</a>
+* <a href="/70">EM algorithm</a>
+* Hidden Markov Model
+* <a href="/72">Dimensionality Reduction (LDA, PCA)</a>
+* <a href="/73">Recommendation System (Matrix Completion)</a>
+	* <a href="/95">Recommendation System with Implicit Feedback</a>
+* <a href="/74">Neural Network Introduction</a>
+* <a href="/75">Deep Learning 1 - RBM, DNN, CNN</a>
+* <a href="/76">Reinforcement Learning</a>
+	* <a href="/96">Multi-armed Bandit</a></p>
 ]]></content>
   </entry>
   

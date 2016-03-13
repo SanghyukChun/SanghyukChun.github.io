@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-13T19:28:48+09:00</updated>
+  <updated>2016-03-13T19:44:32+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -216,6 +216,14 @@
 </ol>
 
 
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2016년 3월 13일: 글 등록</li>
+</ul>
 
 
 <hr>
@@ -463,14 +471,6 @@
 
 
 
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2016년 3월 6일: 글 등록</li>
-</ul>
-
-
 <h5>References</h5>
 
 
@@ -483,6 +483,14 @@
 </ol>
 
 
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2016년 3월 6일: 글 등록</li>
+</ul>
 
 
 <hr>
@@ -756,7 +764,7 @@
 <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
 
 <ul>
-<li>Multi-armed Bandit</li>
+<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
 </ul>
 </li>
 </ul>
@@ -1837,19 +1845,19 @@
 
 
 
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 9월 21일: 글 등록</li>
-</ul>
-
-
 <h5>Reference</h5>
 
 
 <ul>
 <li><a href="http://cs229.stanford.edu/notes/cs229-notes12.pdf">Reinforcement Learning Lecture Note &ndash; Stanford CS229 Lecture Note by Andrew Ng</a></li>
+</ul>
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2015년 9월 21일: 글 등록</li>
 </ul>
 
 
@@ -1982,15 +1990,13 @@
 <p>먼저 Restricted Boltzmann Machine (RBM) 에 대해 설명해보자.</p>
 
 
-<p></p>
+
 
 <h5>Restricted Boltzmann Machine (RBM): Introduction</h5>
 
 
 <p>이 섹션은 상당히 수식이 많으며, 너무 복잡한 수식은 생략한 채 넘어가기 때문에 다소 설명이 모자랄 수 있다. 조금 더 관심이 있는 사람들을 위하여 아래의 참고자료들을 추천한다. 난이도 순서대로 당장 필요한 정도에 따라 읽으면 좋을 것 같은 순서대로 배치하였다. 내가 생각했을 때 알고리즘에 대한 심층적인 이론적 설명이 많은 순서대로 나열하였으니 처음부터 천천히 읽어보면 좋을 것 같다. 특히 마지막 참고자료는 상당히 이론적인 내용들을 굉장히 차근차근 어렵지 않게 담고 있으므로, RBM을 제대로 공부하고 싶다면 꼭 읽어보면 좋을 것 같다.</p>
 
-
-<p></p>
 
 <ul>
 <li><a href="https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf">Hinton, Geoffrey. &ldquo;A practical guide to training restricted Boltzmann machines.&rdquo; Momentum 9.1 (2010): 926.</a></li>
@@ -2102,8 +2108,6 @@
 <p>마지막 layer는 joint probability를 의미하고, 나머지 layer들은 모두 conditional probability로 표현된다. 참고로 전체를 jointly하게 표현하는 모델을 Deep Boltzmann Machine (DBM) 이라고 하는데, 이 모델의 경우 RBM update를 하는 알고리즘과 비슷한 알고리즘으로 전체 모델을 update하게 된다. 그러나 이 논문이 발표될 당시에는 DBN이 훨씬 간단하고 computational cost가 적기 때문에 DBN이라는 모델을 제안한 것으로 보인다.</p>
 
 
-<p></p>
-
 <p>이 모델이 의미있는 이유는 joint probability를 잘 표현하는 좋은 graphical model이어서가 아니라, 이 모델로 deep network를 pre-training하고 backpropagation 알고리즘을 돌렸더니 overfitting 문제가 크게 일어나지 않고 MNIST 등에서 좋은 성과를 거뒀기 때문이다. 즉, parameter initialization을 DBN의 joint probability를 maximize하는 (layer-wise로 \(\ell\)개의 RBM을 learning하는) 방식으로 하고 나서, 그렇게 구해진 parameter들로 deep network를 initialization하고 fine-tuning (backpropation) 을 했을 때, 항상 그 정도 size의 deep network에서 발생하던 overfitting issue가 사라지고 성능이 우수한 classifier를 얻을 수 있었기 때문이다.</p>
 
 
@@ -2121,7 +2125,7 @@
 <p>DBN은 overfitting issue를 initialization으로 해결하였지만, CNN은 overfitting issue를 모델 complexity를 줄이는 것으로 해결한다. CNN은 convolution layer와 pooling layer라는 두 개의 핵심 구조를 가지고 있는데, 이 구조들이 model parameter 개수를 효율적으로 줄여주어 결론적으로 전체 model complexity가 감소하는 효과를 얻게 된다.</p>
 
 
-<p></p>
+
 
 <h5>Convolutional Neural Network (CNN): Convolution Layer</h5>
 
@@ -2246,15 +2250,6 @@
 
 
 
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 9월 21일: 글 등록</li>
-<li>2015년 10월 31일: 오타 수정</li>
-</ul>
-
-
 <h5>Reference</h5>
 
 
@@ -2268,6 +2263,15 @@
 <li><a href="http://image.diku.dk/igel/paper/AItRBM-proof.pdf">Fischer, Asja, and Christian Igel. &ldquo;An introduction to restricted Boltzmann machines.&rdquo; Progress in Pattern Recognition, Image Analysis, Computer Vision, and Applications. Springer Berlin Heidelberg, 2012. 14-36.</a></li>
 <li><a href="https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf">Hinton, Geoffrey. &ldquo;A practical guide to training restricted Boltzmann machines.&rdquo; Momentum 9.1 (2010): 926.</a></li>
 <li><a href="http://www.iro.umontreal.ca/~lisa/pointeurs/TR1312.pdf">Bengio, Yoshua. &ldquo;Learning deep architectures for AI.&rdquo; Foundations and trends® in Machine Learning 2.1 (2009): 1-127.</a></li>
+</ul>
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2015년 9월 21일: 글 등록</li>
+<li>2015년 10월 31일: 오타 수정</li>
 </ul>
 
 
@@ -2295,10 +2299,20 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>
@@ -3033,16 +3047,6 @@
 
 
 
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 9월 13일: 글 등록</li>
-<li>2015년 9월 14일: 오타수정, SGD 내용 추가 등</li>
-<li>2015년 9월 20일: BP in practice 추가</li>
-</ul>
-
-
 <h5>Reference</h5>
 
 
@@ -3050,6 +3054,16 @@
 <li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
 <li>wiki (<a href="https://en.wikibooks.org/wiki/Artificial_Neural_Networks">링크</a>)</li>
 <li><a href="http://courses.cs.tau.ac.il/Caffe_workshop/Bootcamp/pdf_lectures/Lecture%203%20CNN%20-%20backpropagation.pdf">Caffe workshop &ndash; CNN backpropagation</a></li>
+</ul>
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2015년 9월 13일: 글 등록</li>
+<li>2015년 9월 14일: 오타수정, SGD 내용 추가 등</li>
+<li>2015년 9월 20일: BP in practice 추가</li>
 </ul>
 
 
@@ -3077,10 +3091,20 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>
@@ -3351,8 +3375,6 @@
 <h5>Multiclass LDA</h5>
 
 
-<p></p>
-
 <p>그러면 클래스가 2개보다 많을 때, 벡터 \(w\)가 아닌 subspace \(U\)를 찾는 과정은 어떻게 되는지 살펴보도록하자. 다시 \(\sigma_{within}\)과 \(\sigma_{between}\)을 살펴보자. 먼저 \(\sigma_{between}\)은 위와 비슷한 형태로 표현할 수 없다. 그러나 우리가 각각의 클래스의 평균을 \(\mu_i\)라고 정의한다면, 그냥 이 값들의 variance를 계산하기만 하면 된다. 이 variance는 \(\sum_i (\mu_i - \mu)(\mu_i-\mu)^\top\)로 표현이 된다. 이때 \(\mu\)는 모든 평균들의 평균이다. 이 variance가 있으므로, projection하여 얻는 variance도 앞 뒤에 proejction matrix를 곱해 쉽게 계산할 수 있다. \(\sigma_{within}\)은 위와 비슷한 방식으로 \(\sigma_{within} = U^\top \left(\sum_i \Sigma_i \right) U \)로 표현할 수 있다. 이때 \(\Sigma_i\)는 i번째 클래스의 variance이다. 이 식을 정리해보면 다음과 같은 식을 얻는다.</p>
 
 
@@ -3471,10 +3493,20 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>
@@ -3557,19 +3589,19 @@
 
 
 
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 6월 14일: 글 등록</li>
-</ul>
-
-
 <h5>Reference</h5>
 
 
 <ul>
 <li>Bishop, Christopher M. Pattern recognition and machine learning. Vol. 4. No. 4. New York: springer, 2006. Chapter 9</li>
+</ul>
+
+
+<h5>변경 이력</h5>
+
+
+<ul>
+<li>2015년 6월 14일: 글 등록</li>
 </ul>
 
 
@@ -3597,10 +3629,20 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>
@@ -3759,10 +3801,20 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>
@@ -3857,6 +3909,14 @@
 
 
 
+<h5>Reference</h5>
+
+
+<ul>
+<li>Bishop, Christopher M. Pattern recognition and machine learning. Vol. 4. No. 4. New York: springer, 2006. Chapter 9</li>
+</ul>
+
+
 <h5>변경 이력</h5>
 
 
@@ -3889,10 +3949,20 @@
 <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
 <li>Hidden Markov Model</li>
 <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+</ul>
+</li>
 <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
 <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+
+<ul>
+<li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>

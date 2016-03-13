@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neural-Network | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/neural-network/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-13T19:28:48+09:00</updated>
+  <updated>2016-03-13T19:44:32+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -899,15 +899,13 @@
 <p>먼저 Restricted Boltzmann Machine (RBM) 에 대해 설명해보자.</p>
 
 
-<p></p>
+
 
 <h5>Restricted Boltzmann Machine (RBM): Introduction</h5>
 
 
 <p>이 섹션은 상당히 수식이 많으며, 너무 복잡한 수식은 생략한 채 넘어가기 때문에 다소 설명이 모자랄 수 있다. 조금 더 관심이 있는 사람들을 위하여 아래의 참고자료들을 추천한다. 난이도 순서대로 당장 필요한 정도에 따라 읽으면 좋을 것 같은 순서대로 배치하였다. 내가 생각했을 때 알고리즘에 대한 심층적인 이론적 설명이 많은 순서대로 나열하였으니 처음부터 천천히 읽어보면 좋을 것 같다. 특히 마지막 참고자료는 상당히 이론적인 내용들을 굉장히 차근차근 어렵지 않게 담고 있으므로, RBM을 제대로 공부하고 싶다면 꼭 읽어보면 좋을 것 같다.</p>
 
-
-<p></p>
 
 <ul>
 <li><a href="https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf">Hinton, Geoffrey. &ldquo;A practical guide to training restricted Boltzmann machines.&rdquo; Momentum 9.1 (2010): 926.</a></li>
@@ -1019,8 +1017,6 @@
 <p>마지막 layer는 joint probability를 의미하고, 나머지 layer들은 모두 conditional probability로 표현된다. 참고로 전체를 jointly하게 표현하는 모델을 Deep Boltzmann Machine (DBM) 이라고 하는데, 이 모델의 경우 RBM update를 하는 알고리즘과 비슷한 알고리즘으로 전체 모델을 update하게 된다. 그러나 이 논문이 발표될 당시에는 DBN이 훨씬 간단하고 computational cost가 적기 때문에 DBN이라는 모델을 제안한 것으로 보인다.</p>
 
 
-<p></p>
-
 <p>이 모델이 의미있는 이유는 joint probability를 잘 표현하는 좋은 graphical model이어서가 아니라, 이 모델로 deep network를 pre-training하고 backpropagation 알고리즘을 돌렸더니 overfitting 문제가 크게 일어나지 않고 MNIST 등에서 좋은 성과를 거뒀기 때문이다. 즉, parameter initialization을 DBN의 joint probability를 maximize하는 (layer-wise로 \(\ell\)개의 RBM을 learning하는) 방식으로 하고 나서, 그렇게 구해진 parameter들로 deep network를 initialization하고 fine-tuning (backpropation) 을 했을 때, 항상 그 정도 size의 deep network에서 발생하던 overfitting issue가 사라지고 성능이 우수한 classifier를 얻을 수 있었기 때문이다.</p>
 
 
@@ -1038,7 +1034,7 @@
 <p>DBN은 overfitting issue를 initialization으로 해결하였지만, CNN은 overfitting issue를 모델 complexity를 줄이는 것으로 해결한다. CNN은 convolution layer와 pooling layer라는 두 개의 핵심 구조를 가지고 있는데, 이 구조들이 model parameter 개수를 효율적으로 줄여주어 결론적으로 전체 model complexity가 감소하는 효과를 얻게 된다.</p>
 
 
-<p></p>
+
 
 <h5>Convolutional Neural Network (CNN): Convolution Layer</h5>
 
@@ -1163,15 +1159,6 @@
 
 
 
-<h5>변경 이력</h5>
-
-
-<ul>
-<li>2015년 9월 21일: 글 등록</li>
-<li>2015년 10월 31일: 오타 수정</li>
-</ul>
-
-
 <h5>Reference</h5>
 
 
@@ -1188,36 +1175,40 @@
 </ul>
 
 
-<hr>
-
-
-<p><a href="http://SanghyukChun.github.io/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+<h5>변경 이력</h5>
 
 
 <ul>
-<li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-<li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-<li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-<li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-<li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-<li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
-<li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-<li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a></li>
+<li>2015년 9월 21일: 글 등록</li>
+<li>2015년 10월 31일: 오타 수정</li>
 </ul>
 
+
+<p><hr>
+<p><a href="/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+* <a href="/57">Machine Learning이란?</a>
+* <a href="/58">Probability Theory</a>
+* <a href="/59">Overfitting</a>
+* <a href="/60">Algorithm</a>
+* <a href="/61">Decision Theory</a>
+* <a href="/62">Information Theory</a>
+* <a href="/63">Convex Optimzation</a>
+* <a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a>
+* Regression and Logistic Regression
+* PAC Learning & Statistical Learning Theory
+* Support Vector Machine
+* Ensemble Learning (Random Forest, Ada Boost)
+* Graphical Model
+* <a href="/69">Clustering (K-means, Gaussian Mixture Model)</a>
+* <a href="/70">EM algorithm</a>
+* Hidden Markov Model
+* <a href="/72">Dimensionality Reduction (LDA, PCA)</a>
+* <a href="/73">Recommendation System (Matrix Completion)</a>
+	* <a href="/95">Recommendation System with Implicit Feedback</a>
+* <a href="/74">Neural Network Introduction</a>
+* <a href="/75">Deep Learning 1 - RBM, DNN, CNN</a>
+* <a href="/76">Reinforcement Learning</a>
+	* <a href="/96">Multi-armed Bandit</a></p>
 ]]></content>
   </entry>
   
