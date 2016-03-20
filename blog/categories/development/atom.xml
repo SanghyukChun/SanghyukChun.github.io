@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-15T02:29:17+09:00</updated>
+  <updated>2016-03-21T00:45:21+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -14,63 +14,275 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Octopress Markdown Kramdown으로 이전하기]]></title>
+    <link href="http://SanghyukChun.github.io/98/"/>
+    <updated>2016-03-21T00:45:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/98</id>
+    <content type="html"><![CDATA[<ul id="markdown-toc">
+  <li><a href="#html--markdown-">HTML 코드에서 Markdown 코드로</a></li>
+  <li><a href="#markdown--mathjax">기존 Markdown 디버그 (MathJax)</a></li>
+  <li><a href="#kramdown-markdown">Kramdown Markdown</a>    <ul>
+      <li><a href="#table-of-contents-toc">Table of Contents (ToC)</a></li>
+      <li><a href="#inline-attribute-lists-ial">Inline Attribute Lists (IAL)</a></li>
+      <li><a href="#section">개인적으로 불편한 점들</a></li>
+    </ul>
+  </li>
+  <li><a href="#todo">TODO</a></li>
+</ul>
+
+<h3 id="html--markdown-">HTML 코드에서 Markdown 코드로</h3>
+<p>이 블로그를 시작한 이래로, 나는 줄곧 markdown code가 아니라 진짜 pure html code로 블로깅을 해왔다.
+별 다른 이유가 있다기보다는, 이 블로그를 맨 처음 시작할 때만 하더라도 markdown에 대한 개념도 많이 없었고,
+어느 정도 시간이 흐른 뒤에는 markdown으로 작업하려니 몇 가지 충돌사항들이 발생하는데, 이걸 일일이 처리하기도 귀찮고,
+그걸 처리하자고 일부는 markdown으로 쓰고 일부는 html로 작성하려니 정말 끔찍한 코드가 나와서, markdown을 버렸다.</p>
+
+<p>Markdown과 충돌을 일으키는 대표적인 녀석은 바로 <code>MathJax</code>.
+알 수 없는 이유로, markdown 안에 MathJax 문법을 쓰면 제대로 동작하지 않았다 (정확히는 escape됐다).
+사실 조금만 알아보면 고칠 수 있었는데, 그때는 당췌 원인도 잘 모르겠고, 그냥 힘드니까 버려두었다가,
+오늘 갑자기 삘이 꽂혀서 막 고치다가 정신을 차려보니 전체 소스 코드를 뜯어고치고 있더라.</p>
+
+<p>결론적으로 지금은 only markdown 문법만 사용해도 블로깅을 할 수 있도록 소스코드를 뜯어고친 상태이고,
+지금 이 글 역시 markdown으로만 작성하고 있다. Markdown을 사용했을 때의 장점이라면,</p>
+
+<ol>
+  <li>편집기 상에서 각각의 포스트들이 훨씬 더 readable하다.
+    <ul>
+      <li>아무래도 html tag가 난잡하게 섞여있으면 편집기로 코드를 읽기가 벅차다. 그럴 일은 없지만, 만약 html syntax highlighting을 못해주는 편집기라도 썼다가는….</li>
+      <li>사실 이런 이유로, 일일이 html로 코딩할 수 없는 수업, 세미나, 아이디어 정리 등을 포스팅할 때 아래같은 문제가 생긴다.</li>
+    </ul>
+  </li>
+  <li>포스팅을 할 때에 덜 번거롭다.
+    <ul>
+      <li>HTML을 생으로 코딩한다는 얘기는, id, class 같은 attribute라거나, a tag의 내부도 일일이 쳐줘야하고.. 여러모로 귀찮다.</li>
+      <li>HTML로 코딩하는 것 보다는 확실히 생산성이 증가한다. 특히 내가 html 코딩용으로 맞춰둔 sublime text를 쓸 수 없는 환경에서 텍스트로 적은 글을 다시 html로 포팅하는 일은 시간만 엄청 잡아먹고 전혀 생산적이지 않은 일인데 그런 시간을 많이 줄일 수 있을 것 같다.</li>
+    </ul>
+  </li>
+  <li>전체적인 포스팅 시간이 감소한다.
+    <ul>
+      <li>앞에서 얘기한 덜 번거롭다는 점도 물론 크게 작용한다.</li>
+      <li>지금 내가 사용 중인 octopress의 경우, rails 기반이라 글을 수정하면 다시 컴파일을 하지 않아도 알아서 글이 rebuild되긴 하지만, 어쨌거나 이것도 시간이 든다.</li>
+      <li>근데 markdown으로만 코딩을 할 수 있다면 그냥 빠르고 간단한 markdown editor로 글을 쓴 다음 붙여넣기만 하면 된다. 수식이나 그림같은 몇 가지 markdown으로만 지원되지 않는 방식들은 나중에 한 번에 확인하면 되니까 훨씬 시간이 감소한다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>항상 최고일 수는 없듯, markdown을 썼을 때의 단점도 있다.</p>
+
+<ol>
+  <li>명시적으로 코드를 쓰는 것이 아니기 때문에 원하는대로 동작하지 않을 때 디버깅하기가 많이 귀찮다
+    <ul>
+      <li>대표적인 예로 뒤에서 설명할 <code>MathJax</code> 디버깅할때 진짜..</li>
+    </ul>
+  </li>
+  <li>어쩔 수 없이 html componenet를 하나하나 작업해야할 때가 있는데, 이때 마크다운만 쓰면 어쩔 수 없이 한계가 온다.
+    <ul>
+      <li>지금 image caption을 div tag를 써서 div &gt; img, p로 구성한 상태인데, 이걸 마크다운으로…. 적당히 플러그인으로 코딩하면 어떻게든 할 수 있지 않을까 고민 중이다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>하지만 이래저래 markdown을 썼을 때의 생산성만 못하기 때문에 markdown으로 제대로 쓸 수 있도록 몇 가지 작업을 시작했다. (마치 C가 memory를 명시적으로 다루기에 빠워하지만, 코드 생산성은 파이썬이나 루비를 못따라가는 것과 비슷한 이치)</p>
+
+<h3 id="markdown--mathjax">기존 Markdown 디버그 (MathJax)</h3>
+<p>기존 markdown기반 코드의 가장 큰 문제는 <code>MathJax</code>가 전혀 동작하지를 않는다는 것이였다. 예를 들어서</p>
+
+<p><code>
+* example 1: $\alpha$.
+* example 2: \(\alpha\).
+</code></p>
+
+<p>이런 코드를 작성했다고 했을 때, 둘 다 제대로 된 $\alpha$를 보여주는 녀석이 없었다.
+뭐, 일단 여러 이유가 있었는데, 먼저 원래대로라면 위에 있는 <code>$</code> 쓴 녀석은 잘 동작해야한다.
+하지만 제대로 동작하지 않았는데, 그건 내가 설정을 좀 잘못했던거고,</p>
+
+<p>문제는 두 번째 녀석이었는데, 이 녀석은 다른게 문제가 아니라 <code>\</code> 가 escape되어버리는 문제가 있었다.
+그러니까 저 코드를 돌리면, <code>example 2: (alpha)</code> 같은 모양이 나와서 속은 터지고 원인은 모르는 상황이 발생.
+그래도 이게 markdown이 escape을 해버리는 거라서 html로 explict하게 적어주면 잘 동작했다.
+그래서 결국은 저 간단한 코드가 이런 모양새가 되어버렸다</p>
+
+<p>```html</p>
+<ul>
+	<li>example 1: \(\alpha\)</li>
+	<li>example 2: \(\alpha\)</li>
+</ul>
+<p>```</p>
+
+<p>음.. 딱 봐도 지저분하지 않은가? 문제점을 해결하려고 몇 번 시도하다가,
+초반에 <code>MathJax</code>에서 많이 고생했던 터라, 일단 동작하는 상태로 방치해둔게 벌써 거의 2년이 지난 셈이다.</p>
+
+<p>결국, 지금은 <code>MathJax</code>의 설정을 다음과 같이 고쳤다.</p>
+
+<p><code>js
+&lt;script type="text/x-mathjax-config"&gt;
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+&lt;/script&gt;
+</code></p>
+
+<p>내가 앞에서 <code>$</code>가 제대로 동작하지 않은 이유는, 이 설정에서 제대로 명시가 되지 않아서 였던 모양이다.
+원래 기본옵션으로 되어야 맞는데, 왜인지는 모르겠지만 잘 되지 않았던 모양.</p>
+
+<p>그리고 지금은 <code>\(\)</code>와 <code>\[\]</code>를 아예 패턴에서 빼버린 상황인데,
+먼저 <code>\(\)</code>나 <code>\[\]</code>같은 방식으로 수식을 쓰면 가독성이 떨어진다는 점 (처음 쓸 때는 LaTex 초보라 <code>$</code>같은 좋은걸 몰랐다)
+그리고 앞에서 말한대로 자꾸 escape해버리는 경우가 발생해서 아예 없애버렸다.
+이게 언제 심각해지냐하면, 다음과 같은 방식의 markdown을 쓸 때에 결과 값이 이상해진다</p>
+
+<p><code>
+다음 링크 [[링크]](http://sanghyukchun.github.io)를 누르면 제 블로그로 갑니다.
+</code></p>
+
+<p>내가 이해하기로는 octopress에서 <code>MathJax</code>를 쓰면,</p>
+
+<ul>
+  <li>markdown (컴파일) → (public에 생성된) html → <code>MathJax</code>로 parsing</li>
+</ul>
+
+<p>이런 현상이 일어나는데, 위와 같은 방식으로 컴파일을 하고나면 경우에 따라 <code>[]</code>가 <code>\[\]</code>로 인식이 되어서
+‘링크’가 display math로 떠버리는 황당한 경우가 생기더라.
+결국 보기도 편하고 쓰기도 편한 달러로 통일.</p>
+
+<ul>
+  <li><a href="https://www.lucypark.kr/blog/2013/02/25/mathjax-kramdown-and-octopress/">https://www.lucypark.kr/blog/2013/02/25/mathjax-kramdown-and-octopress/</a> 같은 경우에도 보면 markdown 문법이랑 충돌하거나, markdown이 escape하는 녀석을 MathJax에서 쓰면 좀 귀찮아진다.</li>
+</ul>
+
+<h3 id="kramdown-markdown">Kramdown Markdown</h3>
+
+<p>원래 내 Octopress는 <a href="http://dafoster.net/projects/rdiscount/">RDiscount</a> markdown을 쓰고 있었다.
+괜찮은 녀석이긴 한데, 내가 결정적으로 원하는 결정적인 기능인 Heading tag에 자동으로 id 추가기능을 전혀 지원하지 않아서 다른 markdown으로 이전하기로 결정했다.
+내가 후보로 살펴본 markdown은 <a href="http://kramdown.gettalong.org/">Kramdown</a>과 <a href="https://github.com/vmg/redcarpet">Redcarpet2</a>이었는데, 이 중 Redcarpet2는 GitHub의 markdown의 베이스가 되는 녀석이라서 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 좀 많이 탐을 냈는데, octopress와는 궁합이 잘 맞지 않아서 포기했다.</p>
+
+<p>Octopress에서 Redcarpet을 쓰는 방법<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>에 대해 포스팅을 한 사람도 있어서 따라서 해봤는데,
+나는 자꾸 <code>atom.xml</code>에서 <code>Liquid Exception</code>이 발생하더라.
+내용은 <code>render</code>라는 tag가 없다는건데, 뭔가 redcarpet을 쓰면 내가 octopress에서 남발하고 있는 render가 제대로 동작하지 않는 모양. 결국 포기하고 Kramdown으로 넘어가기로 했다.</p>
+
+<p>Kramdown으로 바꾸기 위해서는 <code>_config.yml</code>에서 markdown부분을 <code>markdown: kramdown</code>으로 수정하기만 하면 된다.
+몇 가지 옵션을 줄 수 있는데, 아직 옵션은 안줘봤다.</p>
+
+<h4 id="table-of-contents-toc">Table of Contents (ToC)</h4>
+
+<p>내가 RDiscount를 버린 가장 큰 이유는 바로 Table of Contents가 없다는 건데,
+꼭 필요한건 아니지만, 가끔 ToC가 있었으면 할 때가 있는데도 만들 수가 없어서 좀 번거로울 때가 있었다.
+그리고 또 다른 포스트에서 특정 포스트의 Heading을 refer 해야할 때에도 id auto generation이 안되기 때문에
+내가 일일이 다시 id tag를 달아줘야하는 끔찍함이 있었는데, 그런 불편함도 사라졌다.</p>
+
+<p><a href="http://kramdown.gettalong.org/converter/html.html#toc">링크</a>를 타고 들어가면 ToC를 만드는 법에 대해 나와있으니 참고하면 좋을 것 같다. 아무튼 지금은 맨 앞에 이렇게만 쓰면 된다. 엄청 편함.</p>
+
+<p>```
+* TOC</p>
+<p>```</p>
+
+<p>아 물론 css를 좀 고쳐야한다. <a href="http://blog.riemann.cc/2013/04/10/table-of-contents-in-octopress/">http://blog.riemann.cc/2013/04/10/table-of-contents-in-octopress/</a> 를 참고하시길.</p>
+
+<h4 id="inline-attribute-lists-ial">Inline Attribute Lists (IAL)</h4>
+
+<p>그리고 <code>Kramdown</code>의 또 하나의 장점이라면 markdown의 여러 component들에게 inline으로 attribute를 지정할 수 있다는 것이다.<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>
+이게 무슨 말이냐 하면, 내가 지금 사용 중인 reference list는 다음과 같은 코드로 작성된다.</p>
+
+<p><code>html
+&lt;ol class="reference"&gt;
+	&lt;li&gt;referenece 1&lt;/li&gt;
+	&lt;li&gt;referenece 2&lt;/li&gt;
+&lt;/ol&gt;
+</code></p>
+
+<p>리스트에 class attribute가 있어서 어쩔 수 없이 html 코드를 직접 써야하는데, <code>Kramdown</code>을 쓰면 다음과 같이 쓸 수 있다.</p>
+
+<p class="reference">```
+1. reference 1
+2. reference 2</p>
+<p>```</p>
+
+<p>당연히 <code>#</code>을 쓰면 id도 가능하다!</p>
+
+<h4 id="section">개인적으로 불편한 점들</h4>
+<p>일단 <code>\|</code> 이 무조건 table로 사용이 된다. 그래서 <code>MathJax</code>에서 <code>\| A \|</code> 같은걸 쓰려면 <code>\\\| A \\\|</code> 처럼 escape이 된 형태로 써야한다 (심지어 지금도 그렇게 쓰고있다!). 내가 table을 쓰면 상관이 없지만, table을 안쓰는 입장에서 자꾸 이렇게 되니까 답답해 미칠 것 같다. 하다하다 짜증나면 p tag쓰면 된다지만… 그래도 ㅠㅠ..
+그리고 링크도 <code>&lt;  &gt;</code>로 묶어줘야지만 auto link가 되는 것도 좀 귀찮다. 근데 이건 장단이 있으니까 익숙해지면 될 것 같다.</p>
+
+<p>그걸 제외하면 아직까지는 엄청 불편한건 없어보인다.
+사실 그 동안 markdown으로 글을 안쓰다보니, 갑자기 markdown을 쓰는 것 만으로 글이 엄청 편해져서, 이런 단점들은 아직까지는 그닥 크지 않다.</p>
+
+<h3 id="todo">TODO</h3>
+<p>오늘 하루 종일 이 작업뿐 아니라 블로그 공사에만 집중 했음에도 불구하고 아직도 할 일이 많다.
+오늘 한 대표적인 일 중 하나라면 전체 CSS랑 HTML layout을 살짝 손봤다. 디테일한 부분을 손봤기 때문에 사실 크게 티는 안나지만, 그래도 뭐, 꽤나 만족한다.
+이제 남은 녀석들은 예전 html로 작업한 녀석들 중에 필요한 녀석들은 markdown으로 포팅하는 무시무시한 작업을 제외한다면,
+그 이외에는 다 루비코드를 직접 건드려야하는 녀석들이다. 대표적으로 남은 놈들이라면..</p>
+
+<ul>
+  <li>Syntax Highlighting 복구하기
+    <ul>
+      <li>이건 원래 되던 기능인데, 내가 bootstrap붙이면서 충돌이 너무 일어나서 겨우겨우 depreciate시켜놨더니 이제 무슨 수를 써도 highlighting이 안된다 (..)</li>
+      <li>이건 js로 되는 문제가 아니라 원래 하이라이팅을 해주는 octopress 코드를 충돌이 일어나지 않도록 뜯어고쳐야할듯..</li>
+      <li>오늘 오전부터 한 2-3시까지 이것만 했는데 도대체 왜 안되는건지 갑갑해서 돌아버리겠다.</li>
+    </ul>
+  </li>
+  <li>Image Caption
+    <ul>
+      <li>지금 image caption은 만들어는 놨는데, markdown으로 하기에는 코드가 좀 끔찍하다.</li>
+      <li><code>&lt;div class="caption"&gt;&lt;img src="img"&gt;&lt;p&gt;caption&lt;/p&gt;&lt;/div&gt;</code> 이런 식의 코드라서, 뭔가 루비 코드를 직접 건드려야 할 것 같다.
+        <ul>
+          <li><a href="http://blog.zerosharp.com/image-captions-for-octopress/">http://blog.zerosharp.com/image-captions-for-octopress/</a> 응용하면?</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Github style heading 링크
+    <ul>
+      <li>이건 루비코드를 건드릴 필요는 없지만, 그래도 할게 좀 많아보인다.</li>
+      <li><a href="http://ben.balter.com/2014/03/13/pages-anchor-links/">http://ben.balter.com/2014/03/13/pages-anchor-links/</a> 시간날 때 해보자.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>조만간 시간있을 때 Syntax 부분이랑 anchor link는 다시 덤벼봐야겠다.
+Caption은 일이 좀 커질 것 같아서..</p>
+
+<p>아무튼 markdown으로 포스팅하니까 진짜 편하네.</p>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="https://github.com/blog/832-rolling-out-the-redcarpet">https://github.com/blog/832-rolling-out-the-redcarpet</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://yangsu.github.io/blog/2012/10/11/using-octopress-with-github-flavored-markdown-redcarpet/">http://yangsu.github.io/blog/2012/10/11/using-octopress-with-github-flavored-markdown-redcarpet/</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="http://kramdown.gettalong.org/syntax.html#inline-attribute-lists">http://kramdown.gettalong.org/syntax.html#inline-attribute-lists</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Kaggle competition - Poker rule induction]]></title>
     <link href="http://SanghyukChun.github.io/87/"/>
     <updated>2015-09-26T15:10:00+09:00</updated>
     <id>http://SanghyukChun.github.io/87</id>
     <content type="html"><![CDATA[<p>이 글은 2015년 봄 내가 조교를 했었던 KAIST 빅데이터 분석개론 수업에서 중간 프로젝트로 나왔었던 Kaggle Competition을 내가 개인적으로 진행해보면서 느꼈던 점들을 시간 순서에 맞춰 적은 일종의 개발기이다. <a href="https://github.com/SanghyukChun/kaggle-poker_rule">깃허브 레포지토리</a>도 있으니 코드가 궁금하다면 이 레포지토리를 확인하면 될 것 같다. 깃허브 기준으로 이 프로젝트는 2015년 3월 20일부터 4월 19일까지 대략 한 달간 진행하였다.</p>
-
-
 <p>이 competition을 위하여 4가지 정도의 아이디어를 냈었다. 먼저 normal KNN을 최대한 튜닝해보는 것, 문제가 'rule'이라는 것에 초점을 맞추어 rule을 정의하고 그것을 learning하는 방법, 세 번째로 card set에 대한 확률모델을 정의하여 likelihood를 maximization하는 방법, 마지막으로 기존 KNN의 input을 적당하게 바꾸어 KNN으로 처리하는 방법이었다. 이 중 실제로 submission까지 이어진 아이디어는 처음과 마지막 아이디어인데, 첫 번째는 0.67575, 두 번째에는 0.96908을 달성하였다. 이 글에서는 각각의 아이디어를 생각하게 된 계기와 왜 실패했고, 왜 성공했는지에 대해 정리해보도록하겠다.</p>
-
-
 <p>이 competition을 시작하게 된 계기는, 내가 조교를 맡고 있던 수업에서 프로젝트로 <a href="https://www.kaggle.com">Kaggle competition</a>의 poker rule induction 문제를 풀기로 했기 때문이었다. (<a href="https://www.kaggle.com/c/poker-rule-induction">competition 링크</a>). 문제 자체가 간단하고, 마음만 먹으면 99% 이상을 찍는 단순한 알고리즘을 만드는 것이 어렵지 않은 문제였기 때문에, 나름의 조건으로 poker rule이 아니라 그 어떤 카드 게임에도 general하게 learning 결과를 적용할 수 있는 framework을 만들자는 것과, 또 하나는 deep learning을 사용하지 않고, 학생들이 이미 알고있는 기초적인 framework에 재미있을 법한 아이디어들을 섞어보기로 하였다. 그렇기 때문에 시작은 가장 간단하고 직관적인 KNN부터 적용해보는 것으로 시작해보았다. training set을 8:2로 나눠서 validation 실험을 진행해본 결과, 그냥 raw data를 사용하고 그냥 KNN을 사용하게 되면, 결과가 50% 정도 밖에 나오지 않았다. 여기에서 내가 해볼 수 있는 가장 간단한 개선은 k의 개수를 조절하는 것과 metric을 바꾸는 것, 그리고 input data를 바꾸는 것이다.</p>
-
-
-<h5>첫 번째 아이디어 KNN</h5>
-
-
+<h3>첫 번째 아이디어 KNN</h3>
 <p>K를 이리저리 조절해보아도 크게 차이가 나지는 않았다. 잘 선택하니 55% 언저리도 나오기는 했지만, K와는 다른 문제가 있어보였다. 그 문제를 해결하기 위해 먼저 input data를 5차원 데이터로 바꿔보았다. 즉, 지금은 5개의 카드 각각에 대해 rank와 suit를 따로 표현하여 10차원 데이터로 표현이 되지만, rank와 suit를 합쳐보는 것이다. 그리고 knn을 해보니 결과는 50% 미만. 왜 이럴까 생각을 해보니 당연히 1~52까지 카드가 배치가 될텐데, 이 숫자는 인덱스를 의미하지 진짜 '거리'를 의미하지 않기 때문에 문제가 발생한다는 것을 알 수 있었다. 따라서 input data는 real number여서는 안되고, 52차원짜리 binary로 개선해야겠다는 생각을 하게 되었다. 즉, 원래 10차원 real value data가 이제 52차원 binary data로 바뀌게 되었다. 같은 카드가 두 번 나오지 않기 때문에 반드시 binary임이 보장된다. 그러나 52차원은 너무 크기 때문에 PCA를 사용하여 차원을 조금 더 낮은 차원으로 보내보기도 하였다. 정리하자면 인풋을 binary로 정의하고, distance는 cosine으로 바꿔보고 PCA에 사용할 low dimension을 잘 선택하고 K를 잘 조절해본 결과 8:2 세팅에서 68.233%까지 성능이 향상되는 것을 볼 수 있었다. 2015년 3월 20일 새벽 2시 반, 리소스 문제로 인해 아직 test data를 서버에 제출하지는 못하였다. 아무래도 코드를 개선해야할 것 같다.</p>
-
-
-<h5>두 번째 아이디어 'rule' learning</h5>
-
-
-<p>그러나 이런 식의 방법을 사용해 KNN의 성능을 개선시킬 수는 있지만, 이는 근본적이 해결책이 되지 못한다. 문제를 해결하기 위해서는 조금 더 문제를 잘 정의하고, 좋은 알고리즘을 찾아야만 한다. 즉, 문제를 어떻게 모델링하느냐에 대한 이슈가 아직 해결되지 않은 것이다. 우리는 무엇을 찾아야하는가? 나는 여기에서 한 가지 생각을 했다. 결국 우리가 찾고 싶은 것은 Poker rule이다. 즉, 만약 우리가 rule에 대한 전체 domain을 정의할 수 있고, 각각의 rule에 대한 performance measure를 정의할 수 있다면, 가장 좋은 rule을 찾는 알고리즘을 디자인 할 수 있지 않을까? 생각이 여기까지 진행되니 바로 자연스럽게 다음 질문이 나오게 되었다. 'rule'은 어떻게 정의해야할까? 처음에는 이렇게 생각했다. 결국 카드게임은 카드들을 비교하여 좋은 '조합'을 가진 사람이 이기는 게임이다. 따라서 나는 5장의 카드들로 이루어진 모든 pair 조합만큼의 dimension을 가지고 (즉, \(5 \choose 2\) = 10개) 두 카드를 비교하는 rule의 개수가 \(n\)개라고 했을 때 각각의 piar들에게 n개 중의 하나에 대응시키게 되면, 우리는 10차원 real value vector로 rule을 표시할 수 있지 않을까? 그런데 문제가 있었다. 앞에서 본 것 처럼, rule의 개수를 \(n\)개 라고 한다고 해서, 1번째 rule과 100번째 rule이 어떤 우열관계가 있는게 아니다. 따라서 결국 binary로 만들어야할 것 같다. 그래서 어떻게 두 카드 사이의 rule을 binary로 만들 수 있을지 가만 생각해보니, 결국 rule이라는 것은 현재 이 카드가 다른 카드 어떤 것과 대응되는지 되지 않는지가 아닌가라는 생각이 들었다. 예를 들어 우리가 52개의 카드를 가지고 있을 때, 같은 숫자를 가진다는 rule은, 총 52 * 52개의 모든 카드 조합 중에서 정확하게 4*13 = 52개의 조합들을 의미하는 것이 아닐까. 다시 말해서, (1, 1), (1, 14), (1, 27), (1,40), (2,2), ... 이런 식으로 정의가 된다고 생각할 수 있는 것이다. 그렇게 생각하게 되면 총 52*52 = 2704개의 rule이 필요하게 되더라.</p>
-
-
+<h3>두 번째 아이디어 'rule' learning</h3>
+<p>그러나 이런 식의 방법을 사용해 KNN의 성능을 개선시킬 수는 있지만, 이는 근본적이 해결책이 되지 못한다. 문제를 해결하기 위해서는 조금 더 문제를 잘 정의하고, 좋은 알고리즘을 찾아야만 한다. 즉, 문제를 어떻게 모델링하느냐에 대한 이슈가 아직 해결되지 않은 것이다. 우리는 무엇을 찾아야하는가? 나는 여기에서 한 가지 생각을 했다. 결국 우리가 찾고 싶은 것은 Poker rule이다. 즉, 만약 우리가 rule에 대한 전체 domain을 정의할 수 있고, 각각의 rule에 대한 performance measure를 정의할 수 있다면, 가장 좋은 rule을 찾는 알고리즘을 디자인 할 수 있지 않을까? 생각이 여기까지 진행되니 바로 자연스럽게 다음 질문이 나오게 되었다. 'rule'은 어떻게 정의해야할까? 처음에는 이렇게 생각했다. 결국 카드게임은 카드들을 비교하여 좋은 '조합'을 가진 사람이 이기는 게임이다. 따라서 나는 5장의 카드들로 이루어진 모든 pair 조합만큼의 dimension을 가지고 (즉, $5 \choose 2$ = 10개) 두 카드를 비교하는 rule의 개수가 $n$개라고 했을 때 각각의 piar들에게 n개 중의 하나에 대응시키게 되면, 우리는 10차원 real value vector로 rule을 표시할 수 있지 않을까? 그런데 문제가 있었다. 앞에서 본 것 처럼, rule의 개수를 $n$개 라고 한다고 해서, 1번째 rule과 100번째 rule이 어떤 우열관계가 있는게 아니다. 따라서 결국 binary로 만들어야할 것 같다. 그래서 어떻게 두 카드 사이의 rule을 binary로 만들 수 있을지 가만 생각해보니, 결국 rule이라는 것은 현재 이 카드가 다른 카드 어떤 것과 대응되는지 되지 않는지가 아닌가라는 생각이 들었다. 예를 들어 우리가 52개의 카드를 가지고 있을 때, 같은 숫자를 가진다는 rule은, 총 52 * 52개의 모든 카드 조합 중에서 정확하게 4*13 = 52개의 조합들을 의미하는 것이 아닐까. 다시 말해서, (1, 1), (1, 14), (1, 27), (1,40), (2,2), ... 이런 식으로 정의가 된다고 생각할 수 있는 것이다. 그렇게 생각하게 되면 총 52*52 = 2704개의 rule이 필요하게 되더라.</p>
 <p>이렇게 문제를 단순화시키고나니 문제의 목적은 'rule'을 찾는 것이며, rule은 다음과 같은 binary operation으로 정의할 수 있었다. 먼저 우리는 임의의 두 개의 카드 pair에 대해 총 52 * 52 = 2704개의 rule을 가진다. 왜냐하면 1부터 52까지 범위를 가지는 숫자 두 개를 연결하는 방법이 52*52개 만큼 있기 때문이다. 그리고 그 중 k개의 rule을 뽑아내고, k-1개의 binary operation을 사용해 각 점수에 대한 rule을 구해낸다. 예를 들어 카드의 값을 1부터 52까지 대응시켰을 때, 1 pair rule을 이 operation으로 나타내보면, (A 카드의 값이 1이고, B 카드의 값이 1인 rule) or (A 카드의 값이 2이고, B 카드의 값이 2인 rule) or .... 이 될 것이다. 이 경우 k는 13이고, k-1개의 operation들은 모두 or이다. 마찬가지로 2에 대해서 rule을 구하고, 계속해서 9까지 rule을 구한다.</p>
-
-
 <p>우리가 모든 card set을 가지고 있다면 위의 문제를 direct하게 풀면 문제를 완벽하게 풀 수 있지만, 그렇지 않기 때문에 overfitting이 일어나게 된다. 따라서 나는 이 문제를 어떻게 더 generalize시킬 수 있느냐를 고민해보았다. 이 문제는 Rule의 총 개수를 2704개 보다 훨씬 더 적은 양으로 mapping할 수 있다면 비교적 쉽게 풀 수 있다. 나머지는 전부 training data에서 optimization으로 해결할 수 있는 문제들이니까.</p>
-
-
 <p>그러나 이윽고 나는 다른 문제에 부딪히게 되었다. Rule이 이것보다 훨씬 많다는 것을 깨달았기 때문이다. Rule은 and operation으로만 이어지는 것이 아니라 or operation으로도 이어질 뿐 아니라 연산 순서 역시 중요했었다. 예를 들어 Rule = (Rule 1 and Rule 2 and Rule 3) or Rule 4 or (Rule 5 and Rule 6) 같은 지저분한 rule도 있을 수 있었기 때문이다. 즉, 내가 문제를 너무 단순하게 봤었다. 이렇게 문제를 생각하게 되면 rule에 대한 강력한 assumption이 없는 이상 더 이상의 generalization은 불가능하고, 직접적으로 rule을 learning하는 것이 어렵다는 결론에 도달하였다.</p>
-
-
-<h5>세 번째 아이디어 grapical probability model</h5>
-
-
-<p>다음으로 내가 생각했던 것은, 확률 모델로 문제를 디자인해보자는 것이었다. 주어진 데이터를 \(X\)라고 한다면 \(p(y|X)\)가 제일 큰 \(y\)를 고르면 되도록 말이다. 여러가지 확률 모델들이 있지만 (예를 들어 naive baysian도 확률모델이다) 내가 생각했던 아이디어는 각각의 \(y\)마다 확률 모델을 만들고, \(X\)가 \(y\)인지 아닌지 binary로 판단하게 하는 방식이었다. 이렇게 생각한 이유는, 실제로 rule이 중복해서 나올 수 있기 때문이다. 예를 들어 Triple은 two pair이기도 하고, four card는 triple이면서 two pair이기도 하다. 이렇게 모델을 정의하고 모든 \(y\)에 대해 지금 \(X\)를 대입한 후, 특정 threshold를 넘는 \(y\) 중에서 가장 큰 숫자를 고르게 하는 것이다.</p>
-
-
+<h3>세 번째 아이디어 grapical probability model</h3>
+<p>다음으로 내가 생각했던 것은, 확률 모델로 문제를 디자인해보자는 것이었다. 주어진 데이터를 $X$라고 한다면 $p(y|X)$가 제일 큰 $y$를 고르면 되도록 말이다. 여러가지 확률 모델들이 있지만 (예를 들어 naive baysian도 확률모델이다) 내가 생각했던 아이디어는 각각의 $y$마다 확률 모델을 만들고, $X$가 $y$인지 아닌지 binary로 판단하게 하는 방식이었다. 이렇게 생각한 이유는, 실제로 rule이 중복해서 나올 수 있기 때문이다. 예를 들어 Triple은 two pair이기도 하고, four card는 triple이면서 two pair이기도 하다. 이렇게 모델을 정의하고 모든 $y$에 대해 지금 $X$를 대입한 후, 특정 threshold를 넘는 $y$ 중에서 가장 큰 숫자를 고르게 하는 것이다.</p>
 <p>이 아이디어를 실행하기 위해 가장 중요한 것은 어떤 probability model을 선택하느냐는 것이었다. 내가 처음 생각한 아이디어는 RBM이었지만, RBM은 주어진 데이터에 대한 joint probability만 표현할 수 있지, 어떤 데이터가 그것에 속하지 않는지 learning하는 것이 어려웠다. 이 문제가 근본적으로 기존 방법들로 접근하기 어려운 이유는 sample bias가 너무 심하기 때문이다. 즉, 0점 짜리가 거의 대부분에 속하고 그 다음으로 1점, 2점... 순서로 가기 때문에 각 sample들이 uniform하게 분포하지 않고, 그 때문에 일반적인 방법으로 접근하게 되었을 때 과도하게 0에 치중된 모델이 나오게된다는 점이었다. 나는 이 때문에 각각의 점수별로 모델을 따로 가져가고, 대신 binary로 모델을 풀고 bias를 최대한 해결할 수 있는 방법을 생각해보려 했었다.</p>
-
-
 <p>그러나 conditional probabilty를 이런 방식으로 leanring할 수 있는 모델이 (학생들이 알 수 있거나 생각할 수 있을법한) 모델 중에서는 도저히 떠오르지 않아서 이 방법도 선택하지 않게 되었다.</p>
-
-
-<h5>마지막 아이디어 결국 다시 KNN</h5>
-
-
+<h3>마지막 아이디어 결국 다시 KNN</h3>
 <p>그래서 결국 다시 KNN으로 돌아가게 되었다. 학생 중 하나가 나에게 sorting을 하는 방법에 대해서 물어봤었고, suit를 차라리 없애는 것이 훨씬 결과가 잘 나온다는 얘기를 들었기에 그렇게 한 번 진행해보았다. 그런데 결과가 너무 잘 나오는게 아닌가 (0.96908) 심지어 1-NN을 선택했고, 내가 한 것이라고는 suit를 무시하고 rank만 5개 고르고 5개를 sorting한 것을 넣은 것에 불과했는데. 도저히 이해가 안되서 하루쯤 생각해보니 이게 왜 잘 동작하는지 알 수 있었다. KNN 세팅에서 binary로 바꾸고 하는 과정을 거치지 않았을 때 50%의 성공을 거뒀던 것에 비해 너무 말도 안되는 성능 향상이었기 때문이다. 게다가 1-NN이 아니라 2-NN이나 3-NN의 퍼포먼스가 형편없다는 것도 이해할 수 없었다.</p>
-
-
 <p>실제 poker rule에서 suit와 카드 순서에 영향을 받는 룰은 Flush 와 straight, 그리고 Royal flush 뿐이지만, 이 녀석들은 거의 나타나지 않는 녀석들이었다. 이렇게 input 데이터를 sorting하게 되면 전체 경우수는 오직 ( 13 choose 5 - 13 ) = 1274 개 뿐이다. 13을 뺸 이유는 같은 rank가 같은 경우는 오직 4개 뿐이기 때문이다. 그런데 training 데이터의 개수는 25,000개 넘기 때문에 엄청 높은 확률로 rank만 고려했을 때 training 데이터와 정확하게 같은 training 데이터가 존재하게 되는 것이다. 이 말은 다시 말하면 왜 K=1 일때만 제대로 동작하는지를 증명하는 말이기도 하다. 즉, 아주 높은 확률로 항상 '정확하게 같은' 데이터 셋을 training데이터에서 고를 수 있으니 당연히 K=1을 선택해야만 제대로 결과가 동작하게 되는 것이다.</p>
-
-
 <p>나는 여기까지만 시도하고 그만두었다. 이때부터 엄청 바빠지기도 했고, 내가 처음 걸었던 조건처럼 poker에 대한 가정을 최소화한 상태로 학생들도 알 수 있는 간단한 아이디어로 이 문제를 해결하는 것이 어렵다고 느꼈었기 때문이다. 그래도 최종 결과를 96% 정도 달성하였으니 이 정도면 나름 나쁘지 않은 결과가 아닐까 생각한다.</p>
-
 ]]></content>
   </entry>
   
@@ -80,49 +292,25 @@
     <updated>2015-03-14T03:57:00+09:00</updated>
     <id>http://SanghyukChun.github.io/86</id>
     <content type="html"><![CDATA[<p>운이 좋게도, 교수님의 추천을 받아 블룸버그 software internship을 지원하게 되었다. 지원은 작년 12월에 하였고, 인터뷰는 1월 말부터 시간을 계속 조율하다가 오늘에서야 phone interview를 보게 되었다. 블룸버그가 뉴욕에 있다보니 현지 시간으로 2시에 면접인데 나는 새벽 3시.. 그나마 섬머타임이 실행되서 3시였지 안그랬으면 4시였다. 늦은 시간이지만 잠깐 시간을 내서 이 여운이 사라지기 전에 기록을 남겨볼까 한다.</p>
-
-
 <p>먼저 phone interview는 생각보다도 더 어렵다. 일단 전화라는게 상대방의 말을 명료하게 전달해주지 못하는게 문제가 된다. 안그래도 긴장해서 영어가 잘 안들리는 상황에서 전화 연결 상황까지 안좋으니 더더더 긴장할 수 밖에 없었다. 하지만 이런 상황에도 못알아들었으면 당당하게 다시 말해달라고 하면 인터뷰어가 친절하게 대답해주니까 너무 겁먹을 필요는 없더라. 그리고 내가 phone interview에서 코딩을 위해 사용한 <a href="https://www.hackerrank.com/">HackerRank</a>라는 녀석이 구글 독스처럼 서로 글씨를 적으면 바로바로 상대방이 볼 수 있는 방식이라 말을 하면서 동시에 타이핑을 하는 것으로 충분히 내 부족한 영어를 메꿀 수도 있었다.</p>
-
-
 <p>맨 처음 전화를 받고나서는 내 resume를 기반으로 몇 가지 질문들이 들어왔다. 너 이런 연구했는데 이거에 대해서 간단하게 설명할 수 있니? 여기에서 한 work은 어떤 work이니? 이 회사에서 일할 때 어떤 일들을 했니? 등의 질문들이었는데 아무래도 내 영어가 길지 못해 충분히 설명하지 못한게 아쉬운 요소였다. 시간을 재본건 아닌데 대충 10분 정도 레쥬메 스캔을 한 것 같다.</p>
-
-
 <p>레쥬메 스캔이 끝나자마자 바로 코딩 문제로 넘어갔다. 여러 언어를 사용할 수 있는 것 같던데, 나는 Python을 사용해서 코딩을 했다. 내가 가장 멋진 코드를 쓸 수 있는건 (당연히 MATLAB을 제외하면) Ruby이지만, 내가 Ruby를 손에 안잡은지 너무 오래되었기 때문에 그나마 최근에도 가끔 사용하는 Python을 쓰기로 했다. C나 JAVA보다는 Python이 내 장점을 어필하기에 그나마 조금 나을 것 같아서. 그리고 사실 C랑 자바도 까먹었다. 질문은 두 가지 였는데, 하나는 여러 개의 list를 intersection하는 function을 짜라는 문제였고, 또 하나는 캐시를 구현하는거였다. 첫 번째 문제를 듣자마자 그간 코딩을 게을리한 것을 후회하게 되더라. 분명 어렵지 않은 문제인데 갑자기 코딩을 하려니 좋은 방법이 잘 떠오르지 않더라. 구글링을 하면 간단하게 해결할 수 있는 문제지만 그럴 수 있는 상황은 아니니까. 두 번째 문제는 듣자마자 OS에서 배웠던 내용이라 기뻐했는데 막상 어떤 데이터스트럭쳐를 사용해서 어떻게 빠르게 할 수 있는지 설명하려니까 그냥 딕셔너리를 써서 sorting한다는 대답 밖에 할 수 없었다.</p>
-
-
 <p>첫 번째 문제를 정확하게 기술해보면 Input list들은 [ [1,2,3,...], [2,3,4,...], [5,6,7,...], ... ] 처럼 생긴 list of list로 들어오고, output은 그 list들의 intersection을 구하는 문제였다. 내가 제안한 방법은 functional language 처럼 문제를 푸는 방법이었다. 먼저 두 개의 list를 비교하는 function을 만들고, 그것을 reduce했다. 대략 아래와 같은 느낌</p>
-
-
 <p><code>
 f = lambda x,y : [a for a in x if a in y]
 print reduce(f,L)
 </code></p>
-
 <p>코드 퀄리티는 아주 만족한다. 처음에 문제를 듣자마자 그냥 for loop으로 일단 돌아가게만 다 풀어버릴까 고민도 했었는데 그래도 그것보다는 이게 훨씬 아름답고 functional한 철학에도 맞고 여러모로 내가 추구하는 이상적인 코드에 가깝다. 문제는 여기까지 가는데에 시간이 너무 오래걸렸다는 것. 처음에 열심히 헤메느라 점수 다 까먹었을 것 같다. List comprehension을 사용하면 Lambda를 금방 정의할 수 있는데 그 생각을 못해서 for loop으로 naive한 것을 먼저 만들고 그걸 lambda로 넣으려고 하고 막 그랬는데.. 암튼 좀 헤메다가 위 처럼 문제를 해결했다. 그런데 저 List comprehension도 내가 naive way라면서 일단 element wise로 다 비교해보자고 하면서 넣은거라 interviewer가 내가 코딩을 끝내자마자 바로 이 방법을 더 좋게 만들 수 없는지 물어보더라. Sorting이 되어있냐고 물어보고, 되어있지 않다고 하길래 일단 각각을 sorting했다고 가정하고 filter를 사용해서 개선할 수 있다고 하고 내가 코드를 적으려고 했는데 시간이 부족하다면서 (이미 여기에서부터 15분 남음) 스킵하고 넘어갔다. 내가 적고 싶었던 솔루션은 아래와 같았다. 진짜 잘 동작하는지모르고, complexity가 진짜 더 낮은지 생각해봐야함. 근데 아마 O(n)이 O(log n)이 되어서 더 빠를거임.</p>
-
-
-<p>```
-for l in L:</p>
-
-<pre><code>l = sort(l)
-</code></pre>
-
-<p>f = lambda x,y : [a for a in x if a in filter(lambda b : b >= a, y)]
+<p><code>
+for l in L:
+	l = sort(l)
+f = lambda x,y : [a for a in x if a in filter(lambda b : b &gt;= a, y)]
 print reduce(f,L)
-```</p>
-
+</code></p>
 <p>사실 for loop쓴 sorting도 한 줄에 쓸 수 있을 것 같지만 귀찮으니까 넘어가야지. 으 딱 15초만 더 줬으면 바로 타이핑해서 보여줬을텐데. 시간이 많이 부족하다그래서 그냥 넘어갔다.</p>
-
-
 <p>두 번째 문제는 input이 어떻게 생겼는지 물어보다가 대답이 내가 원하는 대답이 아니라 그냥 내가 stream을 새로 정의했다. S = [1,2,3,4,1,2,1,4,2,1,...] 같은 list로 들어온다고 가정하고, 내가 할 일은 이 리스트를 앞에서부터 읽으면서 캐쉬에 넣다가, 캐쉬 메모리가 모자라면 가장 오래 전에 마지막으로 사용된 element를 drop하는 algorithm을 짜는거였다. 이런 초 쉬운걸 기억이 안나서... 일단 내 대답은 dictionary를 만드는거였다. 참고로 이 문제는 시간이 없어서 말로 때움. 스트림별로 key를 가지는 dictionary를 만들고 value는 키에 해당하는 스트림이 들어왔을 때의 시간 값을 넣는다. 그리고 메모리가 모자라면 dictionary를 보고 가장 오래된 시간을 쓰는 녀석을 지워낸다.. 가 내 솔루션이었는데, 가장 오래된 녀석을 찾는게 log라서 그걸 더 빠르게 할 수 없냐는 질문이 들어왔음. (구체적으로 log라고 한건 아니고, 그때그때 찾는게 비싸니까 더 빠르게 할 수 없냐는 질문) 내가 기억하는 O(1)짜리 data structure가 큐랑 스택 밖에 없어서 그걸 사용해서 막 삽질을 하다가 결국 시간도 모자라고해서 거기에서 멈췄다. 솔직히 이건 시간 더 줬어도 내가 명석하게 해결하지 못했을 듯 ㅠㅠ 이런거 안한지 너무 오래됐다..</p>
-
-
 <p>마지막에 다 끝나고 질문있냐 물어봐서 블룸버그에서 어떤 언어를 쓰냐 물어봤더니 팀마다 다르단다. 본인은 팀에서 C++랑 Javascript를 사용한다고. 파이썬이나 루비를 사용하는 팀도 있다고 한다. 사실 내가 지금 software internship으로 들어가게 되면 도대체 어떤 position으로 들어가게 되는건지 알 수가 없어서 (pure developer인지 researcher인지 어느 정도 level로 코딩하는지..) 내가 어떤 언어를 쓰게 될지는 모르겠지만, 최소한 내가 가서 고를 수 있는 일말의 여지가 있다면 내가 최대한 잘 할 수 있는 팀으로 배정되면 된다는 결론을 내릴 수 있었다. 뭐 될지는 모르겠지만. 결과는 2~3주 뒤에 나온다고 했으니 또 막 메일 왔다갔다하다보면 한 달 예상해본다. Optimal case라면 2주 뒤인 3월 말에 ICML 리뷰를 보고 결과도 대충 알 수 있을거고 블룸버그 결과도 같이 나오는 셈이다. 이번에는 좀 좋은 결과가 있었으면 좋겠는데..</p>
-
-
 <p>사실 크게 별 생각안하고 코딩하면서 떨지만 않게 적당히 인터넷에서 <a href="https://sites.google.com/site/steveyegge2/five-essential-phone-screen-questions">코딩 인터뷰 관련 글</a>이나 <a href="http://www.bogotobogo.com/python/python_interview_questions.php">문제들</a> 푸는 정도로 몸풀고 인터뷰를 봤는데 굉장히 좋은 경험이 되었다. 영어로 official software engineer job recuiting phone interview라니, 정말 중요한 경험인데 굉장히 어린 나이에 운좋게 경험할 수 있었다. 무엇보다 학위를 마치고 장래에 미국에서 job을 구할 생각을 하고 있는 상황에서 이런 좋은 회사와 phone interview 과정을 겪어보는 것만으로도 진짜 좋은 경험이 되었다. 가서 일을 해보면 훨씬 더 좋은 경험이 될 것 같지만, 그건 내가 결정하는게 아니니 일단은 두고 봐야겠지.</p>
-
 ]]></content>
   </entry>
   
@@ -132,60 +320,44 @@ print reduce(f,L)
     <updated>2013-12-16T08:49:00+09:00</updated>
     <id>http://SanghyukChun.github.io/36</id>
     <content type="html"><![CDATA[<p><a href="33">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고... 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/">이음 블로그</a> 참고... 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
-
-
 <p>일단, apache만 가지고 되는건 거의 없다. 기본적으로 php + mysql 기반으로 굴러가는 모듈이 워낙 많기 때문에 이 녀석들도 깔아주도록하자. 아래와 같은 스크립트를 만들어서 돌리면 편하다</p>
-
-
-<p>```</p>
-
-<h1>!/bin/bash</h1>
-
-<p>apt-get -y install apache2 libapache2-mod-passenger
+<p><code>
+#!/bin/bash
+apt-get -y install apache2 libapache2-mod-passenger
 apt-get -y install mysql-server mysql-client
 apt-get -y install php5-common php5 libapache2-mod-php5
 apt-get -y install php5-mysql
 apt-get -y install phpmyadmin
-```</p>
-
+</code></p>
 <p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐... 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
-
-
 <p>Default</p>
-
-
 <p>```
-<VirtualHost *:80></p>
+&lt;VirtualHost *:80&gt;
+	ServerAdmin webmaster@localhost</p>
 
-<pre><code>ServerAdmin webmaster@localhost
-
-DocumentRoot /var/www
+<pre><code>DocumentRoot /var/www
 &lt;Directory /&gt;
-    Options FollowSymLinks
-    AllowOverride None
+	Options FollowSymLinks
+	AllowOverride None
 &lt;/Directory&gt;
 &lt;Directory /var/www/&gt;
-    Options Indexes FollowSymLinks MultiViews
-    AllowOverride None
-    Order allow,deny
-    allow from all
+	Options Indexes FollowSymLinks MultiViews
+	AllowOverride None
+	Order allow,deny
+	allow from all
 </code></pre>
-
-<p>  </Directory>
-  <Directory /var/www/redmine></p>
-
-<pre><code>RailsBaseURI /redmine
-PassengerResolveSymlinksInDocumentRoot on
-</code></pre>
-
-<p>  </Directory></p>
+<p>&lt;/Directory&gt;
+  &lt;Directory /var/www/redmine&gt;
+    RailsBaseURI /redmine
+    PassengerResolveSymlinksInDocumentRoot on
+  &lt;/Directory&gt;</p>
 
 <pre><code>ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
 &lt;Directory "/usr/lib/cgi-bin"&gt;
-    AllowOverride None
-    Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-    Order allow,deny
-    Allow from all
+	AllowOverride None
+	Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+	Order allow,deny
+	Allow from all
 &lt;/Directory&gt;
 
 ErrorLog ${APACHE_LOG_DIR}/error.log
@@ -196,13 +368,9 @@ LogLevel warn
 
 CustomLog ${APACHE_LOG_DIR}/access.log combined
 </code></pre>
-
-<p></VirtualHost>
+<p>&lt;/VirtualHost&gt;
 ```</p>
-
 <p>passenger.conf</p>
-
-
 <p><code>
 &lt;IfModule mod_passenger.c&gt;
   PassengerDefaultUser www-data
@@ -210,52 +378,32 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
   PassengerRuby /usr/bin/ruby
 &lt;/IfModule&gt;
 </code>
-```</p>
-
-<h1>!/bin/bash</h1>
-
-<p>apt-get install redmine redmine-mysql
+<code>
+#!/bin/bash
+apt-get install redmine redmine-mysql
 cp passenger.conf /etc/apache2/mods-available/passenger.conf
 ln -s /usr/share/redmine/public /var/www/redmine
 cp default /etc/apache2/sites-available/default
-```</p>
-
+</code></p>
 <p>참 쉽다.. 참고로 이건 전부다 그냥 기본 설정이라 이렇게 한거지, 만약 설정이 되어있는 상태라면 위에 링크한 글대로 하기를 바란다. 혹시나 default설정 싹 날리거나 그러지 말고... 이제 service apache2 restart를 때려주면 레드마인이 돌아간다 올레</p>
-
-
 <p>음 그리고 이번에는 xe를 깔아보자. BBS 모듈이 필요할 때가 간간히 있기 때문에 xe는 깔아서 손해볼게 없다. (워드프레스도 쓸만하지만 단순 BBS로는 xe가 낫다.) 자 이번에도 스크립트.</p>
-
-
-<p>```</p>
-
-<h1>!/bin/bash</h1>
-
-<p>git clone <a href="https://github.com/xpressengine/xe-core.git">https://github.com/xpressengine/xe-core.git</a>
+<p><code>
+#!/bin/bash
+git clone https://github.com/xpressengine/xe-core.git
 mv xe-core /var/www/xe
 chmod 707 -R /var/www/xe
-svn checkout <a href="http://xe-board.googlecode.com/svn/trunk/">http://xe-board.googlecode.com/svn/trunk/</a> board
+svn checkout http://xe-board.googlecode.com/svn/trunk/ board
 mv board /var/www/xe/modules/board
-```</p>
-
+</code></p>
 <p>뭐.. 이렇게 하고 ~~/xe 들어가서 설치하면 xe랑 board 모듈까지 설치 끝... 아 기본 설정인 경우에는 설정-고급-짧은 주소 사용에 아니오를 선택하고 캐시를 리로드해야한다. 이거 몰라서 한 1시간은 삽질했는데.. 이거 싫으면 따로 뭐를 깔아야하길래 그게 더 귀찮아서 그냥 설정을 바꿔줬다.</p>
-
-
 <p>마지막으로 위키를 깔아보자. 위키는 미디아위키를 사용한다.</p>
-
-
 <p><code>
 git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
 mv core /var/www/wiki
 chmod 707 -R /var/www/wiki
 </code></p>
-
 <p>아 참고로 xe도 wiki도 설치 후에 아파치를 한번 리스타트 해줘야할거다... 역시 이것도 /wiki로 들어가서 설치를 해주고 나온 php파일을 ftp로 /var/www/wiki에 다시 넣어주면 끝</p>
-
-
-<p></p>
-
 <p>전반적으로 크게 난해한 세팅도 없고.. 애당초 이번에 설치한 녀석들이 꽤 모듈로 잘 나온 놈들을 쓴 거라.. 크게 어렵지 않게 세팅했다. 지금 추가로 해볼까 고민 중인 것들은 개인 레포지토리를 뚫느냐 마느냐. 별로 큰 이득이 없어서 안할 것 같기는 하지만, 그래도 일단 만들어서 손해볼 것도 없고, 공부 삼아서 해볼까 고민 중이다. gui로 웹에서 접근 가능한 녀석을 만들어볼까하는데, 엄청 어려울 것 같지는 않고 그냥 엄청 귀찮을거 같아서 고민이다.</p>
-
 ]]></content>
   </entry>
   
@@ -265,24 +413,16 @@ chmod 707 -R /var/www/wiki
     <updated>2013-12-12T01:15:00+09:00</updated>
     <id>http://SanghyukChun.github.io/33</id>
     <content type="html"><![CDATA[<p>사실 서버용 컴퓨터를 구매한 것은 벌써 거의 <a href="http://SanghyukChun.github.io/28">2주도 더 이전에 있었던 일</a>이지만, 근래에 좀 많이 바빠서 이제서야 기본적인 세팅을 하게 되었다. 지난번에 설치한 우분투 서버에 뭔가 문제가 있었는지 장소를 옮겨서 부팅하자마자 OS가 뻗어버리는... 그래서 오늘 다시 다 밀어버리고 처음부터 다시 세팅했다.</p>
-
-
 <p>서버를 설치하면서는 뭐 크게 신경 쓸 만한 옵션은 많이 없긴한데.. 난 개인적으로 내가 관리하는 편이 좋아서 파티션에서 <a href="http://www.fis.unipr.it/pub/linux/redhat/9/en/doc/RH-DOCS/rhl-cg-ko-9/ch-lvm-intro.html">LVM</a>도 끄고, 자동 업데이트도 끄고.. 유틸도 전부 안깔고 진행했다. 그리고 ip 세팅만 해줬는데, 나는 학교에서 할당 받은 ip만 사용할 수 있는 상황이니깐, 이게 나름 중요하다. 맨 처음 세팅할 때 ip를 입력하게 되면 별로 머리아플 일이 없기는 하지만, 실수로 세팅을 하지 않은 상황이거나 하면... 나중에 설치가 끝난 이후에 /etc/network/interfaces와 /etc/resolv.conf만 고쳐주면 간단하다. 아래는 내 interfaces 파일</p>
+<p>```
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).</p>
 
-
-<p>```</p>
-
-<h1>This file describes the network interfaces available on your system</h1>
-
-<h1>and how to activate them. For more information, see interfaces(5).</h1>
-
-<h1>The loopback network interface</h1>
-
+<h1 id="the-loopback-network-interface">The loopback network interface</h1>
 <p>auto lo
 iface lo inet loopback</p>
 
-<h1>The primary network interface</h1>
-
+<h1 id="the-primary-network-interface">The primary network interface</h1>
 <p>auto p2p1
 iface p2p1 inet static
   address 143.248.53.74
@@ -293,58 +433,9 @@ iface p2p1 inet static
   dns-nameservers 8.8.8.8
   dns-search kaist.ac.kr
 ```</p>
-
 <p>이게 맨 처음에 설치할 떄 잡아줬더니 p2p1이라고 잡아줬는데, 평소에는 그냥 따로 추가할 필요없이 아래같은 format으로 적어주면 그만. 이걸 적고 service networking restart를 해주면 dns도 같이 잡힌다. (알아서 resolv.conf가 업데이트 된다.) 이제 인터넷도 끝.</p>
-
-
 <p>이제 유틸을 깔 차례. apt-get으로 설치 가능한 유틸은 대충 깔고... 문제는 아파치, mysql, php등등인데, <a href="http://karasix.blog.me/10090152926">이거에 관련된 블로그</a>를 찾았다. 별로 어렵지는 않고, 그냥 가끔 헷갈릴 때 보면 괜찮은 듯.</p>
-
-
 <p>지금 아파치를 설치 중인데, APR이 없다고 에러가 뜬다.. <a href="http://stackoverflow.com/questions/9436860/apache-httpd-setup-and-installation">stackoverflow</a>를 보니 <a href="http://apr.apache.org/">APR</a>이란 놈을 깔아야하는 모양. 아 이건 좀 귀찮다. 여기서부터는 내일부터.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[서버를 구축해보자]]></title>
-    <link href="http://SanghyukChun.github.io/28/"/>
-    <updated>2013-11-26T00:11:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/28</id>
-    <content type="html"><![CDATA[<p>최근 연구실 초기 세팅을 위해서 고군분투하고 있는데, 갑자기 연구실용이 아니라 내 전용 서버를 하나 두면 재미있을 것 같다는 생각이 들었다. 용도는 크게.. 네 가지 정도</p>
-
-
-<ul>
-    <li>내 개인 웹서버 - 간단한 나에 대한 소개 등등을 하는 개인 페이지나 내가 개발하는 웹 어플리케이션을 배포하기 위한 용도.. 대충 아래에 있는 목록 정도를 배포하지 않을까 싶다</li>
-    <ul>
-        <li>현재 <a href="sanghyukchun.github.io/aboutMe">sanghyukchun.github.io/aboutMe</a>에 있는 내 PR페이지</li>
-        <li>연구를 하고 그 기록을 보관하기 위한 개인 BBS.. 이건 XE 써서 만들면 간단할 것 같다</li>
-        <li>연구 및 개인 스케쥴 관리를 위한 레드마인</li>
-        <li>내가 필요한 내용을 정리하기 위한 개인 Wiki</li>
-        <li>예전부터 생각만 하고 있고 구현은 하고 있지 않은 맛집 DB 및 추천용 웹 어플리케이션</li>
-    </ul>
-    <li>맥 이외의 다른 머신에서도 개발할 수 있기 위한 개인 개발용 서버 (SSH client를 사용해서 접속하는 방식으로..)</li>
-    <li>개인 파일 서버 - 원래는 그냥 SFTP정도로 끝내려고 했지만, 동영상을 저장해서 실시간 스트리밍이 가능한 어플리케이션을 만들어볼까 고민 중이다</li>
-    <li>개인 메일 서버 - 필요하지는 않지만, sanghyuk@sanghyuk.kaist.ac.kr 이나.. 나중에 혹시 다양한 사람들을 위한 웹어플리케이션을 만들 경우에 supports@sanghyuk.kaist.ac.kr 이런 식으로 메일을 만드는 것도 가능하다!</li>
-    <li>개인 메일링 리스트 서버 - 개인적으로 메일링 리스트를 구축해야할 일이 얼마나 있을지는 모르겠지만, 그래도 세팅해두고 메일링 리스트로 관심분야를 정리하면 굉장히 좋을 것 같다는 생각이 든다</li>
-</ul>
-
-
-<p>등을 해보고자 한다.</p>
-
-
-<p>전반적으로 연산 자원을 많이 요구하지 않으니깐 듀얼코어 i3면 충분할 거라고 생각했고 (그리고 듀얼코어가 파워 컨섬션도 적고 발열도 적다), 마찬가지 이유로 RAM도 4GB 한 개만 사기로 했다. 이걸 사는 이유는 그냥 나중에 필요하면 다른 컴퓨터로 옮겨 낄 수도 있고 팔기에도 2GB보다는 4GB가 잘 팔리니깐. 파일 서버를 세팅을 하기는 하겠지만, 아마 TB단위 이상으로 필요할 것 같지는 않고, 만약 필요하다면 요즘 하드 가격도 많이 떨어졌으니 간단하게 확장하면 되니깐 그냥 WD 1TB만 구매하기로 결정. 이 이외의 다른 세팅은 필요없을 것 이라고 판단하고 과감하게 보드도 저렴한 녀석으로 구매했다. 어차피 비싼 보드라는게 결국 포트가 더 많이 들어있거나 더 좋은 성능의 무언가가 들어간 경우 (USB3.0, SPDIF, 예전엔 SATA3등등..) 근데 나는 그냥 랜선만 있으면 된다. 랜카드를 더 박거나 GPU가 필요하지도 않으니 그냥 과감하게 저렴한 녀석으로 결정!</p>
-
-
-<p>그래서 견적이 이렇게 나왔다.</p>
-
-
-<p><img src="/images/post/28-1.png" width="400"></p>
-
-<p>오늘 주문했고 배송도 되었으니 아마 빠르면 내일 오후 늦으면 내일 모레 도착할 것 같다. 조립하기 귀찮아서 조립비도 그냥 낼까 했는데, 부품도 몇 개 없어서 그냥 내가 조립하기로 했다. 정말 금방 끝날 것 같아서..</p>
-
-
-<p>운영체제는 당연히 Ubuntu Server. 예전에는 정말 아무것도 몰라서 Ubuntu Desktop을 깔고 왜 자꾸 에러가 나고 리소스가 부족한지 한숨짓고는 했는데, 이제는 그런 실수는 안하겠지 하하. 13은 너무 버그가 많기도 하고 LTS가 아직 안나온 것 같아서 그냥 12.04LTS로 결정. 이제 서버만 도착하면 될 것 같은데 ㅎㅎ</p>
-
 ]]></content>
   </entry>
   

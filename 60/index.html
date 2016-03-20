@@ -18,30 +18,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
+
+  
   <link rel="canonical" href="http://SanghyukChun.github.io/60">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-	<script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <script>
 $(function() {
-	$('.tip').attr('data-toggle','tooltip');
-	$('.tip').attr('data-placement','top');
-	$('.tip').tooltip();
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -85,7 +103,7 @@ $(function() {
   
   <header>
     
-      <h1 class="entry-title">Machine Learning 스터디 (4) Algorithm</h1>
+      <h1 class="entry-title"><a href="">Machine Learning 스터디 (4) Algorithm</a></h1>
     
     
       <p class="meta text-right mB50">
@@ -110,190 +128,71 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><h5>들어가며</h5>
-
-
+<div class="entry-content"><h3>들어가며</h3>
 <p>Machine Learning을 제대로 이해하기 위해서는 알고리즘에 대한 이해가 필수적이다. 어떤 알고리즘이 좋은 것이고 어떤 알고리즘이 나쁜 것인지에 대한 구분이 이뤄져야지만 향후 논의하게 될 많은 주제들에 대해 얘기하기 쉬워진다. 어떤 문제가 풀 수 있는 문제이고 어떤 문제가 풀 수 없는 문제인가? 풀 수 있다 없다는 어떻게 정의하는가? 등에 대해 이해해야만 머신러닝 알고리즘들에서 얘기하는 local optimum이나 compuation complexity 등에 대해 이해할 수 있을 것이다. (잘 모르는 개념이더라도 영화 이미테이션 게임을 봤다면 금방 이해할 수 있을 것이다)</p>
-
-
 <p><a href="57">이전 글</a>에서 머신러닝에서 알고리즘이란 어떤 의미가 있는지를 얘기했었다. 쉽게 생각하면, 우리가 원하는 형태로 모델을 정의한 이후에 그 모델을 어떻게 learning할 것인가, 즉, 어떤 알고리즘을 사용하여 model을 learning할 것인가에 대한 얘기를 하기 위해서는 알고리즘에 대해 반드시 짚고 넘어가야만 한다. 알고리즘 부분에서 반드시 짚고 넘어가야할 부분은 (1) Big O notation (2) P and NP (3) Reduction (4) NP Complete (5) Approximation Algorithm 정도라고 생각하기에 이 글에서는 이 정도 내용을 다루도록 하겠다.</p>
-
-
-<h5 id="60-1-bigO">Algorithm, Big O notation</h5>
-
-
-<p>먼저 algorithm이란 무엇인지에 대해 생각해보자. 알고리즘이란 것의 정확한 정의는 <a href="http://en.wikipedia.org/wiki/Algorithm">위키</a>를 참고하길 바란다. 알고리즘에 있어서 중요한 몇 가지를 꼽자면, 먼저 input이 정의가 되어야하며 output을 가져야한다. 즉, 알고리즘은 특정 데이터에 대해 동작해야하며, 해당 데이터에 대한 알고리즘의 결과를 출력해야만한다. 그리고 알고리즘은 반드시 어떤 &#8216;목적&#8217;을 가지고 있다. 즉, 내가 만약 특정 지점부터 다른 특정 지점으로 이동하는 가장 짧은 path를 찾는 알고리즘을 작성해야만한다면 해당 알고리즘의 목적은 shortest path를 찾는 것이고, input은 임의의 graph와 시작점, 그리고 끝점이 될 것이다. 마지막으로 출력값은 shortest path가 될 것이다. 이런 것을 행할 수 있는 일종의 procedure가 알고리즘이라고 할 수 있다. 하지만 우리는 그냥 임의의 알고리즘이 필요한 것이 아니라 &#8216;좋은&#8217; 알고리즘이 필요하다. 예를 들어서 Algorithm A는 shortest path를 찾는데 1시간이 걸리고, Algorithm B는 4초가 걸린다면 당연히 B를 사용해야할 것이다. 그렇다면 알고리즘의 좋다 혹은 나쁘다는 무엇으로 구분하느냐, <a href="http://en.wikipedia.org/wiki/Big_O_notation">Big O notation</a>의 역할이 바로 그것을 구분하는 역할을 하는 것인데, 이 notation은 해당하는 알고리즘이 &#8216;주어진 input의 크기에 대해&#8217; 계산량이 얼마나 필요하느냐를 indicate하는 notation이다. 표기는 O(n) 와 같은 꼴로 표시하게 된다. n은 input의 크기이다. 예를 들어 shortest path면 전체 graph의 node의 개수가 될 것이다. O notation은 일종의 upper limit로, 아무리 최악의 상황에서도 계산량이 O 안에 있는 양보다 적게 걸린다는 의미이다. 또한 만약 소요 시간이 2n 이거나 n+1 이거나 10000000000000000n 이어도 이 알고리즘들은 모두 O(n)이 된다. 이 정도 얘기는 조금만 구글링해도 많이 나오는 얘기니 여기까지만 적고, 진짜 중요한건 &#8216;polynomial time&#8217;일 것이다. 무슨 얘기이냐하면, 알고리즘의 실행시간이 input의 크기가 늘어나는 것에 대해 polynomial scale로 증가하는 알고리즘이 좋은 알고리즘이라는 뜻이다. 당연히 input에 대해 최대한 적게 증가하는 알고리즘이 좋기는 하지만, \( O(e^n) \) 보다는 \( O(n^4) \) 이 훨씬 더 좋다는 얘기이다. Exponential time이 소요되는 알고리즘은 사실상 거의 무한대의 시간이 걸린다고 봐도 될 정도로 절망적인 computation time을 의미하며, 제대로 활용 가능한 알고리즘이 되려면 그 알고리즘의 computation time은 반드시 polynomial time이어야한다.</p>
-
-
-<p>Expotentially increase라는 말에는 정말 어마어마한 파괴력이 있다. 이것이 왜 절망적이냐하면, 우리가 linear한 10n 알고리즘을 가지고 있을 때 input의 size가 1, 2, 3 의 순으로 증가하더라도 여전히 computation time은 10, 20, 30이지만, exponential time이 필요한 경우에는 예를 들어 10^n이라고 한다면 10, 100, 1000만큼의 시간이 필요하다. 즉 input이 3배 증가했을 뿐인데 두 알고리즘은 1000/30 = 33.33 배 만큼의 성능차이가 나는 것이다. 만약 input size가 100이라면? \(10^{97}\) 만큼의 차이가 난다. Exponential이라는 것에는 이만큼의 파괴력이 있다. 그러나 polynomial time안에 풀 수 있다면, 100배가 증가했을 때, n과 \(n^2\)의 차이는 100에 불과하다. 이 때문에 polynomial time algorithm은 풀 수 있는 문제로 취급되고, exponential algorithm은 실제로 쓸 수 없는 알고리즘으로 취급받는 것이다. <a href="/59#59-3-ms">이전 글의 model selection part</a>에서 &#8216;그리고 데이터가 많아지면 그런 validation set이 엄청나게 많아진다. 정확히는 exponential로 늘어나기 때문에 마냥 모든 데이터에 대해 cross-validation을 하는 것은 불가능하다.&#8217; 라는 표현을 했을 때 exponential 로 증가하는 validation이 불가능하다는 표현을 했던 것이다.</p>
-
-
-<h5 id="60-2-np">P and NP</h5>
-
-
-<p>P problem이란 해당하는 문제를 polynomial time안에 풀 수 있는 알고리즘을 제시할 수 있는 문제를 의미한다. 예를 들어 우리에게 주어진 데이터의 개수를 sorting하는 알고리즘은 \(n log n\) 의 시간이 필요하므로 P problem이라 할 수 있다. NP problem은 올바르지는 않지만 진짜 진짜 간단하게, 표현하면, &#8216;polynomial time안에 풀 수 없는 엄청나게 어려운 문제&#8217; 라고 할 수 있다. 하지만 이것은 올바르지 않은 정의이며, 심지어 정말 polynomial time안에 풀 수 없는지 조차 아직 확실하지 않다. NP problem의 정확한 정의는 &#8216;problem이 주어지고 해당 problem에 대해 어떤 suggested solution이 주어졌을 때 polynomial time안에 그 solution이 맞는 solution인지 아닌지 구분할 수 있는 문제&#8217;라고 할 수 있다. 당연히 정확한 답을 polynomial time안에 풀 수 있는 P는 NP의 subset이다. 즉, NP는 P를 포함하는 set이라고 할 수 있다. 그렇다면 NP는 반드시 P보다 크다고 할 수 있을까? 이 문제를 얘기하려면 먼저 Reduction에 대해 다뤄야한다.</p>
-
-
-<h5 id="60-3-red">Reduction</h5>
-
-
+<h3 id="60-1-bigO">Algorithm, Big O notation</h3>
+<p>먼저 algorithm이란 무엇인지에 대해 생각해보자. 알고리즘이란 것의 정확한 정의는 <a href="http://en.wikipedia.org/wiki/Algorithm">위키</a>를 참고하길 바란다. 알고리즘에 있어서 중요한 몇 가지를 꼽자면, 먼저 input이 정의가 되어야하며 output을 가져야한다. 즉, 알고리즘은 특정 데이터에 대해 동작해야하며, 해당 데이터에 대한 알고리즘의 결과를 출력해야만한다. 그리고 알고리즘은 반드시 어떤 &#8216;목적&#8217;을 가지고 있다. 즉, 내가 만약 특정 지점부터 다른 특정 지점으로 이동하는 가장 짧은 path를 찾는 알고리즘을 작성해야만한다면 해당 알고리즘의 목적은 shortest path를 찾는 것이고, input은 임의의 graph와 시작점, 그리고 끝점이 될 것이다. 마지막으로 출력값은 shortest path가 될 것이다. 이런 것을 행할 수 있는 일종의 procedure가 알고리즘이라고 할 수 있다. 하지만 우리는 그냥 임의의 알고리즘이 필요한 것이 아니라 &#8216;좋은&#8217; 알고리즘이 필요하다. 예를 들어서 Algorithm A는 shortest path를 찾는데 1시간이 걸리고, Algorithm B는 4초가 걸린다면 당연히 B를 사용해야할 것이다. 그렇다면 알고리즘의 좋다 혹은 나쁘다는 무엇으로 구분하느냐, <a href="http://en.wikipedia.org/wiki/Big_O_notation">Big O notation</a>의 역할이 바로 그것을 구분하는 역할을 하는 것인데, 이 notation은 해당하는 알고리즘이 &#8216;주어진 input의 크기에 대해&#8217; 계산량이 얼마나 필요하느냐를 indicate하는 notation이다. 표기는 O(n) 와 같은 꼴로 표시하게 된다. n은 input의 크기이다. 예를 들어 shortest path면 전체 graph의 node의 개수가 될 것이다. O notation은 일종의 upper limit로, 아무리 최악의 상황에서도 계산량이 O 안에 있는 양보다 적게 걸린다는 의미이다. 또한 만약 소요 시간이 2n 이거나 n+1 이거나 10000000000000000n 이어도 이 알고리즘들은 모두 O(n)이 된다. 이 정도 얘기는 조금만 구글링해도 많이 나오는 얘기니 여기까지만 적고, 진짜 중요한건 &#8216;polynomial time&#8217;일 것이다. 무슨 얘기이냐하면, 알고리즘의 실행시간이 input의 크기가 늘어나는 것에 대해 polynomial scale로 증가하는 알고리즘이 좋은 알고리즘이라는 뜻이다. 당연히 input에 대해 최대한 적게 증가하는 알고리즘이 좋기는 하지만, $ O(e^n) $ 보다는 $ O(n^4) $ 이 훨씬 더 좋다는 얘기이다. Exponential time이 소요되는 알고리즘은 사실상 거의 무한대의 시간이 걸린다고 봐도 될 정도로 절망적인 computation time을 의미하며, 제대로 활용 가능한 알고리즘이 되려면 그 알고리즘의 computation time은 반드시 polynomial time이어야한다.</p>
+<p>Expotentially increase라는 말에는 정말 어마어마한 파괴력이 있다. 이것이 왜 절망적이냐하면, 우리가 linear한 10n 알고리즘을 가지고 있을 때 input의 size가 1, 2, 3 의 순으로 증가하더라도 여전히 computation time은 10, 20, 30이지만, exponential time이 필요한 경우에는 예를 들어 10^n이라고 한다면 10, 100, 1000만큼의 시간이 필요하다. 즉 input이 3배 증가했을 뿐인데 두 알고리즘은 1000/30 = 33.33 배 만큼의 성능차이가 나는 것이다. 만약 input size가 100이라면? $10^{97}$ 만큼의 차이가 난다. Exponential이라는 것에는 이만큼의 파괴력이 있다. 그러나 polynomial time안에 풀 수 있다면, 100배가 증가했을 때, n과 $n^2$의 차이는 100에 불과하다. 이 때문에 polynomial time algorithm은 풀 수 있는 문제로 취급되고, exponential algorithm은 실제로 쓸 수 없는 알고리즘으로 취급받는 것이다. <a href="/59#59-3-ms">이전 글의 model selection part</a>에서 &#8216;그리고 데이터가 많아지면 그런 validation set이 엄청나게 많아진다. 정확히는 exponential로 늘어나기 때문에 마냥 모든 데이터에 대해 cross-validation을 하는 것은 불가능하다.&#8217; 라는 표현을 했을 때 exponential 로 증가하는 validation이 불가능하다는 표현을 했던 것이다.</p>
+<h3 id="60-2-np">P and NP</h3>
+<p>P problem이란 해당하는 문제를 polynomial time안에 풀 수 있는 알고리즘을 제시할 수 있는 문제를 의미한다. 예를 들어 우리에게 주어진 데이터의 개수를 sorting하는 알고리즘은 $n log n$ 의 시간이 필요하므로 P problem이라 할 수 있다. NP problem은 올바르지는 않지만 진짜 진짜 간단하게, 표현하면, &#8216;polynomial time안에 풀 수 없는 엄청나게 어려운 문제&#8217; 라고 할 수 있다. 하지만 이것은 올바르지 않은 정의이며, 심지어 정말 polynomial time안에 풀 수 없는지 조차 아직 확실하지 않다. NP problem의 정확한 정의는 &#8216;problem이 주어지고 해당 problem에 대해 어떤 suggested solution이 주어졌을 때 polynomial time안에 그 solution이 맞는 solution인지 아닌지 구분할 수 있는 문제&#8217;라고 할 수 있다. 당연히 정확한 답을 polynomial time안에 풀 수 있는 P는 NP의 subset이다. 즉, NP는 P를 포함하는 set이라고 할 수 있다. 그렇다면 NP는 반드시 P보다 크다고 할 수 있을까? 이 문제를 얘기하려면 먼저 Reduction에 대해 다뤄야한다.</p>
+<h3 id="60-3-red">Reduction</h3>
 <p>Problem X에서 Y로의 Reduction이란 만약 우리가 Problem Y를 풀 수 있는 Algorithm을 가지고 있을 때, 이 algorithm을 사용해 problem X를 풀 수 있는 algorithm을 찾을 수 있다는 것을 의미한다. 즉, 우리가 problem X를 풀기위해서는 problem Y를 풀기만 하면 된다. 즉, 간단히 생각하면 문제 Y가 X보다는 더 어려운 문제라고 생각하면 된다. 만약 우리가 problem Y 를 풀기위한 algorithm 중에서 P인 algorithm을 가지고 있다면, 그리고 reduction을 polynomial time안에 할 수 있다면 우리는 반드시 problem X를 polynomial time안에 풀 수 있을 것이다.</p>
-
-
-<h5 id="60-4-npc">NP Complete</h5>
-
-
+<h3 id="60-4-npc">NP Complete</h3>
 <p>NP Complete problem은 모든 NP problem이 해당 problem으로 reduction될 수 있는 문제를 의미한다. 즉, 내가 그 어떤 NP problem을 제시하더라도 반드시 어떤 NP complete problem으로 reduction시키는 것이 가능하다. 그리고 <a href="http://en.wikipedia.org/wiki/Cook%E2%80%93Levin_theorem">Cook-Levin Theorem</a>에서 Boolean SAT problem이 NP problem이라는 것을 증명한다. 그렇다면 당연히 SAT problem을 통해서 다른 NP complete problem들을 찾을 수 있다. 우리가 많이 사용하는 NP complete problem들은 <a href="http://en.wikipedia.org/wiki/Independent_set_problem">Independent set problem</a>, <a href="http://en.wikipedia.org/wiki/Clique_problem">Clique problem</a>, <a href="http://en.wikipedia.org/wiki/Vertex_cover_problem">Vertex Cover problem</a>, <a href="http://en.wikipedia.org/wiki/Set_cover">Set Cover problem</a>, <a href="http://en.wikipedia.org/wiki/Subset_sum_problem">Subset Sum problem</a> <a href="http://en.wikipedia.org/wiki/Hamiltonian_path_problem">Hamiltonian path problem</a>, <a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling salesman problem</a>, <a href="http://en.wikipedia.org/wiki/Graph_coloring_problem">Graph Coloring problem</a> 등이 있다. 해당 문제들의 전체 목록은 <a href="http://en.wikipedia.org/wiki/NP-complete#NP-complete_problems">위키</a>에서도 볼 수 있다.</p>
-
-
 <p>그렇다면 당연히 필연적으로 할 수 있는 질문은, &#8216;NP complete problem을 polynomial time안에 풀 수 있는가?&#8217; 라는 질문이 되겠다. 당연히 위에 서술한 그 어떤 문제 중에서 단 하나라도 polynomial solution을 제시할 수 있다면 모든 NP 문제들을 P로 풀 수 있을 것이다. 이 질문이 그 유명한 <a href="http://en.wikipedia.org/wiki/P_versus_NP_problem">P=NP?</a> 문제가 되겠다. 그리고 또 안타깝게도 이 문제는 <a href="http://en.wikipedia.org/wiki/Millennium_Prize_Problems">Millennium Prize Problems</a>라고 해서 엄청나게 어려운, 상금이 걸려있는 문제 중 하나이다. 즉, 아직도 결론이 나지 않은 문제이다. 하지만 그럼에도 대부분의 사람들이 NP complete는 polynomial time안에 풀 수 없다고 생각하고 있으며, 그 때문에 현재 우리가 사용 중인 모든 보안 알고리즘들은 이 NP completeness에 기반하여 만들어져있다. (정확히는 숫자를 곱하는 것은 쉬우나, 주어진 숫자가 소수인지아닌지 구분하는 것은 NP hard problem이라는 특성을 사용한다. - NP hard는 NP complete만큼 어렵거나 그보다 더 어려운 문제를 의미.) 따라서 일단 해당 문제를 reduction했더니 NP complete problem이 튀어나온다면 그 문제는 polynomial안에 답을 낼 수 없는 문제가 되겠다.</p>
-
-
-<h5 id="60-4-aa">Approximation Algorithm</h5>
-
-
-<p>그렇다고 이 문제는 NPC problem이니까 풀지말자! 라고 넘기기에는 세상에 너무나 많은 문제들이 NP complete problem이다. 그래서 정확하지는 않지만 NP complete problem을 풀기위한 여러가지 방법들이 존재한다. (<a href="http://en.wikipedia.org/wiki/NP-complete#Solving_NP-complete_problems">위키</a> 참고) 그 중에서도 approximation algorithm은 정확한 답을 구하는 것이 아니라 approximated solution을 polynomial안에 얻어내는 알고리즘을 의미한다. 즉, 원래 알고리즘이 x라는 답을 줬을 때, \(\alpha\)-approximation algorithm은 \(\alpha\)x 라는 답을 주게 된다. 자세한 점은 <a href="http://en.wikipedia.org/wiki/Approximation_algorithm">위키</a> 참고. 즉, NPC problem이 절망적으로 어려운 문제인 것은 맞지만 마냥 절망만 하고 있을 필요는 없다는 의미이며, approximation 말고도 NPC를 해결하는 방법은 여러 방법들이 존재한다. 하지만 일단 가장 중요한 개념 중 하나라고 할 수 있다.</p>
-
-
+<h3 id="60-4-aa">Approximation Algorithm</h3>
+<p>그렇다고 이 문제는 NPC problem이니까 풀지말자! 라고 넘기기에는 세상에 너무나 많은 문제들이 NP complete problem이다. 그래서 정확하지는 않지만 NP complete problem을 풀기위한 여러가지 방법들이 존재한다. (<a href="http://en.wikipedia.org/wiki/NP-complete#Solving_NP-complete_problems">위키</a> 참고) 그 중에서도 approximation algorithm은 정확한 답을 구하는 것이 아니라 approximated solution을 polynomial안에 얻어내는 알고리즘을 의미한다. 즉, 원래 알고리즘이 x라는 답을 줬을 때, $\alpha$-approximation algorithm은 $\alpha$x 라는 답을 주게 된다. 자세한 점은 <a href="http://en.wikipedia.org/wiki/Approximation_algorithm">위키</a> 참고. 즉, NPC problem이 절망적으로 어려운 문제인 것은 맞지만 마냥 절망만 하고 있을 필요는 없다는 의미이며, approximation 말고도 NPC를 해결하는 방법은 여러 방법들이 존재한다. 하지만 일단 가장 중요한 개념 중 하나라고 할 수 있다.</p>
 <p>수 많은 경우, Machine Learning 문제를 해결하다보면, 해당 문제가 NP complete problem인 경우가 많이 존재한다. 따라서 절대적인 값을 구하는 것이 불가능하여 어쩔 수 없이 local optimum을 구하는 경우도 있고, 혹은 해당 문제를 정확히 일치하지는 않지만 polynomial time안에 구할 수 있는 문제로 바꾸어 문제를 해결하는 방법도 존재한다. 즉, Machine learning에 대해 공부하기 위해서는 algorithm에 대한 이해가 매우매우 필수적이라고 할 수 있을 것이다.</p>
 
-
-
-
-<h5>변경 이력</h5>
-
-
+<h3>변경 이력</h3>
 <ul>
-<li>2014년 8월 10일: 글 등록</li>
-<li>2015년 2월 28일: 변경 이력 추가, 문장 표현 등 수정 (알고리듬->알고리즘)</li>
+  <li>2014년 8월 10일: 글 등록</li>
+  <li>2015년 2월 28일: 변경 이력 추가, 문장 표현 등 수정 (알고리듬-&gt;알고리즘)</li>
 </ul>
 
+<hr />
 
-<hr>
-
-
-<p><a href="/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
 
 <ul>
-<li><a href="/57">Machine Learning이란?</a></li>
-<li><a href="/58">Probability Theory</a></li>
-<li><a href="/59">Overfitting</a></li>
-<li><a href="/60">Algorithm</a></li>
-<li><a href="/61">Decision Theory</a></li>
-<li><a href="/62">Information Theory</a></li>
-<li><a href="/63">Convex Optimzation</a></li>
-<li><a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="/73">Recommendation System (Matrix Completion)</a>
-
-<ul>
-<li><a href="/95">Recommendation System with Implicit Feedback</a></li>
+  <li><a href="/57">Machine Learning이란?</a></li>
+  <li><a href="/58">Probability Theory</a></li>
+  <li><a href="/59">Overfitting</a></li>
+  <li><a href="/60">Algorithm</a></li>
+  <li><a href="/61">Decision Theory</a></li>
+  <li><a href="/62">Information Theory</a></li>
+  <li><a href="/63">Convex Optimzation</a></li>
+  <li><a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+  <li>Regression and Logistic Regression</li>
+  <li>PAC Learning &amp; Statistical Learning Theory</li>
+  <li>Support Vector Machine</li>
+  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
+  <li>Graphical Model</li>
+  <li><a href="/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+  <li><a href="/70">EM algorithm</a></li>
+  <li>Hidden Markov Model</li>
+  <li><a href="/72">Dimensionality Reduction (LDA, PCA)</a></li>
+  <li><a href="/73">Recommendation System (Matrix Completion)</a>
+    <ul>
+      <li><a href="/95">Recommendation System with Implicit Feedback</a></li>
+    </ul>
+  </li>
+  <li><a href="/74">Neural Network Introduction</a></li>
+  <li><a href="/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
+  <li><a href="/76">Reinforcement Learning</a>
+    <ul>
+      <li><a href="/96">Multi-armed Bandit</a></li>
+    </ul>
+  </li>
 </ul>
-</li>
-<li><a href="/74">Neural Network Introduction</a></li>
-<li><a href="/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="/76">Reinforcement Learning</a>
-
-<ul>
-<li><a href="/96">Multi-armed Bandit</a></li>
-</ul>
-</li>
-</ul>
-
 </div>
 
 <hr>
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-10T21:17:00+09:00" pubdate data-updated="true">Aug 10<span>th</span>, 2014</time>
-    </p>
-    <p class="meta">
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/machine-learning-study/'>Machine-Learning-Study</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <div class="sh_button">
-  	<a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/60/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/60/" data-count="vertical">Tweet</a>
-  </div>
-  
-  
-  <div class="sh_button">
-  	<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="box_count" data-action="like" data-show-faces="false" data-share="false"></div>
-  </div>
-  
-<!--   <div class="sh_button">
-  	<a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a>
-    <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-  </div> -->
-  <div class="sh_button">
-  	<a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="SanghyukChun" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
-  </div>
-  <div class="sh_button">
-	  <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-	  <script type="IN/Share" data-counter="top"></script>
-  </div>
-  
-  <div class="sh_button">
-  	<!-- <div class="g-plusone" data-size="medium"></div> -->
-  	<div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-height="60"></div>
-  </div>
-  
-  <div class="clear"></div>
-</div>
-
-    
-    <!--
-    
-    <p class="meta">
-      <a class="url-title basic-alignment left" href="/59/" title="Previous Post: Machine learning 스터디 (3) Overfitting">&laquo; Machine learning 스터디 (3) Overfitting</a>
-    </p>
-    
-    
-    <p class="meta">
-      <a class="url-title basic-alignment right" href="/61/" title="Next Post: Machine learning 스터디 (5) Decision Theory">&raquo; Machine learning 스터디 (5) Decision Theory</a>
-    </p>
-    
-    -->
-    </p>
-  </footer>
 </article>
 
   <section>
-    <h1>Comments</h1>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
@@ -320,6 +219,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
+      </li>
+    
+      <li class="post">
         <a href="/97/">AlphaGo의 알고리즘과 모델</a>
       </li>
     
@@ -335,40 +238,7 @@ $(function() {
         <a href="/73/">Machine Learning 스터디 (17) Recommendation System (Matrix Completion)</a>
       </li>
     
-      <li class="post">
-        <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
-      </li>
-    
   </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'SanghyukChun',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -418,25 +288,7 @@ $(function() {
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 

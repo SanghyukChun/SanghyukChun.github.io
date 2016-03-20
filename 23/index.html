@@ -18,30 +18,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
+
+  
   <link rel="canonical" href="http://SanghyukChun.github.io/23">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-	<script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <script>
 $(function() {
-	$('.tip').attr('data-toggle','tooltip');
-	$('.tip').attr('data-placement','top');
-	$('.tip').tooltip();
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -85,7 +103,7 @@ $(function() {
   
   <header>
     
-      <h1 class="entry-title">좋은 논문 리뷰를 쓰자</h1>
+      <h1 class="entry-title"><a href="">좋은 논문 리뷰를 쓰자</a></h1>
     
     
       <p class="meta text-right mB50">
@@ -111,121 +129,27 @@ $(function() {
 
 
 <div class="entry-content"><p>어제 NDSL에서 paper review session이 있었다. 학생마다 논문 2개 정도를 골라서 실제 conference에서 review하듯 review를 하는 세션이었는데, 학생들의 review에 교수님께서 일일이 코멘트를 해주셨다. 많은 얘기가 있었지만, 그 중에서 많이 나왔던 얘기를 정리해보자면</p>
-
-
 <ul>
-    <li>논문의 내용을 지적할 때는 논리적으로 오류가 있는 경우를 지적하거나 혹은 그렇지 않은 것을 그렇다고 언급했거나 (없는 것을 있다고 말을 하거나) 하는 경우만이 유효하지, &#8216;내가 생각했을 때 이 결과는 부족하다&#8217; 등의 주관적인 내용이 review의 내용이 되면 안된다.</li>
-    <li>위와 같은 맥락인데, 내 주관으로 판단해 기준 미달이라 언급하면 안되고 부족하다면 부족한 이유나 뚜렷한 기준을 제시해야한다. 기준 없는 높다, 낮다는 절대 허용되지 않는다. 예를 들어 &#8216;이 실험 결과는 error rate가 너무 크다&#8217; 라고 하면 안된다. &#8216;이 error rate는 다른 xx실험에 비해 너무 높은 값인데, 이렇게 높은 error rate는 전혀 새롭지 않다.&#8217; 등으로 얘기해야한다.</li>
-    <li>&#8216;이 논문에서는 A case의 문제를 전혀 처리하지 않았다.&#8217; 가 아니라 &#8216;A case를 전혀 고려하지 않았는데 이렇게 했을 경우 B의 문제가 생길 수 있는데 이 논문은 그런 것에 대해 전혀 언급이 없어 문제가 될 수 있다.&#8217; 식으로 얘기해야한다.</li>
-    <li>논문이 너무 specific한 주제에 한정해 다룬 경우 (예를 들어 현실에서 거의 일어나지 않는 경우에 대한 논문일 경우) 이 논문이 general하게 적용할 수 없기 때문에 나쁘다는 식으로 얘기하는 것이 아니라 이 논문이 얘기하는 상황에 대해 이 논문이 얼마나 기여할 수 있는지에 대해 먼저 언급하고 정말 그 case가 realistic한지에 대해 review한다.</li>
-    <li>기존에 하지 않았다고 해서 새로운 것이 아니다. 새로운 아이디어인지 아닌지는 내가 논문을 읽고 이 논문에서 제시한 문제에 접근했을 때 이 논문을 통해서 새로운 것을 얼마나 배웠고 아이디어는 얼마나 좋으냐로 판단해야지, 기존에 없었다고 기여도가 있는 것이 아니다. 내가 밥을 먹을 때 젓가락이 아니라 이쑤시개를 사용해 밥을 먹었다고 그게 정말 도움이 되고 새로운 것이 아니다. 마찬가지 이유로 당연하고 널리 알려져 있는 내용을 길게 적는 페이퍼는 좋은 페이퍼가 아니다.</li>
-    <li>논문은 언제나 어떤 무언가의 이유를 해결하기 위한 논문인가? (WHAT) 논문에서 제시한 방법을 사용해 어떻게 해결했는가? (HOW) 실험 결과의 이유는 도대체 왜 도출된 것인가? (WHY) 이 세 개의 질문에 잘 대답해야한다. Review역시 그 세 개의 질문에서부터 시작해야한다.</li>
-    <li>Review는 그 review를 받았을 때 어떻게 고쳐야할지 감이 오는 review가 좋은 review지, writing이 좋지않다. 논문 아이디어가 좋지 못하다. 식의 너무 애매하고 러프한 review는 좋지 않다. 이런 경우 ~~문단의 ~~줄에서 ~~라는 단어가 무슨 말을 하는지 모르겠다. 논문 아이디어가 ~~의 상황에서 ~~한 것을 처리한 것 같은데 이 아이디어는 이미 ~~에 의해 해결이 되어있다 식으로 자세히 설명해야한다.</li>
+	<li>논문의 내용을 지적할 때는 논리적으로 오류가 있는 경우를 지적하거나 혹은 그렇지 않은 것을 그렇다고 언급했거나 (없는 것을 있다고 말을 하거나) 하는 경우만이 유효하지, &#8216;내가 생각했을 때 이 결과는 부족하다&#8217; 등의 주관적인 내용이 review의 내용이 되면 안된다.</li>
+	<li>위와 같은 맥락인데, 내 주관으로 판단해 기준 미달이라 언급하면 안되고 부족하다면 부족한 이유나 뚜렷한 기준을 제시해야한다. 기준 없는 높다, 낮다는 절대 허용되지 않는다. 예를 들어 &#8216;이 실험 결과는 error rate가 너무 크다&#8217; 라고 하면 안된다. &#8216;이 error rate는 다른 xx실험에 비해 너무 높은 값인데, 이렇게 높은 error rate는 전혀 새롭지 않다.&#8217; 등으로 얘기해야한다.</li>
+	<li>&#8216;이 논문에서는 A case의 문제를 전혀 처리하지 않았다.&#8217; 가 아니라 &#8216;A case를 전혀 고려하지 않았는데 이렇게 했을 경우 B의 문제가 생길 수 있는데 이 논문은 그런 것에 대해 전혀 언급이 없어 문제가 될 수 있다.&#8217; 식으로 얘기해야한다.</li>
+	<li>논문이 너무 specific한 주제에 한정해 다룬 경우 (예를 들어 현실에서 거의 일어나지 않는 경우에 대한 논문일 경우) 이 논문이 general하게 적용할 수 없기 때문에 나쁘다는 식으로 얘기하는 것이 아니라 이 논문이 얘기하는 상황에 대해 이 논문이 얼마나 기여할 수 있는지에 대해 먼저 언급하고 정말 그 case가 realistic한지에 대해 review한다.</li>
+	<li>기존에 하지 않았다고 해서 새로운 것이 아니다. 새로운 아이디어인지 아닌지는 내가 논문을 읽고 이 논문에서 제시한 문제에 접근했을 때 이 논문을 통해서 새로운 것을 얼마나 배웠고 아이디어는 얼마나 좋으냐로 판단해야지, 기존에 없었다고 기여도가 있는 것이 아니다. 내가 밥을 먹을 때 젓가락이 아니라 이쑤시개를 사용해 밥을 먹었다고 그게 정말 도움이 되고 새로운 것이 아니다. 마찬가지 이유로 당연하고 널리 알려져 있는 내용을 길게 적는 페이퍼는 좋은 페이퍼가 아니다.</li>
+	<li>논문은 언제나 어떤 무언가의 이유를 해결하기 위한 논문인가? (WHAT) 논문에서 제시한 방법을 사용해 어떻게 해결했는가? (HOW) 실험 결과의 이유는 도대체 왜 도출된 것인가? (WHY) 이 세 개의 질문에 잘 대답해야한다. Review역시 그 세 개의 질문에서부터 시작해야한다.</li>
+	<li>Review는 그 review를 받았을 때 어떻게 고쳐야할지 감이 오는 review가 좋은 review지, writing이 좋지않다. 논문 아이디어가 좋지 못하다. 식의 너무 애매하고 러프한 review는 좋지 않다. 이런 경우 ~~문단의 ~~줄에서 ~~라는 단어가 무슨 말을 하는지 모르겠다. 논문 아이디어가 ~~의 상황에서 ~~한 것을 처리한 것 같은데 이 아이디어는 이미 ~~에 의해 해결이 되어있다 식으로 자세히 설명해야한다.</li>
 </ul>
-
-
 <p>이렇게 논문 리뷰에 대해 교수님이 해주신 말씀들을 정리하다보니 결국 논문이란 어떻게 써야하고, 어떤 논문이 좋은 논문인가에 대한 어느 정도의 outline이 나오게 되었다.</p>
-
-
 <p>그러니깐 결국 논문도 하나의 story이고 그 story를 독자에게 이해하는 목적인 하나의 &#8216;글&#8217;일 뿐이다. 그 전문성이 매우 높을 뿐 사실 우리가 일반적으로 논리적으로 글을 작성하는 것과 크게 다르지 않다는 것이다. 어떤 문제가 있었느냐 (WHAT) 어떻게 그 문제를 해결할 것이냐 (HOW) 해결을 하기 위해 제시한 방법론은 어떤 결과를 냈으며 그 결과의 이유는 무엇이냐 (WHY) 에 대해 논리적으로, 그리고 객관적인 정보를 통해 내 주장의 support해야하는 것이다. 그런 기본적인 것을 누락하고 논문을 작성하면 아이디어가 정말정말 좋아서 writing을 신경 쓸 필요가 없는 경우가 아니라면, (사실 요즘은 그런 경우라고 하더라도 writing이 너무 안 좋으면 reviewer가 읽다가 reject하게 된다) 무조건 writing에는 신경을 써야한다. 또한 남을 설득함에 있어 객관적으로 납득할 수 있는 결과를 제시해야지, 내 주관이 관여해서 &#8216;이 정도면 대충 충분하다&#8217; 식의 논문을 쓰면 안된다.</p>
-
-
 <p>또한 결국 논문은 남을 설득할 뿐 아니라 내 아이디어를 통해 무언가 기여를 해야하기 때문에 내 idea가 realistic해야한다. 내 idea가 realistic해야 그 아이디어를 발판 삼아서 더 나은 다른 연구도 나올 수 있는 것이지 내 논문이 실제 상황에 적용되지 못하거나 그런 것을 고려하지 않고 연구를 하고 논문을 쓰게 된다면 그 논문은, 아니 그 연구는 좋은 연구가 아닌 것이다.</p>
-
-
 <p>마지막으로 정말 Detail에 집중해야한다. Review는 내가 놓치고 지나간 Detail에서 Reject을 할 이유를 찾게 된다. 내가 한 실험이 정말 corner case를 모두 고려했는지, 이 실험 결과는 어째서 이렇게 나온 것인지 등에 대한 해석 역시 그렇기 때문에 매우 중요하며 Related work 등 일반적으로 크게 신경쓰지 않는 부분들도 detail에 신경써서 작성을 해야한다.</p>
-
-
 <p>역시 연구도 논문도 다 어려운 것 같다.</p>
-
-
-<p></p>
 </div>
 
 <hr>
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-25T20:12:00+09:00" pubdate data-updated="true">Oct 25<span>th</span>, 2013</time>
-    </p>
-    <p class="meta">
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/research/'>Research</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <div class="sh_button">
-  	<a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/23/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/23/" data-count="vertical">Tweet</a>
-  </div>
-  
-  
-  <div class="sh_button">
-  	<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="box_count" data-action="like" data-show-faces="false" data-share="false"></div>
-  </div>
-  
-<!--   <div class="sh_button">
-  	<a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a>
-    <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-  </div> -->
-  <div class="sh_button">
-  	<a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="SanghyukChun" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
-  </div>
-  <div class="sh_button">
-	  <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-	  <script type="IN/Share" data-counter="top"></script>
-  </div>
-  
-  <div class="sh_button">
-  	<!-- <div class="g-plusone" data-size="medium"></div> -->
-  	<div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-height="60"></div>
-  </div>
-  
-  <div class="clear"></div>
-</div>
-
-    
-    <!--
-    
-    <p class="meta">
-      <a class="url-title basic-alignment left" href="/22/" title="Previous Post: 그래비티 - 스케일이 다른 재난 영화(스포)">&laquo; 그래비티 - 스케일이 다른 재난 영화(스포)</a>
-    </p>
-    
-    
-    <p class="meta">
-      <a class="url-title basic-alignment right" href="/24/" title="Next Post: 당신이 수학을 공부해야만 하는 이유">&raquo; 당신이 수학을 공부해야만 하는 이유</a>
-    </p>
-    
-    -->
-    </p>
-  </footer>
 </article>
 
   <section>
-    <h1>Comments</h1>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
@@ -252,6 +176,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
+      </li>
+    
+      <li class="post">
         <a href="/97/">AlphaGo의 알고리즘과 모델</a>
       </li>
     
@@ -267,40 +195,7 @@ $(function() {
         <a href="/73/">Machine Learning 스터디 (17) Recommendation System (Matrix Completion)</a>
       </li>
     
-      <li class="post">
-        <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
-      </li>
-    
   </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'SanghyukChun',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -350,25 +245,7 @@ $(function() {
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 

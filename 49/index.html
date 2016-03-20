@@ -18,30 +18,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
+
+  
   <link rel="canonical" href="http://SanghyukChun.github.io/49">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-	<script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <script>
 $(function() {
-	$('.tip').attr('data-toggle','tooltip');
-	$('.tip').attr('data-placement','top');
-	$('.tip').tooltip();
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -85,7 +103,7 @@ $(function() {
   
   <header>
     
-      <h1 class="entry-title">Network Science - Measures and Metric</h1>
+      <h1 class="entry-title"><a href="">Network Science - Measures and Metric</a></h1>
     
     
       <p class="meta text-right mB50">
@@ -110,273 +128,80 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><h5>들어가기 전에</h5>
-
-
+<div class="entry-content"><h3>들어가기 전에</h3>
 <p>이 글은 <a href="/47">2014년 KAIST Network Science 수업</a> 중 Graph theory 내용을요약한 글이다. 이 렉쳐에서는 기본적인 Graph theory에 대해 배운다. 어려운 내용은 아니고 정말 기초적인 부분들에 대해서 다루게 된다.</p>
-
-
-<h5>Why we need measures and metric?</h5>
-
-
+<h3>Why we need measures and metric?</h3>
 <p>이건 사실 lecture 내용에는 없는 내용이지만 엄청나게 중요한 내용이라고 내가 판단해서 집어넣은 part이다. 일단 이 lecture에서 다루기만 하는 metric이나 measure들이 엄청나게 많다. 대충 10개는 넘을텐데, 이런 수 많은 것들을 우리가 왜 알아야하느냐? 바로 주어진 임의의 graph를 측정하고 어떤 graph인지 판단할 수 있기 때문이다. 또한 진짜 중요한 목적 중 하나는 어느 vertex가 중요한지 알아내는 것이다. 근데 이 &#8216;중요함&#8217;이라는 것이 정의하기에 따라 달라지기 때문에 각각의 &#8216;중요함&#8217;이 무엇인지 정의하는 방법이 달라지게 되고 그렇기 때문에 이 lecture에서 cover하는 measure와 metric이 많은 것이다. 개인적으로는 그냥 closeness, betweeness, clustering coefficient 정도만 cover하고 끝내고 싶지만 나름 중요한 내용이 많아서 일단 최대한 많이 cover를 할 수 있도록 해야겠다. 아무튼 이런 수많은 metric들을 통해 우리가 알고싶은 것은 그래서 어느 vertex가 진짜 중요한 녀석이고, 나중에 다루게 될 dynamic process에서 어느 vertex를 주목해서 그 vertex에 처리를 해야하느냐 등을 하기 위해서 필요한 과정이다. 따라서 목적에 맞게 사용하는 것이 중요하고, 각각의 metric이 어떤 것을 측정하기 위함인지 이해하는 것이 매우 중요한 것이다.</p>
-
-
-<h5>Degree Centrality</h5>
-
-
+<h3>Degree Centrality</h3>
 <p>가장 먼저 살펴볼 centrality는 degree centrality다. 그냥 이건 얼마나 각각의 node가 많은 vertex와 연결되어있느냐, 혹은 각각의 vertex의 degree는 얼마나 되느냐를 측정하는 centrality에 불과하다. Directed graph같은 경우에는 간단하게 indegree와 outdegree를 합한 형태가 되는데, 상황에 따라 indegree centrality와 outdegree centrality를 define하는 것이 가능하기는 하다. 이 metic은 얼마나 많은 vertex들과 연결이 되어있는지를 알아보는 것으로, 많이 연결되어있다면 혹은 degree가 높다면 그만큼 중요할 것이라는 가정에서부터 나온 centrality이다.</p>
-
-
-<h5>Eigenvector Centrality</h5>
-
-
-<p>또 다른 방법으로는 각각의 vertex가 다른 vertex와 결국 궁극적으로 얼마나 많은 connection을 가지는지를 확인하는 것으로, 간단하게 eigenvector로 표현할 수 있다. 증명과정은 매우 간단하다. 먼저 centrality를 \(x_i &#8216;\)으로 정의했을 때 \(x_i &#8217; = \sum_j A_{ij} x_j\) 이므로 \(x&#8217; = Ax\)이다. 이 때, 이 과정을 t번 반복하면 \(x(t) = A^t x(0) \)이 된다. 이제 \(x(0) = \sum c_i v_i \) 라고 나타냈을 때, \(x(t) = A^t \sum c_i v_i = \sum c_i j_i ^t v_i \)이고, 따라서 \(x_i &#8217; = k_i^t \sum c_i ( \frac {k_i} {k_1} )^t v_i \)가 된다. v는 eigenvector고 k는 eigenvalue이다. 이 과정을 무한하게 반복하면 \(x(t) \to c_1 k_1^t v_1 \)이 된다. 따라서 이 과정을 통해 우리는 \(Ax = k_1 x\)일 때, centrality를 \(x_i = k_1^{-1} \sum A_{ij} x_j\)로 정의할 수 있다.</p>
-
-
-<h5>Katz Centrality</h5>
-
-
-<p>앞서 살펴본 eigenvector centrality는 directed graph에서 outdegree가 0이고 indegree가 0보다 큰 값이더라도 eigenvector centrality를 계산하면 해당 vertex는 0이라는 값을 가지게 된다는 단점이 있다. Katz centrality는 \(x_i = \alpha \sum_j A_{ij} x_j + \beta\)로 정의된다. 방금 전 eigenvector centrality에서 상수만 곱하고 더해준 형태가 된다. 이때 더해주는 \(\beta\) term으로 인해 기본적으로 모든 vertex가 특정 값 이상의 centrality를 가지도록 bound시키는 효과가 있다.</p>
-
-
-<h5>Page Rank</h5>
-
-
+<h3>Eigenvector Centrality</h3>
+<p>또 다른 방법으로는 각각의 vertex가 다른 vertex와 결국 궁극적으로 얼마나 많은 connection을 가지는지를 확인하는 것으로, 간단하게 eigenvector로 표현할 수 있다. 증명과정은 매우 간단하다. 먼저 centrality를 $x_i &#8216;$으로 정의했을 때 $x_i &#8217; = \sum_j A_{ij} x_j$ 이므로 $x&#8217; = Ax$이다. 이 때, 이 과정을 t번 반복하면 $x(t) = A^t x(0) $이 된다. 이제 $x(0) = \sum c_i v_i $ 라고 나타냈을 때, $x(t) = A^t \sum c_i v_i = \sum c_i j_i ^t v_i $이고, 따라서 $x_i &#8217; = k_i^t \sum c_i ( \frac {k_i} {k_1} )^t v_i $가 된다. v는 eigenvector고 k는 eigenvalue이다. 이 과정을 무한하게 반복하면 $x(t) \to c_1 k_1^t v_1 $이 된다. 따라서 이 과정을 통해 우리는 $Ax = k_1 x$일 때, centrality를 $x_i = k_1^{-1} \sum A_{ij} x_j$로 정의할 수 있다.</p>
+<h3>Katz Centrality</h3>
+<p>앞서 살펴본 eigenvector centrality는 directed graph에서 outdegree가 0이고 indegree가 0보다 큰 값이더라도 eigenvector centrality를 계산하면 해당 vertex는 0이라는 값을 가지게 된다는 단점이 있다. Katz centrality는 $x_i = \alpha \sum_j A_{ij} x_j + \beta$로 정의된다. 방금 전 eigenvector centrality에서 상수만 곱하고 더해준 형태가 된다. 이때 더해주는 $\beta$ term으로 인해 기본적으로 모든 vertex가 특정 값 이상의 centrality를 가지도록 bound시키는 효과가 있다.</p>
+<h3>Page Rank</h3>
 <p>그러나 결국 Katz centrality도 문제가 있다. 이 경우 many other vertex를 point하는 high katz centrality를 가지는 vertex가 point하는 vertex 역시 높은 katz cent를 가진다는 것이다. 이것이 왜 문제냐, 예를 들어서 구글은 아마 엄청나게 높은 Katz centrality를 가지고 있을 것이다. 그런데 내 블로그나 내 홈페이지는 아마 connection이 매우 적을 것이고 우리는 이 페이지들의 centrality가 낮기를 기대하지만 실제로는 google이 내 page로 향하는 edge를 가지고 있기 때문에 내 page도 centrality가 높아지게 되는 것이다. 이것은 우리가 원하는 결과가 아니기 때문에 수정이 필요하다.</p>
-
-
-<p>Page Rank는 \(x_i = \alpha \sum_j A_{ij} x_j \frac {x_j} {k_j^{out}} + \beta\) 으로 정의된다. (사실 이렇게 정의되는 것은 아니며, page rank는 일종의 ranking algorithm이지만, 여기에서는 이것을 일종의 metric으로 삼으려는 것이므로 일단 이 lecture의 정의를 따라가기로 했다.) 아무튼 outdegree만큼 나눠줌으로써 아까 발생했던 문제를 해결할 수 있다. Google이 가진 outdegree는 엄청나게 높을 것이므로 나를 point하더라도 outdegree로 그 값이 나눠져서 매우 작은 값만 더해질 것이기 때문이다.</p>
-
-
-<h5>Degree, Eigenvector, Katz and Page Rank</h5>
-
-
+<p>Page Rank는 $x_i = \alpha \sum_j A_{ij} x_j \frac {x_j} {k_j^{out}} + \beta$ 으로 정의된다. (사실 이렇게 정의되는 것은 아니며, page rank는 일종의 ranking algorithm이지만, 여기에서는 이것을 일종의 metric으로 삼으려는 것이므로 일단 이 lecture의 정의를 따라가기로 했다.) 아무튼 outdegree만큼 나눠줌으로써 아까 발생했던 문제를 해결할 수 있다. Google이 가진 outdegree는 엄청나게 높을 것이므로 나를 point하더라도 outdegree로 그 값이 나눠져서 매우 작은 값만 더해질 것이기 때문이다.</p>
+<h3>Degree, Eigenvector, Katz and Page Rank</h3>
 <p>간단하게 위의 네 개의 metric을 정리해보면 아래와 같은 결과를 얻게 된다.</p>
-
-
-<p><img src="/images/post/49-1.png" width="350"></p>
-
-<h5>Hub and Authorities</h5>
-
-
-<p>Authority란 무언가 유용한 정보를 가지고 있는 vertex를 뜻하며, Hub란 그런 vertex 중 best를 찾을 수 있는 곳이 어디인지 알려줄 수 있는 vertex들을 의미한다. 이 두가지는 directed network에만 존재하며, 이를 통해 새로운 형태의 metric을 design할 수 있다. 앞서 정의한 바에 따르면 Authorityu centrality x와 Hub centrality y는 다음과 같이 정의된다. \(x_i = \alpha \sum_j A_{ij} y_j\), \(y_i = \beta \sum_j A_{ji} x_j\) 그러면 이것을 matrix 형태로 표현할 수 있는데, \(x = \alpha A y\), \(y = \beta A^\top x\)가 된다. 따라서 \(A A^\top x = \lambda x\), \(A^\top A y = \lambda y\)가 된다. 즉, authority centrality x는 A의 singular vector가 되며 이는 곳 A의 cociation matric C의 eigenvector centrality가 된다.</p>
-
-
-<h5>Closeness Centrality</h5>
-
-
-<p>Closeness Centrality는 매우 중요한 measure 중 하나로, given vertex에서 다른 모든 vertex까지의 shortest path의 mean distance로 정의된다. 이때, distance는 geodesic path, 즉, i에서 j까지의 minimum hop 으로 정의가 된다. 이때 distance를 d라고 하게 되면, i에서 j로 가는 mean geodesic distance는 \(l_i = \frac {1} {n} \sum_j d_{ij}\) 가 되므로 closeness centrality는 \(C_i = \frac {1} {l_i} = \frac {n} {\sum_i d_{ij}}\) 가 된다. 이때, 자기 자신과의 거리는 0이므로 \(C_i &#8217; = \frac {n-1} {\sum_{i \neq j} d_{ij}}\)로 Harmonic mean closeness라는 것을 정의하기도 한다. (큰 차이는 없다.) distance의 평균 값이 높아지려면 vertex가 다른 vertex들과 가까이 모여있는 형태여야 하며, 즉, degree가 높다는 것과는 다른 의미로 중요한 vertex를 의미하는 지표가 된다. (당연히 멀리 떨어질수록 centrality는 작아지며, 연결이 안된 경우는 d가 무한대이므로 0이 된다.) 이 경우 small component에 속한 vertex는 높은 closeness centrality를 가지게 될 것이다.</p>
-
-
-<h5>Betweenness Centrality</h5>
-
-
-<p>Betweenness centrality는 graph에 존재하는 모든 shortest path들에 대해 vertex i가 얼마나 많이 그 path에 속하는지를 나타내는 지표이다. 이 지표는 매우 중요하게 생각할 수 있지만, 안타깝게도 그것을 찾아내는 방법이 매우 어렵다. (아마 NP-Complete로 알고 있다.) 아무튼, 이 값이 중요한 이유는, 실제 flow가 생기는 dynamics를 생각해봤을 때, 진짜 중요한 vertex는 많은 path에 속하는 vertex가 된다. 이런 vertex를 막아서 확산을 막을 수도 있고, 반대로 이 vertex에게 무언가를 확신시키게 하여 다양한 path로 뻗어나가게 하는 것이 가능하기 때문이다. \(x_i = \sum_{st} \frac {n_{st}^i } { g_{st} }  \) 으로 정의가 되며, \(x_i = \frac {1} {n^2} \sum_{st} \frac {n_{st}^i} {g_{st} } \) 으로 noramlized 된 betweenness를 정의할 수 있다.</p>
-
-
+<p><img src="/images/post/49-1.png" width="350" /></p>
+<h3>Hub and Authorities</h3>
+<p>Authority란 무언가 유용한 정보를 가지고 있는 vertex를 뜻하며, Hub란 그런 vertex 중 best를 찾을 수 있는 곳이 어디인지 알려줄 수 있는 vertex들을 의미한다. 이 두가지는 directed network에만 존재하며, 이를 통해 새로운 형태의 metric을 design할 수 있다. 앞서 정의한 바에 따르면 Authorityu centrality x와 Hub centrality y는 다음과 같이 정의된다. $x_i = \alpha \sum_j A_{ij} y_j$, $y_i = \beta \sum_j A_{ji} x_j$ 그러면 이것을 matrix 형태로 표현할 수 있는데, $x = \alpha A y$, $y = \beta A^\top x$가 된다. 따라서 $A A^\top x = \lambda x$, $A^\top A y = \lambda y$가 된다. 즉, authority centrality x는 A의 singular vector가 되며 이는 곳 A의 cociation matric C의 eigenvector centrality가 된다.</p>
+<h3>Closeness Centrality</h3>
+<p>Closeness Centrality는 매우 중요한 measure 중 하나로, given vertex에서 다른 모든 vertex까지의 shortest path의 mean distance로 정의된다. 이때, distance는 geodesic path, 즉, i에서 j까지의 minimum hop 으로 정의가 된다. 이때 distance를 d라고 하게 되면, i에서 j로 가는 mean geodesic distance는 $l_i = \frac {1} {n} \sum_j d_{ij}$ 가 되므로 closeness centrality는 $C_i = \frac {1} {l_i} = \frac {n} {\sum_i d_{ij}}$ 가 된다. 이때, 자기 자신과의 거리는 0이므로 $C_i &#8217; = \frac {n-1} {\sum_{i \neq j} d_{ij}}$로 Harmonic mean closeness라는 것을 정의하기도 한다. (큰 차이는 없다.) distance의 평균 값이 높아지려면 vertex가 다른 vertex들과 가까이 모여있는 형태여야 하며, 즉, degree가 높다는 것과는 다른 의미로 중요한 vertex를 의미하는 지표가 된다. (당연히 멀리 떨어질수록 centrality는 작아지며, 연결이 안된 경우는 d가 무한대이므로 0이 된다.) 이 경우 small component에 속한 vertex는 높은 closeness centrality를 가지게 될 것이다.</p>
+<h3>Betweenness Centrality</h3>
+<p>Betweenness centrality는 graph에 존재하는 모든 shortest path들에 대해 vertex i가 얼마나 많이 그 path에 속하는지를 나타내는 지표이다. 이 지표는 매우 중요하게 생각할 수 있지만, 안타깝게도 그것을 찾아내는 방법이 매우 어렵다. (아마 NP-Complete로 알고 있다.) 아무튼, 이 값이 중요한 이유는, 실제 flow가 생기는 dynamics를 생각해봤을 때, 진짜 중요한 vertex는 많은 path에 속하는 vertex가 된다. 이런 vertex를 막아서 확산을 막을 수도 있고, 반대로 이 vertex에게 무언가를 확신시키게 하여 다양한 path로 뻗어나가게 하는 것이 가능하기 때문이다. $x_i = \sum_{st} \frac {n_{st}^i } { g_{st} }  $ 으로 정의가 되며, $x_i = \frac {1} {n^2} \sum_{st} \frac {n_{st}^i} {g_{st} } $ 으로 noramlized 된 betweenness를 정의할 수 있다.</p>
 <p>또한 random-walk betweenness라는 것도 정의할 수 있는데, shortest path가 아니라 그냥 random walk를 무지하게 많이 만든 다음에 얼마나 많이 그 안에 count가 되었는지를 측정하는 것이다. 이는 betweenness centrality의 approximation algorithm이 되는데, 실제 network에서 움직이는 모양이 random walk인 경우가 많아서 꽤 괜찮은 근사법이라고 한다.</p>
-
-
-<h5>k-plex and k-components</h5>
-
-
+<h3>k-plex and k-components</h3>
 <p>Clique는 모든 vertex들이 fully connected 되어있는 vertex set을 의미한다. 모든 vertex들끼리 꼭 fully connected되는 것은 아니고 거의 fully connected되는, 구체적으로 얘기했을 때 n개의 vertex가 각각의 관점에서 최소한 n-k개 만큼 연결되어있는 vertex set을 생각할 수 있을 것이다. 이것이 바로 k-plex의 정의가 된다. clique도 좋은 성질을 가지고 있지만, k-plex는 일종의 approximated clique로, 실제 network에서 항상 fully connected된 vertex set만 의미가 있는 것이 아니기 때문에 나름의 의미를 가진다. 또한 k-core라는 것도 정의할 수 있는데, (n-k) plex와 같다. k-core는 간단하게 network pruning을 하는 greedy algorithm을 통해 찾아낼 수 있다.</p>
-
-
 <p>모든 vertex들끼리 적어도 k개의 vertex independent path를 가지는 subset을 k-component라고 한다. 참고로 Component는 단순하게 어떤 path를 통해 다른 구성원에 도달할 수 있으면 그것을 일컬어 component라고 한다. 즉, 이 k-component 안에 있는 임의의 vertex는 마찬가지로 같은 k-component에 존재하는 다른 임의의 vertex로 반드시 갈 수 있다. 대부분의 network backbone은 매우 높은 k를 가지는 k-component라고 한다.</p>
-
-
-<h5>Transitivity and Clustering Coefficient</h5>
-
-
+<h3>Transitivity and Clustering Coefficient</h3>
 <p>만약 vertex u와 v, 그리고 w가 서로 모두 연결되어 삼각형을 이루게 된다면 이것을 transitive라고 부른다. 이런 transitive가 정확히 몇 개나 있느냐를 재는 것은 perfect transitivity로 측정하게 되고, partial transitivity라는 것을 통해 u와 v가 연결되고 v와 w가 연결되어있을 때만을 카운트하는, 즉 삼각형에서 edge하나가 빠진형태일 때를 카운트하여 partial rate를 측정할 수도 있다.</p>
-
-
 <p>자 이제 clustering coefficient라는 것을 정의해보자. <a href="/34">이전에 썼던 글</a>에서 조금 자세히 다뤘던 것으로 기억하는데, 같은 컨셉이다. 얼마나 graph가 뭉쳐있는지를 알아보는 계수로, 정의는 간단하게 삼각형을 이룰 것 같은 vertex set 중에서 실제 삼각형을 이루는 vertex set의 비율로 정의된다. 수식으로 표현하면 다음과 같다.</p>
-
-
 <p>$$ C = \frac {number \ of \ traiangles \times 6} {number \ of \ paths \ of \ length \ 2} $$</p>
-
-
 <p>그런데 이 clustering coefficient를 local하게 아래와 같이 정의할 수 있다. </p>
-
-
 <p>$$ C_i = \frac {number \ of \ pairs \ of \ neighbors \ of \ i \ that \ are \ connected} {number \ of \ pairs \ of \ neighbors \ of \ i} $$</p>
-
-
 <p>즉, 이 local cc는 내 친구와 다른 친구가 서로 친구일 확률을 의미하게 된다. 따라서 degree가 높은 vertex는 낮은 local cc를 가지게 될 확률이 높아지게 된다.</p>
-
-
-<p>또한 Redundancy라는 것을 정의할 수 있는데, 이는 i의 neighbor에서부터 다른 neighbor간의 connection의 평균이 된다. 따라서 이 값은 0보다 크거나 같고 \(k_i -1\)보다는 작거나 같다. Local cc를 redundancy를 사용해 표현할 수 있는데, 다음과 같은 방법으로 나타내게 된다. \(C_i = \frac {\frac {1} {2} k_i R_i} { \frac {1} {2} k_i (k_i - 1) } = \frac {R_i} {k_i -1} \) 따라서 global clustering coefficient는 그냥 local clustering coefficient의 summation이 된다.</p>
-
-
-<h5>Reciprocity</h5>
-
-
-<p>Reciprocity는 directed network에서 length 2짜리 loop이 얼마나 많은지를 의미한다. 즉, 서로가 서로를 point하는 vertex의 개수가 얼마나 되는지를 측정하는 것이다. 이는 곧, 서로가 서로에게 paht가 있다는 의미가 되므로 이전에 살펴봤던바와 같이 이 값을 수식으로 표현하게 되면 \(r = \frac 1 m \sum A_{ij} A_{ji} = \frac 1 m Tr A^2\)이 된다는 사실을 쉽게 알 수 있다.</p>
-
-
-<h5>Structural Balance</h5>
-
-
+<p>또한 Redundancy라는 것을 정의할 수 있는데, 이는 i의 neighbor에서부터 다른 neighbor간의 connection의 평균이 된다. 따라서 이 값은 0보다 크거나 같고 $k_i -1$보다는 작거나 같다. Local cc를 redundancy를 사용해 표현할 수 있는데, 다음과 같은 방법으로 나타내게 된다. $C_i = \frac {\frac {1} {2} k_i R_i} { \frac {1} {2} k_i (k_i - 1) } = \frac {R_i} {k_i -1} $ 따라서 global clustering coefficient는 그냥 local clustering coefficient의 summation이 된다.</p>
+<h3>Reciprocity</h3>
+<p>Reciprocity는 directed network에서 length 2짜리 loop이 얼마나 많은지를 의미한다. 즉, 서로가 서로를 point하는 vertex의 개수가 얼마나 되는지를 측정하는 것이다. 이는 곧, 서로가 서로에게 paht가 있다는 의미가 되므로 이전에 살펴봤던바와 같이 이 값을 수식으로 표현하게 되면 $r = \frac 1 m \sum A_{ij} A_{ji} = \frac 1 m Tr A^2$이 된다는 사실을 쉽게 알 수 있다.</p>
+<h3>Structural Balance</h3>
 <p>만약 edge를 -1과 1의 두 가지로 정의하고, -1은 서로 enemy, +1은 서로 friend라고 해보자. 이런 경우 어떤 loop이 있을 때 해당 loop에 -1인 edge가 짝수개 있으면 stable하고 홀수개 있으면 unstable해진다. (간단하게 삼각형을 그려서 확인해볼 수 있다) 아무튼 이럴 때 -1 인 edge가 짝수개 있는 상태를 structural balance라고 하며, Harary&#8217;s theorem은 이런 balanced network가 같은 그룹은 positive한 connection만 가지고 다른 그룹끼리는 negative한 connection만 가지는 group들로 divided된다는 것을 증명한다. 대부분의 social network는 이런 balanced한 상황인 경우가 많다고 한다.</p>
-
-
-<h5>Cosine Similarity</h5>
-
-
+<h3>Cosine Similarity</h3>
 <p>Similarity는 서로 다른 graph가 얼마나 비슷한가를 측정하는 척도이다. 즉, 하나의 graph에서 서로 다른 subgraph들끼리 많은 수의 neighbor를 공유하면 높은 값을 가지는 structurally equivalent를 정의할 수 있는데, 우리가 하고 싶은 것은 서로 꼭 같은 vertex를 공유하는 것은 아니더라도 비슷하게 생긴 neighbor를 가지는 상황에서 regularly equivalent를 정의하고 싶은 것이다.</p>
-
-
 <p>그렇다면 문제는 이런 비슷한 정도를 측정하는 것인데, cosine similarity라는 것을 통해 이런 것을 측정할 수 있다. cosine은 간단하게 vector x와 y의 inner product의 normalization된 형태로 계산이 가능하다. 따라서 cosine similairy는 adjacency matrix의 column vector혹은 row vector들을 inner product하여 그 값을 비교하는 것이다. 수식으로 나타내면 아래와 같이 표현된다.</p>
-
-
 <p>$$ \sigma_{ij} = cos \theta = \frac {\sum_k A_{jk} A_{kj} } {\sqrt {\sum_k A_{ik}^2} \sqrt {\sum_k A_{jk}^2} } $$</p>
-
-
 <p>$$ \sigma_{ij} = \frac {\sum_k A_{jk} A_{kj} } {k_i k_j}  = \frac {n_ij} {k_i k_j} $$</p>
-
-
-<p>이때, \(n_ij\)는 vertex i와 j의 common neighbor들의 숫자가 된다.</p>
-
-
-<p>이런 cosine similarity를 통해 Pearson Coefficient라는 것도 정의할 수 있는데, \( r_{ij} = \frac {cov(A_i,A_j)} {\sigma_i \sigma_j} = \frac { \sum_k (A_{ik} - <A_i>) (A_{jk} - <A_j>) } {\sqrt {\sum_k (A_{ik} - <A_i> )^2} \sqrt {\sum_k ( A_{jk} - <A_j> )^2} } \) 가 되며, 이 값은 -1부터 1사이에 존재하게 된다.</p>
-
-
-<p>그 밖에도 Normalized \(n_ij\), Euclidean distance, Normalized Euclidean distance 등의 structural equivalence를 측정하기 위한 방법 들이 존재한다.</p>
-
-
-<p>Similar score \(sigma_{ij}\)는 \(sigma_{ij} = \alpha \sum_{kl} A_{ik} A_{jl} \sigma_{kl}\)로 정의된다. 이때, 자기 자신에게 높은 similarity를 주지 않는다는 문제 가있어서 \(\delta_{ij}\)를 추가하는 수정된 방식이 존재하며 이때 이 similiarity는 \(\sigma = \alpha A \sigma A + I\)로 표현이 된다. 하지만 이 경우도 even length를 가지는 path만 고려할 수 있다. 따라서 이를 또 개선시키기 위해서 \(sigma_{ij} = \alpha \sum_{k} A_{ik} \sigma_{kj} + \delta_{ij}\)로 수정이 가능하다. 이 값은 \(\sigma = \alpha A \sigma + I\)가 되며 iteration을 \(\sigma(0) = 0\)에서부터 시작하면 \(\sigma = \sum_m^\inf ( \alpha A )^m = ( I - \alpha A ) ^{-1}\)이 된다. 그런데 이 경우 degree가 높은 vertex에 높은 similiarity가 가는 상황이 발생하게 된다. 따라서 다시 degree로 나눠주는 term을 넣어서 마지막으로 수정식을 쓰면, \(sigma_{ij} = \frac {\alpha} {k_i} \sum_{k} A_{ik} \sigma_{kj} + \delta_{ij}\), \(\sigma = \alpha D^{-1} A \sigma + I\)가 된다.</p>
-
-
-<h5>Homophily and Assortative Mixing</h5>
-
-
+<p>이때, $n_ij$는 vertex i와 j의 common neighbor들의 숫자가 된다.</p>
+<p>이런 cosine similarity를 통해 Pearson Coefficient라는 것도 정의할 수 있는데, $ r_{ij} = \frac {cov(A_i,A_j)} {\sigma_i \sigma_j} = \frac { \sum_k (A_{ik} - <a_i>) (A_{jk} - <a_j>) } {\sqrt {\sum_k (A_{ik} - <a_i> )^2} \sqrt {\sum_k ( A_{jk} - <a_j> )^2} } $ 가 되며, 이 값은 -1부터 1사이에 존재하게 된다.
+<p>그 밖에도 Normalized $n_ij$, Euclidean distance, Normalized Euclidean distance 등의 structural equivalence를 측정하기 위한 방법 들이 존재한다.</p>
+<p>Similar score $sigma_{ij}$는 $sigma_{ij} = \alpha \sum_{kl} A_{ik} A_{jl} \sigma_{kl}$로 정의된다. 이때, 자기 자신에게 높은 similarity를 주지 않는다는 문제 가있어서 $\delta_{ij}$를 추가하는 수정된 방식이 존재하며 이때 이 similiarity는 $\sigma = \alpha A \sigma A + I$로 표현이 된다. 하지만 이 경우도 even length를 가지는 path만 고려할 수 있다. 따라서 이를 또 개선시키기 위해서 $sigma_{ij} = \alpha \sum_{k} A_{ik} \sigma_{kj} + \delta_{ij}$로 수정이 가능하다. 이 값은 $\sigma = \alpha A \sigma + I$가 되며 iteration을 $\sigma(0) = 0$에서부터 시작하면 $\sigma = \sum_m^\inf ( \alpha A )^m = ( I - \alpha A ) ^{-1}$이 된다. 그런데 이 경우 degree가 높은 vertex에 높은 similiarity가 가는 상황이 발생하게 된다. 따라서 다시 degree로 나눠주는 term을 넣어서 마지막으로 수정식을 쓰면, $sigma_{ij} = \frac {\alpha} {k_i} \sum_{k} A_{ik} \sigma_{kj} + \delta_{ij}$, $\sigma = \alpha D^{-1} A \sigma + I$가 된다.</p>
+<h3>Homophily and Assortative Mixing</h3>
+<p>작성 중</p>
+<h3>Assotative Mixing by Enumerative Characteristics</h3>
+<p>작성 중</p>
+<h3>Assotative Mixing by Scalar Characteristics</h3>
+<p>작성 중</p>
+<h3>Assortative Mixing by Degree</h3>
 <p>작성 중</p>
 
-
-<h5>Assotative Mixing by Enumerative Characteristics</h5>
-
-
-<p>작성 중</p>
-
-
-<h5>Assotative Mixing by Scalar Characteristics</h5>
-
-
-<p>작성 중</p>
-
-
-<h5>Assortative Mixing by Degree</h5>
-
-
-<p>작성 중</p>
-
-
-
-
-<h5>KAIST Network Science</h5>
-
-
+<h3>KAIST Network Science</h3>
 <p>다른 요약글들 보기 (<a href="/blog/categories/network-science/">카테고리로 이동</a>)</p>
-
-
 <ul>
-    <li>Lecture 1: <a href="/47">Introduction</a></li>
-    <li>Lecture 2: <a href="/48">Graph Theory</a></li>
-    <li>Lecture 3: <a href="/49">Measures and Metric</a></li>
-    <li>Lecture 4: <a href="/50">Random Network</a></li>
-    <li>Lecture 5: <a href="/51">Small world Network</a></li>
-    <li>Lecture 6: <a href="/52">Scale free Network</a></li>
+	<li>Lecture 1: <a href="/47">Introduction</a></li>
+	<li>Lecture 2: <a href="/48">Graph Theory</a></li>
+	<li>Lecture 3: <a href="/49">Measures and Metric</a></li>
+	<li>Lecture 4: <a href="/50">Random Network</a></li>
+	<li>Lecture 5: <a href="/51">Small world Network</a></li>
+	<li>Lecture 6: <a href="/52">Scale free Network</a></li>
 </ul>
-
+</a_j></a_i></a_j></a_i></p>
 </div>
 
 <hr>
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-17T01:59:00+09:00" pubdate data-updated="true">Apr 17<span>th</span>, 2014</time>
-    </p>
-    <p class="meta">
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/kaist/'>KAIST</a>, <a class='category' href='/blog/categories/lecture/'>Lecture</a>, <a class='category' href='/blog/categories/network/'>Network</a>, <a class='category' href='/blog/categories/network-science/'>Network-Science</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <div class="sh_button">
-  	<a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/49/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/49/" data-count="vertical">Tweet</a>
-  </div>
-  
-  
-  <div class="sh_button">
-  	<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="box_count" data-action="like" data-show-faces="false" data-share="false"></div>
-  </div>
-  
-<!--   <div class="sh_button">
-  	<a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a>
-    <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-  </div> -->
-  <div class="sh_button">
-  	<a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="SanghyukChun" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
-  </div>
-  <div class="sh_button">
-	  <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-	  <script type="IN/Share" data-counter="top"></script>
-  </div>
-  
-  <div class="sh_button">
-  	<!-- <div class="g-plusone" data-size="medium"></div> -->
-  	<div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-height="60"></div>
-  </div>
-  
-  <div class="clear"></div>
-</div>
-
-    
-    <!--
-    
-    <p class="meta">
-      <a class="url-title basic-alignment left" href="/48/" title="Previous Post: Network Science - Graph Theory">&laquo; Network Science - Graph Theory</a>
-    </p>
-    
-    
-    <p class="meta">
-      <a class="url-title basic-alignment right" href="/50/" title="Next Post: Network Science - Random Network (Erdös-Rényi Network)">&raquo; Network Science - Random Network (Erdös-Rényi Network)</a>
-    </p>
-    
-    -->
-    </p>
-  </footer>
 </article>
 
   <section>
-    <h1>Comments</h1>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
@@ -403,6 +228,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
+      </li>
+    
+      <li class="post">
         <a href="/97/">AlphaGo의 알고리즘과 모델</a>
       </li>
     
@@ -418,40 +247,7 @@ $(function() {
         <a href="/73/">Machine Learning 스터디 (17) Recommendation System (Matrix Completion)</a>
       </li>
     
-      <li class="post">
-        <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
-      </li>
-    
   </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'SanghyukChun',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -501,25 +297,7 @@ $(function() {
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 

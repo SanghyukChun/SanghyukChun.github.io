@@ -1,24 +1,134 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Octopress | README]]></title>
-  <link href="http://SanghyukChun.github.io/blog/categories/octopress/atom.xml" rel="self"/>
-  <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-21T00:45:21+09:00</updated>
-  <id>http://SanghyukChun.github.io/</id>
-  <author>
-    <name><![CDATA[Sanghyuk Chun]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Octopress Markdown Kramdown으로 이전하기 - README</title>
+  <meta name="author" content="Sanghyuk Chun">
 
   
-  <entry>
-    <title type="html"><![CDATA[Octopress Markdown Kramdown으로 이전하기]]></title>
-    <link href="http://SanghyukChun.github.io/98/"/>
-    <updated>2016-03-21T00:45:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/98</id>
-    <content type="html"><![CDATA[<ul id="markdown-toc">
+  <meta name="description" content="Octopress를 완전하게 Markdown 문법으로만 사용하기 위해서 오늘 하루 동안 했던 MathJax 삽질이랑 Kramdown 삽질 (Table of Contents 세팅 등) 등등의 삽질에 대해서 정리해봤다.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  
+  <link rel="canonical" href="http://SanghyukChun.github.io/98">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script>
+$(function() {
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42711199-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  
+  <div id="main">
+  	<header role="banner"><hgroup>
+  <h1><a id="blog-title" href="/">README&nbsp;&nbsp; </a>
+  
+    <span style="white-space:nowrap;">SanghyukChun's Blog</span>
+  
+  </h1>
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  	<nav role="navigation"><ul class="main-navigation list-inline">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/search">Search</a></li>
+  <li><a href="http://sanghyuk.kaist.ac.kr/">Homepage</a></li>
+  
+</ul>
+</nav>
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title"><a href="">Octopress Markdown Kramdown으로 이전하기</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-21T00:45:00+09:00" pubdate data-updated="true">Mar 21<span>st</span>, 2016</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><ul id="markdown-toc">
   <li><a href="#html--markdown-">HTML 코드에서 Markdown 코드로</a></li>
   <li><a href="#markdown--mathjax">기존 Markdown 디버그 (MathJax)</a></li>
   <li><a href="#kramdown-markdown">Kramdown Markdown</a>    <ul>
@@ -86,10 +196,10 @@
 <h3 id="markdown--mathjax">기존 Markdown 디버그 (MathJax)</h3>
 <p>기존 markdown기반 코드의 가장 큰 문제는 <code>MathJax</code>가 전혀 동작하지를 않는다는 것이였다. 예를 들어서</p>
 
-<p><code>
-* example 1: $\alpha$.
-* example 2: \(\alpha\).
-</code></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">* example 1: $\alpha$.
+</span><span class="line">* example 2: \(\alpha\).</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>이런 코드를 작성했다고 했을 때, 둘 다 제대로 된 $\alpha$를 보여주는 녀석이 없었다.
 뭐, 일단 여러 이유가 있었는데, 먼저 원래대로라면 위에 있는 <code>$</code> 쓴 녀석은 잘 동작해야한다.
@@ -100,31 +210,44 @@
 그래도 이게 markdown이 escape을 해버리는 거라서 html로 explict하게 적어주면 잘 동작했다.
 그래서 결국은 저 간단한 코드가 이런 모양새가 되어버렸다</p>
 
-<p>```html</p>
-<ul>
-	<li>example 1: \(\alpha\)</li>
-	<li>example 2: \(\alpha\)</li>
-</ul>
-<p>```</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;ul&gt;</span>
+</span><span class="line">	<span class="nt">&lt;li&gt;</span>example 1: \(\alpha\)<span class="nt">&lt;/li&gt;</span>
+</span><span class="line">	<span class="nt">&lt;li&gt;</span>example 2: \(\alpha\)<span class="nt">&lt;/li&gt;</span>
+</span><span class="line"><span class="nt">&lt;/ul&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>음.. 딱 봐도 지저분하지 않은가? 문제점을 해결하려고 몇 번 시도하다가,
 초반에 <code>MathJax</code>에서 많이 고생했던 터라, 일단 동작하는 상태로 방치해둔게 벌써 거의 2년이 지난 셈이다.</p>
 
 <p>결국, 지금은 <code>MathJax</code>의 설정을 다음과 같이 고쳤다.</p>
 
-<p><code>js
-&lt;script type="text/x-mathjax-config"&gt;
-    MathJax.Hub.Config({
-      jax: ["input/TeX", "output/HTML-CSS"],
-      tex2jax: {
-        inlineMath: [ ['$', '$'] ],
-        displayMath: [ ['$$', '$$'] ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-&lt;/script&gt;
-</code></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/x-mathjax-config&quot;</span><span class="o">&gt;</span>
+</span><span class="line">    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+</span><span class="line">      <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">],</span>
+</span><span class="line">      <span class="nx">tex2jax</span><span class="o">:</span> <span class="p">{</span>
+</span><span class="line">        <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;$&#39;</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">]</span> <span class="p">],</span>
+</span><span class="line">        <span class="nx">displayMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;$$&#39;</span><span class="p">,</span> <span class="s1">&#39;$$&#39;</span><span class="p">]</span> <span class="p">],</span>
+</span><span class="line">        <span class="nx">processEscapes</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class="line">        <span class="nx">skipTags</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;script&#39;</span><span class="p">,</span> <span class="s1">&#39;noscript&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">,</span> <span class="s1">&#39;textarea&#39;</span><span class="p">,</span> <span class="s1">&#39;pre&#39;</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">]</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">    <span class="p">});</span>
+</span><span class="line"><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>내가 앞에서 <code>$</code>가 제대로 동작하지 않은 이유는, 이 설정에서 제대로 명시가 되지 않아서 였던 모양이다.
 원래 기본옵션으로 되어야 맞는데, 왜인지는 모르겠지만 잘 되지 않았던 모양.</p>
@@ -134,9 +257,9 @@
 그리고 앞에서 말한대로 자꾸 escape해버리는 경우가 발생해서 아예 없애버렸다.
 이게 언제 심각해지냐하면, 다음과 같은 방식의 markdown을 쓸 때에 결과 값이 이상해진다</p>
 
-<p><code>
-다음 링크 [[링크]](http://sanghyukchun.github.io)를 누르면 제 블로그로 갑니다.
-</code></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="err">다음</span> <span class="err">링크</span> <span class="p">[[</span><span class="err">링크</span><span class="p">]](</span><span class="nx">http</span><span class="o">:</span><span class="c1">//sanghyukchun.github.io)를 누르면 제 블로그로 갑니다.</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>내가 이해하기로는 octopress에서 <code>MathJax</code>를 쓰면,</p>
 
@@ -174,9 +297,11 @@
 
 <p><a href="http://kramdown.gettalong.org/converter/html.html#toc">링크</a>를 타고 들어가면 ToC를 만드는 법에 대해 나와있으니 참고하면 좋을 것 같다. 아무튼 지금은 맨 앞에 이렇게만 쓰면 된다. 엄청 편함.</p>
 
-<p>```
-* TOC</p>
-<p>```</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="o">*</span> <span class="nx">TOC</span>
+</span><span class="line"><span class="p">{</span><span class="o">:</span><span class="nx">toc</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>아 물론 css를 좀 고쳐야한다. <a href="http://blog.riemann.cc/2013/04/10/table-of-contents-in-octopress/">http://blog.riemann.cc/2013/04/10/table-of-contents-in-octopress/</a> 를 참고하시길.</p>
 
@@ -185,19 +310,25 @@
 <p>그리고 <code>Kramdown</code>의 또 하나의 장점이라면 markdown의 여러 component들에게 inline으로 attribute를 지정할 수 있다는 것이다.<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>
 이게 무슨 말이냐 하면, 내가 지금 사용 중인 reference list는 다음과 같은 코드로 작성된다.</p>
 
-<p><code>html
-&lt;ol class="reference"&gt;
-	&lt;li&gt;referenece 1&lt;/li&gt;
-	&lt;li&gt;referenece 2&lt;/li&gt;
-&lt;/ol&gt;
-</code></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;ol</span> <span class="na">class=</span><span class="s">&quot;reference&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">	<span class="nt">&lt;li&gt;</span>referenece 1<span class="nt">&lt;/li&gt;</span>
+</span><span class="line">	<span class="nt">&lt;li&gt;</span>referenece 2<span class="nt">&lt;/li&gt;</span>
+</span><span class="line"><span class="nt">&lt;/ol&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>리스트에 class attribute가 있어서 어쩔 수 없이 html 코드를 직접 써야하는데, <code>Kramdown</code>을 쓰면 다음과 같이 쓸 수 있다.</p>
 
-<p class="reference">```
-1. reference 1
-2. reference 2</p>
-<p>```</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">1. reference 1
+</span><span class="line">2. reference 2
+</span><span class="line">{: .reference}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>당연히 <code>#</code>을 쓰면 id도 가능하다!</p>
 
@@ -257,85 +388,113 @@ Caption은 일이 좀 커질 것 같아서..</p>
     </li>
   </ol>
 </div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[블로그에서 Latex 수식 사용하기(MathJax)]]></title>
-    <link href="http://SanghyukChun.github.io/25/"/>
-    <updated>2013-11-05T19:26:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/25</id>
-    <content type="html"><![CDATA[<p>수식을 일반 텍스트로 표현하는 것은 상당히 가독성도 떨어지고 적는 사람도 매우 불편하다. 요즘 포스팅에서 수식을 적을 일이 많아져서 이 참에 블로그에 Latex 문법을 사용할 수 있으면 좋겠다는 생각이 들어서 이번 기회에 추가해봤다. 여러가지 방법이 있을 수 있지만, 내가 선택한 솔루션은 <a href="http://www.mathjax.org/"></a>MathJax라는 javascript plugin.. 이걸 사용한 이유는 가장 많이 쓰이는 것 같고, 자료도 많고 여러 브라우저나 OS랑 호환성도 좋은 것 같아 사용하기로 했다. 무엇보다 직접 javascript를 더 추가하지 않아도 된다는 사실도 좋았다. 속도가 엄청 중요한 웹페이지가 아니고서야 plugin을 다운로드 받고 하는 것 보다 특정 cdn에서 온라인으로 다운로드 받게 하는게 개발하는 입장에서는 훨씬 편하다.</p>
-<p>방법은 매우 간단하다. 아래와 같은 코드를 head에 넣으면 끝. </p>
-<p><code>
-&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;
-</code></p>
-<p>이제 준비는 끝났다. 이제 수식을 넣어보자.</p>
-<p>사용법은 어렵지 않다. 만약 $ E=mc^2 $를 쓰고 싶으면 </p>
-<p><code>
-$ E=mc^2 $
-</code></p>
-<p>라고 적으면 된다. 위에 E=mc^2를 적은 곳에 다른 Latex 문법을 넣으면 다른 수식을 표현할 수 있다.</p>
-<p>이번 포스팅의 참고 포스트: <a href="http://blog.daum.net/whitebrow09/292">블로그에서 수식 표현하기</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013.07.27]]></title>
-    <link href="http://SanghyukChun.github.io/8/"/>
-    <updated>2013-07-28T02:36:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/8</id>
-    <content type="html"><![CDATA[<p>저번 주에는 <a href="http://sanghyukchun.github.io/aboutMe/">AboutMe</a>에 매진하고 이번 주말에는 내내 블로그를 작업하는 데에 몰두한 것 같다. -프로그래밍은 재미있는 것이다.- 라는 말은 어디까지나 내가 감당할 수 있고 내가 어떻게 할 수 있을지 가늠할 수 있을 때 어울리는 말이 아닐까. 앞으로 내가 나아갈 방향에서 그렇지 않은 프로그래밍이 참 많을텐데 내가 계속 프로그래밍을 하는 것이 맞을까라는 생각이 든다.</p>
-<p>Octopress로 블로그를 만든 것을 살짝 후회하고 있다. 편하게 고치려고 가져온건데 오히려 바닥부터 뜯어고쳐야하는게 많다보니 차라리 처음부터 지킬로 작업하는 것 보다 느린 것 같다. 하지만 일단 커스터마이징만 끝나면 deploy, preview 심지어 new post까지 전부 스크립트로 걸어놨으니 오히려 더 빠르게 진행될 수 있겠지</p>
-<p>머신러닝 공부 속도는 더디지만 (오늘은 7강까지 밖에 못들었다.) 그래도 얼른 끝내야 내 프로젝트를 진행하고 neural network 강의 등으로 넘어가서 내 자신에 대한 발전이 있을 텐데 자꾸 더디다. 아직까지는 전부 아는 내용이라 사실 정말 빠르게 다 보고 슥슥 넘겨도 괜찮은 정도인데 그 잠깐을 집중하는 것도 못하고 있어서 큰일이다. 하지만 머신러닝 강의가 더딘만큼 블로그와 About Me의 개발 속도는 어마어마한 것을 보면 확실히 이 세상에 모든 것은 trade-off관계인가 보다.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress에 facebook comments 추가하기]]></title>
-    <link href="http://SanghyukChun.github.io/7/"/>
-    <updated>2013-07-28T01:38:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/7</id>
-    <content type="html"><![CDATA[<p>원래는 바로 레이아웃 뜯어고친 얘기를 적을 생각이었지만 페북 코멘트로 삽질을 하고나니 이것 부터 기록하는 편이 더 나을 것 같다.. 일단 당연히 Octopress는 정적 html 페이지이니 Octopress자체가 comment를 관리하는 것은 불가능하다. 때문에 iframe으로 만들어진 social plugin이 필요한 것이고.. 사실 Disqus를 사용하면 세팅도 할 필요없이 간단하게 처리가 가능하다. 하지만 Disqus는 여러 단점이 존재하고, 무엇보다 내가 쓸 줄 모른다 -_-; 그리고 한국에서 쓰는 걸 본 적이 없음. 차라리 페북이나 트위터 댓글을 만드는 편이 훨씬 나을 것 같아서 개발 경험이 있는 페이스북 댓글로 가기로 했다.</p>
-<p>페이스북 댓글을 만들기 위해서는 먼저 app id가 필요하다. 자신의 <a href="https://developers.facebook.com/apps">App관리 페이지</a>에서 앱을 추가하고 app id만 받아오면 된다. 이 id가 있어야 페이스북 자바스크립트 API를 사용 가능하기 때문에 꼭 만들어줘야한다. (즉, 앱 이름을 제외한 나머지 옵션은 건드릴 필요가 없다)</p>
-<p>원래 <a href="https://developers.facebook.com/docs/reference/plugins/comments/">facebook document</a>에서 <a class="tip" title="facebook comment에서 설정할 수 있는 값은 크기와 light, dark뿐">자동 생성한 코드</a>를 이용했기 때문에 id를 전부 하드코딩했었는데 <a href="http://blog.grambo.me.uk/blog/2012/02/20/adding-facebook-comments-to-octopress/">좋은 포스트</a>를 발견해서 새로운 좋은 방법을 알아냈다. 일단 받아온 앱 id를 _config.yml에 추가하자.</p>
-<p><code>
-facebook_app_id = 12341234
-</code></p>
-<p><a href="https://developers.facebook.com/docs/reference/plugins/comments/">위에서 링크한 document</a>를 보면 알 수 있겠지만, body에서 script를 사용하여 API를 사용할 수 있도록 만들어주는 코드가 필요하고, 실제 코멘트를 추가할 위치에 fb_comments라는 div를 생성해야한다. 이게 사실 짱짱 귀찮은데 이유는 Comment를 추가해야하는 곳이 page랑 post 두개이기 때문 -_-; 거기다가 나는 이상하게 조건문이 잘 안먹어서 열이 뻗쳐서 그냥 if문도 날려버렸다. 내 코딩의 문제겠지만 오랫만에 레일즈 스타일로 html고치려니깐 뭔가 답답해서..</p>
-<p>아무튼 그렇게 하고나서 <code>source/_include/post/facebook_comment.html</code>이라는 녀석을 만들어서 아래의 코드를 추가해주자</p>
-<p><code>
-&lt;div class="fb-comments" data-href="http://SanghyukChun.github.ioblog/categories/octopress/atom.xml" data-width="470" data-num-posts="10"&gt;&lt;/div&gt;
-</code></p>
-<p>옵션은 본인이 원하는 대로 고쳐도 된다. 이제 <code>source/_layout/page.html</code>과 <code>source/_layout/post.html</code>을 수정하자</p>
-<p>```
+</div>
 
-```</p>
-<p>자 이걸로 끝이다. <a href="http://blog.grambo.me.uk/blog/2012/02/20/adding-facebook-comments-to-octopress/">아까 링크했던 글</a>에서는 head에 meta를 추가해주는데 해도 좋고, 없어도 잘 돌아는간다.</p>
-<h6>생길 수 있는 문제들</h6>
-<ul>
-	<li>나처럼 옵션 잘못 걸어서 아예 Comment section자체가 안생김</li>
-	<li>data-href에 http:// 없는 상태로 테스트함 (위와 같이해서 preview 때리면 잘 되야한다)</li>
-	<li>app id나 등등에서 오타가 있음 (그런데 은근 고칠게 많아서 의외로 찾기 힘들다)</li>
-</ul>
-]]></content>
-  </entry>
+<hr>
   
-  <entry>
-    <title type="html"><![CDATA[octopress 자잘한 세팅 변경 및 post용 script 만들기]]></title>
-    <link href="http://SanghyukChun.github.io/6/"/>
-    <updated>2013-07-27T20:13:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/6</id>
-    <content type="html"><![CDATA[<p>일단 자잘한 세팅으로 첫 번째 favicon. favicon이라는 녀석은 사이트에 즐겨찾기를 추가했을 때 옆에 작게 로고처럼 표시되는 녀석인데, default값이 octopress랑 같아서 도저히 작업하면서 신경쓰여서 바꿔버렸다. 이건 정말 간단하다. source/ directory바로 밑에 있는 favicon.png만 다른 파일로 바꿔주고 generate하고 deploy하면 끝</p>
-<p>두번 째로 Permalink. 쉽게 생각하면 포스트의 고유 주소값. 내가 티스토리, 워드프레스로 넘어가면서 가장 불만이었던 점이 이 고유 주소값의 default가 포스트 이름이라는 점. 근데 나는 원래 포스트 이름이 꽤 긴편이고 거기다가 주소에 날짜가 들어가면 정말 우아하지 않다고 생각해서 가장 미니멀리즘하게 포스트 순서대로 하는 것을 좋아한다. 그런데 octopress도 기본 값이 년/월/일/제목 이다.. -_- 그래서 간단하게 바꿔줬는데, _config.yml에 있는 permalink를 /:year/:month/:day/:title에서 /:title로 바꿔주고 markdown 파일 이름을 2013-07-25-1.markdown 이런 식으로 바꿔주면 된다. 어차피 앞에 주소는 rake new_post할 때 해주는거니깐 딱히 고민할 이유는 없다.</p>
-<p>근데 이렇게 하면 매번 생성할 때 마다 마지막 파일 이름이 뭐였는지 일일이 확인해야해서 굉장히 상당히 엄청 귀찮다. 그래서 아래와 같은 스크립트를 만들었음</p>
-<p><code>
-#!/bin/bash
-num=$(ls -l | grep markdown | wc -l)
-bundle exec rake new_post["$((num+1))"]
-</code></p>
-<p>그냥 post.sh라고 이름 붙이고 /source/_post directory바로 밑에 두고 ./post.sh만 돌리면 알아서 순서대로 만들어 준다 굳굳</p>
-]]></content>
-  </entry>
+</article>
+
+  <section>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+  <div class="mT30">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 블로그 포스트 하단 -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-5347633964054949"
+         data-ad-slot="9605924118"
+         data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</div>
+
+<aside class="sidebar">
   
-</feed>
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
+      </li>
+    
+      <li class="post">
+        <a href="/97/">AlphaGo의 알고리즘과 모델</a>
+      </li>
+    
+      <li class="post">
+        <a href="/96/">Machine Learning 스터디 (20-1) Multi-armed Bandit</a>
+      </li>
+    
+      <li class="post">
+        <a href="/95/">Machine Learning 스터디 (17-1) Recommendation System With Implicit Feedback</a>
+      </li>
+    
+      <li class="post">
+        <a href="/73/">Machine Learning 스터디 (17) Recommendation System (Matrix Completion)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Sanghyuk Chun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sanghyukchun';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://SanghyukChun.github.io/98/';
+        var disqus_url = 'http://SanghyukChun.github.io/98/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=182012898639519&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

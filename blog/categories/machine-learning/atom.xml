@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-15T02:29:17+09:00</updated>
+  <updated>2016-03-21T00:45:21+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -18,286 +18,173 @@
     <link href="http://SanghyukChun.github.io/97/"/>
     <updated>2016-03-15T02:28:00+09:00</updated>
     <id>http://SanghyukChun.github.io/97</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
+    <content type="html"><![CDATA[<ul class="no-float" id="markdown-toc">
+  <li><a href="#section">들어가며</a></li>
+  <li><a href="#section-1">왜 바둑이 체스보다 어려운가?</a></li>
+  <li><a href="#monte-carlo-tree-search">Monte-Carlo Tree search</a></li>
+  <li><a href="#approaches-by-alphago">Approaches by AlphaGo</a>    <ul>
+      <li><a href="#supervised-learning-of-policy-network-sl-policy-network">Supervised Learning of Policy Network (SL Policy Network)</a></li>
+      <li><a href="#reinforcement-learning-of-policy-networks-rl-policy-network">Reinforcement Learning of Policy Networks (RL Policy Network)</a></li>
+      <li><a href="#reinforcement-learning-of-value-networks">Reinforcement Learning of Value Networks</a></li>
+      <li><a href="#searching-with-policy-and-value-networks">Searching with Policy and Value Networks</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-2">정리</a></li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#section-3">변경 이력</a></li>
+</ul>
 
+<h3 id="section">들어가며</h3>
+<p>근 일주일 동안 가장 뜨거웠던 주제를 하나 꼽으라면 누가 뭐래도 “알파고”일 것이다. 글을 쓰고 있는 2016년 3월 13일 기준으로 알파고와 이세돌 사범과의 경기에서 최종 승리를 확정지은 상태이며, 오늘 이세돌 사범이 첫 승을 거둠으로써 5국 중 3대 1의 상황이 되었다. 내일 모레 있을 경기에서 3-2가 될지 4-1이 될지가 최종 결정이 될 것이며, 어느 결과가 나오더라도 AI 분야에서는 기념비적인 사건이 될 것이다.</p>
 
-<p>근 일주일 동안 가장 뜨거웠던 주제를 하나 꼽으라면 누가 뭐래도 "알파고"일 것이다. 글을 쓰고 있는 2016년 3월 13일 기준으로 알파고와 이세돌 사범과의 경기에서 최종 승리를 확정지은 상태이며, 오늘 이세돌 사범이 첫 승을 거둠으로써 5국 중 3대 1의 상황이 되었다. 내일 모레 있을 경기에서 3-2가 될지 4-1이 될지가 최종 결정이 될 것이며, 어느 결과가 나오더라도 AI 분야에서는 기념비적인 사건이 될 것이다.</p>
+<p>덕분에 AI (정확하게는 딥러닝)이 사람들의 이목을 집중적으로 받게되면서 불분명한 정보가 마구 흘러다니는 것 같아서 제대로 딥마인드에서 어떤 모델과 알고리즘을 사용한 것인지 직접 알아보고 정리해보기로 했다. 이 글에서는 deep learning, CNN <a href="75/#75-cnn">[7]</a>, deep Q-learning <a href="/90">[9]</a>등의 용어들을 설명없이 사용할 예정이므로, 해당 개념들에 관심이 있다면 내가 쓴 이전 글들 <a href="75/#75-cnn">[7]</a>, <a href="/90">[9]</a> 이나 다른 외부 자료들을 참고하면 좋을 것 같다.
+이 글은 Google Deep Mind에서 2016년 Nature에 발표한 matering the Game of Go with Deep Neural Network and Tree Search <a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[1]</a>를 기반으로 작성되었다.&lt;/p&gt;</p>
 
-
-<p>덕분에 AI (정확하게는 딥러닝)이 사람들의 이목을 집중적으로 받게되면서 불분명한 정보가 마구 흘러다니는 것 같아서 제대로 딥마인드에서 어떤 모델과 알고리즘을 사용한 것인지 직접 알아보고 정리해보기로 했다. 이 글에서는 deep learning, CNN <a href="http://SanghyukChun.github.io/75/#75-cnn">[7]</a>, deep Q-learning <a href="http://SanghyukChun.github.io/90">[9]</a>등의 용어들을 설명없이 사용할 예정이므로, 해당 개념들에 관심이 있다면 내가 쓴 이전 글들 <a href="http://SanghyukChun.github.io/75/#75-cnn">[7]</a>, <a href="http://SanghyukChun.github.io/90">[9]</a> 이나 다른 외부 자료들을 참고하면 좋을 것 같다.</p>
-
-
-<p>이 글은 Google Deep Mind에서 2016년 Nature에 발표한 matering the Game of Go with Deep Neural Network and Tree Search <a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[1]</a>를 기반으로 작성되었다.</p>
-
-
-
-
-<h5>왜 바둑이 체스보다 어려운가?</h5>
-
-
-<p>글을 본격적으로 시작하기 전에, 왜 바둑이 체스나 다른 게임들보다 어려운지부터 이야기해보자. 체스 (1997년 IBM Deeper blue), 체커 (1994년 CHINOOK <a href="https://www.aaai.org/ojs/index.php/aimagazine/article/viewFile/1208/1109">[6]</a>), tic tac toe (1952년) 등의 게임들은 이미 오래오래 전에 컴퓨터가 인간을 박살낸 분야이다. 게다가 최근 연구들을 통해 Atari 에뮬레이터를 기반으로 한 비디오 게임에서도 굉장히 뛰어난 성능을 내는 모델이 제안된 바 있다 <a href="http://SanghyukChun.github.io/90">[9]</a>. 그런데 바둑은 왜 아직까지 인간을 뛰어넘기가 어려웠을까? 그 이유는 다른 데에 있는 것이 아니라, 바둑에서 발생할 수 있는 경우의 수가 너무나 많기 때문이다. 체스, 바둑 등의 턴 방식의 게임들은 현 상황에서 앞으로 발생할 수 있는 모든 경우의 수에 대한 search tree를 만들고 가장 최적의 path를 찾아가는 방식으로 게임을 플레이하게 되는데, 이 tree의 size는 각 위치 별로 가능한 가능한 모든 movement의 개수 b와 게임의 길이 d의 조합인, \(b^d\)로 표현된다. 참고로 b는 breadth이고, d는 depth이다. 체스의 경우 b는 약 35, d는 약 80이지만, 바둑은 b가 약 250 d는 약 150이나 된다 (착수 가능한 경우의 수가 평균 250개, 평균 게임 길이가 150수). 10진수로 바꾸면 \(250^{150} \simeq 10^{360}\)이 되는데, 이게 얼마나 대단한 숫자이냐 하면 우주의 모든 원자의 숫자가 약 \(10^{80}\)으로 예상되니까, 각 경우 수마다 원소 하나 씩을 대응시키면 \(10^{280}\)개의 우주가 필요한 셈이다.</p>
-
-
+<h3 id="section-1">왜 바둑이 체스보다 어려운가?</h3>
+<p>글을 본격적으로 시작하기 전에, 왜 바둑이 체스나 다른 게임들보다 어려운지부터 이야기해보자. 체스 (1997년 IBM Deeper blue), 체커 (1994년 CHINOOK <a href="https://www.aaai.org/ojs/index.php/aimagazine/article/viewFile/1208/1109">[6]</a>), tic tac toe (1952년) 등의 게임들은 이미 오래오래 전에 컴퓨터가 인간을 박살낸 분야이다. 게다가 최근 연구들을 통해 Atari 에뮬레이터를 기반으로 한 비디오 게임에서도 굉장히 뛰어난 성능을 내는 모델이 제안된 바 있다 <a href="http://SanghyukChun.github.io/90">[9]</a>. 그런데 바둑은 왜 아직까지 인간을 뛰어넘기가 어려웠을까? 그 이유는 다른 데에 있는 것이 아니라, 바둑에서 발생할 수 있는 경우의 수가 너무나 많기 때문이다. 체스, 바둑 등의 턴 방식의 게임들은 현 상황에서 앞으로 발생할 수 있는 모든 경우의 수에 대한 search tree를 만들고 가장 최적의 path를 찾아가는 방식으로 게임을 플레이하게 되는데, 이 tree의 size는 각 위치 별로 가능한 가능한 모든 movement의 개수 b와 게임의 길이 d의 조합인, $b^d$로 표현된다. 참고로 b는 breadth이고, d는 depth이다. 체스의 경우 b는 약 35, d는 약 80이지만, 바둑은 b가 약 250 d는 약 150이나 된다 (착수 가능한 경우의 수가 평균 250개, 평균 게임 길이가 150수). 10진수로 바꾸면 $250^{150} \simeq 10^{360}$이 되는데, 이게 얼마나 대단한 숫자이냐 하면 우주의 모든 원자의 숫자가 약 $10^{80}$으로 예상되니까, 각 경우 수마다 원소 하나 씩을 대응시키면 $10^{280}$개의 우주가 필요한 셈이다.</p>
 <p>...사이즈가 너무 커서 도저히 감도 오지 않는다. 아무튼 체스는 그 search space의 크기가 20년 전의 (슈퍼) 컴퓨터로 exact tree search가 가능할 정도의 크기였고 지금은 개인 PC에서도 exact search가 가능할 정도이나, 바둑은 그와는 비교도 할 수 없는 무시무시한 크기를 보여주는 것이다. (정확히는 약 googol배는 더 크다고 한다. 맞다, 구글의 이름의 기원인 세상에서 가장 큰 단위인 그 구골이다..) 때문에 AI 쪽에서는 바둑을 정복하는 것이 최대 과제 중 하나였다. 어떻게 이 어마어마한 search space를 감당할 수 있을것인가?</p>
+<p>보다 더 자세한 설명을 하기 이전에, 바둑, 체스, 체커 등의 턴제 게임을 어떻게 tree search로 해결한다는 것인지 설명을 하고 넘어가도록 하자. 모든 턴제 게임은 일종의 트리 travel로 생각할 수 있다. 즉, 맨 처음 시작에서 각자가 한 턴을 소비할 때마다 트리의 노드로 이동하고, 결국 맨 마지막에 누군가가 승리하는 위치로 도달하면 게임이 끝나는 것이다. 체스는 그것이 체크메이크가 되는 것이고, 바둑은 돌을 더 이상 둘 곳이 없을 때 집의 개수가 더 많은 쪽이 되는 것이다. 특히 바둑에서는 tree가 다음처럼 표현된다.</p>
 
-
-<p>보다 더 자세한 설명을 하기 이전에, 바둑, 체스, 체커 등의 턴제 게임을 어떻게 tree search로 해결한다는 것인지 설명을 하고 넘어가도록 하자. 모든 턴제 게임은 일종의 트리 travel로 생각할 수 있다. 즉, 맨 처음 시작에서 각자가 한 턴을 소비할 때마다 트리의 노드로 이동하고, 결국 맨 마지막에 누군가가 승리하는 위치로 도달하면 게임이 끝나는 것이다. 체스는 그것이 체크메이크가 되는 것이고, 바둑은 돌을 더 이상 둘 곳이 없을 때 집의 개수가 더 많은 쪽이 되는 것이다. 특히 바둑에서는 tree가 다음처럼 표현된다. 출처 <a href="http://spri.kr/post/14725">[3]</a></p>
-
-
-<p><img class="center" src="/images/post/97-1.png" width="600"></p>
+<div class="caption">
+<img class="center" src="/images/post/97-1.png" width="600">
+<p>바둑의 Search Tree. 출처: <a href="http://spri.kr/post/14725">[3]</a></p>
+</div>
 
 <p>그럼 이제 tree를 만들었으니, 매 순간마다 맨 끝까지 tree를 진행한다음 제일 좋은 결과를 보이는 node를 고르면 된다. 끝! ...이라고 하고 싶지만 계속 반복해서 언급했듯 tree size가 우주 원자보다 많기 때문에 brute force는 불가능하다. 모 IT 변호사님 말처럼 모든 경우의 수를 세는 brute force를 하기 때문에 불공평하다는 얘기는 말이 안되는 셈. 때문에 알파고에서 가장 핵심이 되는 부분 중 하나는 바로 어떻게 tree search를 하느냐이다. Exact search가 힘들기 때문에 search space를 줄이는 적절한 approximation algorithm을 사용해야하는데 그 방법을 어떤 것을 취하는지가 문제가 되는 것이다.</p>
-
-
 <p>이건 사족인데, 방금 위에서 얼렁뚱땅 대충 tree로 좋은 node를 고른다고 했지만, 사실은 Minimax algorithm이라는 것을 사용해서, 나의 이득은 최대화하고, 상대방의 이득은 최소화하는 방향을 계속 반복하면서 아래로 value를 propagate하면서 계속 sub tree를 만들고... 뭐 그런 알고리즘을 써야한다. 결국 모든 node에 저런 계산을 해야하기 때문에 바둑같은 무식하게 큰 tree에서는 이 방법을 쓸 수 없는 것이 문제가 되는 것. Minimax에 대해서는 한국어로 된 좋은 자료 <a href="http://spri.kr/post/14725">[3]</a>가 있으니 참고하면 좋다.</p>
 
-
-
-
-<h5>Monte-Carlo Tree search</h5>
-
-
+<h3 id="monte-carlo-tree-search">Monte-Carlo Tree search</h3>
 <p>바둑의 search space의 크기는 착수 가능한 경우의 수를 밑으로하고 250의 평균 바둑 한 판의 길이인 150수를 지수로 하는 무식하게 큰 숫자이다. 따라서 search space를 줄이기 위해서는 (1) tree의 breadth search를 줄이는 방법 (착수 위치를 exact하게 전부 고려하는 대신, 좀 더 작은 숫자로 줄이는 방법), (2) tree의 depth를 줄이는 방법 (매 번 tree를 exact하게 끝까지 보지않는 방법) 이 두 가지가 필요하다. 현재 (AlphaGo이전의) state-of-art 바둑 system들은 이 방법을 해결하기 위하여 Monte-Carlo Tree search (MCTS)라는 방법을 사용하고 있다. MCTS의 이름에 Monte-Carlo가 들어가는 것을 보면 알 수 있듯, 이 방법론은 tree search를 exact tree traversal을 하는 대신, random하게 node를 하나 고르고 (sampling하고) 그것을 통해 확률적인 방법으로 approximate tree search를 하는 방법론이다. 당연히 계속 반복하면 asymptotic하게 optimal value function으로 converge하는 것 역시 증명되어있다.</p>
+<p>MCTS를 완전 high level로만 설명하면, 다음과 그림과 같은 4개의 seqeunce를 계속 반복하는 과정이라 할 수 있다.</p>
 
-
-<p>MCTS를 완전 high level로만 설명하면, 다음과 그림과 같은 4개의 seqeunce를 계속 반복하는 과정이라 할 수 있다. (출처: <a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[4]</a>)</p>
-
-
-<p><img class="center" src="/images/post/97-2.png" width="600"></p>
-
+<div class="caption">
+<img class="center" src="/images/post/97-2.png" width="600">
+<p>High level description of MCTS. 출처: <a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[4]</a></p>
+</div>
 <p>각 step에 대한 설명은 다음과 같다. 여기에서 핵심은 <b>Tree Policy</b>, 그리고 <b>Default Policy</b>이다.</p>
 
-
 <ol>
-<li>Selection: root node에서부터 <strong>Tree Policy (child selection policy)</strong>를 recursive하게 적용해서 leaf node L까지 도달한 후 L을 select한다.</li>
-<li>Expansion: 만약 도달한 leaf L이 terminate state가 아니라면 (즉 L에서 게임이 끝나지 않았다면) <strong>Tree Policy (leaf create policy)</strong>에 의해 새로운 child node 한 개 혹은 여러 개를 더 만들어서 tree를 exapnd한다.</li>
-<li>Simulation: 새 node 에서 <strong>Default Policy</strong>에 따른 outcome을 계산한다.</li>
-<li>Backpropagation: Simulation 결과를 사용해 selection에서 사용하는 statistic들을 update한다.</li>
+  <li>Selection: root node에서부터 __Tree Policy (child selection policy)__를 recursive하게 적용해서 leaf node L까지 도달한 후 L을 select한다.</li>
+  <li>Expansion: 만약 도달한 leaf L이 terminate state가 아니라면 (즉 L에서 게임이 끝나지 않았다면) __Tree Policy (leaf create policy)__에 의해 새로운 child node 한 개 혹은 여러 개를 더 만들어서 tree를 exapnd한다.</li>
+  <li>Simulation: 새 node 에서 __Default Policy__에 따른 outcome을 계산한다.</li>
+  <li>Backpropagation: Simulation 결과를 사용해 selection에서 사용하는 statistic들을 update한다.</li>
 </ol>
-
 
 <p>이때 Tree Policy와 Default Policy에 대한 설명은 각각 다음과 같다.</p>
 
-
 <ul>
-<li>Tree Policy: 이미 존재하는 search tree에서 leaf node를 select하거나 create하는 policy
-
-<ul>
-<li>바둑의 경우에는 특정 시점에서 가능한 모든 수 중에서 가장 승률이 높은 수를 예측하는 policy라고 생각하면 된다.</li>
+  <li>Tree Policy: 이미 존재하는 search tree에서 leaf node를 select하거나 create하는 policy
+    <ul>
+      <li>바둑의 경우에는 특정 시점에서 가능한 모든 수 중에서 가장 승률이 높은 수를 예측하는 policy라고 생각하면 된다.</li>
+    </ul>
+  </li>
+  <li>Default Policy: 주어진 non-terminal state에서의 (얼마나 좋은 state인지를 측정하는) value를 estimation을 하는 policy
+    <ul>
+      <li>바둑의 경우에는 현재 상황에서 얼마나 승리할 수 있을지를 measure하는 policy라고 생각하면 된다.</li>
+    </ul>
+  </li>
 </ul>
-</li>
-<li>Default Policy: 주어진 non-terminal state에서의 (얼마나 좋은 state인지를 측정하는) value를 estimation을 하는 policy
-
-<ul>
-<li>바둑의 경우에는 현재 상황에서 얼마나 승리할 수 있을지를 measure하는 policy라고 생각하면 된다.</li>
-</ul>
-</li>
-</ul>
-
 
 <p>Backpropagation step 자체는 둘 중 어떤 policy도 사용하지 않지만, 대신 backpropagation을 통해 각 policy들의 parameter들이 update된다. 이 4개의 step이 한 iteration으로, MCTS는 시간이 허락하는 한도 내에서 이 과정을 계속 반복하고, 그 중에서 가장 좋은 결과를 자신의 다음 action으로 삼는다. 다음은 가장 '좋은' node를 고르는 criteria의 4가지 예시이다.</p>
 
-
 <ol>
-<li>Max child: 가장 높은 reward 값을 가지고 있는 node를 고른다.</li>
-<li>Robust child: root node에서부터 가장 많이 visit된 node를 고른다.</li>
-<li>Max-Robust child: 1, 2를 동시에 만족하는 node를 고르며, 그런 node가 없다면 계속 반복해서 그런 node를 찾아낸다.</li>
-<li>Secure node: 가장 lower confidence bound를 maximize하는 node를 고른다.</li>
+  <li>Max child: 가장 높은 reward 값을 가지고 있는 node를 고른다.</li>
+  <li>Robust child: root node에서부터 가장 많이 visit된 node를 고른다.</li>
+  <li>Max-Robust child: 1, 2를 동시에 만족하는 node를 고르며, 그런 node가 없다면 계속 반복해서 그런 node를 찾아낸다.</li>
+  <li>Secure node: 가장 lower confidence bound를 maximize하는 node를 고른다.</li>
 </ol>
 
-
 <p>딥마인드에서 쓴 논문 <a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[1]</a>이나 포스트 <a href="http://googleresearch.blogspot.kr/2016/01/alphago-mastering-ancient-game-of-go.html">[2]</a>를 보면 single machine과 multi machine에서의 성능 차이에 대해 언급하는데, 아마도 iteration을 더 많이 시도해볼 수 있기 때문에 결과가 더 좋은 것이 아닐까싶다.</p>
-
-
 <p>MCTS의 일반적인 알고리즘을 정리하면 다음과 같이 적을 수 있다. (1) Tree Policy, (2) Default Policy, (3) Best Child Selection 이 세가지를 어떻게 정하느냐에 따라서 알고리즘의 종류가 바뀐다고 보면 된다.</p>
-
-
 <p><img class="center" src="/images/post/97-3.png" width="400"></p>
-
 <p>알고리즘을 보면 알 수 있듯, 굉장히 reinforcement learning스러운 방식을 취하기 때문에 (1) Aheuristic, 즉 뭔가 이유가 있고 reasonable한 decision making을 할 수 있으며 (2) Asymmetric, 아래 그림처럼 tree를 symmetric하지 않게, 더 relevant한 부분만 집중적으로 서치할 수 있다.</p>
-
-
 <p><img class="center" src="/images/post/97-4.png" width="500"></p>
-
 <p>Survey paper <a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[4]</a>를 보면 MCTS family 중에서 몇 가지 유명한 알고리즘들에 대해 설명하고 있는데 bandit 기반의 알고리즘들이 많이 있다. UCB를 기반으로 한 UCT (Upper Confidence Bounds for Trees), 그것을 좀 발전시킨 BAST (Bandit Algorithm for Smooth Trees).. 그것 이외에도 정말 수 많은 family들에 대해 설명하고 있으니 더 관심이 있으면 해당 논문을 읽어보면 좋을 것 같고, survey paper가 너무 길다면, MCTS에 대해 잘 정리되어있는 사이트 <a href="http://mcts.ai/about/index.html">[5]</a>가 있으니 이 사이트를 참고하면 좋겠다.</p>
 
-
-
-
-<h5>Approaches by AlphaGo</h5>
-
-
+<h3 id="approaches-by-alphago">Approaches by AlphaGo</h3>
 <p>앞서 설명한 MCTS가 비록 full search를 하지 않아도 된다지만, 결국 바둑에 적용하기 위해서는 breadth와 depth를 줄이는 과정이 필요하다. AlphaGo에서 이 둘을 줄이기 위하여 사용한 것이 바로 deep learning technique으로, 먼저 착수하는 지점을 평가하기 위한 value network, 그리고 샘플링을 하는 distribution을 만들기 위한 policy network 두 가지 network를 사용하게 된다.</p>
-
-
 <p>결국 AlphaGo가 한 것을 한 마디로 요약하자면 Monte-Carlo Tree search이며, tree의 search space를 줄이기 위하여 value network와 policy network 두 가지 (사실은 세 가지) network를 한 번에 learning할 수 있는 architecture를 만들고 이를 사용해 MCTS의 성능을 끌어올린 것이다. 따라서 이 방법은 비단 바둑에서만 사용할 수 있는 방법이 아니라, MCTS를 사용할 수 있는 거의 모든 방법론에 적용하는 것이 가능하다. 지금 AlphaGo가 input으로 흰 돌과 검은 돌들이 놓여져 있는 바둑판 그림을 사용하고 있기에 바둑을 학습하는 것이고, 그 이외에 search space가 너무 넓어서 exact tree search가 불가능한 model에서 전부 AlphaGo의 방법론을 사용할 수 있는 것이다.</p>
-
-
 <p>다시 본론으로 돌아와서, 더 자세한 설명을 하기 이전에 먼저 General MCTS에서 사용하는 네 가지 step (selection, expansion, simulation, backpropagation)을 AlphaGo는 어떻게 적용했는지 살펴보자.</p>
-
-
 <p><img class="center" src="/images/post/97-5.png" width="600"></p>
 
 <ol>
-<li>Selection: 현재 상태에서 Q + u가 가장 큰 지점을 고른다.
-
-<ul>
-<li>Q: MCTS의 action-value 값, 클 수록 승리 확률이 높아짐 (Q function에 대해서는 이전에 쓴 reinforcement 글 <a href="/76">[8]</a> 참고)</li>
-<li>u(P): <strong>Policy network (SL)</strong>과 node 방문 횟수 등에 의해 결정되는 값</li>
-</ul>
-</li>
-<li>Expansion: 방문 횟수가 40회가 넘는 경우 child를 하나 expand한다.</li>
-<li>Simulation: <strong>Value network</strong>와 <strong>Fast rollout</strong>이라는 두 가지 방법을 사용해 reward를 계산한다.
-
-<ul>
-<li>Value network는 <strong>Policy network (RL)</strong>을 사용해서 learning한다.</li>
-</ul>
-</li>
-<li>Backpropagation: 시작 지점부터 마지막 leaf node까지 모든 edge의 parameter를 갱신한다.</li>
-<li>1-4를 (시간이 허락하는 한도 내에서) 계속 반복하다가, Best Child Selection으로는 robust child, 즉 가장 많이 방문한 node를 선택한다.</li>
+  <li>Selection: 현재 상태에서 Q + u가 가장 큰 지점을 고른다.
+    <ul>
+      <li>Q: MCTS의 action-value 값, 클 수록 승리 확률이 높아짐 (Q function에 대해서는 이전에 쓴 reinforcement 글 <a href="/76">[8]</a> 참고)</li>
+      <li>u(P): __Policy network (SL)__과 node 방문 횟수 등에 의해 결정되는 값</li>
+    </ul>
+  </li>
+  <li>Expansion: 방문 횟수가 40회가 넘는 경우 child를 하나 expand한다.</li>
+  <li>Simulation: __Value network__와 __Fast rollout__이라는 두 가지 방법을 사용해 reward를 계산한다.
+    <ul>
+      <li>Value network는 __Policy network (RL)__을 사용해서 learning한다.</li>
+    </ul>
+  </li>
+  <li>Backpropagation: 시작 지점부터 마지막 leaf node까지 모든 edge의 parameter를 갱신한다.</li>
+  <li>1-4를 (시간이 허락하는 한도 내에서) 계속 반복하다가, Best Child Selection으로는 robust child, 즉 가장 많이 방문한 node를 선택한다.</li>
 </ol>
 
-
 <p>AlphaGo는 위에서 언급한 policy network를 supervised learning (SL), reinforcement learning (RL) 두 가지로 나눠서 학습한다. SL network는 그 동안 실제 프로기사가 둔 기보를 바탕으로 특정 기보에 대한 다음 수를 classification하는 방식으로 learning하고, RL network는 SL network로 initialize한 후, reinforcement learning 방식 (AlphaGo의 자가대국이라고 부르는 방식)으로 주어진 기보에 대한 다음 수의 distribution을 학습한다.</p>
-
-
 <p>AlphaGo는 앞에서 설명한 Rollout Policy, SL network, RL network 그리고 마지막 value network를 한 번에 pipeline 방식으로 learning하는 architecture를 디자인했다.</p>
 
-
-
-
-<h5>Supervised Learning of Policy Network (SL Policy Network)</h5>
-
-
-<p>먼저 AlphaGo의 Supervised Learning (SL) Policy Network \(p_\sigma (a | s)\)에 대해 알아보자. 이 네트워크는 단순한 CNN으로, input은 시간 t일 때의 기보(s)이고, output은 시간 t+1 일 때의 기보(a)가 된다. 따라서 이 네트워크는 classification network가 된다. 다만 문제라면 output layer의 dimension이 너무 거대하다는 것. 개인적으로 이런 도대체 네트워크를 어떻게 learning시킨건지 상상조차 되지 않는다. 참고로 이 네트워크는 단순 classification task만 하기 때문에 sequencial할 필요는 없다. 때문에 그냥 모든 (s,a) pair에서 랜덤하게 데이터를 샘플해서 SGD로 learning하게 된다.</p>
-
-
+<h4 id="supervised-learning-of-policy-network-sl-policy-network">Supervised Learning of Policy Network (SL Policy Network)</h4>
+<p>먼저 AlphaGo의 Supervised Learning (SL) Policy Network $p_\sigma (a | s)$에 대해 알아보자. 이 네트워크는 단순한 CNN으로, input은 시간 t일 때의 기보(s)이고, output은 시간 t+1 일 때의 기보(a)가 된다. 따라서 이 네트워크는 classification network가 된다. 다만 문제라면 output layer의 dimension이 너무 거대하다는 것. 개인적으로 이런 도대체 네트워크를 어떻게 learning시킨건지 상상조차 되지 않는다. 참고로 이 네트워크는 단순 classification task만 하기 때문에 sequencial할 필요는 없다. 때문에 그냥 모든 (s,a) pair에서 랜덤하게 데이터를 샘플해서 SGD로 learning하게 된다.</p>
 <p>네트워크는 총 13 layer CNN을 사용했으며 KGS라는 곳에서 3천만건의 기보 데이터를 가져와서 학습했다고 한다. 네트워크 구조를 어떻게 만들었는지 궁금해서 살펴보니, inner product layer는 하나도 없이 처음부터 끝까지 convolution layer만 학습한 모양이다.</p>
-
-
 <p>논문에 따르면, AlphaGo는 이 부분에서 기존 state-of-art였던 44.4%보다 훨씬 좋은 classification accuracy인 57%까지 성능개선을 보였다고 한다. 또한 이 accuarcy가 좋으면 좋을수록 AlphaGo의 최종 winning rate가 상승한다는 사실까지 다음 그림과 같이 실험적으로 보이고 있다.</p>
-
-
 <p><img class="center" src="/images/post/97-6.png" width="400"></p>
 
-<h5>Reinforcement Learning of Policy Networks (RL Policy Network)</h5>
-
-
-<p>RL network는 SL network와 동일한 구조를 가지고 있으며, 초기 값 \(\rho\) 역시 SL network의 parameter value \(\sigma\)로 초기화된다. RL network는 현재 RL network policy \(p_\rho\)와 이전 iteration에서 사용했던 policy network 중에서 랜덤하게 하나를 뽑은 다음 이 둘끼리 서로 대국을 하게 한 후, 둘 중에서 현재 네트워크가 최종적으로 이기면 reward를 +1, 지면 -1을 주도록 디자인되어있다. 그러나 당연히 그 reward는 대국이 끝난 시점의 T에서의 reward이지 현재 시점 t에서의 reward는 0이기 때문에, 대신 네트워크의 outcome을 \(z_t = \pm r(s_T)\)으로 정의한다. 즉, 이 네트워크의 outcome은 현재 player의 time t에서의 terminated reward가 된다. 이 네트워크 역시 Stochasic gradient method를 사용해 expected reward를 maximize하는 방식으로 학습이 된다. 여기에서 과거에 학습된 네트워크를 사용하는 이유는, 좀 더 generalize된 모델을 만들고, overfitting을 피하고 싶기 때문이라고 한다 (언론에서 말하는 '자기 자신이랑 계속 반복해서 대국을 진행하는 방식으로 더 똑똑해진다' 라는 표현은 여기에서 나오는 자가 대국을 의미하는 것 같다).</p>
-
-
+<h4 id="reinforcement-learning-of-policy-networks-rl-policy-network">Reinforcement Learning of Policy Networks (RL Policy Network)</h4>
+<p>RL network는 SL network와 동일한 구조를 가지고 있으며, 초기 값 $\rho$ 역시 SL network의 parameter value $\sigma$로 초기화된다. RL network는 현재 RL network policy $p_\rho$와 이전 iteration에서 사용했던 policy network 중에서 랜덤하게 하나를 뽑은 다음 이 둘끼리 서로 대국을 하게 한 후, 둘 중에서 현재 네트워크가 최종적으로 이기면 reward를 +1, 지면 -1을 주도록 디자인되어있다. 그러나 당연히 그 reward는 대국이 끝난 시점의 T에서의 reward이지 현재 시점 t에서의 reward는 0이기 때문에, 대신 네트워크의 outcome을 $z_t = \pm r(s_T)$으로 정의한다. 즉, 이 네트워크의 outcome은 현재 player의 time t에서의 terminated reward가 된다. 이 네트워크 역시 Stochasic gradient method를 사용해 expected reward를 maximize하는 방식으로 학습이 된다. 여기에서 과거에 학습된 네트워크를 사용하는 이유는, 좀 더 generalize된 모델을 만들고, overfitting을 피하고 싶기 때문이라고 한다 (언론에서 말하는 '자기 자신이랑 계속 반복해서 대국을 진행하는 방식으로 더 똑똑해진다' 라는 표현은 여기에서 나오는 자가 대국을 의미하는 것 같다).</p>
 <p>논문에 따르면 SL policy network와 RL policy network가 경쟁할 경우, 거의 80% 이상의 게임을 RL network가 승리했다고 한다. 또한 다른 state-of-art 프로그램들과 붙었을 때도 훨씬 좋은 성능을 발휘했다고 한다.</p>
 
-
-
-
-<h5>Reinforcement Learning of Value Networks</h5>
-
-
-<p>이제 AlphaGo의 deep learning architecture 중에서 마지막 단계인 value network \(v_\theta (s)\)만 남았다. Value network는 evaluation 단계에서 사용하는 네트워크로, position (현재 기보) s와 policy p가 주어졌을 때, value function \(v^p(s)\)를 predict하는 네트워크이다. 즉, 다음과 같은 식으로 표현할 수 있다.</p>
-
-
-<p>\[v^p(s) = \mathbb E [z_t | s_t = s, a_{t\ldots T} \sim p].\]</p>
-
-
-<p>문제는 그 누구도 바둑에서 최적의 수를 모르기 때문에 (다시 강조하지만 search space가 우주의 원자 개수보다 많다) optimal value function \(v^*(s)\)를 학습할 방법이 없다는 것이다. 그 대신, AlphaGo는 현재 시스템에서 가장 우수한 policy인 RL policy network \(p_\rho\)를 사용해 optimal value function을 approximation한다. Value network는 앞에서 설명한 policy network와 비슷한 구조를 띄고 있지만, 마지막 output layer으로 모든 기보가 아닌, single probability distribution을 사용한다. 따라서 이제 문제는 classification이 아니라 regression이 된다. Value network는 현재 가장 state-outcome pair인 (s,z)에 의해서 학습이 된다 (여기에서 z는 RL network에서 나왔던 최종 reward의 값으로 1 또는 -1이다).</p>
-
-
-<p>따라서 Value network는 s에 대해 z가 나오도록 하는 regression network를 학습하게 되며, error는 \(z - v_\theta(s)\)가 된다. 그런데 문제는, state s는 한 개의 기보인데, reward target은 전체 game에 대해 정의되므로, succesive position들끼리 서로 강하게 correlation이 생겨서 결국 overfitting이 발생한다는 것이다. 이 문제를 해결하기 위해 AlphaGo는 3천만개의 데이터를 RL policy network들끼리의 자가대국을 통해 만들어낸 다음 그 결과를 다시 또 value network를 learning하는 데에 사용한다. 그 결과 원래 training error 0.19, test error 0.37로 overfitted되었던 네트워크가, training error 0.226, test error 0.234로 훨씬 더 generalized된 네트워크로 학습되었다는 것을 알 수 있다.</p>
-
-
+<h4 id="reinforcement-learning-of-value-networks">Reinforcement Learning of Value Networks</h4>
+<p>이제 AlphaGo의 deep learning architecture 중에서 마지막 단계인 value network $v_\theta (s)$만 남았다. Value network는 evaluation 단계에서 사용하는 네트워크로, position (현재 기보) s와 policy p가 주어졌을 때, value function $v^p(s)$를 predict하는 네트워크이다. 즉, 다음과 같은 식으로 표현할 수 있다.</p>
+<p>$$v^p(s) = \mathbb E [z_t | s_t = s, a_{t\ldots T} \sim p].$$</p>
+<p>문제는 그 누구도 바둑에서 최적의 수를 모르기 때문에 (다시 강조하지만 search space가 우주의 원자 개수보다 많다) optimal value function $v^*(s)$를 학습할 방법이 없다는 것이다. 그 대신, AlphaGo는 현재 시스템에서 가장 우수한 policy인 RL policy network $p_\rho$를 사용해 optimal value function을 approximation한다. Value network는 앞에서 설명한 policy network와 비슷한 구조를 띄고 있지만, 마지막 output layer으로 모든 기보가 아닌, single probability distribution을 사용한다. 따라서 이제 문제는 classification이 아니라 regression이 된다. Value network는 현재 가장 state-outcome pair인 (s,z)에 의해서 학습이 된다 (여기에서 z는 RL network에서 나왔던 최종 reward의 값으로 1 또는 -1이다).</p>
+<p>따라서 Value network는 s에 대해 z가 나오도록 하는 regression network를 학습하게 되며, error는 $z - v_\theta(s)$가 된다. 그런데 문제는, state s는 한 개의 기보인데, reward target은 전체 game에 대해 정의되므로, succesive position들끼리 서로 강하게 correlation이 생겨서 결국 overfitting이 발생한다는 것이다. 이 문제를 해결하기 위해 AlphaGo는 3천만개의 데이터를 RL policy network들끼리의 자가대국을 통해 만들어낸 다음 그 결과를 다시 또 value network를 learning하는 데에 사용한다. 그 결과 원래 training error 0.19, test error 0.37로 overfitted되었던 네트워크가, training error 0.226, test error 0.234로 훨씬 더 generalized된 네트워크로 학습되었다는 것을 알 수 있다.</p>
 <p>마지막으로, 아래 그림은 랜덤 policy, fast rollout policy, value network, SL network 그리고 RL network를 사용했을 때 각각의 value network의 expected loss가 plot되어있다. Loss는 실제 프로기사가 둔 수와, 각 policy로 둔 수와의 mean square loss이다. 결국, RL policy를 쓰는 것이 그렇지 않은 것보다 훨씬 우수한 결과를 낸다는 것을 알 수 있다.</p>
-
-
 <p><img class="center" src="/images/post/97-7.png" width="400"></p>
 
 <p>이제 high level로 앞에서 살펴본 세 네트워크를 살펴보자.</p>
-
-
 <p><img class="center" src="/images/post/97-8.png" width="600"></p>
-
 <p>먼저 왼쪽 그림은 어떻게 AlphaGo에서 세 네트워크를 pipeline 형태로 묶었는지를 보여준다. 사람이 실제로 둔 기보를 바탕으로 rollout policy, SL policy를 learning하고, SL policy를 initialization 값으로 사용해 RL policy를 learning한다. 그 후 RL policy를 사용해 value network를 learning하는 것이다.</p>
-
-
 <p>앞에서 깜빡하고 언급하지 않았는데, Fast Rollout Policy는 전체 바둑 상태가 아닌 local한 3 by 3 판에서 다음 수를 빠르게 예측해서 terminate state까지 게임을 play한 후 simulation하는 policy로, policy network를 사용한 방법보다 성능은 떨어질지 몰라도 약 1500배 정도 빠르다고 언급되고 있다. 그냥 빠른 naive approach라고 생각하면 될 것 같다.</p>
-
-
 <p>오른쪽 그림에서는 policy network와 value network의 차이를 보여주고 있다. Policy network들은 전부 input, output이 기보로 나타나고 (input이 지금 기보, output이 다음 기보) value network는 board 전체에 대한 probability를 학습한다는 점이 다르다. 즉, policy network는 주어진 기보에서 가장 확률이 높은 action을 고르는 방식으로 MCTS의 selection을 하는 역할을 하고, value network는 simulation결과를 통해 실제로 둘 수 있는 점들 중에서 가장 이길 확률이 높은 (reward가 승리이므로) 곳을 찾아내는 역할을 하게 되는 것이다.</p>
-
-
 <p>그리고 <a href="http://spri.kr/post/14725">[3]</a>에서 구체적인 CNN 구조를 설명한 그림이 있어서 인용하도록 하겠다.</p>
-
-
 <p><img class="center" src="/images/post/97-9.png" width="600"></p>
 
-<h5>Searching with Policy and Value Networks</h5>
-
-
-<p>이제 policy와 value network를 설계하였으니 실제로 이 네트워크들을 어떻게 MCTS에서 사용하는지 살펴보자. MCTS의 각각의 edge (s,a)는 action value Q(s,a), visit count N(s,a), prior probability P(s,a)를 저장한다. Tree는 simulation을 사용해서 traversal을 root node에서부터 진행하게 된다. Simulation의 각 step t마다, action \(a_t\)는 state \(s_t\)에 대해 다음과 같이 정의된다.</p>
-
-
-<p>\[a_t = \arg\max_a (Q(s_t,a) + u(s_t, a)), \mbox{ where } u(s,a) \propto \frac{P(s,a)}{1+N(s,a)}. \]</p>
-
-
-<p>Traversal을 지속하다 leaf node L에 도달하게 되면, expand여부를 결정하게 된다 (방문횟수로 결정하는 듯 하다). 그 후 leaf node에서의 position \(s_L\)을 사용해서 SL policy \(p_\sigma\)를 prior P에 저장한다. 즉, \(P(s,a) = p_\sigma(s,a)\)가 된다. 이때 leaf node는 두 가지 방법으로 evaluate된다. 먼저 value network \(v_\theta(s_L)\), 그리고 fast rollout policy \(p_\pi\)를 사용해 terminal step T까지 도달했을 때 random rollout play로 얻어진 outcome \(z_L\). 이 둘은 parameter \(\lambda\)를 사용해 다음과 같이 combine된다.</p>
-
-
-<p>\[ V(s_L) = (1-\lambda)v_\theta (s_L) + \lambda z_L. \]</p>
-
-
+<h4 id="searching-with-policy-and-value-networks">Searching with Policy and Value Networks</h4>
+<p>이제 policy와 value network를 설계하였으니 실제로 이 네트워크들을 어떻게 MCTS에서 사용하는지 살펴보자. MCTS의 각각의 edge (s,a)는 action value Q(s,a), visit count N(s,a), prior probability P(s,a)를 저장한다. Tree는 simulation을 사용해서 traversal을 root node에서부터 진행하게 된다. Simulation의 각 step t마다, action $a_t$는 state $s_t$에 대해 다음과 같이 정의된다.</p>
+<p>$$a_t = \arg\max_a (Q(s_t,a) + u(s_t, a)), \mbox{ where } u(s,a) \propto \frac{P(s,a)}{1+N(s,a)}. $$</p>
+<p>Traversal을 지속하다 leaf node L에 도달하게 되면, expand여부를 결정하게 된다 (방문횟수로 결정하는 듯 하다). 그 후 leaf node에서의 position $s_L$을 사용해서 SL policy $p_\sigma$를 prior P에 저장한다. 즉, $P(s,a) = p_\sigma(s,a)$가 된다. 이때 leaf node는 두 가지 방법으로 evaluate된다. 먼저 value network $v_\theta(s_L)$, 그리고 fast rollout policy $p_\pi$를 사용해 terminal step T까지 도달했을 때 random rollout play로 얻어진 outcome $z_L$. 이 둘은 parameter $\lambda$를 사용해 다음과 같이 combine된다.</p>
+<p>$$ V(s_L) = (1-\lambda)v_\theta (s_L) + \lambda z_L. $$</p>
 <p>앞에서 진행한 simulation이 끝나고나면, 이제 각 edge들이 가지고 있는 parameter들을 update할 차례다. 앞에서 언급했듯, AlphaGo의 MCTS는 각각의 edge (s,a)에 action value Q(s,a), visit count N(s,a), prior probability P(s,a)를 저장한다. 여기에서 P(s,a)는 SL network로 update가 되고, 남은건 Q와 N이다. 이 값들은 다음과 같은 과정으로 업데이트 된다.</p>
-
-
-<p>\[N(s,a) = \sum_i \mathbf{1}(s,a,i)\]</p>
-
-
-<p>\[Q(s,a) = \sum_i \frac{1}{N(s,a)} \mathbf{1}(s,a,i) V(s_L^i).\]</p>
-
-
-<p>\(s_L^i\)는 i번째 simulation에서 leaf node를 의미하며, \(\mathbf{1}(s,a,i)\)는 i번째 simulation에서 edge (s,a)가 관측되었는지에 대한 indicator function이다. 이런 방식을 통해 서치가 다 끝나고나면 AlphaGo는 root에서 부터 가장많이 선택된 node를 선택하는 방식으로 한 수를 둔다.</p>
-
-
+<p>$$N(s,a) = \sum_i \mathbf{1}(s,a,i)$$</p>
+<p>$$Q(s,a) = \sum_i \frac{1}{N(s,a)} \mathbf{1}(s,a,i) V(s_L^i).$$</p>
+<p>$s_L^i$는 i번째 simulation에서 leaf node를 의미하며, $\mathbf{1}(s,a,i)$는 i번째 simulation에서 edge (s,a)가 관측되었는지에 대한 indicator function이다. 이런 방식을 통해 서치가 다 끝나고나면 AlphaGo는 root에서 부터 가장많이 선택된 node를 선택하는 방식으로 한 수를 둔다.</p>
 <p>재미있는 점은, MCTS의 policy function으로 SL policy를 쓰는 것이 RL policy보다 낫다고 논문에 report된 점이다. 이유는 (SL policy를 learning할 때 사용한) 사람이 두는 수는 뒤를 생각한 좀 더 global한 수를 두는 반면, RL policy는 그 순간의 가장 최고의 move를 하기 때문에, SL policy가 더 낫다는 것이다. 반면, value network는 SL network가 아닌 RL network를 사용하는 편이 훨씬 성능이 좋다고 한다.</p>
 
-
-
-
-<h5>정리</h5>
-
-
+<h3 id="section-2">정리</h3>
 <p>이 글에서는 자세한 네트워크의 구조나 코드 구현보다는 실제로 이 알고리즘이 어떻게 동작하는지, 그리고 모델은 어떻게 구성했는지에 대해 집중적으로 다뤘다. AlphaGo는 MCTS를 deep learning pipeline을 통해 훨씬 성능을 개선한 work이라 할 수 있으며, network는 SL, RL 두개의 policy network 그리고 value network 총 세 가지를 learning하게 된다. Policy network는 MCTS의 selection에서 쓰이게 되며, value network는 MCTS의 evaluation에서 쓰이게 된다.</p>
-
-
 <p>각종 매체나 언론에서는 알파고가 인간이 1000년 동안 두어야 둘 수 있는 대국을 진행했고, 최적의 수를 항상 찾아내기 때문에 이세돌 사범에게 불리하다는 식으로 보도를 하고 있지만, 사실은 그 이전에도 AlphaGo가 사용하던 데이터와 동일한 데이터로 훨씬 못한 결과들을 내왔었다. 결국 알파고가 뛰어난 점은 기존 방법들보다 훨씬 smart한 architecture를 디자인하고, 그 architecture의 power를 최대한으로 끌어올리기 위해서 parallel computing 등의 각종 기법들을 사용해서 시스템을 엄청 정교하게 만들었다는 점이라고 할 수 있다. 그러나 아무리 대단한 시스템 엔지니어라고 하더라도, 근본이 되는 모델의 성능이 나쁘다면 그 시스템을 인간 수준으로 끌어올리지는 못했을 것이다. 결국 구글은, 그리고 딥마인드는, 정말 '인간답게' sequencial decision process를 학습하는 멋진 시스템을 디자인했다고 볼 수 있을 것 같다.</p>
 
-
-
-
-<h5>References</h5>
-
-
+<h3 id="references">References</h3>
 <ol class="reference">
-    <li><a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[Nature] Silver, David, et al. "Mastering the game of Go with deep neural networks and tree search.", 2016.</a>, <a href="http://airesearch.com/wp-content/uploads/2016/01/deepmind-mastering-go.pdf">[pdf링크]</a></li>
-    <li><a href="http://googleresearch.blogspot.kr/2016/01/alphago-mastering-ancient-game-of-go.html">[Google Research Blog] "AlphaGo: Mastering the ancient game of Go with Machine Learning.", 2016.</a></li>
-    <li><a href="http://spri.kr/post/14725">[SPRI] 소프트웨어 정책연구소."AlphaGo의 인공지능 알고리즘 분석.", 2016.</a></li>
-    <li><a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[Computational Intelligence and AI in Games] Browne, Cameron B., et al. "A survey of monte carlo tree search methods.", 2012.</a></li>
-    <li><a href="http://mcts.ai/about/index.html">MCTS.ai</a></li>
-    <li><a href="https://www.aaai.org/ojs/index.php/aimagazine/article/viewFile/1208/1109">[AAAI] Schaeffer, Jonathan, et al. "CHINOOK the world man-machine checkers champion.", 1996.</a></li>
-    <li><a href="http://SanghyukChun.github.io/75/#75-cnn">Machine Learning 스터디 (19) Deep Learning - RBM, DBN, CNN</a></li>
-    <li><a href="http://SanghyukChun.github.io/76">Machine Learning 스터디 (20) Reinforcement Learning</a></li>
-    <li><a href="http://SanghyukChun.github.io/90">Playing Atari With Deep Reinforcement Learning (NIPS 2013)</a></li>
+	<li><a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[Nature] Silver, David, et al. "Mastering the game of Go with deep neural networks and tree search.", 2016.</a>, <a href="http://airesearch.com/wp-content/uploads/2016/01/deepmind-mastering-go.pdf">[pdf링크]</a></li>
+	<li><a href="http://googleresearch.blogspot.kr/2016/01/alphago-mastering-ancient-game-of-go.html">[Google Research Blog] "AlphaGo: Mastering the ancient game of Go with Machine Learning.", 2016.</a></li>
+	<li><a href="http://spri.kr/post/14725">[SPRI] 소프트웨어 정책연구소."AlphaGo의 인공지능 알고리즘 분석.", 2016.</a></li>
+	<li><a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[Computational Intelligence and AI in Games] Browne, Cameron B., et al. "A survey of monte carlo tree search methods.", 2012.</a></li>
+	<li><a href="http://mcts.ai/about/index.html">MCTS.ai</a></li>
+	<li><a href="https://www.aaai.org/ojs/index.php/aimagazine/article/viewFile/1208/1109">[AAAI] Schaeffer, Jonathan, et al. "CHINOOK the world man-machine checkers champion.", 1996.</a></li>
+	<li><a href="http://SanghyukChun.github.io/75/#75-cnn">Machine Learning 스터디 (19) Deep Learning - RBM, DBN, CNN</a></li>
+	<li><a href="http://SanghyukChun.github.io/76">Machine Learning 스터디 (20) Reinforcement Learning</a></li>
+	<li><a href="http://SanghyukChun.github.io/90">Playing Atari With Deep Reinforcement Learning (NIPS 2013)</a></li>
 </ol>
 
-
-
-
-<h5>변경 이력</h5>
-
-
+<h3 id="section-3">변경 이력</h3>
 <ul>
-<li>2016년 3월 15일: 글 등록</li>
+  <li>2016년 3월 15일: 글 등록</li>
 </ul>
-
 ]]></content>
   </entry>
   
@@ -306,216 +193,99 @@
     <link href="http://SanghyukChun.github.io/96/"/>
     <updated>2016-03-13T19:28:00+09:00</updated>
     <id>http://SanghyukChun.github.io/96</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
+    <content type="html"><![CDATA[<h3>들어가며</h3>
 <p>이 글에서는 reinforcement learning의 한 갈래 중 하나인 Multi-armed Bandit에 대해 다룰 것이다. Multi-armed Bandit이 어떤 문제인지에 대해 간략히 설명한 다음, 좀 더 formal하게 문제를 정의하고, 이 문제를 푸는 여러 알고리즘들에 대해 다룰 것이다. 연구가 워낙 오래 진행된 분야라서 모델이나 알고리즘의 종류가 엄청나게 많지만, variation 중에서 몇 가지 간단한 것들 위주로 설명해보도록 하겠다.</p>
 
-
-
-
-<h5>Motivation: Exploration and Exploitation Trade-off</h5>
-
-
-<p>외팔이 강도가 (one-armed bandit이) 우연한 기회로 눈 앞에 여러 개의 슬롯머신을 공짜로 H시간 동안 플레이 할 수 있는 기회를 얻었다고 생각해보자. 이때 강도는 한 번에 한 개의 슬롯머신의 arm만 당길 수 있으며 (즉 총 H번 시도할 수 있다) 각각의 슬롯머신에서 얻을 수 있는 reward는 다르다고 가정한다. 또한 reward는 어떤 probabilistic distribution에 의해 draw되는 random variable이라고 했을 때, 이때 강도가 가장 수익을 최대화하기 위해서는 arm을 어떤 순서대로, 어떤 policy대로 당겨야할까? (그림 출처: <a href="http://research.microsoft.com/en-us/projects/bandits/">MS research</a>)</p>
-
-
-<p><img class="center" src="/images/post/96-4.jpg" width="300"></p>
-
+<h3>Motivation: Exploration and Exploitation Trade-off</h3>
+<p>외팔이 강도가 (one-armed bandit이) 우연한 기회로 눈 앞에 여러 개의 슬롯머신을 공짜로 H시간 동안 플레이 할 수 있는 기회를 얻었다고 생각해보자. 이때 강도는 한 번에 한 개의 슬롯머신의 arm만 당길 수 있으며 (즉 총 H번 시도할 수 있다) 각각의 슬롯머신에서 얻을 수 있는 reward는 다르다고 가정한다. 또한 reward는 어떤 probabilistic distribution에 의해 draw되는 random variable이라고 했을 때, 이때 강도가 가장 수익을 최대화하기 위해서는 arm을 어떤 순서대로, 어떤 policy대로 당겨야할까?</p>
+<div class="caption">
+<img class="center" src="/images/post/96-4.jpg" width="300">
+<p>그림 출처: <a href="http://research.microsoft.com/en-us/projects/bandits/">MS research</a></p>
+</div>
 <p>이 문제에서 가장 큰 난점은, 슬롯머신마다 보상이 다르고, 한 번에 한 슬롯머신의 reward만 관측할 수 있다는 점이다. 예를 들어 한 슬롯머신을 골라서 계속 그 슬롯머신만 당길 수도 있겠지만, 이 경우 다른 슬롯머신에서 더 좋은 reward를 얻었을 수도 있기 때문에 가장 최적의 전략은 아닐 것이다. 혹은 모든 슬롯머신을 동일한 횟수만큼 반복할 수도 있을 것이다. 그러나 슬롯머신 중에서 가장 좋은 reward를 보이는 머신은 오직 하나 뿐 일 것이므로, 이런 전략은 마찬가지로 최종 reward를 최적화하는 방법은 아닐 것이다. 혹은 일부 시간만 슬롯머신을 랜덤하게 당겨보고, 그 시간 동안 제일 좋았던 슬롯머신만 계속 당겨보는 수도 있을 것이다. 이때 기존 경험 혹은 관측값을 토대로 가장 좋은 arm을 선택하는 것을 exploitation이라 하며 더 많은 정보를 위하여 새로운 arm을 선택하는 것을 exploration이라고 한다. 결국 시간이 제한되어있기 때문에 이 둘 사이에는 trade-off관계가 성립하게 된다. 만약 exploration를 너무 하지 않게 될 경우, 잘못된 정보를 토대로 exploitation을 하게 되기 때문에 최종 결과가 좋을 거라는 보장을 하기가 힘들 것이다. 그렇다고 해서 너무 exploration을 많이 하게 되면, 충분히 정보를 가지고 있음에도 불구하고 더 정보를 얻기 위해 쓸데 없는 비용이 발생할 것이다. 따라서 이런 측면에서 exploration과 exploitation은 서로 trade-off 관계가 있다고 할 수 있고, 이런 상황에서 우리가 이 둘을 어떻게 조절하느냐가 Multi-armed Bandit problem의 핵심이 되는 것이다.</p>
-
-
 <p>이런 유형의 문제의 가장 대표적인 예시는 여러 개의 새로운 치료법 중에서 실제로 환자들에게 trial을 해보고 가장 좋은 치료법을 찾는 clinical trial이라고 불리는 문제이다. 예를 들어 우리가 에이즈에 효과가 있어보이는 약물이 총 K개가 있다고 했을 때, 환자들에게 서로 다른 약물을 (혹은 치료법을) 시도해보면서 가장 효과가 좋은 약물이 어떤 것인지 찾아내는 문제이다. 이 경우 당연히 환자들의 건강상 문제라거나 고통 등의 문제를 최소화하는 방향으로 치료 순서를 정해야할 것이다. 이 문제를 푸는 가장 단순한 방법은 K개의 약물을 각각 n번 시도 해보고 각각의 expectation을 고르는 방법이 있다. 그러나 K와 n에 따라 너무 많은 시간이 필요할 뿐 아니라, 이 중에서 환자에게 치명적인 약물이 있으면 risk minimization이라는 측면에서 문제가 된다. 이런 문제점을 해결하기 위해 Multi-armed bandit을 사용하게 되며, Mutli-armed bandit을 사용하게 되면 이런 형태의 문제들을 굉장히 효율적으로, 그리고 practical하게 잘 동작하는 방식으로 풀 수 있다.</p>
-
-
 <p>또 다른 예시로는 웹 사이트의 A/B 테스트를 들 수 있다. 만약 K개의 시안 중에서 가장 사람들이 좋아할만한 시안이 무엇인지 알고 싶어서 사람들에게 무작위로 K개의 시안을 보여준다고 생각해보자. 역시 한 사람에 한 번에 한 페이지만 보여줄 수 있기 때문에 이 문제도 위의 문제와 비슷하게 다룰 수 있고, 가장 최적화하고 싶은 값은 click rate라거나 광고 수익률 등이 될 것이다. 실제로 구글 analytics에서도 multi-armed bandit 실험을 제공하고 있다 (<a href="https://support.google.com/analytics/answer/2846882">[2]</a>). 그 밖에 네트워크 상에서 delay를 최소화하는 route를 구하고 싶을 때, MAB를 활용해 adaptive routing을 하거나, 여러 개의 schedule queue가 있을 때 MAB를 사용해 task를 효과적으로 scheduling하는 방법도 존재하는 등, 수 많은 application들이 존재한다.</p>
 
-
-
-
-<h5>Multi-armed Bandit Problem</h5>
-
-
+<h3>Multi-armed Bandit Problem</h3>
 <p>그러면 이제 Multi-armed Bandit 문제를 좀 더 엄밀하게 정의해보자. Multi-armed bandit (혹은 단순히 bandit이나 MAB) 문제는 각기 다른 reward를 가지고 있는 여러 개의 슬롯머신에서 (Multi-armed) 한 번에 한 슬롯머신에서만 돈을 빼갈 수 있는 도둑(one-armed bandit)의 H 시간 후의 최종 보상을 maximize하는 문제이다. Bandit 문제에서 player는 매 시간 t마다 K개의 arm 중에 하나를 선택, 혹은 play할 수 있고, 그에 상응하는 reward distribution에서 draw된 보상 x를 받게 된다. Bandit에서 매 시간마다 arm을 고르는 방법을 strategy 혹은 policy라고 부르며, bandit 문제는 시간 H 후의 최종 reward를 maximize하는 (혹은 regret을 minimize하는) policy를 찾는 문제가 된다.</p>
-
-
 <p>Bandit problem이 기존 general reinforcement learning과 가장 크게 다른 점이라면, reinforcement learning은 매 순간 reward를 전부 정확하게 알고 나서 행동하지만, bandit problem에서는 오직 내가 지금 선택한 arm에 대한 보상(payoff)만 알 수 있고, 나머지 arm들의 payoff에 대해서는 알 수 없다는 점이다. 이런 'partial information' 특성이 bandit problem의 가장 독특한 특징으로, 다른 arm들이 t 시간에 얼마만큼의 payoff를 주는지 알 수 없기 때문에 문제가 조금 더 까다로워지는 것이다.</p>
-
-
 <p>Bandit problem에는 정말 많은 variants가 존재한다. 이 글에서는 가장 기본적인 (finite-aremd) stochastic bandit problem에 대해서만 다룰 것이다. Stochastic bandit problem에서 'stochastic'이라는 의미는 각각의 arm이 stochastic하게 특정 reward distribution에 의해 (모든 arm과 과거 play들에 대해 i.i.d.하게) draw된다고 가정한다. 또한 arm의 개수 K와 arm에서 나오는 payoff function x는 finite하고, stationary하다고 (즉, time-invariant하다고) 가정하게 된다. 마지막으로 우리가 arm을 play할 수 있는 시간 H 역시 finite하고 알려져 있다고 가정한다. 이런 문제를 finite-armed, stochastic multi-armed bandit problem이라 부른다. 참고로 보통 이론적인 분석을 할 때에는 각 arm의 reward distribution은 Bernoulli distribution을 많이 고른다. 따라서 많은 문제 세팅에서 각 시간마다 arm의 reward는 0 또는 1로 설정하게 된다.</p>
-
-
 <p>실제로는 위의 조건이 상당히 strong하기 때문에, 여러 조건들이 relax될 수가 있다. 예를 들어 i.i.d. condition이라거나, finite, stationary arm condition이라거나 등의 조건들이 relax되는 variant도 존재한다. 우리가 아래에서 다룰 문제는 finite-armed, stochastic multi-armed bandit이 될 것이며, 당장은 contextual bandit이나 adversarial bandit 등의 variant들은 고려하지 않도록 하겠다. 실제로 bandit 문제는 앞서 정의한 statistical한 assumption에 의해서도 variant가 생길 수 있고, stochastic한 성질을 사용하고 하지 않느냐에 따라 또 달라지고, arm의 개수나 한 번에 관측할 수 있는 arm이 여러 개 있다거나, regret function을 어떻게 정의하느냐에 따라 엄청나게 많은 variant가 존재한다.</p>
-
-
-<p>이제 bandit problem들의 variant에 대해서는 그만 이야기해보고 마지막으로 regret function에 대해 살펴보자. Regret이란, 개념적으로는 가장 optimal한 policy대로 arm을 play했을 때 얻어지는 reward에서 내 policy대로 play했을 때 얻어지는 reward의 차이이다. 개념적으로는 이렇지만, 실제로는 Regret function을 정의하는 방법에는 엄청나게 많은 종류가 있다. 물론 이 글에서는 그 모든 variant를 다루지 않고 대신 다음과 같이 생긴 가장 간단한 regret을 사용하도록 하겠다. 이때, \(S_t\)는 내 strategy로 time t 때 고른 arm의 index이다.</p>
-
-
-<p>\[R = \left(\max_{i=1,\ldots,K} \mathbb E \sum_{t=1}^H x_{i,t}\right) - \mathbb E \sum_{t=1}^H x_{S_t,t}\]</p>
-
-
-<p>혹은 다음과 같이 time t에서의 optimal policy로 얻은 reward \(\mu_t^*\)와 time t에서의 user의 policy로 얻은 reward \(\mu_t\) 표현하기도 한다.</p>
-
-
-<p>\[R = \mathbb E \left[ \sum_{t=1}^H\\left(\mu_t^* - \mu_t\right) \right]\]</p>
-
-
+<p>이제 bandit problem들의 variant에 대해서는 그만 이야기해보고 마지막으로 regret function에 대해 살펴보자. Regret이란, 개념적으로는 가장 optimal한 policy대로 arm을 play했을 때 얻어지는 reward에서 내 policy대로 play했을 때 얻어지는 reward의 차이이다. 개념적으로는 이렇지만, 실제로는 Regret function을 정의하는 방법에는 엄청나게 많은 종류가 있다. 물론 이 글에서는 그 모든 variant를 다루지 않고 대신 다음과 같이 생긴 가장 간단한 regret을 사용하도록 하겠다. 이때, $S_t$는 내 strategy로 time t 때 고른 arm의 index이다.</p>
+<p>$$R = \left(\max_{i=1,\ldots,K} \mathbb E \sum_{t=1}^H x_{i,t}\right) - \mathbb E \sum_{t=1}^H x_{S_t,t}$$</p>
+<p>혹은 다음과 같이 time t에서의 optimal policy로 얻은 reward $\mu_t^*$와 time t에서의 user의 policy로 얻은 reward $\mu_t$ 표현하기도 한다.</p>
+<p>$$R = \mathbb E \left[ \sum_{t=1}^H\\left(\mu_t^* - \mu_t\right) \right]$$</p>
 <p>다시 말해서 reward function은 처음부터 끝까지 가장 optimal한 policy를 취했을 때의 reward expectation에서 내 policy를 취했을 때의 reward expectation을 뺀 값이다. 앞에서 언급한 것처럼 reward는 (보통 Bernoulli distribution에서 draw되는) random variable이기 때문에 조금 더 정확한 분석을 위해서 expectation을 취하게 되는 것이다. 그러나 이 값은 모든 reward를 알고있는 절대자 (oracle)이 있어야 정확한 값을 구할 수 있기 때문에 실제로 많은 실제 문제에서 regret이 얼마나 되는지 계산할 수는 없다. 대신 이론적인 분석을 할 때에, 미리 각 arm들이 특정 distribution을 따른다고 가정하고 특정 distribution을 가지는 arm들에서 bandit algorithm이 얼마나 regret을 minimize할 수 있는지를 분석하는 데에 쓰인다고 생각하면 된다.</p>
-
-
 <p>더 많은 bandit variant들이나 regret function의 종류에 대해 궁금하다면 reference로 참조한 survey paper <a href="http://arxiv.org/abs/1510.00757">[1]</a>를 읽어보길 권한다.</p>
 
-
-
-
-<h5>Algorithm 0: Gittins index</h5>
-
-
+<h3>Algorithm 0: Gittins index</h3>
 <p>앞서 설명한 bandit problem을 풀기 위한 알고리즘으로 가장 먼저 설명할 알고리즘은 <a href="https://en.wikipedia.org/wiki/Gittins_index">Gittins index</a>이다. 이 알고리즘은 이론적으로 잘 증명되어있는 Bayes-optimal policy이지만, 실제로는 computation이 너무 많이 필요하기 때문에 practical하게 사용되는 대신 다른 알고리즘들이 많이 사용된다. 따라서 이 문단에서는 정말 짤막하게 언급만 하고 넘어가려고 한다. 매 time t마다 Gittins index 알고리즘은 다음과 같은 방식으로 arm을 고른다.</p>
 
-
 <ol>
-<li>각 arm 별로 Gittins index를 계산한다.</li>
-<li>가장 index가 높은 arm을 고른다.</li>
+  <li>각 arm 별로 Gittins index를 계산한다.</li>
+  <li>가장 index가 높은 arm을 고른다.</li>
 </ol>
-
 
 <p>Gittins index는 bandit problem을 풀기위한 초기 연구 중 하나로, 70 ~ 80년대에 연구된 결과이다. 이 방법론은 bandit 문제를 MDP로 취급하고 문제를 풀게 된다. 그냥 MDP만 사용하게 되면 문제를 풀기 위한 computation이 가능한 action의 모든 경우의 수와 bandit의 arm 개수의 exponential하게 증가하게 되기 때문에 Gittins는 이 문제를 해결하기 위하여 bandit problem이 n개의 1-D problem으로 reduce될 수 있음을 증명하고 각각의 1-D 문제의 계산 값을 Gittins index로 정의한 후, arm 중에서 가장 Gittins index가 높은 arm을 고르는 방법을 제안한다. 이 부분에서 Gittins index는 각 arm을 statistical distribution으로 생각하고 문제를 푸는 대신, 완전한 MDP문제로 해결하게 된다. 실제로는 별로 practical하지 않기에 쓰이지 않으며, UCB라고 하는 조금 더 practical한 approximation algorithm이 있기 때문에 보통 UCB를 사용하게 된다.</p>
 
-
-
-
-<h5>Algorithm 1: \(\varepsilon\)-greedy</h5>
-
-
-<p>Bandit problem을 푸는 가장 popular하면서도 간단한 알고리즘 중 하나로 \(\varepsilon\)-greedy라는 알고리즘이 있다. 이 알고리즘은 \(1-\varepsilon\)의 확률로 지금까지 관측한 arm 중에 가장 좋은 arm을 고르고 (exploitation), \(\varepsilon\)의 확률로 나머지 arm 중에서 random한 arm을 골라서 play하는 (explore) 알고리즘이다. 알고리즘은 다음과 같다.</p>
-
-
-
+<h3>Algorithm 1: $\varepsilon$-greedy</h3>
+<p>Bandit problem을 푸는 가장 popular하면서도 간단한 알고리즘 중 하나로 $\varepsilon$-greedy라는 알고리즘이 있다. 이 알고리즘은 $1-\varepsilon$의 확률로 지금까지 관측한 arm 중에 가장 좋은 arm을 고르고 (exploitation), $\varepsilon$의 확률로 나머지 arm 중에서 random한 arm을 골라서 play하는 (explore) 알고리즘이다. 알고리즘은 다음과 같다.</p>
 
 <ol>
-    <li><p>\(1-varepsilon\)의 확률로 지금까지 empirical reward가 가장 좋은 arm을 고른다.</p></li>
-    <li><p>\(varepsilon\)의 확률로 uniformly random하게 arm을 고른다.</p></li>
+	<li><p>$1-varepsilon$의 확률로 지금까지 empirical reward가 가장 좋은 arm을 고른다.</p></li>
+	<li><p>$varepsilon$의 확률로 uniformly random하게 arm을 고른다.</p></li>
 </ol>
 
+<p>이 알고리즘은 뒤에서 설명할 다른 알고리즘들보다 이론적으로, 또 실험적으로 우수하지는 못하지만, 매우 직관적이다. 이 알고리즘의 parameter $\varepsilon$ 자체가 맨 처음 motivation으로 말했던 exploration and exploitation trade-off를 조절하는 term이 되기 때문이다. $\varepsilon$의 값이 크면 그만큼 exploration을 많이 하게 되고, 반대의 경우도 마찬가지로 생각할 수 있다. 이 알고리즘의 치명적인 단점을 몇 꼽자면, 먼저 시간이 많이 지나서 optimal한 arm이 무엇인지 알게 되었더라도 계속해서 $\varepsilon$만큼의 exploration을 해야하므로, optimal한 값과 멀어지는 결과를 낳게 된다는 점이다. 또 하나는 $\varepsilon$의 확률로 sub-optimal arm들을 뽑고, 그 마저도 uniformly random하게 뽑기 때문에, 전체 arm 중에서 관측하지 못하는, 혹은 관측을 많이 못해서 정보를 많이 얻게 되지 못하는 arm이 생기게 될 가능성이 크다는 것이다.</p>
+<p>여러 문제들을 해결하기 위해서 $\varepsilon$을 constant로 사용하는 대신, adaptive하게 update하거나, 혹은 일정 비율로 감소시키는 방법론도 존재하며 $\varepsilon$-first 등의 variant algorithm 등도 역시 존재하지만 이 글에서는 다루지 않도록 하겠다.</p>
 
-
-
-<p>이 알고리즘은 뒤에서 설명할 다른 알고리즘들보다 이론적으로, 또 실험적으로 우수하지는 못하지만, 매우 직관적이다. 이 알고리즘의 parameter \(\varepsilon\) 자체가 맨 처음 motivation으로 말했던 exploration and exploitation trade-off를 조절하는 term이 되기 때문이다. \(\varepsilon\)의 값이 크면 그만큼 exploration을 많이 하게 되고, 반대의 경우도 마찬가지로 생각할 수 있다. 이 알고리즘의 치명적인 단점을 몇 꼽자면, 먼저 시간이 많이 지나서 optimal한 arm이 무엇인지 알게 되었더라도 계속해서 \(\varepsilon\)만큼의 exploration을 해야하므로, optimal한 값과 멀어지는 결과를 낳게 된다는 점이다. 또 하나는 \(\varepsilon\)의 확률로 sub-optimal arm들을 뽑고, 그 마저도 uniformly random하게 뽑기 때문에, 전체 arm 중에서 관측하지 못하는, 혹은 관측을 많이 못해서 정보를 많이 얻게 되지 못하는 arm이 생기게 될 가능성이 크다는 것이다.</p>
-
-
-<p>여러 문제들을 해결하기 위해서 \(\varepsilon\)을 constant로 사용하는 대신, adaptive하게 update하거나, 혹은 일정 비율로 감소시키는 방법론도 존재하며 \(\varepsilon\)-first 등의 variant algorithm 등도 역시 존재하지만 이 글에서는 다루지 않도록 하겠다.</p>
-
-
-
-
-<h5>Algorithm 2: UCB</h5>
-
-
-<p>앞서 설명한 \(\varepsilon\)-greedy는 항상 empirical mean이 좋은 arm만 고르고, 나머지를 \(\varepsilon\)의 확률로 고르지만, 실제로는 매 시간마다 arm \(i\)에서 얻는 보상은 constant가 아닌 특정 distribution에서 draw되는 random variable이기 때문에, 지금 empirical mean이 크다고 해서 정말로 그 arm이 늘 best일거라고 확신할 수 없다. 특히 관측 횟수가 적을 경우에는 empirical result와 실제 결과 간의 큰 차이가 발생할 확률이 높기 때문에 \(\varepsilon\)-greedy에는 심각한 결점이 있는 셈이다. 반대로 관측 횟수가 충분히 많다면 explore를 굳이 할 필요가 없음에도 \(\varepsilon\) 만큼의 explore를 반드시 해야한다는 점 역시 문제가 된다.</p>
-
-
+<h3>Algorithm 2: UCB</h3>
+<p>앞서 설명한 $\varepsilon$-greedy는 항상 empirical mean이 좋은 arm만 고르고, 나머지를 $\varepsilon$의 확률로 고르지만, 실제로는 매 시간마다 arm $i$에서 얻는 보상은 constant가 아닌 특정 distribution에서 draw되는 random variable이기 때문에, 지금 empirical mean이 크다고 해서 정말로 그 arm이 늘 best일거라고 확신할 수 없다. 특히 관측 횟수가 적을 경우에는 empirical result와 실제 결과 간의 큰 차이가 발생할 확률이 높기 때문에 $\varepsilon$-greedy에는 심각한 결점이 있는 셈이다. 반대로 관측 횟수가 충분히 많다면 explore를 굳이 할 필요가 없음에도 $\varepsilon$ 만큼의 explore를 반드시 해야한다는 점 역시 문제가 된다.</p>
 <p>UCB 알고리즘은 empirical mean이 가장 좋은 arm을 play하는 대신, 시간 t마다 과거의 관측결과(empirical mean과 관측 횟수)와 몇 가지 probabilistic한 계산들을 토대로구한 각각의 arm i의 upper confidence bound (UCB)를 구하고 이것이 가장 좋은 arm을 고르는 알고리즘이다. UCB를 간단히 설명하자면 그 동안의 관측 결과에서부터 time t에서 arm i의 expected reward의 confidence (확률이 높은) upper bound 정도로 설명할 수 있을 것이다. UCB 알고리즘은 매 시간 t에서 다음과 같은 rule로 arm i를 고른다.</p>
 
-
-
-
 <ol>
-    <li><p>다음 식을 만족하는 arm i를 고른다. \(i = \arg\max_i \mu_i + P_i.\)</p></li>
+	<li><p>다음 식을 만족하는 arm i를 고른다. $i = \arg\max_i \mu_i + P_i.$</p></li>
 </ol>
 
-
-
-
-<p>뒤에 붙는 \(P_i\) term이나 UCB를 정의하는 방법에 따라서 UCB1, UCB2, UCB-Tuned, MOSS, KL-UCB, Bayes-UCB 등의 variant가 있지만, 기본적인 아이디어는 동일하다고 생각하면 된다. 이론적으로 더 우수한 UCB를 가지게 될 경우 더 적은 regret을 가지게 되는데, 각각의 UCB variant 들에 대해서 이런 confidence bound를 증명한 work이 상당히 많이 있기 때문에 가장 좋은 UCB를 사용하면 된다. 이 글에서는 가장 간단한 UCB1만 소개를 해보도록 하겠다. UCB1의 policy는 다음과 같다.</p>
-
-
-<p>\[i = \arg\max_i \bar x_i + \sqrt{\frac{2\ln t}{n_i}}.\]</p>
-
-
-<p>여기에서 \(\bar x_i\)는 i번째 arm의 지금까지 관측한 평균 값이고, t는 현재 시간, \(n_i\)는 현재 시간에서 arm i가 play된 횟수를 의미한다. 이 값은 arm i의 실제 보상에 대한 \(1-\frac{1}{t}\)의 confidence의 upper bound로, Chernoff-Hoeffding bound를 통해 얻어지는 값이다. 처음에는 관측 결과가 좋은 arm을 고르되, 관측 결과가 적은 arm들을 고를 확률이 더 높을 수 있지만, 시간이 충분히 지나고나면 (time은 log scale이지만 관측은 linear scale이므로) empirical result가 더 큰 가중치를 얻게 되고, 그 결과 시간이 많이 지나고 나면 empirical하게 가장 좋은 arm 위주로 arm을 뽑게 된다.</p>
-
-
+<p>뒤에 붙는 $P_i$ term이나 UCB를 정의하는 방법에 따라서 UCB1, UCB2, UCB-Tuned, MOSS, KL-UCB, Bayes-UCB 등의 variant가 있지만, 기본적인 아이디어는 동일하다고 생각하면 된다. 이론적으로 더 우수한 UCB를 가지게 될 경우 더 적은 regret을 가지게 되는데, 각각의 UCB variant 들에 대해서 이런 confidence bound를 증명한 work이 상당히 많이 있기 때문에 가장 좋은 UCB를 사용하면 된다. 이 글에서는 가장 간단한 UCB1만 소개를 해보도록 하겠다. UCB1의 policy는 다음과 같다.</p>
+<p>$$i = \arg\max_i \bar x_i + \sqrt{\frac{2\ln t}{n_i}}.$$</p>
+<p>여기에서 $\bar x_i$는 i번째 arm의 지금까지 관측한 평균 값이고, t는 현재 시간, $n_i$는 현재 시간에서 arm i가 play된 횟수를 의미한다. 이 값은 arm i의 실제 보상에 대한 $1-\frac{1}{t}$의 confidence의 upper bound로, Chernoff-Hoeffding bound를 통해 얻어지는 값이다. 처음에는 관측 결과가 좋은 arm을 고르되, 관측 결과가 적은 arm들을 고를 확률이 더 높을 수 있지만, 시간이 충분히 지나고나면 (time은 log scale이지만 관측은 linear scale이므로) empirical result가 더 큰 가중치를 얻게 되고, 그 결과 시간이 많이 지나고 나면 empirical하게 가장 좋은 arm 위주로 arm을 뽑게 된다.</p>
 <p>UCB는 이론적으로 우수한 결과를 가지고 있고 (앞서 설명한 Gittins index의 아주 효율적인 appoximation algorithm이라는 것이 알려져 있다), 또한 실험에서도 잘 동작하는 것이 이미 알려져있지만 UCB 알고리즘도 만능은 아니다. UCB를 계산하기 위해서는 empirical mean이 필수적이기 때문에 반드시 처음에 모든 arm들을 explore해야한다는 이슈가 있기 때문에 초기에는 한 번 이상 exploration이 필요하다는 문제점이 있다.</p>
 
-
-
-
-<h5>Algorithm 3: Thompson Sampling</h5>
-
-
+<h3>Algorithm 3: Thompson Sampling</h3>
 <p>마지막으로 Thompson sampling, 혹은 probability matching에 대해 알아보자. 이 알고리즘은 google analytics에서도 사용하고 있는 알고리즘으로 <a href="https://support.google.com/analytics/answer/2846882">[2]</a> 최근 이론적인 증명과 실험적인 결과에서 모두 두각을 보이고 있는 알고리즘이다. <a href="http://papers.nips.cc/paper/4321-an-empirical-evaluation-of-thompson-sampling.pdf">[3]</a>, <a href="http://arxiv.org/abs/1506.00779">[4]</a></p>
-
-
-<p>Thompson sampling의 기본 아이디어는 간단하다. 각각의 시간 t마다 policy에 따라 action a를 선택하고, 그에 상응하는 reward r을 받는다고 가정해보자. Thompson sampling은 observation \((a_t, r_t)\)과 parameter \(\theta\)를 사용해 likelihood function \(Pr[r ~|~ a, \theta]\)를 설계한 다음, prior를 가정해 MAP 문제를 푸는 것이다. Arm의 i.i.d condition 등의 적절한 몇 가지 가정을 더하면, MAP 문제는 다음과 같이 기술된다.</p>
-
-
-<p>\[\max_\theta Pr[\theta ~|~ D] = \prod Pr[r_t ~|~ a_t, x_t, \theta] Pr[\theta].\]</p>
-
-
-<p>일반적인 경우, reward는 action a와 true parameter \(\theta^*\)에 대한 stochastic random variable이기 때문에, expected reward인 \(\mathbb E[r~|~a,x,\theta^*]\)를 maximize하는 방식으로 학습을 하게 된다. 여기에서 \(\theta^*\)이 unknown이기 때문에 다음과 같은 식을 maximize하는 action을 찾는 것이 더 합리적이다.</p>
-
-
-<p>\[\mathbb E [r ~|~ a] = \int \mathbb E [r~|~a,\theta] Pr[\theta~|~D] d\theta.\]</p>
-
-
+<p>Thompson sampling의 기본 아이디어는 간단하다. 각각의 시간 t마다 policy에 따라 action a를 선택하고, 그에 상응하는 reward r을 받는다고 가정해보자. Thompson sampling은 observation $(a_t, r_t)$과 parameter $\theta$를 사용해 likelihood function $Pr[r ~|~ a, \theta]$를 설계한 다음, prior를 가정해 MAP 문제를 푸는 것이다. Arm의 i.i.d condition 등의 적절한 몇 가지 가정을 더하면, MAP 문제는 다음과 같이 기술된다.</p>
+<p>$$\max_\theta Pr[\theta ~|~ D] = \prod Pr[r_t ~|~ a_t, x_t, \theta] Pr[\theta].$$</p>
+<p>일반적인 경우, reward는 action a와 true parameter $\theta^*$에 대한 stochastic random variable이기 때문에, expected reward인 $\mathbb E[r~|~a,x,\theta^*]$를 maximize하는 방식으로 학습을 하게 된다. 여기에서 $\theta^*$이 unknown이기 때문에 다음과 같은 식을 maximize하는 action을 찾는 것이 더 합리적이다.</p>
+<p>$$\mathbb E [r ~|~ a] = \int \mathbb E [r~|~a,\theta] Pr[\theta~|~D] d\theta.$$</p>
 <p>이 문제를 풀기 위해서 probability mathing은 다음과 같은 heuristic을 사용하게 된다.</p>
-
-
-<p>\[\int \mathbb I \left( \mathbb E [r~|~a,\theta] = \max_{a^\prime} \mathbb E [r~|~a^\prime,\theta] \right) Pr[\theta~|~D] d\theta.\]</p>
-
-
-<p>여기에서 \(\mathbb I(\cdot)\)은 indicator function이다. 즉, 매 순간마다 전체 parameter에 대해서 가장 reward의 expectation을 maximize하는 action을 뽑는 방법이 된다. 이 방법에 따라 Thomson sampling algorithm은 다음과 같다. (x는 context vector라는 것인데, 지금은 무시해도 된다)</p>
-
-
+<p>$$\int \mathbb I \left( \mathbb E [r~|~a,\theta] = \max_{a^\prime} \mathbb E [r~|~a^\prime,\theta] \right) Pr[\theta~|~D] d\theta.$$</p>
+<p>여기에서 $\mathbb I(\cdot)$은 indicator function이다. 즉, 매 순간마다 전체 parameter에 대해서 가장 reward의 expectation을 maximize하는 action을 뽑는 방법이 된다. 이 방법에 따라 Thomson sampling algorithm은 다음과 같다. (x는 context vector라는 것인데, 지금은 무시해도 된다)</p>
 <p><img class="center" src="/images/post/96-1.png" width="300"></p>
-
-<p>이때, 각각의 arm이 Bernoulli distribution을 따른다고 가정했을 때, <a href="http://SanghyukChun.github.io/58">예전 글의</a> <a href="https://en.wikipedia.org/wiki/Conjugate_prior">conjugate prior</a> 설명에서 다뤘던 것 처럼, prior를 Beta distribution으로 잡았을 때 계산 상의 이점이 생긴다. Beta distribution Beta(a,b)는 \(x^a (1-x)^b\)를 normalize하는 형태로 생겼는데, a가 커질수록 관측될 확률이 높아지고 b가 커질수록 그 확률이 낮아진다. Thompson sampling에서는 a에는 arm을 play해서 성공한 횟수, b에는 arm을 play해서 실패한 횟수와 관련된 term을 assign함으로써 Beta distribution을 다음과 같이 정의하고 있다.</p>
-
-
+<p>이때, 각각의 arm이 Bernoulli distribution을 따른다고 가정했을 때, <a href="http://SanghyukChun.github.io/58">예전 글의</a> <a href="https://en.wikipedia.org/wiki/Conjugate_prior">conjugate prior</a> 설명에서 다뤘던 것 처럼, prior를 Beta distribution으로 잡았을 때 계산 상의 이점이 생긴다. Beta distribution Beta(a,b)는 $x^a (1-x)^b$를 normalize하는 형태로 생겼는데, a가 커질수록 관측될 확률이 높아지고 b가 커질수록 그 확률이 낮아진다. Thompson sampling에서는 a에는 arm을 play해서 성공한 횟수, b에는 arm을 play해서 실패한 횟수와 관련된 term을 assign함으로써 Beta distribution을 다음과 같이 정의하고 있다.</p>
 <p><img class="center" src="/images/post/96-2.png" width="400"></p>
-
 <p>기본 아이디어도 어렵지 않고, 알고리즘 또한 엄청나게 간단한 편임에도 Thompson sampling은 다음 그래프에서 볼 수 있듯 UCB 등의 기존 알고리즘보다도 더 좋은 performance를 내는 것을 알 수 있다. (<a href="http://papers.nips.cc/paper/4321-an-empirical-evaluation-of-thompson-sampling.pdf">[3]</a>에서 따옴)</p>
-
-
 <p><img class="center" src="/images/post/96-3.png" width="600"></p>
-
 <p>Thompson sampling의 장점 중 하나는, 한 번에 하나의 arm만 play하는 single play 문제에서 여러 개의 N개의 arm을 play할 수 있는 multi play 문제로의 확장이 용이하다는 것이다. 이 방법으로는 두 가지 방법이 있는데, 하나는 action을 maximization 문제를 만족하는 N개의 action을 순서대로 고르는 방법이 하나가 있으며 (Multiplay Thompson sampling, 줄여서 MP-TS), 또 다른 방법으로는 m-1개의 arm은 empirical result가 제일 좋은 arm을 고르고, 마지막 m번째 arm만 Thompson sampling으로 푸는 방법도 있다 (Improved MP-TS, 줄여서 IMP-TS). 흥미롭게도, 두 번째 방법이 실제로는 asymptotic bound를 유지하면서, 첫 번째 방법보다는 조금 더 나은 성능을 보인다고 한다. (<a href="http://arxiv.org/abs/1510.00757">[1]</a>과 <a href="http://arxiv.org/abs/1506.00779">[4]</a>에서 언급됨)</p>
 
-
-
-
-<h5>정리</h5>
-
-
+<h3>정리</h3>
 <p>이 글에서는 Multi-armed bandit problem에 대해 설명하고, 그 중 finite-armed stochastic multi-armed bandit problem을 푸는 네 가지 알고리즘에 대해 다뤘다. 현재 empirical하게 <a href="http://papers.nips.cc/paper/4321-an-empirical-evaluation-of-thompson-sampling.pdf">[3]</a>, (그리고 최근에는 theoretical하게까지 <a href="http://arxiv.org/abs/1506.00779">[4]</a>) 가장 우수한 성능을 보이는 알고리즘은 Thompson sampling (arm의 prior를 Bernoulli distribution으로 가정했을 때)이다. 실제로는 위에서 설명한 bandit 보다 훨씬 더 복잡하고 어려운 bandit problem들이 많이 있으며 그것들을 해결하기 위한 알고리즘들 역시 많이 있지만, 이 글에서는 그런 variant들을 모두 다루기보다는, bandit을 이해하기 위해서 가장 필수적으로 이해하고 있어야할 요소들만 다루었다. 조금 더 advanced한 bandit들은 추후에 다른 글들을 통해 소개해볼 수 있도록 하겠다.</p>
 
-
-
-
-<h5>References</h5>
-
-
+<h3>References</h3>
 <ol class="reference">
-    <li><a href="http://arxiv.org/abs/1510.00757">Burtini, Giuseppe, Jason Loeppky, and Ramon Lawrence. "A Survey of Online Experiment Design with the Stochastic Multi-Armed Bandit.", 2015.</a></li>
-    <li><a href="https://support.google.com/analytics/answer/2846882">Google Anayltics Help - multi-armed bandit computational and theoretical details</a></li>
-    <li><a href="http://papers.nips.cc/paper/4321-an-empirical-evaluation-of-thompson-sampling.pdf">Chapelle, Olivier, and Lihong Li. "An empirical evaluation of thompson sampling.", 2011.</a></li>
-    <li><a href="http://arxiv.org/abs/1506.00779">Komiyama, Junpei, Junya Honda, and Hiroshi Nakagawa. "Optimal regret analysis of thompson sampling in stochastic multi-armed bandit problem with multiple plays.", 2015.</a></li>
+	<li><a href="http://arxiv.org/abs/1510.00757">Burtini, Giuseppe, Jason Loeppky, and Ramon Lawrence. "A Survey of Online Experiment Design with the Stochastic Multi-Armed Bandit.", 2015.</a></li>
+	<li><a href="https://support.google.com/analytics/answer/2846882">Google Anayltics Help - multi-armed bandit computational and theoretical details</a></li>
+	<li><a href="http://papers.nips.cc/paper/4321-an-empirical-evaluation-of-thompson-sampling.pdf">Chapelle, Olivier, and Lihong Li. "An empirical evaluation of thompson sampling.", 2011.</a></li>
+	<li><a href="http://arxiv.org/abs/1506.00779">Komiyama, Junpei, Junya Honda, and Hiroshi Nakagawa. "Optimal regret analysis of thompson sampling in stochastic multi-armed bandit problem with multiple plays.", 2015.</a></li>
 </ol>
 
-
-
-
-<h5>변경 이력</h5>
-
-
+<h3>변경 이력</h3>
 <ul>
-<li>2016년 3월 13일: 글 등록</li>
+  <li>2016년 3월 13일: 글 등록</li>
 </ul>
 
-
 <p><hr>
-[Machine Learning 스터디](/blog/categories/machine-learning-study/)의 다른 글들
+### Machine Learning 스터디의 다른 글들
 
 * [Machine Learning이란?](/57)
 * [Probability Theory](/58)
@@ -548,227 +318,90 @@
     <link href="http://SanghyukChun.github.io/95/"/>
     <updated>2016-03-06T01:30:00+09:00</updated>
     <id>http://SanghyukChun.github.io/95</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
+    <content type="html"><![CDATA[<h3>들어가며</h3>
 <p>이전 글<a href="http://SanghyukChun.github.io/73">[1]</a>에서 다룬 recommendation system은 사용자가 점수를 정확하게 매긴 경우에 대해, 즉 explicit feedback에 대해서만 문제를 푸는 방식이다. 그러나 실제로는 사용자가 점수를 직접 매기는 대신에 단순히 클릭했거나, 조회, 구매한 간접적인 정보, 즉 implicit feedback에만 의존하게 되는 경우도 빈번하게 발생하게 된다. 이 글에서는 그런 implicit feedback만 존재하는 상황에서 어떻게 matrix completion 문제를 디자인하고 해결하는지에 대해 총 세 개의 논문을 들어 설명할 것이다.</p>
-
-
 <p>이 글의 맨 앞은 implicit feedback이 정확히 무엇이고, 어떤 상황의 문제들이 있는지에 대해 설명할 것이다. 그리고 총 세 개의 논문에서 어떤 방법으로 문제를 접근하는가 설명하도록 할 것이다. 소개할 논문은 <a href="http://yifanhu.net/PUB/cf.pdf">Collaborative Filtering for Implicit Feedback Datasets [2]</a>, <a href="http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf">Logistic Matrix Factorization for Implicit Feedback Data [3]</a>, <a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf">Bayesian Personalized Ranking for Non-Uniformly Sampled Items [4]</a> 총 세가지이다.</p>
 
-
-
-
-<h5>Explicit Feedback and Implicit Feedback</h5>
-
-
+<h3>Explicit Feedback and Implicit Feedback</h3>
 <p>본격적으로 논문들이 제안한 방법론을 살펴보기 전에, explicit feedback과 implicit feedback의 차이점에 대해 논해보도록 하겠다. 먼저 explicit feedback은 사용자가 정확하게 본인이 얼마나 이 item에 호감이 있는지를 수치로 feedback을 주는 것이다. 예를 들어서 Netflix problem의 별점 데이터는 정확하게 1점부터 5점 사이의 well-define된 범위를 가진다. 그러나 실제로는 사용자의 item에 대한 정확한 호감도를 요구하는 것이 어려울 때가 있다. 아마존의 상품 추천을 예로 들어보자. 아마존이 가질 수 있는 데이터는 사용자가 어떤 상품들을 조회하였는지와, 어떤 상품들을 구매하였는지 정도의 정보 밖에 가질 수 없다. 이 경우 사용자가 살펴본 물건들이 사용자가 정말 매력있게 느껴서 살펴본 것인지, 만약 그렇다면 얼마만큼의 호감도가 있는지 판별하는 것이 매우 어려울 것이다. 이런 종류의 데이터를 사용자가 직접적인 점수를 주는 대신 간접적인 정보만을 제공한다고 하여 implicit feedback이라 부른다. 이외에도 sound cloud나 youTube 등에서 사용자가 재생한 재생목록이나 반복하여 청취 혹은 시청한 횟수 등의 데이터도 마찬가지로 implicit feedback의 대표적인 예가 될 수 있다.</p>
-
-
 <p>Implicit feedback에서 관측 값은 click이나 재생 횟수 (0 혹은 0보다 큰 정수) 일 수도 있고, 음악 등의 item을 재생한 총 시간 (0 이상의 실수) 일 수도 있다. 한 가지 주의할 점은, explicit feedback처럼 사용자가 구체적으로 item에 대한 preference를 제공하지 않기 떄문에 사용자가 선호하지 않아서 선택하지 않은 item과 아직 관측하지 않은, 그러나 잠재적으로 흥미가 있는 item 모두 값이 0일 것이라는 점이다. 보통 사용자들이 item을 굉장히 조금만 click하거나 (뉴스) 사용하거나 (음악, 동영상) 구매하기 때문에 (쇼핑) 실제로는 matrix의 거의 대부분이 비어있고 아주 일부분의 데이터만 관측되기 때문에, negative observation이 positive observation의 수를 압도한게 되고, 때문에 이런 점을 고려하지 않고 모델을 설계하게 되면 아주 일부분의 positive 데이터와 거의 대부분의 negative observation (값이 0인 observation)들에의해 model이 overfitting된다. 또한, implicit feedback은 굉장히 노이즈가 많기 때문에 주어진 데이터를 얼마나 믿을 수 있을지 알 수 없다는 것이다. 예를 들어서 사용자가 물건을 하나 구매하였더라도, 이 물건에 대해 반드시 긍정적으로 생각할 것이라 기대할 수는 없을 것이다. 가끔은 구매한 물건이 아주 불만족스럽고 다시는 비슷한 물건을 구매하고 싶지 않을 수도 있지 않은가? 이런 두 가지 이슈 (negative observation, confidence)는 recommendation model이 implicit feedback을 처리하기 위해 반드시 고려되어야 할 이슈가 된다.</p>
 
-
-
-
-<h5>Recall: Matrix Factorization with Explicit Feedback</h5>
-
-
+<h3>Recall: Matrix Factorization with Explicit Feedback</h3>
 <p>이전 글 <a href="http://SanghyukChun.github.io/73">[1]</a>에서 다뤘던 objective function은 다음과 같다.</p>
-
-
-<p>\[\min_{X,Y} \sum_{u,i \in \kappa} (r_{ui} - x_u^\top y_i)^2 + \lambda ( \| x_u \|_2^2 + \| y_i \|_2^2 ) .\]</p>
-
-
+<p>$$\min_{X,Y} \sum_{u,i \in \kappa} (r_{ui} - x_u^\top y_i)^2 + \lambda ( \| x_u \|_2^2 + \| y_i \|_2^2 ) .$$</p>
 <p>이전 글에서는 x,y 대신 p,q noataion을 사용했으나 이 글에서는 전부 x, y notation으로 통일하도록 하겠다. 이 objective에 대해서는 이전 글을 참고하면서 읽으면 좋을 것 같다. 원래는 bias term까지 포함해야하지만, 이 글에서는 편의상 bias term은 생략하도록 하겠다. 이 문제는 SGD (Stochastic Gradient Descent), ALS (Alternating Least Square) 등의 solver를 사용해 풀 수 있으며 이 글에서는 자세한 설명을 생략하도록 하겠다.</p>
 
-
-
-
-<h5><a href="http://yifanhu.net/PUB/cf.pdf">Collaborative Filtering for Implicit Feedback Datasets [2]</a></h5>
-
-
-<p>Implicit feedback을 처리하는 가장 기본적인 접근법을 소개해보자. 이 논문은 user u가 item i를 선호하는지 하지 않는지 여부를 가르키는 preference vector \(p_{ui}\)를 정의한다. \(p_{ui}\)의 값은 \(sign(r_{ui})\)으로 정의할 수 있다. sign 함수는 input 값의 'sign'을 return하는 함수로, 즉 input이 negative value면 -1, positive value면 1을 return한다. 따라서 perference의 값은 rating r이 0보다 크다면 1이고, r이 0이라면 p도 0이 되는 것이다.</p>
-
-
-<p>앞서 설명한 것 처럼, preference vector의 값을 항상 신뢰할 수 있는 것은 아니다. 때문에, 이 논문에서는 confience level \(c_{ui}\)라는 것을 정의하게 된다. 우리가 한 가지 가정할 수 있는 것은 만약 \(r_{ui}\)의 값이 크다면, 예를 들어 한 사용자가 한 항목을 엄청 많이 재구매했다거나 한다면, u는 i를 아주 높은 확률로 prefer한다는 사실을 가정할 수 있다. 따라서 confidence level은 r에 대한 increasing function으로 정의하는 것이 타당하다고 할 수 있다. 이 논문에서는 confidence level \(c_{ui}\)를 다양한 방식으로 정의할 수 있다고 언급하고 있으며, 실제 실험에서는 가장 직관적이고 단순한 increasing function은 linear function을 사용한다. 따라서 이 논문에서는 다음과 같은 confidence를 사용한다.</p>
-
-
-<p>\[c_{ui} = 1 + \alpha r_{ui}.\]</p>
-
-
-<p>혹은 \(c_{ui} = 1 + \alpha \log (1 + r_{ui}/ \varepsilon)\) 등의 confidence도 대안으로 제안하기는 하지만, 기본적으로 위에서 설명한 linear confidence를 사용하는 듯하다. 한 가지 짚고 넘어가야할 점은, \(c_{ui}\)는 실제 데이터 \(r_{ui}\)와 hyper-parameter \(\alpha\)에 의해서만 정의되므로 optimize해야 할 parameter가 아니라 한 번 confidence를 정의하기만하면 고정되는 constant라는 점이다. 따라서 confidence의 값을 어떻게 정의하더라도 전체 알고리즘의 로직을 바꾸거나 하지는 않는다.</p>
-
-
-<p>c를 정의하는 것에는 또 하나의 이점이 있다. Parameter \(\alpha\)가 positive observation과 negative observation의 중요도를 조절하는 역할을 하게 되면서, negative feedback에 대한 중요도를 조절할 수 있는 것이다. 예를 들어 \(\alpha\)의 크기가 작다면, positive와 negative observation의 confidence 차이가 큰 \(\alpha\)를 가질 때 보다 상대적으로 작을 것이라는 것을 기대할 수 있게 된다.</p>
-
-
-<p>이제 objective를 정의할 차례이다. Explicit feedback에서는 복원한 rating \(\hat r_{ui}\)와 관측한 데이터 \(r_{ui}\)의 RMSE를 바로 계산하였으나, 앞서 말한대로 이 값을 그대로 계산하기에는 confidence의 문제가 있다. 이 논문에서는 앞서 정의한 confidence를 고려하여 objective function은 다음과 같이 정의한다.</p>
-
-
-<p>\[\min_{X,Y} \sum_{u,i \in \kappa} c_{ui}(p_{ui} - x_u^\top y_i)^2 + \lambda ( \| x_u \|_2^2 + \| y_i \|_2^2 ) .\]</p>
-
-
-<p>맨 처음 objective와 달라진 점은, rating vector r (0 이상의 real value) 이 preference vector p (0 또는 1) 로 바뀌었다는 점과, 각각의 u,i pair에 대해 confidence \(c_{ui}\)가 곱해진다는 점이다. 이때, \(c_{ui}\)는 optimization parameter와는 상관없이 맨 처음 정해지고 변하지 않는 값이므로, 이렇게 바뀐 objective function을 풀기 위해서 이전 문제와 마찬가지로 살짝 변형된 SGD나 ALS 등을 사용할 수 있다. 논문에서는 조금 더 scalability를 고려한 방법론을 제안하는데, matrix product를 조금 더 효율적으로 하도록 matrix들을 decompose하여 조금 더 order가 낮은 연산을 하는 방법을 사용한다. 자세한 알고리즘은 논문을 참고하면 좋을 것 같다.</p>
-
-
+<h3><a href="http://yifanhu.net/PUB/cf.pdf">Collaborative Filtering for Implicit Feedback Datasets [2]</a></h3>
+<p>Implicit feedback을 처리하는 가장 기본적인 접근법을 소개해보자. 이 논문은 user u가 item i를 선호하는지 하지 않는지 여부를 가르키는 preference vector $p_{ui}$를 정의한다. $p_{ui}$의 값은 $sign(r_{ui})$으로 정의할 수 있다. sign 함수는 input 값의 'sign'을 return하는 함수로, 즉 input이 negative value면 -1, positive value면 1을 return한다. 따라서 perference의 값은 rating r이 0보다 크다면 1이고, r이 0이라면 p도 0이 되는 것이다.</p>
+<p>앞서 설명한 것 처럼, preference vector의 값을 항상 신뢰할 수 있는 것은 아니다. 때문에, 이 논문에서는 confience level $c_{ui}$라는 것을 정의하게 된다. 우리가 한 가지 가정할 수 있는 것은 만약 $r_{ui}$의 값이 크다면, 예를 들어 한 사용자가 한 항목을 엄청 많이 재구매했다거나 한다면, u는 i를 아주 높은 확률로 prefer한다는 사실을 가정할 수 있다. 따라서 confidence level은 r에 대한 increasing function으로 정의하는 것이 타당하다고 할 수 있다. 이 논문에서는 confidence level $c_{ui}$를 다양한 방식으로 정의할 수 있다고 언급하고 있으며, 실제 실험에서는 가장 직관적이고 단순한 increasing function은 linear function을 사용한다. 따라서 이 논문에서는 다음과 같은 confidence를 사용한다.</p>
+<p>$$c_{ui} = 1 + \alpha r_{ui}.$$</p>
+<p>혹은 $c_{ui} = 1 + \alpha \log (1 + r_{ui}/ \varepsilon)$ 등의 confidence도 대안으로 제안하기는 하지만, 기본적으로 위에서 설명한 linear confidence를 사용하는 듯하다. 한 가지 짚고 넘어가야할 점은, $c_{ui}$는 실제 데이터 $r_{ui}$와 hyper-parameter $\alpha$에 의해서만 정의되므로 optimize해야 할 parameter가 아니라 한 번 confidence를 정의하기만하면 고정되는 constant라는 점이다. 따라서 confidence의 값을 어떻게 정의하더라도 전체 알고리즘의 로직을 바꾸거나 하지는 않는다.</p>
+<p>c를 정의하는 것에는 또 하나의 이점이 있다. Parameter $\alpha$가 positive observation과 negative observation의 중요도를 조절하는 역할을 하게 되면서, negative feedback에 대한 중요도를 조절할 수 있는 것이다. 예를 들어 $\alpha$의 크기가 작다면, positive와 negative observation의 confidence 차이가 큰 $\alpha$를 가질 때 보다 상대적으로 작을 것이라는 것을 기대할 수 있게 된다.</p>
+<p>이제 objective를 정의할 차례이다. Explicit feedback에서는 복원한 rating $\hat r_{ui}$와 관측한 데이터 $r_{ui}$의 RMSE를 바로 계산하였으나, 앞서 말한대로 이 값을 그대로 계산하기에는 confidence의 문제가 있다. 이 논문에서는 앞서 정의한 confidence를 고려하여 objective function은 다음과 같이 정의한다.</p>
+<p>$$\min_{X,Y} \sum_{u,i \in \kappa} c_{ui}(p_{ui} - x_u^\top y_i)^2 + \lambda ( \| x_u \|_2^2 + \| y_i \|_2^2 ) .$$</p>
+<p>맨 처음 objective와 달라진 점은, rating vector r (0 이상의 real value) 이 preference vector p (0 또는 1) 로 바뀌었다는 점과, 각각의 u,i pair에 대해 confidence $c_{ui}$가 곱해진다는 점이다. 이때, $c_{ui}$는 optimization parameter와는 상관없이 맨 처음 정해지고 변하지 않는 값이므로, 이렇게 바뀐 objective function을 풀기 위해서 이전 문제와 마찬가지로 살짝 변형된 SGD나 ALS 등을 사용할 수 있다. 논문에서는 조금 더 scalability를 고려한 방법론을 제안하는데, matrix product를 조금 더 효율적으로 하도록 matrix들을 decompose하여 조금 더 order가 낮은 연산을 하는 방법을 사용한다. 자세한 알고리즘은 논문을 참고하면 좋을 것 같다.</p>
 <p>정리하자면 이 논문은 rating vector r을 preference vector p로 변환하고, confidence level c를 정의한 후, p와 c를 사용해 RMSE objective function을 optimize하는 work인 것이다. 그리고 앞서 설명했던 두 가지 문제는 confidence level c를 정의하는 방법에 의해 해결할 수 있다.</p>
 
-
-
-
-<h5><a href="http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf">Logistic Matrix Factorization for Implicit Feedback Data [3]</a></h5>
-
-
-<p>앞선 논문 <a href="http://yifanhu.net/PUB/cf.pdf">[2]</a>에서는 RMSE를 minimize하는 objective를 설계하였지만, RMSE가 아닌 다른 형태의 objective를 optimize하는 것도 가능하다. 앞선 논문에서 RMSE를 minimize함으로써 얻을 수 있는 효과는 관측한 preference \(p_{ui}\)와 복원한 preference \(\hat p_{ui}\)가 서로 (RMSE의 관점에서) 최대한 비슷한 값을 가지도록 optimization이 된다는 것이다. 이 논문은 perference의 RMSE를 minimize하는 문제 대신, 관측 값 \(r\)과 optimization parameter \(\Theta = (x, y, b)\) 등의 posteriori를 maximization하는 방식을 취한다. 참고로 이 논문은 Spotify에서 발표한 논문으로, 실제 음악 추천에서 응용하고 있는 듯 하다.</p>
-
-
-<p>계속 강조하듯, 여기에서 실제 유저가 선호하는 것과 유저의 implicit feedback 결과는 다를 수 있다. 그렇기 때문에 이 논문은 u가 i를 좋아할 확률을 logistic function으로 확률적으로 정의한 후, 관측한 데이터로부터 posteriori를 maximize하는 방향으로 학습을 하게 된다. 그러기위해 이 논문은 \(\ell_{ui}\)이라는 새로운 notation을 introduce하고 이를 사용자 u가 item i를 선호하는 'event'로 정의한다. 어렵게 설명했지만, 그냥 'user u가 음악 i를 좋아한다 좋아하지 않는다'에 대한 0, 1 값이다. 이 논문은 주어진 \(\Theta (x, y, b)\)에 대해 \(\ell\)이 1이 될 확률 \(pr_{ui}\)를 다음과 같이 logistic form으로 정의한다.</p>
-
-
-<p>\[pr_{ui} := Pr[\ell_{ui} = 1 ~|~ \Theta] = \frac{\exp(x_u^\top y_i + b_u + b_i)}{1 + \exp(x_u^\top y_i + b_u + b_i)}. \]</p>
-
-
-<p>직관적으로 생각해보았을 때, 앞선 논문 [2]은 r의 값이 0보다 크기만 하면 항상 u가 i를 좋아한다고 생각하지만, 이 논문에서는 그것이 r의 값에 대한 확률로 나타난다는 점을 알 수 있다. Reconstructed rating \(\hat r\)을 \(\hat r_{ui} = x_u^\top y_i\)이라고 했을 때, 위의 함수는 \(\hat r_{ui}\)에 대한 증가함수이므로 (\(\hat r_{ui}\)의 값이 \(-\infty\)가 되면 함수값이 0이고, \(\hat r_{ui}\) 값이 \(\infty\)가 되면 함수값이 1이 된다), 위의 식은 rating 값이 더 크면 호감을 가질 확률이 더 높아지는 형태의 확률 함수가 된다.</p>
-
-
-<p>따라서 이 모델의 likelihood는 positive observation u,i의 set을 \(\mathcal S\)라 하였을 때 다음과 같이 쓸 수 있다.</p>
-
-
-<p>\[\mathcal L_{naive} (R ~|~ \Theta) = \prod_{u,i \in \mathcal S} pr_{ui} \prod_{u,i \notin \mathcal S} (1-pr_{ui})\]</p>
-
-
-<p>그러나 앞선 논문 [2]에서도 언급되었듯, negative feedback은 '싫어한다'와 다른 의미를 가지고 있기 때문에, 이 논문에서도 confidence라는 것을 정의하게 된다. [2]와의 차이점이라면 RMSE 관점이 아니라 앞에서 살펴본 likelihood function의 관점에서 정의를 한다는 점이다. 여기에서 \(c_{ui}\)는 \(\alpha r_{ui}\)로 사용하는데, 만약 hyper-parameter \(\alpha\)의 값이 크면 positive observation에 더 큰 비중을 두고, \(\alpha\)의 값이 작다면 negative observation에 더 큰 비중을 두는 식으로 다음과 같이 정의를 하게 된다.</p>
-
-
-<p>\[ \mathcal L (R ~|~ \Theta) = \prod_{u,i} Pr[ \ell_{ui} | \Theta]^{\alpha r_{ui}} (1 - Pr[ \ell_{ui} | \Theta]).\]</p>
-
-
-<p>위의 식에서 negative feedback에 대한 (즉, 만약 관측값 \(r_{ui}\)가 0이라면) likelihood 값은 \(\mathcal L (r_{ui} ~|~ \Theta ) = 1 - pr_{ui}\) 가 되므로 앞에서 계산한 naive한 likelihood function과 일치한다. 그러나 positive feedback에 대한 likelihood는 \(pr_{ui}^{\alpha r_{ui}} (1-pr_{ui}) \)가 되므로, \(\alpha\)의 값을 조절함에 따라 앞에서 계산한 값과 차이가 있다.</p>
-
-
+<h3><a href="http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf">Logistic Matrix Factorization for Implicit Feedback Data [3]</a></h3>
+<p>앞선 논문 <a href="http://yifanhu.net/PUB/cf.pdf">[2]</a>에서는 RMSE를 minimize하는 objective를 설계하였지만, RMSE가 아닌 다른 형태의 objective를 optimize하는 것도 가능하다. 앞선 논문에서 RMSE를 minimize함으로써 얻을 수 있는 효과는 관측한 preference $p_{ui}$와 복원한 preference $\hat p_{ui}$가 서로 (RMSE의 관점에서) 최대한 비슷한 값을 가지도록 optimization이 된다는 것이다. 이 논문은 perference의 RMSE를 minimize하는 문제 대신, 관측 값 $r$과 optimization parameter $\Theta = (x, y, b)$ 등의 posteriori를 maximization하는 방식을 취한다. 참고로 이 논문은 Spotify에서 발표한 논문으로, 실제 음악 추천에서 응용하고 있는 듯 하다.</p>
+<p>계속 강조하듯, 여기에서 실제 유저가 선호하는 것과 유저의 implicit feedback 결과는 다를 수 있다. 그렇기 때문에 이 논문은 u가 i를 좋아할 확률을 logistic function으로 확률적으로 정의한 후, 관측한 데이터로부터 posteriori를 maximize하는 방향으로 학습을 하게 된다. 그러기위해 이 논문은 $\ell_{ui}$이라는 새로운 notation을 introduce하고 이를 사용자 u가 item i를 선호하는 'event'로 정의한다. 어렵게 설명했지만, 그냥 'user u가 음악 i를 좋아한다 좋아하지 않는다'에 대한 0, 1 값이다. 이 논문은 주어진 $\Theta (x, y, b)$에 대해 $\ell$이 1이 될 확률 $pr_{ui}$를 다음과 같이 logistic form으로 정의한다.</p>
+<p>$$pr_{ui} := Pr[\ell_{ui} = 1 ~|~ \Theta] = \frac{\exp(x_u^\top y_i + b_u + b_i)}{1 + \exp(x_u^\top y_i + b_u + b_i)}. $$</p>
+<p>직관적으로 생각해보았을 때, 앞선 논문 [2]은 r의 값이 0보다 크기만 하면 항상 u가 i를 좋아한다고 생각하지만, 이 논문에서는 그것이 r의 값에 대한 확률로 나타난다는 점을 알 수 있다. Reconstructed rating $\hat r$을 $\hat r_{ui} = x_u^\top y_i$이라고 했을 때, 위의 함수는 $\hat r_{ui}$에 대한 증가함수이므로 ($\hat r_{ui}$의 값이 $-\infty$가 되면 함수값이 0이고, $\hat r_{ui}$ 값이 $\infty$가 되면 함수값이 1이 된다), 위의 식은 rating 값이 더 크면 호감을 가질 확률이 더 높아지는 형태의 확률 함수가 된다.</p>
+<p>따라서 이 모델의 likelihood는 positive observation u,i의 set을 $\mathcal S$라 하였을 때 다음과 같이 쓸 수 있다.</p>
+<p>$$\mathcal L_{naive} (R ~|~ \Theta) = \prod_{u,i \in \mathcal S} pr_{ui} \prod_{u,i \notin \mathcal S} (1-pr_{ui})$$</p>
+<p>그러나 앞선 논문 [2]에서도 언급되었듯, negative feedback은 '싫어한다'와 다른 의미를 가지고 있기 때문에, 이 논문에서도 confidence라는 것을 정의하게 된다. [2]와의 차이점이라면 RMSE 관점이 아니라 앞에서 살펴본 likelihood function의 관점에서 정의를 한다는 점이다. 여기에서 $c_{ui}$는 $\alpha r_{ui}$로 사용하는데, 만약 hyper-parameter $\alpha$의 값이 크면 positive observation에 더 큰 비중을 두고, $\alpha$의 값이 작다면 negative observation에 더 큰 비중을 두는 식으로 다음과 같이 정의를 하게 된다.</p>
+<p>$$ \mathcal L (R ~|~ \Theta) = \prod_{u,i} Pr[ \ell_{ui} | \Theta]^{\alpha r_{ui}} (1 - Pr[ \ell_{ui} | \Theta]).$$</p>
+<p>위의 식에서 negative feedback에 대한 (즉, 만약 관측값 $r_{ui}$가 0이라면) likelihood 값은 $\mathcal L (r_{ui} ~|~ \Theta ) = 1 - pr_{ui}$ 가 되므로 앞에서 계산한 naive한 likelihood function과 일치한다. 그러나 positive feedback에 대한 likelihood는 $pr_{ui}^{\alpha r_{ui}} (1-pr_{ui}) $가 되므로, $\alpha$의 값을 조절함에 따라 앞에서 계산한 값과 차이가 있다.</p>
 <p>개인적인 생각으로는 여기에서 저자가 증명을 잘못한 것이 아닐까 생각된다. 만약 Positive feedback의 likelihood에 weight를 주기위해 exponent c를 추가한다고 했을 때, likelihood 식은 다음과 같이 된다.</p>
-
-
-<p>\[ \mathcal L = \prod_{u,i \in \mathcal S} ( p_{ui}^{\ell_{ui}} (1-p_{ui})^{1-\ell_{ui}} )^{\alpha r_{ui}} \prod_{u,i \notin \mathcal S} p_{ui}^{\ell_{ui}} (1-p_{ui})^{1-\ell_{ui}}. \]</p>
-
-
-<p>이때, \(r_{ui} > 0\) 일 때 \(\ell = 1\)이고, 혹은 둘 다 0이라는 특성을 잘 사용하면 이 식은 다음과 같이 표현이 된다.</p>
-
-
-<p>\[\mathcal L = \prod_{u,i} p_{ui}^{\alpha r_{ui}} (1-p_{ui})^{1-\ell_{ui}}. \]</p>
-
-
+<p>$$ \mathcal L = \prod_{u,i \in \mathcal S} ( p_{ui}^{\ell_{ui}} (1-p_{ui})^{1-\ell_{ui}} )^{\alpha r_{ui}} \prod_{u,i \notin \mathcal S} p_{ui}^{\ell_{ui}} (1-p_{ui})^{1-\ell_{ui}}. $$</p>
+<p>이때, $r_{ui} &gt; 0$ 일 때 $\ell = 1$이고, 혹은 둘 다 0이라는 특성을 잘 사용하면 이 식은 다음과 같이 표현이 된다.</p>
+<p>$$\mathcal L = \prod_{u,i} p_{ui}^{\alpha r_{ui}} (1-p_{ui})^{1-\ell_{ui}}. $$</p>
 <p>즉, 만약 저자가 의도한대로 positive feedback의 likelihood에 exponent로 weight를 주고 싶었다면, positive feedback의 likelihood function에서 1-p 부분이 없어야한다는 점이다. 이 부분은 저자가 실수를 했거나 혹은 내가 이해를 잘못했을 가능성이 있다. 혹시 몰라서 논문을 좀 찾아봤는데, 약 한 달 전쯤 나온 <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004760">논문</a>에서 증명한 결과가 내가 증명한 결과와 같은걸 보면, 저자가 틀린게 맞는 것 같다.</p>
-
-
-<p>그리고 또 다른 문제는 \(pr_{ui}\)는 언제나 값이 0에서 1사이이기 때문에 \(c_{ui} = \alpha r_{ui}\)의 값이 크면 클수록 \(pr_{ui}\)의 값은 오히려 감소하게 된다는 것이다. 그래서 논문의 설명과는 반대로 \(\alpha\)의 값을 키우는 것이 오히려 positive observation의 weight를 낮추는 것이 아닌가하는 생각이 드는데, 논문을 여러 번 다시 읽어보고 계산을 해봐도 아직 아리송하다. 오히려 이렇게 하고 싶었다면, 최종 objective가 완전히 바뀌기는 하지만, 관측된 데이터 \(\mathcal S\)에 대해서 likelihood를 \( (1 + \alpha_{ui}) pr_{ui}\)와 같은 형태로 정의하는 편이 훨씬 좋지 않을까? 왜 base가 1보다 작은데, weight term을 exponent으로 올렸는지 이해가 되질 않는다. 이 부분은 혹시 나중에 이해가 완전히 되면 내용을 추가하도록 하겠다.</p>
-
-
-<p>다시 본문으로 돌아오자. Likelihood를 계산했으니, prior만 있다면 posteriori를 계산할 수 있게 된다. 이 논문은 \(x, y\)의 prior를 전부 0 mean Normal distribution으로 정의한다. 이렇게 정의할 경우, 나중에 log MAP 문제를 풀게 될 때, L2 regularization과 같은 형태의 식 \(\frac{\lambda}{2} (\| x \|^2 + \| y \|^2) \) 을 얻을 수 있다. 자세한 증명은 생략한다. Prior를 정했으니 이제 posteriori를 구해서 다음과 같이 log MAP 문제를 정의할 수 있다. (논문에서 증명한 결과로, 내가 증명한 결과와는 차이가 있다)</p>
-
-
-<p>\[ \log Pr[ \Theta | P ] = \sum_{u,i} c_{ui} \widehat r_{ui} - ( 1 + c_{ui} ) \log ( 1 + \exp \widehat r_{ui} ) - \frac{\lambda}{2} ( \| x_u\|^2 + \| y_i \|^2 ). \]</p>
-
-
+<p>그리고 또 다른 문제는 $pr_{ui}$는 언제나 값이 0에서 1사이이기 때문에 $c_{ui} = \alpha r_{ui}$의 값이 크면 클수록 $pr_{ui}$의 값은 오히려 감소하게 된다는 것이다. 그래서 논문의 설명과는 반대로 $\alpha$의 값을 키우는 것이 오히려 positive observation의 weight를 낮추는 것이 아닌가하는 생각이 드는데, 논문을 여러 번 다시 읽어보고 계산을 해봐도 아직 아리송하다. 오히려 이렇게 하고 싶었다면, 최종 objective가 완전히 바뀌기는 하지만, 관측된 데이터 $\mathcal S$에 대해서 likelihood를 $ (1 + \alpha_{ui}) pr_{ui}$와 같은 형태로 정의하는 편이 훨씬 좋지 않을까? 왜 base가 1보다 작은데, weight term을 exponent으로 올렸는지 이해가 되질 않는다. 이 부분은 혹시 나중에 이해가 완전히 되면 내용을 추가하도록 하겠다.</p>
+<p>다시 본문으로 돌아오자. Likelihood를 계산했으니, prior만 있다면 posteriori를 계산할 수 있게 된다. 이 논문은 $x, y$의 prior를 전부 0 mean Normal distribution으로 정의한다. 이렇게 정의할 경우, 나중에 log MAP 문제를 풀게 될 때, L2 regularization과 같은 형태의 식 $\frac{\lambda}{2} (\| x \|^2 + \| y \|^2) $ 을 얻을 수 있다. 자세한 증명은 생략한다. Prior를 정했으니 이제 posteriori를 구해서 다음과 같이 log MAP 문제를 정의할 수 있다. (논문에서 증명한 결과로, 내가 증명한 결과와는 차이가 있다)</p>
+<p>$$ \log Pr[ \Theta | P ] = \sum_{u,i} c_{ui} \widehat r_{ui} - ( 1 + c_{ui} ) \log ( 1 + \exp \widehat r_{ui} ) - \frac{\lambda}{2} ( \| x_u\|^2 + \| y_i \|^2 ). $$</p>
 <p>이 문제 역시 다른 문제들 처럼 한 번에 update하기가 어렵기 떄문에 alternative하게 update를 하게 된다. 정확히는 coordinate gradient method를 사용한다 (maximize문제이므로 ascent가 될 것이다). 여기에서 한 가지 문제가 발생하는데, 앞에 붙어있는 summation term이 <b>모.든.</b> (u,i) pair에 대한 summation이기 때문에 한 번 gradient를 계산하는 비용이 어마어마해진다는 것이다. 정확히는 아이템의 개수 I와 유저의 숫자 U에 대해 linear한 비용이 필요하다. 보통 그 둘의 값은 몇 백만, 몇 천만이 될 정도로 크기 때문에 scalability 이슈가 굉장히 중요해진다. 이 논문은 그런 문제를 해결하기 위하여 (속도가 느리다는 문제) AdaGradient를 사용하라거나, 전체에 대해 summation을 하는 대신, 전체 positive pair (u,i)와 일부 negative pair (u,i)만 사용해서 문제를 해결하라고 언급되어있다.</p>
-
-
 <p>정리하자면 이 논문은 Matrix Factorization을 RMSE minimization 문제가 아닌 MAP 문제로 해결하려는 시도를 한 논문으로, MAP로 바꾸기 위하여 confidence가 포함된 likelihood function을 정의한다. (개인적으로는 이 likelihood function이 왜 이런 꼴을 하고 있는지 이해하지 못하였다) 알고리즘은 coordinate ascent를 사용하지만, 각각의 gradient 값이 아이템과 유저의 개수에 linear하기 때문에 실제 데이터에서 practical하지 못하다는 문제가 발생한다. 이런 문제를 해결하기 위하여 이 논문은 전체 matrix의 거의 대부분을 차지하는 negative observation을 전체 다 사용하는 대신, 일부만 sample하여 사용하는 방식을 제안하고 있다.</p>
 
-
-
-
-<h5><a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf">Bayesian Personalized Ranking for Non-Uniformly Sampled Items [4]</a></h5>
-
-
+<h3><a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf">Bayesian Personalized Ranking for Non-Uniformly Sampled Items [4]</a></h3>
 <p>앞의 두 논문은 같은 문제의 objective function만 RMSE와 MAP로 서로 다르게 잡은 경우이지만, 이 논문은 앞의 방법들과 다소 다른 접근 방식을 취하고 있다. 이 논문은 먼저 선행 연구<a href="http://arxiv.org/abs/1205.2618">[5]</a>를 조금 발전 시킨 논문인데, 선행 연구에서는 partially observed pair-wise competition 문제를 푸는 Baysian Personalized Ranking (BPR) optimization과 그것을 푸는 알고리즘을 제안하고, 그것을 MF로 확장하고있다. 그리고 그 다음 논문 [4]에서는 원래 논문이 가지는 단점을 negative observation을 adaptive하게 sample하는 방식으로 개선하고 있다.</p>
-
-
-<p>먼저 핵심 notation들을 정의해보자. 관측된 (u,i) pair는 \(\mathcal S\)라는 set으로 정의된다. 여기에서 새로운 notation \(I_u^+\)와 \(U_i^+\) 2개가 introduce된다. \(I_u^+\)는 user u가 관측한 적 있는 item의 set이고, \(U_i^+\)는 item i를 관측한 적 있는 user u의 set이다. 그러면 이 set들을 통해 \(\mathcal D_S\)라는 triplet을 다음과 같이 정의할 수 있다.</p>
-
-
-<p>\[D_S := \{(u,i,j) ~|~ i \in I_u^+ \mbox{ and } j \notin I_u^+ \}.\]</p>
-
-
+<p>먼저 핵심 notation들을 정의해보자. 관측된 (u,i) pair는 $\mathcal S$라는 set으로 정의된다. 여기에서 새로운 notation $I_u^+$와 $U_i^+$ 2개가 introduce된다. $I_u^+$는 user u가 관측한 적 있는 item의 set이고, $U_i^+$는 item i를 관측한 적 있는 user u의 set이다. 그러면 이 set들을 통해 $\mathcal D_S$라는 triplet을 다음과 같이 정의할 수 있다.</p>
+<p>$$D_S := \{(u,i,j) ~|~ i \in I_u^+ \mbox{ and } j \notin I_u^+ \}.$$</p>
 <p>즉, user u, user u가 관측한 item i와 관측하지 못한 item j 이렇게 셋의 triplet인 것이다.</p>
-
-
-<p>이제 이 논문의 핵심아이디어인 pair-wise ranking에 대해 살펴보자. 이 논문은 먼저 각각의 user u에게 item i와 item j간의 pair-wise ranking이 존재한다고 가정한다. 이 논문에서는 user u가 item i를 j보다 높은 order를 가질 때 \(i &gt;_u j\)의 꼴로 표현한다. 이 pair-wise ranking은 (혹은 order는) totality, antisymmetry, transitivity를 만족하는 order로 정의된다. 자세한 수식은 논문에 있으니 생략한다.</p>
-
-
+<p>이제 이 논문의 핵심아이디어인 pair-wise ranking에 대해 살펴보자. 이 논문은 먼저 각각의 user u에게 item i와 item j간의 pair-wise ranking이 존재한다고 가정한다. 이 논문에서는 user u가 item i를 j보다 높은 order를 가질 때 $i &gt;_u j$의 꼴로 표현한다. 이 pair-wise ranking은 (혹은 order는) totality, antisymmetry, transitivity를 만족하는 order로 정의된다. 자세한 수식은 논문에 있으니 생략한다.</p>
 <p>이 논문은 user u가 item i를 item j보다 더 높게 평가할 확률을 다음과 같이 가정하고 있다.</p>
-
-
-<p>\[Pr( i &gt;_u j | \Theta) = \sigma(\hat r_{uij} (\Theta)).\]</p>
-
-
-<p>여기에서 \(\hat r_{uij} := \hat r_{ui} - \hat r_{uj}\)로 정의되는 값이고, \(\sigma\)는 sigmoid function으로, \(\sigma(x) = \frac{1}{1+\exp(-x)}\)의 꼴로 정의된다. 각각의 user에 대해 pair-wise ranking에 대한 확률을 정의했고, 또한 실제 관측값도 있기 때문에, 우리는 ranking에 대한 likelihood를 정의할 수 있고, prior를 가정하게 되면 posteriori역시 계산할 수 있다. 먼저 likelihood \(\prod_u p(&gt;_u | \Theta)\)부터 계산해보자. (이전과 마찬가지로 user들은 전부 independent하다고 가정했기 때문에 곱으로 표현된다)</p>
-
-
-<p>\[\prod_u p(&gt;_u | \Theta) = \prod_{u,i,j} \prod_u p( i &gt;_u j | \Theta)^{I_{(u,i,j) \in \mathcal D_S}} (1 - p( i &gt;_u j | \Theta) )^{I_{(u,i,j) \notin \mathcal D_S}} \]</p>
-
-
-<p>\(I_x\)는 x가 true면 1이고 false면 0인 indicator function이다. 여기에서 order를 정의할 때 totality와 antisymmetry를 가정하였기 때문에, 위 식을 잘 건개하면 아래와 같은 간단한 식으로 표현하는 것이 가능하다고 한다.</p>
-
-
-<p>\[\prod_u p(&gt;_u | \Theta) = \prod_{(u,i,j) \in \mathcal D_S} p( i &gt;_u j | \Theta). \]</p>
-
-
+<p>$$Pr( i &gt;_u j | \Theta) = \sigma(\hat r_{uij} (\Theta)).$$</p>
+<p>여기에서 $\hat r_{uij} := \hat r_{ui} - \hat r_{uj}$로 정의되는 값이고, $\sigma$는 sigmoid function으로, $\sigma(x) = \frac{1}{1+\exp(-x)}$의 꼴로 정의된다. 각각의 user에 대해 pair-wise ranking에 대한 확률을 정의했고, 또한 실제 관측값도 있기 때문에, 우리는 ranking에 대한 likelihood를 정의할 수 있고, prior를 가정하게 되면 posteriori역시 계산할 수 있다. 먼저 likelihood $\prod_u p(&gt;_u | \Theta)$부터 계산해보자. (이전과 마찬가지로 user들은 전부 independent하다고 가정했기 때문에 곱으로 표현된다)</p>
+<p>$$\prod_u p(&gt;_u | \Theta) = \prod_{u,i,j} \prod_u p( i &gt;_u j | \Theta)^{I_{(u,i,j) \in \mathcal D_S}} (1 - p( i &gt;_u j | \Theta) )^{I_{(u,i,j) \notin \mathcal D_S}} $$</p>
+<p>$I_x$는 x가 true면 1이고 false면 0인 indicator function이다. 여기에서 order를 정의할 때 totality와 antisymmetry를 가정하였기 때문에, 위 식을 잘 건개하면 아래와 같은 간단한 식으로 표현하는 것이 가능하다고 한다.</p>
+<p>$$\prod_u p(&gt;_u | \Theta) = \prod_{(u,i,j) \in \mathcal D_S} p( i &gt;_u j | \Theta). $$</p>
 <p>[3]과 같이 prior를 zero mean normal distribution으로 정의하게 되면, log posteriori는 다음과 같이 표현된다.</p>
-
-
-<p>\[ \max \ln Pr(\Theta | &gt;_u) = \max \sum_{(u,i,j) \in \mathcal D_S} \ln \sigma(\hat x_{uij}) - \lambda \| \Theta \|^2. \]</p>
-
-
+<p>$$ \max \ln Pr(\Theta | &gt;_u) = \max \sum_{(u,i,j) \in \mathcal D_S} \ln \sigma(\hat x_{uij}) - \lambda \| \Theta \|^2. $$</p>
 <p>이 문제는 stochastic gradient descent로 푸는 것이 가능하다. 자세한 미분 값은 논문에 있으니 생략한다. 참고로 이 논문은 이 문제를 optimization했을 때 얻을 수 있는 solution이 AUC (area under the ROC curve, ROC curve는 <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">wiki</a> 참고)를 maximization하는 것과 비슷한 문제라는 것을 따로 증명해두었으니 관심이 있다면 한 번쯤 읽어보면 좋을 것 같다.</p>
+<p>[4]에서 제안한 BPR (baysian personalized ranking) problem을 풀기 위해서 SGD를 사용한다는 언급을 했는데, 문제가 하나 있다. 바로 triplet $\mathcal D_S$의 개수가 너무 많아서 전부 uniform하게 뽑기에는 데이터가 너무너무 많다는 것이다. 그래서 [5]에서는 adapted sampling 방식을 제안하고 있다.</p>
+<p>$$ \max  \sum_{(u,i,j) \in \mathcal D_S} w_u w_i w_j \ln \sigma(\hat x_{uij}) - \lambda \| \Theta \|^2. $$</p>
+<p>이때 $w_u = 1/| I_u^+ |$, $w_i = 1$로 정의가 된다. 즉, 관측한 아이템이 더 많은 유저는 적게 뽑고, 모든 positivie item은 uniform하게 뽑는다. 마지막으로 $w_j = \frac{1}{|U||I|} \sum_{u} I_{j \in I_u^+}$으로 취하게 되는데, 더 많이 사용자들이 관측한, 혹은 좋아한 데이터 위주로 sample을 뽑는 방식이다.</p>
+<p>정리해보면, BPR은 다른 논문들처럼 reconstructed error를 바로 measure하는 것이 아니라, pair-wise ranking을 정의하고, 복원된 rating $\hat r_{ui}$에 대해 user가 item i보다 j를 좋아할 확률을 sigmoid로 정의한다. 이 확률을 사용해 MAP문제를 정의하는데, 이 문제는 ROC curve의 넓이를 구하는 것과 비슷한 문제가 된다. 이때, sigmoid function을 step function으로 바꾸면 완전히 ROC curve의 넓이를 구하는 것과 같은 문제가 된다. Sigmoid가 step function의 가장 popular한 differentiable approximation 중 하나이기 때문에 sigmoid로 정의하게 되는 것이다. Algorithm은 SGD를 사용하는데, 데이터 셋이 user u가 관측한 item i와 관측하지 않은 item j의 triplet이기 때문에 uniform sampling을 하게 되면 결과가 좋지 않을 수 있다. 때문에 adaptive하게 (u,i,j)에서 j 고를 때, popular한 j를 더 고르도록 sample을 하여 성능을 개선하고 있다.</p>
 
+<h3>정리</h3>
+<p>이 글에서는 Implicit feedback에 대해 recommendation을 어떻게 할 수 있을지 서로 다른 세 가지 접근방법을 소개했다. 첫 번째는 가장 기본적인 방법으로, confidence level $c_{ui}$를 정의하고, real value variable인 $r_{ui}$를 binary variable인 $p_{ui}$로 바꾼 다음 optimization을 푸는 방법에 대해 소개했다. 두 번째로는 RMSE를 optimization하는 대신, u가 i를 좋아할 확률을 모델링하고, 주어진 데이터에 대해 MAP를 푸는 방법에 대해 소개했다. 마지막으로는 각각의 user별로 item들끼리의 personalized pair-wise ranking을 정의하고, 역시 마찬가지로 u가 i보다 j를 좋아할 확률을 모델링하고 이것의 MAP를 구하는 방법에 대해 소개했다. 알고리즘은 SGD로 해결할 수 있지만, 조금 더 smart하게 item을 뽑는 adaptive sampling을 사용할 경우 성능이 더 올라간다고 한다.</p>
 
-<p>[4]에서 제안한 BPR (baysian personalized ranking) problem을 풀기 위해서 SGD를 사용한다는 언급을 했는데, 문제가 하나 있다. 바로 triplet \(\mathcal D_S\)의 개수가 너무 많아서 전부 uniform하게 뽑기에는 데이터가 너무너무 많다는 것이다. 그래서 [5]에서는 adapted sampling 방식을 제안하고 있다.</p>
-
-
-<p>\[ \max  \sum_{(u,i,j) \in \mathcal D_S} w_u w_i w_j \ln \sigma(\hat x_{uij}) - \lambda \| \Theta \|^2. \]</p>
-
-
-<p>이때 \(w_u = 1/| I_u^+ |\), \(w_i = 1\)로 정의가 된다. 즉, 관측한 아이템이 더 많은 유저는 적게 뽑고, 모든 positivie item은 uniform하게 뽑는다. 마지막으로 \(w_j = \frac{1}{|U||I|} \sum_{u} I_{j \in I_u^+}\)으로 취하게 되는데, 더 많이 사용자들이 관측한, 혹은 좋아한 데이터 위주로 sample을 뽑는 방식이다.</p>
-
-
-<p>정리해보면, BPR은 다른 논문들처럼 reconstructed error를 바로 measure하는 것이 아니라, pair-wise ranking을 정의하고, 복원된 rating \(\hat r_{ui}\)에 대해 user가 item i보다 j를 좋아할 확률을 sigmoid로 정의한다. 이 확률을 사용해 MAP문제를 정의하는데, 이 문제는 ROC curve의 넓이를 구하는 것과 비슷한 문제가 된다. 이때, sigmoid function을 step function으로 바꾸면 완전히 ROC curve의 넓이를 구하는 것과 같은 문제가 된다. Sigmoid가 step function의 가장 popular한 differentiable approximation 중 하나이기 때문에 sigmoid로 정의하게 되는 것이다. Algorithm은 SGD를 사용하는데, 데이터 셋이 user u가 관측한 item i와 관측하지 않은 item j의 triplet이기 때문에 uniform sampling을 하게 되면 결과가 좋지 않을 수 있다. 때문에 adaptive하게 (u,i,j)에서 j 고를 때, popular한 j를 더 고르도록 sample을 하여 성능을 개선하고 있다.</p>
-
-
-
-
-<h5>정리</h5>
-
-
-<p>이 글에서는 Implicit feedback에 대해 recommendation을 어떻게 할 수 있을지 서로 다른 세 가지 접근방법을 소개했다. 첫 번째는 가장 기본적인 방법으로, confidence level \(c_{ui}\)를 정의하고, real value variable인 \(r_{ui}\)를 binary variable인 \(p_{ui}\)로 바꾼 다음 optimization을 푸는 방법에 대해 소개했다. 두 번째로는 RMSE를 optimization하는 대신, u가 i를 좋아할 확률을 모델링하고, 주어진 데이터에 대해 MAP를 푸는 방법에 대해 소개했다. 마지막으로는 각각의 user별로 item들끼리의 personalized pair-wise ranking을 정의하고, 역시 마찬가지로 u가 i보다 j를 좋아할 확률을 모델링하고 이것의 MAP를 구하는 방법에 대해 소개했다. 알고리즘은 SGD로 해결할 수 있지만, 조금 더 smart하게 item을 뽑는 adaptive sampling을 사용할 경우 성능이 더 올라간다고 한다.</p>
-
-
-
-
-<h5>References</h5>
-
-
+<h3>References</h3>
 <ol class="reference">
-    <li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
-    <li><a href="http://yifanhu.net/PUB/cf.pdf">Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets.", 2008</a></li>
-    <li><a href="http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf">Johnson, Christopher C. "Logistic matrix factorization for implicit feedback data.", 2014</a></li>
-    <li><a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf">Gantner, Zeno, et al. "Bayesian personalized ranking for non-uniformly sampled items.", 2012</a></li>
-    <li><a href="http://arxiv.org/abs/1205.2618">Rendle, Steffen, et al. "BPR: Bayesian personalized ranking from implicit feedback.", 2009</a></li>
+	<li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a></li>
+	<li><a href="http://yifanhu.net/PUB/cf.pdf">Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets.", 2008</a></li>
+	<li><a href="http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf">Johnson, Christopher C. "Logistic matrix factorization for implicit feedback data.", 2014</a></li>
+	<li><a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf">Gantner, Zeno, et al. "Bayesian personalized ranking for non-uniformly sampled items.", 2012</a></li>
+	<li><a href="http://arxiv.org/abs/1205.2618">Rendle, Steffen, et al. "BPR: Bayesian personalized ranking from implicit feedback.", 2009</a></li>
 </ol>
 
-
-
-
-<h5>변경 이력</h5>
-
-
+<h3>변경 이력</h3>
 <ul>
-<li>2016년 3월 6일: 글 등록</li>
+  <li>2016년 3월 6일: 글 등록</li>
 </ul>
 
-
 <p><hr>
-[Machine Learning 스터디](/blog/categories/machine-learning-study/)의 다른 글들
+### Machine Learning 스터디의 다른 글들
 
 * [Machine Learning이란?](/57)
 * [Probability Theory](/58)
@@ -801,194 +434,80 @@
     <link href="http://SanghyukChun.github.io/73/"/>
     <updated>2016-03-01T17:58:00+09:00</updated>
     <id>http://SanghyukChun.github.io/73</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
+    <content type="html"><![CDATA[<h3>들어가며</h3>
 <p>이 글에서는 recommendation 문제가 어떤 문제인지에 대해 간략하게 설명하고, 각각을 푸는 가장 대표적인 알고리즘인 matrix factorization에 대해서 설명할 것이다. 이 글의 많은 부분이 예전에 적었던 글 <a href="http://SanghyukChun.github.io/30">[1]</a>, <a href="http://SanghyukChun.github.io/31">[2]</a>을 기반으로 작성하였으니, 궁금하다면 추가로 읽어보면 좋을 것 같다.</p>
-
-
-<h5>Recommendation Problem</h5>
-
-
+<h3>Recommendation Problem</h3>
 <p>Recommendation problem은 여태까지 사용자가 item에 대해 evaluate한 history data를 기반으로 사용자가 아직 사용하지 않은 item에 대한 사용자의 평가를 예측하는 문제라고 할 수 있다. 추천과 랭킹 문제는 마케팅을 포함한 다양한 분야에서 오랜 세월 관심을 가져왔던 분야이다. 특히 광고를 제작하는 사람들 입장에서는 적은 비용으로 최대한의 효율을 낼 수 있는 타겟광고는 그야말로 금덩이나 다름없는 영역이라 할 수 있을 것이다. 추천은 그만큼 제한된 자원을 최대한 효율적으로 분배할 수 있는 방법이기도 하며, 사람들의 지갑을 더 열게 할 수 있는 중요한 문제인 것이다. Netflix와 왓챠는 내가 점수를 매긴 별점을 바탕으로 내가 좋아할만한 영화나 드라마를 추천해준다. 아마존, 이베이, Gmarket 등의 온라인 쇼핑몰들 역시 내가 클릭했던 상품들의 history를 기반으로 내가 좋아할만한, 사고싶어할만한 상품들을 추천해주거나, 이 상품들을 묶어서 하나의 작은 할인 패키지를 구성하기도 한다. 페이스북은 내가 좋아요를 누른 포스트들을 바탕으로 내가 좋아할만한 페이지를 추천하고, 타겟 광고를 내보낸다. 우리가 지금은 너무나 자연스럽게 받아들이는 이 사실들은 전부 머신러닝에 의해 가능해진 것들이다.</p>
-
-
-<h5>Matrix Completion</h5>
-
-
-<p>그러면 이제 추천 문제를 보다 엄밀하게 정의해보도록 하자. 먼저 데이터에 대해 살펴보도록 하자. 이 문제에서는 사용자와 상품이라는 두 가지 요소들이 존재한다. 사용자 \(u\)가 아이템 \(i\)를 얼마나 좋아할 것인지 나타내는 값을 rating \(r_{ui}\)라 하자. 이때, 이 rating은 Netflix처럼 1에서 5 사이의 real value일수도 있으며, 아마존이나 페이스북처럼 클릭했는지 하지 않았는지에 대한 데이터일수도 있다. 앞선 경우는 사용자가 자신이 얼마나 이 아이템을 좋아하는지 '명시적으로' 나타냈기 때문에 explicit feedback이라 부르며, 후자의 경우는 사용자가 해당 상품을 좋아했는지 싫어했는지 표현을 직접적으로 하지 않으므로 'implicit feedback'이라고 부른다. 이에 대해서는 나중에 다른 글을 통해 더 자세히 다루도록 하겠다. (<a href="http://SanghyukChun.github.io/95">Implicit feedback에 대한 글</a>을 새로 추가하였다) 지금은 \(r_{ui}\)의 정확한 값을 알고 있고, 이 값이 전혀 noise가 없는 값이라고 가정하고 문제를 계속 설명하도록 하겠다. 이런 경우 우리가 가지고 있는 데이터는 \(r_{ui}\)들의 값이 될 것이고, 대략 아래와 같은 방식으로 matrix로 표현할 수 있을 것이다.</p>
-
-
-<p><a align="center" href="http://www.codecogs.com/eqnedit.php?latex=movie.&space;{\begin{matrix}&space;1&space;&&space;2&space;&&space;3&space;&&space;4&space;&&space;5&space;&6&space;&&space;7&space;&&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&&space;5&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;*&space;&&space;2&space;\\&space;*&space;&&space;3&space;&&space;5&space;&&space;1&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;3&space;\\&space;4&space;&&space;1&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;3&space;&&space;2&space;\\&space;5&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;2&space;&&space;3&space;&&space;*&space;&&space;*&space;\\&space;*&space;&&space;2&space;&&space;4&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;1&space;&&space;2&space;\\&space;5&space;&&space;*&space;&&space;*&space;&&space;5&space;&&space;4&space;&*&space;&&space;*&space;&&space;4&space;\\&space;1&space;&&space;*&space;&&space;5&space;&&space;2&space;&&space;3&space;&1&space;&&space;5&space;&&space;3&space;\\&space;*&space;&&space;3&space;&&space;2&space;&&space;1&space;&&space;4&space;&&space;*&space;&&space;*&space;&&space;*&space;\\&space;\end{bmatrix}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?movie.&space;{\begin{matrix}&space;1&space;&&space;2&space;&&space;3&space;&&space;4&space;&&space;5&space;&6&space;&&space;7&space;&&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&&space;5&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;*&space;&&space;2&space;\\&space;*&space;&&space;3&space;&&space;5&space;&&space;1&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;3&space;\\&space;4&space;&&space;1&space;&&space;*&space;&&space;4&space;&&space;1&space;&*&space;&&space;3&space;&&space;2&space;\\&space;5&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;2&space;&&space;3&space;&&space;*&space;&&space;*&space;\\&space;*&space;&&space;2&space;&&space;4&space;&&space;2&space;&&space;*&space;&&space;*&space;&&space;1&space;&&space;2&space;\\&space;5&space;&&space;*&space;&&space;*&space;&&space;5&space;&&space;4&space;&*&space;&&space;*&space;&&space;4&space;\\&space;1&space;&&space;*&space;&&space;5&space;&&space;2&space;&&space;3&space;&1&space;&&space;5&space;&&space;3&space;\\&space;*&space;&&space;3&space;&&space;2&space;&&space;1&space;&&space;4&space;&&space;*&space;&&space;*&space;&&space;*&space;\\&space;\end{bmatrix}" title="movie. {\begin{matrix} 1 & 2 & 3 & 4 & 5 &6 & 7 & 8\end{matrix}} \\ \left\{\begin{matrix} user 1 \\ user 2 \\ user3 \\ user4 \\ user5 \\ user6 \\ user7 \\user8\, \end{matrix}\right. \begin{bmatrix} 3 & 5 & * & 4 & 1 &* & * & 2 \\ * & 3 & 5 & 1 & 2 & * & * & 3 \\ 4 & 1 & * & 4 & 1 &* & 3 & 2 \\ 5 & 2 & * & * & 2 & 3 & * & * \\ * & 2 & 4 & 2 & * & * & 1 & 2 \\ 5 & * & * & 5 & 4 &* & * & 4 \\ 1 & * & 5 & 2 & 3 &1 & 5 & 3 \\ * & 3 & 2 & 1 & 4 & * & * & * \\ \end{bmatrix}" /></a></p>
-
-
+<h3>Matrix Completion</h3>
+<p>그러면 이제 추천 문제를 보다 엄밀하게 정의해보도록 하자. 먼저 데이터에 대해 살펴보도록 하자. 이 문제에서는 사용자와 상품이라는 두 가지 요소들이 존재한다. 사용자 $u$가 아이템 $i$를 얼마나 좋아할 것인지 나타내는 값을 rating $r_{ui}$라 하자. 이때, 이 rating은 Netflix처럼 1에서 5 사이의 real value일수도 있으며, 아마존이나 페이스북처럼 클릭했는지 하지 않았는지에 대한 데이터일수도 있다. 앞선 경우는 사용자가 자신이 얼마나 이 아이템을 좋아하는지 '명시적으로' 나타냈기 때문에 explicit feedback이라 부르며, 후자의 경우는 사용자가 해당 상품을 좋아했는지 싫어했는지 표현을 직접적으로 하지 않으므로 'implicit feedback'이라고 부른다. 이에 대해서는 나중에 다른 글을 통해 더 자세히 다루도록 하겠다. (<a href="http://SanghyukChun.github.io/95">Implicit feedback에 대한 글</a>을 새로 추가하였다) 지금은 $r_{ui}$의 정확한 값을 알고 있고, 이 값이 전혀 noise가 없는 값이라고 가정하고 문제를 계속 설명하도록 하겠다. 이런 경우 우리가 가지고 있는 데이터는 $r_{ui}$들의 값이 될 것이고, 대략 아래와 같은 방식으로 matrix로 표현할 수 있을 것이다.</p>
+<p><a align="center" href="http://www.codecogs.com/eqnedit.php?latex=movie.&space;{\begin{matrix}&space;1&space;&amp;&space;2&space;&amp;&space;3&space;&amp;&space;4&space;&amp;&space;5&space;&amp;6&space;&amp;&space;7&space;&amp;&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&amp;&space;5&space;&amp;&space;*&space;&amp;&space;4&space;&amp;&space;1&space;&amp;*&space;&amp;&space;*&space;&amp;&space;2&space;\\&space;*&space;&amp;&space;3&space;&amp;&space;5&space;&amp;&space;1&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;3&space;\\&space;4&space;&amp;&space;1&space;&amp;&space;*&space;&amp;&space;4&space;&amp;&space;1&space;&amp;*&space;&amp;&space;3&space;&amp;&space;2&space;\\&space;5&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;2&space;&amp;&space;3&space;&amp;&space;*&space;&amp;&space;*&space;\\&space;*&space;&amp;&space;2&space;&amp;&space;4&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;1&space;&amp;&space;2&space;\\&space;5&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;5&space;&amp;&space;4&space;&amp;*&space;&amp;&space;*&space;&amp;&space;4&space;\\&space;1&space;&amp;&space;*&space;&amp;&space;5&space;&amp;&space;2&space;&amp;&space;3&space;&amp;1&space;&amp;&space;5&space;&amp;&space;3&space;\\&space;*&space;&amp;&space;3&space;&amp;&space;2&space;&amp;&space;1&space;&amp;&space;4&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;*&space;\\&space;\end{bmatrix}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?movie.&space;{\begin{matrix}&space;1&space;&amp;&space;2&space;&amp;&space;3&space;&amp;&space;4&space;&amp;&space;5&space;&amp;6&space;&amp;&space;7&space;&amp;&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&amp;&space;5&space;&amp;&space;*&space;&amp;&space;4&space;&amp;&space;1&space;&amp;*&space;&amp;&space;*&space;&amp;&space;2&space;\\&space;*&space;&amp;&space;3&space;&amp;&space;5&space;&amp;&space;1&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;3&space;\\&space;4&space;&amp;&space;1&space;&amp;&space;*&space;&amp;&space;4&space;&amp;&space;1&space;&amp;*&space;&amp;&space;3&space;&amp;&space;2&space;\\&space;5&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;2&space;&amp;&space;3&space;&amp;&space;*&space;&amp;&space;*&space;\\&space;*&space;&amp;&space;2&space;&amp;&space;4&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;1&space;&amp;&space;2&space;\\&space;5&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;5&space;&amp;&space;4&space;&amp;*&space;&amp;&space;*&space;&amp;&space;4&space;\\&space;1&space;&amp;&space;*&space;&amp;&space;5&space;&amp;&space;2&space;&amp;&space;3&space;&amp;1&space;&amp;&space;5&space;&amp;&space;3&space;\\&space;*&space;&amp;&space;3&space;&amp;&space;2&space;&amp;&space;1&space;&amp;&space;4&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;*&space;\\&space;\end{bmatrix}" title="movie. {\begin{matrix} 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp;6 &amp; 7 &amp; 8\end{matrix}} \\ \left\{\begin{matrix} user 1 \\ user 2 \\ user3 \\ user4 \\ user5 \\ user6 \\ user7 \\user8\, \end{matrix}\right. \begin{bmatrix} 3 &amp; 5 &amp; * &amp; 4 &amp; 1 &amp;* &amp; * &amp; 2 \\ * &amp; 3 &amp; 5 &amp; 1 &amp; 2 &amp; * &amp; * &amp; 3 \\ 4 &amp; 1 &amp; * &amp; 4 &amp; 1 &amp;* &amp; 3 &amp; 2 \\ 5 &amp; 2 &amp; * &amp; * &amp; 2 &amp; 3 &amp; * &amp; * \\ * &amp; 2 &amp; 4 &amp; 2 &amp; * &amp; * &amp; 1 &amp; 2 \\ 5 &amp; * &amp; * &amp; 5 &amp; 4 &amp;* &amp; * &amp; 4 \\ 1 &amp; * &amp; 5 &amp; 2 &amp; 3 &amp;1 &amp; 5 &amp; 3 \\ * &amp; 3 &amp; 2 &amp; 1 &amp; 4 &amp; * &amp; * &amp; * \\ \end{bmatrix}" /></a></p>
 <p>이때 *은 아직 사용자가 평가하지 않은 데이터를 의미한다. 이제 recommendation problem은 이 매트릭스의 비어있는 부분의 값을 예측하는 문제로 바꿔서 생각할 수 있다. 이를 수식으로 표현하면 아래와 같은 형태로 표현하는 것이 가능하다.</p>
+<p>$$\min_{\hat R} \| \hat R - R \|_F^2 $$</p>
+<p>이때 $R$는 비어있는 곳이 없는 원래 데이터를 의미한다. User의 숫자를 n, item의 개수를 m이라고 하면 R은 n by m matrix가 될 것이다. $\hat R$는 원래 데이터로부터 비어있는 곳을 복구한 데이터를 의미한다. 여기에서, 원래 데이터 matrix $R$에서 값이 없었던 부분은 제외하고 error를 (oot mean squared error라 하여 RMSE라 부른다) 계산하는 것이 이 문제의 objective function이 된다. 이런 문제를 일컬어, 비어있는 matrix를 완성시키는 문제다 해서 <a href="https://en.wikipedia.org/wiki/Matrix_completion">Matrix Completion</a>이라고 부른다. 따라서 앞으로 남은 글에서는 recommendation problem이라는 말 대신, matrix completion이라는 이름으로 바꿔서 부를 것이다.</p>
 
-
-<p>\[\min_{\hat R} \| \hat R - R \|_F^2 \]</p>
-
-
-<p>이때 \(R\)는 비어있는 곳이 없는 원래 데이터를 의미한다. User의 숫자를 n, item의 개수를 m이라고 하면 R은 n by m matrix가 될 것이다. \(\hat R\)는 원래 데이터로부터 비어있는 곳을 복구한 데이터를 의미한다. 여기에서, 원래 데이터 matrix \(R\)에서 값이 없었던 부분은 제외하고 error를 (oot mean squared error라 하여 RMSE라 부른다) 계산하는 것이 이 문제의 objective function이 된다. 이런 문제를 일컬어, 비어있는 matrix를 완성시키는 문제다 해서 <a href="https://en.wikipedia.org/wiki/Matrix_completion">Matrix Completion</a>이라고 부른다. 따라서 앞으로 남은 글에서는 recommendation problem이라는 말 대신, matrix completion이라는 이름으로 바꿔서 부를 것이다.</p>
-
-
-
-
-<h5>Matrix Factorization</h5>
-
-
-<p>그러면 앞서 설명한 matrix completion 문제를 어떻게 해결할 수 있을까? 지금까지는 문제를 정의하는 법에 대해서만 설명했지만, 이제부터는 이 문제를 풀기 위한 가정과 그 가정을 사용하여 만든 모델, 그리고 그 모델을 풀기위한 알고리즘을 설명할 것이다. Matrix Completion 문제를 풀기 위한 방법은 여러 가지가 있다. 이전 글 <a href="http://SanghyukChun.github.io/31">[2]</a> 에서 다뤘던 baseline predictor와 neighborhood method 등의 방법도 그런 방법들 중 하나이지만, 이 글에서는 단일 모델로 가장 우수한 성능을 보이는 것으로 알려진 matrix factorization에 대해서만 다룰 것이다. Matrix factorization의 가정은 original data matrix \(R\)가 low rank matrix라는 것이다. 따라서 우리가 복원하는 \(\hat R\) 역시 low rank 조건을 가지게 되므로 constrained optimization 문제로 바꿔서 쓸 수 있게 된다. 이 경우 optimal한 matrix completion의 objective function은 다음처럼 표현된다.</p>
-
-
-<p>\[\min ~\mbox{rank}(\hat R) ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i\]</p>
-
-
-<p>여기에서 \(\Omega(A_{ij} - B_{ij})\)는 matrix A와 B의 i,j 번째 element 중 하나라도 비어있으면 0, 둘 다 element가 존재하면 둘의 차이로 정의가 된다.</p>
-
-
-<p>이 문제를 어떻게 풀지에 대해 논하기 전에 먼저 low rank assumption은 어떤 의미가 있는지에 대해 먼저 논해보자. 먼저 모든 matrix는 다른 두 matrix의 곱으로 표현이 가능하다. 이때 만약 matrix의 rank가 작다면 두 matrix 의 rank역시 더 작은 형태로 표현이 가능하게 된다. 즉, 원래 n by m matrix R이 n이나 m보다 작은 k만큼의 rank를 가졌을 때, R은 n by k matrix P와 m by k matrix Q의 곱으로 표현할 수 있다. 즉, \(R = P Q^\top\) 으로 표현이 된다는 사실이 이미 알려져있다.</p>
-
-
-<p>\(p_u\)와 \(q_i\)는 각각 P와 Q의 u, i번째 row vector라고 정의하면 (둘 다 k차원 벡터가 된다) 앞선 수식에서부터 우리는 다음과 같은 수식을 얻을 수 있다.</p>
-
-
-<p>\[r_{ui} = p_u \cdot q_i\]</p>
-
-
-<p>이 사실로부터 우리는 user u가 item i의 점수를 주는 방식은, user u의 item들에 대한 숨겨진(latent) interest \(p_u\)와 그에 대응하는 item들의 숨겨진 특성 \(q_i\)에 의해 결정된다는 사실을 알 수 있다. 이를 그림으로 표현하면 다음과 같다.</p>
-
-
+<h3>Matrix Factorization</h3>
+<p>그러면 앞서 설명한 matrix completion 문제를 어떻게 해결할 수 있을까? 지금까지는 문제를 정의하는 법에 대해서만 설명했지만, 이제부터는 이 문제를 풀기 위한 가정과 그 가정을 사용하여 만든 모델, 그리고 그 모델을 풀기위한 알고리즘을 설명할 것이다. Matrix Completion 문제를 풀기 위한 방법은 여러 가지가 있다. 이전 글 <a href="http://SanghyukChun.github.io/31">[2]</a> 에서 다뤘던 baseline predictor와 neighborhood method 등의 방법도 그런 방법들 중 하나이지만, 이 글에서는 단일 모델로 가장 우수한 성능을 보이는 것으로 알려진 matrix factorization에 대해서만 다룰 것이다. Matrix factorization의 가정은 original data matrix $R$가 low rank matrix라는 것이다. 따라서 우리가 복원하는 $\hat R$ 역시 low rank 조건을 가지게 되므로 constrained optimization 문제로 바꿔서 쓸 수 있게 된다. 이 경우 optimal한 matrix completion의 objective function은 다음처럼 표현된다.</p>
+<p>$$\min ~\mbox{rank}(\hat R) ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i$$</p>
+<p>여기에서 $\Omega(A_{ij} - B_{ij})$는 matrix A와 B의 i,j 번째 element 중 하나라도 비어있으면 0, 둘 다 element가 존재하면 둘의 차이로 정의가 된다.</p>
+<p>이 문제를 어떻게 풀지에 대해 논하기 전에 먼저 low rank assumption은 어떤 의미가 있는지에 대해 먼저 논해보자. 먼저 모든 matrix는 다른 두 matrix의 곱으로 표현이 가능하다. 이때 만약 matrix의 rank가 작다면 두 matrix 의 rank역시 더 작은 형태로 표현이 가능하게 된다. 즉, 원래 n by m matrix R이 n이나 m보다 작은 k만큼의 rank를 가졌을 때, R은 n by k matrix P와 m by k matrix Q의 곱으로 표현할 수 있다. 즉, $R = P Q^\top$ 으로 표현이 된다는 사실이 이미 알려져있다.</p>
+<p>$p_u$와 $q_i$는 각각 P와 Q의 u, i번째 row vector라고 정의하면 (둘 다 k차원 벡터가 된다) 앞선 수식에서부터 우리는 다음과 같은 수식을 얻을 수 있다.</p>
+<p>$$r_{ui} = p_u \cdot q_i$$</p>
+<p>이 사실로부터 우리는 user u가 item i의 점수를 주는 방식은, user u의 item들에 대한 숨겨진(latent) interest $p_u$와 그에 대응하는 item들의 숨겨진 특성 $q_i$에 의해 결정된다는 사실을 알 수 있다. 이를 그림으로 표현하면 다음과 같다.</p>
 <p><img class="center" src="/images/post/30-1.png" width="400"></p>
-
 <p>따라서 앞에서 설명했던 rank를 minimize하는 문제는, 최대한 적은 latent feature를 사용하여 user와 item을 표현하도록 하는 문제가 되는 것이다. 그러나 실제로는 rank condition이 convex optimization이 아니기 때문에 이 문제를 optimal하게 풀 수 없다는 문제점이 존재한다. 여기에서 두 가지 접근 방법이 가능하다. 하나는 rank condition을 convex 조건으로 바꿔서 푸는 convex relaxation이 있고, 또 하나는 rank의 값은 우리가 직접 넣어주는 hyper-parameter로 사용하고, 대신 RMSE를 minize하는 방법이 있다. 각각의 objective function은 다음과 같이 표현된다.</p>
-
-
-<p>\[\min_{\hat R} \| \hat R \|_* ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i.\]</p>
-
-
-<p>\[\min_{\hat R} \sum_{u,i \in \kappa} (r_{ui} - \hat r_{ui})^2 ~\mbox{ s.t. }~ \mbox{rank}(\hat R) = k.\]</p>
-
-
-<p>여기에서 \(u,i \in \kappa\)는, 전체 데이터 중에서 오직 관측된 u,i pair만을 의미한다. 즉, \(\Omega\) notation을 대체하는 기호라고 생각하면 된다.</p>
-
-
+<p>$$\min_{\hat R} \| \hat R \|_* ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i.$$</p>
+<p>$$\min_{\hat R} \sum_{u,i \in \kappa} (r_{ui} - \hat r_{ui})^2 ~\mbox{ s.t. }~ \mbox{rank}(\hat R) = k.$$</p>
+<p>여기에서 $u,i \in \kappa$는, 전체 데이터 중에서 오직 관측된 u,i pair만을 의미한다. 즉, $\Omega$ notation을 대체하는 기호라고 생각하면 된다.</p>
 <p>전자는 항상 convex relaxed된 문제에서는 optimal한 solution을 찾을 수 있다는 것이 보장된다는 장점이 있지만, 원래 문제와 다른 문제를 풀기 때문에 원래 문제와 같은 optimal solution을 갖는 상황이 아니면 의미가 없을 수 있다는 문제점이 있다. 후자는 convex한 방법론을 사용할 수 없기 때문에 global optimal solution 대신 local optimal solution을 얻게 되지만, practical하게 잘 동작한다는 장점이 존재한다. 이 글에서는 둘 다 짤막하게 (그러나 너무 깊지 않게) 다뤄볼까 한다.</p>
 
-
-
-
-<h5>Methodology 1: Convex Relaxation</h5>
-
-
+<h3>Methodology 1: Convex Relaxation</h3>
 <p>먼저 왜 rank condition이 non-convex condition인지부터 살펴보자. Matrix X의 rank는 X의 0이 아닌 singular value들의 숫자로, 다시 말해 이들의 l-0 norm의 합으로 표현이 가능하다. 즉, 원래 objective function은 다음처럼 표현할 수 있다.</p>
-
-
-<p>\[\min \sum_\ell \| \sigma_\ell(\hat R) \|_0 ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i\]</p>
-
-
-<p>이때, \(\sigma_i(A)\)는 A의 i번째 singular value를 의미한다. 만약 matrix의 rank k가 full rank가 아니라면, 정확하게 k개의 singular value만 값이 0이 아니고, 나머지 singular value들의 값은 0이 된다. 따라서 이 문제가 위에 적은 것 처럼 l-0 norm의 합으로 표현이 되는 것이다. 문제는 이 l-0 norm 자체가 non-convex norm이라는 것이다. 보통 l-0 norm을 relax하는 가장 tight한 방법 중 하나가, l-0 norm을 l-1 norm으로 바꾸는 것이다. 이때, matrix A의 singular value들의 l-1 norm합은, matrix A의 nuclear norm \(\| A \|_* \)이 된다. 따라서 위의 문제를 \( \min \sum_\ell \| \sigma_\ell(\hat R) \|_1 \)으로 relax하게 될 경우 (편의상 constriant는 생략한다), objective function은 \(\min \| \hat R\|_*\)을 하는 것과 같다.</p>
-
-
+<p>$$\min \sum_\ell \| \sigma_\ell(\hat R) \|_0 ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i$$</p>
+<p>이때, $\sigma_i(A)$는 A의 i번째 singular value를 의미한다. 만약 matrix의 rank k가 full rank가 아니라면, 정확하게 k개의 singular value만 값이 0이 아니고, 나머지 singular value들의 값은 0이 된다. 따라서 이 문제가 위에 적은 것 처럼 l-0 norm의 합으로 표현이 되는 것이다. 문제는 이 l-0 norm 자체가 non-convex norm이라는 것이다. 보통 l-0 norm을 relax하는 가장 tight한 방법 중 하나가, l-0 norm을 l-1 norm으로 바꾸는 것이다. 이때, matrix A의 singular value들의 l-1 norm합은, matrix A의 nuclear norm $\| A \|_* $이 된다. 따라서 위의 문제를 $ \min \sum_\ell \| \sigma_\ell(\hat R) \|_1 $으로 relax하게 될 경우 (편의상 constriant는 생략한다), objective function은 $\min \| \hat R\|_*$을 하는 것과 같다.</p>
 <p>이 문제는 convex problem이기 때문에 아무 convex solver를 가져와서 문제를 풀면 된다. 그러나 조금 더 효율적인 풀이방법을 위하여 singular value thresholding이라는 alternating update 방식의 알고리즘도 제안이 되어있는 상태이다. 이 글에서는 최대한 개념 위주로 설명을 할 생각이기 때문에, 설명 대신 좋은 review paper <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">[3]</a>와 원본 논문 <a href="http://statweb.stanford.edu/~candes/papers/MatrixCompletion.pdf">[4]</a>을 reference로 추가한다.</p>
+<p>이렇듯 convex relaxation에서 algorithm은 보통 큰 issue는 아니다. 물론 기존 solver보다 더 좋은 알고리즘을 제안하는 것도 중요한 일이지만, convex relaxation에서 가장 critical한 issue는, relaxed problem이 언제 원래 problem과 같은 해를 가지는지에 대한 조건이 무엇이냐 하는 것이다. 즉, 내가 그 어떤 조건에서도 relaxed problem을 사용해서 원래 문제를 풀 수 없다면, 그 convex relaxation은 가치가 없는 relaxation이 되는 것이다. 아마도 데이터가 많으면 많을수록 복원이 쉬울 것이고, 적으면 적을수록 복원이 어려워지다가, 어느 순간부터 복원이 불가능해지는 시점이 존재할 것이라는 것이다. 예를 들어 데이터가 하나 빼고 전부 있다면 MC가 어려운 문제가 아닐 수 있지만, 반대로 데이터가 하나만 있다면 복원할 수 있는 경우의 수가 거의 무한하게 많을 것이라는 것이다. 다행히도 리뷰 페이퍼 <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">[3]</a>의 Theorem 1에도 나와있듯, user와 item 숫자 중 더 큰 숫자를 $n_0$라고 했을 때, convex relaxed problem이 optimal한 solution을 얻기 위해서는 order of $n_0 \log^2 n_0$ 만큼의 observed data가 필요하다는 증명이 이미 되어있다. 이에 대한 자세한 설명은 해당 논문을 읽어보면 좋을 것 같고, 이 글에서는 생략하도록 하겠다.</p>
 
-
-<p>이렇듯 convex relaxation에서 algorithm은 보통 큰 issue는 아니다. 물론 기존 solver보다 더 좋은 알고리즘을 제안하는 것도 중요한 일이지만, convex relaxation에서 가장 critical한 issue는, relaxed problem이 언제 원래 problem과 같은 해를 가지는지에 대한 조건이 무엇이냐 하는 것이다. 즉, 내가 그 어떤 조건에서도 relaxed problem을 사용해서 원래 문제를 풀 수 없다면, 그 convex relaxation은 가치가 없는 relaxation이 되는 것이다. 아마도 데이터가 많으면 많을수록 복원이 쉬울 것이고, 적으면 적을수록 복원이 어려워지다가, 어느 순간부터 복원이 불가능해지는 시점이 존재할 것이라는 것이다. 예를 들어 데이터가 하나 빼고 전부 있다면 MC가 어려운 문제가 아닐 수 있지만, 반대로 데이터가 하나만 있다면 복원할 수 있는 경우의 수가 거의 무한하게 많을 것이라는 것이다. 다행히도 리뷰 페이퍼 <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">[3]</a>의 Theorem 1에도 나와있듯, user와 item 숫자 중 더 큰 숫자를 \(n_0\)라고 했을 때, convex relaxed problem이 optimal한 solution을 얻기 위해서는 order of \(n_0 \log^2 n_0\) 만큼의 observed data가 필요하다는 증명이 이미 되어있다. 이에 대한 자세한 설명은 해당 논문을 읽어보면 좋을 것 같고, 이 글에서는 생략하도록 하겠다.</p>
-
-
-
-
-<h5>Methodology 2: Solve Non-convex Problem Directly</h5>
-
-
+<h3>Methodology 2: Solve Non-convex Problem Directly</h3>
 <p>두 번째 방법으로는 non-convex한 objective function을 바로 푸는 것이다. 혼동을 피하기 위하여 이 objective function을 다시 적어보자.</p>
-
-
-<p>\[\min_{\hat R} \sum_{u,i \in \kappa} (r_{ui} - \hat r_{ui})^2 ~\mbox{ s.t. }~ \mbox{rank}(\hat R) = k.\]</p>
-
-
-<p>그리고, 이미 앞에서 \(\hat r_{ui} = p_u \cdot q_i\)로 표현할 수 있다는 것 까지 확인했었으므로, 이를 기반으로 문제를 적으면 다음과 같은 문제가 된다.</p>
-
-
-<p>\[\min_{P,Q} \sum_{u,i \in \kappa} (r_{ui} - p_u \cdot q_i)^2.\]</p>
-
-
+<p>$$\min_{\hat R} \sum_{u,i \in \kappa} (r_{ui} - \hat r_{ui})^2 ~\mbox{ s.t. }~ \mbox{rank}(\hat R) = k.$$</p>
+<p>그리고, 이미 앞에서 $\hat r_{ui} = p_u \cdot q_i$로 표현할 수 있다는 것 까지 확인했었으므로, 이를 기반으로 문제를 적으면 다음과 같은 문제가 된다.</p>
+<p>$$\min_{P,Q} \sum_{u,i \in \kappa} (r_{ui} - p_u \cdot q_i)^2.$$</p>
 <p>앞에서 설명한 것 처럼 P,Q는 각각 n by k, m by k matrix가 된다. 이때, overfitting을 피하고 보다 generalized된 문제로 바꿔주기 위하여 regularization term을 뒤에 붙여주면 문제는 다음과 같이 바뀐다.</p>
-
-
-<p>\[\min_{P,Q} \sum_{u,i \in \kappa} (r_{ui} - p_u \cdot q_i)^2 + \lambda ( \| p_u \|_2^2 + \| q_i \|_2^2 ) .\]</p>
-
-
+<p>$$\min_{P,Q} \sum_{u,i \in \kappa} (r_{ui} - p_u \cdot q_i)^2 + \lambda ( \| p_u \|_2^2 + \| q_i \|_2^2 ) .$$</p>
 <p>이 pair-wise optimization 문제는 non-convex 문제이지만, gradient descent method로 local optimum에 수렴하는 결과를 얻을 수 있으며 실제로 꽤 효율적으로 좋은 결과를 얻을 수 있다.</p>
-
-
 <p>또 다른 solver로는 Alternating Least Square (ALS) 라는 방법이 있다. 이 방법은 alternative하게 주어진 objective를 update하는 방법인데, 주어진 objective가 pairwise optimization으로 생각하면 non-convex이지만, p나 q 중 하나를 고정하고 나머지에 대해 optimization을 하게 되면 convex, 그것도 closed form으로 계산된다는 점을 이용한 방법이다. 따라서 이 방법을 사용해 예전에 설명했었던 k-means style의 알고리즘을 설계할 수 있는데, 이를 ALS라고 부르는 것이다. Gradient descent가 더 빠른 경우도 있지만, ALS를 사용하게 되면 각각의 element들이 다른 element에 independent하기 때문에 분산처리가 간편하기 때문에 실제로는 ALS 방법도 많이 사용된다고 한다.</p>
-
-
-<p>지금까지 설명한 방법은 그야말로 가장 기본이 되는 모델이고, 이 모델을 조금 더 확장해보도록 하자. 가장 간단하게 확장할 수 있는 방법은 bias term을 추가하는 것이다. 예를 들어서 어떤 user는 항상 모든 영화 평점을 비교적 '짜게' 주는 user가 있을 수 있고, 반대로 모든 영화에 점수를 후하게 주는 user도 있을 수 있다. 어떤 영화는 개봉 전부터 평단이나 기자들에게서 호평을 받았거나 유명 배우가 나와 기본 점수가 높을 수도 있고, 그 반대도 가능하다. 따라서 이런 현상들을 반영할 수 있는 bias term이 추가가 되는 것은 지극히 자연스럽다고 할 수 있다. user의 bias를 \(b_u\), item의 bias를 \(b_i\)라고 하면 (이 값들은 vector가 아니라 scalar value이다) user u의 item i에 대한 bias \(b_{ui}\)는 \(b_{ui} = \mu + b_u + b_i\)로 표현할 수 있을 것이다. 여기에서 \(\mu\)는 전체 모든 r_{ui}의 평균 값으로, bias라는 개념이 평균에서부터 얼마나 멀어지는 가에 대한 개념이므로 평균 값도 함께 고려하는 것이다. \(\mu\)는 데이터와 함께 주어지는 값이고, bias term들은 p,q처럼 optimization을 통해 찾아야하는 optimization parameter가 된다. 이를 사용하면 reconstructed rating \(\hat r_{ui}\)는 다음과 같이 표현된다.</p>
-
-
-<p>\[\hat r_{ui} = \mu + b_u + b_i + p_u \cdot q_i.\]</p>
-
-
+<p>지금까지 설명한 방법은 그야말로 가장 기본이 되는 모델이고, 이 모델을 조금 더 확장해보도록 하자. 가장 간단하게 확장할 수 있는 방법은 bias term을 추가하는 것이다. 예를 들어서 어떤 user는 항상 모든 영화 평점을 비교적 '짜게' 주는 user가 있을 수 있고, 반대로 모든 영화에 점수를 후하게 주는 user도 있을 수 있다. 어떤 영화는 개봉 전부터 평단이나 기자들에게서 호평을 받았거나 유명 배우가 나와 기본 점수가 높을 수도 있고, 그 반대도 가능하다. 따라서 이런 현상들을 반영할 수 있는 bias term이 추가가 되는 것은 지극히 자연스럽다고 할 수 있다. user의 bias를 $b_u$, item의 bias를 $b_i$라고 하면 (이 값들은 vector가 아니라 scalar value이다) user u의 item i에 대한 bias $b_{ui}$는 $b_{ui} = \mu + b_u + b_i$로 표현할 수 있을 것이다. 여기에서 $\mu$는 전체 모든 r_{ui}의 평균 값으로, bias라는 개념이 평균에서부터 얼마나 멀어지는 가에 대한 개념이므로 평균 값도 함께 고려하는 것이다. $\mu$는 데이터와 함께 주어지는 값이고, bias term들은 p,q처럼 optimization을 통해 찾아야하는 optimization parameter가 된다. 이를 사용하면 reconstructed rating $\hat r_{ui}$는 다음과 같이 표현된다.</p>
+<p>$$\hat r_{ui} = \mu + b_u + b_i + p_u \cdot q_i.$$</p>
 <p>이제 이 결과를 원래 objective에 대입하면 다음과 같은 식을 얻게 된다.</p>
-
-
-<p>\[\min_{P,Q,B} \sum_{u,i \in \kappa} (r_{ui} - \mu - b_u - b_i - p_u \cdot q_i)^2 + \lambda ( \| p_u \|_2^2 + \| q_i \|_2^2 + b_u^2 + b_i^2 ) .\]</p>
-
-
+<p>$$\min_{P,Q,B} \sum_{u,i \in \kappa} (r_{ui} - \mu - b_u - b_i - p_u \cdot q_i)^2 + \lambda ( \| p_u \|_2^2 + \| q_i \|_2^2 + b_u^2 + b_i^2 ) .$$</p>
 <p>마찬가지로 이 결과 역시 gradient method나 ALS로 푸는 것이 가능하다.</p>
 
-
-
-
-<h5>Matrix Factorization in Netflix Prize Competition</h5>
-
-
+<h3>Matrix Factorization in Netflix Prize Competition</h3>
 <p>위의 methodology 2는 실제로 Netflix problem에서 (<a href="http://SanghyukChun.github.io/30">[1]</a> 참고) 단일 성능이 가장 우수했던 알고리즘을 소개한 것이다. 조금 더 구체적으로는 다음과 같은 그래프로 표현할 수 있다. (출처: <a href="http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf">[5]</a>)</p>
-
-
 <p><img class="center" src="/images/post/73-1.png" width="600"></p>
-
 <p>Plain은 진짜 가장 기본 term만 사용한 것이고, with bias는, 앞에서 설명한 bias를 사용한 방식이다. Implicit feedback은 생략하고, temporal dynamics는 rating이 시간에 따라 바뀐다고 가정하고 다음과 같이 모델을 설계한 것이다.</p>
+<p>$$\hat r_{ui}(t) = \mu + b_u(t) + b_i(t) + p_u(t) \cdot q_i.$$</p>
+<p>여기에서, item의 성질 $q_i$는 static하다고 가정하고, 대신 사람이 평가하는 방식인 $p_u$만 시간에 대해 변한다고 가정하는 것이다. 이 모델은 시간이 지남에 따라 사람들이 서로 상호작용하고, 그로 인해 별점을 매기는 방식이 바뀔 수 있다는 것을 가정으로 한 방법으로, 실제 최종 결과를 살펴보면 이 방식을 채용한 방법이 가장 우수한 결과를 얻는 것을 확인할 수 있다. 실제 Netflix prize에서는 다른 방법들까지 고려한 ensemble method가 더 좋은 성능을 내지만, 실제로 RMSE metric에서 단일 모델로 가장 좋은 성능을 내는 것은 여전히 matrix factorization 기반 접근법이다.</p>
 
-
-<p>\[\hat r_{ui}(t) = \mu + b_u(t) + b_i(t) + p_u(t) \cdot q_i.\]</p>
-
-
-<p>여기에서, item의 성질 \(q_i\)는 static하다고 가정하고, 대신 사람이 평가하는 방식인 \(p_u\)만 시간에 대해 변한다고 가정하는 것이다. 이 모델은 시간이 지남에 따라 사람들이 서로 상호작용하고, 그로 인해 별점을 매기는 방식이 바뀔 수 있다는 것을 가정으로 한 방법으로, 실제 최종 결과를 살펴보면 이 방식을 채용한 방법이 가장 우수한 결과를 얻는 것을 확인할 수 있다. 실제 Netflix prize에서는 다른 방법들까지 고려한 ensemble method가 더 좋은 성능을 내지만, 실제로 RMSE metric에서 단일 모델로 가장 좋은 성능을 내는 것은 여전히 matrix factorization 기반 접근법이다.</p>
-
-
-
-
-<h5>정리</h5>
-
-
+<h3>정리</h3>
 <p>이 글에서는 recommendation 문제가 어떤 문제인지 설명하고, 보다 수학적으로 정의된 matrix completion 문제로 recommendation을 설명한다. 그 후 이 문제를 푸는 가장 popular한 방법인 matrix factorization에 대해서 다룬다. 해당 문제가 non-convex 문제이기 때문에 convex relaxation을 통해 문제를 푸는 방법 (더 늦게 나온 방법이다), non-convex optimization을 바로 푸는 방법 (Netflix prize에서 실제 사용했던 방법) 두 가지를 소개하고 각각에 대해 간략하게 설명한다. 실제 recommendation은 matrix factorization 뿐 아니라 여러 다른 methodology들을 결합해서 문제를 풀게 되지만, 여전히 단일 model로 가장 좋은 performance를 보여주는 것은 matrix factorization을 기반으로 한 방법론들이기 때문에 matrix factorization을 제대로 아는 것이 recommendation 문제를 풀기 위한 첫 걸음이라 할 수 있을 것이다.</p>
 
-
-
-
-<h5>변경 이력</h5>
-
-
+<h3>변경 이력</h3>
 <ul>
-<li>2016년 3월 1일: 글 등록</li>
+  <li>2016년 3월 1일: 글 등록</li>
 </ul>
 
-
-<h5>References</h5>
-
-
+<h3>References</h3>
 <ol class="reference">
-    <li><a href="http://SanghyukChun.github.io/30">인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2)</a></li>
-    <li><a href="http://SanghyukChun.github.io/31">인터넷 속의 수학 - How Does Netflix Recommend Movies? (2/2)</a></li>
-    <li><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">Kennedy, Ryan. "Low-rank matrix completion.", 2013</a></li>
-    <li><a href="http://statweb.stanford.edu/~candes/papers/MatrixCompletion.pdf">Candès, Emmanuel J., and Benjamin Recht. "Exact matrix completion via convex optimization.", 2009</a></li>
-    <li><a href="http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf">Koren, Yehuda, Robert Bell, and Chris Volinsky. "Matrix factorization techniques for recommender systems.", 2009</a></li>
+	<li><a href="http://SanghyukChun.github.io/30">인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2)</a></li>
+	<li><a href="http://SanghyukChun.github.io/31">인터넷 속의 수학 - How Does Netflix Recommend Movies? (2/2)</a></li>
+	<li><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">Kennedy, Ryan. "Low-rank matrix completion.", 2013</a></li>
+	<li><a href="http://statweb.stanford.edu/~candes/papers/MatrixCompletion.pdf">Candès, Emmanuel J., and Benjamin Recht. "Exact matrix completion via convex optimization.", 2009</a></li>
+	<li><a href="http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf">Koren, Yehuda, Robert Bell, and Chris Volinsky. "Matrix factorization techniques for recommender systems.", 2009</a></li>
 </ol>
 
-
 <p><hr>
-[Machine Learning 스터디](/blog/categories/machine-learning-study/)의 다른 글들
+### Machine Learning 스터디의 다른 글들
 
 * [Machine Learning이란?](/57)
 * [Probability Theory](/58)
@@ -1023,341 +542,165 @@
     <id>http://SanghyukChun.github.io/93</id>
     <content type="html"><![CDATA[<p>주어진 이미지에 대한 설명을 하는 문장, 혹은 캡션을 생성하는 문제를 image caption 문제라고 한다. 이 문제는 여러 가지 문제들이 복합적으로 얽혀있는 문제라고 할 수 있는데, 먼저 이미지가 어떤 것에 대한 이미지인지 판별하기 위하여 object recognition을 정확하게 할 수 있어야한다. 그 다음에는 detect한 object들 사이의 관계를 추론하여 이미지가 나타내는 event가 무엇인지 알아내어야 하고, 마지막으로 event를 caption으로, 즉 natural language로 재생성해야한다. 얼핏 생각하면 간단한 문제같지만 자그마치 비전과 NLP 분야의 핵심 문제들이 복합적으로 얽혀있는 복잡한 문제인 것이다. <s>방금 너희들이 본 건 간단해 보이지만 자그마치 3개의 퀑 기술이 합쳐진 컴비네이션!</s> 예를 들어보자.</p>
 
-
-<p></p>
-
 <p><img class="center" src="/images/post/93-1.jpg" width="400"></p>
 
 <p>이 사진을 보고 우리는 '오바마가 청소부와 인사를 하고 있다' 라고 바로 문장으로 풀어낼 수 있지만, 이런 문제를 푸는 알고리즘을 디자인하기 위해서는 먼저 이 사진에서 오바마와 청소부라는 핵심 object를 detect 해야한다. 그러나 아직까지는 어떤 object가 중요한지 알 수 없으므로, 먼저 복도에 있는 보좌관들, 기둥, 바닥, 뒤에 보이는 계단 난간, 전등, 복도 등등을 모두 detect 해야한다. 그러므로, caption을 만들기 위해서 가장 먼저 우리는 높은 수준의 object detection과 segmentation을 필요로 하다. 다음으로는 segmentation된 정보를 사용해서 여러 event를 알아내야 한다. '오바마와 청소부가 인사를 하고 있다' '보좌관이 복도를 걷고 있다' '한 남자가 책을 읽고 있다' '사람이 기둥 뒤에 서있다' <s>'기둥 뒤에 공간이 있다'</s> 등의 여러 event를 추정해야하고, 그 중에서 가장 가능성이 높은 event를 판별해야한다. 마지막으로 해당 event를 설명하는 문장을 generate해야한다.</p>
-
-
 <p>현재 caption generation 문제를 해결하는 방법들 중에서 가장 널리 쓰이고 있고, 가장 잘 동작하는 (state-of-art) 방법들은 neural network를 사용한 접근 방식들이다. Neural network를 사용하지 않은 기존 접근 방법은 크게 두 가지가 있었다. 하나는 object detection과 attribute discovery를 먼저 진행한 후에, 그것들을 사용해 미리 만들어놓은 caption template을 채우는 것이고, 또 하나는 비슷한 이미지 들의 caption 데이터를 사용해 지금 image에 적합한 caption으로 수정하는 방식이었다고 한다. Reference들을 보면 약 2010년부터 2013년 정도까지 연구가 활발하게 진행되었던 모양이지만, 지금은 전부 neural network 기반의 work에게 밀려서 사용되지 않는다고 한다.</p>
-
-
 <p>현재 state-of-art를 찍고 있는 Neural network 기반 image description generator 모델들은 주로 2014년쯤부터 활발하게 연구가 진행되고 있다. Image caption 문제를 해결하기 위해 기존 deep learning 연구 그룹들은 마치 image를 하나의 language처럼 취급하고 실제 언어로 'translate' 하는 concept을 도입해서 문제를 machine traslation의 연장선으로 바라보는 접근 방법을 취한다고 한다. 그래서 대부분의 neural network 기반의 work들은 machine translation에서 사용하는 encoder-decoder 아이디어를 활용하여 caption generation을 한다고 한다. 보통 encoder-decoder 과정에서 이미지 하나를 그대로 사용하는 대신, CNN을 사용하여 이미지 하나를 single feature vector로 표현하고, 그 feature vector를 model에서 사용하는 방식을 취하고 있다.</p>
-
-
 <p>올해 초, 기존 state-of-art를 뛰어넘는 RNN visual attention 기반 caption generation model이 <a href="http://arxiv.org/abs/1502.03044">Xu, Kelvin, et al. "Show, attend and tell: Neural image caption generation with visual attention." ICML 2015</a>이라는 work을 통해 제안되었다. 이 논문은 기본적으로 기존의 방법들처럼 encoder-decoder 개념을 사용하지만, 추가로 visual attention이라는 개념을 caption generator에 도입하여 image caption 문제를 해결한다. Attention이란 사람이 시각 정보를 처리할 때 일부 데이터에 'focus'하면서 계속 focus되는 대상이 움직이는 현상을 일컫는다. 최근 RNN을 사용하여 visual attention을 반영한 새로운 모델 들이 여기저기에서 등장하고 있는데, 이는 기존 CNN 기반 접근 방법들이 모든 이미지 픽셀을 그대로 사용하는 것과 대조적이라 할 수 있다. 참고로, 이미 앞선 <a class="tip" title="Recurrent Models of Visual Attention (NIPS 2014)" href="http://SanghyukChun.github.io/91">다른 work</a>에서도 visual attention이라는 개념을 사용해 classification 문제를 해결했었다.</p>
-
-
 <p>이 논문의 가장 큰 contribution은 visual attention을 "hard" attention과 "soft" attention, 두 가지 attention machanism을 제안하고 새로운 방식의 two attention-based image caption generator 모델을 제안했다는 것이다.</p>
 
-
 <ul>
-<li>&ldquo;Soft&rdquo; attention은 deterministic machanism으로, standard back-propagation 방법으로 train할 수 있기 때문에 전체 모델이 end-to-end로 learning된다. Soft attention model은 hard attention model의 approximation model이라고 생각하면 된다.</li>
-<li>&ldquo;Hard&rdquo; attention은 stochastic mechanism이며, reinforcement learning으로 train할 수 있다. Hard attention model은 매 iteration마다 데이터를 sampling을 해야하고, reinforcement learning과 neural network 부분이 분리되어있어 end-to-end learning이 아니라는 단점이 있다.</li>
+  <li>“Soft” attention은 deterministic machanism으로, standard back-propagation 방법으로 train할 수 있기 때문에 전체 모델이 end-to-end로 learning된다. Soft attention model은 hard attention model의 approximation model이라고 생각하면 된다.</li>
+  <li>“Hard” attention은 stochastic mechanism이며, reinforcement learning으로 train할 수 있다. Hard attention model은 매 iteration마다 데이터를 sampling을 해야하고, reinforcement learning과 neural network 부분이 분리되어있어 end-to-end learning이 아니라는 단점이 있다.</li>
 </ul>
 
-
 <p>(+ 이 논문을 처음 읽을 때는 두 가지 모델을 '섞어서' 한 모델에서 soft와 hard attention이 복합적으로 작용하는 모델을 만드는 것이라고 생각했었지만, 논문을 자세히 읽어보니, 먼저 hard attention을 제안한 후에, 이 모델의 approximation version으로 soft attention이라는 모델을 추가로 제안한 것이었다.)</p>
-
-
 <p>그럼 이제 모델이 구체적으로 어떻게 구성이 되어있는지 자세하게 알아보도록 하자.</p>
 
+<h3>Image Caption Generation with Attention Mechanism: Model details</h3>
 
+<p>먼저 이 논문에서 제안하는 caption generation task를 정의하자. 이 논문은 caption의 길이를 $C$로, 사용할 수 있는 단어의 개수를 $K$로 고정시킨채 문제를 해결한다. 이 정의에 따라 caption을 vector $y$로 표현할 수 있다.</p>
 
+<p>$$ y = \{y_1, \ldots, y_c \}, y_i \in \mathbb R^K. $$</p>
 
-<h5>Image Caption Generation with Attention Mechanism: Model details</h5>
-
-
-
-
-<p>먼저 이 논문에서 제안하는 caption generation task를 정의하자. 이 논문은 caption의 길이를 \(C\)로, 사용할 수 있는 단어의 개수를 \(K\)로 고정시킨채 문제를 해결한다. 이 정의에 따라 caption을 vector \(y\)로 표현할 수 있다.</p>
-
-
-
-
-<p>\[ y = \{y_1, \ldots, y_c \}, y_i \in \mathbb R^K. \]</p>
-
-
-
-
-<p>이 식에서 각 \(y_i\)는 단어 하나를 의미한다. 즉, 이 논문의 목적은 '적절한' caption vector \(y\)를 생성하는 것이다. 이 논문은 '적절한' caption vector를 hard loss와 soft loss 두 가지 loss function을 사용해 정의하고 있으며, 여기에서 attention 개념이 사용된다. 자세한 설명은 아래에서 마저 설명하도록 하겠다.</p>
-
-
-
+<p>이 식에서 각 $y_i$는 단어 하나를 의미한다. 즉, 이 논문의 목적은 '적절한' caption vector $y$를 생성하는 것이다. 이 논문은 '적절한' caption vector를 hard loss와 soft loss 두 가지 loss function을 사용해 정의하고 있으며, 여기에서 attention 개념이 사용된다. 자세한 설명은 아래에서 마저 설명하도록 하겠다.</p>
 
 <p>이제 자세한 모델 설명을 해보자. 앞에서도 잠깐 언급했듯, 이 논문 역시 다른 기존 deep learning caption generator model들처럼 image에서 caption을 생성하는 과정을 image라는 언어에서 caption이라는 언어로 'translatation' 하는 개념을 사용한다. 따라서 이 논문은 machine translation의 encoder-decoder 개념을 사용하게 되는데, encoder는 우리가 잘 알고 있는 CNN을 사용하고, decoder로 RNN, 정확히는 LSTM을 사용하게 된다. 이 논문의 핵심이라고 할 수 있는 attention 개념은 LSTM에서 사용된다.</p>
-
-
 <p>이 논문에서 제안하는 모델을 그림으로 표현하면 다음과 같다.</p>
-
 
 <p><img class="center" src="/images/post/93-8.png" width="450"></p>
 
-<h5>Encoder: CNN</h5>
+<h3>Encoder: CNN</h3>
 
+<p>Encoder CNN은 주어진 이미지를 input으로 받아, output으로 feature vector $a$를 내보낸다. 이 CNN의 마지막 layer는 총 $L$ 개의 filter로 이루어져있으며, 각각의 filter마다 $D$ 개의 neuron을 가지도록 설계하였다. 즉, 다음과 같이 쓸 수 있다</p>
 
-
-
-<p>Encoder CNN은 주어진 이미지를 input으로 받아, output으로 feature vector \(a\)를 내보낸다. 이 CNN의 마지막 layer는 총 \(L\) 개의 filter로 이루어져있으며, 각각의 filter마다 \(D\) 개의 neuron을 가지도록 설계하였다. 즉, 다음과 같이 쓸 수 있다</p>
-
-
-
-
-<p>\[ a = \{ a_1, \ldots, a_L \}, a_i \in \mathbb R^D. \]</p>
-
-
-
+<p>$$ a = \{ a_1, \ldots, a_L \}, a_i \in \mathbb R^D. $$</p>
 
 <p>이 논문에서는 encoder를 위한 CNN으로 VGG network를 선택하였는데, 이 네트워크는 바로 <a href="http://SanghyukChun.github.io/92">전 글</a>에서 다뤘으니 자세한 설명은 생략하도록 하겠다. 19 layer짜리를 사용한 것 같고, VGG11 layer로 pre-training만 시키고 fine-tunning은 하지 않은 상태로 사용했다고 한다. 당연한 얘기지만, VGG 네트워크말고도 다른 네트워크도 사용가능하다.</p>
 
+<h3>Decoder: LSTM</h3>
 
-
-
-<h5>Decoder: LSTM</h5>
-
-
-
-
-<p>이 논문은 decoder로 LSTM을 사용한다. 이 LSTM은 매 time stamp \(t\) 마다 caption vector \(y\)의 한 element \(y_t\)를 생성한다. 즉, 전체 'unfold' 하게되는 시간은 caption의 길이 \(C\)와 같다. 즉 이 LSTM은 한 time stamp \(t\) 마다 바로 전 hidden state \(h_{t-1}\)과 바로 전에 generate된 단어 \(y_{t-1}\)을 input으로 받아서 지금 time stamp에 해당하는 단어 \(y_t\)를 생성하는 것이다. 이 논문에서 사용하는 LSTM 모델은 다음과 같다.</p>
-
+<p>이 논문은 decoder로 LSTM을 사용한다. 이 LSTM은 매 time stamp $t$ 마다 caption vector $y$의 한 element $y_t$를 생성한다. 즉, 전체 'unfold' 하게되는 시간은 caption의 길이 $C$와 같다. 즉 이 LSTM은 한 time stamp $t$ 마다 바로 전 hidden state $h_{t-1}$과 바로 전에 generate된 단어 $y_{t-1}$을 input으로 받아서 지금 time stamp에 해당하는 단어 $y_t$를 생성하는 것이다. 이 논문에서 사용하는 LSTM 모델은 다음과 같다.</p>
 
 <p><img class="center" src="/images/post/93-2.png" width="450"></p>
 
-<p>LSTM에 대한 자세한 설명은 생략하도록 하겠다. 추후 다른 포스트를 통해 LSTM 자체에 대해 자세히 다뤄보도록하겠다. \(T_{s,t}: \mathbb R^s \to \mathbb R^t\)를  간단한 affine transformation이라고 정의해보자 (\(T_{n,m} (x) = W x + b\)라는 의미이다). 그러면 LSTM은 다음과 같이 간단하게 표현할 수 있다.</p>
-
+<p>LSTM에 대한 자세한 설명은 생략하도록 하겠다. 추후 다른 포스트를 통해 LSTM 자체에 대해 자세히 다뤄보도록하겠다. $T_{s,t}: \mathbb R^s \to \mathbb R^t$를  간단한 affine transformation이라고 정의해보자 ($T_{n,m} (x) = W x + b$라는 의미이다). 그러면 LSTM은 다음과 같이 간단하게 표현할 수 있다.</p>
 
 <p><img class="center" src="/images/post/93-3.png" width="300"></p>
 
-<p>이때 1번 식의 \(i_t,f_t ,c_t ,o_t ,h_t \)는 각각 input, forget, memory, output, hidden state를 의미한다. 이 논문은 LSTM의 initial memory state와 hidden state를 \(a\)의 평균 \(\bar a = \frac{1}{L}\sum_i^L a_i\)을 input으로 하는 두 개의 MLP (\(f_{init,c}\) \(f_{init,h}\))로 estimate한다고 한다.</p>
+<p>이때 1번 식의 $i_t,f_t ,c_t ,o_t ,h_t $는 각각 input, forget, memory, output, hidden state를 의미한다. 이 논문은 LSTM의 initial memory state와 hidden state를 $a$의 평균 $\bar a = \frac{1}{L}\sum_i^L a_i$을 input으로 하는 두 개의 MLP ($f_{init,c}$ $f_{init,h}$)로 estimate한다고 한다.</p>
+<p>그럼 이제 LSTM cell 하나에 input으로 들어오는 $Ey_{t-1}, h_{t-1}, \hat z_t$에 대해 알아보자. $h_{t-1}$은 바로 전 hidden state이니 제외하고, $Ey_{t-1} $는 $t-1$ 시점에서 생성된 caption $y_{t-1}$을 embedding matrix $E \in \mathbb R^{m \times K}$로 embedding한 $m$ dimensional vector이다. $E$는 맨 처음에 randomly initialize를 한 이후 train 과정에서 update되는 parameter이다. 마지막으로 $\hat z \in \mathbb R^D$는 context vector라고 하는데, 이 context vector는 attention model들에 의해서 결정된다.</p>
 
+<p>Context vector $\hat z_t$는 CNN encoder output $a$와 바로 전 hidden state $h_{t-1}$에 의해 다음과 같이 결정된다.</p>
 
-<p>그럼 이제 LSTM cell 하나에 input으로 들어오는 \(Ey_{t-1}, h_{t-1}, \hat z_t\)에 대해 알아보자. \(h_{t-1}\)은 바로 전 hidden state이니 제외하고, \(Ey_{t-1} \)는 \(t-1\) 시점에서 생성된 caption \(y_{t-1}\)을 embedding matrix \(E \in \mathbb R^{m \times K}\)로 embedding한 \(m\) dimensional vector이다. \(E\)는 맨 처음에 randomly initialize를 한 이후 train 과정에서 update되는 parameter이다. 마지막으로 \(\hat z \in \mathbb R^D\)는 context vector라고 하는데, 이 context vector는 attention model들에 의해서 결정된다.</p>
+<p>$$ \hat z_t = \phi (a, \alpha_t), \mbox{ where } \alpha_{ti} = \frac{\exp(f_{att}(a_i, h_{t-1}))}{\sum_{k=1}^L \exp(f_{att}(a_k, h_{t-1}) )}. $$</p>
 
-
-
-
-<p>Context vector \(\hat z_t\)는 CNN encoder output \(a\)와 바로 전 hidden state \(h_{t-1}\)에 의해 다음과 같이 결정된다.</p>
-
-
-
-
-<p>\[ \hat z_t = \phi (a, \alpha_t), \mbox{ where } \alpha_{ti} = \frac{\exp(f_{att}(a_i, h_{t-1}))}{\sum_{k=1}^L \exp(f_{att}(a_k, h_{t-1}) )}. \]</p>
-
-
-
-
-<p>먼저 \(\alpha_t\)는 time \(t\)에서의 \(a\)의 weight vector를 의미하며, \(\alpha_{ti}\)는 time \(t\)에서의 \(a\)의 \(i\)번째 element \(a_i\)에 해당하는 weight value값이다. 이때 weight란, 우리가 주어진 annotation (CNN의 output) 중에서 어느 location에 focus를 맞출 것인지, 혹은 어떤 것이 중요하지 않은지를 결정하는 값으로, 모델에서 'attention' 개념이 적용된 부분이다. 위의 식에서 알 수 있듯, softmax로 정의가 되기 때문에, weight \(\alpha_t\)의 element-wise summation은 1이다. \(f_{att}\)는 attention model이라는 것으로, weight vector \(\alpha\)를 계산하기 위한 모델이며, 이 논문은 이 모델을 hard와 soft 두 가지로 정의하였다. \(\phi\) function은 주어진 \(a\)와 그것의 weight vector \(\alpha_t\)를 사용해 \(\hat z_t\)를 계산하기 위한 function이다. 정리해보면 다음과 같다.</p>
-
-
-
+<p>먼저 $\alpha_t$는 time $t$에서의 $a$의 weight vector를 의미하며, $\alpha_{ti}$는 time $t$에서의 $a$의 $i$번째 element $a_i$에 해당하는 weight value값이다. 이때 weight란, 우리가 주어진 annotation (CNN의 output) 중에서 어느 location에 focus를 맞출 것인지, 혹은 어떤 것이 중요하지 않은지를 결정하는 값으로, 모델에서 'attention' 개념이 적용된 부분이다. 위의 식에서 알 수 있듯, softmax로 정의가 되기 때문에, weight $\alpha_t$의 element-wise summation은 1이다. $f_{att}$는 attention model이라는 것으로, weight vector $\alpha$를 계산하기 위한 모델이며, 이 논문은 이 모델을 hard와 soft 두 가지로 정의하였다. $\phi$ function은 주어진 $a$와 그것의 weight vector $\alpha_t$를 사용해 $\hat z_t$를 계산하기 위한 function이다. 정리해보면 다음과 같다.</p>
 
 <ul>
-    <li><p>\(\alpha_t\): \(a\)의 weight vector로, 어디에 'attend' 할지 결정하는 값. 모두 더하면 1.</p></li>
-    <li><p>\(f_{att}\): \(a\)와 \(h_{t-1}\)을 사용해 weight vector \(\alpha\)를 계산하기 위한 attention model.</p></li>
-    <li><p>\(\phi\): \(a\)와 \(\alpha_t\)를 받아 \(\hat z\)를 계산하는 mechanism (예: \(\phi(a,\alpha_t) = \sum_i\alpha_{ti} a\)).</p></li>
+	<li><p>$\alpha_t$: $a$의 weight vector로, 어디에 'attend' 할지 결정하는 값. 모두 더하면 1.</p></li>
+	<li><p>$f_{att}$: $a$와 $h_{t-1}$을 사용해 weight vector $\alpha$를 계산하기 위한 attention model.</p></li>
+	<li><p>$\phi$: $a$와 $\alpha_t$를 받아 $\hat z$를 계산하는 mechanism (예: $\phi(a,\alpha_t) = \sum_i\alpha_{ti} a$).</p></li>
 </ul>
 
+<p>마지막으로, 모델이 주어졌을 때, time $t$에서의 단어 $y_t$는 다음과 같이 바로 전 context vector $\hat z_{t-1}$와 그 동안의 LSTM의 state를 저장하고 있는 hidden state $h_t$, 그리고 바로 직전 단어 $y_{t-1}$에 관련된 확률에 의해 결정된다.</p>
 
+<p>$$p (y_t | a, y^{t-1}_1) \propto \exp(L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)). $$</p>
 
+<p>여기에서 $L_o \in \mathbb R^{K \times m}, L_h \in \mathbb R^{m \times n} L_z \in \mathbb R^{m \times D}, E \in \mathbb R^{m \times K} $는 train과정에서 learning하는 parameter들이다.</p>
 
-<p>마지막으로, 모델이 주어졌을 때, time \(t\)에서의 단어 \(y_t\)는 다음과 같이 바로 전 context vector \(\hat z_{t-1}\)와 그 동안의 LSTM의 state를 저장하고 있는 hidden state \(h_t\), 그리고 바로 직전 단어 \(y_{t-1}\)에 관련된 확률에 의해 결정된다.</p>
+<p>이제 이 논문의 핵심인 attention model $f_{att}$들을 살펴보도록하자.</p>
 
+<h3>Stochastic "Hard" Attention</h3>
 
+<p>캡션 모델이 i번째 단어를 생성하기 위해 focus attention해야 하는 위치를 $s_t$라고 하는 location variable을 사용해 표현해보자. 우리가 원하는 벡터는 정확하게 focus해야하는 부분 한 부분만 값이 1이고 나머지는 전부 0인 벡터이다.</p>
+<p>첫 번째 attention model인 stochastic "hard" attention은 attention location $s_t$를 latent variable로 취급한 다음, 이 값을 $\alpha_t$로 multinoulli distiribution parameterize시킨다. 다시 말하면, 주어진 시간 $t$에서, $s_t$의 $i$번째 element s_{ti}의 값이 1이 될 확률이 $\alpha_{ti}$이 되는 것이며, 주어진 시간 $t$에서 모든 $i$에 대해 $\alpha_{ti}$를 더하면 그 값은 1이 된다. 즉, $\sum_i \alpha_{ti} = 1$ 이다. $s_t$와 $\alpha_t$를 정의하게 되면 $\hat z_t$라는 새로운 random variable을 다음과 같이 정의할 수 있다.</p>
 
+<p>$$p(s_{ti} = 1 | s_{j &#60; t, a}) = \alpha_{ti} \mbox{ and } \hat z_t = \sum_i s_{ti} a_i. $$</p>
 
-<p>\[p (y_t | a, y^{t-1}_1) \propto \exp(L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)). \]</p>
+<p>우리의 목표는 주어진 feature vector $a$에 대해 가장 확률이 높은 caption $y$를 고르는 것이다. 이 작업은 간단하게 maximum log likelihood $\max_y \log p(y|a)$를 계산하는 것으로 구할 수 있는데, 이 값을 직접 계산하는 대신, 앞에서 정의한 attention location $s_t$를 사용하게 된다면 log likelihood의 lower bound를 다음과 같이 계산할 수 있으며, 이 값을 새로운 objective function $L_s$로 정의한다.</p>
 
+<p>$$ L_s = \sum_s p(s|a) \log p(y|s,a) \leq \log \sum_s p(s|a) p(y|s,a) = \log p(y|a).$$</p>
 
+<p>$L_s$가 log likelihood의 lower bound이므로, 이 값을 증가시키게 되면 likelihood 역시 함께 증가할 것이다. 따라서 log-likelihood의 maximum값을 구하는 대신, $L_s$의 maximum 값을 구하는 것으로 문제를 대략적으로 풀 수 있다 (하지만 엄밀하게 증명해본 것은 아니지만, 아마도 $L_s$가 local optimum으로 converge한다고 해서 원래 log likelihood가 converge할 것 같지는 않기 때문에 정확한 문제의 solution을 찾게 되는 것은 아닌 것 같다. 그러나 이미 neural network 쪽 algorithm들이 그러하듯, 정확한 답보다는 그 답을 향해 진행하는 것이 훨씬 중요하기 때문에 이 work에서는 큰 문제가 될 것 같지는 않다). Parameter $W$에 대한 $L_s$의 미분값은 다음과 같이 주어지며, 이 값을 사용하면 gradient descent를 통해 $\max L_s$ 문제를 해결할 수 있다. </p>
 
+<p>$$ \frac{\partial L}{\partial W} = \sum_s p(s|a) \left[ \frac{\partial p(y| s,a)}{\partial W} + \log p(y|s,a)\frac{\partial p(s|a)}{\partial W} \right]. $$</p>
 
-<p>여기에서 \(L_o \in \mathbb R^{K \times m}, L_h \in \mathbb R^{m \times n} L_z \in \mathbb R^{m \times D}, E \in \mathbb R^{m \times K} \)는 train과정에서 learning하는 parameter들이다.</p>
+<p>이 미분 값을 직접 구하기 위해서는 모든 attention location $s$에 대해 summation 기호 안에 있는 연산을 계산해야하기 때문에 computation이 간단하지 않다. 이미 많은 기존 deep learning approach들에서 '정확한' 값을 구하는 데에 시간이 오래걸린다면, 그냥 '적당히' 빠르게 근사하는 것이 더 낫다는 것이 알려져 있는 만큼, 이 논문에서는 정확한 값을 계산하는 대신 Monte Carlo based sampling을 사용해 이 값을 다음과 같이 근사하고 있다. 이때, $\tilde s_t \sim \mbox{Multinouli}_L (\alpha)$로 주어진 값이다.</p>
 
-
-
-
-<p>이제 이 논문의 핵심인 attention model \(f_{att}\)들을 살펴보도록하자.</p>
-
-
-
-
-<h5>Stochastic "Hard" Attention</h5>
-
-
-
-
-<p>캡션 모델이 i번째 단어를 생성하기 위해 focus attention해야 하는 위치를 \(s_t\)라고 하는 location variable을 사용해 표현해보자. 우리가 원하는 벡터는 정확하게 focus해야하는 부분 한 부분만 값이 1이고 나머지는 전부 0인 벡터이다.</p>
-
-
-<p>첫 번째 attention model인 stochastic "hard" attention은 attention location \(s_t\)를 latent variable로 취급한 다음, 이 값을 \(\alpha_t\)로 multinoulli distiribution parameterize시킨다. 다시 말하면, 주어진 시간 \(t\)에서, \(s_t\)의 \(i\)번째 element s_{ti}의 값이 1이 될 확률이 \(\alpha_{ti}\)이 되는 것이며, 주어진 시간 \(t\)에서 모든 \(i\)에 대해 \(\alpha_{ti}\)를 더하면 그 값은 1이 된다. 즉, \(\sum_i \alpha_{ti} = 1\) 이다. \(s_t\)와 \(\alpha_t\)를 정의하게 되면 \(\hat z_t\)라는 새로운 random variable을 다음과 같이 정의할 수 있다.</p>
-
-
-
-
-<p>\[p(s_{ti} = 1 | s_{j &#60; t, a}) = \alpha_{ti} \mbox{ and } \hat z_t = \sum_i s_{ti} a_i. \]</p>
-
-
-
-
-<p>우리의 목표는 주어진 feature vector \(a\)에 대해 가장 확률이 높은 caption \(y\)를 고르는 것이다. 이 작업은 간단하게 maximum log likelihood \(\max_y \log p(y|a)\)를 계산하는 것으로 구할 수 있는데, 이 값을 직접 계산하는 대신, 앞에서 정의한 attention location \(s_t\)를 사용하게 된다면 log likelihood의 lower bound를 다음과 같이 계산할 수 있으며, 이 값을 새로운 objective function \(L_s\)로 정의한다.</p>
-
-
-
-
-<p>\[ L_s = \sum_s p(s|a) \log p(y|s,a) \leq \log \sum_s p(s|a) p(y|s,a) = \log p(y|a).\]</p>
-
-
-
-
-<p>\(L_s\)가 log likelihood의 lower bound이므로, 이 값을 증가시키게 되면 likelihood 역시 함께 증가할 것이다. 따라서 log-likelihood의 maximum값을 구하는 대신, \(L_s\)의 maximum 값을 구하는 것으로 문제를 대략적으로 풀 수 있다 (하지만 엄밀하게 증명해본 것은 아니지만, 아마도 \(L_s\)가 local optimum으로 converge한다고 해서 원래 log likelihood가 converge할 것 같지는 않기 때문에 정확한 문제의 solution을 찾게 되는 것은 아닌 것 같다. 그러나 이미 neural network 쪽 algorithm들이 그러하듯, 정확한 답보다는 그 답을 향해 진행하는 것이 훨씬 중요하기 때문에 이 work에서는 큰 문제가 될 것 같지는 않다). Parameter \(W\)에 대한 \(L_s\)의 미분값은 다음과 같이 주어지며, 이 값을 사용하면 gradient descent를 통해 \(\max L_s\) 문제를 해결할 수 있다. </p>
-
-
-
-
-<p>\[ \frac{\partial L}{\partial W} = \sum_s p(s|a) \left[ \frac{\partial p(y| s,a)}{\partial W} + \log p(y|s,a)\frac{\partial p(s|a)}{\partial W} \right]. \]</p>
-
-
-
-
-<p>이 미분 값을 직접 구하기 위해서는 모든 attention location \(s\)에 대해 summation 기호 안에 있는 연산을 계산해야하기 때문에 computation이 간단하지 않다. 이미 많은 기존 deep learning approach들에서 '정확한' 값을 구하는 데에 시간이 오래걸린다면, 그냥 '적당히' 빠르게 근사하는 것이 더 낫다는 것이 알려져 있는 만큼, 이 논문에서는 정확한 값을 계산하는 대신 Monte Carlo based sampling을 사용해 이 값을 다음과 같이 근사하고 있다. 이때, \(\tilde s_t \sim \mbox{Multinouli}_L (\alpha)\)로 주어진 값이다.</p>
-
-
-
-
-<p>\[ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \log p(y| \tilde s^n,a)\frac{\partial p(\tilde s^n |a)}{\partial W} \right]. \]</p>
-
-
-
+<p>$$ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \log p(y| \tilde s^n,a)\frac{\partial p(\tilde s^n |a)}{\partial W} \right]. $$</p>
 
 <p>Monte Carlo based sampling을 사용해 gradient를 근사하게 되면, 굉장히 효율적이고 빠르게 gradient를 근사할 수 있지만, 그렇게 계산된 gradient는 variance가 크기 때문에 이를 handle하기 위한 추가적인 아이디어들이 도입되게 된다. 먼저 moving average를 사용한다. 이 논문에서는 moving average baseline을 다음과 같이 이전 log likelihood들의 exponential decay를 사용한 합으로 표현하였다.</p>
 
+<p>$$ b_k = 0.9 \times b_{k-1} + 0.1 \times \log p (y | \tilde s_k, a). $$</p>
 
+<p>여기에 또 varinace를 줄이기 위하여 entroy term $H[s]$를 더한다. 그뿐 아니라 주어진 이미지에 0.5의 확률로 sampled attention location $\tilde s$의 값을 $\tilde s$의 기대값인 $\alpha$로 설정한다. 이 방법들을 사용하게 되면 stochastic attention learning algorithm의 robustness를 증대시킬 수 있다고 한다. 이 방법들을 모두 섞으면, 기존의 gradient는 다음과 같이 바뀐다.</p>
 
+<p>$$ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \lambda_r (\log( p(y|\tilde s^n, a) - b)\frac{\partial p(\tilde s^n |a)}{\partial W} + \lambda_e \frac{H[\partial \tilde s^n]}{\partial W} \right]. $$</p>
 
-<p>\[ b_k = 0.9 \times b_{k-1} + 0.1 \times \log p (y | \tilde s_k, a). \]</p>
+<p>이렇게 구해진 식은, reinforcement learning의 update rule과 같다. 그렇기 때문에 hard visual attention을 reinforcement learning을 사용해 learning할 수 있다고 이야기하는 것이다. Action은 attention의 위치를 고르는 것이 될 것이고, reward는 log-likelihood의 lower bound인 $L_s$가 된다.</p>
+<p>Hard attention model은 매 순간마다 $\hat z$를 'hard choice'를 통해 계산하게 된다. 여기에서 hard choice란, 주어진 시간 $t$에서 $\alpha$로 parameterize된 multinouilli distribution에서 $a_i$를 sampling하여 얻게되는 choice를 의미한다.</p>
 
+<h3>Deterministic "Soft" Attention</h3>
+<p>Hard attention은 train phase의 매 timestamp마다 attention location $s_t$를 매 번 sampling해줘야하기 때문에, 이 논문에서는 hard attention 대신 soft attention이라는 개념을 추가로 도입한다. Soft attention은 stochastic하게 매 번 sampling을 하는 대신 deterministic하게 context vecot $\hat z_t$을 계산한다. Soft attention $\phi$는 다음과 같이 표현된다.</p>
 
+<p>$$\phi (\{ a_i \}, \{ \alpha_i \}) = \sum_i^L \alpha_i a_i. $$</p>
 
+<p>이렇게 표현되는 이유는 $\hat z_t$의 expectation이 $\alpha, a$로 다음과 같이 직접 계산할 수 있기 때문이라고 한다.</p>
 
-<p>여기에 또 varinace를 줄이기 위하여 entroy term \(H[s]\)를 더한다. 그뿐 아니라 주어진 이미지에 0.5의 확률로 sampled attention location \(\tilde s\)의 값을 \(\tilde s\)의 기대값인 \(\alpha\)로 설정한다. 이 방법들을 사용하게 되면 stochastic attention learning algorithm의 robustness를 증대시킬 수 있다고 한다. 이 방법들을 모두 섞으면, 기존의 gradient는 다음과 같이 바뀐다.</p>
+<p>$$ \mathbb E_{p(s_t|a)}p[\hat z_t] = \sum_{i=1}^L \alpha_{ti} a_i. $$</p>
 
+<p>따라서 이 방법을 취하게 되면 전체 모델이 좀 더 smooth해지고, differentiable해지기 때문에 back-propagation을 사용해서 end-to-end로 learning이 가능하다는 장점이 있다. Deterministic attention, 혹은 soft attention 역시 앞에서 구한 likelihood $p(y|a)$를 $s_t$를 사용하여 구한 approximation을 optimizing하는 것으로 구할 수 있다. 이 논문에 따르면 $h_t$가 stochatic context vector $\hat z_t$를 tanh를 사용한 linear projection이기 때문에, $\mathbb E_{p(s_t|a)[h_t]}$를 1st order Taylor approximation하게 되면 이 값은 $\hat z_t$의 expectation인 $\mathbb E_{p(s_t|a)}p[\hat z_t]$를 사용하여 forward propagation을 한 번 진행하여 $h_t$를 구한 값과 같아진다고 한다. $n_t = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)$로 정의하고 ($p (y_t | a, y^{t-1}_1)$를 approximation했을 때 쓰인 값과 같다), $n_{ti}$를 $a_i$를 사용하여 계산한 random variable $\hat z_t$를 대입하여 구한 $n_{t}$값이라고 해보자. 이 값들을 사용하여 이 논문은 k번째 word prediction을 위한 NWGM (Normalized Weighted Geometric Mean)이라는 것을 다음과 같이 정의한다.</p>
 
+<p>$$NWGM[p(y_t = k | a)] = \frac{\prod_i \exp(n_{tki})^{p(s_{ti}=1|a)}}{\sum_j \prod_i \exp(n_tji)^{p(s_{ti}=1|a)}} = \frac{\exp(\mathbb E_{p(s_t|a)}[n_{tk}])}{\sum_j\exp(\mathbb E_{p(s_t|a)}[n_{tj}])}.$$</p>
 
+<p>정의에 따라 $\mathbb E [n_t] = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)$이 되므로, 이 식을 통해 우리는 caption prediction을 위한 NWGM이 expected context vector를 사용하여 approximate된다는 것을 알 수 있다. 이전의 다른 work에 의하면, NWGM은 (softmax acivation일 때만) $\mathbb E [ p(y_t = k | a)]$로 근사가 된다고 한다. 이 말은 바꿔 말하면, 모든 가능한 attention location $s_t$에 대해 구한 output의 expectation이 expected context vector $\mathbb E [\hat z_t]$를 사용하여 간단한 feedforward propagation으로 계산된다는 의미가 된다.</p>
 
-<p>\[ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \lambda_r (\log( p(y|\tilde s^n, a) - b)\frac{\partial p(\tilde s^n |a)}{\partial W} + \lambda_e \frac{H[\partial \tilde s^n]}{\partial W} \right]. \]</p>
-
-
-
-
-<p>이렇게 구해진 식은, reinforcement learning의 update rule과 같다. 그렇기 때문에 hard visual attention을 reinforcement learning을 사용해 learning할 수 있다고 이야기하는 것이다. Action은 attention의 위치를 고르는 것이 될 것이고, reward는 log-likelihood의 lower bound인 \(L_s\)가 된다.</p>
-
-
-<p>Hard attention model은 매 순간마다 \(\hat z\)를 'hard choice'를 통해 계산하게 된다. 여기에서 hard choice란, 주어진 시간 \(t\)에서 \(\alpha\)로 parameterize된 multinouilli distribution에서 \(a_i\)를 sampling하여 얻게되는 choice를 의미한다.</p>
-
-
-
-
-<h5>Deterministic "Soft" Attention</h5>
-
-
-<p>Hard attention은 train phase의 매 timestamp마다 attention location \(s_t\)를 매 번 sampling해줘야하기 때문에, 이 논문에서는 hard attention 대신 soft attention이라는 개념을 추가로 도입한다. Soft attention은 stochastic하게 매 번 sampling을 하는 대신 deterministic하게 context vecot \(\hat z_t\)을 계산한다. Soft attention \(\phi\)는 다음과 같이 표현된다.</p>
-
-
-<p></p>
-
-<p>\[\phi (\{ a_i \}, \{ \alpha_i \}) = \sum_i^L \alpha_i a_i. \]</p>
-
-
-
-
-<p>이렇게 표현되는 이유는 \(\hat z_t\)의 expectation이 \(\alpha, a\)로 다음과 같이 직접 계산할 수 있기 때문이라고 한다.</p>
-
-
-
-
-<p>\[ \mathbb E_{p(s_t|a)}p[\hat z_t] = \sum_{i=1}^L \alpha_{ti} a_i. \]</p>
-
-
-
-
-<p>따라서 이 방법을 취하게 되면 전체 모델이 좀 더 smooth해지고, differentiable해지기 때문에 back-propagation을 사용해서 end-to-end로 learning이 가능하다는 장점이 있다. Deterministic attention, 혹은 soft attention 역시 앞에서 구한 likelihood \(p(y|a)\)를 \(s_t\)를 사용하여 구한 approximation을 optimizing하는 것으로 구할 수 있다. 이 논문에 따르면 \(h_t\)가 stochatic context vector \(\hat z_t\)를 tanh를 사용한 linear projection이기 때문에, \(\mathbb E_{p(s_t|a)[h_t]}\)를 1st order Taylor approximation하게 되면 이 값은 \(\hat z_t\)의 expectation인 \(\mathbb E_{p(s_t|a)}p[\hat z_t]\)를 사용하여 forward propagation을 한 번 진행하여 \(h_t\)를 구한 값과 같아진다고 한다. \(n_t = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)\)로 정의하고 (\(p (y_t | a, y^{t-1}_1)\)를 approximation했을 때 쓰인 값과 같다), \(n_{ti}\)를 \(a_i\)를 사용하여 계산한 random variable \(\hat z_t\)를 대입하여 구한 \(n_{t}\)값이라고 해보자. 이 값들을 사용하여 이 논문은 k번째 word prediction을 위한 NWGM (Normalized Weighted Geometric Mean)이라는 것을 다음과 같이 정의한다.</p>
-
-
-
-
-<p>\[NWGM[p(y_t = k | a)] = \frac{\prod_i \exp(n_{tki})^{p(s_{ti}=1|a)}}{\sum_j \prod_i \exp(n_tji)^{p(s_{ti}=1|a)}} = \frac{\exp(\mathbb E_{p(s_t|a)}[n_{tk}])}{\sum_j\exp(\mathbb E_{p(s_t|a)}[n_{tj}])}.\]</p>
-
-
-
-
-<p>정의에 따라 \(\mathbb E [n_t] = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)\)이 되므로, 이 식을 통해 우리는 caption prediction을 위한 NWGM이 expected context vector를 사용하여 approximate된다는 것을 알 수 있다. 이전의 다른 work에 의하면, NWGM은 (softmax acivation일 때만) \(\mathbb E [ p(y_t = k | a)]\)로 근사가 된다고 한다. 이 말은 바꿔 말하면, 모든 가능한 attention location \(s_t\)에 대해 구한 output의 expectation이 expected context vector \(\mathbb E [\hat z_t]\)를 사용하여 간단한 feedforward propagation으로 계산된다는 의미가 된다.</p>
-
-
-
-
-<p>또한 이 논문에서는 doubly stochastic attention이라는 개념도 같이 제안한다. \(\alpha\)의 정의에 따라 우리는 \(\sum_i \alpha_{ti} = 1\) 이라는 관계식을 가진다. 이 논문이 주장하는 것은, \(\sum_t \alpha_{ti} \approx 1\) 이라는 조건을 하나 더 추가하는 것이 실제 실험결과 더 좋은 성능을 낸다는 것이다. 그 이유는 모델이 모든 이미지의 모든 부분을 전체 기간 동안 보는 것을 방해하기 때문에 더 focus된 attention이 가능하기 때문이라고 한다. 그리고 추가로, soft attention model에 </p>
-
-
-
+<p>또한 이 논문에서는 doubly stochastic attention이라는 개념도 같이 제안한다. $\alpha$의 정의에 따라 우리는 $\sum_i \alpha_{ti} = 1$ 이라는 관계식을 가진다. 이 논문이 주장하는 것은, $\sum_t \alpha_{ti} \approx 1$ 이라는 조건을 하나 더 추가하는 것이 실제 실험결과 더 좋은 성능을 낸다는 것이다. 그 이유는 모델이 모든 이미지의 모든 부분을 전체 기간 동안 보는 것을 방해하기 때문에 더 focus된 attention이 가능하기 때문이라고 한다. 그리고 추가로, soft attention model에 </p>
 
 <p>결론적으로, 이 모델은 아래와 같은 negative log-likelihood를 minimize하는 방식으로 end-to-end learning을 할 수 있다.</p>
+<p>$$ L_d = -\log (p(y|x)) + \lambda \sum_i^L \left(1 - \sum_t^C \alpha_{ti} \right)^2. $$</p>
 
-
-<p>\[ L_d = -\log (p(y|x)) + \lambda \sum_i^L \left(1 - \sum_t^C \alpha_{ti} \right)^2. \]</p>
-
-
-
-
-<h5>Experiment</h5>
-
-
+<h3>Experiment</h3>
 <p>다음 그림은 실제 hard attention과 soft attention이 어떻게 동작하는지 잘 보여주는 그림이다. 가장 왼쪽의 주어진 이미지에 대해 soft attnetion과 hard attention 모두 'a bird flying over a body of water.' 이라는 caption을 생성했는데, soft와 hard attention 각각 경우에 대해 caption generation 모델이 어느 곳을 attend하도록 동작했는지 표현되어있다.</p>
-
 
 <p><img src="/images/post/93-5.png" width="600"></p>
 
 <p>위의 그림이 deterministic하게 attention을 계산하는 soft attention이다. 정확한 'attention location'이 존재하는 것이 아니라, 하얗게 mapping된 부분을 전반적으로 attend한다고 생각하면 된다. 반면 아래에 있는 hard attention을 보면, 매 번 정확한 attention location을 고르는 것을 알 수 있다. 이 과정을 매 번 확률적으로, sampling based approximaiton을 취하기 때문에 hard attention model은 stochastic machanism이다.</p>
-
-
 <p>다음 그림을 통해, 실제 각 word 별로 어느 곳을 attend하는지 대략적으로 확인할 수 있다.</p>
-
-
-<p></p>
 
 <p><img src="/images/post/93-6.png" width="600"></p>
 
 <p>Attend하는 위치가 비교적 굉장히 정확한 곳을 고르는 것을 알 수 있다. 좀 더 많은 예시가 gif로 <a href="http://kelvinxu.github.io/projects/capgen.html">이 링크</a>에 업로드되어있으니 참고하면 좋을 것 같다. 이 논문은 성공했을 때 뿐 아니라 실패했을 경우의 attention도 아래 그림과 같이 기재하여두었다.</p>
 
-
 <p><img src="/images/post/93-7.png" width="600"></p>
 
 <p>이 사진들을 통해 저자들은, 이 모델이 attend하는 위치는 잘 골랐으나, 각 object를 조금 잘못 classification했기 때문에 실패하는 경우가 나온다고 주장하고 있다. 예를 들어 위 실패 경우를 보면 바이올린을 스케이트 보드라고 했거나, 돛을 서핑보드라고 분류하여 잘못된 caption 결과가 나왔음을 알 수 있다.</p>
-
-
 <p>좀 더 많은 이미지 데이터셋에 대해 hard attention과 soft attention을 사용한 caption generator의 성능은 다음 표에 잘 나타나있다. 점수는 높을수록 좋다.</p>
-
 
 <p><img src="/images/post/93-4.png" width="600"></p>
 
 <p>기존에 알려진 모델들에 비해 attention based model들의 성능이 훨씬 좋은 것을 알 수 있다.</p>
 
-
-
-
-<h5>Summary of Show, Attend and Tell</h5>
-
+<h3>Summary of Show, Attend and Tell</h3>
 
 <ul>
-<li>Image caption 문제는 상당히 어려운 문제이며, 기존 deep learning 기법들은 machine translation에서 사용하는 encoder-decoder concept를 사용해 문제를 해결한다.</li>
-<li>이 논문 역시 encoder-decoder 개념을 사용하지만, decoder에서 attention이라는 개념을 추가로 사용하여 새로운 모델을 제안하고 있다.</li>
-<li>Encoder는 CNN을 사용한다. 실제 실험에서는 CNN 모델로 VGG 네트워크를 선택하여 사용하고 있다.</li>
-<li>Decoder는 RNN, 정확히 말하면 LSTM을 사용하는데, 바로 전 state h, 바로 전 caption word y, 그리고 attention model을 통해 생성되는 context vector z가 LSTM cell의 input이 된다.</li>
-<li>Context vector z는 hard attention과 soft attention 두 가지 방법 중에 한 가지 방법을 선택하여 생성하게 된다. Hard attention은 stochastic machanism이고, soft attention은 deterministic machanism이다.</li>
-<li>Hard attention은 먼저 location variable s를 정의하고, 이것을 사용해 log-likelhood의 lower bound Ls를 계산한다. Ls를 optimization하기 위해 gradient를 구해야하는데, 이 값을 정확하게 구하는 것이 까다롭기 때문에 Monte Carlo based sampling approximation을 사용해 문제를 해결하게 된다. 이 update rule은 reinforcement learning의 update rule과 일치한다.</li>
-<li>Soft attention은 매 iteration마다 sampling을 하는 대신, s의 확률 alpha를 직접 사용하여 z를 계산한다.</li>
-<li>Attention based caption generation model은 기존 image caption generation 모델들에 비해 훨씬 좋은 성능을 보인다.</li>
+  <li>Image caption 문제는 상당히 어려운 문제이며, 기존 deep learning 기법들은 machine translation에서 사용하는 encoder-decoder concept를 사용해 문제를 해결한다.</li>
+  <li>이 논문 역시 encoder-decoder 개념을 사용하지만, decoder에서 attention이라는 개념을 추가로 사용하여 새로운 모델을 제안하고 있다.</li>
+  <li>Encoder는 CNN을 사용한다. 실제 실험에서는 CNN 모델로 VGG 네트워크를 선택하여 사용하고 있다.</li>
+  <li>Decoder는 RNN, 정확히 말하면 LSTM을 사용하는데, 바로 전 state h, 바로 전 caption word y, 그리고 attention model을 통해 생성되는 context vector z가 LSTM cell의 input이 된다.</li>
+  <li>Context vector z는 hard attention과 soft attention 두 가지 방법 중에 한 가지 방법을 선택하여 생성하게 된다. Hard attention은 stochastic machanism이고, soft attention은 deterministic machanism이다.</li>
+  <li>Hard attention은 먼저 location variable s를 정의하고, 이것을 사용해 log-likelhood의 lower bound Ls를 계산한다. Ls를 optimization하기 위해 gradient를 구해야하는데, 이 값을 정확하게 구하는 것이 까다롭기 때문에 Monte Carlo based sampling approximation을 사용해 문제를 해결하게 된다. 이 update rule은 reinforcement learning의 update rule과 일치한다.</li>
+  <li>Soft attention은 매 iteration마다 sampling을 하는 대신, s의 확률 alpha를 직접 사용하여 z를 계산한다.</li>
+  <li>Attention based caption generation model은 기존 image caption generation 모델들에 비해 훨씬 좋은 성능을 보인다.</li>
 </ul>
 
-
-<h5>Reference</h5>
-
-
+<h3>Reference</h3>
 <ul>
-    <li><p><a href="http://arxiv.org/abs/1406.6247">Mnih, Volodymyr, Nicolas Heess, and Alex Graves. "Recurrent models of visual attention." Advances in Neural Information Processing Systems. 2014.</a></p></li>
-    <li><a href="http://kelvinxu.github.io/projects/capgen.html">http://kelvinxu.github.io/projects/capgen.html</a></li>
+	<li><p><a href="http://arxiv.org/abs/1406.6247">Mnih, Volodymyr, Nicolas Heess, and Alex Graves. "Recurrent models of visual attention." Advances in Neural Information Processing Systems. 2014.</a></p></li>
+	<li><a href="http://kelvinxu.github.io/projects/capgen.html">http://kelvinxu.github.io/projects/capgen.html</a></li>
 </ul>
-
 ]]></content>
   </entry>
   

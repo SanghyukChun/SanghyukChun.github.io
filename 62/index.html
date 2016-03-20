@@ -18,30 +18,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
+
+  
   <link rel="canonical" href="http://SanghyukChun.github.io/62">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-	<script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <script>
 $(function() {
-	$('.tip').attr('data-toggle','tooltip');
-	$('.tip').attr('data-placement','top');
-	$('.tip').tooltip();
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -85,7 +103,7 @@ $(function() {
   
   <header>
     
-      <h1 class="entry-title">Machine Learning 스터디 (6) Information Theory</h1>
+      <h1 class="entry-title"><a href="">Machine Learning 스터디 (6) Information Theory</a></h1>
     
     
       <p class="meta text-right mB50">
@@ -110,251 +128,92 @@ $(function() {
   </header>
 
 
-<div class="entry-content"><h5>들어가며</h5>
-
-
+<div class="entry-content"><h3>들어가며</h3>
 <p>Information Theory는 섀년이라는 걸출한 천재가 이룩해낸 매우 뛰어난 이론이다. 이 이론 덕분에 우리는 이렇게 인터넷도 할 수 있고, 무선통신도 할 수 있는 것이다. 이 이론 덕분에 불안정한 noisy한 channel에서도 유한한 시간 안에 우리가 전달하고 싶은 정보를 전부 전달할 수 있다는 것을 확신할 수 있고, 이론적인 한계값까지 도출이 가능한 엄청난 이론이다. Machine Learning에서도 이런 information theory 측면에서 문제를 바라보는 경우가 종종 있는데, Entropy, Mutual Information, KL-divergence 등이 그것이다. 이 글에서는 그런 Machine Learning의 관점에서 많이 쓰이는 기초적인 정보이론의 개념들을 짚고 넘어가볼까 한다.</p>
-
-
-<h5>Entropy</h5>
-
-
-<p>엔트로피는 &#8216;정보&#8217;의 단위라고 할 수 있다. 어떤 distibution p(x)에서 generate되는 discrete random variable x가 있다고 해보자. 이 random variable x가 전달할 수 있는 정보량은 어떻게 계산할 수 있을까. 여기에서 &#8216;정보&#8217;란 얼만큼의 bit가 있어야 x에 대한 정보를 완벽하게 얻을 수 있는가로 정의해보자. 예를 들어서 fair한 동전 던지기의 정보량은 1이다. 한 비트만 있으면 반드시 그 동전 던지기의 distribution을 서술할 수 있다. 그러나 만약 fair coin이 아니라면 한 면이 나올 확률이 다른 면이 나올 확률보다 상대적으로 더 크기 때문에 한 비트보다도 더 적은 정보를 사용해 값을 맞추는 것이 가능해진다. 이런 정보의 양을 <a href="http://en.wikipedia.org/wiki/Entropy_(information_theory)">Entropy</a>라는 것으로 정의하게 되는데, 간단하게 생각하면 열역학2법칙의 그 엔트로피와 동일하다. 즉, 엔트로피가 커질수록 불확실성이 높아지고 정보량은 더 많아진다. Entropy는 \(H(x) = - \sum_x p(x) log_2 p(x) \)로 정의가 되며, 만약 p(x)가 0으로 가면 \(\log_2 p(x)\)는 음의 무한으로 발산하지만, p(x)가 0이 되는 속도가 더 빠르기 때문에 엔트로피는 0이 된다.</p>
-
-
-<p>그럼 왜 엔트로피는 이런 꼴을 하게 되는 것일까. 만약 우리가 전체 N개의 object들이 있고, 이 object들이 K개의 bin으로 나뉘어져있다고 해보자. 그리고 i번째 bin에 들어갈 수 있는 object의 개수를 \(n_i\)라고 했을 때, object들이 bin에 들어갈 수 있는 permutation의 개수는 \(W = \frac{N!}{\prod_i n_i!}\)와 같으며 이를 multiplicity라고 한다. 엔트로피란 이 multiplicity에 비례하는, 정확히는 log를 취한 값을 엔트로피라고 하게 된다. 즉 Entropy H는 multiplicity W에 대해 다음과 같이 표현된다.</p>
-
-
-<p>\[H = \frac{1}{N}\ln W = \frac{1}{N}\ln N! - \frac{1}{N}\sum_i \ln n_i ! \]</p>
-
-
-<p>이때 \(\lim N \to \infty \) 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation">Stirling 근사</a>를 할 수 있는데 이는 \(\ln N! \simeq N \ln N - N\)으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
-
-
-<p>\[H = -\lim_{N \to \infty} \sum_i \left( \frac{n_i}{N} \right) \ln \left( \frac{n_i}{N} \right) = - \sum_i p_i \ln p_i \]</p>
-
-
+<h3>Entropy</h3>
+<p>엔트로피는 &#8216;정보&#8217;의 단위라고 할 수 있다. 어떤 distibution p(x)에서 generate되는 discrete random variable x가 있다고 해보자. 이 random variable x가 전달할 수 있는 정보량은 어떻게 계산할 수 있을까. 여기에서 &#8216;정보&#8217;란 얼만큼의 bit가 있어야 x에 대한 정보를 완벽하게 얻을 수 있는가로 정의해보자. 예를 들어서 fair한 동전 던지기의 정보량은 1이다. 한 비트만 있으면 반드시 그 동전 던지기의 distribution을 서술할 수 있다. 그러나 만약 fair coin이 아니라면 한 면이 나올 확률이 다른 면이 나올 확률보다 상대적으로 더 크기 때문에 한 비트보다도 더 적은 정보를 사용해 값을 맞추는 것이 가능해진다. 이런 정보의 양을 <a href="http://en.wikipedia.org/wiki/Entropy_(information_theory)">Entropy</a>라는 것으로 정의하게 되는데, 간단하게 생각하면 열역학2법칙의 그 엔트로피와 동일하다. 즉, 엔트로피가 커질수록 불확실성이 높아지고 정보량은 더 많아진다. Entropy는 $H(x) = - \sum_x p(x) log_2 p(x) $로 정의가 되며, 만약 p(x)가 0으로 가면 $\log_2 p(x)$는 음의 무한으로 발산하지만, p(x)가 0이 되는 속도가 더 빠르기 때문에 엔트로피는 0이 된다.</p>
+<p>그럼 왜 엔트로피는 이런 꼴을 하게 되는 것일까. 만약 우리가 전체 N개의 object들이 있고, 이 object들이 K개의 bin으로 나뉘어져있다고 해보자. 그리고 i번째 bin에 들어갈 수 있는 object의 개수를 $n_i$라고 했을 때, object들이 bin에 들어갈 수 있는 permutation의 개수는 $W = \frac{N!}{\prod_i n_i!}$와 같으며 이를 multiplicity라고 한다. 엔트로피란 이 multiplicity에 비례하는, 정확히는 log를 취한 값을 엔트로피라고 하게 된다. 즉 Entropy H는 multiplicity W에 대해 다음과 같이 표현된다.</p>
+<p>$$H = \frac{1}{N}\ln W = \frac{1}{N}\ln N! - \frac{1}{N}\sum_i \ln n_i ! $$</p>
+<p>이때 $\lim N \to \infty $ 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation">Stirling 근사</a>를 할 수 있는데 이는 $\ln N! \simeq N \ln N - N$으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
+<p>$$H = -\lim_{N \to \infty} \sum_i \left( \frac{n_i}{N} \right) \ln \left( \frac{n_i}{N} \right) = - \sum_i p_i \ln p_i $$</p>
 <p>이는 위에서 정의한 엔트로피의 값과 일치한다.</p>
-
-
-<p>그런데 이 값은 discrete한 random variable에 대해 정의된 값이고 continous한 random variable x에 대해서는 <a href="http://en.wikipedia.org/wiki/Differential_entropy">differencial entropy</a>라는 정의할 수 있다. <a href="http://en.wikipedia.org/wiki/Mean_value_theorem">평균값 정리</a>에 의해서 우리는 다음을 만족하는 value \(x_i\)를 반드시 찾을 수 있다</p>
-
-
-<p>\[ \int_{i\Delta}^{(i+1)\Delta} p(x) dx = p(x_i) \Delta\]</p>
-
-
-<p>엔트로피는 discrete한 random variable에 대한 값이었는데, 위 식을 통해 continous variable x를 위의 식을 만족하는 \(x_i\)로 치환하는 방식으로 quantize할 수 있다. 또한 이런 경우 각 \(x_i\)를 관측할 확률이 \(p(x_i)\Delta\)로 계산되므로, 이렇게 했을 경우 엔트로피는 아래와 같이 계산할 수 있다.</p>
-
-
-<p>\[H_\Delta = -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = - \sum_i p(x_i) \Delta p(x_i) - \ln \Delta \]</p>
-
-
-<p>이때, 오른쪽 term은 x에 대한 값이 아니니까 일단 먼저 무시하고, \(\lim \Delta \to 0\)를 취해보자. 이렇게 계산할 경우 아래 식이 얻어진다.</p>
-
-
-<p>\[\lim_{\Delta \to 0} H_\Delta = \lim_{\Delta \to 0} -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = -\int p(x) \ln p(x) dx\]</p>
-
-
+<p>그런데 이 값은 discrete한 random variable에 대해 정의된 값이고 continous한 random variable x에 대해서는 <a href="http://en.wikipedia.org/wiki/Differential_entropy">differencial entropy</a>라는 정의할 수 있다. <a href="http://en.wikipedia.org/wiki/Mean_value_theorem">평균값 정리</a>에 의해서 우리는 다음을 만족하는 value $x_i$를 반드시 찾을 수 있다</p>
+<p>$$ \int_{i\Delta}^{(i+1)\Delta} p(x) dx = p(x_i) \Delta$$</p>
+<p>엔트로피는 discrete한 random variable에 대한 값이었는데, 위 식을 통해 continous variable x를 위의 식을 만족하는 $x_i$로 치환하는 방식으로 quantize할 수 있다. 또한 이런 경우 각 $x_i$를 관측할 확률이 $p(x_i)\Delta$로 계산되므로, 이렇게 했을 경우 엔트로피는 아래와 같이 계산할 수 있다.</p>
+<p>$$H_\Delta = -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = - \sum_i p(x_i) \Delta p(x_i) - \ln \Delta $$</p>
+<p>이때, 오른쪽 term은 x에 대한 값이 아니니까 일단 먼저 무시하고, $\lim \Delta \to 0$를 취해보자. 이렇게 계산할 경우 아래 식이 얻어진다.</p>
+<p>$$\lim_{\Delta \to 0} H_\Delta = \lim_{\Delta \to 0} -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = -\int p(x) \ln p(x) dx$$</p>
 <p>이때, 맨 오른쪽 term을 differencial entropy라고 정의한다. 즉, differencial entropy는 다음과 같이 정의된다.</p>
-
-
-<p>\[H(x) = -\int p(x) \ln p(x) dx\]</p>
-
-
-<p>마지막으로 random variable이 x,y 두 개가 있고 이 둘의 joint distribution p(x,y)가 있다고 해보자. 우리가 알고 있는 정보는 x의 value라고 했을 때 우리는 y의 information의 양을 계산할 수 있을까? 이를 <a href="http://en.wikipedia.org/wiki/Conditional_entropy">Conditional Entropy</a>라고 하는데 이때 y에 대해 필요한 additioanl information은 \(p(y|x)\)이며, x와 y의 확률은 p(x,y)이므로 Conditional Entropy는 아래와 같이 정의된다.</p>
-
-
-<p>\[H(y|x) = - \int \int p(y,x) \ln p(y|x) dy dx\]</p>
-
-
+<p>$$H(x) = -\int p(x) \ln p(x) dx$$</p>
+<p>마지막으로 random variable이 x,y 두 개가 있고 이 둘의 joint distribution p(x,y)가 있다고 해보자. 우리가 알고 있는 정보는 x의 value라고 했을 때 우리는 y의 information의 양을 계산할 수 있을까? 이를 <a href="http://en.wikipedia.org/wiki/Conditional_entropy">Conditional Entropy</a>라고 하는데 이때 y에 대해 필요한 additioanl information은 $p(y|x)$이며, x와 y의 확률은 p(x,y)이므로 Conditional Entropy는 아래와 같이 정의된다.</p>
+<p>$$H(y|x) = - \int \int p(y,x) \ln p(y|x) dy dx$$</p>
 <p>이 값은 다음과 같은 chain rule을 항상 만족시킨다.</p>
-
-
-<p>\[H(x,y) = H(y|x) + H(x)\]</p>
-
-
-<h5>KL divergence</h5>
-
-
-<p>어떤 probability distribution p(x)와 p(y)가 있다고 했을 때 이 둘의 차이, 혹은 distance를 정의할 수는 없을까. 예를 들어 p(x)라는 우리가 모르는 unknown distribution이 있을 때, 우리가 추측한 \(p(\hat x)\)와 true distribution p(x)가 얼마나 차이나는지를 계산할 수 있는 방법은 없을까. 만약 우리가 q(x)를 사용해서 x를 transmitting하는 coding scheme을 construct했다고 해보자. 그리고 true distribution을 p(x)였다고 했을 때, q(x)를 사용하였을 때 얼마나 더 많은 정보량이 필요할 것인지 measure할 수 있을 것이다. 이를 <a href="http://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler divergence</a> 혹은 KL divergence라고 하며 수식은 아래와 같다.</p>
-
-
-<p>\[KL(p\|\|q) = - \int p(x) \ln q(x) - \left( -\int p(x) \ln p(x) dx \right) &#92;&#92; = -p(x) \ln \left[ \frac{q(x)}{p(x)} \right] dx \]</p>
-
-
-<p>정확히 얘기하면 이 값은 &#8216;distance&#8217;가 될 수는 없다. 왜냐하면 distance, 혹은 metric은 symmetric해야하는데 KL divergence는 \(KL(p\|\|q) \neq KL(q\|\|p)\) 이기 때문이다.</p>
-
-
+<p>$$H(x,y) = H(y|x) + H(x)$$</p>
+<h3>KL divergence</h3>
+<p>어떤 probability distribution p(x)와 p(y)가 있다고 했을 때 이 둘의 차이, 혹은 distance를 정의할 수는 없을까. 예를 들어 p(x)라는 우리가 모르는 unknown distribution이 있을 때, 우리가 추측한 $p(\hat x)$와 true distribution p(x)가 얼마나 차이나는지를 계산할 수 있는 방법은 없을까. 만약 우리가 q(x)를 사용해서 x를 transmitting하는 coding scheme을 construct했다고 해보자. 그리고 true distribution을 p(x)였다고 했을 때, q(x)를 사용하였을 때 얼마나 더 많은 정보량이 필요할 것인지 measure할 수 있을 것이다. 이를 <a href="http://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler divergence</a> 혹은 KL divergence라고 하며 수식은 아래와 같다.</p>
+<p>$$KL(p\|\|q) = - \int p(x) \ln q(x) - \left( -\int p(x) \ln p(x) dx \right) &#92;&#92; = -p(x) \ln \left[ \frac{q(x)}{p(x)} \right] dx $$</p>
+<p>정확히 얘기하면 이 값은 &#8216;distance&#8217;가 될 수는 없다. 왜냐하면 distance, 혹은 metric은 symmetric해야하는데 KL divergence는 $KL(p\|\|q) \neq KL(q\|\|p)$ 이기 때문이다.</p>
 <p>KL divergence는 언제나 0 보다 크거나 같은데, 같은 경우는 오직 p(x)와 q(x)가 일치하는 경우 뿐이다. 이를 증명하기 위해서는 convexity 컨셉과 Jensen&#8217;s inequality를 도입하면 쉽게 증명이 가능하지만, 여기에서는 생갹하도록 하겠다.</p>
-
-
 <p>중요한 점은, KL divergence는 두 distribution의 차이를 define할 수 있는 좋은 수단 중 하나라는 것이며, 다시 말해 원래 true distribution p(x)와 우리가 estimate한 q(x)가 얼마나 비슷한지를 measure할 수 있는 수단이라는 점이다.</p>
-
-
-<h5>Mutual Information</h5>
-
-
+<h3>Mutual Information</h3>
 <p><a href="http://en.wikipedia.org/wiki/Mutual_information">Mutual Information</a>은 두 random variable들이 얼마나 mutual dependence한지를 measure하는 방법을 의미한다. 만약 random variable x와 y가 independent하다면 joint distribution p(x,y) 는 p(x,y) = p(x)p(y) 로 주어지게 될 것이며, 만약 둘이 dependent한 경우에는 두 값이 달라질 것이다. 그렇다면 만약 true distribution을 p(x,y)라고 했을 때, 새롭게 우리가 x와 y가 independent하다고 estimate하고 구한 p(x)p(y)와의 KL-divergence를 구할 수 있지 않을까? 당연히 이 값은 x와 y가 independent할 때만 0이고 그 이외에는 항상 0보다 크다. 즉, 두 random variable이 얼마나 mutually dependent한가, 얼마나 Mutual하게 information을 많이 가지고 있느냐를 측정할 수 있는 도구가 되므로 이를 Mutual information이라 한다. 수식으로 표현해보면 아래와 같다.</p>
-
-
-<p>\[I(x,y) = KL(p(x,y)\|\|p(x)p(y) &#92;&#92; = - \int \int p(x,y) \ln \left( \frac{p(x)p(y)}{p(x,y)} \right) dx dy\]</p>
-
-
+<p>$$I(x,y) = KL(p(x,y)\|\|p(x)p(y) &#92;&#92; = - \int \int p(x,y) \ln \left( \frac{p(x)p(y)}{p(x,y)} \right) dx dy$$</p>
 <p>위의 값을 Mutual Information이라 하며, 이 값은 항상 다음과 같은 관계를 만족시킨다.</p>
-
-
-<p>\[I(x,y) = H(x) - H(x|y) = H(y) - H(y|x)\]</p>
-
-
-<h5>Machine Learning and Information Theory</h5>
-
-
+<p>$$I(x,y) = H(x) - H(x|y) = H(y) - H(y|x)$$</p>
+<h3>Machine Learning and Information Theory</h3>
 <p>Entropy는 주어진 bin에 얼마나 비슷한 element들이 들어있는지를 측정하는 척도로 쓰일 수 있으며, decision tree를 learning하는 알고리듬 등에서도 사용할 수 있다. 또한 KL-divergence는 두 distribution과의 거리를 의미하므로, density estimation 관점에서 바라봤을 때 우리가 estimate하는 distribution과 원래 true distribution이 얼마나 유사한지, 우리가 얼마나 잘 density estimation을 했는지 evaluation을 하는 용도 등으로 쓰일 수 있다. 마지막으로 Mutual information을 Bayes perspective에서 바라보게 된다면, 만약 우리가 어떤 데이터 x의 prior p(x)를 관측하고, 새로운 데이터 y를 관측해 얻은 posterior distribution p(y|x)가 있다고 했을 때, Mutual information은 이전 관측 x를 통해 새로운 관측 y의 uncertainty가 얼마나 reduction 되는지를 의미하게 되는 것과 동일하다는 것을 알 수 있다.</p>
-
-
 <p>정보이론 자체는 Machine Learning과 크게 관계가 없어보이지만, 그 개념들은 생각보다 꽤 많은 부분에서 사용되게 되므로 좀 간략하게 다루게 되었다.</p>
-
-
 <p>추가: 정보이론이 어떻게 머신러닝에 유용하게 쓰일 수 있는가에 대한 lecture와 book link들 <a href="http://www.inference.phy.cam.ac.uk/itprnn_lectures/">[1]</a>, <a href="http://www.inference.phy.cam.ac.uk/mackay/itila/book.html">[2]</a></p>
 
-
-
-
-<h5>변경 이력</h5>
-
-
+<h3>변경 이력</h3>
 <ul>
-<li>2014년 8월 19일: 글 등록</li>
-<li>2014년 10월 9일: 정보이론, 머신러닝 렉쳐 및 책 링크 등록</li>
-<li>2015년 2월 28일: 변경 이력 추가</li>
+  <li>2014년 8월 19일: 글 등록</li>
+  <li>2014년 10월 9일: 정보이론, 머신러닝 렉쳐 및 책 링크 등록</li>
+  <li>2015년 2월 28일: 변경 이력 추가</li>
 </ul>
 
+<hr />
 
-<hr>
-
-
-<p><a href="/blog/categories/machine-learning-study/">Machine Learning 스터디</a>의 다른 글들</p>
+<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
 
 <ul>
-<li><a href="/57">Machine Learning이란?</a></li>
-<li><a href="/58">Probability Theory</a></li>
-<li><a href="/59">Overfitting</a></li>
-<li><a href="/60">Algorithm</a></li>
-<li><a href="/61">Decision Theory</a></li>
-<li><a href="/62">Information Theory</a></li>
-<li><a href="/63">Convex Optimzation</a></li>
-<li><a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-<li>Regression and Logistic Regression</li>
-<li>PAC Learning &amp; Statistical Learning Theory</li>
-<li>Support Vector Machine</li>
-<li>Ensemble Learning (Random Forest, Ada Boost)</li>
-<li>Graphical Model</li>
-<li><a href="/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-<li><a href="/70">EM algorithm</a></li>
-<li>Hidden Markov Model</li>
-<li><a href="/72">Dimensionality Reduction (LDA, PCA)</a></li>
-<li><a href="/73">Recommendation System (Matrix Completion)</a>
-
-<ul>
-<li><a href="/95">Recommendation System with Implicit Feedback</a></li>
+  <li><a href="/57">Machine Learning이란?</a></li>
+  <li><a href="/58">Probability Theory</a></li>
+  <li><a href="/59">Overfitting</a></li>
+  <li><a href="/60">Algorithm</a></li>
+  <li><a href="/61">Decision Theory</a></li>
+  <li><a href="/62">Information Theory</a></li>
+  <li><a href="/63">Convex Optimzation</a></li>
+  <li><a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+  <li>Regression and Logistic Regression</li>
+  <li>PAC Learning &amp; Statistical Learning Theory</li>
+  <li>Support Vector Machine</li>
+  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
+  <li>Graphical Model</li>
+  <li><a href="/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+  <li><a href="/70">EM algorithm</a></li>
+  <li>Hidden Markov Model</li>
+  <li><a href="/72">Dimensionality Reduction (LDA, PCA)</a></li>
+  <li><a href="/73">Recommendation System (Matrix Completion)</a>
+    <ul>
+      <li><a href="/95">Recommendation System with Implicit Feedback</a></li>
+    </ul>
+  </li>
+  <li><a href="/74">Neural Network Introduction</a></li>
+  <li><a href="/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
+  <li><a href="/76">Reinforcement Learning</a>
+    <ul>
+      <li><a href="/96">Multi-armed Bandit</a></li>
+    </ul>
+  </li>
 </ul>
-</li>
-<li><a href="/74">Neural Network Introduction</a></li>
-<li><a href="/75">Deep Learning 1 &ndash; RBM, DNN, CNN</a></li>
-<li><a href="/76">Reinforcement Learning</a>
-
-<ul>
-<li><a href="/96">Multi-armed Bandit</a></li>
-</ul>
-</li>
-</ul>
-
 </div>
 
 <hr>
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-20T00:20:00+09:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time>
-    </p>
-    <p class="meta">
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/machine-learning-study/'>Machine-Learning-Study</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <div class="sh_button">
-  	<a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/62/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/62/" data-count="vertical">Tweet</a>
-  </div>
-  
-  
-  <div class="sh_button">
-  	<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="box_count" data-action="like" data-show-faces="false" data-share="false"></div>
-  </div>
-  
-<!--   <div class="sh_button">
-  	<a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a>
-    <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-  </div> -->
-  <div class="sh_button">
-  	<a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="SanghyukChun" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
-  </div>
-  <div class="sh_button">
-	  <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-	  <script type="IN/Share" data-counter="top"></script>
-  </div>
-  
-  <div class="sh_button">
-  	<!-- <div class="g-plusone" data-size="medium"></div> -->
-  	<div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-height="60"></div>
-  </div>
-  
-  <div class="clear"></div>
-</div>
-
-    
-    <!--
-    
-    <p class="meta">
-      <a class="url-title basic-alignment left" href="/61/" title="Previous Post: Machine learning 스터디 (5) Decision Theory">&laquo; Machine learning 스터디 (5) Decision Theory</a>
-    </p>
-    
-    
-    <p class="meta">
-      <a class="url-title basic-alignment right" href="/63/" title="Next Post: Machine learning 스터디 (7) Convex Optimization">&raquo; Machine learning 스터디 (7) Convex Optimization</a>
-    </p>
-    
-    -->
-    </p>
-  </footer>
 </article>
 
   <section>
-    <h1>Comments</h1>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
@@ -381,6 +240,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
+      </li>
+    
+      <li class="post">
         <a href="/97/">AlphaGo의 알고리즘과 모델</a>
       </li>
     
@@ -396,40 +259,7 @@ $(function() {
         <a href="/73/">Machine Learning 스터디 (17) Recommendation System (Matrix Completion)</a>
       </li>
     
-      <li class="post">
-        <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
-      </li>
-    
   </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'SanghyukChun',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -479,25 +309,7 @@ $(function() {
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 

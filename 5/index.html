@@ -18,30 +18,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
+
+  
   <link rel="canonical" href="http://SanghyukChun.github.io/5">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-	<script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <script>
 $(function() {
-	$('.tip').attr('data-toggle','tooltip');
-	$('.tip').attr('data-placement','top');
-	$('.tip').tooltip();
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -85,7 +103,7 @@ $(function() {
   
   <header>
     
-      <h1 class="entry-title">Script와 함께하는 Bundle Exec~</h1>
+      <h1 class="entry-title"><a href="">Script와 함께하는 Bundle Exec~</a></h1>
     
     
       <p class="meta text-right mB50">
@@ -111,137 +129,32 @@ $(function() {
 
 
 <div class="entry-content"><p>진짜 rails 개발할 때 제일 귀찮았던 것이 rake를 하려고만 하면 버전이 안맞아서 bundle exec를 붙여줘야 했던 점. 물론 강제로 내가 버전을 낮추면 되지만 왜 굳이 잘 쓰고 있는 rake의 버전을 낮추냐는 마인드로 계속 썼었다. 그게 가능했던 이유는 사실 rails 개발할 때 rake는 생각보다 그렇게 빈번하게 쓰지 않는다. 주로 <code>rails s</code>(혹은 <code>rails server</code>) 아니면 가끔 디버깅 용 <code>rails c</code>(혹은 <code>rails console</code>)을 쓰고는 했는데 이녀석들은 거의 출근해서 실행시키면 거의 퇴근할 때 까지 다시 실행시킬 일 없이 쭉 실행된다 -_-;; 근데 블로깅을 하니깐 이게 죄다 rake다. Rakefile을 바꿔버리는 방법도 있지만 굉장히 귀찮기 때문에 그냥 그런 귀찮은 짓을 하느니.. 뭐 그래서 그냥 일일이 치고 있다 하하..</p>
-
-
 <p>근데 이것도 한 두번이지.. 게다가 이건 포스트 쓸 때는 물론이고 preview 심지어 deploy까지 죄다 rake를 때려야 한다. 포스트 하나 당 최소 세번 -_-;;; 결국 안되겠다 싶어서 deploy.sh라는 녀석을 만들기로 결정</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>bundle exec rake deploy</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">#!/bin/bash
+</span><span class="line">bundle exec rake deploy</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>이게 끝이다. 그리고 deploy할 때마다 이름 묻는게 너무 귀찮아서 (password는 그러려니 한다. 맘에 안들면 ssh키를 쓰면 되는데 귀찮아서 -_-; 근데 조만간 쓰게 될 듯) remote origin의 url을 https에서 ssh로 바꿔버렸다.</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>음.. 바꾸고 나서 아직 deploy를 안해봤는데 이 포스트가 잘 올라가면 성공이고 안되면 다른 해법을 찾아야 한다 이런.</p>
-
-
 <p>아무튼 귀찮은 것은 질색이기 때문에 좀 여러 방면에서 편하게 블로깅을 할 수 있는 툴들이나 스크립트를 많이 쓰게 될 것 같은 스멜~</p>
-
-
-<hr>
-
+<hr />
 
 <p>&#8212; 추가</p>
-
-
 <p>아 ssh로 바꾸기는 해놨는데 ssh키가 등록이 안되어있어서 결국 도로묵이었다. <a href="https://help.github.com/articles/generating-ssh-keys">https://help.github.com/articles/generating-ssh-keys</a>보고 순서대로 따라서 하니깐 잘 등록 완료. 이제 deploy만 하면 된다~</p>
-
-
 <p>&#8212; 또 추가</p>
-
-
 <p>아 범인을 발견했다. octopress에서 github pages에 대해서는 _deploy 밑에 따로 프로젝트를 관리하는데 나는 그걸 모르고 octopress의 url만 열심히 고치고 있었다 ㅋㅋㅋ blog_directory/_deploy/.git/config 를 고쳐야 한다. 즉, 다시 말해서 위에서 언급한</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git remote set-url origin git@github.com:SanghyukChun/SanghyukChun.github.io.git</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>요놈은 root가 아니라 _deploy에서 실행시켜야 한다는 의미!</p>
-
 </div>
 
 <hr>
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-27T17:15:00+09:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
-    </p>
-    <p class="meta">
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/development/'>Development</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <div class="sh_button">
-  	<a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/5/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/5/" data-count="vertical">Tweet</a>
-  </div>
-  
-  
-  <div class="sh_button">
-  	<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="box_count" data-action="like" data-show-faces="false" data-share="false"></div>
-  </div>
-  
-<!--   <div class="sh_button">
-  	<a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a>
-    <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-  </div> -->
-  <div class="sh_button">
-  	<a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="SanghyukChun" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
-  </div>
-  <div class="sh_button">
-	  <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-	  <script type="IN/Share" data-counter="top"></script>
-  </div>
-  
-  <div class="sh_button">
-  	<!-- <div class="g-plusone" data-size="medium"></div> -->
-  	<div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-height="60"></div>
-  </div>
-  
-  <div class="clear"></div>
-</div>
-
-    
-    <!--
-    
-    <p class="meta">
-      <a class="url-title basic-alignment left" href="/4/" title="Previous Post: Customize Octopress - CSS 변경하기">&laquo; Customize Octopress - CSS 변경하기</a>
-    </p>
-    
-    
-    <p class="meta">
-      <a class="url-title basic-alignment right" href="/6/" title="Next Post: octopress 자잘한 세팅 변경 및 post용 script 만들기">&raquo; octopress 자잘한 세팅 변경 및 post용 script 만들기</a>
-    </p>
-    
-    -->
-    </p>
-  </footer>
 </article>
 
   <section>
-    <h1>Comments</h1>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
@@ -268,6 +181,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
+      </li>
+    
+      <li class="post">
         <a href="/97/">AlphaGo의 알고리즘과 모델</a>
       </li>
     
@@ -283,40 +200,7 @@ $(function() {
         <a href="/73/">Machine Learning 스터디 (17) Recommendation System (Matrix Completion)</a>
       </li>
     
-      <li class="post">
-        <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
-      </li>
-    
   </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'SanghyukChun',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -366,25 +250,7 @@ $(function() {
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 

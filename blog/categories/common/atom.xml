@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Common | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/common/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-15T02:29:17+09:00</updated>
+  <updated>2016-03-21T00:45:21+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -19,19 +19,10 @@
     <updated>2015-02-27T05:34:00+09:00</updated>
     <id>http://SanghyukChun.github.io/85</id>
     <content type="html"><![CDATA[<p>2월 6일. 드디어 짧게 보면 반 년 넘게, 길게 보면 1년이 넘게 진행해온 연구로 논문을 제출했다. 제출한 학회는 ICML. 처음으로 쓰는 논문이고, 처음으로 내가 1저자가 되어 제출하는 논문인데 처음부터 너무 좋은 학회에 제출하게 되었다. 여러모로 운이 좋았다. Author feedback period는 3월 말이나 되어야하고, 최종 decision notification은 4월 25일이다. 만약 accept이 된다면 7월에 프랑스 Lille에서 내 연구를 수 많은 사람들 앞에서 발표하게 된다. 아직 결과가 나오려면 2달 가까이 남았기 때문에 연구에 대한 압박감은 많이 사라졌다. 다만, 추가적으로 더 해보고 싶은 것들이 있어 추가 실험이나 앞으로 시도해볼 분야의 review paper를 읽어야 하는데, 쉽사리 의욕이 나지 않는다.</p>
-
-
 <p>Paper를 제출하고, 약 2주 반 정도의 휴가를 다녀왔다. 원래는 블로그에 ML study 포스트도 하루에 한 개씩 올리고, 책도 많이 읽고 Machine Learning 공부를 처음부터 천천히 할 수 있는 가장 좋은 시기라고 생각했었는데, 중간에 설 연휴도 있었고 잠깐 외국도 다녀오고 하니까 그럴 수 있는 시간이 하나도 없었다. 아마 머신러닝 공부, 그리고 관련 포스팅은 전부 학기 중에 수업도 들으면서 동시에 진행하게 될 것 같다.</p>
-
-
 <p>쉬는 것에도 관성이 있는 것 같다. 어제 다시 학교로 돌아왔는데 아직까지 하루 종일 일이 손에 잡히지 않는다.</p>
-
-
 <p>1월부터 2월초까지는 논문을 쓰는 것에 내 모든 역량을 쏟아부었다. 그래서 그런지 나에게는 이번 겨울이 너무나 짧게 느껴진다. 논문 쓰느라 한참 바쁘게 지내고 잠깐 외국다녀오니 겨울이 끝나있었다. 마찬가지로 2015년도 너무 급작스럽게 찾아왔다. 벌써 3월을 눈 앞에 두고있다니. 남들은 연말에 하거나 연초에 하는 2015년 계획을 오늘에서야 세우게 되었다. 사실 올해 목표 예년과 크게 다르지 않다. 올해 목표는 딱 두 가지인데, 하나는 체중 감량이고 또 하나는 제2외국어 공부이다. 체중감량은 워낙 오래전부터 내세우던 목표이고 제대로 성공한 적이 한 번도 없기 때문에 이번에는 정말 제대로 해봐야겠다. 혼자 계속 운동하다가 정체기가 오는 것 같으면 바로 PT를 받아볼 생각이다. 바로 PT를 받기에는 학교 헬스장이 워낙 시설이 좋아서 돈이 조금 아깝다. 그리고 내가 운동이나 식이요법을 '몰라서' 못하는게 아니라 귀찮거나 의지가 부족해서 안하는 것이기 때문에 의지가 부족해졌다고 느낄 때 쯤에 PT를 받아야겠다. 제2외국어공부는 여러가지를 생각해보았으나 역시 내가 빠른 시간에 금방 배울 수 있는 언어는 일본어이다. 오늘 저녁 먹기 전에 학원에 가서 상담받고 등록해야겠다.</p>
-
-
 <p>한 번 연구를 해보니까 자신감이 생기기도 하지만 반대로 내가 이런 작업을 또 해낼 수 있을까 두렵기도 하다. 다행히 지금 나는 해야 할 일이 명확하니 내가 해야 할 일에 최선을 다해야겠다.</p>
-
 ]]></content>
   </entry>
   
@@ -41,60 +32,44 @@
     <updated>2013-12-16T08:49:00+09:00</updated>
     <id>http://SanghyukChun.github.io/36</id>
     <content type="html"><![CDATA[<p><a href="33">지난 포스팅</a>에서 APR이 깔리지 않아 어쩌고 저쩌고... 했는데, 그냥 apt-get으로 깔기로 했다. 내가 apt-get을 신뢰하지 않는 가장 큰 이유는 버전이 최신이 아닌 경우가 허다하기 때문인데 (루비의 경우 진짜 최악이다. 자세한건 <a href="http://bigmatch.i-um.net/2013/12/%EB%A9%98%EB%B6%95%EC%97%86%EC%9D%B4-rvm%EA%B3%BC-%EB%A3%A8%EB%B9%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/">이음 블로그</a> 참고... 루비를 설치하는건 그냥 다른거 하나도 생각 안하고 여기 나오는 녀석들만 따라 긁어 붙여넣으면 끝난다.) apt-get으로 깔리는 아파치랑 기타 등등을 보니 생각보다 크게 암울하지 않아서 그냥 간단하게 apt-get으로 설치하기로 결정했다. apache만 까는건 정말 간단하고, (apt-get install apache2) 이 글에서는 아파치를 최대한 제대로 써보기 위해서 다양한 프로그램들을 가져다가 붙이는 작업을 해볼 예정이다.</p>
-
-
 <p>일단, apache만 가지고 되는건 거의 없다. 기본적으로 php + mysql 기반으로 굴러가는 모듈이 워낙 많기 때문에 이 녀석들도 깔아주도록하자. 아래와 같은 스크립트를 만들어서 돌리면 편하다</p>
-
-
-<p>```</p>
-
-<h1>!/bin/bash</h1>
-
-<p>apt-get -y install apache2 libapache2-mod-passenger
+<p><code>
+#!/bin/bash
+apt-get -y install apache2 libapache2-mod-passenger
 apt-get -y install mysql-server mysql-client
 apt-get -y install php5-common php5 libapache2-mod-php5
 apt-get -y install php5-mysql
 apt-get -y install phpmyadmin
-```</p>
-
+</code></p>
 <p>자, apache2랑 필요한 기본 모듈 (mod-passenger는 redmine을 위한 모듈) 그리고 mysql이랑 php를 설치했다. 뭐 그렇게 어려운건 아니니깐. 그냥 쉽게 쉽게 넘어가자. 그러면 이제 redmine을 연동해보자. redmine은 레일즈 기반으로 작성된 이슈트래커같은건데.. 뭐 그냥 설치하기도 편하고 내가 워낙 오래쓰기도 해서 그냥 편해서 사용한다. 사실 트렐로를 쓰는게 더 범용적이고 이쁘지만 그냥 깔고보는거지 뭐... 여튼 redmine연동은 <a href="http://myevan.cpascal.net/articles/2013/ubuntu_redmine.html">이 글</a>을 많이 참고했다. 단순히 redmine을 아파치에 올리는 것 뿐 아니라 svn이랑 연동하는 것까지 있는 글이라 아마 어지간한 내용은 다 있을 것이다. 하지만 난 개인 레포를 쓰지않을 예정이기도 하고 아직 구태여 소형 개인 서버에 redmine이랑 svn(혹은 머큐리얼이나 git)을 연동할 이유를 못찾아서 뒷 부분은 하지 않았다. 어쩌면 연구실 서버 세팅할 때는 사용할지도.. 암튼 레드마인 설치도 아래 스크립트를 돌리면 된다.</p>
-
-
 <p>Default</p>
-
-
 <p>```
-<VirtualHost *:80></p>
+&lt;VirtualHost *:80&gt;
+	ServerAdmin webmaster@localhost</p>
 
-<pre><code>ServerAdmin webmaster@localhost
-
-DocumentRoot /var/www
+<pre><code>DocumentRoot /var/www
 &lt;Directory /&gt;
-    Options FollowSymLinks
-    AllowOverride None
+	Options FollowSymLinks
+	AllowOverride None
 &lt;/Directory&gt;
 &lt;Directory /var/www/&gt;
-    Options Indexes FollowSymLinks MultiViews
-    AllowOverride None
-    Order allow,deny
-    allow from all
+	Options Indexes FollowSymLinks MultiViews
+	AllowOverride None
+	Order allow,deny
+	allow from all
 </code></pre>
-
-<p>  </Directory>
-  <Directory /var/www/redmine></p>
-
-<pre><code>RailsBaseURI /redmine
-PassengerResolveSymlinksInDocumentRoot on
-</code></pre>
-
-<p>  </Directory></p>
+<p>&lt;/Directory&gt;
+  &lt;Directory /var/www/redmine&gt;
+    RailsBaseURI /redmine
+    PassengerResolveSymlinksInDocumentRoot on
+  &lt;/Directory&gt;</p>
 
 <pre><code>ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
 &lt;Directory "/usr/lib/cgi-bin"&gt;
-    AllowOverride None
-    Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-    Order allow,deny
-    Allow from all
+	AllowOverride None
+	Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+	Order allow,deny
+	Allow from all
 &lt;/Directory&gt;
 
 ErrorLog ${APACHE_LOG_DIR}/error.log
@@ -105,13 +80,9 @@ LogLevel warn
 
 CustomLog ${APACHE_LOG_DIR}/access.log combined
 </code></pre>
-
-<p></VirtualHost>
+<p>&lt;/VirtualHost&gt;
 ```</p>
-
 <p>passenger.conf</p>
-
-
 <p><code>
 &lt;IfModule mod_passenger.c&gt;
   PassengerDefaultUser www-data
@@ -119,52 +90,32 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
   PassengerRuby /usr/bin/ruby
 &lt;/IfModule&gt;
 </code>
-```</p>
-
-<h1>!/bin/bash</h1>
-
-<p>apt-get install redmine redmine-mysql
+<code>
+#!/bin/bash
+apt-get install redmine redmine-mysql
 cp passenger.conf /etc/apache2/mods-available/passenger.conf
 ln -s /usr/share/redmine/public /var/www/redmine
 cp default /etc/apache2/sites-available/default
-```</p>
-
+</code></p>
 <p>참 쉽다.. 참고로 이건 전부다 그냥 기본 설정이라 이렇게 한거지, 만약 설정이 되어있는 상태라면 위에 링크한 글대로 하기를 바란다. 혹시나 default설정 싹 날리거나 그러지 말고... 이제 service apache2 restart를 때려주면 레드마인이 돌아간다 올레</p>
-
-
 <p>음 그리고 이번에는 xe를 깔아보자. BBS 모듈이 필요할 때가 간간히 있기 때문에 xe는 깔아서 손해볼게 없다. (워드프레스도 쓸만하지만 단순 BBS로는 xe가 낫다.) 자 이번에도 스크립트.</p>
-
-
-<p>```</p>
-
-<h1>!/bin/bash</h1>
-
-<p>git clone <a href="https://github.com/xpressengine/xe-core.git">https://github.com/xpressengine/xe-core.git</a>
+<p><code>
+#!/bin/bash
+git clone https://github.com/xpressengine/xe-core.git
 mv xe-core /var/www/xe
 chmod 707 -R /var/www/xe
-svn checkout <a href="http://xe-board.googlecode.com/svn/trunk/">http://xe-board.googlecode.com/svn/trunk/</a> board
+svn checkout http://xe-board.googlecode.com/svn/trunk/ board
 mv board /var/www/xe/modules/board
-```</p>
-
+</code></p>
 <p>뭐.. 이렇게 하고 ~~/xe 들어가서 설치하면 xe랑 board 모듈까지 설치 끝... 아 기본 설정인 경우에는 설정-고급-짧은 주소 사용에 아니오를 선택하고 캐시를 리로드해야한다. 이거 몰라서 한 1시간은 삽질했는데.. 이거 싫으면 따로 뭐를 깔아야하길래 그게 더 귀찮아서 그냥 설정을 바꿔줬다.</p>
-
-
 <p>마지막으로 위키를 깔아보자. 위키는 미디아위키를 사용한다.</p>
-
-
 <p><code>
 git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
 mv core /var/www/wiki
 chmod 707 -R /var/www/wiki
 </code></p>
-
 <p>아 참고로 xe도 wiki도 설치 후에 아파치를 한번 리스타트 해줘야할거다... 역시 이것도 /wiki로 들어가서 설치를 해주고 나온 php파일을 ftp로 /var/www/wiki에 다시 넣어주면 끝</p>
-
-
-<p></p>
-
 <p>전반적으로 크게 난해한 세팅도 없고.. 애당초 이번에 설치한 녀석들이 꽤 모듈로 잘 나온 놈들을 쓴 거라.. 크게 어렵지 않게 세팅했다. 지금 추가로 해볼까 고민 중인 것들은 개인 레포지토리를 뚫느냐 마느냐. 별로 큰 이득이 없어서 안할 것 같기는 하지만, 그래도 일단 만들어서 손해볼 것도 없고, 공부 삼아서 해볼까 고민 중이다. gui로 웹에서 접근 가능한 녀석을 만들어볼까하는데, 엄청 어려울 것 같지는 않고 그냥 엄청 귀찮을거 같아서 고민이다.</p>
-
 ]]></content>
   </entry>
   
@@ -174,30 +125,17 @@ chmod 707 -R /var/www/wiki
     <updated>2013-12-14T23:24:00+09:00</updated>
     <id>http://SanghyukChun.github.io/35</id>
     <content type="html"><![CDATA[<p>맨 처음 우분투 desktop을 메인 컴퓨터로 사용하겠다고 삽질하던 시절, Matlab 하나 까는 것도 무지막지 고생스러웠던 시절이 있다. 최근 다시 우분투를 메인 컴으로 사용하면서 매트랩 설치에 삽질을 하는 사람이 있을까싶어 이 글을 남겨본다. 기준은 2011B 버전이며, Linux Mac Solaris 호환 버전을 기준으로 한다.</p>
-
-
 <p>맨 처음 파일을 받고 압축을 풀게 되면 (tar.gz파일을 받은 상태라고 가정한다. + 참고로 저는 학교 라이센스를 사용합니다.) 폴더안에 install이라는 파일이 있는 것을 확인할 수 있다. 이 파일은 간단한 shell script인데, chmod로 사용할 수 있도록 바꿔주어야한다.. 거기에다가 이 녀석이 자기 폴더 내부에 있는 java 파일을 사용하는데 이놈이 뭔가 권한이 없는지 에러를 슝슝 뱉는다. 잘못하면 삽질하기 딱 좋은 상황. 그러나 간단하게 아래 명령어 하나로 해결할 수 있다.</p>
-
-
 <p><code>
 chmod -R +x Mathworks_2011B_Linux_Mac_Solaris
 </code></p>
-
 <p>이렇게 한 줄 치고,</p>
-
-
 <p><code>
 sudo ./Mathworks_2011B_Linux_Mac_Solaris/install
 </code></p>
-
 <p>하면 깔끔하게 해결된다.</p>
-
-
 <p>+ install sudo로 안하면 파일 생성이 안된다</p>
-
-
 <p>아 그리고 JDK 설치도 삽질하기 딱 좋은데 이건 <a href="http://whatwant.tistory.com/438">정말 정리가 잘 된 포스트</a>가 있어서 링크로 대체하도록 하겠다.</p>
-
 ]]></content>
   </entry>
   
@@ -207,24 +145,16 @@ sudo ./Mathworks_2011B_Linux_Mac_Solaris/install
     <updated>2013-12-12T01:15:00+09:00</updated>
     <id>http://SanghyukChun.github.io/33</id>
     <content type="html"><![CDATA[<p>사실 서버용 컴퓨터를 구매한 것은 벌써 거의 <a href="http://SanghyukChun.github.io/28">2주도 더 이전에 있었던 일</a>이지만, 근래에 좀 많이 바빠서 이제서야 기본적인 세팅을 하게 되었다. 지난번에 설치한 우분투 서버에 뭔가 문제가 있었는지 장소를 옮겨서 부팅하자마자 OS가 뻗어버리는... 그래서 오늘 다시 다 밀어버리고 처음부터 다시 세팅했다.</p>
-
-
 <p>서버를 설치하면서는 뭐 크게 신경 쓸 만한 옵션은 많이 없긴한데.. 난 개인적으로 내가 관리하는 편이 좋아서 파티션에서 <a href="http://www.fis.unipr.it/pub/linux/redhat/9/en/doc/RH-DOCS/rhl-cg-ko-9/ch-lvm-intro.html">LVM</a>도 끄고, 자동 업데이트도 끄고.. 유틸도 전부 안깔고 진행했다. 그리고 ip 세팅만 해줬는데, 나는 학교에서 할당 받은 ip만 사용할 수 있는 상황이니깐, 이게 나름 중요하다. 맨 처음 세팅할 때 ip를 입력하게 되면 별로 머리아플 일이 없기는 하지만, 실수로 세팅을 하지 않은 상황이거나 하면... 나중에 설치가 끝난 이후에 /etc/network/interfaces와 /etc/resolv.conf만 고쳐주면 간단하다. 아래는 내 interfaces 파일</p>
+<p>```
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).</p>
 
-
-<p>```</p>
-
-<h1>This file describes the network interfaces available on your system</h1>
-
-<h1>and how to activate them. For more information, see interfaces(5).</h1>
-
-<h1>The loopback network interface</h1>
-
+<h1 id="the-loopback-network-interface">The loopback network interface</h1>
 <p>auto lo
 iface lo inet loopback</p>
 
-<h1>The primary network interface</h1>
-
+<h1 id="the-primary-network-interface">The primary network interface</h1>
 <p>auto p2p1
 iface p2p1 inet static
   address 143.248.53.74
@@ -235,15 +165,9 @@ iface p2p1 inet static
   dns-nameservers 8.8.8.8
   dns-search kaist.ac.kr
 ```</p>
-
 <p>이게 맨 처음에 설치할 떄 잡아줬더니 p2p1이라고 잡아줬는데, 평소에는 그냥 따로 추가할 필요없이 아래같은 format으로 적어주면 그만. 이걸 적고 service networking restart를 해주면 dns도 같이 잡힌다. (알아서 resolv.conf가 업데이트 된다.) 이제 인터넷도 끝.</p>
-
-
 <p>이제 유틸을 깔 차례. apt-get으로 설치 가능한 유틸은 대충 깔고... 문제는 아파치, mysql, php등등인데, <a href="http://karasix.blog.me/10090152926">이거에 관련된 블로그</a>를 찾았다. 별로 어렵지는 않고, 그냥 가끔 헷갈릴 때 보면 괜찮은 듯.</p>
-
-
 <p>지금 아파치를 설치 중인데, APR이 없다고 에러가 뜬다.. <a href="http://stackoverflow.com/questions/9436860/apache-httpd-setup-and-installation">stackoverflow</a>를 보니 <a href="http://apr.apache.org/">APR</a>이란 놈을 깔아야하는 모양. 아 이건 좀 귀찮다. 여기서부터는 내일부터.</p>
-
 ]]></content>
   </entry>
   
@@ -253,40 +177,26 @@ iface p2p1 inet static
     <updated>2013-11-26T00:11:00+09:00</updated>
     <id>http://SanghyukChun.github.io/28</id>
     <content type="html"><![CDATA[<p>최근 연구실 초기 세팅을 위해서 고군분투하고 있는데, 갑자기 연구실용이 아니라 내 전용 서버를 하나 두면 재미있을 것 같다는 생각이 들었다. 용도는 크게.. 네 가지 정도</p>
-
-
 <ul>
-    <li>내 개인 웹서버 - 간단한 나에 대한 소개 등등을 하는 개인 페이지나 내가 개발하는 웹 어플리케이션을 배포하기 위한 용도.. 대충 아래에 있는 목록 정도를 배포하지 않을까 싶다</li>
-    <ul>
-        <li>현재 <a href="sanghyukchun.github.io/aboutMe">sanghyukchun.github.io/aboutMe</a>에 있는 내 PR페이지</li>
-        <li>연구를 하고 그 기록을 보관하기 위한 개인 BBS.. 이건 XE 써서 만들면 간단할 것 같다</li>
-        <li>연구 및 개인 스케쥴 관리를 위한 레드마인</li>
-        <li>내가 필요한 내용을 정리하기 위한 개인 Wiki</li>
-        <li>예전부터 생각만 하고 있고 구현은 하고 있지 않은 맛집 DB 및 추천용 웹 어플리케이션</li>
-    </ul>
-    <li>맥 이외의 다른 머신에서도 개발할 수 있기 위한 개인 개발용 서버 (SSH client를 사용해서 접속하는 방식으로..)</li>
-    <li>개인 파일 서버 - 원래는 그냥 SFTP정도로 끝내려고 했지만, 동영상을 저장해서 실시간 스트리밍이 가능한 어플리케이션을 만들어볼까 고민 중이다</li>
-    <li>개인 메일 서버 - 필요하지는 않지만, sanghyuk@sanghyuk.kaist.ac.kr 이나.. 나중에 혹시 다양한 사람들을 위한 웹어플리케이션을 만들 경우에 supports@sanghyuk.kaist.ac.kr 이런 식으로 메일을 만드는 것도 가능하다!</li>
-    <li>개인 메일링 리스트 서버 - 개인적으로 메일링 리스트를 구축해야할 일이 얼마나 있을지는 모르겠지만, 그래도 세팅해두고 메일링 리스트로 관심분야를 정리하면 굉장히 좋을 것 같다는 생각이 든다</li>
+	<li>내 개인 웹서버 - 간단한 나에 대한 소개 등등을 하는 개인 페이지나 내가 개발하는 웹 어플리케이션을 배포하기 위한 용도.. 대충 아래에 있는 목록 정도를 배포하지 않을까 싶다</li>
+	<ul>
+		<li>현재 <a href="sanghyukchun.github.io/aboutMe">sanghyukchun.github.io/aboutMe</a>에 있는 내 PR페이지</li>
+		<li>연구를 하고 그 기록을 보관하기 위한 개인 BBS.. 이건 XE 써서 만들면 간단할 것 같다</li>
+		<li>연구 및 개인 스케쥴 관리를 위한 레드마인</li>
+		<li>내가 필요한 내용을 정리하기 위한 개인 Wiki</li>
+		<li>예전부터 생각만 하고 있고 구현은 하고 있지 않은 맛집 DB 및 추천용 웹 어플리케이션</li>
+	</ul>
+	<li>맥 이외의 다른 머신에서도 개발할 수 있기 위한 개인 개발용 서버 (SSH client를 사용해서 접속하는 방식으로..)</li>
+	<li>개인 파일 서버 - 원래는 그냥 SFTP정도로 끝내려고 했지만, 동영상을 저장해서 실시간 스트리밍이 가능한 어플리케이션을 만들어볼까 고민 중이다</li>
+	<li>개인 메일 서버 - 필요하지는 않지만, sanghyuk@sanghyuk.kaist.ac.kr 이나.. 나중에 혹시 다양한 사람들을 위한 웹어플리케이션을 만들 경우에 supports@sanghyuk.kaist.ac.kr 이런 식으로 메일을 만드는 것도 가능하다!</li>
+	<li>개인 메일링 리스트 서버 - 개인적으로 메일링 리스트를 구축해야할 일이 얼마나 있을지는 모르겠지만, 그래도 세팅해두고 메일링 리스트로 관심분야를 정리하면 굉장히 좋을 것 같다는 생각이 든다</li>
 </ul>
-
-
 <p>등을 해보고자 한다.</p>
-
-
 <p>전반적으로 연산 자원을 많이 요구하지 않으니깐 듀얼코어 i3면 충분할 거라고 생각했고 (그리고 듀얼코어가 파워 컨섬션도 적고 발열도 적다), 마찬가지 이유로 RAM도 4GB 한 개만 사기로 했다. 이걸 사는 이유는 그냥 나중에 필요하면 다른 컴퓨터로 옮겨 낄 수도 있고 팔기에도 2GB보다는 4GB가 잘 팔리니깐. 파일 서버를 세팅을 하기는 하겠지만, 아마 TB단위 이상으로 필요할 것 같지는 않고, 만약 필요하다면 요즘 하드 가격도 많이 떨어졌으니 간단하게 확장하면 되니깐 그냥 WD 1TB만 구매하기로 결정. 이 이외의 다른 세팅은 필요없을 것 이라고 판단하고 과감하게 보드도 저렴한 녀석으로 구매했다. 어차피 비싼 보드라는게 결국 포트가 더 많이 들어있거나 더 좋은 성능의 무언가가 들어간 경우 (USB3.0, SPDIF, 예전엔 SATA3등등..) 근데 나는 그냥 랜선만 있으면 된다. 랜카드를 더 박거나 GPU가 필요하지도 않으니 그냥 과감하게 저렴한 녀석으로 결정!</p>
-
-
 <p>그래서 견적이 이렇게 나왔다.</p>
-
-
 <p><img src="/images/post/28-1.png" width="400"></p>
-
 <p>오늘 주문했고 배송도 되었으니 아마 빠르면 내일 오후 늦으면 내일 모레 도착할 것 같다. 조립하기 귀찮아서 조립비도 그냥 낼까 했는데, 부품도 몇 개 없어서 그냥 내가 조립하기로 했다. 정말 금방 끝날 것 같아서..</p>
-
-
 <p>운영체제는 당연히 Ubuntu Server. 예전에는 정말 아무것도 몰라서 Ubuntu Desktop을 깔고 왜 자꾸 에러가 나고 리소스가 부족한지 한숨짓고는 했는데, 이제는 그런 실수는 안하겠지 하하. 13은 너무 버그가 많기도 하고 LTS가 아직 안나온 것 같아서 그냥 12.04LTS로 결정. 이제 서버만 도착하면 될 것 같은데 ㅎㅎ</p>
-
 ]]></content>
   </entry>
   

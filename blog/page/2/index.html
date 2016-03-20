@@ -9,9 +9,9 @@
   <meta name="author" content="Sanghyuk Chun">
 
   
-  <meta name="description" content="Sep 19 2015
-Recurrent Models of Visual Attention (NIPS 2014)
-Google Deep Mind에서 NIPS 2014에 발표한 Recurrent Models of Visual Attention 정리 Deep-Learning &hellip;">
+  <meta name="description" content="Sep 21 2015
+Machine learning 스터디 (19) Deep Learning - RBM, DBN, CNN
+내 멋대로 정리해보는 Machine Learning. Deep Learning Deep-Learning, Machine-Learning, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,30 +20,48 @@ Google Deep Mind에서 NIPS 2014에 발표한 Recurrent Models of Visual Attenti
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
+
+  
   <link rel="canonical" href="http://SanghyukChun.github.io/blog/page/2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-	<script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <script>
 $(function() {
-	$('.tip').attr('data-toggle','tooltip');
-	$('.tip').attr('data-placement','top');
-	$('.tip').tooltip();
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -84,6 +102,19 @@ $(function() {
     <div id="content">
       <div class="blog-index">
   
+  
+  <article class="mB40">
+    
+<p><time datetime="2015-09-21T00:10:00+09:00" pubdate><span class='month'>Sep</span> <span class='day'>21</span> <span class='year'>2015</span></time><br>
+<span class="archive-title"><a href="/75/">Machine learning 스터디 (19) Deep Learning - RBM, DBN, CNN</a></span><br>
+내 멋대로 정리해보는 Machine Learning. Deep Learning</p>
+
+<span class="categories"><a class='category' href='/blog/categories/deep-learning/'>Deep-Learning</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine-Learning</a>, <a class='category' href='/blog/categories/machine-learning-study/'>Machine-Learning-Study</a>, <a class='category' href='/blog/categories/neural-network/'>Neural-Network</a></span>
+
+
+
+
+  </article>
   
   <article class="mB40">
     
@@ -202,19 +233,6 @@ Google이 작성한 현재 ImageNet classification competition state-of-art이�
 
   </article>
   
-  <article class="mB40">
-    
-<p><time datetime="2015-03-14T03:57:00+09:00" pubdate><span class='month'>Mar</span> <span class='day'>14</span> <span class='year'>2015</span></time><br>
-<span class="archive-title"><a href="/86/">블룸버그 폰 인터뷰 후기</a></span><br>
-</p>
-
-<span class="categories"><a class='category' href='/blog/categories/development/'>Development</a></span>
-
-
-
-
-  </article>
-  
   <p class="mB40">subscribe via <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></p>
   <div class="m20">
     <a href="/archives">Go to Archives</a>
@@ -269,25 +287,7 @@ Google이 작성한 현재 ImageNet classification competition state-of-art이�
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 

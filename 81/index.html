@@ -18,30 +18,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
+
+  
   <link rel="canonical" href="http://SanghyukChun.github.io/81">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-	<script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <script>
 $(function() {
-	$('.tip').attr('data-toggle','tooltip');
-	$('.tip').attr('data-placement','top');
-	$('.tip').tooltip();
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -85,7 +103,7 @@ $(function() {
   
   <header>
     
-      <h1 class="entry-title">맥 요세미티 업데이트 이후 Homebrew 문제점 Troubleshooting</h1>
+      <h1 class="entry-title"><a href="">맥 요세미티 업데이트 이후 Homebrew 문제점 Troubleshooting</a></h1>
     
     
       <p class="meta text-right mB50">
@@ -111,111 +129,19 @@ $(function() {
 
 
 <div class="entry-content"><p>나는 맥 OS 장비가 두 개 있다. 하나는 연구실에서 사용하는 아이맥이고 또 하나는 연구실 밖에서 사용하는 맥북프로이다. 이번 요세미티 업데이트는 프리뷰 때 부터 기대를 많이 했기에 나오자마자 바로 두 머신 모두 요세미티 설치를 했다. 그리고 그게 내가 이 글을 쓰게 된 시발점이 되었다.</p>
-
-
 <p>Homebrew는 맥에서 가장 많이 사용하는 패키지 관리 프로그램 중 하나로, 간단히 생각하면 ubuntu의 apt-get과 같은 역할을 (더 fancy하게!) 해준다. 그런데 문제는 이 녀석이 ruby base로 돌아가고, ruby path가 하드코딩되어있는데, 요세미티는 system ruby의 버전을 강제로 업그레이드시켜버리기 때문에 brew의 모든 명령이 깨진다는 것. 참고로 이건 예전 버전의 homebrew에서나 그렇고, 새로 나온 버전은 아무 문제가 없다.</p>
-
-
 <p>가장 간단한 해결책은 임시로 brew.rb 파일에 있는 path를 current ruby로 바꿔준 다음 brew를 최신 버전으로 다시 내려받는 것이다. 하지만 늘 인생은 쉽지 않지. 쉬운 길을 눈 앞에 두고 돌아가기 마련인데, 두 머신 모두 (약간의 시간 차이를 두고 한 일이지만) brew를 삭제하고, 다시 설치한다음 rvm으로 ruby 버전을 다시 다운로드 받는&#8230; 삽질을 했다.</p>
-
-
 <p>그런데 이번에 rvm으로 루비 버전을 먼저 내려받다가, brew가 깨져있는 상황에서 실수로 지금 이미 있는 루비조차 날려버리는 최악의 실수를 해버렸다. 다시 말해 ruby 를 입력해도 아무 반응이 없고, rvm list는 비어있는 최악의 상황. 먼저 rvm install 2.0.0 을 실행했는데, 컴파일이 거의 한 시간 정도의 긴 시간이 지나도 끝나지를 않아 찾아보니 xcode 버전이 낮으면 그럴 수 있다더라. 다시 내 xcode를 보니 5버전.. 최신은 6버전이다. 바로 xcode부터 재설치를 했다. 근데 xcode가 보통 무거워야지.. 설치하는데 시간이 꽤 걸렸다.</p>
-
-
 <p>xcode 재설치를 끝내고 homebrew를 설치하려고 보니 ruby 명령어를 실행해야하는터라, 강제로 system ruby path에 들어가 system ruby로 실행을 시켰다. brew를 제대로 지우지 않은 상황이라면 시키는대로 하면 된다. 설치 후에는 brew doctor 한 번 돌려줘야한다. 꼬여있는 dependency를 정리해야하기 때문.</p>
-
-
 <p>이제 rvm install 2.0.0, rvm install 1.9.3, rvm install 2.1.5 모두 잘 실행된다. (라고 적었지만 사실 1.9.3은 gcc48설치하는게 너무 오래 걸려서 아직 끝은 안난게 함정&#8230;)</p>
-
-
 <p>Gitlab도 그렇고, 지금 쓰고 있는 Octopress도 그렇고, 많은 웹에서 쓰는 프레임워크 혹은 어플리케이션들이 rails 기반, 루비 기반인 경우가 많아 이런 문제가 왕왕 생기고는 하는데, 당황하지 않고 천천히 찾아보면 해결하는게 크게 어렵지는 않다. 루비는 sudo user로 설치하는게 아니다보니까 더 쉬운 듯. 가장 중요한건 인내심을 가지는 것. 너무 이상할 정도로 오래걸리는건 생각해볼 필요가 있지만, 대부분의 경우 생각보다 시간이 훨씬 오래 걸린다.</p>
-
 </div>
 
 <hr>
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Sanghyuk Chun</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-30T03:24:00+09:00" pubdate data-updated="true">Nov 30<span>th</span>, 2014</time>
-    </p>
-    <p class="meta">
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/development/'>development</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <div class="sh_button">
-  	<a href="//twitter.com/share" class="twitter-share-button" data-url="http://SanghyukChun.github.io/81/" data-via="SanghyukChun" data-counturl="http://SanghyukChun.github.io/81/" data-count="vertical">Tweet</a>
-  </div>
-  
-  
-  <div class="sh_button">
-  	<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="box_count" data-action="like" data-show-faces="false" data-share="false"></div>
-  </div>
-  
-<!--   <div class="sh_button">
-  	<a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a>
-    <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-  </div> -->
-  <div class="sh_button">
-  	<a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="SanghyukChun" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
-  </div>
-  <div class="sh_button">
-	  <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-	  <script type="IN/Share" data-counter="top"></script>
-  </div>
-  
-  <div class="sh_button">
-  	<!-- <div class="g-plusone" data-size="medium"></div> -->
-  	<div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-height="60"></div>
-  </div>
-  
-  <div class="clear"></div>
-</div>
-
-    
-    <!--
-    
-    <p class="meta">
-      <a class="url-title basic-alignment left" href="/80/" title="Previous Post: Gitlab을 깔자">&laquo; Gitlab을 깔자</a>
-    </p>
-    
-    
-    <p class="meta">
-      <a class="url-title basic-alignment right" href="/82/" title="Next Post: 블로그에 Disqus 설치">&raquo; 블로그에 Disqus 설치</a>
-    </p>
-    
-    -->
-    </p>
-  </footer>
 </article>
 
   <section>
-    <h1>Comments</h1>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
@@ -242,6 +168,10 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
+      </li>
+    
+      <li class="post">
         <a href="/97/">AlphaGo의 알고리즘과 모델</a>
       </li>
     
@@ -257,40 +187,7 @@ $(function() {
         <a href="/73/">Machine Learning 스터디 (17) Recommendation System (Matrix Completion)</a>
       </li>
     
-      <li class="post">
-        <a href="/93/">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention (ICML2015)</a>
-      </li>
-    
   </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/SanghyukChun">@SanghyukChun</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'SanghyukChun',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -340,25 +237,7 @@ $(function() {
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 

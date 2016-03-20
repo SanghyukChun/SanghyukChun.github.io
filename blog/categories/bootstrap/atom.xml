@@ -4,7 +4,7 @@
   <title><![CDATA[Category: bootstrap | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/bootstrap/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-15T02:29:17+09:00</updated>
+  <updated>2016-03-21T00:45:21+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -19,20 +19,14 @@
     <updated>2013-07-27T16:17:00+09:00</updated>
     <id>http://SanghyukChun.github.io/4</id>
     <content type="html"><![CDATA[<p>평일에는 조금 바빴고 주말을 맞아 블로그를 다시 Customize하고자 간단하게 Document를 훑어보고 당장 Twitter Bootstrap을 적용시켰다. 한가지 당황했던 점은 Bootstrap이 2에서 3으로 version up 되면서 docs페이지가 완전히 정전 상태.. 그냥 급하게 Bootstrap team blog에서 다운받아서 소스만 붙여 넣었다. 나중에 version 3으로 업그레이드 되면 바꿔줘야 할 것 같은 부분이다. (근데 About Me 실컷 Bootstrap CSS Customizing하고 필요없는거 다 지우고 comon.css로 몰아놓고 1주일도 안되서 ver.3이라니.. deploy완전히 끝나면 훑어보고 마음에 들면 About Me를 통채로 들어내야 할수도;;)</p>
-
-
 <p>아무튼, css를 바꾸는 방법은 간단했다. 공식 <a href="http://octopress.org/docs/theme/styles/">document</a>를 보면 <code>sass/custom/_style.scss</code>를 수정하면 된다고 한다. 간단하게 override하라는 의미인데, Bootstrap을 그냥 들어다가 붙이기만 해도 꽤 나름 훌륭한 스타일링이 된다. 내가 Bootstrap을 사랑하는 이유. 다만 폰트가 마음에 들지 않아서 (이상하게 대부분의 사이트가 그러하듯 sarif를 기본 폰트로 지정하면 윈도우 크롬 환경에서 폰트가 깨지는 경우가 종종있다.) 구글 웹폰트에서 나눔고딕코딩으로 적용시커주었다. 굳이 나눔고딕코딩으로 적용한 이유는 아무래도 이 블로그에는 코딩이 많이 들어갈 것 같고 간단하게 문서를 읽기에는 역시 나눔고딕코딩이 괜찮을 것 같아서이다. 방법은 간단하다 <code>sass/custom/_style.scss</code>에 아래처럼만 넣어주면 된다</p>
-
-
 <p><code>
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
 body {
   font-family: "Nanum Gothic Coding";
 }
 </code></p>
-
 <p>물론 나는 Bootstrap에 넣은 것이기 때문에 Bootstrap에서 body에 해당하는 부분만 바꾸어 주었다. 추가로 pre, code에 해당하는 부분 등에도 font-family가 설정되어 있어 그 부분도 마찬가지로 수정. 이렇게 처리하면 어렵지 않게 CSS style을 변경할 수 있다. 이제 layout을 뜯어고칠 차례!</p>
-
 ]]></content>
   </entry>
   

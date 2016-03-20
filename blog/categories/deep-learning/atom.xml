@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Deep-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/deep-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-15T02:29:17+09:00</updated>
+  <updated>2016-03-21T00:45:21+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -18,286 +18,173 @@
     <link href="http://SanghyukChun.github.io/97/"/>
     <updated>2016-03-15T02:28:00+09:00</updated>
     <id>http://SanghyukChun.github.io/97</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
+    <content type="html"><![CDATA[<ul class="no-float" id="markdown-toc">
+  <li><a href="#section">들어가며</a></li>
+  <li><a href="#section-1">왜 바둑이 체스보다 어려운가?</a></li>
+  <li><a href="#monte-carlo-tree-search">Monte-Carlo Tree search</a></li>
+  <li><a href="#approaches-by-alphago">Approaches by AlphaGo</a>    <ul>
+      <li><a href="#supervised-learning-of-policy-network-sl-policy-network">Supervised Learning of Policy Network (SL Policy Network)</a></li>
+      <li><a href="#reinforcement-learning-of-policy-networks-rl-policy-network">Reinforcement Learning of Policy Networks (RL Policy Network)</a></li>
+      <li><a href="#reinforcement-learning-of-value-networks">Reinforcement Learning of Value Networks</a></li>
+      <li><a href="#searching-with-policy-and-value-networks">Searching with Policy and Value Networks</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-2">정리</a></li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#section-3">변경 이력</a></li>
+</ul>
 
+<h3 id="section">들어가며</h3>
+<p>근 일주일 동안 가장 뜨거웠던 주제를 하나 꼽으라면 누가 뭐래도 “알파고”일 것이다. 글을 쓰고 있는 2016년 3월 13일 기준으로 알파고와 이세돌 사범과의 경기에서 최종 승리를 확정지은 상태이며, 오늘 이세돌 사범이 첫 승을 거둠으로써 5국 중 3대 1의 상황이 되었다. 내일 모레 있을 경기에서 3-2가 될지 4-1이 될지가 최종 결정이 될 것이며, 어느 결과가 나오더라도 AI 분야에서는 기념비적인 사건이 될 것이다.</p>
 
-<p>근 일주일 동안 가장 뜨거웠던 주제를 하나 꼽으라면 누가 뭐래도 "알파고"일 것이다. 글을 쓰고 있는 2016년 3월 13일 기준으로 알파고와 이세돌 사범과의 경기에서 최종 승리를 확정지은 상태이며, 오늘 이세돌 사범이 첫 승을 거둠으로써 5국 중 3대 1의 상황이 되었다. 내일 모레 있을 경기에서 3-2가 될지 4-1이 될지가 최종 결정이 될 것이며, 어느 결과가 나오더라도 AI 분야에서는 기념비적인 사건이 될 것이다.</p>
+<p>덕분에 AI (정확하게는 딥러닝)이 사람들의 이목을 집중적으로 받게되면서 불분명한 정보가 마구 흘러다니는 것 같아서 제대로 딥마인드에서 어떤 모델과 알고리즘을 사용한 것인지 직접 알아보고 정리해보기로 했다. 이 글에서는 deep learning, CNN <a href="75/#75-cnn">[7]</a>, deep Q-learning <a href="/90">[9]</a>등의 용어들을 설명없이 사용할 예정이므로, 해당 개념들에 관심이 있다면 내가 쓴 이전 글들 <a href="75/#75-cnn">[7]</a>, <a href="/90">[9]</a> 이나 다른 외부 자료들을 참고하면 좋을 것 같다.
+이 글은 Google Deep Mind에서 2016년 Nature에 발표한 matering the Game of Go with Deep Neural Network and Tree Search <a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[1]</a>를 기반으로 작성되었다.&lt;/p&gt;</p>
 
-
-<p>덕분에 AI (정확하게는 딥러닝)이 사람들의 이목을 집중적으로 받게되면서 불분명한 정보가 마구 흘러다니는 것 같아서 제대로 딥마인드에서 어떤 모델과 알고리즘을 사용한 것인지 직접 알아보고 정리해보기로 했다. 이 글에서는 deep learning, CNN <a href="http://SanghyukChun.github.io/75/#75-cnn">[7]</a>, deep Q-learning <a href="http://SanghyukChun.github.io/90">[9]</a>등의 용어들을 설명없이 사용할 예정이므로, 해당 개념들에 관심이 있다면 내가 쓴 이전 글들 <a href="http://SanghyukChun.github.io/75/#75-cnn">[7]</a>, <a href="http://SanghyukChun.github.io/90">[9]</a> 이나 다른 외부 자료들을 참고하면 좋을 것 같다.</p>
-
-
-<p>이 글은 Google Deep Mind에서 2016년 Nature에 발표한 matering the Game of Go with Deep Neural Network and Tree Search <a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[1]</a>를 기반으로 작성되었다.</p>
-
-
-
-
-<h5>왜 바둑이 체스보다 어려운가?</h5>
-
-
-<p>글을 본격적으로 시작하기 전에, 왜 바둑이 체스나 다른 게임들보다 어려운지부터 이야기해보자. 체스 (1997년 IBM Deeper blue), 체커 (1994년 CHINOOK <a href="https://www.aaai.org/ojs/index.php/aimagazine/article/viewFile/1208/1109">[6]</a>), tic tac toe (1952년) 등의 게임들은 이미 오래오래 전에 컴퓨터가 인간을 박살낸 분야이다. 게다가 최근 연구들을 통해 Atari 에뮬레이터를 기반으로 한 비디오 게임에서도 굉장히 뛰어난 성능을 내는 모델이 제안된 바 있다 <a href="http://SanghyukChun.github.io/90">[9]</a>. 그런데 바둑은 왜 아직까지 인간을 뛰어넘기가 어려웠을까? 그 이유는 다른 데에 있는 것이 아니라, 바둑에서 발생할 수 있는 경우의 수가 너무나 많기 때문이다. 체스, 바둑 등의 턴 방식의 게임들은 현 상황에서 앞으로 발생할 수 있는 모든 경우의 수에 대한 search tree를 만들고 가장 최적의 path를 찾아가는 방식으로 게임을 플레이하게 되는데, 이 tree의 size는 각 위치 별로 가능한 가능한 모든 movement의 개수 b와 게임의 길이 d의 조합인, \(b^d\)로 표현된다. 참고로 b는 breadth이고, d는 depth이다. 체스의 경우 b는 약 35, d는 약 80이지만, 바둑은 b가 약 250 d는 약 150이나 된다 (착수 가능한 경우의 수가 평균 250개, 평균 게임 길이가 150수). 10진수로 바꾸면 \(250^{150} \simeq 10^{360}\)이 되는데, 이게 얼마나 대단한 숫자이냐 하면 우주의 모든 원자의 숫자가 약 \(10^{80}\)으로 예상되니까, 각 경우 수마다 원소 하나 씩을 대응시키면 \(10^{280}\)개의 우주가 필요한 셈이다.</p>
-
-
+<h3 id="section-1">왜 바둑이 체스보다 어려운가?</h3>
+<p>글을 본격적으로 시작하기 전에, 왜 바둑이 체스나 다른 게임들보다 어려운지부터 이야기해보자. 체스 (1997년 IBM Deeper blue), 체커 (1994년 CHINOOK <a href="https://www.aaai.org/ojs/index.php/aimagazine/article/viewFile/1208/1109">[6]</a>), tic tac toe (1952년) 등의 게임들은 이미 오래오래 전에 컴퓨터가 인간을 박살낸 분야이다. 게다가 최근 연구들을 통해 Atari 에뮬레이터를 기반으로 한 비디오 게임에서도 굉장히 뛰어난 성능을 내는 모델이 제안된 바 있다 <a href="http://SanghyukChun.github.io/90">[9]</a>. 그런데 바둑은 왜 아직까지 인간을 뛰어넘기가 어려웠을까? 그 이유는 다른 데에 있는 것이 아니라, 바둑에서 발생할 수 있는 경우의 수가 너무나 많기 때문이다. 체스, 바둑 등의 턴 방식의 게임들은 현 상황에서 앞으로 발생할 수 있는 모든 경우의 수에 대한 search tree를 만들고 가장 최적의 path를 찾아가는 방식으로 게임을 플레이하게 되는데, 이 tree의 size는 각 위치 별로 가능한 가능한 모든 movement의 개수 b와 게임의 길이 d의 조합인, $b^d$로 표현된다. 참고로 b는 breadth이고, d는 depth이다. 체스의 경우 b는 약 35, d는 약 80이지만, 바둑은 b가 약 250 d는 약 150이나 된다 (착수 가능한 경우의 수가 평균 250개, 평균 게임 길이가 150수). 10진수로 바꾸면 $250^{150} \simeq 10^{360}$이 되는데, 이게 얼마나 대단한 숫자이냐 하면 우주의 모든 원자의 숫자가 약 $10^{80}$으로 예상되니까, 각 경우 수마다 원소 하나 씩을 대응시키면 $10^{280}$개의 우주가 필요한 셈이다.</p>
 <p>...사이즈가 너무 커서 도저히 감도 오지 않는다. 아무튼 체스는 그 search space의 크기가 20년 전의 (슈퍼) 컴퓨터로 exact tree search가 가능할 정도의 크기였고 지금은 개인 PC에서도 exact search가 가능할 정도이나, 바둑은 그와는 비교도 할 수 없는 무시무시한 크기를 보여주는 것이다. (정확히는 약 googol배는 더 크다고 한다. 맞다, 구글의 이름의 기원인 세상에서 가장 큰 단위인 그 구골이다..) 때문에 AI 쪽에서는 바둑을 정복하는 것이 최대 과제 중 하나였다. 어떻게 이 어마어마한 search space를 감당할 수 있을것인가?</p>
+<p>보다 더 자세한 설명을 하기 이전에, 바둑, 체스, 체커 등의 턴제 게임을 어떻게 tree search로 해결한다는 것인지 설명을 하고 넘어가도록 하자. 모든 턴제 게임은 일종의 트리 travel로 생각할 수 있다. 즉, 맨 처음 시작에서 각자가 한 턴을 소비할 때마다 트리의 노드로 이동하고, 결국 맨 마지막에 누군가가 승리하는 위치로 도달하면 게임이 끝나는 것이다. 체스는 그것이 체크메이크가 되는 것이고, 바둑은 돌을 더 이상 둘 곳이 없을 때 집의 개수가 더 많은 쪽이 되는 것이다. 특히 바둑에서는 tree가 다음처럼 표현된다.</p>
 
-
-<p>보다 더 자세한 설명을 하기 이전에, 바둑, 체스, 체커 등의 턴제 게임을 어떻게 tree search로 해결한다는 것인지 설명을 하고 넘어가도록 하자. 모든 턴제 게임은 일종의 트리 travel로 생각할 수 있다. 즉, 맨 처음 시작에서 각자가 한 턴을 소비할 때마다 트리의 노드로 이동하고, 결국 맨 마지막에 누군가가 승리하는 위치로 도달하면 게임이 끝나는 것이다. 체스는 그것이 체크메이크가 되는 것이고, 바둑은 돌을 더 이상 둘 곳이 없을 때 집의 개수가 더 많은 쪽이 되는 것이다. 특히 바둑에서는 tree가 다음처럼 표현된다. 출처 <a href="http://spri.kr/post/14725">[3]</a></p>
-
-
-<p><img class="center" src="/images/post/97-1.png" width="600"></p>
+<div class="caption">
+<img class="center" src="/images/post/97-1.png" width="600">
+<p>바둑의 Search Tree. 출처: <a href="http://spri.kr/post/14725">[3]</a></p>
+</div>
 
 <p>그럼 이제 tree를 만들었으니, 매 순간마다 맨 끝까지 tree를 진행한다음 제일 좋은 결과를 보이는 node를 고르면 된다. 끝! ...이라고 하고 싶지만 계속 반복해서 언급했듯 tree size가 우주 원자보다 많기 때문에 brute force는 불가능하다. 모 IT 변호사님 말처럼 모든 경우의 수를 세는 brute force를 하기 때문에 불공평하다는 얘기는 말이 안되는 셈. 때문에 알파고에서 가장 핵심이 되는 부분 중 하나는 바로 어떻게 tree search를 하느냐이다. Exact search가 힘들기 때문에 search space를 줄이는 적절한 approximation algorithm을 사용해야하는데 그 방법을 어떤 것을 취하는지가 문제가 되는 것이다.</p>
-
-
 <p>이건 사족인데, 방금 위에서 얼렁뚱땅 대충 tree로 좋은 node를 고른다고 했지만, 사실은 Minimax algorithm이라는 것을 사용해서, 나의 이득은 최대화하고, 상대방의 이득은 최소화하는 방향을 계속 반복하면서 아래로 value를 propagate하면서 계속 sub tree를 만들고... 뭐 그런 알고리즘을 써야한다. 결국 모든 node에 저런 계산을 해야하기 때문에 바둑같은 무식하게 큰 tree에서는 이 방법을 쓸 수 없는 것이 문제가 되는 것. Minimax에 대해서는 한국어로 된 좋은 자료 <a href="http://spri.kr/post/14725">[3]</a>가 있으니 참고하면 좋다.</p>
 
-
-
-
-<h5>Monte-Carlo Tree search</h5>
-
-
+<h3 id="monte-carlo-tree-search">Monte-Carlo Tree search</h3>
 <p>바둑의 search space의 크기는 착수 가능한 경우의 수를 밑으로하고 250의 평균 바둑 한 판의 길이인 150수를 지수로 하는 무식하게 큰 숫자이다. 따라서 search space를 줄이기 위해서는 (1) tree의 breadth search를 줄이는 방법 (착수 위치를 exact하게 전부 고려하는 대신, 좀 더 작은 숫자로 줄이는 방법), (2) tree의 depth를 줄이는 방법 (매 번 tree를 exact하게 끝까지 보지않는 방법) 이 두 가지가 필요하다. 현재 (AlphaGo이전의) state-of-art 바둑 system들은 이 방법을 해결하기 위하여 Monte-Carlo Tree search (MCTS)라는 방법을 사용하고 있다. MCTS의 이름에 Monte-Carlo가 들어가는 것을 보면 알 수 있듯, 이 방법론은 tree search를 exact tree traversal을 하는 대신, random하게 node를 하나 고르고 (sampling하고) 그것을 통해 확률적인 방법으로 approximate tree search를 하는 방법론이다. 당연히 계속 반복하면 asymptotic하게 optimal value function으로 converge하는 것 역시 증명되어있다.</p>
+<p>MCTS를 완전 high level로만 설명하면, 다음과 그림과 같은 4개의 seqeunce를 계속 반복하는 과정이라 할 수 있다.</p>
 
-
-<p>MCTS를 완전 high level로만 설명하면, 다음과 그림과 같은 4개의 seqeunce를 계속 반복하는 과정이라 할 수 있다. (출처: <a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[4]</a>)</p>
-
-
-<p><img class="center" src="/images/post/97-2.png" width="600"></p>
-
+<div class="caption">
+<img class="center" src="/images/post/97-2.png" width="600">
+<p>High level description of MCTS. 출처: <a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[4]</a></p>
+</div>
 <p>각 step에 대한 설명은 다음과 같다. 여기에서 핵심은 <b>Tree Policy</b>, 그리고 <b>Default Policy</b>이다.</p>
 
-
 <ol>
-<li>Selection: root node에서부터 <strong>Tree Policy (child selection policy)</strong>를 recursive하게 적용해서 leaf node L까지 도달한 후 L을 select한다.</li>
-<li>Expansion: 만약 도달한 leaf L이 terminate state가 아니라면 (즉 L에서 게임이 끝나지 않았다면) <strong>Tree Policy (leaf create policy)</strong>에 의해 새로운 child node 한 개 혹은 여러 개를 더 만들어서 tree를 exapnd한다.</li>
-<li>Simulation: 새 node 에서 <strong>Default Policy</strong>에 따른 outcome을 계산한다.</li>
-<li>Backpropagation: Simulation 결과를 사용해 selection에서 사용하는 statistic들을 update한다.</li>
+  <li>Selection: root node에서부터 __Tree Policy (child selection policy)__를 recursive하게 적용해서 leaf node L까지 도달한 후 L을 select한다.</li>
+  <li>Expansion: 만약 도달한 leaf L이 terminate state가 아니라면 (즉 L에서 게임이 끝나지 않았다면) __Tree Policy (leaf create policy)__에 의해 새로운 child node 한 개 혹은 여러 개를 더 만들어서 tree를 exapnd한다.</li>
+  <li>Simulation: 새 node 에서 __Default Policy__에 따른 outcome을 계산한다.</li>
+  <li>Backpropagation: Simulation 결과를 사용해 selection에서 사용하는 statistic들을 update한다.</li>
 </ol>
-
 
 <p>이때 Tree Policy와 Default Policy에 대한 설명은 각각 다음과 같다.</p>
 
-
 <ul>
-<li>Tree Policy: 이미 존재하는 search tree에서 leaf node를 select하거나 create하는 policy
-
-<ul>
-<li>바둑의 경우에는 특정 시점에서 가능한 모든 수 중에서 가장 승률이 높은 수를 예측하는 policy라고 생각하면 된다.</li>
+  <li>Tree Policy: 이미 존재하는 search tree에서 leaf node를 select하거나 create하는 policy
+    <ul>
+      <li>바둑의 경우에는 특정 시점에서 가능한 모든 수 중에서 가장 승률이 높은 수를 예측하는 policy라고 생각하면 된다.</li>
+    </ul>
+  </li>
+  <li>Default Policy: 주어진 non-terminal state에서의 (얼마나 좋은 state인지를 측정하는) value를 estimation을 하는 policy
+    <ul>
+      <li>바둑의 경우에는 현재 상황에서 얼마나 승리할 수 있을지를 measure하는 policy라고 생각하면 된다.</li>
+    </ul>
+  </li>
 </ul>
-</li>
-<li>Default Policy: 주어진 non-terminal state에서의 (얼마나 좋은 state인지를 측정하는) value를 estimation을 하는 policy
-
-<ul>
-<li>바둑의 경우에는 현재 상황에서 얼마나 승리할 수 있을지를 measure하는 policy라고 생각하면 된다.</li>
-</ul>
-</li>
-</ul>
-
 
 <p>Backpropagation step 자체는 둘 중 어떤 policy도 사용하지 않지만, 대신 backpropagation을 통해 각 policy들의 parameter들이 update된다. 이 4개의 step이 한 iteration으로, MCTS는 시간이 허락하는 한도 내에서 이 과정을 계속 반복하고, 그 중에서 가장 좋은 결과를 자신의 다음 action으로 삼는다. 다음은 가장 '좋은' node를 고르는 criteria의 4가지 예시이다.</p>
 
-
 <ol>
-<li>Max child: 가장 높은 reward 값을 가지고 있는 node를 고른다.</li>
-<li>Robust child: root node에서부터 가장 많이 visit된 node를 고른다.</li>
-<li>Max-Robust child: 1, 2를 동시에 만족하는 node를 고르며, 그런 node가 없다면 계속 반복해서 그런 node를 찾아낸다.</li>
-<li>Secure node: 가장 lower confidence bound를 maximize하는 node를 고른다.</li>
+  <li>Max child: 가장 높은 reward 값을 가지고 있는 node를 고른다.</li>
+  <li>Robust child: root node에서부터 가장 많이 visit된 node를 고른다.</li>
+  <li>Max-Robust child: 1, 2를 동시에 만족하는 node를 고르며, 그런 node가 없다면 계속 반복해서 그런 node를 찾아낸다.</li>
+  <li>Secure node: 가장 lower confidence bound를 maximize하는 node를 고른다.</li>
 </ol>
 
-
 <p>딥마인드에서 쓴 논문 <a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[1]</a>이나 포스트 <a href="http://googleresearch.blogspot.kr/2016/01/alphago-mastering-ancient-game-of-go.html">[2]</a>를 보면 single machine과 multi machine에서의 성능 차이에 대해 언급하는데, 아마도 iteration을 더 많이 시도해볼 수 있기 때문에 결과가 더 좋은 것이 아닐까싶다.</p>
-
-
 <p>MCTS의 일반적인 알고리즘을 정리하면 다음과 같이 적을 수 있다. (1) Tree Policy, (2) Default Policy, (3) Best Child Selection 이 세가지를 어떻게 정하느냐에 따라서 알고리즘의 종류가 바뀐다고 보면 된다.</p>
-
-
 <p><img class="center" src="/images/post/97-3.png" width="400"></p>
-
 <p>알고리즘을 보면 알 수 있듯, 굉장히 reinforcement learning스러운 방식을 취하기 때문에 (1) Aheuristic, 즉 뭔가 이유가 있고 reasonable한 decision making을 할 수 있으며 (2) Asymmetric, 아래 그림처럼 tree를 symmetric하지 않게, 더 relevant한 부분만 집중적으로 서치할 수 있다.</p>
-
-
 <p><img class="center" src="/images/post/97-4.png" width="500"></p>
-
 <p>Survey paper <a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[4]</a>를 보면 MCTS family 중에서 몇 가지 유명한 알고리즘들에 대해 설명하고 있는데 bandit 기반의 알고리즘들이 많이 있다. UCB를 기반으로 한 UCT (Upper Confidence Bounds for Trees), 그것을 좀 발전시킨 BAST (Bandit Algorithm for Smooth Trees).. 그것 이외에도 정말 수 많은 family들에 대해 설명하고 있으니 더 관심이 있으면 해당 논문을 읽어보면 좋을 것 같고, survey paper가 너무 길다면, MCTS에 대해 잘 정리되어있는 사이트 <a href="http://mcts.ai/about/index.html">[5]</a>가 있으니 이 사이트를 참고하면 좋겠다.</p>
 
-
-
-
-<h5>Approaches by AlphaGo</h5>
-
-
+<h3 id="approaches-by-alphago">Approaches by AlphaGo</h3>
 <p>앞서 설명한 MCTS가 비록 full search를 하지 않아도 된다지만, 결국 바둑에 적용하기 위해서는 breadth와 depth를 줄이는 과정이 필요하다. AlphaGo에서 이 둘을 줄이기 위하여 사용한 것이 바로 deep learning technique으로, 먼저 착수하는 지점을 평가하기 위한 value network, 그리고 샘플링을 하는 distribution을 만들기 위한 policy network 두 가지 network를 사용하게 된다.</p>
-
-
 <p>결국 AlphaGo가 한 것을 한 마디로 요약하자면 Monte-Carlo Tree search이며, tree의 search space를 줄이기 위하여 value network와 policy network 두 가지 (사실은 세 가지) network를 한 번에 learning할 수 있는 architecture를 만들고 이를 사용해 MCTS의 성능을 끌어올린 것이다. 따라서 이 방법은 비단 바둑에서만 사용할 수 있는 방법이 아니라, MCTS를 사용할 수 있는 거의 모든 방법론에 적용하는 것이 가능하다. 지금 AlphaGo가 input으로 흰 돌과 검은 돌들이 놓여져 있는 바둑판 그림을 사용하고 있기에 바둑을 학습하는 것이고, 그 이외에 search space가 너무 넓어서 exact tree search가 불가능한 model에서 전부 AlphaGo의 방법론을 사용할 수 있는 것이다.</p>
-
-
 <p>다시 본론으로 돌아와서, 더 자세한 설명을 하기 이전에 먼저 General MCTS에서 사용하는 네 가지 step (selection, expansion, simulation, backpropagation)을 AlphaGo는 어떻게 적용했는지 살펴보자.</p>
-
-
 <p><img class="center" src="/images/post/97-5.png" width="600"></p>
 
 <ol>
-<li>Selection: 현재 상태에서 Q + u가 가장 큰 지점을 고른다.
-
-<ul>
-<li>Q: MCTS의 action-value 값, 클 수록 승리 확률이 높아짐 (Q function에 대해서는 이전에 쓴 reinforcement 글 <a href="/76">[8]</a> 참고)</li>
-<li>u(P): <strong>Policy network (SL)</strong>과 node 방문 횟수 등에 의해 결정되는 값</li>
-</ul>
-</li>
-<li>Expansion: 방문 횟수가 40회가 넘는 경우 child를 하나 expand한다.</li>
-<li>Simulation: <strong>Value network</strong>와 <strong>Fast rollout</strong>이라는 두 가지 방법을 사용해 reward를 계산한다.
-
-<ul>
-<li>Value network는 <strong>Policy network (RL)</strong>을 사용해서 learning한다.</li>
-</ul>
-</li>
-<li>Backpropagation: 시작 지점부터 마지막 leaf node까지 모든 edge의 parameter를 갱신한다.</li>
-<li>1-4를 (시간이 허락하는 한도 내에서) 계속 반복하다가, Best Child Selection으로는 robust child, 즉 가장 많이 방문한 node를 선택한다.</li>
+  <li>Selection: 현재 상태에서 Q + u가 가장 큰 지점을 고른다.
+    <ul>
+      <li>Q: MCTS의 action-value 값, 클 수록 승리 확률이 높아짐 (Q function에 대해서는 이전에 쓴 reinforcement 글 <a href="/76">[8]</a> 참고)</li>
+      <li>u(P): __Policy network (SL)__과 node 방문 횟수 등에 의해 결정되는 값</li>
+    </ul>
+  </li>
+  <li>Expansion: 방문 횟수가 40회가 넘는 경우 child를 하나 expand한다.</li>
+  <li>Simulation: __Value network__와 __Fast rollout__이라는 두 가지 방법을 사용해 reward를 계산한다.
+    <ul>
+      <li>Value network는 __Policy network (RL)__을 사용해서 learning한다.</li>
+    </ul>
+  </li>
+  <li>Backpropagation: 시작 지점부터 마지막 leaf node까지 모든 edge의 parameter를 갱신한다.</li>
+  <li>1-4를 (시간이 허락하는 한도 내에서) 계속 반복하다가, Best Child Selection으로는 robust child, 즉 가장 많이 방문한 node를 선택한다.</li>
 </ol>
 
-
 <p>AlphaGo는 위에서 언급한 policy network를 supervised learning (SL), reinforcement learning (RL) 두 가지로 나눠서 학습한다. SL network는 그 동안 실제 프로기사가 둔 기보를 바탕으로 특정 기보에 대한 다음 수를 classification하는 방식으로 learning하고, RL network는 SL network로 initialize한 후, reinforcement learning 방식 (AlphaGo의 자가대국이라고 부르는 방식)으로 주어진 기보에 대한 다음 수의 distribution을 학습한다.</p>
-
-
 <p>AlphaGo는 앞에서 설명한 Rollout Policy, SL network, RL network 그리고 마지막 value network를 한 번에 pipeline 방식으로 learning하는 architecture를 디자인했다.</p>
 
-
-
-
-<h5>Supervised Learning of Policy Network (SL Policy Network)</h5>
-
-
-<p>먼저 AlphaGo의 Supervised Learning (SL) Policy Network \(p_\sigma (a | s)\)에 대해 알아보자. 이 네트워크는 단순한 CNN으로, input은 시간 t일 때의 기보(s)이고, output은 시간 t+1 일 때의 기보(a)가 된다. 따라서 이 네트워크는 classification network가 된다. 다만 문제라면 output layer의 dimension이 너무 거대하다는 것. 개인적으로 이런 도대체 네트워크를 어떻게 learning시킨건지 상상조차 되지 않는다. 참고로 이 네트워크는 단순 classification task만 하기 때문에 sequencial할 필요는 없다. 때문에 그냥 모든 (s,a) pair에서 랜덤하게 데이터를 샘플해서 SGD로 learning하게 된다.</p>
-
-
+<h4 id="supervised-learning-of-policy-network-sl-policy-network">Supervised Learning of Policy Network (SL Policy Network)</h4>
+<p>먼저 AlphaGo의 Supervised Learning (SL) Policy Network $p_\sigma (a | s)$에 대해 알아보자. 이 네트워크는 단순한 CNN으로, input은 시간 t일 때의 기보(s)이고, output은 시간 t+1 일 때의 기보(a)가 된다. 따라서 이 네트워크는 classification network가 된다. 다만 문제라면 output layer의 dimension이 너무 거대하다는 것. 개인적으로 이런 도대체 네트워크를 어떻게 learning시킨건지 상상조차 되지 않는다. 참고로 이 네트워크는 단순 classification task만 하기 때문에 sequencial할 필요는 없다. 때문에 그냥 모든 (s,a) pair에서 랜덤하게 데이터를 샘플해서 SGD로 learning하게 된다.</p>
 <p>네트워크는 총 13 layer CNN을 사용했으며 KGS라는 곳에서 3천만건의 기보 데이터를 가져와서 학습했다고 한다. 네트워크 구조를 어떻게 만들었는지 궁금해서 살펴보니, inner product layer는 하나도 없이 처음부터 끝까지 convolution layer만 학습한 모양이다.</p>
-
-
 <p>논문에 따르면, AlphaGo는 이 부분에서 기존 state-of-art였던 44.4%보다 훨씬 좋은 classification accuracy인 57%까지 성능개선을 보였다고 한다. 또한 이 accuarcy가 좋으면 좋을수록 AlphaGo의 최종 winning rate가 상승한다는 사실까지 다음 그림과 같이 실험적으로 보이고 있다.</p>
-
-
 <p><img class="center" src="/images/post/97-6.png" width="400"></p>
 
-<h5>Reinforcement Learning of Policy Networks (RL Policy Network)</h5>
-
-
-<p>RL network는 SL network와 동일한 구조를 가지고 있으며, 초기 값 \(\rho\) 역시 SL network의 parameter value \(\sigma\)로 초기화된다. RL network는 현재 RL network policy \(p_\rho\)와 이전 iteration에서 사용했던 policy network 중에서 랜덤하게 하나를 뽑은 다음 이 둘끼리 서로 대국을 하게 한 후, 둘 중에서 현재 네트워크가 최종적으로 이기면 reward를 +1, 지면 -1을 주도록 디자인되어있다. 그러나 당연히 그 reward는 대국이 끝난 시점의 T에서의 reward이지 현재 시점 t에서의 reward는 0이기 때문에, 대신 네트워크의 outcome을 \(z_t = \pm r(s_T)\)으로 정의한다. 즉, 이 네트워크의 outcome은 현재 player의 time t에서의 terminated reward가 된다. 이 네트워크 역시 Stochasic gradient method를 사용해 expected reward를 maximize하는 방식으로 학습이 된다. 여기에서 과거에 학습된 네트워크를 사용하는 이유는, 좀 더 generalize된 모델을 만들고, overfitting을 피하고 싶기 때문이라고 한다 (언론에서 말하는 '자기 자신이랑 계속 반복해서 대국을 진행하는 방식으로 더 똑똑해진다' 라는 표현은 여기에서 나오는 자가 대국을 의미하는 것 같다).</p>
-
-
+<h4 id="reinforcement-learning-of-policy-networks-rl-policy-network">Reinforcement Learning of Policy Networks (RL Policy Network)</h4>
+<p>RL network는 SL network와 동일한 구조를 가지고 있으며, 초기 값 $\rho$ 역시 SL network의 parameter value $\sigma$로 초기화된다. RL network는 현재 RL network policy $p_\rho$와 이전 iteration에서 사용했던 policy network 중에서 랜덤하게 하나를 뽑은 다음 이 둘끼리 서로 대국을 하게 한 후, 둘 중에서 현재 네트워크가 최종적으로 이기면 reward를 +1, 지면 -1을 주도록 디자인되어있다. 그러나 당연히 그 reward는 대국이 끝난 시점의 T에서의 reward이지 현재 시점 t에서의 reward는 0이기 때문에, 대신 네트워크의 outcome을 $z_t = \pm r(s_T)$으로 정의한다. 즉, 이 네트워크의 outcome은 현재 player의 time t에서의 terminated reward가 된다. 이 네트워크 역시 Stochasic gradient method를 사용해 expected reward를 maximize하는 방식으로 학습이 된다. 여기에서 과거에 학습된 네트워크를 사용하는 이유는, 좀 더 generalize된 모델을 만들고, overfitting을 피하고 싶기 때문이라고 한다 (언론에서 말하는 '자기 자신이랑 계속 반복해서 대국을 진행하는 방식으로 더 똑똑해진다' 라는 표현은 여기에서 나오는 자가 대국을 의미하는 것 같다).</p>
 <p>논문에 따르면 SL policy network와 RL policy network가 경쟁할 경우, 거의 80% 이상의 게임을 RL network가 승리했다고 한다. 또한 다른 state-of-art 프로그램들과 붙었을 때도 훨씬 좋은 성능을 발휘했다고 한다.</p>
 
-
-
-
-<h5>Reinforcement Learning of Value Networks</h5>
-
-
-<p>이제 AlphaGo의 deep learning architecture 중에서 마지막 단계인 value network \(v_\theta (s)\)만 남았다. Value network는 evaluation 단계에서 사용하는 네트워크로, position (현재 기보) s와 policy p가 주어졌을 때, value function \(v^p(s)\)를 predict하는 네트워크이다. 즉, 다음과 같은 식으로 표현할 수 있다.</p>
-
-
-<p>\[v^p(s) = \mathbb E [z_t | s_t = s, a_{t\ldots T} \sim p].\]</p>
-
-
-<p>문제는 그 누구도 바둑에서 최적의 수를 모르기 때문에 (다시 강조하지만 search space가 우주의 원자 개수보다 많다) optimal value function \(v^*(s)\)를 학습할 방법이 없다는 것이다. 그 대신, AlphaGo는 현재 시스템에서 가장 우수한 policy인 RL policy network \(p_\rho\)를 사용해 optimal value function을 approximation한다. Value network는 앞에서 설명한 policy network와 비슷한 구조를 띄고 있지만, 마지막 output layer으로 모든 기보가 아닌, single probability distribution을 사용한다. 따라서 이제 문제는 classification이 아니라 regression이 된다. Value network는 현재 가장 state-outcome pair인 (s,z)에 의해서 학습이 된다 (여기에서 z는 RL network에서 나왔던 최종 reward의 값으로 1 또는 -1이다).</p>
-
-
-<p>따라서 Value network는 s에 대해 z가 나오도록 하는 regression network를 학습하게 되며, error는 \(z - v_\theta(s)\)가 된다. 그런데 문제는, state s는 한 개의 기보인데, reward target은 전체 game에 대해 정의되므로, succesive position들끼리 서로 강하게 correlation이 생겨서 결국 overfitting이 발생한다는 것이다. 이 문제를 해결하기 위해 AlphaGo는 3천만개의 데이터를 RL policy network들끼리의 자가대국을 통해 만들어낸 다음 그 결과를 다시 또 value network를 learning하는 데에 사용한다. 그 결과 원래 training error 0.19, test error 0.37로 overfitted되었던 네트워크가, training error 0.226, test error 0.234로 훨씬 더 generalized된 네트워크로 학습되었다는 것을 알 수 있다.</p>
-
-
+<h4 id="reinforcement-learning-of-value-networks">Reinforcement Learning of Value Networks</h4>
+<p>이제 AlphaGo의 deep learning architecture 중에서 마지막 단계인 value network $v_\theta (s)$만 남았다. Value network는 evaluation 단계에서 사용하는 네트워크로, position (현재 기보) s와 policy p가 주어졌을 때, value function $v^p(s)$를 predict하는 네트워크이다. 즉, 다음과 같은 식으로 표현할 수 있다.</p>
+<p>$$v^p(s) = \mathbb E [z_t | s_t = s, a_{t\ldots T} \sim p].$$</p>
+<p>문제는 그 누구도 바둑에서 최적의 수를 모르기 때문에 (다시 강조하지만 search space가 우주의 원자 개수보다 많다) optimal value function $v^*(s)$를 학습할 방법이 없다는 것이다. 그 대신, AlphaGo는 현재 시스템에서 가장 우수한 policy인 RL policy network $p_\rho$를 사용해 optimal value function을 approximation한다. Value network는 앞에서 설명한 policy network와 비슷한 구조를 띄고 있지만, 마지막 output layer으로 모든 기보가 아닌, single probability distribution을 사용한다. 따라서 이제 문제는 classification이 아니라 regression이 된다. Value network는 현재 가장 state-outcome pair인 (s,z)에 의해서 학습이 된다 (여기에서 z는 RL network에서 나왔던 최종 reward의 값으로 1 또는 -1이다).</p>
+<p>따라서 Value network는 s에 대해 z가 나오도록 하는 regression network를 학습하게 되며, error는 $z - v_\theta(s)$가 된다. 그런데 문제는, state s는 한 개의 기보인데, reward target은 전체 game에 대해 정의되므로, succesive position들끼리 서로 강하게 correlation이 생겨서 결국 overfitting이 발생한다는 것이다. 이 문제를 해결하기 위해 AlphaGo는 3천만개의 데이터를 RL policy network들끼리의 자가대국을 통해 만들어낸 다음 그 결과를 다시 또 value network를 learning하는 데에 사용한다. 그 결과 원래 training error 0.19, test error 0.37로 overfitted되었던 네트워크가, training error 0.226, test error 0.234로 훨씬 더 generalized된 네트워크로 학습되었다는 것을 알 수 있다.</p>
 <p>마지막으로, 아래 그림은 랜덤 policy, fast rollout policy, value network, SL network 그리고 RL network를 사용했을 때 각각의 value network의 expected loss가 plot되어있다. Loss는 실제 프로기사가 둔 수와, 각 policy로 둔 수와의 mean square loss이다. 결국, RL policy를 쓰는 것이 그렇지 않은 것보다 훨씬 우수한 결과를 낸다는 것을 알 수 있다.</p>
-
-
 <p><img class="center" src="/images/post/97-7.png" width="400"></p>
 
 <p>이제 high level로 앞에서 살펴본 세 네트워크를 살펴보자.</p>
-
-
 <p><img class="center" src="/images/post/97-8.png" width="600"></p>
-
 <p>먼저 왼쪽 그림은 어떻게 AlphaGo에서 세 네트워크를 pipeline 형태로 묶었는지를 보여준다. 사람이 실제로 둔 기보를 바탕으로 rollout policy, SL policy를 learning하고, SL policy를 initialization 값으로 사용해 RL policy를 learning한다. 그 후 RL policy를 사용해 value network를 learning하는 것이다.</p>
-
-
 <p>앞에서 깜빡하고 언급하지 않았는데, Fast Rollout Policy는 전체 바둑 상태가 아닌 local한 3 by 3 판에서 다음 수를 빠르게 예측해서 terminate state까지 게임을 play한 후 simulation하는 policy로, policy network를 사용한 방법보다 성능은 떨어질지 몰라도 약 1500배 정도 빠르다고 언급되고 있다. 그냥 빠른 naive approach라고 생각하면 될 것 같다.</p>
-
-
 <p>오른쪽 그림에서는 policy network와 value network의 차이를 보여주고 있다. Policy network들은 전부 input, output이 기보로 나타나고 (input이 지금 기보, output이 다음 기보) value network는 board 전체에 대한 probability를 학습한다는 점이 다르다. 즉, policy network는 주어진 기보에서 가장 확률이 높은 action을 고르는 방식으로 MCTS의 selection을 하는 역할을 하고, value network는 simulation결과를 통해 실제로 둘 수 있는 점들 중에서 가장 이길 확률이 높은 (reward가 승리이므로) 곳을 찾아내는 역할을 하게 되는 것이다.</p>
-
-
 <p>그리고 <a href="http://spri.kr/post/14725">[3]</a>에서 구체적인 CNN 구조를 설명한 그림이 있어서 인용하도록 하겠다.</p>
-
-
 <p><img class="center" src="/images/post/97-9.png" width="600"></p>
 
-<h5>Searching with Policy and Value Networks</h5>
-
-
-<p>이제 policy와 value network를 설계하였으니 실제로 이 네트워크들을 어떻게 MCTS에서 사용하는지 살펴보자. MCTS의 각각의 edge (s,a)는 action value Q(s,a), visit count N(s,a), prior probability P(s,a)를 저장한다. Tree는 simulation을 사용해서 traversal을 root node에서부터 진행하게 된다. Simulation의 각 step t마다, action \(a_t\)는 state \(s_t\)에 대해 다음과 같이 정의된다.</p>
-
-
-<p>\[a_t = \arg\max_a (Q(s_t,a) + u(s_t, a)), \mbox{ where } u(s,a) \propto \frac{P(s,a)}{1+N(s,a)}. \]</p>
-
-
-<p>Traversal을 지속하다 leaf node L에 도달하게 되면, expand여부를 결정하게 된다 (방문횟수로 결정하는 듯 하다). 그 후 leaf node에서의 position \(s_L\)을 사용해서 SL policy \(p_\sigma\)를 prior P에 저장한다. 즉, \(P(s,a) = p_\sigma(s,a)\)가 된다. 이때 leaf node는 두 가지 방법으로 evaluate된다. 먼저 value network \(v_\theta(s_L)\), 그리고 fast rollout policy \(p_\pi\)를 사용해 terminal step T까지 도달했을 때 random rollout play로 얻어진 outcome \(z_L\). 이 둘은 parameter \(\lambda\)를 사용해 다음과 같이 combine된다.</p>
-
-
-<p>\[ V(s_L) = (1-\lambda)v_\theta (s_L) + \lambda z_L. \]</p>
-
-
+<h4 id="searching-with-policy-and-value-networks">Searching with Policy and Value Networks</h4>
+<p>이제 policy와 value network를 설계하였으니 실제로 이 네트워크들을 어떻게 MCTS에서 사용하는지 살펴보자. MCTS의 각각의 edge (s,a)는 action value Q(s,a), visit count N(s,a), prior probability P(s,a)를 저장한다. Tree는 simulation을 사용해서 traversal을 root node에서부터 진행하게 된다. Simulation의 각 step t마다, action $a_t$는 state $s_t$에 대해 다음과 같이 정의된다.</p>
+<p>$$a_t = \arg\max_a (Q(s_t,a) + u(s_t, a)), \mbox{ where } u(s,a) \propto \frac{P(s,a)}{1+N(s,a)}. $$</p>
+<p>Traversal을 지속하다 leaf node L에 도달하게 되면, expand여부를 결정하게 된다 (방문횟수로 결정하는 듯 하다). 그 후 leaf node에서의 position $s_L$을 사용해서 SL policy $p_\sigma$를 prior P에 저장한다. 즉, $P(s,a) = p_\sigma(s,a)$가 된다. 이때 leaf node는 두 가지 방법으로 evaluate된다. 먼저 value network $v_\theta(s_L)$, 그리고 fast rollout policy $p_\pi$를 사용해 terminal step T까지 도달했을 때 random rollout play로 얻어진 outcome $z_L$. 이 둘은 parameter $\lambda$를 사용해 다음과 같이 combine된다.</p>
+<p>$$ V(s_L) = (1-\lambda)v_\theta (s_L) + \lambda z_L. $$</p>
 <p>앞에서 진행한 simulation이 끝나고나면, 이제 각 edge들이 가지고 있는 parameter들을 update할 차례다. 앞에서 언급했듯, AlphaGo의 MCTS는 각각의 edge (s,a)에 action value Q(s,a), visit count N(s,a), prior probability P(s,a)를 저장한다. 여기에서 P(s,a)는 SL network로 update가 되고, 남은건 Q와 N이다. 이 값들은 다음과 같은 과정으로 업데이트 된다.</p>
-
-
-<p>\[N(s,a) = \sum_i \mathbf{1}(s,a,i)\]</p>
-
-
-<p>\[Q(s,a) = \sum_i \frac{1}{N(s,a)} \mathbf{1}(s,a,i) V(s_L^i).\]</p>
-
-
-<p>\(s_L^i\)는 i번째 simulation에서 leaf node를 의미하며, \(\mathbf{1}(s,a,i)\)는 i번째 simulation에서 edge (s,a)가 관측되었는지에 대한 indicator function이다. 이런 방식을 통해 서치가 다 끝나고나면 AlphaGo는 root에서 부터 가장많이 선택된 node를 선택하는 방식으로 한 수를 둔다.</p>
-
-
+<p>$$N(s,a) = \sum_i \mathbf{1}(s,a,i)$$</p>
+<p>$$Q(s,a) = \sum_i \frac{1}{N(s,a)} \mathbf{1}(s,a,i) V(s_L^i).$$</p>
+<p>$s_L^i$는 i번째 simulation에서 leaf node를 의미하며, $\mathbf{1}(s,a,i)$는 i번째 simulation에서 edge (s,a)가 관측되었는지에 대한 indicator function이다. 이런 방식을 통해 서치가 다 끝나고나면 AlphaGo는 root에서 부터 가장많이 선택된 node를 선택하는 방식으로 한 수를 둔다.</p>
 <p>재미있는 점은, MCTS의 policy function으로 SL policy를 쓰는 것이 RL policy보다 낫다고 논문에 report된 점이다. 이유는 (SL policy를 learning할 때 사용한) 사람이 두는 수는 뒤를 생각한 좀 더 global한 수를 두는 반면, RL policy는 그 순간의 가장 최고의 move를 하기 때문에, SL policy가 더 낫다는 것이다. 반면, value network는 SL network가 아닌 RL network를 사용하는 편이 훨씬 성능이 좋다고 한다.</p>
 
-
-
-
-<h5>정리</h5>
-
-
+<h3 id="section-2">정리</h3>
 <p>이 글에서는 자세한 네트워크의 구조나 코드 구현보다는 실제로 이 알고리즘이 어떻게 동작하는지, 그리고 모델은 어떻게 구성했는지에 대해 집중적으로 다뤘다. AlphaGo는 MCTS를 deep learning pipeline을 통해 훨씬 성능을 개선한 work이라 할 수 있으며, network는 SL, RL 두개의 policy network 그리고 value network 총 세 가지를 learning하게 된다. Policy network는 MCTS의 selection에서 쓰이게 되며, value network는 MCTS의 evaluation에서 쓰이게 된다.</p>
-
-
 <p>각종 매체나 언론에서는 알파고가 인간이 1000년 동안 두어야 둘 수 있는 대국을 진행했고, 최적의 수를 항상 찾아내기 때문에 이세돌 사범에게 불리하다는 식으로 보도를 하고 있지만, 사실은 그 이전에도 AlphaGo가 사용하던 데이터와 동일한 데이터로 훨씬 못한 결과들을 내왔었다. 결국 알파고가 뛰어난 점은 기존 방법들보다 훨씬 smart한 architecture를 디자인하고, 그 architecture의 power를 최대한으로 끌어올리기 위해서 parallel computing 등의 각종 기법들을 사용해서 시스템을 엄청 정교하게 만들었다는 점이라고 할 수 있다. 그러나 아무리 대단한 시스템 엔지니어라고 하더라도, 근본이 되는 모델의 성능이 나쁘다면 그 시스템을 인간 수준으로 끌어올리지는 못했을 것이다. 결국 구글은, 그리고 딥마인드는, 정말 '인간답게' sequencial decision process를 학습하는 멋진 시스템을 디자인했다고 볼 수 있을 것 같다.</p>
 
-
-
-
-<h5>References</h5>
-
-
+<h3 id="references">References</h3>
 <ol class="reference">
-    <li><a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[Nature] Silver, David, et al. "Mastering the game of Go with deep neural networks and tree search.", 2016.</a>, <a href="http://airesearch.com/wp-content/uploads/2016/01/deepmind-mastering-go.pdf">[pdf링크]</a></li>
-    <li><a href="http://googleresearch.blogspot.kr/2016/01/alphago-mastering-ancient-game-of-go.html">[Google Research Blog] "AlphaGo: Mastering the ancient game of Go with Machine Learning.", 2016.</a></li>
-    <li><a href="http://spri.kr/post/14725">[SPRI] 소프트웨어 정책연구소."AlphaGo의 인공지능 알고리즘 분석.", 2016.</a></li>
-    <li><a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[Computational Intelligence and AI in Games] Browne, Cameron B., et al. "A survey of monte carlo tree search methods.", 2012.</a></li>
-    <li><a href="http://mcts.ai/about/index.html">MCTS.ai</a></li>
-    <li><a href="https://www.aaai.org/ojs/index.php/aimagazine/article/viewFile/1208/1109">[AAAI] Schaeffer, Jonathan, et al. "CHINOOK the world man-machine checkers champion.", 1996.</a></li>
-    <li><a href="http://SanghyukChun.github.io/75/#75-cnn">Machine Learning 스터디 (19) Deep Learning - RBM, DBN, CNN</a></li>
-    <li><a href="http://SanghyukChun.github.io/76">Machine Learning 스터디 (20) Reinforcement Learning</a></li>
-    <li><a href="http://SanghyukChun.github.io/90">Playing Atari With Deep Reinforcement Learning (NIPS 2013)</a></li>
+	<li><a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">[Nature] Silver, David, et al. "Mastering the game of Go with deep neural networks and tree search.", 2016.</a>, <a href="http://airesearch.com/wp-content/uploads/2016/01/deepmind-mastering-go.pdf">[pdf링크]</a></li>
+	<li><a href="http://googleresearch.blogspot.kr/2016/01/alphago-mastering-ancient-game-of-go.html">[Google Research Blog] "AlphaGo: Mastering the ancient game of Go with Machine Learning.", 2016.</a></li>
+	<li><a href="http://spri.kr/post/14725">[SPRI] 소프트웨어 정책연구소."AlphaGo의 인공지능 알고리즘 분석.", 2016.</a></li>
+	<li><a href="http://www.cameronius.com/cv/mcts-survey-master.pdf">[Computational Intelligence and AI in Games] Browne, Cameron B., et al. "A survey of monte carlo tree search methods.", 2012.</a></li>
+	<li><a href="http://mcts.ai/about/index.html">MCTS.ai</a></li>
+	<li><a href="https://www.aaai.org/ojs/index.php/aimagazine/article/viewFile/1208/1109">[AAAI] Schaeffer, Jonathan, et al. "CHINOOK the world man-machine checkers champion.", 1996.</a></li>
+	<li><a href="http://SanghyukChun.github.io/75/#75-cnn">Machine Learning 스터디 (19) Deep Learning - RBM, DBN, CNN</a></li>
+	<li><a href="http://SanghyukChun.github.io/76">Machine Learning 스터디 (20) Reinforcement Learning</a></li>
+	<li><a href="http://SanghyukChun.github.io/90">Playing Atari With Deep Reinforcement Learning (NIPS 2013)</a></li>
 </ol>
 
-
-
-
-<h5>변경 이력</h5>
-
-
+<h3 id="section-3">변경 이력</h3>
 <ul>
-<li>2016년 3월 15일: 글 등록</li>
+  <li>2016년 3월 15일: 글 등록</li>
 </ul>
-
 ]]></content>
   </entry>
   
@@ -308,341 +195,165 @@
     <id>http://SanghyukChun.github.io/93</id>
     <content type="html"><![CDATA[<p>주어진 이미지에 대한 설명을 하는 문장, 혹은 캡션을 생성하는 문제를 image caption 문제라고 한다. 이 문제는 여러 가지 문제들이 복합적으로 얽혀있는 문제라고 할 수 있는데, 먼저 이미지가 어떤 것에 대한 이미지인지 판별하기 위하여 object recognition을 정확하게 할 수 있어야한다. 그 다음에는 detect한 object들 사이의 관계를 추론하여 이미지가 나타내는 event가 무엇인지 알아내어야 하고, 마지막으로 event를 caption으로, 즉 natural language로 재생성해야한다. 얼핏 생각하면 간단한 문제같지만 자그마치 비전과 NLP 분야의 핵심 문제들이 복합적으로 얽혀있는 복잡한 문제인 것이다. <s>방금 너희들이 본 건 간단해 보이지만 자그마치 3개의 퀑 기술이 합쳐진 컴비네이션!</s> 예를 들어보자.</p>
 
-
-<p></p>
-
 <p><img class="center" src="/images/post/93-1.jpg" width="400"></p>
 
 <p>이 사진을 보고 우리는 '오바마가 청소부와 인사를 하고 있다' 라고 바로 문장으로 풀어낼 수 있지만, 이런 문제를 푸는 알고리즘을 디자인하기 위해서는 먼저 이 사진에서 오바마와 청소부라는 핵심 object를 detect 해야한다. 그러나 아직까지는 어떤 object가 중요한지 알 수 없으므로, 먼저 복도에 있는 보좌관들, 기둥, 바닥, 뒤에 보이는 계단 난간, 전등, 복도 등등을 모두 detect 해야한다. 그러므로, caption을 만들기 위해서 가장 먼저 우리는 높은 수준의 object detection과 segmentation을 필요로 하다. 다음으로는 segmentation된 정보를 사용해서 여러 event를 알아내야 한다. '오바마와 청소부가 인사를 하고 있다' '보좌관이 복도를 걷고 있다' '한 남자가 책을 읽고 있다' '사람이 기둥 뒤에 서있다' <s>'기둥 뒤에 공간이 있다'</s> 등의 여러 event를 추정해야하고, 그 중에서 가장 가능성이 높은 event를 판별해야한다. 마지막으로 해당 event를 설명하는 문장을 generate해야한다.</p>
-
-
 <p>현재 caption generation 문제를 해결하는 방법들 중에서 가장 널리 쓰이고 있고, 가장 잘 동작하는 (state-of-art) 방법들은 neural network를 사용한 접근 방식들이다. Neural network를 사용하지 않은 기존 접근 방법은 크게 두 가지가 있었다. 하나는 object detection과 attribute discovery를 먼저 진행한 후에, 그것들을 사용해 미리 만들어놓은 caption template을 채우는 것이고, 또 하나는 비슷한 이미지 들의 caption 데이터를 사용해 지금 image에 적합한 caption으로 수정하는 방식이었다고 한다. Reference들을 보면 약 2010년부터 2013년 정도까지 연구가 활발하게 진행되었던 모양이지만, 지금은 전부 neural network 기반의 work에게 밀려서 사용되지 않는다고 한다.</p>
-
-
 <p>현재 state-of-art를 찍고 있는 Neural network 기반 image description generator 모델들은 주로 2014년쯤부터 활발하게 연구가 진행되고 있다. Image caption 문제를 해결하기 위해 기존 deep learning 연구 그룹들은 마치 image를 하나의 language처럼 취급하고 실제 언어로 'translate' 하는 concept을 도입해서 문제를 machine traslation의 연장선으로 바라보는 접근 방법을 취한다고 한다. 그래서 대부분의 neural network 기반의 work들은 machine translation에서 사용하는 encoder-decoder 아이디어를 활용하여 caption generation을 한다고 한다. 보통 encoder-decoder 과정에서 이미지 하나를 그대로 사용하는 대신, CNN을 사용하여 이미지 하나를 single feature vector로 표현하고, 그 feature vector를 model에서 사용하는 방식을 취하고 있다.</p>
-
-
 <p>올해 초, 기존 state-of-art를 뛰어넘는 RNN visual attention 기반 caption generation model이 <a href="http://arxiv.org/abs/1502.03044">Xu, Kelvin, et al. "Show, attend and tell: Neural image caption generation with visual attention." ICML 2015</a>이라는 work을 통해 제안되었다. 이 논문은 기본적으로 기존의 방법들처럼 encoder-decoder 개념을 사용하지만, 추가로 visual attention이라는 개념을 caption generator에 도입하여 image caption 문제를 해결한다. Attention이란 사람이 시각 정보를 처리할 때 일부 데이터에 'focus'하면서 계속 focus되는 대상이 움직이는 현상을 일컫는다. 최근 RNN을 사용하여 visual attention을 반영한 새로운 모델 들이 여기저기에서 등장하고 있는데, 이는 기존 CNN 기반 접근 방법들이 모든 이미지 픽셀을 그대로 사용하는 것과 대조적이라 할 수 있다. 참고로, 이미 앞선 <a class="tip" title="Recurrent Models of Visual Attention (NIPS 2014)" href="http://SanghyukChun.github.io/91">다른 work</a>에서도 visual attention이라는 개념을 사용해 classification 문제를 해결했었다.</p>
-
-
 <p>이 논문의 가장 큰 contribution은 visual attention을 "hard" attention과 "soft" attention, 두 가지 attention machanism을 제안하고 새로운 방식의 two attention-based image caption generator 모델을 제안했다는 것이다.</p>
 
-
 <ul>
-<li>&ldquo;Soft&rdquo; attention은 deterministic machanism으로, standard back-propagation 방법으로 train할 수 있기 때문에 전체 모델이 end-to-end로 learning된다. Soft attention model은 hard attention model의 approximation model이라고 생각하면 된다.</li>
-<li>&ldquo;Hard&rdquo; attention은 stochastic mechanism이며, reinforcement learning으로 train할 수 있다. Hard attention model은 매 iteration마다 데이터를 sampling을 해야하고, reinforcement learning과 neural network 부분이 분리되어있어 end-to-end learning이 아니라는 단점이 있다.</li>
+  <li>“Soft” attention은 deterministic machanism으로, standard back-propagation 방법으로 train할 수 있기 때문에 전체 모델이 end-to-end로 learning된다. Soft attention model은 hard attention model의 approximation model이라고 생각하면 된다.</li>
+  <li>“Hard” attention은 stochastic mechanism이며, reinforcement learning으로 train할 수 있다. Hard attention model은 매 iteration마다 데이터를 sampling을 해야하고, reinforcement learning과 neural network 부분이 분리되어있어 end-to-end learning이 아니라는 단점이 있다.</li>
 </ul>
 
-
 <p>(+ 이 논문을 처음 읽을 때는 두 가지 모델을 '섞어서' 한 모델에서 soft와 hard attention이 복합적으로 작용하는 모델을 만드는 것이라고 생각했었지만, 논문을 자세히 읽어보니, 먼저 hard attention을 제안한 후에, 이 모델의 approximation version으로 soft attention이라는 모델을 추가로 제안한 것이었다.)</p>
-
-
 <p>그럼 이제 모델이 구체적으로 어떻게 구성이 되어있는지 자세하게 알아보도록 하자.</p>
 
+<h3>Image Caption Generation with Attention Mechanism: Model details</h3>
 
+<p>먼저 이 논문에서 제안하는 caption generation task를 정의하자. 이 논문은 caption의 길이를 $C$로, 사용할 수 있는 단어의 개수를 $K$로 고정시킨채 문제를 해결한다. 이 정의에 따라 caption을 vector $y$로 표현할 수 있다.</p>
 
+<p>$$ y = \{y_1, \ldots, y_c \}, y_i \in \mathbb R^K. $$</p>
 
-<h5>Image Caption Generation with Attention Mechanism: Model details</h5>
-
-
-
-
-<p>먼저 이 논문에서 제안하는 caption generation task를 정의하자. 이 논문은 caption의 길이를 \(C\)로, 사용할 수 있는 단어의 개수를 \(K\)로 고정시킨채 문제를 해결한다. 이 정의에 따라 caption을 vector \(y\)로 표현할 수 있다.</p>
-
-
-
-
-<p>\[ y = \{y_1, \ldots, y_c \}, y_i \in \mathbb R^K. \]</p>
-
-
-
-
-<p>이 식에서 각 \(y_i\)는 단어 하나를 의미한다. 즉, 이 논문의 목적은 '적절한' caption vector \(y\)를 생성하는 것이다. 이 논문은 '적절한' caption vector를 hard loss와 soft loss 두 가지 loss function을 사용해 정의하고 있으며, 여기에서 attention 개념이 사용된다. 자세한 설명은 아래에서 마저 설명하도록 하겠다.</p>
-
-
-
+<p>이 식에서 각 $y_i$는 단어 하나를 의미한다. 즉, 이 논문의 목적은 '적절한' caption vector $y$를 생성하는 것이다. 이 논문은 '적절한' caption vector를 hard loss와 soft loss 두 가지 loss function을 사용해 정의하고 있으며, 여기에서 attention 개념이 사용된다. 자세한 설명은 아래에서 마저 설명하도록 하겠다.</p>
 
 <p>이제 자세한 모델 설명을 해보자. 앞에서도 잠깐 언급했듯, 이 논문 역시 다른 기존 deep learning caption generator model들처럼 image에서 caption을 생성하는 과정을 image라는 언어에서 caption이라는 언어로 'translatation' 하는 개념을 사용한다. 따라서 이 논문은 machine translation의 encoder-decoder 개념을 사용하게 되는데, encoder는 우리가 잘 알고 있는 CNN을 사용하고, decoder로 RNN, 정확히는 LSTM을 사용하게 된다. 이 논문의 핵심이라고 할 수 있는 attention 개념은 LSTM에서 사용된다.</p>
-
-
 <p>이 논문에서 제안하는 모델을 그림으로 표현하면 다음과 같다.</p>
-
 
 <p><img class="center" src="/images/post/93-8.png" width="450"></p>
 
-<h5>Encoder: CNN</h5>
+<h3>Encoder: CNN</h3>
 
+<p>Encoder CNN은 주어진 이미지를 input으로 받아, output으로 feature vector $a$를 내보낸다. 이 CNN의 마지막 layer는 총 $L$ 개의 filter로 이루어져있으며, 각각의 filter마다 $D$ 개의 neuron을 가지도록 설계하였다. 즉, 다음과 같이 쓸 수 있다</p>
 
-
-
-<p>Encoder CNN은 주어진 이미지를 input으로 받아, output으로 feature vector \(a\)를 내보낸다. 이 CNN의 마지막 layer는 총 \(L\) 개의 filter로 이루어져있으며, 각각의 filter마다 \(D\) 개의 neuron을 가지도록 설계하였다. 즉, 다음과 같이 쓸 수 있다</p>
-
-
-
-
-<p>\[ a = \{ a_1, \ldots, a_L \}, a_i \in \mathbb R^D. \]</p>
-
-
-
+<p>$$ a = \{ a_1, \ldots, a_L \}, a_i \in \mathbb R^D. $$</p>
 
 <p>이 논문에서는 encoder를 위한 CNN으로 VGG network를 선택하였는데, 이 네트워크는 바로 <a href="http://SanghyukChun.github.io/92">전 글</a>에서 다뤘으니 자세한 설명은 생략하도록 하겠다. 19 layer짜리를 사용한 것 같고, VGG11 layer로 pre-training만 시키고 fine-tunning은 하지 않은 상태로 사용했다고 한다. 당연한 얘기지만, VGG 네트워크말고도 다른 네트워크도 사용가능하다.</p>
 
+<h3>Decoder: LSTM</h3>
 
-
-
-<h5>Decoder: LSTM</h5>
-
-
-
-
-<p>이 논문은 decoder로 LSTM을 사용한다. 이 LSTM은 매 time stamp \(t\) 마다 caption vector \(y\)의 한 element \(y_t\)를 생성한다. 즉, 전체 'unfold' 하게되는 시간은 caption의 길이 \(C\)와 같다. 즉 이 LSTM은 한 time stamp \(t\) 마다 바로 전 hidden state \(h_{t-1}\)과 바로 전에 generate된 단어 \(y_{t-1}\)을 input으로 받아서 지금 time stamp에 해당하는 단어 \(y_t\)를 생성하는 것이다. 이 논문에서 사용하는 LSTM 모델은 다음과 같다.</p>
-
+<p>이 논문은 decoder로 LSTM을 사용한다. 이 LSTM은 매 time stamp $t$ 마다 caption vector $y$의 한 element $y_t$를 생성한다. 즉, 전체 'unfold' 하게되는 시간은 caption의 길이 $C$와 같다. 즉 이 LSTM은 한 time stamp $t$ 마다 바로 전 hidden state $h_{t-1}$과 바로 전에 generate된 단어 $y_{t-1}$을 input으로 받아서 지금 time stamp에 해당하는 단어 $y_t$를 생성하는 것이다. 이 논문에서 사용하는 LSTM 모델은 다음과 같다.</p>
 
 <p><img class="center" src="/images/post/93-2.png" width="450"></p>
 
-<p>LSTM에 대한 자세한 설명은 생략하도록 하겠다. 추후 다른 포스트를 통해 LSTM 자체에 대해 자세히 다뤄보도록하겠다. \(T_{s,t}: \mathbb R^s \to \mathbb R^t\)를  간단한 affine transformation이라고 정의해보자 (\(T_{n,m} (x) = W x + b\)라는 의미이다). 그러면 LSTM은 다음과 같이 간단하게 표현할 수 있다.</p>
-
+<p>LSTM에 대한 자세한 설명은 생략하도록 하겠다. 추후 다른 포스트를 통해 LSTM 자체에 대해 자세히 다뤄보도록하겠다. $T_{s,t}: \mathbb R^s \to \mathbb R^t$를  간단한 affine transformation이라고 정의해보자 ($T_{n,m} (x) = W x + b$라는 의미이다). 그러면 LSTM은 다음과 같이 간단하게 표현할 수 있다.</p>
 
 <p><img class="center" src="/images/post/93-3.png" width="300"></p>
 
-<p>이때 1번 식의 \(i_t,f_t ,c_t ,o_t ,h_t \)는 각각 input, forget, memory, output, hidden state를 의미한다. 이 논문은 LSTM의 initial memory state와 hidden state를 \(a\)의 평균 \(\bar a = \frac{1}{L}\sum_i^L a_i\)을 input으로 하는 두 개의 MLP (\(f_{init,c}\) \(f_{init,h}\))로 estimate한다고 한다.</p>
+<p>이때 1번 식의 $i_t,f_t ,c_t ,o_t ,h_t $는 각각 input, forget, memory, output, hidden state를 의미한다. 이 논문은 LSTM의 initial memory state와 hidden state를 $a$의 평균 $\bar a = \frac{1}{L}\sum_i^L a_i$을 input으로 하는 두 개의 MLP ($f_{init,c}$ $f_{init,h}$)로 estimate한다고 한다.</p>
+<p>그럼 이제 LSTM cell 하나에 input으로 들어오는 $Ey_{t-1}, h_{t-1}, \hat z_t$에 대해 알아보자. $h_{t-1}$은 바로 전 hidden state이니 제외하고, $Ey_{t-1} $는 $t-1$ 시점에서 생성된 caption $y_{t-1}$을 embedding matrix $E \in \mathbb R^{m \times K}$로 embedding한 $m$ dimensional vector이다. $E$는 맨 처음에 randomly initialize를 한 이후 train 과정에서 update되는 parameter이다. 마지막으로 $\hat z \in \mathbb R^D$는 context vector라고 하는데, 이 context vector는 attention model들에 의해서 결정된다.</p>
 
+<p>Context vector $\hat z_t$는 CNN encoder output $a$와 바로 전 hidden state $h_{t-1}$에 의해 다음과 같이 결정된다.</p>
 
-<p>그럼 이제 LSTM cell 하나에 input으로 들어오는 \(Ey_{t-1}, h_{t-1}, \hat z_t\)에 대해 알아보자. \(h_{t-1}\)은 바로 전 hidden state이니 제외하고, \(Ey_{t-1} \)는 \(t-1\) 시점에서 생성된 caption \(y_{t-1}\)을 embedding matrix \(E \in \mathbb R^{m \times K}\)로 embedding한 \(m\) dimensional vector이다. \(E\)는 맨 처음에 randomly initialize를 한 이후 train 과정에서 update되는 parameter이다. 마지막으로 \(\hat z \in \mathbb R^D\)는 context vector라고 하는데, 이 context vector는 attention model들에 의해서 결정된다.</p>
+<p>$$ \hat z_t = \phi (a, \alpha_t), \mbox{ where } \alpha_{ti} = \frac{\exp(f_{att}(a_i, h_{t-1}))}{\sum_{k=1}^L \exp(f_{att}(a_k, h_{t-1}) )}. $$</p>
 
-
-
-
-<p>Context vector \(\hat z_t\)는 CNN encoder output \(a\)와 바로 전 hidden state \(h_{t-1}\)에 의해 다음과 같이 결정된다.</p>
-
-
-
-
-<p>\[ \hat z_t = \phi (a, \alpha_t), \mbox{ where } \alpha_{ti} = \frac{\exp(f_{att}(a_i, h_{t-1}))}{\sum_{k=1}^L \exp(f_{att}(a_k, h_{t-1}) )}. \]</p>
-
-
-
-
-<p>먼저 \(\alpha_t\)는 time \(t\)에서의 \(a\)의 weight vector를 의미하며, \(\alpha_{ti}\)는 time \(t\)에서의 \(a\)의 \(i\)번째 element \(a_i\)에 해당하는 weight value값이다. 이때 weight란, 우리가 주어진 annotation (CNN의 output) 중에서 어느 location에 focus를 맞출 것인지, 혹은 어떤 것이 중요하지 않은지를 결정하는 값으로, 모델에서 'attention' 개념이 적용된 부분이다. 위의 식에서 알 수 있듯, softmax로 정의가 되기 때문에, weight \(\alpha_t\)의 element-wise summation은 1이다. \(f_{att}\)는 attention model이라는 것으로, weight vector \(\alpha\)를 계산하기 위한 모델이며, 이 논문은 이 모델을 hard와 soft 두 가지로 정의하였다. \(\phi\) function은 주어진 \(a\)와 그것의 weight vector \(\alpha_t\)를 사용해 \(\hat z_t\)를 계산하기 위한 function이다. 정리해보면 다음과 같다.</p>
-
-
-
+<p>먼저 $\alpha_t$는 time $t$에서의 $a$의 weight vector를 의미하며, $\alpha_{ti}$는 time $t$에서의 $a$의 $i$번째 element $a_i$에 해당하는 weight value값이다. 이때 weight란, 우리가 주어진 annotation (CNN의 output) 중에서 어느 location에 focus를 맞출 것인지, 혹은 어떤 것이 중요하지 않은지를 결정하는 값으로, 모델에서 'attention' 개념이 적용된 부분이다. 위의 식에서 알 수 있듯, softmax로 정의가 되기 때문에, weight $\alpha_t$의 element-wise summation은 1이다. $f_{att}$는 attention model이라는 것으로, weight vector $\alpha$를 계산하기 위한 모델이며, 이 논문은 이 모델을 hard와 soft 두 가지로 정의하였다. $\phi$ function은 주어진 $a$와 그것의 weight vector $\alpha_t$를 사용해 $\hat z_t$를 계산하기 위한 function이다. 정리해보면 다음과 같다.</p>
 
 <ul>
-    <li><p>\(\alpha_t\): \(a\)의 weight vector로, 어디에 'attend' 할지 결정하는 값. 모두 더하면 1.</p></li>
-    <li><p>\(f_{att}\): \(a\)와 \(h_{t-1}\)을 사용해 weight vector \(\alpha\)를 계산하기 위한 attention model.</p></li>
-    <li><p>\(\phi\): \(a\)와 \(\alpha_t\)를 받아 \(\hat z\)를 계산하는 mechanism (예: \(\phi(a,\alpha_t) = \sum_i\alpha_{ti} a\)).</p></li>
+	<li><p>$\alpha_t$: $a$의 weight vector로, 어디에 'attend' 할지 결정하는 값. 모두 더하면 1.</p></li>
+	<li><p>$f_{att}$: $a$와 $h_{t-1}$을 사용해 weight vector $\alpha$를 계산하기 위한 attention model.</p></li>
+	<li><p>$\phi$: $a$와 $\alpha_t$를 받아 $\hat z$를 계산하는 mechanism (예: $\phi(a,\alpha_t) = \sum_i\alpha_{ti} a$).</p></li>
 </ul>
 
+<p>마지막으로, 모델이 주어졌을 때, time $t$에서의 단어 $y_t$는 다음과 같이 바로 전 context vector $\hat z_{t-1}$와 그 동안의 LSTM의 state를 저장하고 있는 hidden state $h_t$, 그리고 바로 직전 단어 $y_{t-1}$에 관련된 확률에 의해 결정된다.</p>
 
+<p>$$p (y_t | a, y^{t-1}_1) \propto \exp(L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)). $$</p>
 
+<p>여기에서 $L_o \in \mathbb R^{K \times m}, L_h \in \mathbb R^{m \times n} L_z \in \mathbb R^{m \times D}, E \in \mathbb R^{m \times K} $는 train과정에서 learning하는 parameter들이다.</p>
 
-<p>마지막으로, 모델이 주어졌을 때, time \(t\)에서의 단어 \(y_t\)는 다음과 같이 바로 전 context vector \(\hat z_{t-1}\)와 그 동안의 LSTM의 state를 저장하고 있는 hidden state \(h_t\), 그리고 바로 직전 단어 \(y_{t-1}\)에 관련된 확률에 의해 결정된다.</p>
+<p>이제 이 논문의 핵심인 attention model $f_{att}$들을 살펴보도록하자.</p>
 
+<h3>Stochastic "Hard" Attention</h3>
 
+<p>캡션 모델이 i번째 단어를 생성하기 위해 focus attention해야 하는 위치를 $s_t$라고 하는 location variable을 사용해 표현해보자. 우리가 원하는 벡터는 정확하게 focus해야하는 부분 한 부분만 값이 1이고 나머지는 전부 0인 벡터이다.</p>
+<p>첫 번째 attention model인 stochastic "hard" attention은 attention location $s_t$를 latent variable로 취급한 다음, 이 값을 $\alpha_t$로 multinoulli distiribution parameterize시킨다. 다시 말하면, 주어진 시간 $t$에서, $s_t$의 $i$번째 element s_{ti}의 값이 1이 될 확률이 $\alpha_{ti}$이 되는 것이며, 주어진 시간 $t$에서 모든 $i$에 대해 $\alpha_{ti}$를 더하면 그 값은 1이 된다. 즉, $\sum_i \alpha_{ti} = 1$ 이다. $s_t$와 $\alpha_t$를 정의하게 되면 $\hat z_t$라는 새로운 random variable을 다음과 같이 정의할 수 있다.</p>
 
+<p>$$p(s_{ti} = 1 | s_{j &#60; t, a}) = \alpha_{ti} \mbox{ and } \hat z_t = \sum_i s_{ti} a_i. $$</p>
 
-<p>\[p (y_t | a, y^{t-1}_1) \propto \exp(L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)). \]</p>
+<p>우리의 목표는 주어진 feature vector $a$에 대해 가장 확률이 높은 caption $y$를 고르는 것이다. 이 작업은 간단하게 maximum log likelihood $\max_y \log p(y|a)$를 계산하는 것으로 구할 수 있는데, 이 값을 직접 계산하는 대신, 앞에서 정의한 attention location $s_t$를 사용하게 된다면 log likelihood의 lower bound를 다음과 같이 계산할 수 있으며, 이 값을 새로운 objective function $L_s$로 정의한다.</p>
 
+<p>$$ L_s = \sum_s p(s|a) \log p(y|s,a) \leq \log \sum_s p(s|a) p(y|s,a) = \log p(y|a).$$</p>
 
+<p>$L_s$가 log likelihood의 lower bound이므로, 이 값을 증가시키게 되면 likelihood 역시 함께 증가할 것이다. 따라서 log-likelihood의 maximum값을 구하는 대신, $L_s$의 maximum 값을 구하는 것으로 문제를 대략적으로 풀 수 있다 (하지만 엄밀하게 증명해본 것은 아니지만, 아마도 $L_s$가 local optimum으로 converge한다고 해서 원래 log likelihood가 converge할 것 같지는 않기 때문에 정확한 문제의 solution을 찾게 되는 것은 아닌 것 같다. 그러나 이미 neural network 쪽 algorithm들이 그러하듯, 정확한 답보다는 그 답을 향해 진행하는 것이 훨씬 중요하기 때문에 이 work에서는 큰 문제가 될 것 같지는 않다). Parameter $W$에 대한 $L_s$의 미분값은 다음과 같이 주어지며, 이 값을 사용하면 gradient descent를 통해 $\max L_s$ 문제를 해결할 수 있다. </p>
 
+<p>$$ \frac{\partial L}{\partial W} = \sum_s p(s|a) \left[ \frac{\partial p(y| s,a)}{\partial W} + \log p(y|s,a)\frac{\partial p(s|a)}{\partial W} \right]. $$</p>
 
-<p>여기에서 \(L_o \in \mathbb R^{K \times m}, L_h \in \mathbb R^{m \times n} L_z \in \mathbb R^{m \times D}, E \in \mathbb R^{m \times K} \)는 train과정에서 learning하는 parameter들이다.</p>
+<p>이 미분 값을 직접 구하기 위해서는 모든 attention location $s$에 대해 summation 기호 안에 있는 연산을 계산해야하기 때문에 computation이 간단하지 않다. 이미 많은 기존 deep learning approach들에서 '정확한' 값을 구하는 데에 시간이 오래걸린다면, 그냥 '적당히' 빠르게 근사하는 것이 더 낫다는 것이 알려져 있는 만큼, 이 논문에서는 정확한 값을 계산하는 대신 Monte Carlo based sampling을 사용해 이 값을 다음과 같이 근사하고 있다. 이때, $\tilde s_t \sim \mbox{Multinouli}_L (\alpha)$로 주어진 값이다.</p>
 
-
-
-
-<p>이제 이 논문의 핵심인 attention model \(f_{att}\)들을 살펴보도록하자.</p>
-
-
-
-
-<h5>Stochastic "Hard" Attention</h5>
-
-
-
-
-<p>캡션 모델이 i번째 단어를 생성하기 위해 focus attention해야 하는 위치를 \(s_t\)라고 하는 location variable을 사용해 표현해보자. 우리가 원하는 벡터는 정확하게 focus해야하는 부분 한 부분만 값이 1이고 나머지는 전부 0인 벡터이다.</p>
-
-
-<p>첫 번째 attention model인 stochastic "hard" attention은 attention location \(s_t\)를 latent variable로 취급한 다음, 이 값을 \(\alpha_t\)로 multinoulli distiribution parameterize시킨다. 다시 말하면, 주어진 시간 \(t\)에서, \(s_t\)의 \(i\)번째 element s_{ti}의 값이 1이 될 확률이 \(\alpha_{ti}\)이 되는 것이며, 주어진 시간 \(t\)에서 모든 \(i\)에 대해 \(\alpha_{ti}\)를 더하면 그 값은 1이 된다. 즉, \(\sum_i \alpha_{ti} = 1\) 이다. \(s_t\)와 \(\alpha_t\)를 정의하게 되면 \(\hat z_t\)라는 새로운 random variable을 다음과 같이 정의할 수 있다.</p>
-
-
-
-
-<p>\[p(s_{ti} = 1 | s_{j &#60; t, a}) = \alpha_{ti} \mbox{ and } \hat z_t = \sum_i s_{ti} a_i. \]</p>
-
-
-
-
-<p>우리의 목표는 주어진 feature vector \(a\)에 대해 가장 확률이 높은 caption \(y\)를 고르는 것이다. 이 작업은 간단하게 maximum log likelihood \(\max_y \log p(y|a)\)를 계산하는 것으로 구할 수 있는데, 이 값을 직접 계산하는 대신, 앞에서 정의한 attention location \(s_t\)를 사용하게 된다면 log likelihood의 lower bound를 다음과 같이 계산할 수 있으며, 이 값을 새로운 objective function \(L_s\)로 정의한다.</p>
-
-
-
-
-<p>\[ L_s = \sum_s p(s|a) \log p(y|s,a) \leq \log \sum_s p(s|a) p(y|s,a) = \log p(y|a).\]</p>
-
-
-
-
-<p>\(L_s\)가 log likelihood의 lower bound이므로, 이 값을 증가시키게 되면 likelihood 역시 함께 증가할 것이다. 따라서 log-likelihood의 maximum값을 구하는 대신, \(L_s\)의 maximum 값을 구하는 것으로 문제를 대략적으로 풀 수 있다 (하지만 엄밀하게 증명해본 것은 아니지만, 아마도 \(L_s\)가 local optimum으로 converge한다고 해서 원래 log likelihood가 converge할 것 같지는 않기 때문에 정확한 문제의 solution을 찾게 되는 것은 아닌 것 같다. 그러나 이미 neural network 쪽 algorithm들이 그러하듯, 정확한 답보다는 그 답을 향해 진행하는 것이 훨씬 중요하기 때문에 이 work에서는 큰 문제가 될 것 같지는 않다). Parameter \(W\)에 대한 \(L_s\)의 미분값은 다음과 같이 주어지며, 이 값을 사용하면 gradient descent를 통해 \(\max L_s\) 문제를 해결할 수 있다. </p>
-
-
-
-
-<p>\[ \frac{\partial L}{\partial W} = \sum_s p(s|a) \left[ \frac{\partial p(y| s,a)}{\partial W} + \log p(y|s,a)\frac{\partial p(s|a)}{\partial W} \right]. \]</p>
-
-
-
-
-<p>이 미분 값을 직접 구하기 위해서는 모든 attention location \(s\)에 대해 summation 기호 안에 있는 연산을 계산해야하기 때문에 computation이 간단하지 않다. 이미 많은 기존 deep learning approach들에서 '정확한' 값을 구하는 데에 시간이 오래걸린다면, 그냥 '적당히' 빠르게 근사하는 것이 더 낫다는 것이 알려져 있는 만큼, 이 논문에서는 정확한 값을 계산하는 대신 Monte Carlo based sampling을 사용해 이 값을 다음과 같이 근사하고 있다. 이때, \(\tilde s_t \sim \mbox{Multinouli}_L (\alpha)\)로 주어진 값이다.</p>
-
-
-
-
-<p>\[ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \log p(y| \tilde s^n,a)\frac{\partial p(\tilde s^n |a)}{\partial W} \right]. \]</p>
-
-
-
+<p>$$ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \log p(y| \tilde s^n,a)\frac{\partial p(\tilde s^n |a)}{\partial W} \right]. $$</p>
 
 <p>Monte Carlo based sampling을 사용해 gradient를 근사하게 되면, 굉장히 효율적이고 빠르게 gradient를 근사할 수 있지만, 그렇게 계산된 gradient는 variance가 크기 때문에 이를 handle하기 위한 추가적인 아이디어들이 도입되게 된다. 먼저 moving average를 사용한다. 이 논문에서는 moving average baseline을 다음과 같이 이전 log likelihood들의 exponential decay를 사용한 합으로 표현하였다.</p>
 
+<p>$$ b_k = 0.9 \times b_{k-1} + 0.1 \times \log p (y | \tilde s_k, a). $$</p>
 
+<p>여기에 또 varinace를 줄이기 위하여 entroy term $H[s]$를 더한다. 그뿐 아니라 주어진 이미지에 0.5의 확률로 sampled attention location $\tilde s$의 값을 $\tilde s$의 기대값인 $\alpha$로 설정한다. 이 방법들을 사용하게 되면 stochastic attention learning algorithm의 robustness를 증대시킬 수 있다고 한다. 이 방법들을 모두 섞으면, 기존의 gradient는 다음과 같이 바뀐다.</p>
 
+<p>$$ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \lambda_r (\log( p(y|\tilde s^n, a) - b)\frac{\partial p(\tilde s^n |a)}{\partial W} + \lambda_e \frac{H[\partial \tilde s^n]}{\partial W} \right]. $$</p>
 
-<p>\[ b_k = 0.9 \times b_{k-1} + 0.1 \times \log p (y | \tilde s_k, a). \]</p>
+<p>이렇게 구해진 식은, reinforcement learning의 update rule과 같다. 그렇기 때문에 hard visual attention을 reinforcement learning을 사용해 learning할 수 있다고 이야기하는 것이다. Action은 attention의 위치를 고르는 것이 될 것이고, reward는 log-likelihood의 lower bound인 $L_s$가 된다.</p>
+<p>Hard attention model은 매 순간마다 $\hat z$를 'hard choice'를 통해 계산하게 된다. 여기에서 hard choice란, 주어진 시간 $t$에서 $\alpha$로 parameterize된 multinouilli distribution에서 $a_i$를 sampling하여 얻게되는 choice를 의미한다.</p>
 
+<h3>Deterministic "Soft" Attention</h3>
+<p>Hard attention은 train phase의 매 timestamp마다 attention location $s_t$를 매 번 sampling해줘야하기 때문에, 이 논문에서는 hard attention 대신 soft attention이라는 개념을 추가로 도입한다. Soft attention은 stochastic하게 매 번 sampling을 하는 대신 deterministic하게 context vecot $\hat z_t$을 계산한다. Soft attention $\phi$는 다음과 같이 표현된다.</p>
 
+<p>$$\phi (\{ a_i \}, \{ \alpha_i \}) = \sum_i^L \alpha_i a_i. $$</p>
 
+<p>이렇게 표현되는 이유는 $\hat z_t$의 expectation이 $\alpha, a$로 다음과 같이 직접 계산할 수 있기 때문이라고 한다.</p>
 
-<p>여기에 또 varinace를 줄이기 위하여 entroy term \(H[s]\)를 더한다. 그뿐 아니라 주어진 이미지에 0.5의 확률로 sampled attention location \(\tilde s\)의 값을 \(\tilde s\)의 기대값인 \(\alpha\)로 설정한다. 이 방법들을 사용하게 되면 stochastic attention learning algorithm의 robustness를 증대시킬 수 있다고 한다. 이 방법들을 모두 섞으면, 기존의 gradient는 다음과 같이 바뀐다.</p>
+<p>$$ \mathbb E_{p(s_t|a)}p[\hat z_t] = \sum_{i=1}^L \alpha_{ti} a_i. $$</p>
 
+<p>따라서 이 방법을 취하게 되면 전체 모델이 좀 더 smooth해지고, differentiable해지기 때문에 back-propagation을 사용해서 end-to-end로 learning이 가능하다는 장점이 있다. Deterministic attention, 혹은 soft attention 역시 앞에서 구한 likelihood $p(y|a)$를 $s_t$를 사용하여 구한 approximation을 optimizing하는 것으로 구할 수 있다. 이 논문에 따르면 $h_t$가 stochatic context vector $\hat z_t$를 tanh를 사용한 linear projection이기 때문에, $\mathbb E_{p(s_t|a)[h_t]}$를 1st order Taylor approximation하게 되면 이 값은 $\hat z_t$의 expectation인 $\mathbb E_{p(s_t|a)}p[\hat z_t]$를 사용하여 forward propagation을 한 번 진행하여 $h_t$를 구한 값과 같아진다고 한다. $n_t = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)$로 정의하고 ($p (y_t | a, y^{t-1}_1)$를 approximation했을 때 쓰인 값과 같다), $n_{ti}$를 $a_i$를 사용하여 계산한 random variable $\hat z_t$를 대입하여 구한 $n_{t}$값이라고 해보자. 이 값들을 사용하여 이 논문은 k번째 word prediction을 위한 NWGM (Normalized Weighted Geometric Mean)이라는 것을 다음과 같이 정의한다.</p>
 
+<p>$$NWGM[p(y_t = k | a)] = \frac{\prod_i \exp(n_{tki})^{p(s_{ti}=1|a)}}{\sum_j \prod_i \exp(n_tji)^{p(s_{ti}=1|a)}} = \frac{\exp(\mathbb E_{p(s_t|a)}[n_{tk}])}{\sum_j\exp(\mathbb E_{p(s_t|a)}[n_{tj}])}.$$</p>
 
+<p>정의에 따라 $\mathbb E [n_t] = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)$이 되므로, 이 식을 통해 우리는 caption prediction을 위한 NWGM이 expected context vector를 사용하여 approximate된다는 것을 알 수 있다. 이전의 다른 work에 의하면, NWGM은 (softmax acivation일 때만) $\mathbb E [ p(y_t = k | a)]$로 근사가 된다고 한다. 이 말은 바꿔 말하면, 모든 가능한 attention location $s_t$에 대해 구한 output의 expectation이 expected context vector $\mathbb E [\hat z_t]$를 사용하여 간단한 feedforward propagation으로 계산된다는 의미가 된다.</p>
 
-<p>\[ \frac{\partial L}{\partial W} \approx \frac{1}{N} \sum_n^N \left[ \frac{\partial \log p(y| \tilde s^n,a)}{\partial W} + \lambda_r (\log( p(y|\tilde s^n, a) - b)\frac{\partial p(\tilde s^n |a)}{\partial W} + \lambda_e \frac{H[\partial \tilde s^n]}{\partial W} \right]. \]</p>
-
-
-
-
-<p>이렇게 구해진 식은, reinforcement learning의 update rule과 같다. 그렇기 때문에 hard visual attention을 reinforcement learning을 사용해 learning할 수 있다고 이야기하는 것이다. Action은 attention의 위치를 고르는 것이 될 것이고, reward는 log-likelihood의 lower bound인 \(L_s\)가 된다.</p>
-
-
-<p>Hard attention model은 매 순간마다 \(\hat z\)를 'hard choice'를 통해 계산하게 된다. 여기에서 hard choice란, 주어진 시간 \(t\)에서 \(\alpha\)로 parameterize된 multinouilli distribution에서 \(a_i\)를 sampling하여 얻게되는 choice를 의미한다.</p>
-
-
-
-
-<h5>Deterministic "Soft" Attention</h5>
-
-
-<p>Hard attention은 train phase의 매 timestamp마다 attention location \(s_t\)를 매 번 sampling해줘야하기 때문에, 이 논문에서는 hard attention 대신 soft attention이라는 개념을 추가로 도입한다. Soft attention은 stochastic하게 매 번 sampling을 하는 대신 deterministic하게 context vecot \(\hat z_t\)을 계산한다. Soft attention \(\phi\)는 다음과 같이 표현된다.</p>
-
-
-<p></p>
-
-<p>\[\phi (\{ a_i \}, \{ \alpha_i \}) = \sum_i^L \alpha_i a_i. \]</p>
-
-
-
-
-<p>이렇게 표현되는 이유는 \(\hat z_t\)의 expectation이 \(\alpha, a\)로 다음과 같이 직접 계산할 수 있기 때문이라고 한다.</p>
-
-
-
-
-<p>\[ \mathbb E_{p(s_t|a)}p[\hat z_t] = \sum_{i=1}^L \alpha_{ti} a_i. \]</p>
-
-
-
-
-<p>따라서 이 방법을 취하게 되면 전체 모델이 좀 더 smooth해지고, differentiable해지기 때문에 back-propagation을 사용해서 end-to-end로 learning이 가능하다는 장점이 있다. Deterministic attention, 혹은 soft attention 역시 앞에서 구한 likelihood \(p(y|a)\)를 \(s_t\)를 사용하여 구한 approximation을 optimizing하는 것으로 구할 수 있다. 이 논문에 따르면 \(h_t\)가 stochatic context vector \(\hat z_t\)를 tanh를 사용한 linear projection이기 때문에, \(\mathbb E_{p(s_t|a)[h_t]}\)를 1st order Taylor approximation하게 되면 이 값은 \(\hat z_t\)의 expectation인 \(\mathbb E_{p(s_t|a)}p[\hat z_t]\)를 사용하여 forward propagation을 한 번 진행하여 \(h_t\)를 구한 값과 같아진다고 한다. \(n_t = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)\)로 정의하고 (\(p (y_t | a, y^{t-1}_1)\)를 approximation했을 때 쓰인 값과 같다), \(n_{ti}\)를 \(a_i\)를 사용하여 계산한 random variable \(\hat z_t\)를 대입하여 구한 \(n_{t}\)값이라고 해보자. 이 값들을 사용하여 이 논문은 k번째 word prediction을 위한 NWGM (Normalized Weighted Geometric Mean)이라는 것을 다음과 같이 정의한다.</p>
-
-
-
-
-<p>\[NWGM[p(y_t = k | a)] = \frac{\prod_i \exp(n_{tki})^{p(s_{ti}=1|a)}}{\sum_j \prod_i \exp(n_tji)^{p(s_{ti}=1|a)}} = \frac{\exp(\mathbb E_{p(s_t|a)}[n_{tk}])}{\sum_j\exp(\mathbb E_{p(s_t|a)}[n_{tj}])}.\]</p>
-
-
-
-
-<p>정의에 따라 \(\mathbb E [n_t] = L_o(E y_{t-1} + L_h h_t + L_z \hat z_t)\)이 되므로, 이 식을 통해 우리는 caption prediction을 위한 NWGM이 expected context vector를 사용하여 approximate된다는 것을 알 수 있다. 이전의 다른 work에 의하면, NWGM은 (softmax acivation일 때만) \(\mathbb E [ p(y_t = k | a)]\)로 근사가 된다고 한다. 이 말은 바꿔 말하면, 모든 가능한 attention location \(s_t\)에 대해 구한 output의 expectation이 expected context vector \(\mathbb E [\hat z_t]\)를 사용하여 간단한 feedforward propagation으로 계산된다는 의미가 된다.</p>
-
-
-
-
-<p>또한 이 논문에서는 doubly stochastic attention이라는 개념도 같이 제안한다. \(\alpha\)의 정의에 따라 우리는 \(\sum_i \alpha_{ti} = 1\) 이라는 관계식을 가진다. 이 논문이 주장하는 것은, \(\sum_t \alpha_{ti} \approx 1\) 이라는 조건을 하나 더 추가하는 것이 실제 실험결과 더 좋은 성능을 낸다는 것이다. 그 이유는 모델이 모든 이미지의 모든 부분을 전체 기간 동안 보는 것을 방해하기 때문에 더 focus된 attention이 가능하기 때문이라고 한다. 그리고 추가로, soft attention model에 </p>
-
-
-
+<p>또한 이 논문에서는 doubly stochastic attention이라는 개념도 같이 제안한다. $\alpha$의 정의에 따라 우리는 $\sum_i \alpha_{ti} = 1$ 이라는 관계식을 가진다. 이 논문이 주장하는 것은, $\sum_t \alpha_{ti} \approx 1$ 이라는 조건을 하나 더 추가하는 것이 실제 실험결과 더 좋은 성능을 낸다는 것이다. 그 이유는 모델이 모든 이미지의 모든 부분을 전체 기간 동안 보는 것을 방해하기 때문에 더 focus된 attention이 가능하기 때문이라고 한다. 그리고 추가로, soft attention model에 </p>
 
 <p>결론적으로, 이 모델은 아래와 같은 negative log-likelihood를 minimize하는 방식으로 end-to-end learning을 할 수 있다.</p>
+<p>$$ L_d = -\log (p(y|x)) + \lambda \sum_i^L \left(1 - \sum_t^C \alpha_{ti} \right)^2. $$</p>
 
-
-<p>\[ L_d = -\log (p(y|x)) + \lambda \sum_i^L \left(1 - \sum_t^C \alpha_{ti} \right)^2. \]</p>
-
-
-
-
-<h5>Experiment</h5>
-
-
+<h3>Experiment</h3>
 <p>다음 그림은 실제 hard attention과 soft attention이 어떻게 동작하는지 잘 보여주는 그림이다. 가장 왼쪽의 주어진 이미지에 대해 soft attnetion과 hard attention 모두 'a bird flying over a body of water.' 이라는 caption을 생성했는데, soft와 hard attention 각각 경우에 대해 caption generation 모델이 어느 곳을 attend하도록 동작했는지 표현되어있다.</p>
-
 
 <p><img src="/images/post/93-5.png" width="600"></p>
 
 <p>위의 그림이 deterministic하게 attention을 계산하는 soft attention이다. 정확한 'attention location'이 존재하는 것이 아니라, 하얗게 mapping된 부분을 전반적으로 attend한다고 생각하면 된다. 반면 아래에 있는 hard attention을 보면, 매 번 정확한 attention location을 고르는 것을 알 수 있다. 이 과정을 매 번 확률적으로, sampling based approximaiton을 취하기 때문에 hard attention model은 stochastic machanism이다.</p>
-
-
 <p>다음 그림을 통해, 실제 각 word 별로 어느 곳을 attend하는지 대략적으로 확인할 수 있다.</p>
-
-
-<p></p>
 
 <p><img src="/images/post/93-6.png" width="600"></p>
 
 <p>Attend하는 위치가 비교적 굉장히 정확한 곳을 고르는 것을 알 수 있다. 좀 더 많은 예시가 gif로 <a href="http://kelvinxu.github.io/projects/capgen.html">이 링크</a>에 업로드되어있으니 참고하면 좋을 것 같다. 이 논문은 성공했을 때 뿐 아니라 실패했을 경우의 attention도 아래 그림과 같이 기재하여두었다.</p>
 
-
 <p><img src="/images/post/93-7.png" width="600"></p>
 
 <p>이 사진들을 통해 저자들은, 이 모델이 attend하는 위치는 잘 골랐으나, 각 object를 조금 잘못 classification했기 때문에 실패하는 경우가 나온다고 주장하고 있다. 예를 들어 위 실패 경우를 보면 바이올린을 스케이트 보드라고 했거나, 돛을 서핑보드라고 분류하여 잘못된 caption 결과가 나왔음을 알 수 있다.</p>
-
-
 <p>좀 더 많은 이미지 데이터셋에 대해 hard attention과 soft attention을 사용한 caption generator의 성능은 다음 표에 잘 나타나있다. 점수는 높을수록 좋다.</p>
-
 
 <p><img src="/images/post/93-4.png" width="600"></p>
 
 <p>기존에 알려진 모델들에 비해 attention based model들의 성능이 훨씬 좋은 것을 알 수 있다.</p>
 
-
-
-
-<h5>Summary of Show, Attend and Tell</h5>
-
+<h3>Summary of Show, Attend and Tell</h3>
 
 <ul>
-<li>Image caption 문제는 상당히 어려운 문제이며, 기존 deep learning 기법들은 machine translation에서 사용하는 encoder-decoder concept를 사용해 문제를 해결한다.</li>
-<li>이 논문 역시 encoder-decoder 개념을 사용하지만, decoder에서 attention이라는 개념을 추가로 사용하여 새로운 모델을 제안하고 있다.</li>
-<li>Encoder는 CNN을 사용한다. 실제 실험에서는 CNN 모델로 VGG 네트워크를 선택하여 사용하고 있다.</li>
-<li>Decoder는 RNN, 정확히 말하면 LSTM을 사용하는데, 바로 전 state h, 바로 전 caption word y, 그리고 attention model을 통해 생성되는 context vector z가 LSTM cell의 input이 된다.</li>
-<li>Context vector z는 hard attention과 soft attention 두 가지 방법 중에 한 가지 방법을 선택하여 생성하게 된다. Hard attention은 stochastic machanism이고, soft attention은 deterministic machanism이다.</li>
-<li>Hard attention은 먼저 location variable s를 정의하고, 이것을 사용해 log-likelhood의 lower bound Ls를 계산한다. Ls를 optimization하기 위해 gradient를 구해야하는데, 이 값을 정확하게 구하는 것이 까다롭기 때문에 Monte Carlo based sampling approximation을 사용해 문제를 해결하게 된다. 이 update rule은 reinforcement learning의 update rule과 일치한다.</li>
-<li>Soft attention은 매 iteration마다 sampling을 하는 대신, s의 확률 alpha를 직접 사용하여 z를 계산한다.</li>
-<li>Attention based caption generation model은 기존 image caption generation 모델들에 비해 훨씬 좋은 성능을 보인다.</li>
+  <li>Image caption 문제는 상당히 어려운 문제이며, 기존 deep learning 기법들은 machine translation에서 사용하는 encoder-decoder concept를 사용해 문제를 해결한다.</li>
+  <li>이 논문 역시 encoder-decoder 개념을 사용하지만, decoder에서 attention이라는 개념을 추가로 사용하여 새로운 모델을 제안하고 있다.</li>
+  <li>Encoder는 CNN을 사용한다. 실제 실험에서는 CNN 모델로 VGG 네트워크를 선택하여 사용하고 있다.</li>
+  <li>Decoder는 RNN, 정확히 말하면 LSTM을 사용하는데, 바로 전 state h, 바로 전 caption word y, 그리고 attention model을 통해 생성되는 context vector z가 LSTM cell의 input이 된다.</li>
+  <li>Context vector z는 hard attention과 soft attention 두 가지 방법 중에 한 가지 방법을 선택하여 생성하게 된다. Hard attention은 stochastic machanism이고, soft attention은 deterministic machanism이다.</li>
+  <li>Hard attention은 먼저 location variable s를 정의하고, 이것을 사용해 log-likelhood의 lower bound Ls를 계산한다. Ls를 optimization하기 위해 gradient를 구해야하는데, 이 값을 정확하게 구하는 것이 까다롭기 때문에 Monte Carlo based sampling approximation을 사용해 문제를 해결하게 된다. 이 update rule은 reinforcement learning의 update rule과 일치한다.</li>
+  <li>Soft attention은 매 iteration마다 sampling을 하는 대신, s의 확률 alpha를 직접 사용하여 z를 계산한다.</li>
+  <li>Attention based caption generation model은 기존 image caption generation 모델들에 비해 훨씬 좋은 성능을 보인다.</li>
 </ul>
 
-
-<h5>Reference</h5>
-
-
+<h3>Reference</h3>
 <ul>
-    <li><p><a href="http://arxiv.org/abs/1406.6247">Mnih, Volodymyr, Nicolas Heess, and Alex Graves. "Recurrent models of visual attention." Advances in Neural Information Processing Systems. 2014.</a></p></li>
-    <li><a href="http://kelvinxu.github.io/projects/capgen.html">http://kelvinxu.github.io/projects/capgen.html</a></li>
+	<li><p><a href="http://arxiv.org/abs/1406.6247">Mnih, Volodymyr, Nicolas Heess, and Alex Graves. "Recurrent models of visual attention." Advances in Neural Information Processing Systems. 2014.</a></p></li>
+	<li><a href="http://kelvinxu.github.io/projects/capgen.html">http://kelvinxu.github.io/projects/capgen.html</a></li>
 </ul>
-
 ]]></content>
   </entry>
   
@@ -653,237 +364,130 @@
     <id>http://SanghyukChun.github.io/92</id>
     <content type="html"><![CDATA[<p>얼마 전, <a href="http://arxiv.org/abs/1508.06576 ">'A Neural Algorithm of Artistic Style '</a> 이라는 이름의 충격적인 논문이 arXiv에 업로드되었다. 기술 전문 잡지나 신문이 아닌 스브스뉴스 같은 일반적인 기사를 보도하는 매체에서도 보도가 되었을 정도로 요즘 꽤 이슈가 되고 있는 논문이다.</p>
 
-
 <ul>
-<li><a href="http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149">스브스뉴스: &ldquo;이건 &lsquo;반 고흐'의 그림이 아닌 '컴퓨터'의 그림입니다.&rdquo;</a></li>
-<li><a href="http://www.dailymail.co.uk/sciencetech/article-3214634/The-algorithm-learn-copy-artist-Neural-network-recreate-snaps-style-Van-Gogh-Picasso.html">DailyMail: &ldquo;The algorithm that can learn to copy ANY artist: Neural network can recreate your snaps in the style of Van Gogh or Picasso&rdquo;</a></li>
-<li><a href="http://www.theguardian.com/technology/2015/sep/02/computer-algorithm-recreates-van-gogh-painting-picasso">The Guardian: &ldquo;Computer algorithm recreates Van Gogh painting in one hour&rdquo;</a></li>
+  <li><a href="http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149">스브스뉴스: “이건 ‘반 고흐’의 그림이 아닌 ‘컴퓨터’의 그림입니다.”</a></li>
+  <li><a href="http://www.dailymail.co.uk/sciencetech/article-3214634/The-algorithm-learn-copy-artist-Neural-network-recreate-snaps-style-Van-Gogh-Picasso.html">DailyMail: “The algorithm that can learn to copy ANY artist: Neural network can recreate your snaps in the style of Van Gogh or Picasso”</a></li>
+  <li><a href="http://www.theguardian.com/technology/2015/sep/02/computer-algorithm-recreates-van-gogh-painting-picasso">The Guardian: “Computer algorithm recreates Van Gogh painting in one hour”</a></li>
 </ul>
 
-
 <p>자고로 백문이 불여일견이라, 이게 도대체 무슨 contribution이 있길래 사람들의 이목이 쏠리고 있는지 논문에 첨부되어있는 그림을 먼저 보자.</p>
-
 
 <p><img src="/images/post/92-1.jpg" width="600"></p>
 
 <p>이 그림들은 모두 사람이 그린 것이 아니라 neural network를 사용하여 generate한 것이다. 이 논문은 제목 그대로, 'artistic style'을 learning하는 neural network algorithm을 제안한다. 여기에서 artistic style이라는 것을 어떻게 정의하였는지는 나중에 조금 더 자세히 살펴보도록하자. 위 그림은 이 논문에서 제안한 알고리즘을 사용하여 report한 결과이다. 원본이 되는 A가 독일의 튀빙겐이라는 곳에서 찍은 '사진'이다. B부터 F는 유명한 거장들의 그림 'style'과 A의 'content'를 가지는 그림을 generate한 결과이다. 순서대로 B는 J.M.W. 터너의 &#60;미노타우르스 호의 난파&#62;, C는 그 유명한 빈센트 반 고흐의 &#60;별이 빛나는 밤&#62;을, D는 뭉크의 &#60;절규&#62;, E는 피카소의 &#60;앉아 있는 나체의 여성&#62;, F는 칸딘스키의 &#60;구성 VII&#62;이다. 놀랍게도 알고리즘을 통해 얻은 그림은 원본 사진의 content는 거의 그대로 보존하면서, 동시에 다른 그림의 style을 특징을 잘 살려서 가지고 있다.</p>
-
-
 <p>이 짧은 논문이 사람들에게 얼마나 큰 충격을 주었는지는 길게 적지 않아도 알 수 있을 것이라고 생각한다. 논문이 나오고 얼마 지나지 않아 <a href="https://github.com/jcjohnson">jcjohson</a> 이라는 github user가 torch 기반으로 만든 <a href="https://github.com/jcjohnson/neural-style">'neural style'</a>이라는 프로젝트를 github에 공개하였다. 논문이 정말 좋은 결과를 낸 것인지 사람들이 이런 저런 사진과 그림들을 사용해 실험해본 결과, 논문에서 이야기하는 것 처럼 실제로 아무 사진을 적당히 골라서 적당한 그림을 넣어주면 사진의 내용은 보존한 채로 질감만 바꿔서 출력해주는 것을 알 수 있었다. 아래 그림은 <a href="https://github.com/jcjohnson/neural-style">'neural style'</a>을 사용해 금문교 사진과 여러 예술가들의 그림을 사용해 generate한 결과이다.</p>
-
 
 <p><img src="/images/post/92-3.png" width="600"></p>
 
 <p>이 논문이 나온게 9월 말이었는데, 벌써 한국 개발팀에서 스마트폰 app까지 개발했을 정도로 관심이 뜨겁다. (<a href="http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149">스브스뉴스: 이건 '반 고흐'의 그림이 아닌 '컴퓨터'의 그림입니다.</a>)</p>
 
-
 <p><img class="center" src="/images/post/92-4.jpg" width="300"></p>
 
 <p>꽤나 흥미로운 논문인 만큼, 어떤 아이디어를 사용했고, 어떤 방법론을 사용했는지까지 한 번 차근차근 살펴보도록 하자.</p>
 
-
-
-
-<h5>Content &#38; Style Reconstruction using CNN</h5>
-
-
-
+<h3>Content &#38; Style Reconstruction using CNN</h3>
 
 <p>Deep learning이 지금처럼 급부상하게 된 배경에는 (비전 분야를 중심으로 한) <a class="red tip" title="Convolutional Neural Network">CNN</a>의 엄청난 힘이 있었다. CNN이 비전에서 월등한 성능을 내는 이유를 여러가지로 설명할 수 있겠지만, 일반적으로는 CNN은 각각의 layer가 'feature'의 의미를 지니기 때문이라고 설명한다. 각각의 layer가 feature를 생성해내고, 이 feature들이 hierarchy하게 쌓이면서 더 높은 layer로 갈수록 더 좋은 feature를 만들어낸다는 것이다. CNN은 이 feature를 hard-coding하여 뽑아내는대신, 데이터에서부터 '가장 좋은' 최종 feature를 만들도록 학습시키기 때문에 아주 좋은 feature를 사용해 perceptron 등의 간단한 classifier로 높은 performance를 얻게 되는 것이다 (CNN에 익숙하지 않다면 <a href="http://SanghyukChun.github.io/75/#75-cnn">CNN에 대해 설명했었던 이전 글</a>을 참고하면 좋을 것 같다). 그렇기 때문에 각각의 convolution layer의 output은 흔히 feature map으로 표현이 된다.</p>
-
-
 <p>주어진 이미지에서 feature를 뽑아내는 것은 CNN을 통하여 지금까지 항상 하던 일이었다. 그렇다면 반대로 할 수도 있지 않을까? 즉, CNN의 중간 feature map을 사용하여 원래 이미지를 복원하는 작업을 하는 것이다. 이렇게 feature map에서부터 이미지를 reconstruction 할 수만 있다면, deep CNN에서 layer를 지면서 어떤 재미있는 일들이 벌어지고 있는지 사람이 직접 눈으로 확인할 수 있을 것이다. 이런 visualization에 대한 motivation 때문에 그 동안 CNN의 convolution layer에서 원래 이미지를 reconstruction하는 작업들은 꾸준하게 제안되어 왔다. 그 중 가장 유명한 work으로 다음과 같은 work이 있다.</p>
 
-
 <ul>
-<li><a href="http://arxiv.org/abs/1412.0035">Mahendran, Aravindh, and Andrea Vedaldi. &ldquo;Understanding deep image representations by inverting them.&rdquo; arXiv preprint arXiv:1412.0035 (2014).</a></li>
+  <li><a href="http://arxiv.org/abs/1412.0035">Mahendran, Aravindh, and Andrea Vedaldi. “Understanding deep image representations by inverting them.” arXiv preprint arXiv:1412.0035 (2014).</a></li>
 </ul>
-
 
 <p>이 논문은 주어진 feature map에서 image를 복원하는 방법을 제안한다. 단순히 이미지를 복원하는 것이 아니라, 이미지를 특정 목적에 맞게 변형하는 work도 진행되어왔다. 대표적인 예가 아래 논문과 Google DeepMind의 <a href="http://googleresearch.blogspot.kr/2015/06/inceptionism-going-deeper-into-neural.html">Deep Dream</a>이다.</p>
 
-
 <ul>
-<li><a href="http://arxiv.org/abs/1412.1897">Nguyen, Anh, Jason Yosinski, and Jeff Clune. &ldquo;Deep neural networks are easily fooled: High confidence predictions for unrecognizable images.&rdquo; arXiv preprint arXiv:1412.1897 (2014).</a></li>
+  <li><a href="http://arxiv.org/abs/1412.1897">Nguyen, Anh, Jason Yosinski, and Jeff Clune. “Deep neural networks are easily fooled: High confidence predictions for unrecognizable images.” arXiv preprint arXiv:1412.1897 (2014).</a></li>
 </ul>
-
 
 <p>이 논문은 deep CNN이 거의 100% 확률로 오답을 발생시키도록 이미지를 조작한 work이다. 예를 들어 주어진 이미지가 '새' 라는 label을 가지고 있다고 판별했을 때, '문어'라는 label을 100% 로 가지도록 이미지를 조작하는 것이다. 사람이 봤을 때는 여전히 '새' 사진이지만, CNN은 '문어'라고 판별해버리는 것이다.</p>
-
-
 <p>이렇듯, 다양한 목적으로 CNN이 이미 주어져 있을 때, 특정 목적에 따라 이미지를 update하는 방법론들은 이미 예전부터 연구가 계속 진행되어왔다. 위에 링크한 3개의 work은 꽤 흥미로운 주제들이기 때문에 나중에 또 따로 포스팅할 수 있도록 하겠다. 이 논문의 contribution은 각 convolution layer에서부터 style과 content를 reconstruct하는 방법론을 제안했다는 것이다. 이 방법은 앞에서 언급한 <a href="http://arxiv.org/abs/1412.0035">Understanding deep image representations by inverting them</a> 논문 처럼 현재 feature map에서 원래 이미지를 최대한 복원하는 content reconstruction과, 아래 논문 등에서 제안되어왔던 texture 분석과 생성 등을 복원하는 texture reconstruction을 결합한 것이다. 참고로 이 work들은 맨 처음 논문을 제외하면 neural network 기반 work은 아니다 (첫 번째 논문은 이 논문을 작성한 연구팀이 이 논문을 arXiv에 올리기 3개월 전에 arXiv에 올린 다른 논문이다). 자세한건 뒤에서 더 다루도록하자.</p>
 
-
 <ul>
-<li><a href="http://arxiv.org/abs/1505.07376">Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. &ldquo;Texture synthesis and the controlled generation of natural stimuli using convolutional neural networks.&rdquo; arXiv preprint arXiv:1505.07376 (2015).</a></li>
-<li><a href="http://www.cns.nyu.edu/heegerlab/content/publications/Heeger-siggraph95.pdf">Heeger, David J., and James R. Bergen. &ldquo;Pyramid-based texture analysis/synthesis.&rdquo; Proceedings of the 22nd annual conference on Computer graphics and interactive techniques. ACM, 1995.</a></li>
-<li><a href="http://dl.acm.org/citation.cfm?id=363108">Portilla, Javier, and Eero P. Simoncelli. &ldquo;A parametric texture model based on joint statistics of complex wavelet coefficients.&rdquo; International Journal of Computer Vision 40.1 (2000): 49-70.</a></li>
+  <li><a href="http://arxiv.org/abs/1505.07376">Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. “Texture synthesis and the controlled generation of natural stimuli using convolutional neural networks.” arXiv preprint arXiv:1505.07376 (2015).</a></li>
+  <li><a href="http://www.cns.nyu.edu/heegerlab/content/publications/Heeger-siggraph95.pdf">Heeger, David J., and James R. Bergen. “Pyramid-based texture analysis/synthesis.” Proceedings of the 22nd annual conference on Computer graphics and interactive techniques. ACM, 1995.</a></li>
+  <li><a href="http://dl.acm.org/citation.cfm?id=363108">Portilla, Javier, and Eero P. Simoncelli. “A parametric texture model based on joint statistics of complex wavelet coefficients.” International Journal of Computer Vision 40.1 (2000): 49-70.</a></li>
 </ul>
-
 
 <p>이 논문에서 제안하는 두 가지 reconstruction 방법을 CNN의 각 layer에 대해 적용해보면 다음과 같은 결과를 얻을 수 있다. 참고로 이 논문에서는 CNN 모델로 <a href="http://arxiv.org/abs/1409.1556">VGG 19</a>를 선택했다. 이 네트워크는 총 16개의 convolution layer와 3개의 fully connected layer로 이루어져있다. 이 네트워크에 대한 설명은 method 부분에서 더 자세히 다루도록 하겠다.</p>
 
-
-
-
-<p><img id="92-reconst-img" src="http://SanghyukChun.github.io/images/post/92-5.png" width="600"></p>
-
-
-
+<p><img id="92-reconst-img" src="http://SanghyukChun.github.io/images/post/92-5.png" width="600" /></p>
 
 <p>위 그림은 CNN 하나에서 서로 다른 두 가지 방법으로 각각 style과 content를 layer 별로 reconstruction한 결과이다. 하나의 같은 CNN에 대해 두 가지 다른 reconstruction을 진행한 것인데, 위쪽 그림은 고흐의 &#60;별이 빛나는 밤&#62;의 style을 layer 별로 reconstruction한 것이고, 아래 그림은 튀빙겐에서 찍은 사진의 content를 layer 별로 reconstruction한 것이다.</p>
-
-
 <p>먼저 style reconstruction에서 알 수 있는 것은 layer가 얕을수록 원래 content 정보는 거의 무시하고 'texture'를 복원한다는 것이다. 반면 깊은 layer로 가게 될수록 점점 원래 content 정보가 포함이 되는 것을 볼 수 있다. 이런 현상이 발생하는 이유는 이 논문에서는 style을 같은 layer에 있는 feature map들 간의 correlation으로 정의하기 때문이다. 이를 구체적으로 어떻게 수학적으로 정의하였는지는 뒤에서 좀 더 자세하게 살펴보도록 하자. Style을 correlation으로 생각하기 때문에, 가장 style이 복원이 잘되는 얕은 layer에서는 원본 content가 거의 무시되고 correlation을 가장 좋게하는 style만 나오는 것이고, 깊은 layer로 갈수록 style이 제대로 복원이 되지 않을 것이므로 원본 content의 정보가 증가해 correlation이 작아지는 결과를 얻게 되는 것이다.</p>
-
-
 <p>다음으로 content reconstruction을 보자. 이 그림을 통해 낮은 level의 layer는 거의 완벽하게 원본 이미지를 보존하고 있고 layer가 깊어질수록 원본 이미지의 정보는 조금씩 소실되지만, 가장 중요한 high-level content는 거의 유지가 되는 것을 볼 수 있다.</p>
+<p>이 논문은 같은 CNN이라고 할지라도 content와 style에 대한 representation이 분리가 되어있다는 것을 중요하게 언급하고 있다. 그렇기 때문에 같은 network을 사용하여 서로 다른 이미지에서 서로 다른 content와 style을 reconstruction해서 그 둘을 섞는 것이 가능한 것이다. 이것이 중요한 이유는 실제로 reconstruction을 하는 과정은 임의의 image를 input으로 삼고, image를 parameter로 하여 목표하는 style과 content에 대한 loss를 minimize하는 optimization 과정이기 때문이다. 이 두 가지 다른 optimization process를 오직 하나의 network만 사용하여 진행할 수 있기 때문에 $A$(혹은 튀빙겐에서 찍은 사진)이라는 input의 content를 가지면서 $B$(혹은 고흐의 &#60;별이 빛나는 밤&#62;)이라는 input의 style을 가지도록하는 방향으로 input 이미지의 gradient를 구할 수 있는 것이다. 수식으로 나타내보자. input image를 $x$라고 해보자. 우리 목표는 $x$와 $A$ 간의 content가 얼마나 다른지 표현하는 loss function $\mathcal L_{content} (x,A)$와 $x$와 $B$ 간의 style이 얼마나 다른지 표현하는 loss function $\mathcal L_{style (x,A)}$를 minimize하는 $x$를 찾는 것이다. 따라서 우리가 풀고 싶은 optimization problem은 다음과 같다.</p>
+<p>$$x = \arg\max_x \alpha\mathcal L_{content} (x,A) + \beta\mathcal L_{style} (x,B)$$</p>
+<p>이런 식으로 식을 쓸 수 있을 것이다 ($\alpha$와 $\beta$는 적당한 상수라고 하자). 이런 optimization을 푸는 가장 간단한 방법으로 $x$에 대한 gradient를 구하고 gradient descent optimization을 하는 것인데, 두 loss를 같은 network에 대해 design할 수 있기 때문에 gradient가 간단해지는 것이다. 그러면 이제 구체적으로 어떻게 각각의 loss가 정의되었는지 살펴보자.</p>
 
-
-<p>이 논문은 같은 CNN이라고 할지라도 content와 style에 대한 representation이 분리가 되어있다는 것을 중요하게 언급하고 있다. 그렇기 때문에 같은 network을 사용하여 서로 다른 이미지에서 서로 다른 content와 style을 reconstruction해서 그 둘을 섞는 것이 가능한 것이다. 이것이 중요한 이유는 실제로 reconstruction을 하는 과정은 임의의 image를 input으로 삼고, image를 parameter로 하여 목표하는 style과 content에 대한 loss를 minimize하는 optimization 과정이기 때문이다. 이 두 가지 다른 optimization process를 오직 하나의 network만 사용하여 진행할 수 있기 때문에 \(A\)(혹은 튀빙겐에서 찍은 사진)이라는 input의 content를 가지면서 \(B\)(혹은 고흐의 &#60;별이 빛나는 밤&#62;)이라는 input의 style을 가지도록하는 방향으로 input 이미지의 gradient를 구할 수 있는 것이다. 수식으로 나타내보자. input image를 \(x\)라고 해보자. 우리 목표는 \(x\)와 \(A\) 간의 content가 얼마나 다른지 표현하는 loss function \(\mathcal L_{content} (x,A)\)와 \(x\)와 \(B\) 간의 style이 얼마나 다른지 표현하는 loss function \(\mathcal L_{style (x,A)}\)를 minimize하는 \(x\)를 찾는 것이다. 따라서 우리가 풀고 싶은 optimization problem은 다음과 같다.</p>
-
-
-<p>\[x = \arg\max_x \alpha\mathcal L_{content} (x,A) + \beta\mathcal L_{style} (x,B)\]</p>
-
-
-<p>이런 식으로 식을 쓸 수 있을 것이다 (\(\alpha\)와 \(\beta\)는 적당한 상수라고 하자). 이런 optimization을 푸는 가장 간단한 방법으로 \(x\)에 대한 gradient를 구하고 gradient descent optimization을 하는 것인데, 두 loss를 같은 network에 대해 design할 수 있기 때문에 gradient가 간단해지는 것이다. 그러면 이제 구체적으로 어떻게 각각의 loss가 정의되었는지 살펴보자.</p>
-
-
-
-
-<h5>Methods</h5>
-
-
+<h3>Methods</h3>
 <p>이 paper에서는 CNN 모델로 <a href="http://arxiv.org/abs/1409.1556">VGG 19</a> 네트워크를 사용한다. 이 네트워크는 옥스포드의 VGG(Visual Geometry Group)에서 만든 네트워크로, <a href="http://SanghyukChun.github.io/88">Batch Normalization</a>이 적용되기 이전 inception network (혹은 GoogleNet) 등에 비해 꽤 우수한 성능을 보이는 네트워크이다. 아래 논문을 통해 발표하였다.</p>
 
-
 <ul>
-<li><a href="http://arxiv.org/abs/1409.1556">Simonyan, Karen, and Andrew Zisserman. &ldquo;Very deep convolutional networks for large-scale image recognition.&rdquo; arXiv preprint arXiv:1409.1556 (2014).</a></li>
+  <li><a href="http://arxiv.org/abs/1409.1556">Simonyan, Karen, and Andrew Zisserman. “Very deep convolutional networks for large-scale image recognition.” arXiv preprint arXiv:1409.1556 (2014).</a></li>
 </ul>
 
-
 <p>자세한 method를 설명하기에 앞서 VGG 19 네트워크 자체에 대해 다뤄야하는데, 이 네트워크는 총 16개의 convolution layer, 5개의 pooling layer, 3개의 fully connected layer로 구성되어있다. 이 논문은 제공된 16개의 convolution layer에서 생성되는 feature map을 사용해 style loss와 content loss를 계산한다. 이 네트워크는 다음과 같은 형태로 구성되어있다.</p>
-
 
 <p><img class="center" src="/images/post/92-6.png" width="400"></p>
 
 <p>이 논문에서 사용한 VGG 19는 E에 해당하며, conv 2개 - pooling - conv 2개 - pooling - conv 4개 ... 이런 식으로 구성되어있다. 각각의 conv layer들은 pooling layer를 기준으로, 순서대로 conv 1_1, conv 1_2, conv 2_1, conv 2_2, conv 3_1, conv 3_2, conv 3_3, ... conv 5_4 라는 이름을 가지고 있다. 즉, conv 5_1 이면 4번쨰 pooling layer 바로 다음 conv layer를 말하는 것이다.</p>
-
-
 <p>이 논문에서는 fully connected layer는 사용하지 않고, 16개의 conv layer와 5개의 pooling layer만 사용하는데, image reconstruction에 있어서는 max pooling보다는 average pooling을 고르는 것이 그림이 조금 더 자연스럽고 좋아보이는 결과로 나오기 때문에 max pooling 대신 average pooling을 사용하였다고 한다.</p>
 
-
-
-
-<p>그럼 먼저 비교적 간단한 content loss 부터 살펴보도록하자. 이 논문은 feature map을 \(F^l \in \mathcal R^{N_l \times M_l}\)으로 정의하였다. 이때 \(N_l\)은 \(l\) 번째 레이어의 filter 개수이고, \(M_l\)은 각각의 filter의 가로와 세로를 곱한 값이며, 즉 각 filter들의 output 개수이다. 또한 \(F^l_{ij}\)는 \(i\) 번째 필터의 \(j\) 번째 output을 의미하게 된다. 이제 우리가 비교하려는 두 가지 이미지를 각각 \(p\)와 \(x\)라 하고, 각각의 \(l\) 번째 layer의 feature representation을 \(P^l, F^l\)로 정의하자. 이렇게 정의하였을 때, \(l\) 번째 layer의 content loss는 다음과 같이 간단하게 정의된다.</p>
-
-
-<p>\[ \mathcal L_{content} (p, x, l) = \frac{1}{2} \sum_{ij} \big( F^l_{ij} - P^l_{ij} \big)^2. \]</p>
-
-
-<p>즉, \(p\)와 \(x\)에 대해 각각 feature map \(P^l, F^l\)을 계산하고, 이 둘의 차의 Frobenius norm (\(\| P^l - F^l \|_F\))을 loss로 선택한 것이다. 이 error를 각각의 layer에 대해 따로 정의하게 된다. 이제 튀빙겐에서 찍은 사진 \(p\)의 \(l\) 번째 layer의 representation을 사용해 image reconstruction을 한다고 가정해보자. 이때 \(l\) 번째 layer에서 복원한 이미지를 \(x^l\)라고 하자. 앞서 정의한 loss를 minimize하는 \(x^l\)를 찾아야하므로, 우리는 다음과 같은 식을 얻는다.</p>
-
-
-<p>\[x^l = \arg\max_x \mathcal L_{content} (p, x, l). \]</p>
-
-
-<p>이 식을 풀기 위한 가장 간단한 방법은 \(x^l\)을 random image로 initialize하고 \(\frac{\mathcal L_{content} (p, x, l)}{x}\)를 게산해 gradient descent method를 사용하는 것이다. Loss를 layer의 각각의 activation으로 미분한 결과는 다음과 같다.</p>
-
-
-<p>\[ \frac{\partial \mathcal L_{content} (p, x, l)}{\partial F^l_{ij}} = (F^l_{ij} - P^l_{ij})_{ij} \mbox{ if } F^l_{ij} > 0, \mbox{ otherwise, } 0.\]</p>
-
-
+<p>그럼 먼저 비교적 간단한 content loss 부터 살펴보도록하자. 이 논문은 feature map을 $F^l \in \mathcal R^{N_l \times M_l}$으로 정의하였다. 이때 $N_l$은 $l$ 번째 레이어의 filter 개수이고, $M_l$은 각각의 filter의 가로와 세로를 곱한 값이며, 즉 각 filter들의 output 개수이다. 또한 $F^l_{ij}$는 $i$ 번째 필터의 $j$ 번째 output을 의미하게 된다. 이제 우리가 비교하려는 두 가지 이미지를 각각 $p$와 $x$라 하고, 각각의 $l$ 번째 layer의 feature representation을 $P^l, F^l$로 정의하자. 이렇게 정의하였을 때, $l$ 번째 layer의 content loss는 다음과 같이 간단하게 정의된다.</p>
+<p>$$ \mathcal L_{content} (p, x, l) = \frac{1}{2} \sum_{ij} \big( F^l_{ij} - P^l_{ij} \big)^2. $$</p>
+<p>즉, $p$와 $x$에 대해 각각 feature map $P^l, F^l$을 계산하고, 이 둘의 차의 Frobenius norm ($\| P^l - F^l \|_F$)을 loss로 선택한 것이다. 이 error를 각각의 layer에 대해 따로 정의하게 된다. 이제 튀빙겐에서 찍은 사진 $p$의 $l$ 번째 layer의 representation을 사용해 image reconstruction을 한다고 가정해보자. 이때 $l$ 번째 layer에서 복원한 이미지를 $x^l$라고 하자. 앞서 정의한 loss를 minimize하는 $x^l$를 찾아야하므로, 우리는 다음과 같은 식을 얻는다.</p>
+<p>$$x^l = \arg\max_x \mathcal L_{content} (p, x, l). $$</p>
+<p>이 식을 풀기 위한 가장 간단한 방법은 $x^l$을 random image로 initialize하고 $\frac{\mathcal L_{content} (p, x, l)}{x}$를 게산해 gradient descent method를 사용하는 것이다. Loss를 layer의 각각의 activation으로 미분한 결과는 다음과 같다.</p>
+<p>$$ \frac{\partial \mathcal L_{content} (p, x, l)}{\partial F^l_{ij}} = (F^l_{ij} - P^l_{ij})_{ij} \mbox{ if } F^l_{ij} &gt; 0, \mbox{ otherwise, } 0.$$</p>
 <p>이 값을 사용하면 전체 gradient를 back-propagation 알고리즘을 사용해 간단하게 계산할 수 있게 된다. <a href="#92-reconst-img">앞서 봤던 reconstruction 그림</a>의 아래 부분에서 복원한 5개의 이미지는 각각 conv 1_1, conv 2_2, conv 3_1, conv 4_1, conv 5_1에서 loss를 계산하여 복원한 것이다.</p>
 
-
-
-
-<p>다음으로, style에 대한 loss를 정의해보자. 이 논문에서 style이라는 것은 같은 layer의 서로 다른 filter들끼리의 correlation으로 정의한다. 즉, filter가 \(N_l\)개 있으므로 이것들의 correlation은 \(G^l \in \mathcal R^{N_l \times N_l}\)이 될 것이다. 이때, correlation을 계산하기 위하여 각각의 filter의 expectation 값을 사용하여 correlation matrix를 계산한다고 한다. 즉, \(l\)번째 layer에서 필터가 100개 있고, 각 필터별로 output이 400개 있다면, 각각의 100개의 필터마다 400개의 output들을 평균내어 값을 100개 뽑아내고, 그 100개의 값들의 correlation을 계산했다는 것이다. 이렇게 계산한 matrix를 Gram matrix라고 하며 \(G^l_{ij}\)라고 적으며 다음과 같이 계산할 수 있다.</p>
-
-
-<p>\[ G^l_{ij} = \sum_{k} F^l_{ik} F^l_{kj}.\]</p>
-
-
-<p>두 개의 image \(a\)와 \(x\) 간의 style이 얼마나 다른지를 나타내는 style loss \(\mathcal L_{style}\)은 \(G^l_{ij}\)를 사용하여 다음과 같이 정의된다.</p>
-
-
-<p>\[ \mathcal L_{style} (a,x) = \sum_{l=0}^L w_l E_l \]</p>
-
-
-<p>\(L\)은 loss에 영향을 주는 layer 개수, \(w_l\)은 전부 더해서 1이 되는 weight이고, \(E_l\)은 layer \(l\)의 style loss contribution이다. 이 값은 다음과 같이 정의된다.</p>
-
-
-<p>\[ E_l = \frac{1}{4 N_l^2 M_l^2} \sum_{i,j} \big( G^l_{ij} - A^l_{ij} \big)^2. \]</p>
-
-
-<p>역시 마찬가지로, \(p\), 혹은 고흐의 &#60;별이 빛나는 밤&#62;의 layer 별 style reconstruction 역시 이 \(\mathcal L_{style} (a,x)\)를 minimize하는 \(x\)를 찾는 것으로 풀 수 있으며 이 문제는 back-propagation algorithm으로 풀 수 있다.</p>
-
-
-<p>\[ \frac{\partial \mathcal E_l}{\partial F^l_{ij}} = \frac{1}{N_l^2 M_l^2} \sum_{i,j} \big( \big(F^l)^\top \big( G^l_{ij} - A^l_{ij} \big)\big)_{ji} \mbox{ if } F^l_{ij} > 0 \mbox{ otherwise } 0. \]</p>
-
-
-<p>다시 한 번 <a href="#92-reconst-img">앞서 봤던 reconstruction 그림</a>의 윗 부분에서 복원한 이미지를 살펴보면, 순서대로 loss 계산을 위해 conv 1_1만 사용하여 복원한 그림, conv 1_1, conv 2_1을 사용한 그림, conv 1_1, conv 2_1, conv 3_1을 사용한 그림, conv 1_1, conv 2_1, conv 3_1, conv 4_1을 선택한 그림 ... 이런 식으로 선택하여 복원을 한 그림이다. 이때 '선택' 한다는 것의 개념은 선택한 layer의 \(w_l\)의 값을 0이 아닌 같은 값으로 두고 나머지는 전부 0으로 설정하는 것이다. 예를 들어 c 그림은 4개만 영향을 주므로 conv 1_1, conv 2_1, conv 3_1, conv 4_1만 \(w_l = 0.25\)이고 나머지는 0이다.</p>
-
-
-<p>이제 마지막으로 이 두 가지 loss를 한 번에 optimization하는 과정만 남았다. \(\alpha\)와 \(\beta\)는 content와 style 중 어느 쪽에 더 초점을 둘 것인지 조정하는 파라미터로, 보통 \(\alpha/\beta\)으로 \(10^{-3}\)이나 \(10^{-4}\) 정도를 고른다고 한다.</p>
-
-
-<p>\[\mathcal L_{total} (p,a,x) = \alpha \mathcal L_{content} (p, x) + \beta \mathcal L_{style} (a,x)\]</p>
-
-
-<p></p>
-
-<p>논문에서는 style에 얼마나 많은 layer를 고려하는지에 따라, 그리고 \(\alpha/\beta\)의 값을 조정함에 따라 다음과 같이 결과가 달라진다고 report하고 있다.</p>
-
+<p>다음으로, style에 대한 loss를 정의해보자. 이 논문에서 style이라는 것은 같은 layer의 서로 다른 filter들끼리의 correlation으로 정의한다. 즉, filter가 $N_l$개 있으므로 이것들의 correlation은 $G^l \in \mathcal R^{N_l \times N_l}$이 될 것이다. 이때, correlation을 계산하기 위하여 각각의 filter의 expectation 값을 사용하여 correlation matrix를 계산한다고 한다. 즉, $l$번째 layer에서 필터가 100개 있고, 각 필터별로 output이 400개 있다면, 각각의 100개의 필터마다 400개의 output들을 평균내어 값을 100개 뽑아내고, 그 100개의 값들의 correlation을 계산했다는 것이다. 이렇게 계산한 matrix를 Gram matrix라고 하며 $G^l_{ij}$라고 적으며 다음과 같이 계산할 수 있다.</p>
+<p>$$ G^l_{ij} = \sum_{k} F^l_{ik} F^l_{kj}.$$</p>
+<p>두 개의 image $a$와 $x$ 간의 style이 얼마나 다른지를 나타내는 style loss $\mathcal L_{style}$은 $G^l_{ij}$를 사용하여 다음과 같이 정의된다.</p>
+<p>$$ \mathcal L_{style} (a,x) = \sum_{l=0}^L w_l E_l $$</p>
+<p>$L$은 loss에 영향을 주는 layer 개수, $w_l$은 전부 더해서 1이 되는 weight이고, $E_l$은 layer $l$의 style loss contribution이다. 이 값은 다음과 같이 정의된다.</p>
+<p>$$ E_l = \frac{1}{4 N_l^2 M_l^2} \sum_{i,j} \big( G^l_{ij} - A^l_{ij} \big)^2. $$</p>
+<p>역시 마찬가지로, $p$, 혹은 고흐의 &#60;별이 빛나는 밤&#62;의 layer 별 style reconstruction 역시 이 $\mathcal L_{style} (a,x)$를 minimize하는 $x$를 찾는 것으로 풀 수 있으며 이 문제는 back-propagation algorithm으로 풀 수 있다.</p>
+<p>$$ \frac{\partial \mathcal E_l}{\partial F^l_{ij}} = \frac{1}{N_l^2 M_l^2} \sum_{i,j} \big( \big(F^l)^\top \big( G^l_{ij} - A^l_{ij} \big)\big)_{ji} \mbox{ if } F^l_{ij} &gt; 0 \mbox{ otherwise } 0. $$</p>
+<p>다시 한 번 <a href="#92-reconst-img">앞서 봤던 reconstruction 그림</a>의 윗 부분에서 복원한 이미지를 살펴보면, 순서대로 loss 계산을 위해 conv 1_1만 사용하여 복원한 그림, conv 1_1, conv 2_1을 사용한 그림, conv 1_1, conv 2_1, conv 3_1을 사용한 그림, conv 1_1, conv 2_1, conv 3_1, conv 4_1을 선택한 그림 ... 이런 식으로 선택하여 복원을 한 그림이다. 이때 '선택' 한다는 것의 개념은 선택한 layer의 $w_l$의 값을 0이 아닌 같은 값으로 두고 나머지는 전부 0으로 설정하는 것이다. 예를 들어 c 그림은 4개만 영향을 주므로 conv 1_1, conv 2_1, conv 3_1, conv 4_1만 $w_l = 0.25$이고 나머지는 0이다.</p>
+<p>이제 마지막으로 이 두 가지 loss를 한 번에 optimization하는 과정만 남았다. $\alpha$와 $\beta$는 content와 style 중 어느 쪽에 더 초점을 둘 것인지 조정하는 파라미터로, 보통 $\alpha/\beta$으로 $10^{-3}$이나 $10^{-4}$ 정도를 고른다고 한다.</p>
+<p>$$\mathcal L_{total} (p,a,x) = \alpha \mathcal L_{content} (p, x) + \beta \mathcal L_{style} (a,x)$$</p>
+<p>논문에서는 style에 얼마나 많은 layer를 고려하는지에 따라, 그리고 $\alpha/\beta$의 값을 조정함에 따라 다음과 같이 결과가 달라진다고 report하고 있다.</p>
 
 <p><img src="/images/post/92-7.png" width="600"></p>
 
-<p>x 축이 \(\alpha/\beta\), y축은 순서대로 앞에서처럼 conv 1_1, conv 2_1, conv 3_1, conv 4_1, conv 5_1을 선택한 것이다 (A: 1_1, B: 1_1, 2_1, C: 1_1, 2_1, 3_1, ...) 이 값들을 어떻게 조정하느냐에 따라 style과 content의 적당한 trade-off를 조정할 수 있다. Layer를 더 많이 사용할수록, 그리고 \(\alpha/\beta\) 값이 작아질수록 content보다는 style에 더 치중된 결과가 나오게 된다. 그리고 당연히 layer를 더 적게 사용하거나 \(\alpha/\beta\)의 값을 키울수록 그 반대의 결과가 나오게 된다.</p>
-
-
+<p>x 축이 $\alpha/\beta$, y축은 순서대로 앞에서처럼 conv 1_1, conv 2_1, conv 3_1, conv 4_1, conv 5_1을 선택한 것이다 (A: 1_1, B: 1_1, 2_1, C: 1_1, 2_1, 3_1, ...) 이 값들을 어떻게 조정하느냐에 따라 style과 content의 적당한 trade-off를 조정할 수 있다. Layer를 더 많이 사용할수록, 그리고 $\alpha/\beta$ 값이 작아질수록 content보다는 style에 더 치중된 결과가 나오게 된다. 그리고 당연히 layer를 더 적게 사용하거나 $\alpha/\beta$의 값을 키울수록 그 반대의 결과가 나오게 된다.</p>
 <p><img src="/images/post/92-2.png" width="600"></p>
+<p>위 그림은 앞에서 언급한 <a href="https://github.com/jcjohnson/neural-style">'neural style'</a>을 사용해 만든 그림이다. 원본 content 이미지로 브래드 피트의 사진을 넣고, style 이미지로 피카소의 &#60;자화상&#62;을 넣은 다음, $\alpha/\beta$ 값을 조정하면서 값이 변하는 것을 관측한 것이다.</p>
+<p>맨 처음 글을 시작하며 보았던 그림에서는, content representation은 conv 4_2의 것만을 사용하고, style representation은 conv 1_1, 2_1, 3_1, 4_1, 5_1 에 각각 $w_l = 1/5$, 나머지는 $w_l=0$으로 하여 사용했다. 또한 B,C,D 그림은 $\alpha/\beta = 10^{-3}$, E,D 그림은 $\alpha/\beta = 10^{-4}$를 사용하였다고 한다.</p>
 
-<p>위 그림은 앞에서 언급한 <a href="https://github.com/jcjohnson/neural-style">'neural style'</a>을 사용해 만든 그림이다. 원본 content 이미지로 브래드 피트의 사진을 넣고, style 이미지로 피카소의 &#60;자화상&#62;을 넣은 다음, \(\alpha/\beta\) 값을 조정하면서 값이 변하는 것을 관측한 것이다.</p>
-
-
-<p>맨 처음 글을 시작하며 보았던 그림에서는, content representation은 conv 4_2의 것만을 사용하고, style representation은 conv 1_1, 2_1, 3_1, 4_1, 5_1 에 각각 \(w_l = 1/5\), 나머지는 \(w_l=0\)으로 하여 사용했다. 또한 B,C,D 그림은 \(\alpha/\beta = 10^{-3}\), E,D 그림은 \(\alpha/\beta = 10^{-4}\)를 사용하였다고 한다.</p>
-
-
-
-
-<h5>Comments</h5>
-
+<h3>Comments</h3>
 
 <ul>
-<li>개인적인 생각으로는, 이 논문의 결과는 고흐나 뭉크 등의 &lsquo;스타일'이 분명한 인상주의, 표현주의, 야수파 화풍의 화가들의 그림을 더 잘 generate할 것으로 생각된다. 나중에 사람들이 실험해본 결과도 그렇고, 대체로 고흐 등의 경우 스타일이 특색이 뚜렷해서 그러한지 꽤 그럴싸한 결과가 나오는 반면, 피카소 등으로 대변되는 입체파 처럼 '스타일'을 넘어서는 그 무언가가 존재하는 경우 기대만큼 좋은 결과로 이어지는 것 같지는 않다. 원래 이 논문에서 제안하는 알고리즘의 목적 자체가 그림의 texture를 learning하여 content는 유지한 상태로 texture만 변경시키는 것이므로, 내용 자체가 변화하는 입체파 등의 독특한 그림을 제대로 따라하는 것은 불가능하기 떄문에 그런 것으로 보인다. (+ 글을 쓰면서 개인적으로 궁금해진게, 캐리커쳐는 어떻게 반응할지 궁금해졌다. 나중에 public하게 공개된 코드를 사용해서 실험해봐야겠다)</li>
-<li>왜 method에서 전체 conv layer를 사용하는 것이 아니라 일부만 사용하는 것인지 다소 아리송하다. 또한 왜 style reconstruction을 위해 conv 1_1, 2_1, &hellip; 5_1 의 정보만 사용했고, content는 왜 conv 4_2를 사용하였는지 역시 의아하다. 아마 제일 잘 되는 것을 골랐을텐데, 왜 그것들이 제일 잘되는 것일까 궁금해진다.</li>
-<li>CNN에 대한 이해가 충분히 있어야 쉽게 읽을 수 있는 논문이었다. 추가로 VGG network에 대한 이해도도 있으면 도움이 되는 것 같다. 맨 처음 논문을 읽을 때는 이런 것들에 대해 감이 좀 약해서 읽어도 이해하기가 어려웠는데, CNN 공부를 다시 끝내고 다른 선행 연구들을 적당히 이해한 채로 다시 읽어보니 쉽게 이해할 수 있었다.</li>
+  <li>개인적인 생각으로는, 이 논문의 결과는 고흐나 뭉크 등의 ‘스타일’이 분명한 인상주의, 표현주의, 야수파 화풍의 화가들의 그림을 더 잘 generate할 것으로 생각된다. 나중에 사람들이 실험해본 결과도 그렇고, 대체로 고흐 등의 경우 스타일이 특색이 뚜렷해서 그러한지 꽤 그럴싸한 결과가 나오는 반면, 피카소 등으로 대변되는 입체파 처럼 ‘스타일’을 넘어서는 그 무언가가 존재하는 경우 기대만큼 좋은 결과로 이어지는 것 같지는 않다. 원래 이 논문에서 제안하는 알고리즘의 목적 자체가 그림의 texture를 learning하여 content는 유지한 상태로 texture만 변경시키는 것이므로, 내용 자체가 변화하는 입체파 등의 독특한 그림을 제대로 따라하는 것은 불가능하기 떄문에 그런 것으로 보인다. (+ 글을 쓰면서 개인적으로 궁금해진게, 캐리커쳐는 어떻게 반응할지 궁금해졌다. 나중에 public하게 공개된 코드를 사용해서 실험해봐야겠다)</li>
+  <li>왜 method에서 전체 conv layer를 사용하는 것이 아니라 일부만 사용하는 것인지 다소 아리송하다. 또한 왜 style reconstruction을 위해 conv 1<em>1, 2</em>1, … 5<em>1 의 정보만 사용했고, content는 왜 conv 4</em>2를 사용하였는지 역시 의아하다. 아마 제일 잘 되는 것을 골랐을텐데, 왜 그것들이 제일 잘되는 것일까 궁금해진다.</li>
+  <li>CNN에 대한 이해가 충분히 있어야 쉽게 읽을 수 있는 논문이었다. 추가로 VGG network에 대한 이해도도 있으면 도움이 되는 것 같다. 맨 처음 논문을 읽을 때는 이런 것들에 대해 감이 좀 약해서 읽어도 이해하기가 어려웠는데, CNN 공부를 다시 끝내고 다른 선행 연구들을 적당히 이해한 채로 다시 읽어보니 쉽게 이해할 수 있었다.</li>
 </ul>
 
-
-<h5>Summary of A Neural Algorithm of Artistic Style</h5>
-
+<h3>Summary of A Neural Algorithm of Artistic Style</h3>
 
 <ul>
-<li>CNN의 conv layer가 feature map이라는 것에서부터 착안하여, feature map에서 style과 content를 reconstruct하는 optimization problem을 제안하였다.</li>
-<li>하나의 CNN에서 content와 style representation이 separable하므로 style과 content를 한 번에 update하는 알고리즘을 만들 수 있다.</li>
-<li>Content loss는 두 이미지 각각의 feature matrix의 차의 frobenius norm으로 표현이 된다. 최종 결과를 위해서는 conv 4_2 만 사용하였다.</li>
-<li>Style loss는 두 이미지 각각의 Gram matrix의 차의 frobenius norm으로 표현이 된다. 최종 결과를 위해서는 conv 1_1, 2_1, 3_1, 4_1, 5_1 만 사용하였다.</li>
-<li>이때 style loss가 Gram matrix가 되는 이유는 style을 한 레이어 안에 있는 filter들의 correlation으로 정의했기 때문이다. 이때 correlation 계산은 각각의 filter들의 expectation 값들을 사용한다.</li>
-<li>VGG 19 네트워크를 사용했으며, FC layer는 제거하고 max pooling 대신 avg pooling을 사용하였다.</li>
-<li>Content loss와 Style loss의 비율을 조정하여 style과 content 중에서 어느 것에 집중할지 선택할 수 있다. 논문에서는 0.001 정도를 사용하였다.</li>
+  <li>CNN의 conv layer가 feature map이라는 것에서부터 착안하여, feature map에서 style과 content를 reconstruct하는 optimization problem을 제안하였다.</li>
+  <li>하나의 CNN에서 content와 style representation이 separable하므로 style과 content를 한 번에 update하는 알고리즘을 만들 수 있다.</li>
+  <li>Content loss는 두 이미지 각각의 feature matrix의 차의 frobenius norm으로 표현이 된다. 최종 결과를 위해서는 conv 4_2 만 사용하였다.</li>
+  <li>Style loss는 두 이미지 각각의 Gram matrix의 차의 frobenius norm으로 표현이 된다. 최종 결과를 위해서는 conv 1<em>1, 2</em>1, 3<em>1, 4</em>1, 5_1 만 사용하였다.</li>
+  <li>이때 style loss가 Gram matrix가 되는 이유는 style을 한 레이어 안에 있는 filter들의 correlation으로 정의했기 때문이다. 이때 correlation 계산은 각각의 filter들의 expectation 값들을 사용한다.</li>
+  <li>VGG 19 네트워크를 사용했으며, FC layer는 제거하고 max pooling 대신 avg pooling을 사용하였다.</li>
+  <li>Content loss와 Style loss의 비율을 조정하여 style과 content 중에서 어느 것에 집중할지 선택할 수 있다. 논문에서는 0.001 정도를 사용하였다.</li>
 </ul>
 
-
-<h5>Reference</h5>
-
-
+<h3>Reference</h3>
 <ul>
-<li><a href="http://arxiv.org/abs/1508.06576">Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. &ldquo;A Neural Algorithm of Artistic Style.&rdquo; arXiv preprint arXiv:1508.06576 (2015).</a></li>
-<li><a href="https://github.com/jcjohnson/neural-style">&lsquo;neural style&rsquo;</a></li>
-<li><a href="http://arxiv.org/abs/1409.1556">Simonyan, Karen, and Andrew Zisserman. &ldquo;Very deep convolutional networks for large-scale image recognition.&rdquo; arXiv preprint arXiv:1409.1556 (2014).</a></li>
+  <li><a href="http://arxiv.org/abs/1508.06576">Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. “A Neural Algorithm of Artistic Style.” arXiv preprint arXiv:1508.06576 (2015).</a></li>
+  <li><a href="https://github.com/jcjohnson/neural-style">‘neural style’</a></li>
+  <li><a href="http://arxiv.org/abs/1409.1556">Simonyan, Karen, and Andrew Zisserman. “Very deep convolutional networks for large-scale image recognition.” arXiv preprint arXiv:1409.1556 (2014).</a></li>
 </ul>
-
 ]]></content>
   </entry>
   
@@ -892,374 +496,192 @@
     <link href="http://SanghyukChun.github.io/75/"/>
     <updated>2015-09-21T00:10:00+09:00</updated>
     <id>http://SanghyukChun.github.io/75</id>
-    <content type="html"><![CDATA[<h5>들어가며</h5>
-
-
+    <content type="html"><![CDATA[<h3>들어가며</h3>
 <p><a href="http://SanghyukChun.github.io/74">이전 글</a>에서 기본적인 neural network에 대한 introduction과, feed-forward network를 푸는 <a href="http://SanghyukChun.github.io/74#backprop">backpropagtion 알고리즘</a>과 optimization을 하기 위해 기본적으로 사용되는 <a href="http://SanghyukChun.github.io/74#sgd">stochastic gradient descent</a>에 대해 다루었다. 이 글에서는 deep learning이란 것은 정확히 무엇이며, 왜 deep learning이 최근 크게 급부상하게 되었는지에 대해 시간 순으로 다룰 것이다. 이 글에서는 unsupervised learning의 한 방법인 Restricted Boltzmann Machine (RBM)과 그것을 사용한 Deep Belief Network (DBN)에 대해 다룰 것이다. 또 다른 unsupervised learning 방법 중 하나인 (denoising) auto-encoder 역시 다루고자하였으나, 이 내용까지 전부 다루기에는 내용이 너무 길어져서 이 글에서는 생략하였다. 주의할 점은, 2007년 2008년에 막 deep learning이라는 이름으로 나왔던 연구들인 unsupervised pretraining 방법들은 현재 거의 쓰이지 않는 연구방법들이라는 것이다. 때문에 지금까지도 사용되는 조금 더 practical한 방법들인 neural network regularization (예를 들어서 ReLU, Dropout 등), optimization method (momentum, adagrad 등)에 대해서는 이 이후 한 번의 posting을 더 하여 다루도록 하겠다. 추가로, 오래된 work임에도 불구하고 아직도 computer vision 쪽에서 엄청나게 많이 사용하는 Convolutional Neural Network (CNN) 에 대해서도 다루도록 하겠다.</p>
 
-
-
-
-<h5>Deep Neural Network</h5>
-
-
+<h3>Deep Neural Network</h3>
 <p>Deep learning이라는 것은 사실 deep neural network를 의미하는 것이다. Neural network에 대해서는 <a href="http://SanghyukChun.github.io/74">이전 글</a>에서 설명하였고, 그럼 deep이란 무엇인가하면, 다른게 아니라 feed-forward network에서 가운데 hidden layer가 1개 보다 많으면 'deep'하다고 말하는 것이다. 요즘은 layer를 무조건 1개보다는 많이 쌓기 때문에 요즘 나오는 neural network 연구는 모두 deep learning 연구라고 생각하면 된다.</p>
-
-
 <p>그런데 사실 deep learning은 전혀 새로운 연구분야가 아니고 이미 몇 십년 전에 기본적인 연구가 끝난 분야이다.</p>
 
-
 <ul>
-<li>1958 Rosenblatt proposed perceptrons</li>
-<li>1980 Neocognitron (Fukushima, 1980)</li>
-<li>1982 Hopfield network, SOM (Kohonen, 1982), Neural PCA (Oja, 1982)</li>
-<li>1985 Boltzmann machines (Ackley et al., 1985)</li>
-<li>1986 Multilayer perceptrons and backpropagation (Rumelhart et al., 1986) 1988 RBF networks (Broomhead&amp;Lowe, 1988)</li>
-<li>1989 Autoencoders (Baldi&amp;Hornik, 1989), Convolutional network (LeCun, 1989) 1992 Sigmoid belief network (Neal, 1992)</li>
-<li>1993 Sparse coding (Field, 1993)</li>
+  <li>1958 Rosenblatt proposed perceptrons</li>
+  <li>1980 Neocognitron (Fukushima, 1980)</li>
+  <li>1982 Hopfield network, SOM (Kohonen, 1982), Neural PCA (Oja, 1982)</li>
+  <li>1985 Boltzmann machines (Ackley et al., 1985)</li>
+  <li>1986 Multilayer perceptrons and backpropagation (Rumelhart et al., 1986) 1988 RBF networks (Broomhead&amp;Lowe, 1988)</li>
+  <li>1989 Autoencoders (Baldi&amp;Hornik, 1989), Convolutional network (LeCun, 1989) 1992 Sigmoid belief network (Neal, 1992)</li>
+  <li>1993 Sparse coding (Field, 1993)</li>
 </ul>
-
 
 <p>이렇듯 이미 가장 중요한 기초적인 연구는 예전에 다 끝났다. 지난 글에서 설명한 backpropagation 알고리즘은 이미 1986년 나온 알고리즘이고, 1989년에 나온 convolutional network가 요즘도 vision 분야에서 늘 사용하는 그 CNN이다. 그런데 정작 deep learning은 2000년도 중반이 지나고나서야 주목을 받기 시작했다. 왜 그랬을까?</p>
 
-
-
-
-<h5>Why Deep Learning?</h5>
-
-
+<h3>Why Deep Learning?</h3>
 <p>Deep learning이 예전에 '사기꾼' 취급을 받았던 이유는 크게 세 가지 이유가 있었다. 먼저 'deep' learning에 대한 이론적인 결과가 전무했다는 점 (network가 deep 해지면 문제가 더 이상 convex해지지 않는데, 이 상태에 대해 좋은 convergence는 어디이며 어떤게 좋은 initialization인가 등에 대한 연구가 전무하다. 즉, learning하면 overfitting이 너무 심하게 일어난다), 둘째로 이론적으로 연구가 많이 진행되어있는 'deep' 하지 않은 network (perceptron이라고 한다) 는 xor도 learning할 수 없는 한계가 존재한다는 점 (linear classifier라 그렇다). 마지막으로 computation cost가 무시무시해서 그 당시 컴퓨터로는 도저히 처리할 엄두조차 낼 수 없었다는 점이다.</p>
-
-
 <p>그렇다면 지금은 무엇이 바뀌었길래 deep learning이 핫해진걸까? 가장 크게 차이 나는 점은 예전과는 다르게 overfitting을 handle할 수 있는 좋은 연구가 많이 나오게 되었다. 처음 2007, 2008년에 등장했던 unsupervised pre-training method들 (이 글에서 다룰 내용들), 2010년도쯤 들어서서 나오기 시작한 수많은 regularization method들 (dropout, ReLU 등). 그리고 과거보다 하드웨어 스펙이 압도적으로 뛰어난데다가, GPU parallelization에 대한 이해도가 높아지게 되면서 에전과는 비교도 할 수 없을정도로 많은 computation power를 사용할 수 있게 된 것이다. 현재까지 알려진바로는 network가 deep할 수록 그 최종적인 성능이 좋아지며, optimization을 많이 하면 할 수록 그 성능이 좋아지기 때문에, computation power를 더 많이 사용할 수 있다면 그만큼 더 좋은 learning을 할 수 있다는 것을 의미하기 때문에 하드웨어의 발전 역시 중요한 요소이다.</p>
-
-
 <p>그리고 무엇보다 무시할 수 없는 것은, deep learning 기반의 approach들이 다른 방법론들을 압도하는 분야들이 있다는 것이다. 대표적인 분야가 바로 computer vison이다. 우리가 잘 알고 있는 <a href="http://yann.lecun.com/exdb/mnist/">MNSIT</a> 데이터셋은 물론이고, <a href="http://www.image-net.org/">ImageNet</a>과 그것 중에서 10개의 class만 떼어내서 만들어낸 데이터셋인 <a href="http://www.cs.toronto.edu/~kriz/cifar.html">Cifar-10</a> 대해서도 가장 잘 하고 있는건 역시 neural network이다. 아래 표들을 살펴보자 (<a href="http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html">출처</a>)</p>
-
 
 <p><img src="/images/post/75-1.png" width="600">
 <img src="/images/post/75-2.png" width="600"></p>
 
 <p>여기서 잠시 MNIST가 28 by 28 짜리 handwrite digit을 모아놓은 데이터셋이라는 것은 많이 언급했던 내용이니 넘어가고, ImageNet competition에 대해 잠깐 언급하고 넘어가보도록 하자. <a href="http://www.image-net.org/">ImageNet</a>이라는 것은 사실 데이터셋의 이름이 아니라 매년 새로운 task가 주어지는 competition이다. 보통 실험에 사용하는건 <a href="http://image-net.org/challenges/LSVRC/2012/index">2012년 데이터셋 (ILSVRC 2012)</a>인데, training 데이터가 1000개 class에 데이터 개수는 거의 128만개 가까이 되는 엄청나게 큰 데이터 셋이다. Test data는 공개되지 않았고, 대신 validation set으로 공개된 데이터는 총 5만개짜리 데이터이다. 전체 데이터 사이즈는 거의 150GB가까이 된다. 이때 데이터를 많이 사용하는 이유는, 이때 task가 iamge classification이고, 많은 논문들이 이 때의 데이터를 기준으로 실험하기 때문인듯 하다. 예를 들어서 <a href="http://image-net.org/challenges/LSVRC/2015/">ILSVRC 2015</a>에는 더 이상 classification task가 존재하지 않고, object detection이나 object localization등의 task만 주어져있는 상태이다.</p>
-
-
 <p>현재 ImageNet dataset (혹은 ILSVRC 2012)에서 state-of-art classification performance를 보이는 work은 <a href="http://SanghyukChun.github.io/88">지난 번에 review</a>했던 <a href="http://arxiv.org/abs/1502.03167">Batch Normalization</a> 논문인데, classification error는 20.1%이고, 1000개의 class 중에서 확률이 가장 높다고 판단한 top 5개 중에서 우리가 원하는 정답이 있을 확률인 top-5 error는 4.9%에 달한다. ImageNet dataset을 보면 1000개의 데이터가 전부 독립적인 것이 아니라 어느 정도 비슷한 데이터도 섞여있는 만큼, top-5 error가 5% 이하라는 것은 진짜 어마어마한 수준이라고 할 수 있다.</p>
-
 
 <p><img src="/images/post/88-8.png" width="600"></p>
 
 <p>이렇듯 deep learning은 computer vision 쪽에서 압도적인 성능을 보이고 있을 뿐 아니라, 최근에는 language model, NLP, machine translation 등의 다양한 분야에서도 좋은 결과를 내고 있다. 무엇보다 deep learning 쪽 분야는 Google, MS, Yahoo 심지어는 Apple과 삼성 등에서도 투자를 많이 하고 있고 실제로 엄청나게 많은 연구들이 행해지고 그 연구들이 나오자마자 거의 바로 산업에 적용될 정도로 practical하게 많이 쓰이고 있는 분야가 되었다. 그렇기 때문에 아마도 당분간은 머신러닝 분야에서 deep learning의 강세는 이어질 것으로 보인다.</p>
-
-
 <p>이 글의 남은 부분의 첫 번째 부분에서는 NIPS 2006에 발표된 Bengio 교수 연구팀의 <a href="http://papers.nips.cc/paper/3048-greedy-layer-wise-training-of-deep-networks.pdf">Greedy layer-wise training of deep networks</a> 연구와 NIPS 2007에 발표된 Hinton 교수 연구팀의 <a href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf">A fast learning algorithm for deep belief nets</a> 두 논문을 통해 제안되었던 unsupervised pretraining method 들에 대해서 다룰 것이다. 이 부분은 더 이상 practical usage로 사용되지는 않지만, deep learning의 거의 첫 번째 연구결과라고 해도 좋을 정도로 의미있는 연구결과들이므로 한 번쯤 알아둘 필요가 있다고 생각한다.</p>
-
-
 <p>그리고 나머지 부분에서는 정말 오래된 연구결과이지만 아직까지도 쓰이고 있는 Convolutional Neural Network (CNN)에 대해 다룰 것이다. 이 결과는 앞서 ImageNet에서 가장 좋은 결과를 내고 있다는 Batch Normalization 에서도 기본 골격으로 사용하고 있는 vision 쪽에서는 가장 기초가 되는 엄청나게 중요한 개념이므로 마찬가지로 이 글에서 다루도록 하겠다. 만약 practical한 목적으로 이 글을 읽고 있다면 아래 unsupervised pretraining 섹션은 건너뛰고 바로 <a href="#75-cnn">CNN</a> 섹션부터 읽더라도 크게 상관없다.</p>
 
-
-
-
-<h5>Problems to solve for deep learning</h5>
-
-
+<h3>Problems to solve for deep learning</h3>
 <p>Deep learning이 흥하기까지 수 많은 연구결과들이 있었지만, 지금처럼 deep learning이 hot하게 되기까지는 앞에서 말했던 것처럼 regularization method들이나 initialization method들, 그리고 overfitting을 최대한 피할 수 있는 optimization mehtod 등이 많이 제안되면서부터라고 할 수 있다. 이 연구들이 공통적으로 고민하고 있는 것은 <a href="http://SanghyukChun.github.io/59">overfitting</a>이다.</p>
-
 
 <p><img src="/images/post/59-1.png" width="500"></p>
 
 <p>Overfitting은 주어진 데이터의 양에 비해 모델의 complexity가 높으면 발생하게 된다. 안타깝게도 neural network가 깊어질수록 model의 complexity는 exponential하게 증가하게 된다. 그렇기 때문에 거의 무한한 표현형을 learning할 수 있는 deep network가 좋다는 것을 다들 알고 있음에도 불구하고, 너무나 overfitting이 심하게 발생하기 때문에 neural network 연구가 멈추게 된 것이다. 하지만 2007~8년 즈음하여 overfitting을 막기 위하여 새로운 initialziation을 제안하는 work이 나오게 되는데 그 work이 바로 앞에서 설명 했던 NIPS에 발표되었던 두 work이다.</p>
-
-
 <p>먼저 Restricted Boltzmann Machine (RBM) 에 대해 설명해보자.</p>
 
-
-
-
-<h5>Restricted Boltzmann Machine (RBM): Introduction</h5>
-
-
+<h3>Restricted Boltzmann Machine (RBM): Introduction</h3>
 <p>이 섹션은 상당히 수식이 많으며, 너무 복잡한 수식은 생략한 채 넘어가기 때문에 다소 설명이 모자랄 수 있다. 조금 더 관심이 있는 사람들을 위하여 아래의 참고자료들을 추천한다. 난이도 순서대로 당장 필요한 정도에 따라 읽으면 좋을 것 같은 순서대로 배치하였다. 내가 생각했을 때 알고리즘에 대한 심층적인 이론적 설명이 많은 순서대로 나열하였으니 처음부터 천천히 읽어보면 좋을 것 같다. 특히 마지막 참고자료는 상당히 이론적인 내용들을 굉장히 차근차근 어렵지 않게 담고 있으므로, RBM을 제대로 공부하고 싶다면 꼭 읽어보면 좋을 것 같다.</p>
 
-
 <ul>
-<li><a href="https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf">Hinton, Geoffrey. &ldquo;A practical guide to training restricted Boltzmann machines.&rdquo; Momentum 9.1 (2010): 926.</a></li>
-<li><a href="http://www.iro.umontreal.ca/~lisa/pointeurs/TR1312.pdf">Bengio, Yoshua. &ldquo;Learning deep architectures for AI.&rdquo; Foundations and trends® in Machine Learning 2.1 (2009): 1-127.</a> (20쪽 부터)</li>
-<li><a href="http://image.diku.dk/igel/paper/AItRBM-proof.pdf">Fischer, Asja, and Christian Igel. &ldquo;An introduction to restricted Boltzmann machines.&rdquo; Progress in Pattern Recognition, Image Analysis, Computer Vision, and Applications. Springer Berlin Heidelberg, 2012. 14-36.</a></li>
+  <li><a href="https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf">Hinton, Geoffrey. “A practical guide to training restricted Boltzmann machines.” Momentum 9.1 (2010): 926.</a></li>
+  <li><a href="http://www.iro.umontreal.ca/~lisa/pointeurs/TR1312.pdf">Bengio, Yoshua. “Learning deep architectures for AI.” Foundations and trends® in Machine Learning 2.1 (2009): 1-127.</a> (20쪽 부터)</li>
+  <li><a href="http://image.diku.dk/igel/paper/AItRBM-proof.pdf">Fischer, Asja, and Christian Igel. “An introduction to restricted Boltzmann machines.” Progress in Pattern Recognition, Image Analysis, Computer Vision, and Applications. Springer Berlin Heidelberg, 2012. 14-36.</a></li>
 </ul>
 
-
 <p>RBM은 graphical probabilistic model의 일종으로, undirected graph로 표현되는 모델이다. Probability는 energy function의 형태로 표현이 되는데, 원래 RBM이라는 모델 자체가 Ising model이라는 물리 분야에서 많이 사용되는 모델의 일종이기 때문에 그 형식을 그대로 본 따온 것으로 보인다. RBM의 기본적인 형태는 다음과 같다.</p>
-
-
 <p><img class="center" src="/images/post/75-3.png" width="200"></p>
+<p>이 모델은 complete undirected bipartite graph을 띄고 있다. 이때 각각의 biparition은 visual unit들과 hidden unit들로 이루어져있으며 이 경우는 모든 unit들이 binary인 경우에 대해서만 다룬다. 따라서 visual layer와 hidden layer는 서로 internal edge가 존재하지 않고, layer들끼리 undirected fully connected된 형태를 띄고 있다. 이 모델은 graphical probabilistic model이기 때문에 각각의 visual node $v$들과 hidden node $h$들은 random variable을 의미하게 되며, 이 모델은 $v,h$의 joint probability를 표현하는 모델이 된다. 이 모델은 joint probability를 아래와 같은 energy function form으로 표현한다.</p>
+<p>$$p(v,h) = \frac{e^{-E(v,h)}}{Z}, \mbox{ where } E(v,h) := -\sum_i a_i v_i - \sum_j b_j h_j - \sum_i \sum_j v_i w_{ij} h_j \mbox{ and } Z = \sum_{v,h} e^{-E(x,h)} $$</p>
+<p>RBM의 parameter는 bais term $a_i, b_j$와 weight term $w_{ij}$로, 이 값들이 변화함에 따라 joint probability가 변하게 된다. RBM은 주어진 데이터들을 가장 잘 설명하는, 즉 $p(v)$의 값이 가장 커지도록 하는 parameter를 learning하게된다. 보통 이 값은 log likelihood로 다음과 같이 표현된다.</p>
+<p>$$\theta = \arg\max_\theta \log \mathcal L (v) = \arg\max_\theta \sum_{v \in V} \log P(v). $$</p>
+<p>이때 likelihood $P(v)$는 $P(v) = \sum_h P(v,h) = \frac{1}{Z} \sum_h e^{-E(v,h)}$로 계산할 수 있다. 이 log-likelihood 값을 maximize하는 문제는 non-convex문제이기 때문에 global optimum을 찾는 것은 불가능하고, 대신 stochastic gradient descent를 사용하여 local optimum을 계산하게 된다. SGD를 사용해 update를 하기로 하였으니, 각각의 sample $v$에 대한 gradient $\frac{\partial\log p(v)}{\partial\theta}$를 계산해보자.</p>
+<p>$$ \log p(v) = -\log \frac{1}{Z}\sum_h e^{-E(v,h)} = \ln \sum_h e^{-E(v,h)} - \ln \sum_{v,h} e^{-E(v,h)}$$</p>
+<p>$$ \frac{\partial\log p(v)}{\partial\theta} = \frac{\partial\ln \sum_h e^{-E(v,h)}}{\partial\theta} - \frac{\partial\ln \sum_{v,h} e^{-E(v,h)}}{\partial\theta}$$</p>
+<p>$$ = -\frac{1}{\sum_h e^{-E(v,h)} } \sum_h e^{-E(v,h)} \frac{\partial E(v,h)}{\partial \theta} + \frac{1}{\sum_{v,h} e^{-E(v,h)} } \sum_{v,h} e^{-E(v,h)} \frac{\partial E(v,h)}{\partial \theta}$$</p>
+<p>$$ = -\sum_h p(h|v) \frac{\partial E(v,h)}{\partial \theta} + \sum_{v,h} p(v,h) \frac{\partial E(v,h)}{\partial \theta}.$$</p>
+<p>이때, $p(h|v)$는 $p(h|v) = \frac{p(v,h)}{p(v)} = \frac{ e^{-E(v,h)} }{\sum_h e^{-E(v,h)}}$ 로부터 유도되는 값이다. 즉, 우리가 optimization하고 싶은 gradient는 $\frac{\partial E(v,h)}{\partial \theta}$의 값의 $p(h|v)$와 $p(v,h)$에 대한 expectation 값이 된다. 예를 들어 $w_{ij}$의 경우 $\frac{\partial E(v,h)}{\partial w_{ij}} = v_i h_j$이므로 $v_i h_j$의 $p(h|v)$와 $p(v,h)$에 대한 expectation을 구하게 된다면 우리가 목표하는 gradient를 얻는 것이 가능하다.</p>
+<p>$$ \frac{\partial\log p(v)}{\partial\theta} = \sum_h p(h|v) v_i h_j - \sum_{v,h} p(v,h) v_i h_j$$</p>
+<p>$$ = \sum_h p(h|v) v_i h_j -  \sum_{v,h} p(v,h) v_i h_j = p(h_j=1|v) v_j - \sum_v p(v) p(h_j=1|v)v_j$$</p>
+<p>라는 결과를 얻을 수 있다. (지금은 i와 j가 고정된 상황이므로 $\sum_h$를 하게 되면 $h_j$의 값이 0이거나 1인 경우 둘 밖에 없고, 0인 경우는 $v_i h_j$가 0이므로 위와 같은 식을 얻을 수 있다). 이때, $p(h_j = 1|v)$는 아래와 같이 간단하게 계산할 수 있다.</p>
+<p>$$p(h_j = c|v) = \frac{1}{Z} exp(-\sum_i a_i v_i - \sum_{\ell\neq j} b_\ell h_\ell - b_j * c - \sum_i \sum_{\ell\neq j} v_i w_{i\ell} h_\ell - \sum_i v_i w_{ij} * c)$$</p>
+<p>$$p(h_j = 1|v) = \frac{p(h_j = 1|v)}{p(h_j = 1|v) + p(h_j = 0|v)} = \frac{1}{1 + exp(-b_j-\sum_i v_i w_{ij})} = \sigma(b_j+\sum_i v_i w_{ij}).$$</p>
+<p>즉, conditional probability는 sigmoid function이 된다. 마찬가지로 $p(v_i = 1 | h) = \sigma(a_i+\sum_j h_j w_{ij})$로 계산할 수 있다. 그렇기 때문에 우리가 주어진 데이터 $v_i$도 알고 있고, $p(h_j=1|v)$ 역시 sigmoid로 계산할 수 있기 때문에, log likelihood의 weight에 대한 gradient값인 $\sum_h p(h|v) v_i h_j -  \sum_{v,h} p(v,h) v_i h_j$의 앞부분은 간단하게 계산할 수 있다.</p>
+<p>그러나 문제가 되는 부분은 뒷 부분이다. 안타깝게도 이 경우는 모든 $v,h$의 조합에 대해 값을 모두 계산해야하기 때문에 이 값을 정확하게 계산하기 위해 필요한 computational complexity는 exponential이 된다. 그런데 이 값이 정확하게 우리가 구하고 싶은 마지막 final 값도 아니고, 겨우 중간 단계의 한 번의 gradient를 계산하기 위해 필요한 step에 불과한데 iteration 안에 exponential complexity를 가지는 step이 있는건 큰 문제가 된다. 그렇기 때문에 이 RBM문제를 해결하기 위해 도입되는 알고리즘이 Contrastive Divergence라는 gradient approximation 알고리즘이다.</p>
 
-<p>이 모델은 complete undirected bipartite graph을 띄고 있다. 이때 각각의 biparition은 visual unit들과 hidden unit들로 이루어져있으며 이 경우는 모든 unit들이 binary인 경우에 대해서만 다룬다. 따라서 visual layer와 hidden layer는 서로 internal edge가 존재하지 않고, layer들끼리 undirected fully connected된 형태를 띄고 있다. 이 모델은 graphical probabilistic model이기 때문에 각각의 visual node \(v\)들과 hidden node \(h\)들은 random variable을 의미하게 되며, 이 모델은 \(v,h\)의 joint probability를 표현하는 모델이 된다. 이 모델은 joint probability를 아래와 같은 energy function form으로 표현한다.</p>
-
-
-<p>\[p(v,h) = \frac{e^{-E(v,h)}}{Z}, \mbox{ where } E(v,h) := -\sum_i a_i v_i - \sum_j b_j h_j - \sum_i \sum_j v_i w_{ij} h_j \mbox{ and } Z = \sum_{v,h} e^{-E(x,h)} \]</p>
-
-
-<p>RBM의 parameter는 bais term \(a_i, b_j\)와 weight term \(w_{ij}\)로, 이 값들이 변화함에 따라 joint probability가 변하게 된다. RBM은 주어진 데이터들을 가장 잘 설명하는, 즉 \(p(v)\)의 값이 가장 커지도록 하는 parameter를 learning하게된다. 보통 이 값은 log likelihood로 다음과 같이 표현된다.</p>
-
-
-<p>\[\theta = \arg\max_\theta \log \mathcal L (v) = \arg\max_\theta \sum_{v \in V} \log P(v). \]</p>
-
-
-<p>이때 likelihood \(P(v)\)는 \(P(v) = \sum_h P(v,h) = \frac{1}{Z} \sum_h e^{-E(v,h)}\)로 계산할 수 있다. 이 log-likelihood 값을 maximize하는 문제는 non-convex문제이기 때문에 global optimum을 찾는 것은 불가능하고, 대신 stochastic gradient descent를 사용하여 local optimum을 계산하게 된다. SGD를 사용해 update를 하기로 하였으니, 각각의 sample \(v\)에 대한 gradient \(\frac{\partial\log p(v)}{\partial\theta}\)를 계산해보자.</p>
-
-
-<p>\[ \log p(v) = -\log \frac{1}{Z}\sum_h e^{-E(v,h)} = \ln \sum_h e^{-E(v,h)} - \ln \sum_{v,h} e^{-E(v,h)}\]</p>
-
-
-<p>\[ \frac{\partial\log p(v)}{\partial\theta} = \frac{\partial\ln \sum_h e^{-E(v,h)}}{\partial\theta} - \frac{\partial\ln \sum_{v,h} e^{-E(v,h)}}{\partial\theta}\]</p>
-
-
-<p>\[ = -\frac{1}{\sum_h e^{-E(v,h)} } \sum_h e^{-E(v,h)} \frac{\partial E(v,h)}{\partial \theta} + \frac{1}{\sum_{v,h} e^{-E(v,h)} } \sum_{v,h} e^{-E(v,h)} \frac{\partial E(v,h)}{\partial \theta}\]</p>
-
-
-<p>\[ = -\sum_h p(h|v) \frac{\partial E(v,h)}{\partial \theta} + \sum_{v,h} p(v,h) \frac{\partial E(v,h)}{\partial \theta}.\]</p>
-
-
-<p>이때, \(p(h|v)\)는 \(p(h|v) = \frac{p(v,h)}{p(v)} = \frac{ e^{-E(v,h)} }{\sum_h e^{-E(v,h)}}\) 로부터 유도되는 값이다. 즉, 우리가 optimization하고 싶은 gradient는 \(\frac{\partial E(v,h)}{\partial \theta}\)의 값의 \(p(h|v)\)와 \(p(v,h)\)에 대한 expectation 값이 된다. 예를 들어 \(w_{ij}\)의 경우 \(\frac{\partial E(v,h)}{\partial w_{ij}} = v_i h_j\)이므로 \(v_i h_j\)의 \(p(h|v)\)와 \(p(v,h)\)에 대한 expectation을 구하게 된다면 우리가 목표하는 gradient를 얻는 것이 가능하다.</p>
-
-
-<p>\[ \frac{\partial\log p(v)}{\partial\theta} = \sum_h p(h|v) v_i h_j - \sum_{v,h} p(v,h) v_i h_j\]</p>
-
-
-<p>\[ = \sum_h p(h|v) v_i h_j -  \sum_{v,h} p(v,h) v_i h_j = p(h_j=1|v) v_j - \sum_v p(v) p(h_j=1|v)v_j\]</p>
-
-
-<p>라는 결과를 얻을 수 있다. (지금은 i와 j가 고정된 상황이므로 \(\sum_h\)를 하게 되면 \(h_j\)의 값이 0이거나 1인 경우 둘 밖에 없고, 0인 경우는 \(v_i h_j\)가 0이므로 위와 같은 식을 얻을 수 있다). 이때, \(p(h_j = 1|v)\)는 아래와 같이 간단하게 계산할 수 있다.</p>
-
-
-<p>\[p(h_j = c|v) = \frac{1}{Z} exp(-\sum_i a_i v_i - \sum_{\ell\neq j} b_\ell h_\ell - b_j * c - \sum_i \sum_{\ell\neq j} v_i w_{i\ell} h_\ell - \sum_i v_i w_{ij} * c)\]</p>
-
-
-<p>\[p(h_j = 1|v) = \frac{p(h_j = 1|v)}{p(h_j = 1|v) + p(h_j = 0|v)} = \frac{1}{1 + exp(-b_j-\sum_i v_i w_{ij})} = \sigma(b_j+\sum_i v_i w_{ij}).\]</p>
-
-
-<p>즉, conditional probability는 sigmoid function이 된다. 마찬가지로 \(p(v_i = 1 | h) = \sigma(a_i+\sum_j h_j w_{ij})\)로 계산할 수 있다. 그렇기 때문에 우리가 주어진 데이터 \(v_i\)도 알고 있고, \(p(h_j=1|v)\) 역시 sigmoid로 계산할 수 있기 때문에, log likelihood의 weight에 대한 gradient값인 \(\sum_h p(h|v) v_i h_j -  \sum_{v,h} p(v,h) v_i h_j\)의 앞부분은 간단하게 계산할 수 있다.</p>
-
-
-<p>그러나 문제가 되는 부분은 뒷 부분이다. 안타깝게도 이 경우는 모든 \(v,h\)의 조합에 대해 값을 모두 계산해야하기 때문에 이 값을 정확하게 계산하기 위해 필요한 computational complexity는 exponential이 된다. 그런데 이 값이 정확하게 우리가 구하고 싶은 마지막 final 값도 아니고, 겨우 중간 단계의 한 번의 gradient를 계산하기 위해 필요한 step에 불과한데 iteration 안에 exponential complexity를 가지는 step이 있는건 큰 문제가 된다. 그렇기 때문에 이 RBM문제를 해결하기 위해 도입되는 알고리즘이 Contrastive Divergence라는 gradient approximation 알고리즘이다.</p>
-
-
-
-
-<h5>Restricted Boltzmann Machine (RBM): Contrastive Divergence</h5>
-
-
-<p>Contrastive Divergence 알고리즘을 한 마디로 요약하면: \(p(v,h)\)를 계산하는 MCMC (Gibbs Sampling)의 step을 converge할 때 까지 돌리는 것이 아니라, 한 번만 돌려서 \(p(v,h)\)를 approximate하고, 그 값을 사용하여 \(\sum_{v,h} p(v,h) v_i h_j\)을 계산해 gradient의 approximation 값을 구한다.</p>
-
-
+<h3>Restricted Boltzmann Machine (RBM): Contrastive Divergence</h3>
+<p>Contrastive Divergence 알고리즘을 한 마디로 요약하면: $p(v,h)$를 계산하는 MCMC (Gibbs Sampling)의 step을 converge할 때 까지 돌리는 것이 아니라, 한 번만 돌려서 $p(v,h)$를 approximate하고, 그 값을 사용하여 $\sum_{v,h} p(v,h) v_i h_j$을 계산해 gradient의 approximation 값을 구한다.</p>
 <p>MCMC는 원하는 stationary distribution을 가지는 MC를 design하여 목표로하는 distribution을 만들어내는 알고리즘 family를 일컫는다. 이 내용도 꽤나 방대한 내용이므로, 필요하다면 나중에 추가로 포스팅을 하도록 하겠다. Gibbs Sampling은 MCMC 알고리즘 family 중 하나로, 여러 random variable들의 joint probability를 계산하기 위한 알고리즘이다. 사실 내용은 엄청 간단한데, 한 variable을 제외한 나머지 r.v.를 fix하고 나머지 fixed된 r.v.가 주어졌다고 가정하고 conditional probability를 구해 현재 r.v.를 update하는 것을 모든 variable들에 대해 distribution이 converge할 때까지 반복하는 것이다. 이 과정을 엄청나게 많이 반복해서 stationary distribution에 converge했을 정도로 많이 iteration을 돌리게 되면, 우리는 iteration을 돌리면서 얻어내는 sequence들로부터 r.v.들의 joint probability로부터 sample하는 것과 같은 확률로 sample들을 얻을 수 있다.</p>
-
-
-<p>따라서 이 알고리즘을 사용하면 앞에서 exponential complexity가 문제가 되었던 \(p(v,h)\)를 계산하는 것이 가능하다. 그런데 문제는 보통 MCMC가 converge할 때 까지 걸리는 시간이 결코 적지 않다는 것이다. 이론적으로 polynomial complexity를 보장할 수는 있지만, 실제 leanring time이 너무 길어져서 practical하게 쓰기 어렵다. 앞에서 설명한 것 처럼 이 distribution이 한 번의 gradient update만을 위해 사용되는 RBM에서는 그 시간을 모두 사용하기에는 너무 비효율적이다.</p>
-
-
+<p>따라서 이 알고리즘을 사용하면 앞에서 exponential complexity가 문제가 되었던 $p(v,h)$를 계산하는 것이 가능하다. 그런데 문제는 보통 MCMC가 converge할 때 까지 걸리는 시간이 결코 적지 않다는 것이다. 이론적으로 polynomial complexity를 보장할 수는 있지만, 실제 leanring time이 너무 길어져서 practical하게 쓰기 어렵다. 앞에서 설명한 것 처럼 이 distribution이 한 번의 gradient update만을 위해 사용되는 RBM에서는 그 시간을 모두 사용하기에는 너무 비효율적이다.</p>
 <p>그래서 RBM은 Gibbs sampleing을 끝까지 돌리는 대신 이런 생각을 하게 된다. '어차피 정확하게 converge한 distribution이나, 중간에 멈춘 distribution이나 대략의 방향성은 공유할 것이다. 그렇기 때문에 완벽한 gradient 대신 Gibbs sampling을 중간에 멈추고 그 approximation 값을 update에 사용하자.' 이 아이디어가 바로 Contrastive Divergence의 전부라고 할 수 있다. Contrastive Divergence는 전체 RBM update 과정 중에서 이 Gibbs sampling을 한 번만 돌리는 부분을 일컫는 말이며, Hinton이 처음 제안한 이후 나중에 이 알고리즘이 충분한 시간이 흐른 후에 전체 log likelihood의 local optimum으로 converge한다는 이론적 결과까지 증명된다.</p>
-
-
 <p>Contrastive Divergence를 도입한 RBM update 알고리즘은 다음과 같다. (notation이 조금 다를 수 있다)</p>
-
 
 <p><img src="/images/post/75-4.png" width="600"></p>
 
-<p>이 과정을 계속 반복하면 우리가 원래 원했던 hidden node와 visible node들의 joint probability를 표현하는 RBM을 learning할 수 있게 된다. RBM이 이렇게 간단하게 learning되는 이유는 restricted라는 조건이 있기 때문이다. 즉, 같은 layer들끼리는 connection이 없기 때문에 \(p(h|v) = \prod_j p(h_j|v)\)로 간단하게 표현되기 때문에 leanring이 간단해지는 것이다. 그렇기 때문에 restricted 되지 않은 general boltzmann machine은 RBM 처럼 마냥 간단하게 update되지 않는다.</p>
-
-
-<h5>Deep Beilf Network (DBN)</h5>
-
-
-<p>DBN은 \(\ell\) 개의 layer를 가진 joint distribution을 표현하는 graphical model이다. 참고로 앞에서 RBM은 1-layer 모델이었다. DBN의 확률 모델은 다음과 같은 식으로 표현된다. 이때 \(h^k\)는 k번째 layer의 hidden variable들을 표현하는 notation이다.</p>
-
-
-<p>\[P(x, h^1, \ldots, h^\ell) = \bigg( \prod_{k=1}^{\ell-2} P(h^k|h^{k-1}) \bigg) P(h^{\ell-1},h^{\ell})\]</p>
-
-
-<p>이때 data \(x\)는 \(h^0\)이고, 각각의 \(P(h^k|h^{k-1})\)는 RBM에서 visible unit이 given된 conditional probability로 표현되고, joint probability \(P(h^{\ell-1},h^{\ell})\)는 RBM의 joint probability로 given된다. 이 모델은 아래와 같은 알고리즘으로 learning할 수 있다.</p>
-
+<p>이 과정을 계속 반복하면 우리가 원래 원했던 hidden node와 visible node들의 joint probability를 표현하는 RBM을 learning할 수 있게 된다. RBM이 이렇게 간단하게 learning되는 이유는 restricted라는 조건이 있기 때문이다. 즉, 같은 layer들끼리는 connection이 없기 때문에 $p(h|v) = \prod_j p(h_j|v)$로 간단하게 표현되기 때문에 leanring이 간단해지는 것이다. 그렇기 때문에 restricted 되지 않은 general boltzmann machine은 RBM 처럼 마냥 간단하게 update되지 않는다.</p>
+<h3>Deep Beilf Network (DBN)</h3>
+<p>DBN은 $\ell$ 개의 layer를 가진 joint distribution을 표현하는 graphical model이다. 참고로 앞에서 RBM은 1-layer 모델이었다. DBN의 확률 모델은 다음과 같은 식으로 표현된다. 이때 $h^k$는 k번째 layer의 hidden variable들을 표현하는 notation이다.</p>
+<p>$$P(x, h^1, \ldots, h^\ell) = \bigg( \prod_{k=1}^{\ell-2} P(h^k|h^{k-1}) \bigg) P(h^{\ell-1},h^{\ell})$$</p>
+<p>이때 data $x$는 $h^0$이고, 각각의 $P(h^k|h^{k-1})$는 RBM에서 visible unit이 given된 conditional probability로 표현되고, joint probability $P(h^{\ell-1},h^{\ell})$는 RBM의 joint probability로 given된다. 이 모델은 아래와 같은 알고리즘으로 learning할 수 있다.</p>
 
 <p><img src="/images/post/75-5.png" width="600"></p>
 
 <p>즉, 이 모델은 RBM을 맨 아래 data layer부터 차근차근 stack으로 쌓아가면서 전체 parameter를 update하는 모델이다. 이 모델을 그림으로 표현하면 아래와 같은 그림이 된다.</p>
 
-
 <p><img class="center" src="/images/post/75-6.png" width="200"></p>
 
 <p>마지막 layer는 joint probability를 의미하고, 나머지 layer들은 모두 conditional probability로 표현된다. 참고로 전체를 jointly하게 표현하는 모델을 Deep Boltzmann Machine (DBM) 이라고 하는데, 이 모델의 경우 RBM update를 하는 알고리즘과 비슷한 알고리즘으로 전체 모델을 update하게 된다. 그러나 이 논문이 발표될 당시에는 DBN이 훨씬 간단하고 computational cost가 적기 때문에 DBN이라는 모델을 제안한 것으로 보인다.</p>
-
-
-<p>이 모델이 의미있는 이유는 joint probability를 잘 표현하는 좋은 graphical model이어서가 아니라, 이 모델로 deep network를 pre-training하고 backpropagation 알고리즘을 돌렸더니 overfitting 문제가 크게 일어나지 않고 MNIST 등에서 좋은 성과를 거뒀기 때문이다. 즉, parameter initialization을 DBN의 joint probability를 maximize하는 (layer-wise로 \(\ell\)개의 RBM을 learning하는) 방식으로 하고 나서, 그렇게 구해진 parameter들로 deep network를 initialization하고 fine-tuning (backpropation) 을 했을 때, 항상 그 정도 size의 deep network에서 발생하던 overfitting issue가 사라지고 성능이 우수한 classifier를 얻을 수 있었기 때문이다.</p>
-
-
+<p>이 모델이 의미있는 이유는 joint probability를 잘 표현하는 좋은 graphical model이어서가 아니라, 이 모델로 deep network를 pre-training하고 backpropagation 알고리즘을 돌렸더니 overfitting 문제가 크게 일어나지 않고 MNIST 등에서 좋은 성과를 거뒀기 때문이다. 즉, parameter initialization을 DBN의 joint probability를 maximize하는 (layer-wise로 $\ell$개의 RBM을 learning하는) 방식으로 하고 나서, 그렇게 구해진 parameter들로 deep network를 initialization하고 fine-tuning (backpropation) 을 했을 때, 항상 그 정도 size의 deep network에서 발생하던 overfitting issue가 사라지고 성능이 우수한 classifier를 얻을 수 있었기 때문이다.</p>
 <p>DBN으로 unsupervised pre-training한 deep network 모델을 사용했을 때 MNIST 데이터 셋에서 그 동안 다른 모델들로 거뒀던 성능들보다 훨씬 우수한 결과를 얻을 수 있었고, 그때부터 deep learning이라는 것이 큰 주목을 받기 시작했다. 그러나 지금은 데이터가 충분히 많을 경우 이런 방식으로 weight를 initialization하는 것 보다 random initialization의 성능이 훨씬 우수하다는 것이 알려져있기 때문에 practical한 목적으로는 거의 사용하지 않는다.</p>
 
-
-
-
-<h5 id="75-cnn">Convolutional Neural Network (CNN): Introduction</h5>
-
-
+<h3 id="75-cnn">Convolutional Neural Network (CNN): Introduction</h3>
 <p>DBN이 지금은 practical한 목적으로 거의 사용되지 않는 것과는 대조적으로, 1989년에 제안된 이 모델은 아직까지도 많이 쓰이는 deep network 모델이다. 특히 computer vision에 특화된 이 네트워크는 인간의 시신경 구조를 모방하여 인간이 vision 정보를 처리하는 것을 흉내낸 모형이다.</p>
-
-
 <p>DBN은 overfitting issue를 initialization으로 해결하였지만, CNN은 overfitting issue를 모델 complexity를 줄이는 것으로 해결한다. CNN은 convolution layer와 pooling layer라는 두 개의 핵심 구조를 가지고 있는데, 이 구조들이 model parameter 개수를 효율적으로 줄여주어 결론적으로 전체 model complexity가 감소하는 효과를 얻게 된다.</p>
 
-
-
-
-<h5>Convolutional Neural Network (CNN): Convolution Layer</h5>
-
-
+<h3>Convolutional Neural Network (CNN): Convolution Layer</h3>
 <p>먼저 convolution layer에 대해 설명해보자. Convolution layer를 설명하기 전에 먼저 convolution operation에 대해 알아보자. Convolution이란 signal processing 분야에서 아주 많이 사용하는 operation으로, 다음과 같이 표현된다.</p>
-
-
-<p>\[s(t) = (x * w)(t) = \int x(a)w(t-a) da.\]</p>
-
-
-<p>예를 들어 이 operation은 주어진 데이터 \(x\)에 filter \(w\)를 사용해 데이터를 처리할 때 사용된다. 이 operation을 적용한 간단한 예를 보자. (<a href="http://www.sfu.ca/~truax/conv.html">출처</a>)</p>
-
+<p>$$s(t) = (x * w)(t) = \int x(a)w(t-a) da.$$</p>
+<p>예를 들어 이 operation은 주어진 데이터 $x$에 filter $w$를 사용해 데이터를 처리할 때 사용된다. 이 operation을 적용한 간단한 예를 보자. (<a href="http://www.sfu.ca/~truax/conv.html">출처</a>)</p>
 
 <p><img class="center" src="/images/post/75-7.jpg" width="400"></p>
 
-<p>이렇듯 convolution은 어떤 filter를 사용하여 주어진 image의 적절한 feature를 뽑아내기 위해 사용했던 operation이다. 이때 \(s(t)\)를 데이터 \(x\)의 feature map이라고 부른다. Deep learning이 널리 사용되기 이전에는 다른 머신러닝 framework에 이미지를 input으로 넣고 처리하기 위해서는 먼저 filter를 고르고 그 filter로 image를 convolution하는 preprocessing을 거쳐서 적절한 feature map을 얻어낸 이후에 그것을 machine learning framework의 input으로 넣어 돌리는 방식을 사용했었다. 그렇기 때문에 이런 feature engineering이 전체 performance에 큰 영향을 미치는 경우가 많았다. 어떤 filter를 선택할 것이며, 얼마나 많은 filter를 고를 것인지 등의 영역은 feature engineering의 영역이고, 이론적인 영역이 아니기 때문에 machine learning 분야에서는 큰 관심을 두는 분야는 아니었다. 데이터는 잘 처리되었다고 가정하고 그 데이터를 사용해 어떤 좋은 알고리즘을 개발하느냐가 그 동안 머신러닝 framework들의 아이디어였다면, CNN의 핵심 아이디어는 preprocessing이 실제 performance에 크게 영향을 미치니까, 아예 이 preprocessing을 가장 잘해주는, 가장 좋은 feature map을 뽑아주는 convolution filter를 learning하는 모델을 만들어버리자는 것이다.</p>
-
-
+<p>이렇듯 convolution은 어떤 filter를 사용하여 주어진 image의 적절한 feature를 뽑아내기 위해 사용했던 operation이다. 이때 $s(t)$를 데이터 $x$의 feature map이라고 부른다. Deep learning이 널리 사용되기 이전에는 다른 머신러닝 framework에 이미지를 input으로 넣고 처리하기 위해서는 먼저 filter를 고르고 그 filter로 image를 convolution하는 preprocessing을 거쳐서 적절한 feature map을 얻어낸 이후에 그것을 machine learning framework의 input으로 넣어 돌리는 방식을 사용했었다. 그렇기 때문에 이런 feature engineering이 전체 performance에 큰 영향을 미치는 경우가 많았다. 어떤 filter를 선택할 것이며, 얼마나 많은 filter를 고를 것인지 등의 영역은 feature engineering의 영역이고, 이론적인 영역이 아니기 때문에 machine learning 분야에서는 큰 관심을 두는 분야는 아니었다. 데이터는 잘 처리되었다고 가정하고 그 데이터를 사용해 어떤 좋은 알고리즘을 개발하느냐가 그 동안 머신러닝 framework들의 아이디어였다면, CNN의 핵심 아이디어는 preprocessing이 실제 performance에 크게 영향을 미치니까, 아예 이 preprocessing을 가장 잘해주는, 가장 좋은 feature map을 뽑아주는 convolution filter를 learning하는 모델을 만들어버리자는 것이다.</p>
 <p>최대한 작은 complexity를 가지면서 우수한 filter를 표현하기 위한 CNN의 핵심 아이디어는 다음 세 가지이다: sparse interactions (혹은 sparse weight라고도 한다), parameter sharing (혹은 tied wieght라고도 한다), equivariant representations. 즉, CNN은 layer와 layer간에 모든 connection을 연결하는 대신 일부만 연결하고 (sparse weight), 그리고 그 weight들을 각각 다른 random variable로 취급하여 따로 update하는 대신 특정 weight group들은 weight 값이 항상 같도록 parameter를 share한다 (parameter sharing). 그리고 앞의 아이디어를 잘 활용하여 shift 등의 transform에 대해서 equivariant한 (자세한 내용은 밑에서 설명한다) representation을 learning하도록 모델을 구성한다.</p>
-
-
 <p>Sparse weight를 사용하게 되면 모든 가능한 connection을 사용하는 것 보다 훨씬 적은 표현형을 learning하게 된다는 단점이 있지만, 반대로 model의 complexity가 낮아진다는 장점이 존재한다. CNN은 vision과 관련된 task를 수행하도록 design된 network라는 것은 이미 언급한바 있다. 이런 vision 데이터를 처리하는 task를 하게 될 경우에는 주어진 input의 dimension에 비해 실제 필요한 feature의 dimension은 극히 적다는 domain knowledge를 우리는 이미 가지고 있다. 즉 input인 이미지의 경우 픽셀 값이 적으면 몇 백에서 많으면 몇 백만에 이를 정도로 dimension이 엄청나게 높지만, 우리가 필요한 'feature'는 그 중에서도 극히 일부 영역, 이를테면 edge detection 등의 그에 비해 훨씬 적은 dimension으로 표현 가능하기 때문에 최대한 parameter를 줄여서 더 효율적인 feature map을 뽑아내기 위하여 weight를 sparse하게 사용한다. 이를 그림으로 표현하면 아래와 같다.</p>
-
 
 <p><img src="/images/post/75-9.png" width="600"></p>
 
-<p>이 그림은 같은 output \(s_3\)에 영향을 주는 edge들과 input node를 표현한 그림이다. 왼쪽은 가능한 connection이 전부 있는 것이 아니라 그 일부만 존재하고, \(s_3\)에 영향을 주는 input이 \(x_2, x_3, x_4\) 뿐이지만 오른쪽은 모든 가능한 connection이 있어서 model parameter의 개수가 크게 차이나고 모든 input이 \(s_3\)에 영향을 주는 것을 알 수 있다. 실제 image 데이터를 처리하기에는 왼쪽 모델이 조금 더 나은데, 그 이유는 한 feature를 결정하기 위해서 모든 image 정보가 필요한 것이 아니라, image의 일부분만 필요하기 때문이다. 예를 들어 내가 face segmentation, 즉 얼굴 사진에서 눈 코 입 등을 찾아내는 task를 수행한다고 하면, 주어진 사진에서 '눈'이 어디인지 표현하기 위해서 모든 이미지가 다 필요한 것이 아니라 눈 주변의 local한 데이터만 필요할 것이라고 유추할 수 있다. 오른쪽 그림은 필요하지 않은 배경까지 모두 고려하여 눈에 대한 정보를 찾는 셈이고, 왼쪽 그림은 local한 정보만을 주고 눈에 대한 정보를 처리하게 하는 것이다. 따라서 vision task를 처리하기에는 적절한 sparse weight가 더 효율적인 모델이라는 것을 알 수 있다. 때문에 CNN의 convolution layer는 hidden node 하나가 image의 local한 patch와 연결되어있는 형태로 되어있다. 예를 들어 한 hidden node 마다 image의 3 by 3 patch만을 연결하는 방식이다. 그림으로 표현하면 아래와 같은 식이다. (출처: <a href="http://www.codeproject.com/Articles/523074/Online-handwriting-recognition-using-multi-convolu">Code project - Online handwriting recognition using multi convolution neural networks</a>)</p>
-
+<p>이 그림은 같은 output $s_3$에 영향을 주는 edge들과 input node를 표현한 그림이다. 왼쪽은 가능한 connection이 전부 있는 것이 아니라 그 일부만 존재하고, $s_3$에 영향을 주는 input이 $x_2, x_3, x_4$ 뿐이지만 오른쪽은 모든 가능한 connection이 있어서 model parameter의 개수가 크게 차이나고 모든 input이 $s_3$에 영향을 주는 것을 알 수 있다. 실제 image 데이터를 처리하기에는 왼쪽 모델이 조금 더 나은데, 그 이유는 한 feature를 결정하기 위해서 모든 image 정보가 필요한 것이 아니라, image의 일부분만 필요하기 때문이다. 예를 들어 내가 face segmentation, 즉 얼굴 사진에서 눈 코 입 등을 찾아내는 task를 수행한다고 하면, 주어진 사진에서 '눈'이 어디인지 표현하기 위해서 모든 이미지가 다 필요한 것이 아니라 눈 주변의 local한 데이터만 필요할 것이라고 유추할 수 있다. 오른쪽 그림은 필요하지 않은 배경까지 모두 고려하여 눈에 대한 정보를 찾는 셈이고, 왼쪽 그림은 local한 정보만을 주고 눈에 대한 정보를 처리하게 하는 것이다. 따라서 vision task를 처리하기에는 적절한 sparse weight가 더 효율적인 모델이라는 것을 알 수 있다. 때문에 CNN의 convolution layer는 hidden node 하나가 image의 local한 patch와 연결되어있는 형태로 되어있다. 예를 들어 한 hidden node 마다 image의 3 by 3 patch만을 연결하는 방식이다. 그림으로 표현하면 아래와 같은 식이다. (출처: <a href="http://www.codeproject.com/Articles/523074/Online-handwriting-recognition-using-multi-convolu">Code project - Online handwriting recognition using multi convolution neural networks</a>)</p>
 
 <p><img src="/images/post/75-11.png" width="600"></p>
 
 <p>여기에서 subsampling은 일단 나중에 설명하도록 하고 (subsampling part가 pooling layer에 해당한다) 가장 왼쪽의 image data의 일부분에 해당하는 patch만 다음 hidden layer의 한 unit에 연결하는 것이다. 이런 식으로 네트워크를 만들게 되면, patch size에 따라 다음 feature map의 size가 결정될 것이다. 예를 들어 100 by 100 이미지에서 5 by 5 patch를 사용해 convolution layer를 구축할 경우, 이 layer의 feature map은 96 by 96이 될 것이다.</p>
-
-
 <p>CNN은 이런 sparse weight에 parameter sharing을 또 더하여 vision task에 최적화된 network를 learning하게 된다. Parameter를 share하게 되면 그러지 않는 것과 비교하여 보다 적은 parameter만을 가지게 되므로 model의 complexity가 줄어드는 효과가 있을 뿐 아니라, 각각의 patch마다 따로 필터를 learning하는 대신, 모든 patch에 동일한 필터를 적용하도록 강제하는 효과가 있다. CNN은 아래 그림과 같이 각각의 hidden node들이 같은 location에 대해 같은 weight를 가지도록 설정하여 모든 hidden node들이 각각 다른 patch에 대해 같은 filter를 처리하는 것과 같은 형태로 모델을 디자인한다.</p>
-
 
 <p><img class="center" src="/images/post/75-8.png" width="200"></p>
 
 <p>위 그림에서 같은 색으로 칠해진 edge는 서로 같은 weight를 가진다. 위 그림에서 볼 수 있듯, CNN은 fully connected layer를 가지지 않고, 그 sparse한 weight들에서도 서로 weight를 공유하도록 설정되어있다. 그렇지 않은 네트워크와 비교해보면 다음과 같다.</p>
 
-
 <p><img src="/images/post/75-10.png" width="600"></p>
 
 <p>각각의 그림에서 검은색으로 연결된 edge들은 서로 같은 parameter를 가진다. 즉, 왼쪽은 한 번에 5개의 edge가 같은 weight를 가지지만, 오른쪽은 하나의 parameter로 한 개의 edge만 표현할 수 있다. 이렇게 표현하게 되면 convolution layer operation이 간단한 matrix multiplication으로 주어지게 되어 gradient를 계산하기 한 층 더 수월해진다는 장점도 존재한다. 자세한 내용은 algorithm 쪽에서 다루도록 하자.</p>
 
-
-
-
-<p>마지막으로 equivalent representations는 위와 같은 sparse weight와 tied weight를 어떤 특정한 형태로 효율적으로 배치하게 되었을 때, 주어진 input의 변화에 대해 output이 변화하는 방식이 equivariant해지는 현상을 의미한다 (equivalent가 아니다). 예를 들어 function \(f\)가 function \(g\)와 equivariant하다는 의미는, \(f(g(x)) = g(f(x))\)인 경우를 말한다. 이미지 처리를 예로 들면 \(g\)는 임의의 linear transform이라고 할 수 있다. Shift, rotate, scale등의 image에 대한 transform들이 그것인데, 우리는 같은 이미지가 돌아가거나 움직이거나 살짝 scale되더라도 그 이미지가 어떤 이미지인지 잘 판별할 수 있지만, 컴퓨터에게는 그런 transform이 픽셀 값이 완전히 바뀌는 결과를 낳기 때문에 어떤 정보인지 판별하기 어려운 것이다. 그런데 만약 우리가 어떤 transform \(g\)에 대해 equivariant representation을 만들어내는 network \(f\)를 만들 수 있다면, input이 shift되거나 rotate되더라도 항상 적절한 representation을 가지도록 할 수 있을 것이다. (실제 CNN은 shift에만 equivariant하다.)</p>
-
-
+<p>마지막으로 equivalent representations는 위와 같은 sparse weight와 tied weight를 어떤 특정한 형태로 효율적으로 배치하게 되었을 때, 주어진 input의 변화에 대해 output이 변화하는 방식이 equivariant해지는 현상을 의미한다 (equivalent가 아니다). 예를 들어 function $f$가 function $g$와 equivariant하다는 의미는, $f(g(x)) = g(f(x))$인 경우를 말한다. 이미지 처리를 예로 들면 $g$는 임의의 linear transform이라고 할 수 있다. Shift, rotate, scale등의 image에 대한 transform들이 그것인데, 우리는 같은 이미지가 돌아가거나 움직이거나 살짝 scale되더라도 그 이미지가 어떤 이미지인지 잘 판별할 수 있지만, 컴퓨터에게는 그런 transform이 픽셀 값이 완전히 바뀌는 결과를 낳기 때문에 어떤 정보인지 판별하기 어려운 것이다. 그런데 만약 우리가 어떤 transform $g$에 대해 equivariant representation을 만들어내는 network $f$를 만들 수 있다면, input이 shift되거나 rotate되더라도 항상 적절한 representation을 가지도록 할 수 있을 것이다. (실제 CNN은 shift에만 equivariant하다.)</p>
 <p>즉, 앞에서 shared parameter가 각각의 patch에 대해 같은 filter를 처리하는 것 처럼 설정하였기 때문에, 만약 image가 shift되더라도 feature map의 형태가 크게 뒤틀리는 것이 아니라, feature map도 image와 함께 shift되는 형태를 보이게 될 것이다.</p>
-
-
 <p>그런데 실제로는 한 image에 한 개의 filter가 아니라 여러 개의 filter가 필요할 수도 있다. 앞에서 설명한 convolution layer는 한 개의 convolution filter를 표현할 뿐이지만, 실제로는 이런 convolution filter가 한 개가 아니라 여러 개 만든 다음 그 값들을 concate하여 feature map을 표현해야할 수도 있다. 그렇기 때문에 실제로 CNN model은 한 개의 convolution layer가 아니라 아래와 같이 여러 개의 convolution layer가 결합된 꼴을 하고 있다. 참고로 공식적으로는 각각의 layer 혹은 filter를 kernel이라 하고, 그 kernel들이 모여있는 것을 한 layer로 부른다. (<a href="http://masters.donntu.org/2012/fknt/umiarov/diss/indexe.htm#p4">출처</a>)</p>
-
 
 <p><img src="/images/post/75-12.png" width="600"></p>
 
-<h5>Convolutional Neural Network (CNN): Pooling Layer</h5>
-
-
+<h3>Convolutional Neural Network (CNN): Pooling Layer</h3>
 <p>Convolution Layer만 여러 개 연결하여 deep network를 구성하는 것도 가능하지만, 실제로는 더 dimension이 낮은 feature map을 얻기 위하여 subsampling이라는 것을 하게 된다. 앞에서 예로 들었던 것처럼 100 by 100 이미지에 5 by 5 convoltion patch size를 가지는 convolution layer를 연결할 경우 feature map의 size는 96 by 96이 되는데, 사실 이 96 by 96 feature map은 서로 매우 highly correlated 되어있는 값이 것이다. 특히 서로 이웃해있을수록 겹치는 영역이 많기 때문에 거의 비슷한 값을 가질 것이라고 예상할 수 있다. 아래 그림을 보자.</p>
-
 
 <p><img src="/images/post/75-11.png" width="600"></p>
 
 <p>이미 앞에서 나왔던 그림이지만 설명을 위하여 다시 가져왔다. Pooling layer는 convolution layer의 feature map을 조금 더 줄여주는 역할을 한다. 전체 feature map을 그대로 들고가는 대신, 예를 들어 96 by 96 image feature map을 2 by 2 patch들로 쪼개는 것이다. 이렇게 할 경우 총 48 by 48 개의 output이 생기게 될텐데, subsampling이라는 것은 각각의 2 by 2 patch는 max, average 등의 operation을 행하는 것을 의미한다. 보통 max operation을 사용하고, 이 경우 간단하게 max pooling을 사용한다 라고 이야기 한다. 가끔 average pooling을 사용하는 경우도 있지만 보통 classification을 위한 모델들은 max pooling을 사용하니 참고하면 좋을 것 같다.</p>
-
-
 <p>CNN은 이렇게 convolution layer와 pooling layer가 결합된 형태로 deep 하게 구성이 된다. 개인적으로 아래 그림이 CNN의 convolution layer와 max pooling layer를 잘 표현하는 그림이라고 생각한다. (<a href="http://inspirehep.net/record/1252539/plots">출처</a>)</p>
-
 
 <p><img class="center" src="/images/post/75-13.png" width="300"></p>
 
-<h5>Convolutional Neural Network (CNN): Backpropagation</h5>
-
-
+<h3>Convolutional Neural Network (CNN): Backpropagation</h3>
 <p>CNN의 기본 model은 알았으니 이제 이 network의 parameter를 어떻게 learning해야할지 알아보자. 기본적인 update algorithm은 <a href="http://SanghyukChun.github.io/74">이전 글</a>에서 설명했던 <a href="http://SanghyukChun.github.io/74#backprop">backpropagation algorithm</a>을 사용한다.</p>
-
-
-<p>먼저 간단한 max pooling layer 부터 살펴보자. Pooling layer는 아래 p by q size의 patch 중에서 max 값을 선택하는 layer이다. 때문에 이를 수식으로 표현해보면 다음과 같이 쓸 수 있다. \((x,y)\)는 pooling layer feature map의 x,y좌표를 나타내고, (\(h_l\)은 l번째 layer의 hidden variable들)</p>
-
-
-<p>\[h_{l+1} (x, y) = max_{a-p\leq a\leq a+p, b-q\leq b\leq b+q}(h_l (x+a, y+b))\]</p>
-
-
-<p>Parameter는 없으므로 \(\frac{\partial h_{l+1} }{\partial h_{l}}\)만 계산하면 된다. 이 경우 주어진 \((x,y)\)가 만약 max pooling을 통해 선택된 값이라면 값을 그대로 passing하고, 만약 선택되지 않은 값이라면 0을 할당하면 된다.</p>
-
-
+<p>먼저 간단한 max pooling layer 부터 살펴보자. Pooling layer는 아래 p by q size의 patch 중에서 max 값을 선택하는 layer이다. 때문에 이를 수식으로 표현해보면 다음과 같이 쓸 수 있다. $(x,y)$는 pooling layer feature map의 x,y좌표를 나타내고, ($h_l$은 l번째 layer의 hidden variable들)</p>
+<p>$$h_{l+1} (x, y) = max_{a-p\leq a\leq a+p, b-q\leq b\leq b+q}(h_l (x+a, y+b))$$</p>
+<p>Parameter는 없으므로 $\frac{\partial h_{l+1} }{\partial h_{l}}$만 계산하면 된다. 이 경우 주어진 $(x,y)$가 만약 max pooling을 통해 선택된 값이라면 값을 그대로 passing하고, 만약 선택되지 않은 값이라면 0을 할당하면 된다.</p>
 <p>Convolution layer는 operation이 꽤 복잡한데, 먼저 아래 그림을 보자.</p>
-
 
 <p><img class="center" src="/images/post/75-14.png" width="400"></p>
 
 <p>이때 l+1 번째 layer 중에서 i 번째 convolution filter의 x,y 좌표 값은 아래와 같이 표현된다. 아래 conv layer의 kernel은 m 개, 위 conv layer의 kernel은 n개 라고 해보자.</p>
-
-
-<p>\[h_{l+1}(i, x,y) = \sum_{j=1}^m \sum_{a=1}^p \sum_{b=1}^q h_l (j, x+a, y+b) * w(i,n;a,b)\]</p>
-
-
-<p>값이 좀 많이 복잡하긴 한데, 미분 값을 계산해보면, parameter의 gradient는 \(\frac{E}{\partial w} = \sum_x \sum_y \frac{E}{h_{l+1} } (x,y) h_l (x,y)\)와 같이 바로 전 layer의 pixel값에 대해 gradient 값을 곱한 것을 전부 더한 형태로 구할 수 있고, \(\frac{E}{\partial h_l} \)은 weight w로 이전 layer의 gradient를 convolution한 것들을 전부 더한 것과 같은 결과를 얻게 된다.</p>
-
-
+<p>$$h_{l+1}(i, x,y) = \sum_{j=1}^m \sum_{a=1}^p \sum_{b=1}^q h_l (j, x+a, y+b) * w(i,n;a,b)$$</p>
+<p>값이 좀 많이 복잡하긴 한데, 미분 값을 계산해보면, parameter의 gradient는 $\frac{E}{\partial w} = \sum_x \sum_y \frac{E}{h_{l+1} } (x,y) h_l (x,y)$와 같이 바로 전 layer의 pixel값에 대해 gradient 값을 곱한 것을 전부 더한 형태로 구할 수 있고, $\frac{E}{\partial h_l} $은 weight w로 이전 layer의 gradient를 convolution한 것들을 전부 더한 것과 같은 결과를 얻게 된다.</p>
 <p>CNN의 모든 operation들은 단순 연산이 많고 branch가 없기 때문에 core가 많고, 모든 core가 하나의 operation pointer를 공유하는 GPU를 사용해 효율적으로 parallization하기 좋다. 보통 CNN은 <a href="caffe.berkeleyvision.org">caffe</a>라는 C++ library를 사용해 learning하기 때문에 위에서 언급한 알고리즘을 실제로 구현할 일은 많지 않을 것 같다.</p>
 
-
-
-
-<h5>정리</h5>
-
-
+<h3>정리</h3>
 <p>Deep learning은 neural network의 layer를 deep 하게 쌓은 것에 지나지 않지만, 아무것도 하지 않고 layer를 깊게 쌓기만하면 overfitting이 너무 강하게 발생하여 제대로 된 결과를 얻을 수 없다. 이 글에서는 두 가지 overfitting을 피하는 방법을 설명하였다. 첫 번째 DBN은 주어진 network를 DBN이라는 RBM이 stack으로 쌓여있는 graphical probabilistic model로 표현한다. 그리고 주어진 데이터에 대해 likelihood를 maximize하는 parameter를 찾아서 그 값을 initial point로 사용해 gradient descent를 실행한다. 이때 RBM의 gradient 값을 정확히 구하는 것이 힘들기 때문에 Gibbs sampling의 iteration을 converge할때까지 돌리는 대신 한 번만 돌리는 Contrastive Divergence 알고리즘이 제안된다. DBN은 RBM을 layer wise greedy update rule을 통해 parameter를 update하게 된다.</p>
-
-
 <p>두 번째로 설명한 CNN은 sparse weight, tied weight, equivariant representation이라는 세 가지 아이디어를 기반으로 모델의 complexity는 최소화하면서 vision에 최적화되어있는 형태의 모델이다. Parameter update는 backpropagation으로 하게 되는데, 보통 구현되어있는 툴을 사용하게 되므로 세부 update rule을 직접 구현할 일은 많지 않을 것 같다.</p>
-
-
 <p>이 밖에 regularization이나 optimization method들과 같이 deep learning과 관련된 중요한 개념들 역시 추후 다른 포스트를 통해 소개할 수 있도록 하겠다.</p>
 
-
-
-
-<h5>Reference</h5>
-
-
+<h3>Reference</h3>
 <ul>
-<li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
-<li><a href="http://papers.nips.cc/paper/3048-greedy-layer-wise-training-of-deep-networks.pdf">Bengio, Yoshua, et al. &ldquo;Greedy layer-wise training of deep networks.&rdquo; Advances in neural information processing systems 19 (2007): 153.</a></li>
-<li><a href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf">Hinton, Geoffrey E., Simon Osindero, and Yee-Whye Teh. &ldquo;A fast learning algorithm for deep belief nets.&rdquo; Neural computation 18.7 (2006): 1527-1554.</a></li>
-<li><a href="http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html">Classification datasets results</a></li>
-<li><a href="http://deeplearning.net/tutorial/rbm.html">DeepLearning.net &ndash; Restricted Boltzmann Machines (RBM) Tutorial</a></li>
-<li><a href="http://deeplearning.net/tutorial/lenet.html">DeepLearning.net &ndash; Convolutional Neural Network (LeNet) Tutorial</a></li>
-<li><a href="http://image.diku.dk/igel/paper/AItRBM-proof.pdf">Fischer, Asja, and Christian Igel. &ldquo;An introduction to restricted Boltzmann machines.&rdquo; Progress in Pattern Recognition, Image Analysis, Computer Vision, and Applications. Springer Berlin Heidelberg, 2012. 14-36.</a></li>
-<li><a href="https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf">Hinton, Geoffrey. &ldquo;A practical guide to training restricted Boltzmann machines.&rdquo; Momentum 9.1 (2010): 926.</a></li>
-<li><a href="http://www.iro.umontreal.ca/~lisa/pointeurs/TR1312.pdf">Bengio, Yoshua. &ldquo;Learning deep architectures for AI.&rdquo; Foundations and trends® in Machine Learning 2.1 (2009): 1-127.</a></li>
+  <li><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">Deep Learning, Yoshua Bengio and Ian J. Goodfellow and Aaron Courville, Book in preparation for MIT Press, 2015</a></li>
+  <li><a href="http://papers.nips.cc/paper/3048-greedy-layer-wise-training-of-deep-networks.pdf">Bengio, Yoshua, et al. “Greedy layer-wise training of deep networks.” Advances in neural information processing systems 19 (2007): 153.</a></li>
+  <li><a href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf">Hinton, Geoffrey E., Simon Osindero, and Yee-Whye Teh. “A fast learning algorithm for deep belief nets.” Neural computation 18.7 (2006): 1527-1554.</a></li>
+  <li><a href="http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html">Classification datasets results</a></li>
+  <li><a href="http://deeplearning.net/tutorial/rbm.html">DeepLearning.net - Restricted Boltzmann Machines (RBM) Tutorial</a></li>
+  <li><a href="http://deeplearning.net/tutorial/lenet.html">DeepLearning.net - Convolutional Neural Network (LeNet) Tutorial</a></li>
+  <li><a href="http://image.diku.dk/igel/paper/AItRBM-proof.pdf">Fischer, Asja, and Christian Igel. “An introduction to restricted Boltzmann machines.” Progress in Pattern Recognition, Image Analysis, Computer Vision, and Applications. Springer Berlin Heidelberg, 2012. 14-36.</a></li>
+  <li><a href="https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf">Hinton, Geoffrey. “A practical guide to training restricted Boltzmann machines.” Momentum 9.1 (2010): 926.</a></li>
+  <li><a href="http://www.iro.umontreal.ca/~lisa/pointeurs/TR1312.pdf">Bengio, Yoshua. “Learning deep architectures for AI.” Foundations and trends® in Machine Learning 2.1 (2009): 1-127.</a></li>
 </ul>
 
-
-<h5>변경 이력</h5>
-
-
+<h3>변경 이력</h3>
 <ul>
-<li>2015년 9월 21일: 글 등록</li>
-<li>2015년 10월 31일: 오타 수정</li>
+  <li>2015년 9월 21일: 글 등록</li>
+  <li>2015년 10월 31일: 오타 수정</li>
 </ul>
-
 
 <p><hr>
-[Machine Learning 스터디](/blog/categories/machine-learning-study/)의 다른 글들
+### Machine Learning 스터디의 다른 글들
 
 * [Machine Learning이란?](/57)
 * [Probability Theory](/58)
@@ -1294,136 +716,75 @@
     <id>http://SanghyukChun.github.io/91</id>
     <content type="html"><![CDATA[<p>이번에 리뷰할 논문은 Google DeepMind가 NIPS 2014에 발표한 Recurrent Neural Networ와 Reinforcement Learning을 결합한 <a href="http://arxiv.org/abs/1406.6247">Recurrent Models of Visual Attention</a> 이라는 논문이다. <a href="http://SanghyukChun.github.io/90">지난 글</a>에서 리뷰했던 <a href="http://arxiv.org/abs/1312.5602">Playing Atari With Deep Reinforcement Learning</a>과 같은 연구팀에서 진행한 연구인듯하다. Atari 논문에서는 전통적인 RL 문제인 '게임'을 풀기 위하여 CNN으로 action-value function을 모델링하고 value iteration을 대체하는 새로운 action-value function learning 모델과 알고리즘을 제안했다면, 이 논문은 기존 RL 문제라기보다는 오히려 좀 더 클래식한 classification 문제라고 할 수 있는 image recognition 문제에 RNN 구조와 RL 구조를 결합하여 reward maximization optimization problem을 푸는 모델과 알고리즘을 제안한다.</p>
 
-
-
-
-<h5>Motivation</h5>
-
-
+<h3>Motivation</h3>
 <p>CNN 기반의 image classification은 이미 인간이 할 수 있는 수준에 거의 근접하였다. 그러나 CNN을 사용한 기존 접근 방법은 input size가 fix되어있어야하고, pixel size가 엄청나게 크면 그만큼 computation cost가 그대로 늘어난다는 단점이 존재한다. 하지만 실제 사람이 물체를 인식하거나 할 때를 생각해보면, <a class="red tip" title="주의, 집중 등의 뜻이 있다.">'attention'</a>이 존재한다는 것을 알 수 있다. 즉, 배경을 포함한 모든 정보를 사용하여 물체를 인식하는 것이 아니라 자신이 focus하고 있는 일부분과 그 주변 부의 정보들을 '훑어보면서' 훑어본 sequence들을 복합적으로 종합하여 결론을 내린다는 것을 알 수 있다. 만약 이런 방식으로 'focusing'을 하는 모델을 만들 수 있다면 지금 보고 있는 화면의 일부 만을 사용하므로 더 적은 'bandwidth'의 데이터를 저장해도 되고, 정보를 처리하기 위해 좀 더 적은 양의 pixel이 필요할 것이다. 그렇기 때문에 단순 pixel map을 파악하는 것 보다 이런 'atenttion'을 고려한 훨씬 더 human-like한 모델을 설계한다면 기존 CNN의 단점을 해결하는 데에 도움이 될 수 있을 것이라는 것이 이 논문의 motivation이다. 이 논문은 visual scence의 attention-based processing을 attention을 어떻게 취할 것인지를 action으로 생각하여 일종의 control problem으로 모델링하여 문제를 해결한다.</p>
-
-
 <p>이 논문은 기존 CNN기반 approach들처럼 각 time stamp에 대해 전체 이미지를 한 번에 처리하거나 혹은 이미지 박싱을 하는 대신에 모델이 attend해야할 다음 location을 과거 정보와 현재 reward를 기반으로 선택하는 모델을 제안한다. 이 모델은 기존 CNN 모델과는 다르게 image의 크기가 바뀌더라도 computation이나 memory가 그 크기에 linear하게 증가하지 않고 모델에 의해 조절 가능하다는 특징이 있다. </p>
 
-
-
-
-<h5>The Recurrent Attention Model (RAM)</h5>
-
-
+<h3>The Recurrent Attention Model (RAM)</h3>
 <p>구체적인 모델을 정의하기 위하여 먼저 attention problem을 정의해보자. 이 논문은 attention problem을 visual 환경과 interact하는 목표지향적인 agent가 행하는 sequential decision process로 정의한다. 각 time stamp하다 agent는 bandwidth-limited sensor만을 사용해 environment를 observe하게 된다. 즉, agent는 한 번에 전체 environmnet를 감지하지 않고, 매 time stamp마다 local한 정보 만을 감지한다. 대신 agent는 sensor를 어떻게 사용할 것인지, 다시 말해서 sensor의 다음 location을 선택하는 action을 취할 수 있다. 마치 사람이 시선을 쭉 움직이면서 visual scence을 훑어보는 것처럼 말이다. 만약 reward를 image classification과 관련되도록 정의한다면 이런 attention 문제는 한 번에 센서가 볼 수 있는 정보가 한정되어있고, action을 어떻게 취하느냐에 따라 결과가 (reward가) 크게 달라지기 때문에 state별로 reward를 maximize하는 action을 취하는 policy를 learning하는 reinforcement learning 문제로 생각할 수 있다.</p>
-
-
 <p>이제 모델을 조금 더 구체적으로 정의해보자.</p>
 
-
-
-
 <ul>
-    <li><p>\(x_t\): agent가 time \(t\)에 관측한 environment (전체 image의 일부분)</p></li>
-    <li><p>\(\ell_t\): agent가 time \(t\)에 focus하고 있는 region의 좌표 값, 실제 agent는 \(\ell_t\)의 주변을 관측한다. 이 값은 논문에서 sensor control의 action으로 사용된다.</p></li>
-    <li><p>\(a_t\): agent의 time \(t\)에서의 environment action. Classification의 경우는 \(a_t\)가 classification을 하는 decision을 내리는 용도로 사용된다. 즉, MNIST data로 실험하는 경우 가능한 \(a_t\)의 경우 수는 [0-9]이며, 각각 0부터 9까지의 숫자를 나타내게 된다.</p></li>
-    <li><p>\(r_t\): agent가 maximize하고자하는 목표 값이다. Image classification은 time \(t\)에서 정확한 classification을 했으면 reward가 1, 아니라면 reward가 0이 되도록 설정하였다고 한다.</p></li>
-    <li><p>\(h_t\): time \(t\)에서 agent의 state를 'hidden' state로 표현한 것으로, 원래 state는 \(s_{1:t} = x_1, \ell_1, a_1, \ldots, x_{t-1}, \ell_{t-1}, a_{t-1}, x_t\)로 표현되지만, 만약 \(h_t\)를 이 모든 state들을 'summarize'하는 것과 같이 모델링 할 수 있다면, 전체 state를 보는 대신, summerized internal state인 \(h_t\)로 state 표현을 대신할 수 있다.</p></li>
+	<li><p>$x_t$: agent가 time $t$에 관측한 environment (전체 image의 일부분)</p></li>
+	<li><p>$\ell_t$: agent가 time $t$에 focus하고 있는 region의 좌표 값, 실제 agent는 $\ell_t$의 주변을 관측한다. 이 값은 논문에서 sensor control의 action으로 사용된다.</p></li>
+	<li><p>$a_t$: agent의 time $t$에서의 environment action. Classification의 경우는 $a_t$가 classification을 하는 decision을 내리는 용도로 사용된다. 즉, MNIST data로 실험하는 경우 가능한 $a_t$의 경우 수는 [0-9]이며, 각각 0부터 9까지의 숫자를 나타내게 된다.</p></li>
+	<li><p>$r_t$: agent가 maximize하고자하는 목표 값이다. Image classification은 time $t$에서 정확한 classification을 했으면 reward가 1, 아니라면 reward가 0이 되도록 설정하였다고 한다.</p></li>
+	<li><p>$h_t$: time $t$에서 agent의 state를 'hidden' state로 표현한 것으로, 원래 state는 $s_{1:t} = x_1, \ell_1, a_1, \ldots, x_{t-1}, \ell_{t-1}, a_{t-1}, x_t$로 표현되지만, 만약 $h_t$를 이 모든 state들을 'summarize'하는 것과 같이 모델링 할 수 있다면, 전체 state를 보는 대신, summerized internal state인 $h_t$로 state 표현을 대신할 수 있다.</p></li>
 </ul>
-
-
-
 
 <p>위와 같은 모델을 설계하기 위하여 이 논문에서는 다음과 같은 RNN 형태의 neural netork model은 제안하고 있다.</p>
 
-
 <p><img class="center" src="/images/post/91-1.png" width="200"></p>
 
-<p>Agent에게는 매 시간마다 전체 image의 일부분 정보인 \(x_t\)와 바로 전 state를 표현하는 \(h_{t-1}\)이 input으로 들어온다. 이 정보들을 사용하여 agent는 sensor를 어떻게 움직일 것인지 결정하는 (다음으로 살펴볼 위치 정보를 결정하는) \(\ell_t\)와 주어진 task를 수행하는 action (이 경우는 image classification이므로 \(a_t\) 그 자체가 label 정보를 담은 action이 된다) \(a_t\)라는 action을 취하게 된다. 이 모델을 시간에 대해 unfold한 것이 논문에 나와있는 Figure 1.c이다. </p>
-
+<p>Agent에게는 매 시간마다 전체 image의 일부분 정보인 $x_t$와 바로 전 state를 표현하는 $h_{t-1}$이 input으로 들어온다. 이 정보들을 사용하여 agent는 sensor를 어떻게 움직일 것인지 결정하는 (다음으로 살펴볼 위치 정보를 결정하는) $\ell_t$와 주어진 task를 수행하는 action (이 경우는 image classification이므로 $a_t$ 그 자체가 label 정보를 담은 action이 된다) $a_t$라는 action을 취하게 된다. 이 모델을 시간에 대해 unfold한 것이 논문에 나와있는 Figure 1.c이다. </p>
 
 <p><img src="/images/post/91-2.PNG" width="600"></p>
 
-<p>이때 \(f_g, f_\ell, f_a\)는 각각 input data에 대한 정보를 처리하는 네트워크 (glimpse network \(f_g\)), 위치 정보를 결정하는 네트워크 (location network \(f_\ell\)), 그리고 action의 값을 결정하는 네트워크를 (action network \(f_a\)) 의미한다. 각각의 네트워크에 대해 하나하나 살펴보도록 하자.</p>
-
-
-<p>먼저 gimpse network \(f_g\)는 주어진 input image \(x_t\)와, 그 중 일부의 위치정보 \(\ell_t\) 만을 받아서 원래 image의 일부분만 'attention' 하여 적절한 feature를 뽑아내는 네트워크이다. Glimpse라는 말은 한국어로 '언뜻 보다' 라는 의미를 가지고 있는데, 다시 말해 주어진 이미지를 살짝 훑어보고 그 정보를 잘 정리하여 주어진 RNN core network가 정보를 잘 처리할 수 있도록 만들어주는 역할을 한다. 이 네트워크는 아래 그림과 같이 구성되어있다.</p>
-
+<p>이때 $f_g, f_\ell, f_a$는 각각 input data에 대한 정보를 처리하는 네트워크 (glimpse network $f_g$), 위치 정보를 결정하는 네트워크 (location network $f_\ell$), 그리고 action의 값을 결정하는 네트워크를 (action network $f_a$) 의미한다. 각각의 네트워크에 대해 하나하나 살펴보도록 하자.</p>
+<p>먼저 gimpse network $f_g$는 주어진 input image $x_t$와, 그 중 일부의 위치정보 $\ell_t$ 만을 받아서 원래 image의 일부분만 'attention' 하여 적절한 feature를 뽑아내는 네트워크이다. Glimpse라는 말은 한국어로 '언뜻 보다' 라는 의미를 가지고 있는데, 다시 말해 주어진 이미지를 살짝 훑어보고 그 정보를 잘 정리하여 주어진 RNN core network가 정보를 잘 처리할 수 있도록 만들어주는 역할을 한다. 이 네트워크는 아래 그림과 같이 구성되어있다.</p>
 
 <p><img src="/images/post/91-4.PNG" width="600"></p>
 
-<p>이 네트워크는 glimpse sensor라는 것의 output과 \(\ell_{t-1}\)의 정보를 concate하는 역할을 한다. 여기에서 중요한 것은 glimpse sensor라는 것인데, 이 센서는 마치 사람의 '망막처럼' (retina-like) 정보를 처리하는 역할을 한다. 즉, 이 센서를 사용해 전체 이미지에서 좁은 영역에 해당하는 정보를 뽑아내는 역할을 하는 것이다. 이 센서는 아래와 같은 구조를 띄고 있다.</p>
-
+<p>이 네트워크는 glimpse sensor라는 것의 output과 $\ell_{t-1}$의 정보를 concate하는 역할을 한다. 여기에서 중요한 것은 glimpse sensor라는 것인데, 이 센서는 마치 사람의 '망막처럼' (retina-like) 정보를 처리하는 역할을 한다. 즉, 이 센서를 사용해 전체 이미지에서 좁은 영역에 해당하는 정보를 뽑아내는 역할을 하는 것이다. 이 센서는 아래와 같은 구조를 띄고 있다.</p>
 
 <p><img src="/images/post/91-3.PNG" width="600"></p>
 
-<p>Glimpse sensor는 주어진 이미지 \(x_t\)의 한 위치 \(\ell_{t-1}\)을 받아서 해당 위치에서 특정 거리 \(d_1\)만큼 떨어진 이미지를 추출한다. 그리고 나서 그것보다 더 넓은 범위인 \(d_2\)만큼 떨어진 이미지를 추출하고, 다시 그것보다 큰 \(d_3\)만큼 떨어진 이미지를 추출하는 과정을 \(k\)번 반복하여 \(k\)개의 patch를 만든다. 이렇게 하는 이유는 사람의 망막이 중심부에 가까울수록 데이터의 해상도를 높게 받아들이고 중심부에서 멀어질수록 이미지가 흐려지도록 처리하기 때문이다. Sensor에서 이 값들을 생성하고 나면 \(\rho(x_t, \ell_{t-1})\) 이라는 transform을 처리하게 되는데, image classification 실험을 위해서 사용한 transform은 모든 사진을 같은 크기로 resize한 다음 concate하는 transform이라고 한다. 이렇게 될 경우 중심부에 가까울수록 정보량이 많아지고 정확해지지만 멀어질수록 해상도가 낮은 정보를 받게 될 것이다.</p>
+<p>Glimpse sensor는 주어진 이미지 $x_t$의 한 위치 $\ell_{t-1}$을 받아서 해당 위치에서 특정 거리 $d_1$만큼 떨어진 이미지를 추출한다. 그리고 나서 그것보다 더 넓은 범위인 $d_2$만큼 떨어진 이미지를 추출하고, 다시 그것보다 큰 $d_3$만큼 떨어진 이미지를 추출하는 과정을 $k$번 반복하여 $k$개의 patch를 만든다. 이렇게 하는 이유는 사람의 망막이 중심부에 가까울수록 데이터의 해상도를 높게 받아들이고 중심부에서 멀어질수록 이미지가 흐려지도록 처리하기 때문이다. Sensor에서 이 값들을 생성하고 나면 $\rho(x_t, \ell_{t-1})$ 이라는 transform을 처리하게 되는데, image classification 실험을 위해서 사용한 transform은 모든 사진을 같은 크기로 resize한 다음 concate하는 transform이라고 한다. 이렇게 될 경우 중심부에 가까울수록 정보량이 많아지고 정확해지지만 멀어질수록 해상도가 낮은 정보를 받게 될 것이다.</p>
+<p>모든 glimpse network의 lyaer들은 기본적인 inner product layer를 사용한다 ($Linear(x) = Wx + b$). 그리고 neuron으로는 ReLU unit ($ReLU(x) = \max(x,0))$을 사용한다. 즉, </p>
+<p>$$h_g = ReLU(Linear(\rho(x,\ell))), h_\ell = ReLU(Linear(\ell)) $$</p>
+<p>그리고 glimpse network의 output $g$는 $g = ReLU(Linear(h_g) + Linear(h_\ell)$로 정의한다. Glimpse network 말고도 location network와 core network도 거의 같은 방식으로 정의하게 되는데, 각각 $f_\ell (h) = Linear(h)$, $h_t = f_h(h_{t-1}) = ReLU(Linear(h_{t-1}) + Linear(g_t) )$로 정의한다. 이때, core network는 state vecotr $h$의 dimension이 256인 LSTM을 사용한다. 마지막으로 action network $f_a (h) = exp(Linear(h))/Z$, 즉 linear softmax classifier로 정의한다. 그 이외 설정은 모두 앞에서 설명한 것과 같다.</p>
 
+<h3>Training</h3>
+<p>실험에 대해 알아보기 전에, 이 network를 어떻게 learning할 수 있는지 잠시 살펴보도록하자. 이 네트워크에서 우리가 learning해야할 parameter는 glimpse network, core network 그리 action network의 parameter인 $\theta_g, \theta_h, \theta_a$이다. Optimization을 하기 위한 target function은 total reward를 maximize하는 함수로 설정할 것이다. 조금 더 formal한 설명을 위하여 interaction sequences $s_{1:N}$과, 그것의 모든 가능한 state들의 distribution $p(s_{1:T}; \theta)$을 introduce해보자. 이렇게 정의할 경우 우리는 아래와 같은 target function의 $p(s_{1:T}; \theta)$에 대한 expectation을 maximize하는 문제로 reward maximization problem을 formal하게 정의할 수 있다.</p>
+<p>$$J(\theta) = \mathbb E_{p(s_{1:T};\theta)} \bigg[ \sum_{t=1}^T r_t \bigg] = \mathbb E_{p(s_{1:T};\theta)} \big[R\big]. $$</p>
+<p>그러나 이 함수 $J(\theta)$를 maximize하는 것은 trivial한 일이 아닌데, 다행스럽게도 이미 예전에 다른 work에서 이 $J(\theta)$의 gradient의 sample approximation이 아래와 같이 유도된다는 것을 보였다고 한다.</p>
+<p>$$\nabla J(\theta) = \sum_{t=1}^T \mathbb E_{p(s_{1:T};\theta)} \big[ \nabla_\theta \log \phi (u_t ~|~ s_{1:t};\theta) R \big] \simeq \frac{1}{M} \sum_{i=1}^M \sum_{t=1}^T \nabla_\theta \log \phi (u_t^i ~|~ s_{1:t}^i;\theta) R^i .  $$</p>
+<p>위의 관계식에서의 $\nabla_\theta \log \phi (u_t^i ~|~ s_{1:t}^i;\theta)$은 RNN의 gradient를 계산해야하는 것으로 간단하게 구할 수 있다. 다만 이 관계식이 unbiased estimation of gradient를 제공하기는 하지만, variance가 너무 높다는 단점이 있다고 한다. 그래서 이 논문에서는 아래와 같은 form으로 gradient를 estimation하여 variance의 값을 줄이도록 하였다고 한다.</p>
+<p>$$ \frac{1}{M} \sum_{i=1}^M \sum_{t=1}^T \nabla_\theta \log \phi (u_t^i ~|~ s_{1:t}^i;\theta) (R_t^i - b_t), \mbox{ where } R_t^i = \sum_{t^prime=1}^T r_{t^\prime}^i. $$</p>
 
-<p>모든 glimpse network의 lyaer들은 기본적인 inner product layer를 사용한다 (\(Linear(x) = Wx + b\)). 그리고 neuron으로는 ReLU unit (\(ReLU(x) = \max(x,0))\)을 사용한다. 즉, </p>
-
-
-<p>\[h_g = ReLU(Linear(\rho(x,\ell))), h_\ell = ReLU(Linear(\ell)) \]</p>
-
-
-<p>그리고 glimpse network의 output \(g\)는 \(g = ReLU(Linear(h_g) + Linear(h_\ell)\)로 정의한다. Glimpse network 말고도 location network와 core network도 거의 같은 방식으로 정의하게 되는데, 각각 \(f_\ell (h) = Linear(h)\), \(h_t = f_h(h_{t-1}) = ReLU(Linear(h_{t-1}) + Linear(g_t) )\)로 정의한다. 이때, core network는 state vecotr \(h\)의 dimension이 256인 LSTM을 사용한다. 마지막으로 action network \(f_a (h) = exp(Linear(h))/Z\), 즉 linear softmax classifier로 정의한다. 그 이외 설정은 모두 앞에서 설명한 것과 같다.</p>
-
-
-
-
-<h5>Training</h5>
-
-
-<p>실험에 대해 알아보기 전에, 이 network를 어떻게 learning할 수 있는지 잠시 살펴보도록하자. 이 네트워크에서 우리가 learning해야할 parameter는 glimpse network, core network 그리 action network의 parameter인 \(\theta_g, \theta_h, \theta_a\)이다. Optimization을 하기 위한 target function은 total reward를 maximize하는 함수로 설정할 것이다. 조금 더 formal한 설명을 위하여 interaction sequences \(s_{1:N}\)과, 그것의 모든 가능한 state들의 distribution \(p(s_{1:T}; \theta)\)을 introduce해보자. 이렇게 정의할 경우 우리는 아래와 같은 target function의 \(p(s_{1:T}; \theta)\)에 대한 expectation을 maximize하는 문제로 reward maximization problem을 formal하게 정의할 수 있다.</p>
-
-
-<p>\[J(\theta) = \mathbb E_{p(s_{1:T};\theta)} \bigg[ \sum_{t=1}^T r_t \bigg] = \mathbb E_{p(s_{1:T};\theta)} \big[R\big]. \]</p>
-
-
-<p>그러나 이 함수 \(J(\theta)\)를 maximize하는 것은 trivial한 일이 아닌데, 다행스럽게도 이미 예전에 다른 work에서 이 \(J(\theta)\)의 gradient의 sample approximation이 아래와 같이 유도된다는 것을 보였다고 한다.</p>
-
-
-<p>\[\nabla J(\theta) = \sum_{t=1}^T \mathbb E_{p(s_{1:T};\theta)} \big[ \nabla_\theta \log \phi (u_t ~|~ s_{1:t};\theta) R \big] \simeq \frac{1}{M} \sum_{i=1}^M \sum_{t=1}^T \nabla_\theta \log \phi (u_t^i ~|~ s_{1:t}^i;\theta) R^i .  \]</p>
-
-
-<p>위의 관계식에서의 \(\nabla_\theta \log \phi (u_t^i ~|~ s_{1:t}^i;\theta)\)은 RNN의 gradient를 계산해야하는 것으로 간단하게 구할 수 있다. 다만 이 관계식이 unbiased estimation of gradient를 제공하기는 하지만, variance가 너무 높다는 단점이 있다고 한다. 그래서 이 논문에서는 아래와 같은 form으로 gradient를 estimation하여 variance의 값을 줄이도록 하였다고 한다.</p>
-
-
-<p>\[ \frac{1}{M} \sum_{i=1}^M \sum_{t=1}^T \nabla_\theta \log \phi (u_t^i ~|~ s_{1:t}^i;\theta) (R_t^i - b_t), \mbox{ where } R_t^i = \sum_{t^prime=1}^T r_{t^\prime}^i. \]</p>
-
-
-
-
-<h5>Experiments</h5>
-
-
+<h3>Experiments</h3>
 <p>이 논문에서는 MNIST에 대해 실험을 진행했다. 실험은 우리가 보통 사용하는 centered digit, non-centered digit은 물론이고, <a title="흐트러트리다, 어지럽히다라는 뜻이 있다" class="red tip">cluttered</a> non-centered digit에 대한 실험도 진행했다. 마지막 실험은 MNIST digit에 random하게 8 by 8 subpatch를 더하여 데이터를 조금 더 '지저분하게' 만들어서 실험을 진행했다. 비교군은 MNIST의 state-of-art인 모델들이 아니라, 가장 간단한 2 layer fully connect neural network를 사용하였다. 아마 state-of-art 모델들은 워낙 성능이 뛰어나서 아직 극복이 안되는 모양이다. 실험 결과는 아래와 같다.</p>
-
 
 <p><img src="/images/post/91-5.png" width="600">
 <img src="/images/post/91-6.png" width="600"></p>
 
 <p>결과가 outperform하다고 할 수는 없지만, 간단한 2-layer fully connected neural network보다 특수한 경우들에 대해 훨씬 잘 동작함을 볼 수 있고, 무엇보다 올바른 classification을 하기위한 policy rule이 (초록색 선으로 표현된 것들) 상당히 human-likely 한 결과를 보인다는 것이 고무적이다. 물론, 이 결과가 GoogleNet이나 AlexNet에 비해 엄청 우수한 결과를 보이느냐하면 그것은 아니지만, 새로운 형태의 접근을 할 수 있다는 가능성을 제시하는 것 만으로도 의미가 있다고 본다. 보다 자세한 실험에 대한 설명은 논문을 참고하면 좋을 것 같다.</p>
 
-
-
-
-<h5>Summary of Visual Attention</h5>
-
+<h3>Summary of Visual Attention</h3>
 
 <ul>
-<li>기존 CNN 기반 접근 방식의 문제점들 &ndash; 이미지 사이즈에 linear한 computation cost, human-like 하지 않은 처리 방법 등 &ndash; 을 처리하기 위한 목적으로 디자인되었음</li>
-<li>사람이 정보를 한 번에 처리하는 것이 아니라 배경을 무시하고 이미지의 일부만 인식하듯, &lsquo;attention'을 모델에 대입하는 아이디어를 제안함</li>
-<li>Attention을 neural network에 도입하기 위하여 RNN과 Reinforcement Learning을 결합한 형태의 모델을 사용함</li>
-<li>RNN의 input으로는 이미지 정보, 위치 정보가 있으며, 그것들을 조금 더 retina-like하게 처리하기 위한 glimpse network라는 것을 추가로 붙여서 input으로 사용함</li>
-<li>output으로는 action network, location network가 있는데, action network는 classification을 위한 linear classifier이고, location network는 다음 state에 영향을 미치는 recurrent하게 다음 input과 함께 glimpse network의 input으로 쓰이는 값임</li>
-<li>reward는 time t에 올바른 classification을 하였는지 아닌지를 판단하여 0-1 으로 reward를 return함</li>
-<li>train을 하기 위하여 reward maximization을 하는데, 직접 gradient를 구하는 것이 non-trivial하여 estimation값을 사용함. 이때 unbaised estimator는 variance가 높아서 low variance estimator를 사용하여 update를 함</li>
-<li>MNIST에 대해 실험을 하였으며, centered digit은 기존 state-of-art에 비해 턱없이 모자라지만, 사람은 구분할 수 있지만 머신은 제대로 판단하지 못하는 cluttered non-centered digit을 기존 fully connected network보다 훨씬 잘 판별하는 것을 알 수 있었음</li>
+  <li>기존 CNN 기반 접근 방식의 문제점들 - 이미지 사이즈에 linear한 computation cost, human-like 하지 않은 처리 방법 등 - 을 처리하기 위한 목적으로 디자인되었음</li>
+  <li>사람이 정보를 한 번에 처리하는 것이 아니라 배경을 무시하고 이미지의 일부만 인식하듯, ‘attention’을 모델에 대입하는 아이디어를 제안함</li>
+  <li>Attention을 neural network에 도입하기 위하여 RNN과 Reinforcement Learning을 결합한 형태의 모델을 사용함</li>
+  <li>RNN의 input으로는 이미지 정보, 위치 정보가 있으며, 그것들을 조금 더 retina-like하게 처리하기 위한 glimpse network라는 것을 추가로 붙여서 input으로 사용함</li>
+  <li>output으로는 action network, location network가 있는데, action network는 classification을 위한 linear classifier이고, location network는 다음 state에 영향을 미치는 recurrent하게 다음 input과 함께 glimpse network의 input으로 쓰이는 값임</li>
+  <li>reward는 time t에 올바른 classification을 하였는지 아닌지를 판단하여 0-1 으로 reward를 return함</li>
+  <li>train을 하기 위하여 reward maximization을 하는데, 직접 gradient를 구하는 것이 non-trivial하여 estimation값을 사용함. 이때 unbaised estimator는 variance가 높아서 low variance estimator를 사용하여 update를 함</li>
+  <li>MNIST에 대해 실험을 하였으며, centered digit은 기존 state-of-art에 비해 턱없이 모자라지만, 사람은 구분할 수 있지만 머신은 제대로 판단하지 못하는 cluttered non-centered digit을 기존 fully connected network보다 훨씬 잘 판별하는 것을 알 수 있었음</li>
 </ul>
 
-
-<h5>Reference</h5>
-
-
+<h3>Reference</h3>
 <ul><li><p><a href="http://arxiv.org/abs/1406.6247">Mnih, Volodymyr, Nicolas Heess, and Alex Graves. "Recurrent models of visual attention." Advances in Neural Information Processing Systems. 2014.</a></p></li></ul>
-
 ]]></content>
   </entry>
   

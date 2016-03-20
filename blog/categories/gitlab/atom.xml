@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gitlab | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/gitlab/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-15T02:29:17+09:00</updated>
+  <updated>2016-03-21T00:45:21+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -19,63 +19,30 @@
     <updated>2014-11-20T03:05:00+09:00</updated>
     <id>http://SanghyukChun.github.io/80</id>
     <content type="html"><![CDATA[<p>버전관리의 중요성은 몇 번을 강조해도 부족하지 않다. 버전관리를 하기 위한 여러 도구들이 존재하지만, 난 분산 버전 관리 (DVCS) 를 좋아한다. Mercurial 로 처음 버전관리를 공부했고, 지금은 주로 Github에 소스를 올리기 때문에 git 을 많이 쓰고 있다. 콘솔에서는 큰 차이가 있지만, 정작 둘 다 <a href="http://www.sourcetreeapp.com/">SourceTree</a>로만 관리하기 때문에.. 예전에는 맥버전만 있었지만, 이제는 윈도우 버전도 생겨서 다른 사람들도 용이하게 쓸 수 있다. 이런 이유로 최근에는 거의 모든 레포지토리를 git 레포지토리로 만들게 되는데, 연구실에서 내가 쓰고 있는 논문이나 프로젝트용 코드 같은 경우는 공개된 레포지토리로 올려도 곤란하고, 연구실 단위로 관리를 해야할 필요를 느껴서 <a href="https://about.gitlab.com/">GitLab</a>이라는 놈을 깔아보기로 헀다.</p>
-
-
 <p>Gitlab을 한 마디로 요약하자면 '개인용 github' 라고 할 수 있다. 코드를 훑어보니 rails 기반에 nginx를 서버로 사용하고 있어서 내가 친숙한 환경이기도 해서 좋더라. 늘 깔아야지 깔아야지했는데 이게 생각보다 설치가 머리가 아파서.. 나중에 시간이 넉넉해지면 설치하려 했으나 어쩌다보니 갑작스럽게 설치를 하게 되었다.</p>
-
-
 <p>내 설치환경은 Ubuntu 14.04, <a href="https://about.gitlab.com/downloads/">다운로드 페이지</a>에서 ubuntu 14.04를 선택하는 아래와 같은 명령어를 실행하면 알아서 옴니버스 버전을 깔아준다고 한다.</p>
-
-
 <p><code>
 wget https://downloads-packages.s3.amazonaws.com/ubuntu-14.04/gitlab_7.4.3-omnibus.5.1.0.ci-1_amd64.deb
 sudo apt-get install openssh-server
 sudo apt-get install postfix # Select 'Internet Site', using sendmail instead also works, exim has problems
 sudo dpkg -i gitlab_7.4.3-omnibus.5.1.0.ci-1_amd64.deb
 </code></p>
-
 <p>난 openssh-server, postfix는 깔려있으니 생략했다.</p>
-
-
 <p>다음으로는 <code>sudo vim /etc/gitlab/gitlab.rb</code> 를 실행해 <code>gitlab.rb</code> 를 수정해야한다. 다시 한 번 말하지만, gitlab은 rails로 돌아가기 떄문에 rails setting 을 해줘야한다. 원래 레일즈 프로젝트의 설정을 바꾸기 위해서는 yml 파일이나 다른 rb 파일들을 직접 수정해주어야하는데, gitlab 옴니버스 버전에서는 친절하게 이 루비 파일 하나만 바꾸면, 알아서 yml 등을 generate해준다. 아 편하고 좋다! 라고 생각했지만 이것이 그 모든 재앙의 시작이었다..</p>
-
-
 <p>편하게 해주려고 만든 ruby setting 파일이 왜 문제가 되었느냐, 사실 이 대부분은 문제가 생기지 않는다. 예를 들어서 <code>www.example.com</code> 이라는 도메인을 가지고 있고, gitlab 의 접속 경로를 <code>gitlab.example.com</code> 으로 사용한다면 옴니버스 버전을 바로 사용하면 된다. 하지만 내가 사용하는 서버는 학교 도메인에서 서브도메인을 받아서 사용하기 때문에 <code>sanghyuk.kaist.ac.kr</code> 이런 식의 도메인을 가지고 있다. 따라서 위와 같은 경로를 취하게 되면 <code>gitlab.sanghyuk.kaist.ac.kr</code> 이라는 기괴한 경로가 생기게 되고, 당연하지만 이런 경로는 허용되지 않는다. 따라서 <code>sanghyuk.kaist.ac.kr/gitlab</code> 같은 relative domain을 사용해야한다. nginx에서 이런 서브 도메인을 루트로 삼는 것은 규칙에 위반되지만 사용하는 것이 가능하긴하다. rails에서도 root url을 relative url로 바꾸고 하면 돌릴 수 있지만.. 이건 내가 rails파일을 직접 바꿀 때 얘기였다.</p>
-
-
 <p>옴니버스 버전에서 이런저런 삽질을 하다가 찾아낸 이슈.. <a href="https://gitlab.com/gitlab-org/omnibus-gitlab/issues/238">옴니버전에서는 Relative URL root를 지원할 계획이 없다</a> 아... <code>gitlab.rb</code> 에서 삽질을 하고 있었는데 다 쓸데 없는 짓에 불과했던 것이다.</p>
-
-
 <p>그래서 relative url은 포기하고 다른 쪽으로 알아보니 포트를 바꿔서 접속을 하는 방법이 있더라. 이건 그나마 훨씬 할 만 헀다. <code>/etc/gitlab/gitlab.rb</code> 에서 다음과 같이 설정해준다.</p>
-
-
 <p><code>
 external_url = 'http://sanghyuk.kaist.ac.kr:1234'
 </code></p>
-
 <p>아 참고로, 내가 깐 버전은 = 을 안쓰면 에러가 나서 내가 = 을 따로 넣어줬다. 옴니버스 버전별로 다른 모양</p>
-
-
 <p>이렇게 하고 <code>sudo gitlab-ctl reconfigure</code> 을 실행시켜서 yml 등을 자동으로 generate시키기만 하면 문제 해결! ... 이 아니었다. 아예 접속 자체가 되지를 않아서 이제 여기에서 다시 삽질을 시작했는데, 먼저 netstat으로 포트는 열려있나 봤다. 안타깝게도 아예 포트가 열려있지도 않았다. 돌아버리겠는건 <code>gitlab-ctl status</code> 에서는 잘 실행되는 것으로 나오는 것.</p>
-
-
 <p>이제 또 한참 삽질을 하다가, 아예 nginx 조차 돌아가는 것 같지 않아서 nginx 세팅을 수동으로 뜯어고치기로 결정했다. 이게 상당히 위험한 짓인데, 나중에 내가 생각없이 또 reconfigure를 때리면 내가 고친 파일들이 새로운 파일들로 덮어씌일 것이기 때문이다. 때문에 이렇게 설정을 시작한다면 reconfigure 대신 <code>gitlab-ctl restart</code> 로 configure 파일을 다시 생성시키지 말고 레일즈랑 nginx 등만 내렸다가 올려야한다. 이제 세팅을 바꿔보자.</p>
-
-
 <p>가장 먼저 nginx 설정을 찾아봤다. <code>/var/opt/gitlab/nginx/conf/gitlab-http.conf</code> 에 설정 파일이 있는데, listen과 server name이 엉망으로 되어있더라. 당연히 nginx가 설정이 잘못되었으니 서버에 접속도 못하고 포트도 안열려 있던 것. 이 둘을 제대로 바꿔주고 restart를 했다.</p>
-
-
 <p>드디어 '페이지를 찾을 수 없습니다' 창말고 다른 창을 볼 수 있었다. 그러나 여기에서 또 502 에러가 발생했는데, 아마도 내부 rails가 제대로 올라오지 않은 모양인가보다. 그래서 혹시 레일즈 세팅도 이상한가 싶어서 yml 파일을 찾아봤다.</p>
-
-
 <p><code>/var/opt/gitlab/gitlab-rails/etc/gitlab.yml</code> 을 열어봤더니 여기도 host랑 port가 엉망이었다. 이 부분을 바꿔주고 나서 다시 <code>sudo gitlab-ctl restart</code></p>
-
-
 <p>아 드디어 잘 실행된다. 기존에 쓰던 다른 레포지토리를 추가해주기 위해서 <a href="http://git-scm.com/book/ko/v1/Git%EC%9D%98-%EA%B8%B0%EC%B4%88-%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%A0%80%EC%9E%A5%EC%86%8C">remote</a>를 해주려고 보니 ssh key를 생성해서 넣어줘야 하더라. 이건 <a href="http://git-scm.com/book/ko/v1/Git-%EC%84%9C%EB%B2%84-SSH-%EA%B3%B5%EA%B0%9C%ED%82%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0">이 글</a>을 보면 된다. 이건 예전에 다 등록해뒀던거라서 금방금방했다. 조금 가지고 놀아보니 아직까지는 매우 만족스럽다.</p>
-
-
 <p>이렇게 일단 주먹구구식으로 깃랩을 돌리는 것에는 성공했지만, 아직 reconfigure를 함부로 하면 안된다. 내가 바꾼 <code>/var/opt/gitlab/gitlab-rails/etc/gitlab.yml</code>, <code>/var/opt/gitlab/nginx/conf/gitlab-http.conf</code> 는 <code>gitlab-ctl reconfigure</code> 를 할 때 자동으로 generate 되는 파일이다. 따라서 내가 바꾼 설정이 저장이 되지 않기 때문에 함부로 reconfigure를 했다가는... 나중에 시간이 나면 이 부분을 gitlab.rb 만 바꿔서 수정할 수 있는지 알아보자.</p>
-
 ]]></content>
   </entry>
   
