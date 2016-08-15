@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-26T11:47:00+09:00</updated>
+  <updated>2016-08-16T00:58:37+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,556 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Practical Bayesian Optimization of Machine Learning Algorithms (NIPS 2012)]]></title>
+    <link href="http://SanghyukChun.github.io/99/"/>
+    <updated>2016-08-16T00:58:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/99</id>
+		<content type="html"><![CDATA[<ul class="no-float" id="markdown-toc">
+  <li><a href="#section">들어가며</a></li>
+  <li><a href="#hyperparameter-tuning-as-optimization-problem">Hyperparameter Tuning as Optimization Problem</a></li>
+  <li><a href="#bayesian-optimization-for-black-box-function">Bayesian Optimization for “Black-box” function</a>    <ul>
+      <li><a href="#stochastic-process">Stochastic Process</a></li>
+      <li><a href="#gaussian-process">Gaussian Process</a>        <ul>
+          <li><a href="#gp-with-noisy-data">GP with Noisy data</a></li>
+        </ul>
+      </li>
+      <li><a href="#acquisition-function">Acquisition Function</a>        <ul>
+          <li><a href="#probability-of-improvement">Probability of Improvement</a></li>
+          <li><a href="#expected-improvement">Expected Improvement</a></li>
+          <li><a href="#ucb">UCB</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#limitation-of-bayesian-optimization">Limitation of Bayesian Optimization</a></li>
+  <li><a href="#practical-bayesian-optimization">Practical Bayesian Optimization</a>    <ul>
+      <li><a href="#expected-improvement-and-matern-52-kernel-function">Expected Improvement and Matern 5/2 Kernel function</a></li>
+      <li><a href="#integrated-acquisition-function-marginalize-hyperparameter">Integrated Acquisition Function (marginalize hyperparameter)</a></li>
+      <li><a href="#expected-improvement-per-second">Expected Improvement per second</a></li>
+      <li><a href="#monte-carlo-acquisition-for-parallelizing-bayesian-optimization">Monte Carlo Acquisition for Parallelizing Bayesian Optimization</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+  </li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#section-1">변경 이력</a></li>
+</ul>
+
+<h3 id="section">들어가며</h3>
+<p>Machine Learning 모델을 만들다보면 Hyperparameter 라는 녀석을 다뤄야 하는 일이 종종 발생한다.
+예를 들면 Random forest의 forest 개수라거나, Neural network의 layer 개수, learning rate, momentum 값 등등..
+문제는 이런 hyperparameter들을 어떻게 설정하느냐에 따라 그 결과가 크게 바뀌기 때문에 소위 말하는 ‘튜닝’에 시간을 매우 많이 쏟아야한다는 점이다.</p>
+
+<p>이 논문은 hyperparameter tuning 문제를 Bayesian optimization을 사용해여 해결하는 방법을 제안한다.
+Bayesian optimization은 알려지지 않은 “black-box” function을 optimization할 때 많이 사용되는 방법이다.
+그러나 Bayesian optimization은 몇 가지 이유로 practical하게 쓰기 어려운데,
+1) (kernel function, acquisition function 등) 모델을 어떤 것을 고르냐에 따라 성능이 크게 바뀐다,
+2) Baysian optimization 자체도 hyperparameter가 있어서 이 hyperparameter들을 튜닝해야한다,
+3) Sequential update를 해야하기 때문에 parallelization이 되지 않는다
+등의 이슈가 있다.</p>
+
+<p>이 논문은
+1) empirical하게 좋은 성능을 보이는 적절한 kernel function과 acquisition function을 제안하고,
+2) Baysian optimization의 hyperparameter를 (MCMC로 풀 수 있는) fully baysian approach를 통해 전체 optimization에서 한 번에 계산할 수 있는 방법을 제안할 뿐 아니라,
+3) MCMC를 사용해 풀 수 있는 theoretically tractable parallelized Bayesian optimization을 제안한다.</p>
+
+<p>사실 이 논문을 제대로 이해하기 위해서는 아래 개념들에 대해 이미 잘 알고 있어야한다.</p>
+
+<ul>
+  <li>Stochastic process (Random process라고도 부른다)</li>
+  <li>Gaussian process (GP) &amp; kernel function of GP</li>
+  <li>Bayesian optimization &amp; acquisition function</li>
+  <li>Markov chain Monte Carlo (MCMC)</li>
+</ul>
+
+<p>마지막 MCMC는 이 글에서는 다루지 않기로 하고, 나머지들에 대해서는 차근차근 정리하면서 내용을 진행해보도록 하겠다.</p>
+
+<h3 id="hyperparameter-tuning-as-optimization-problem">Hyperparameter Tuning as Optimization Problem</h3>
+<p>보통 hyperparameter를 찾기 위해 사용되는 방법들로는 Grid search, Random search 등의 방법들이 있다.
+Random forest 모델 하나를 예로 들어서 위 방법들에 대해 자세히 살펴보자.</p>
+
+<p>Random forest에서 사용하는 hyperparameter는, tree의 개수 (n_estimators), split criteria (criterion), max depth (max_depth), leaf 당 최소 샘플 개수 (min_samples_leaf), … 등등이 있다. (자세한건 <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">Scikit learn의 Random Forest 코드 참고</a>)</p>
+
+<p>우리가 찾고 싶은 hyperparameter는,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr> <td class="code"><pre><code class=""><span class="line">n_estimators = [10, 50, 100, 200]
+</span><span class="line">criterion = ['gini', 'entropy']
+</span><span class="line">max_depth = [None, 100, 10]
+</span><span class="line">min_samples_leaf = [1, 5, 10, 20]</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>의 조합 중에 하나라고 가정해보자.</p>
+
+<p>먼저 Grid search는 모든 parameter의 경우의 수에 대해 cross-validation 결과가 가장 좋은 parameter를 고르는 방법이다.
+즉, 위에 나열된 hyperparameter의 모든 가능한 경우의 수는 4 x 2 x 3 x 4 = 96개인데, 모든 96개의 parameter들에 대해서
+training data를 80:20으로 나누어 (꼭 80:20일 필요는 없다) 80으로 train을 하고, 20으로 test을 했을 때, test 결과가 제일 좋은 parameter를 고르는 것이다.</p>
+
+<p>이 방법은, 주어진 공간 내에서 가장 좋은 결과를 얻을 수 있다는 장점이 있지만, 시간이 정말 정말 오래걸린다는 단점이 존재한다.
+또한, 예시에서도 볼 수 있었듯, parameter의 candidate을 늘릴 때 마다 그 만큼의 시간이 더 필요하기 때문에,
+정해진 시간 안에 parameter를 찾기 위해서는 어쩔 수 없이 hyperparameter의 candidate을 더 늘리지 못하고, candidate set이 제한된다는 단점이 존재한다.</p>
+
+<p>이런 단점을 피하기 위해 나온 방법이 바로 random search이다.
+Random search는 모든 grid를 전부 search하는 대신, random하게 일부의 parameter들만 관측한 후, 그 중에서 가장 좋은 parameter를 고른다.
+Bengio 연구팀이 2012년에 발표한 논문 <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">2</a>에 따르면,
+high dimensional hyperparameter optimization에서는, grid search를 하는 것 보다, random search를 했을 때 성능이 더 좋을 수 있다고 주장하고 있다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-1.png" width="600" /></p>
+
+<p>서로 importance가 다른 두 개의 parameter가 있다고 가정해보자. Grid search는 중요하지 않은 parameter와 중요한 parameter를 동일하게 관측해야하기 때문에 정작 중요한 parameter를 다양하게 시도해볼 수 있는 기회가 적지만, random search는 grid로 제한되지 않기 때문에 확률적으로 중요한 parameter를 더 살펴볼 수 있는 기회를 더 받게 된다. 출처: <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">[2]</a></p>
+
+<p>Machine Learning에서 hyperparameter search가 어려운 이유 중 하나는, hyperparameter가 바뀔 때 마다 모델이 바뀌게 되므로 다시 모델을 새로 learning해야한다는 점이다.
+만약 실험 하나하나가 시간이 엄청 오래걸린다면, full grid search를 시도하기는 어려울 것이다. 그렇기에 random search가 꽤 유용하게 사용될 수 있는 여지가 더 많고,
+실제로 나도 hyperparameter를 튜닝해야겠다싶으면 random search를 사용한다. (<a href="http://scikit-learn.org/stable/modules/grid_search.html">Scikit learn에서도 관련 패키지를 제공한다.</a>)</p>
+
+<p>Grid search와 random search의 좋은 점 중 하나는, 모든 trial들이 independent하므로 parallelization이 자연스럽게 이루어진다는 점이다.</p>
+
+<h3 id="bayesian-optimization-for-black-box-function">Bayesian Optimization for “Black-box” function</h3>
+<p>Bayesian optimization은 다음과 같은 아주 무난한 optimization을 푸는 방법론 중 하나이다.</p>
+
+<script type="math/tex; mode=display"> x^* = \arg\min_{x \in X} f(x). </script>
+
+<p>이때, $X$는 bounded domain이고, $f(x)$는 그 모양을 모르는, 즉 input을 넣었을 때 output이 무엇인지만 알 수 있는 black box function이라 가정하자.
+Optimization에는 여러 form이 있지만, minimization을 다루는 것이 일반적이기 때문에 여기에서도 minimization 꼴을 사용하도록 하겠다.
+Bayesian optimization은 $f(x)$가 expensive black-box function일 때, 즉 한 번 input을 넣어서 output을 확인하는 것 자체가 cost가 많이 드는 function일 때 많이 사용하는 optimization method이다.</p>
+
+<p>Bayesian optimization은 다음과 같은 방식으로 작동한다.</p>
+
+<ol>
+  <li>먼저 지금까지 관측된 데이터들 $D = [(x<em>1, f(x</em>1)), (x<em>2, f(x</em>2)), \ldots]$ 를 통해, 전체 function f(x)를 <strong>어떤 방식을 사용해 estimate한다.</strong></li>
+  <li>Function f(x)를 더 정밀하게 예측하기 위해 다음으로 관측할 지점 $(x<em>{n+1}, f(x</em>{n+1}))$ 을 <strong>어떤 decision rule을 통해 선택한다.</strong></li>
+  <li>새로 관측한 $(x<em>{n+1}, f(x</em>{n+1}))$ 을 $D$에 추가하고, 적절한 stopping criteria에 도달할 때 까지 다시 1로 돌아가 반복한다.</li>
+</ol>
+
+<p>1에서 언급한 estimation을 할 때에는 $f(x)$가 Gaussian process prior를 가진다고 가정한 다음, posterior를 계산하여 function을 estimate한다.
+2에서는 acquisition function $a(x | D)$를 디자인해서 $\arg\max_x a(x | D)$ 를 계산해 다음 지점을 고른다.</p>
+
+<p>간단한 예시를 통해서 이게 무슨 말인지 조금 더 자세히 살펴보자.</p>
+
+<p>아래 그림에서 빨간색 점선은 우리가 찾으려고 하는 unknown black box function $f(x)$ 를 나타내고,
+까만색 실선은 지금까지 관측한 데이터를 바탕으로 우리가 예측한 estimated function $\widehat f(x)$ 의 expectation을 의미한다.
+까만선 주변에 있는 회색 영역은, function f(x)가 존재할 confidence bound이고 (쉽게 말해서 function의 variance이다),
+밑에 있는 $EI(x)$는 위에서 언급한 acquisition function을 의미한다. (어떻게 구하는지는 아직 신경쓰지 말자)
+출처: <a href="Practical Bayesian Optimization of Machine Learning Algorithms">[3]</a></p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-2.png" width="600" />
+지금까지 관측한 데이터를 바탕으로, (acquisition function 값이 제일 큰) 파란색 점이 찍힌 부분을 관측하는 것이 가장 좋다는 것을 알 수 있다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-3.png" width="600" />
+위에서 acquisition function 값이 제일 컸던 지점의 function 값을 관측하고 estimatation을 update한다. 함수의 uncertainty를 의미하는 회색 영역이 크게 감소했음을 알 수 있다. 그러나 여전히 좌측 부분과 우측 부분의 uncertainty가 꽤 큼을 알 수 있다. 다시 한 번 다음 관측할 point를 acquisition function을 통해 고른다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-4.png" width="600" />
+계속 update를 진행한 결과, estimation과 실제 function이 거의 흡사해졌다. 이제 여태까지 관측한 지점 중 best point를 argmin f(x) 로 선택한다.</p>
+
+<p>이것이 Bayesian optimization의 대략적인 procedure이다. 여기까지 설명한 내용은 완전히 새로운 것이 아니라, 오래 전에 이미 제안되었었고, 계속 쓰이던 방법이다.
+이 내용을 완전히 이해하고 있어야 이 글에서 다루는 논문을 이해할 수 있다.
+앞에서 Bayesian optimization을 위해서는 두 가지가 필요하다는 언급을 했었다. 하나는 function을 estimate하는 방법과, 또 하나는 다음 관측 지점을 고를 acquisition function이다.
+이 두 가지 개념들이 대해 다음 두 subsection에서 조금 더 자세히 살펴보도록 하자.</p>
+
+<h4 id="stochastic-process">Stochastic Process</h4>
+<p>Stochastic process가 무엇인지 설명하기에 앞서, Random variable이란 무엇인지 알고 있어야한다.
+특히 ‘Random variable은 함수이다’ 라는 개념을 이해하고 있어야하는데, 이 개념에 대해 살펴보도록 하자.</p>
+
+<p>Random variable은 probability space에서 어떤 real value R로 가는 function으로 정의가 된다.
+이때 이 real value R이 pdf나 cdf를 의미하는 것이 아니라, random variable의 값 그 자체가 된다.
+Probability space란, 확률 값이 정의가 되는 공간이고, random variable이란 그 공간에서 실제 real value로 가는 function인 것이다.</p>
+
+<p>주사위를 예로 들어보자. 먼저 주사위의 probability space는 <code>{1, 2, 3, 4, 5, 6}</code> 으로 정의가 되며,
+각각의 값이 나올 확률은 동일하게 $Pr(X=1) = Pr(X=2) = \ldots = Pr(X=6) = 1/6$ 으로 정의가 된다.
+여기에서 주사위의 random variable X는 다음과 같이 정의된다.</p>
+
+<script type="math/tex; mode=display"> X= \begin{cases} 1 \mbox{ with probability } 1/6,\\ 2 \mbox{ with probability } 1/6,\\ 3 \mbox{ with probability } 1/6, \\ 4 \mbox{ with probability } 1/6, \\ 5 \mbox{ with probability } 1/6, \\ 6 \mbox{ with probability } 1/6\end{cases} </script>
+
+<p>이 개념을 조금 더 확장시킨 것이 stochastic process이다.
+Stochastic process는 어떤 ordered set T로 indexed된 random variable들의 collection으로 정의된다.</p>
+
+<script type="math/tex; mode=display"> \{ X_t : t \in T \} </script>
+
+<p>Ordered set T는 보통 시간이나 공간 등의 개념과 대응된다. Stochastic process라는 것 자체가, 시간에 따른 어떤 값의 변화를 추정하기 위해 도입된 개념이다보니,
+(자그마치 아인슈타인이 브라운 운동 증명할 때 썼던 개념이라고 한다) 일반적으로는 이 ordered set은 시간으로 생각해도 충분하다.
+앞서 설명한 random variable의 collection을 조금 더 간단하게 이야기하면, stochastic process는 probability space와 시간 T에 대한 function이라고 생각할 수 있다.
+즉, 똑같은 probability space에서 한 지점을 sample했을 때, random varible은 값이 나오고 (주사위의 눈금이 나오고),
+stochastic process는 t에 대한 함수가 (random variable $X_t$가) 나오게 된다. 그림으로 보면 아래와 같다.</p>
+
+<div class="caption">
+<img class="center" src="http://SanghyukChun.github.io/images/post/99-5.png" width="400" />
+<p>Random variable $X$에서 값을 sample하면 real value R을 가지는 특정 값을 얻게 된다. 즉, X는 probability space에서 R로 가는 함수라고 할 수 있다.</p>
+</div>
+
+<div class="caption">
+<img class="center" src="http://SanghyukChun.github.io/images/post/99-6.png" width="400" />
+<p>Stochastic process $X_t$에서 값을 sample하면 시간 t에 대한 서로 다른 함수를 얻게 된다. 즉, $X_t$는 probability space에서 다른 function space로 가는 함수라고 할 수 있다.</p>
+</div>
+
+<p>Random process와 stochastic process에 대한 (그리고 뒤에서 설명할 Gaussian process 역시) 조금 더 자세한 내용은 reference에 추가한 블로그 글 <a href="http://enginius.tistory.com/489">[4]</a>을 참고하면 좋을 것 같다. (위 그림의 출처 역시 같은 블로그이다.)</p>
+
+<h4 id="gaussian-process">Gaussian Process</h4>
+<p>Gaussian process, 줄여서 GP는 continuous domain에 대해 정의되는 statistical distribution이다.
+이때, input domain에 있는 모든 point들은 normal distribution random variable이 되며,
+아무 finite한 GP sample들을 뽑더라도, 그 sample들은 multivariate normal distribution을 가지게 된다.</p>
+
+<p>GP의 개념은 이 정도로만 설명을 마무리하고, formulation에 대해 살펴보자.
+GP 하나를 정의하기 위해서는 mean function과 kernel function 두 가지 함수가 먼저 정의되어야 한다.</p>
+
+<p>먼저 mean function $m(x)$는 이름에서도 쉽게 유추할 수 있듯 point x에서의 mean value를 나타내는 x에 대한 함수이다.
+보통은 constant value m을 많이 선택하며, 그마저도 선택하지 않고 그냥 zero-mean을 고르는 경우도 많다고 한다.</p>
+
+<p>Kernel function이 상당히 중요한데, kernel function은 주어진 GP sample들이 서로 어떤 relationship을 가지는지, 어떤 covariance matrix를 형성하게 되는지 정의하는 함수이다.
+Kernel function $k(x, x^\prime)$은 점 두 개에 대해 정의가 되는데, 일반적으로 점 사이의 거리가 가까우면 relationship이 크고, 멀먼 작을 것이라는 가정을 하게 된다.
+가장 간단한 kernel function인 squared-exponential kernel function은 다음과 같다. 이때, $x_d$는 $x$의 d 차원 value이고, $\alpha, \theta_d$는 hyperparameter이다.
+($\theta_d$는 1부터 D까지 총 D개 존재한다.)</p>
+
+<script type="math/tex; mode=display"> k_{sqe}(x, x^\prime) = \alpha \exp \left\{ -\frac{1}{2} \sum_{d=1}^D \left( \frac{x_d - x_d^\prime}{\theta_d} \right) \right\}. </script>
+
+<p>Kernel function을 사용해 두 점 사이의 relation을 정의하고 나면, GP sample collection이 주어졌을 때, 해당 sample들의 covariance matrix를 다음과 같이 정의할 수 있다.
+이 경우는 sample이 총 n개가 있고, $k_{ij} := k(x_i, x_j)$ 라고 정의하도록 하겠다.</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+ K = \begin{pmatrix} k_{1,1} & k_{1,2} & \cdots & k_{1,n} \\ k_{2,1} & k_{2,2} & \cdots & k_{2,n} \\ \vdots  & \vdots  & \ddots & \vdots  \\ k_{n,1} & k_{n,2} & \cdots & k_{n,n} \end{pmatrix}.  %]]&gt;</script>
+
+<p>Mean function $m(x)$와 kernel function $k(x, x^\prime)$이 정의가 되었으므로, 어떤 point x가 주어졌을 때, (앞에서 모든 GP의 sample은 normal ditribution r.v.라고 했음을 기억하자)
+그 점의 mean과 variance를 계산할 수 있으므로, 이 둘만 정의가 된다면 아무 임의의 지점에 대해 Gaussian distribution r.v. 을 얻을 수 있다.</p>
+
+<p>이 글에서는 function f(x)가 GP prior를 가진다고 가정했을 때, likelihood가 주어졌을 때 posterior가 어떻게 update되는지까지는 다루지 않을 것이다.
+조금만 찾아보면 잘 정리된 내용들을 찾을 수 있을 것이다.</p>
+
+<h5 id="gp-with-noisy-data">GP with Noisy data</h5>
+<p>모든 함수가 항상 deterministic output을 가지지는 않는다. 오히려 거의 대부분의 real world function들은 관측할 때 마다 그 값이 바뀌게 된다.
+이를 보통 우리는 noise라는 현상으로 설명하고는 한다. 조금 더 formal하게 적어보자.</p>
+
+<p>다음과 같은 observation pair ${x_i, y_i}$ 가 있다고 가정해보자. 이 값은, input $x_i$와, 그 때 관측된 함수값 $y_i$의 pair로,
+만약 noise가 없다면 $y_i = f(x_i)$ 라고 바로 쓸 수 있지만, 대부분의 경우는 noise가 있어서 그렇게 표현할 수 없다.
+가장 많이 쓰이는 방법은 white Gaussian noise를 추가하는 방법이다. 따라서 이런 경우에 y는 다음과 같이 표현된다.</p>
+
+<script type="math/tex; mode=display"> y_i \sim \mathcal N(f(x_i), \nu). </script>
+
+<p>이때, $\nu$는 noise의 세기를 나타내는 hyperparameter가 된다.
+이렇게 표현할 경우, noise가 없을 때와 있을 때 GP를 fit한 결과는 아래와 같은 차이가 나게 된다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-12.png" width="600" /></p>
+
+<h4 id="acquisition-function">Acquisition Function</h4>
+<p>Function f(x)가 GP prior를 가지는 Bayesian optimization을 진행 중이라고 가정해보자.
+f(x)의 모든 point x에 대해, 우리는 mean과 variance를 계산할 수 있다 (위에 언급되었던 그림 중 까만 선과 회색 영역).
+이때 다음으로 관측해야할 부분이 어디인지 어떻게 알 수 있을까?</p>
+
+<p>한 가지 방법은 estimated mean의 값이 가장 작은 지점은 관측하여 현재까지 관측된 값들을 기준으로 가장 좋은 점을 찾아보는 것이다.
+또 다른 방법은 variance의 값이 가장 큰 지점을 관측하여, 함수의 모양을 더 정교하게 탐색하는 방법이 있다.
+즉, 다음에 어떤 점을 탐색하느냐를 결정하는 문제는 explore-exploit 문제가 된다. Explore는 high variance point를 관측하는 것, exploit은 low mean point를 관측하는 것이 되겠다.
+Acquisition function이란 explore와 exploit을 적절하게 균형을 잡아주는 역할을 하며, 여러 종류가 있지만, 여기에서는 세 가지만 다루도록 하겠다
+(Probability of Improvement, Expected Improvement, UCB).</p>
+
+<p>이 섹션의 남은 부분에서, $f^\prime$ 이란, 지금까지 관측한 function 값 중에서 가장 minimum 값을 지칭하도록 하겠다.</p>
+
+<h5 id="probability-of-improvement">Probability of Improvement</h5>
+<p>Probability of improvement (PI)는, 특정 지점의 함수 값이 지금 best 함수 값인 f’ 보다 작을 확률을 사용한다.
+즉, PI의 utility function은 다음과 같다.</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+ u(x) = \begin{cases} 0 ~ & ~f(x) > f^\prime \\ 1 ~ & f(x) \leq f^\prime \end{cases}.  %]]&gt;</script>
+
+<p>Estimated function f(x)의 값은 정해진 값이 아니라 확률 값이기 때문에, PI는 x에서의 u(x)의 expectation으로 표현된다.</p>
+
+<script type="math/tex; mode=display"> a_{PI} (x) = \mathbb E [u(x) \| x, D] = \int_{-\infty}^{f^\prime} \mathcal N (f; \mu(x), k(x,x))df = \Phi (f^\prime; \mu(x), k(x,x)). </script>
+
+<p>이때 $\mathcal N(f;\mu(x), k(x,x))$는 mean function $\mu(x)$와 kernel function $k(x, x)$로 표현되는 normal distribution이고, $\Phi(\cdot)$은 cdf를 의미한다.
+PI를 그림으로 나타내면 아래와 같다. 아래 그림에서 이미 explore가 많이 된 지점이 PI가 높은 것에 주목하라.
+(밑에 나올 그림들의 출처는 모두 <a href="http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf">[5]</a> 이다.)</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-7.png" width="500" /></p>
+
+<h5 id="expected-improvement">Expected Improvement</h5>
+<p>PI의 가장 큰 문제점 중 하나는, ‘improvement’ 될 수 있는 확률만 보기 때문에, 확률이 조금 더 낫을지라도, 궁극적으로는 더 큰 improvement가 가능한 point를 고를 수 없다는 점이다.
+다시 말하면 exploit에 집중하느라 explore에 취약하다는 단점이 있다.
+Expected improvement (EI)는 utility function을 0, 1이 아니라, linear 꼴로 정의하기 때문에 그 차이를 반영할 수 있다. (Step function과 ReLU의 차이라고 보면 된다)
+EI의 utility function은 다음과 같다.</p>
+
+<script type="math/tex; mode=display"> u(x) = \max(0, f^\prime - f(x)). </script>
+
+<p>주의할 점은, EI가 PI의 expectation이 아니라는 점이다. 그냥 이름만 비슷한거고 완전히 다른 function이라고 생각하면 된다.
+PI와 마찬가지로 EI역시 u(x)의 expectation을 계산해야 한다.</p>
+
+<script type="math/tex; mode=display"> a_{EI} (x) = \mathbb E [u(x) \| x, D] = \int_{-\infty}^{f^\prime} \mathcal N (f; \mu(x), k(x,x))df = (f^\prime - \mu(x))\Phi(f^\prime;\mu(x),k(x,x)) + k(x,x) \mathcal N (f^\prime;\mu(x),k(x,x)). </script>
+
+<p>EI를 그림으로 나타내면 다음과 같다. PI처럼 이미 explore가 많이 된 곳을 또 찾는 실수는 덜 저지른다는 것을 볼 수 있다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-8.png" width="500" /></p>
+
+<h5 id="ucb">UCB</h5>
+
+<p>UCB는 우리가 이미 잘 알고 있는 그 UCB이며, acquisition function은 다음과 같다.</p>
+
+<script type="math/tex; mode=display"> a_{UCB}(x;\beta) = \mu(x) - \beta\sigma(x). </script>
+
+<p>UCB의 문제점이라면, explore-exploit trade-off parameter인 $\beta$의 존재이다.
+Form도 간단하고, 조절하기 쉽기도 하지만, hyperparameter를 또 조정해야한다는 문제 때문에 이 논문에서는 다루지 않는다.
+UCB 역시 그림으로 나타내면 다음과 같다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-9.png" width="500" /></p>
+
+<p>이 이외에도 Entropy search, Thompson sampling 등의 다양한 acquisition function이 있지만 이 글에서는 다루지 않도록 하겠다.</p>
+
+<h3 id="limitation-of-bayesian-optimization">Limitation of Bayesian Optimization</h3>
+<p>지금까지 Bayesian optimization (BO)에 대해 ‘간략히’ 알아봤다. 여기까지 글을 읽으면서 느꼈겠지만, Bayesian optimization은 굉장히 impractical하다.
+여러가지 이유가 있는데, 크게는 다음과 같은 이유들이 있다.</p>
+
+<ul>
+  <li>Hyperparameter search를 하기 위해 BO를 사용하는데, BO를 사용하기 위해서는 GP의 hyperparameter들을 튜닝해야한다 (kernel function의 parameter 등)</li>
+  <li>어떤 stochastic assumption을 하느냐에 따라 (어떤 kernel function을 사용해야할지 등) 결과가 천차만별로 바뀌는데, (model selection에 민감한데) 어떤 선택이 가장 좋은지에 대한 가이드가 전혀 없다.</li>
+  <li>Acquisition function을 사용해 다음 지점을 찾는 과정 자체가 sequential하기 때문에 grid search나 random search와는 다르게 parallelization이 불가능하다.</li>
+  <li>위에 대한 문제점들이 전부 해결된다고 하더라도 software implementation이 쉽지 않다.</li>
+</ul>
+
+<p>이런 문제점들을 해결하기 위해 이 논문은 (그렇다 이제서야 이 논문이 어떤 일을 했는지 얘기할 수 있게 되었다) 먼저 kernel function을 여러 실험적 결과 등을 통해
+Matern 5/2 kernel이 가장 실험적으로 좋은 결과를 낸다는 결론을 내린다 (즉, kernel function은 언제나 Matern 5/2를 쓰면 된다). 또한 acquisition function도 EI로 고정한다.
+다음으로 GP의 hyperparameter들을 Bayesian approach를 통해 acquisition function을 hyperparameter에 대해 marginalize한다.
+이 marginalized acquisition function은 (integrated acquisition function이라고 한다) MCMC로 풀 수 있는데, 자세한 얘기는 뒤에서 이어서 하도록 하겠다.
+마지막으로 이 논문은 이론적으로 tractable한 Bayesian optimization의 parallelized version을 (MCMC estimation이다) 제안한다.</p>
+
+<p>저자들이 작성한 코드 역시 GitHub에 공개가 되어있다. (HIPS repo에 있는 코드가 최신이다. 둘이 라이센스가 다르기 때문에 상황에 맞춰 쓰면 된다.)</p>
+
+<ul>
+  <li><a href="https://github.com/JasperSnoek/spearmint">https://github.com/JasperSnoek/spearmint</a> (Out-dated, Fully open source)</li>
+  <li><a href="https://github.com/HIPS/Spearmint">https://github.com/HIPS/Spearmint</a> (Up-to-dated, non-commercial use, academic use only)</li>
+</ul>
+
+<p>그 밖에도 최근 다른 곳에서도 이 내용을 implement한 것 같다.</p>
+
+<ul>
+  <li><a href="https://github.com/fdiehl/apsis">https://github.com/fdiehl/apsis</a></li>
+</ul>
+
+<h3 id="practical-bayesian-optimization">Practical Bayesian Optimization</h3>
+
+<h4 id="expected-improvement-and-matern-52-kernel-function">Expected Improvement and Matern 5/2 Kernel function</h4>
+
+<p>앞에서도 설명했듯, 이 논문은 먼저 acquisition function으로는 EI를 사용하고, kernel function으로는 Matern 5/2를 사용한다.
+Kernel function을 무엇을 고르냐에 따라 어떤 변화가 나타나는지 보여주는 좋은 그림이 하나 있어 첨부한다. 출처: <a href="http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf">[5]</a></p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-10.png" width="500" /></p>
+
+<p>가장 많이 쓰이는 Squared-exponential function의 가장 큰 문제는 ‘smoothness’로, 복잡한 모델을 표현하기에는 너무 ‘smooth’한 function만 estimate할 수 있다는 단점이 있다.
+이를 해결하기 위해 이 논문에서는 Matern kernel function을 사용하며, 특히 그 hyperparameter로 5와 2를 사용하는 Matern 5/2를 사용하고 있다.
+이 결과는 아무 값이나 고른건 아니고, 실제로 structured SVM의 hyperparameter를 찾을 때 여러 kernel function 중에서 가장 좋은 kernel이 무엇인지 아래와 같은 실험들 끝에 얻은 결과이다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-11.png" width="500" /></p>
+
+<p>Matern 5/2 kernel의 구체적인 식은 다음과 같다.</p>
+
+<script type="math/tex; mode=display"> K_{M52}(x, x^\prime) = \theta_0 \left( 1 + \sqrt{5 r^2(x, x^\prime)} + \frac{5}{3} r^2(x, x^\prime) \right) \exp \left\{ -\sqrt{5 r^2 (x, x^\prime)} \right\}. </script>
+
+<script type="math/tex; mode=display"> r^2 (x, x^\prime) = \sum_{d=1}^D (x_d - x_d^\prime)^2 / \theta_d^2. </script>
+
+<p>따라서 이 GP의 hyperparameter는 $\theta_0, \theta_d$로, d가 1부터 D까지 있으니 총 D+1 개의 hyperparameter를 필요로 한다.</p>
+
+<p>앞으로 별 다른 언급이 없다면 kernel function은 Matern 5/2, acquisition function으로는 EI를 사용한다.</p>
+
+<h4 id="integrated-acquisition-function-marginalize-hyperparameter">Integrated Acquisition Function (marginalize hyperparameter)</h4>
+
+<p>이제 covariance의 형태를 결정했으니, GP의 hyperparameter를 없애는 일이 남았다.
+우리가 optimize하고 싶은 hyperparameter의 dimension이 D라고 해보자 (위에서 언급했던 random forest의 경우, hyperparameter는 n_estimators, criterion, max_depth, min_samples_leaf로 D=4다). 이때 GP의 hyperparameter의 개수는 D+3개가 된다. 바로 앞에서 언급한 D+1개와, constant mean function의 값 m, 그리고 noise $\nu$가 그것이다.</p>
+
+<p>이 논문에서는 hyperparameter를 완전하게 Bayesian으로 처리하기 위하여 모든 hyperparameter $\theta$ (D+3 dimensional vector)에 대해
+acquisition function을 marginalize한 다음에, 다음과 같은 integrated acquisition function을 계산하는 방법을 제안한다.</p>
+
+<script type="math/tex; mode=display"> \widehat a (x; \{x_n, y_n\}) = \int a(x; \{x_n, y_n\}, \theta) p(\theta \| \{x_n, y_n\})_{n=1}^N) d\theta. </script>
+
+<p>PI와 EI에 대해서는 이 integrated acquisition function을 계산하기 위해 다양한 GP hyperparameter에 대한 GP posterior를 계산한 다음,
+integrated acquisition function의 Monte Carlo estimatation을 구하는 것이 가능하다. 이 논문에서는 slide sampling을 사용해 구할 수 있다고 언급되어있다.
+말이 조금 어려운데, 그냥 쉽게 생각해보면, sampling을 통해 얻은 여러 hyperparameter들에 대해 EI를 전부 구한 다음, 그것들을 사용해 expectation 계산을 하면 integrated EI를 구할 수 있다.
+그림으로 표현하면 아래와 같다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-13.png" width="400" /></p>
+
+<h4 id="expected-improvement-per-second">Expected Improvement per second</h4>
+<p>위에서 구한 integrated EI를 사용한다고 하더라도, 아직 몇 가지 문제점들이 남아있다. 그 중 하나는, 모든 hyperparameter에 대해 실험 시간이 똑같지 않다는 점이다.
+예를 들어 deep learning layer가 2인 것과 500인 것은 실험 시간의 차이가 어마어마하다.
+따라서 실제로는 가장 최소한의 시행을 통해 optimization을 진행한다고 하더라도, 실제 소요 시간은 엄청 클 수도 있는 것이다.
+이 논문은 그런 문제를 해결하기 위해, 필요한 경우 EI per second 라는 새로운 acquisition function을 제안한다.</p>
+
+<p>아마도 NIPS 논문이 page limitation이 빡빡해서 그런지 정확한 formulation은 나와있지 않지만, 요점은 objective function f(x) 말고도,
+duration function c(x) 라는 것을 따로 정의한 다음, 이 함수를 사용해 ‘cost’를 모델링하는 것이다.
+c(x)도 GP라고 assume하는 것 같은데, c(x)와 f(x)가 independent하다고 가정하면 쉽게 acquisition function을 구할 수 있는 모양이다.
+아래 실험결과에서도 볼 수 있듯, 오히려 실제 실행 시간의 관점에서는 EI per second가 더 빠른 것을 알 수 있다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-15.png" width="500" /></p>
+
+<h4 id="monte-carlo-acquisition-for-parallelizing-bayesian-optimization">Monte Carlo Acquisition for Parallelizing Bayesian Optimization</h4>
+<p>이제 이 논문의 마지막 하이라이트만 남았다. Acquisition function을 optimize하면서 다음 point를 고르는 방식은 parallelization하기가 쉽지 않다.
+매 번 포인트를 고를 때 마다 이 function이 바뀌기 때문인데, 여러 heuristic을 사용할 수는 있지만, theoretically tractable한 결과를 얻기는 쉽지 않다.</p>
+
+<p>다음과 같은 문제 상황을 가정해보자. N개의 데이터의 evaluation이 끝난 상황이고 $(\{x_n, y_n\}_{n=1}^N)$ J개의 point들에서 $(\{x_j\}_{j=1}^J)$ 실험을 진행 중이라고 가정해보자. (아직 결과는 나오지 않았다)
+이론상 지금까지 진행한 실험과 $(\{x_n, y_n\}_{n=1}^N)$ 현재 진행 중인 실험 $(\{x_j\}_{j=1}^J)$ 을 모두 고려하여 다음 point를 고르기 위해서는,
+acquisition function의 J개의 아직 결과가 나오지 않은 point들에 대한 expectation을 구한 다음, 그 결과를 acquisition function으로 사용하면 된다.</p>
+
+<script type="math/tex; mode=display"> \widehat a (x; \{x_n, y_n\}, \theta, \{x_j\}) = \int a (x; \{x_n, y_n\}, \theta, \{x_j, y_j\}) p(\{y_j\}_{j=1}^J \| \{x_j\}_{j=1}^J, \{x_n, y_n\}_{n=1}^N)dy_1, \ldots, dy_J. </script>
+
+<p>다행스럽게도, y가 Gaussian distribution이기 때문에 이 expectation은 쉽게 계산할 수 있으며,
+단순히 동시에 진행하는 실험의 숫자를 늘리는 것으로 parallelization을 할 수 있기 때문에 parallelization 역시 간단하게 할 수 있다.
+이 방법론을 GP EI MCMC라고 하며, 그림으로 나타내면 아래와 같다.</p>
+
+<p><img class="center" src="http://SanghyukChun.github.io/images/post/99-14.png" width="400" /></p>
+
+<h4 id="conclusion">Conclusion</h4>
+<p>이 논문의 꽃이라 할 수 있는 실험 결과는 스킵하도록 하겠다. 그냥 “압도적으로 좋다” 정도로 이해하고 넘어가자.
+사실 또 하나 언급하지 않은 점은, supplimentary material에 있는 구체적인 acquisition function optimization 방법이다.
+이 논문은 개념적으로 알고 있어야하는 내용이 안그래도 많은데, 이 얘기를 하려면 여기에서 더 많은 얘기를 해야해서 넘기기로 하였다.
+나중에 여유가 있을 때 추가 포스트를 쓰던가 해야겠다.</p>
+
+<p>이 논문은 잘 쓰기만하면 굉장히 outperform한 성능을 낼 수 있는 Bayesian optimization 기반 hyperparameter search 알고리즘을 제안한다.
+핵심은 어떻게 다음 point를 고를 것인지 설정하는 acquisition function을 design하느냐인데,
+이 논문은 GP의 hyperparameter도 acquisition function에 녹이고, parallelization을 하기 위해 아직 진행 중인 실험의 expectation또한
+이 acquisition function에 녹임으로써 원래 Bayesian optimization이 가지고 있었던 한계를 극복한다.
+그뿐 아니라 실험적으로 우수한 kernel function인 Matern 5/2를 기본 kernel function제안함으로써 model selection 이슈도 피해간다.</p>
+
+<p>실제 구현해서 사용하기는 어려운 내용이지만, 잘 숙지해두면 분명 도움이 될 수 있는 아이디어라 생각한다.</p>
+
+<h3 id="references">References</h3>
+<ol class="reference">
+	<li><a href="http://papers.nips.cc/paper/4522-practical">[NIPS] Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. &#8220;Practical bayesian optimization of machine learning algorithms.&#8221;, 2012.</a></li>
+	<li><a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">[JMLR] Bergstra, James, and Yoshua Bengio. &#8220;Random search for hyper-parameter optimization.&#8221;, 2012</a></li>
+	<li><a href="http://becs.aalto.fi/en/research/bayes/courses/4613/Vik_Kamath_Presentation.pdf">http://becs.aalto.fi/en/research/bayes/courses/4613/Vik_Kamath_Presentation.pdf</a></li>
+	<li><a href="http://enginius.tistory.com/489">http://enginius.tistory.com/489</a></li>
+	<li><a href="http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf">http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf</a></li>
+	<li><a href="http://www.dmi.usherb.ca/~larocheh/publications/gpopt_nips_appendix.pdf">[NIPS] Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. &#8220;Practical bayesian optimization of machine learning algorithms.&#8221; Supplimentary material, 2012.</a></li>
+</ol>
+
+<h3 id="section-1">변경 이력</h3>
+<ul>
+  <li>2016년 8월 16일: 글 등록</li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (10) PAC Learning & Statistical Learning Theory]]></title>
+    <link href="http://SanghyukChun.github.io/66/"/>
+    <updated>2016-05-06T00:26:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/66</id>
+		<content type="html"><![CDATA[<ul id="markdown-toc">
+  <li><a href="#section">들어가며</a></li>
+  <li><a href="#motivation">Motivation</a></li>
+  <li><a href="#revisit-machine-learning-in-function-approximation-view">Revisit: Machine Learning in function approximation view</a></li>
+  <li><a href="#overfitting-revisited">Overfitting: revisited</a></li>
+  <li><a href="#pac-learning-with-finite-hypothesis-space">PAC Learning with Finite Hypothesis Space</a></li>
+  <li><a href="#pac-leanring-with-infinite-hypothesis-space">PAC Leanring with Infinite Hypothesis Space</a>    <ul>
+      <li><a href="#vc-dimension">VC Dimension</a></li>
+    </ul>
+  </li>
+  <li><a href="#structure-risk-minimization">Structure Risk Minimization</a></li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#section-1">변경 이력</a></li>
+  <li><a href="#machine-learning---">Machine Learning 스터디의 다른 글들</a></li>
+</ul>
+
+<h3 id="section">들어가며</h3>
+<p>어떤 머신러닝 모델이 있다고 가정해보자. 이 모델이 다른 모델에 비해 뛰어나다고 주장하려면 어떤 것들이 필요할까? 알고리즘이 얼마나 더 뛰어난지 주장하기 위해서는 알고리즘의 수렴성이나 complexity 등에 대해 논하면 되지만, 모델이 얼마나 뛰어난지는 어떻게 설명할 수 있을까? 이번 글에서 설명할 PAC (Probably Approximately Correct) 라는 개념은 이렇듯 모델의 성능을 이론적으로 측정하는 방법이라고 할 수 있다. 이 글에서는 PAC의 기본 개념을 설명하고, 핵심이라 할 수 있는 PAC bound에 대해 설명할 것이다. 또한 모델의 hypothesis space가 infinite한 경우 (거의 모든 continous parameter를 가지는 모델의 경우) VC dimension이라는 것을 통해 PAC bound를 어떻게 다시 bound 시킬 수 있는지 등에 대해 설명할 것이다.</p>
+
+<h3 id="motivation">Motivation</h3>
+<p>맨 앞 글에서도 잠시 언급했듯, 우리의 motivation은 특정한 모델이 얼마나 뛰어난지를 측정하는 것이다. 모델이 ‘뛰어나다’ 라고 말하기 위해서는, 다른 모델에 비해 learning하는 데에 필요한 데이터의 수가 적어야할 것이고, learning한 이후에 inference를 했을 때 그 결과가 좋아야할 것이고, 마지막으로 learning이 가능한 상황이 많이 있어야한다. 예를 들어서 어떤 모델을 만들었는데, 이 모델이 너무 복잡해서 100번 learning시켰을 때 (overfitting등의 이슈로 인해) 오직 3번 정도만 제대로 learning이 된다고 하면 이 모델은 쓸모없는 모델일 것이다.
+따라서 ‘좋은 모델’ 인지 여부를 판단하기 위해서는 다음과 같은 질문들에 대답을 해야한다.</p>
+
+<ul>
+  <li>“Seccessful” learning을 할 확률</li>
+  <li>Learning에 필요한 training example의 개수</li>
+  <li>ML algorithm에 의해 구해진 approximated target function의 정확도</li>
+</ul>
+
+<p>이런 질문들에 답을 하기 위해 등장하게 된 분야가 바로 <a href="https://en.wikipedia.org/wiki/Computational_learning_theory">Computational learning theory</a>으로, machine learning algorithm의 분석을 위한 수학적이고 이론적인 분야라고 생각하면 될 것 같다. 오늘 다루게 될 PAC는 이 computational learning theory의 한 부분으로, 가장 간단한 이론 중 하나이지만, 그 만큼 이론적으로 시사하는 바가 많은 이론이기 때문에 많은 machine learning course에서 한 번은 언급하고 넘어가는 경우가 많다.</p>
+
+<h3 id="revisit-machine-learning-in-function-approximation-view">Revisit: Machine Learning in function approximation view</h3>
+<p><a href="http://SanghyukChun.github.io/57">맨 처음 글</a>에서 잠시 다뤘던 내용이지만, machine learning이라는 것이 어떤 것인지에 대해 다시 살펴보도록하자. 그때도 언급했지만, machine learning이라는 것을 구성하는 것은 크게 다음과 같다. 이 글에서는 이 글에 맞는 용어로 재구성했다. 참고로 이 글에서는 machine learning의 역할이 특정 데이터의 결과를 예측하는 function을 찾는 것이라고 가정한다. 즉, 특정 데이터가 어느 class에 속하는지 판단하는 function을 찾는 문제라고 생각할 것이다. 따라서 error는 항상 정확하게 정의된다 (함수 값이 정확하게 찾아진 데이터의 수와, 그렇지 않은 수에 대해 바로 error가 0에서 1사이의 값으로 정의된다).</p>
+
+<ul>
+  <li>Instance $X$: 모든 데이터의 공간이라 할 수 있다. 즉, 모든 픽셀이 0 또는 1인 28 by 28 흑백 이미지라고 한다면 $2^{784}$ 크기의 set이 될 것이다.</li>
+  <li>Target concept $c$: 혹은 우리에게 조금 더 익숙한 용어로 표현하면 ‘target function’이다. Instance space의 subset으로 정의가 되며, 주어진 데이터가 어떤 값을 가지는지 판단하는 함수라고 생각하면 된다. 예를 들어 MNIST classification 문제에서는 주어진 데이터 x가 [0-9] 사이의 데이터 중에서 어디에 속하는지 판단하는 함수가 될 것이다.</li>
+  <li>Hypothesis space $H$: 주어진 $c$와 최대한 비슷한 approximated function (hypothesis) $h$가 속하는 function space이다. 예를 들어 함수가 linear라 가정한다면 Hypothesis space는 모든 linear function의 function space가 된다.</li>
+  <li>Training Data $D$: 모든 instance space를 다 볼수는 없으니 그 중 일부의 데이터만이 training data로 주어진다.</li>
+  <li>Machine learning 모델은 위의 4가지가 주어졌을 때, 다음과 같은 두 가지 질문을 판단해야한다.
+    <ol>
+      <li>주어진 training data $x \in D$에 대해 Hypothesis $h \in H$가 $c(x)$와 얼마나 비슷한가?</li>
+      <li>모든 data $x \in X$에 대해 Hypothesis $h \in H$가 $c(x)$와 얼마나 비슷한가?</li>
+    </ol>
+  </li>
+</ul>
+
+<p>좀 더 자세히 설명하기 이전에 …. There is no free lunch 라고 한다.</p>
+
+<p>여기에서 한 가지 재미있는 점이 있는데,</p>
+
+<script type="math/tex; mode=display"> Pr[ \mbox{error}_{true} (h) \leq \mbox{error}_{train}(h) + \varepsilon ] \leq \| H \| exp(-2m\varepsilon^2). </script>
+
+<h3 id="overfitting-revisited">Overfitting: revisited</h3>
+<p>앞선 섹션의 마지막 두 질문, 주어진 training data와 모든 data에 대해 hypothesis $h$와 $c$가 얼마나 비슷한지에 대한 질문은 각각 training error와 true error의 값이 어떻게 되는가를 물어보는 질문과 동일하며, 이 둘은 각각 traning data set $D$와 전체 데이터셋 $X$에서의 learning된 hypothesis $h$의 error로 정의된다. 수식으로 표현하면 다음과 같다.</p>
+
+<p><script type="math/tex"> error_{true}(h) := \mbox{Pr}_{x\in X} [c(x) \neq h(x)] </script>
+<script type="math/tex"> error_{train}(h) := \mbox{Pr}_{x\in D} [c(x) \neq h(x)] </script></p>
+
+<p>당연한 얘기지만, 모든 데이터에 대해 true error를 측정하는 것은 불가능하다. 그러나 만약 우리가 test data를 모든 데이터셋에서 uniformly random하게 (i.i.d하게) 뽑는다면 test error는 true error의 unbiased estimator라고 할 수 있다. 이 글에서는 반드시 test data가 i.i.d하게 뽑혔다고 가정하고 test error를 true error의 unbiased estimation으로 취급할 것이다. 즉, 앞으로 test error라고 언급하는 것들은 전부 true error와 같다고 생각해도 된다.</p>
+
+<p>우리가 model을 learning하기 위해, 혹은 적절한 $h$를 찾기 위해 할 수 있는 가장 간단한 방법은 바로 현재 주어진 training data에서 가장 error가 낮은 hypothesis를 찾는 것이다. 수식으로 쓰면, $h = \arg\min_h error_{train}(h)$가 될 것이다. 여기에서 $h$와 training error가 서로 dependent하다는 사실을 기억해야한다. 이 방법은 주어진 데이터에 대해서 risk를 minimization하는 문제를 푸는 것이기 때문에 우리는 이를 empirical risk minimization이라고 부른다. 그러나 이 방법에는 한 가지 문제가 있는데, 앞서 설명한 test error와는 다르게 training error는 true error의 unbiased estimator가 아니기 때문이다. 왜냐하면 앞에서 설명했듯 $h$가 training data에서부터 골라진 값이기 때문에 training error가 $h$에 dependent하게 되고, 따라서 training error는 true error의 unbiased estimator가 아니라는 결론을 내릴 수 있다.</p>
+
+<p>따라서 우리가 만든 $h$는 항상 true error보다 training error가 좋은 결과를 얻을 것이라는 생각을 할 수 있다.</p>
+
+<h3 id="pac-learning-with-finite-hypothesis-space">PAC Learning with Finite Hypothesis Space</h3>
+
+<script type="math/tex; mode=display"> m \geq \frac{1}{2\varepsilon^2} (\ln \|H\| + \ln(1/\delta)). </script>
+
+<script type="math/tex; mode=display">\mbox{error}_{true}(h) \leq \mbox{error}_{train}(h) + \sqrt{\frac{\ln \|H\| + \ln \frac{1}{\delta}}{m}}.</script>
+
+<h3 id="pac-leanring-with-infinite-hypothesis-space">PAC Leanring with Infinite Hypothesis Space</h3>
+
+<h4 id="vc-dimension">VC Dimension</h4>
+
+<h3 id="structure-risk-minimization">Structure Risk Minimization</h3>
+
+<h3 id="references">References</h3>
+<ol class="reference">
+  <li>hi</li>
+  <li>hello</li>
+</ol>
+
+<h3 id="section-1">변경 이력</h3>
+<ul>
+  <li>2016년 3월 : 글 등록</li>
+</ul>
+
+<hr />
+
+<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
+
+<ul>
+  <li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+  <li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+  <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
+  <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
+  <li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+  <li>Regression and Logistic Regression</li>
+  <li>PAC Learning &amp; Statistical Learning Theory</li>
+  <li>Support Vector Machine</li>
+  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
+  <li>Graphical Model</li>
+  <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+  <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+  <li>Hidden Markov Model</li>
+  <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
+  <li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+    <ul>
+      <li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+    </ul>
+  </li>
+  <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
+  <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
+  <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+    <ul>
+      <li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+    </ul>
+  </li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress Markdown Kramdown으로 이전하기]]></title>
@@ -2297,180 +2847,6 @@ Caption은 일이 좀 커질 것 같아서..</p>
 <h3>변경 이력</h3>
 <ul>
   <li>2015년 6월 14일: 글 등록</li>
-</ul>
-
-<hr />
-
-<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
-
-<ul>
-  <li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-  <li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-  <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-  <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-  <li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-  <li>Regression and Logistic Regression</li>
-  <li>PAC Learning &amp; Statistical Learning Theory</li>
-  <li>Support Vector Machine</li>
-  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
-  <li>Graphical Model</li>
-  <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-  <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-  <li>Hidden Markov Model</li>
-  <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-  <li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
-    <ul>
-      <li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
-    </ul>
-  </li>
-  <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-  <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
-  <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
-    <ul>
-      <li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
-    </ul>
-  </li>
-</ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (13) Clustering (K-means, Gaussian Mixture Model)]]></title>
-    <link href="http://SanghyukChun.github.io/69/"/>
-    <updated>2015-03-25T03:20:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/69</id>
-		<content type="html"><![CDATA[<h3>들어가며</h3>
-<p><a href="57-4-ClassML">첫 번째 글</a>에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 앞서 이미 그 중 <a href="http://SanghyukChun.github.io/64">Supervised Learning</a>을 간략하게 다룬 글이 있었고, 이 글에서는 그 중 Unsupervised Learning의 가장 대표적인 예시인 Clustering 대해 다룰 것이며 가장 대표적이고 간단한 두 가지 알고리즘에 대해서 역시 다룰 것이다.</p>
-<h3>What is Clustering?</h3>
-<p><a href="http://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a>은 <a href="http://en.wikipedia.org/wiki/Unsupervised_learning">Unsupervised Learning</a>의 일종으로, label 데이터 없이 주어진 데이터들을 가장 잘 설명하는 cluster를 찾는 문제이다. 왜 클러스터링이 필요할까? Classification을 하기 위해서는 데이터와 각각의 데이터의 label이 필요하지만, 실제로는 데이터는 존재하지만 그 데이터의 label이나 category가 무엇인지 알 수 없는 경우가 많기 때문에 classfication이 아닌 다른 방법을 통해 데이터들을 설명해야하는 경우가 발생한다. 아래 그림은 클러스터링이 어떤 것인지 잘 보여주는 그림이다.</p>
-<p><img src="http://SanghyukChun.github.io/images/post/69-1.png" width="500" /></p>
-<p>우리에게 처음 주어진 것은 왼쪽 파란 데이터이다. 각각의 데이터에 대한 정보는 아무 것도 없는 상태에서 주어진 데이터들을 가장 잘 설명하는 클러스터를 찾아내는 것이 클러스터링의 목적이다. 따라서 클러스터링은 대부분 Optimization 문제를 푸는 경우가 많다. 이는 클러스터링 뿐 아니라 다른 많은 unsupervised learning에서도 역시 마찬가지이다.</p>
-<p><a href="http://SanghyukChun.github.io/57">첫 번째 글</a>과 <a href="http://SanghyukChun.github.io/64">이전 글</a>에서 머신러닝 문제는 먼저 주어진 데이터에 대한 가정을 하고, 해당 가정을 만족하는 best hypothesis를 찾는 문제라고 언급한 적이 있다. Clustering 문제 역시 Machine Learning 문제이므로 데이터에 대한 가정을 먼저 해야하고, best hypothesis를 찾는 과정을 거친다. 따라서 각각의 서로 다른 clustering algorithm들은 서로 다른 assumption을 가지고 있으며, 해당 assumption을 가장 잘 만족하는 function parameter를 계산하는 과정이다. 앞으로 설명하게 될 알고리즘들에 대한 설명을 읽을 때 데이터에 대해 어떤 가정을 하였는지 꼼꼼히 확인하면서 읽으면 알고리즘을 이해하기 한결 수월할 것이다.</p>
-<h3>K-means</h3>
-<p>클러스터를 정의하는 방법에는 여러 가지가 있을 수 있지만, 가장 간단한 정의 중 하나는 클러스터 내부에 속한 데이터들이 서로 &#8216;가깝다&#8217;라고 정의하고, &#8216;가장 가까운&#8217; 내부 거리를 가지는 클러스터를 고르는 것이다. <a href="http://en.wikipedia.org/wiki/K-means_clustering">K-means</a>는 같은 클러스터에 속한 데이터는 서로 &#8216;가깝다&#8217; 라고 가정한다. 이때 각각의 클러스터마다 &#8216;중심&#8217;이 하나씩 존재하고, 각각의 데이터가 그 중심과 &#8216;얼마나 가까운가&#8217;를 cost로 정의한다. K-means는 이렇게 정의된 cost를 가장 줄이는 클러스터를 찾는 알고리즘이다. 수식으로 적으면 다음과 같다.</p>
-<p>$$ \min_{b,w} \sum_i^n \sum_j^k w_{ij} \| x_i - b_j \|_2^2 \text{ s.t. } \sum_j w_{ij} = 1, \forall j$$</p>
-<p>데이터는 $n$개 있으며 클러스터는 $k$개 있다고 가정했다. 이때, $b_j$는 $j$ 번째 클러스터의 &#8216;중심&#8217;을 의미하며, $w_{ij}$는 $i$ 번째 데이터가 $j$ 번째 클러스터에 속하면 1, 아니면 0을 가지는 binary variable이다. 또한 뒤에 붙는 조건은 반드시 각 데이터 별로 한 개의 클러스터에 assign이 되어야한다는 constraint이다.</p>
-<p>이 문제는 풀기 쉬운 문제가 아니다. Binary variable $w_{ij}$ 때문에, 모든 cluster 조합을 하나하나 확인해야만 optimal한 값을 구할 수 있다. 즉, jointly optimize하는 것이 매우 어렵다. 그러나 재미있게도 $b$와 $w$ 둘 중 하나를 고정하고 나머지 하나를 update하는 것은 매우 간단하다. 나머지 값이 고정되었을 때 $b_j$의 optimal값은 $j$ 번째 클러스터의 &#8216;mean&#8217;을 계산하는 것이다 (이 때문에 &#8216;$k$&#8217; 개의 &#8216;mean&#8217;을 찾는다고 해서 k-means 알고리즘이다). $w_{ij}$의 optimal 값은 모든 데이터 i에 대해, 각각 모든 클러스터 중에서 $x_i - b_j$가 가장 작은 클러스터에 assign하는 것이 optimal한 solution이다. 이렇듯 만약 다른 변수 하나를 정확하게 알고 있다고 생각하면 아주 간단한 방법으로 alternative optimization이 가능하다. 사실 이 개념은 예전에 적은 <a href="http://SanghyukChun.github.io/63">convex optimization</a>글에서 잠깐 언급했던 coordinate descent 방법과 거의 유사하다. K-means 알고리즘은 이렇게 $b$와 $w$를 alternative하게 계속 update하면서 $b$와 $w$가 더 이상 바뀌지 않을 때 까지 계산을 반복하는 알고리즘이다. 안타깝게도 K-means는 global optimum에 수렴하지 않고 local한 optimum에 수렴하므로 initialization에 매우매우 취약하다는 단점이 존재한다.</p>
-<p>또한 여담으로 K-means objective function에 사용한 $\ell_2$ norm의 제곱이 outlier 혹은 noise에 매우 취약하기 때문에 조금 더 outlier에 덜 sensitive한 &#8216;robust한&#8217; norm을 사용하는 방법도 존재한다. 예를 들어 $\ell_2$ norm의 제곱을 $\ell_1$ norm으로 바꾸면 &#8216;mean&#8217; 대신에 &#8216;median&#8217;을 찾는 문제로 바뀌게 된다. 이를 <a href="http://en.wikipedia.org/wiki/K-medians_clustering">k-median</a>이라고 부른다. 그 밖에도 k-means의 robustness를 개선하기 위한 다양한 방법들이 개발이 되어있지만 이 글에서는 다루지 않도록 하겠다.</p>
-<h3>Gaussian Mixture Model</h3>
-<p>K-means algorithm의 key idea는 &#8216;alternative update&#8217;이다. 즉, coordinate wise로 다른 변수들을 고정한 채로 &#8216;alternative&#8217;하게 변수들을 update함으로써 jointly optimization을 할 수 없는 문제를 푸는 것이다. 비록 그 결과가 global하지 않은 local에 converge하더라도, 찾지 못하는 것보다는 훨씬 낫기 때문에 실제로 이런 방법이 많이 쓰인다. 이번 섹션에서는 이런 방법을 사용하는 또 다른 알고리즘을 하나 소개하도록 하겠다.</p>
-<p>Gaussian Mixture Model, Mixture of Gaussian, GMM, 혹은 MoG는 데이터가 &#8216;Gaussian&#8217;의 &#8216;Mixture&#8217;로 구성이 되어있다고 가정한다. 보통 GMM이라고 많이 부르며, 이 글에서 다루는 GMM은 가장 optimal한 GMM을 찾는 알고리즘을 의미한다. 즉, 데이터가 $k$개의 gaussian으로 구성되어있다고 했을 때, 가장 데이터를 잘 설명하는 $k$개의 평균과 covariance를 찾는 알고리즘이다. 아래 그림은 3개의 gaussian으로 구성되어있다고 가정하고 그 gaussian 분포들을 찾은 결과이다.</p>
-<p><img src="http://SanghyukChun.github.io/images/post/69-2.png" width="500" /></p>
-<p>모든 machine learning 문제는 &#8216;performance measure&#8217;를 가진다고 예전에 얘기한 적이 있다. GMM의 performance measure는 log likelihood function이다. 즉, 주어진 paramter에 대해 데이터 X의 확률을 가장 크게 만드는 parameter를 찾는 것이 목표가 된다. log likelihood는 $\ln p(X|\theta)$로 정의가 된다. 우리가 찾아야하는 parameter $\theta$는 각각의 gaussian의 평균 $\mu_j$, covariance $\Sigma_j$, 그리고 마지막으로 각각의 데이터가 각각의 gaussian에 속할 확률 $\pi_j$로 구성된다. 따라서 주어진 $\mu_j, \Sigma_j$에 대한 $x_i$의 multinomial gaussian distribution을 $N(x_i|\mu_j, \Sigma_j)$라고 정의한다면 log likelihood function은 다음과 같이 기술할 수 있다.</p>
-<p>$$ \ln p(X|\pi, \mu, \Sigma) = \sum_i^n \ln \sum_j^k \pi_j N (x_i | \mu_j, \Sigma_j) $$</p>
-<p>그러나 역시 이 문제도 jointly update가 매우매우 어려운 문제이다. 그러나 K-means와 비슷하게도 $\pi$를 고정하고 $\mu, \Sigma$를 계산하는 것은 쉬우며, 그 반대 역시 쉽다. 따라서 비슷하게 alternative update를 통해 문제를 해결하는 알고리즘을 어렵지 않게 디자인 할 수 있다. 역시 이 알고리즘도 global로 수렴하지 않고 local로만 수렴하게 된다. GMM을 풀기 위해서 사용되는 알고리즘 중 가장 유명한 알고리즘으로는 <a href="http://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm">&#8216;EM&#8217; 알고리즘</a>이 존재한다. 이 알고리즘에 대해서는 <a href="http://SanghyukChun.github.io/70">다음 글</a>에서 더 자세하게 설명하도록 하고, 이 글에서는 EM 알고리즘이라는 것을 알고 있는 상태에서 어떻게 각 step을 해결할 수 있는지에 대해서만 다루도록 하겠다. E-step에서는 현재 주어진 $\mu, \Sigma, \pi$들을 사용해 가장 &#8216;expectation&#8217;이 높은 latent variable의 값을 찾아내며, M-step에서는 새로 estimate된 latent variable을 사용해 그 값을 maximize하는 $\mu, \Sigma, \pi$를 찾는다. EM 알고리즘은 E-step과 M-step이 계속 번갈아 진행되며, 더 이상 값이 변하지 않을 때 까지 반복된다. K-means를 이런 관점으로 바라보게 된다면, cluster information $w_{ij}$를 update하는 과정이 E-step, $b$를 update하는 과정을 M-step이라고 할 수 있다. (그러나 K-means을 푸는 알고리즘은 엄밀하게 말하면 EM 알고리즘이 아니다)</p>
-<p>사실 엄밀하게 설명하면 GMM을 푸는 EM에서 E-step 때 update하는 것은 정확하게 $\pi$와 같은 것은 아니다. EM으로 이 문제를 풀기 위해서 우리는 새로운 &#8216;latent&#8217; variable을 introduce해야한다. latent variable은 쉽게 생각하면 graphical model에서 hidden variable에 해당하는 값이다. 다음에 EM 알고리즘에 대해 자세히 다룰 때 다시 설명하겠지만, 이렇게 latent variable을 설정하는 이유는 어떤 특정 variable의 marginal distribution을 optimize하는 것은 어려울 때, latent variable을 사용해 그 variable과 latent variable의 joint distribution을 다루는 것은 간단할 수 있기 때문이다. GMM에서는 latent variable $z$를 introduce하게 된다. $z$는 $k$-ary variable로, $z$의 $j$ 번째 dimension인 $z_j$는 Binary random variable이며, $p(z_j=1) = pi_j, $ where $\sum_j z_j = 1$ and $\sum_j \pi_j = 1$ 이라는 조건을 가지고 있다. $z$의 marginal probability는 $p(z) = \prod_j \pi_j^{z_j}$로 어렵지 않게 계산할 수 있으며, 비슷하게 주어진 데이터 $x$에 대한 conditional distribution 역시 간단하게 다음과 같이 표현된다. $p(x|z) = \prod_j N(x|\mu_j, \Sigma_j)^{z_j}$.</p>
-<p>따라서 앞선 식들로부터 joint distribution을 얻을 수 있고, 그 값을 marginalize해 다음과 같은 결과를 얻을 수 있다.</p>
-<p>$$ p(x) = \sum_z p(x,z) = \sum_z p(z)p(x|z) = \sum_j \pi_j N(x|\mu_j, \Sigma_j) $$</p>
-<p>정리하자면, 각각의 data point $x_i$ in GMM의 graphical representation은 다음과 같이 표현할 수 있다.</p>
-<p><img src="http://SanghyukChun.github.io/images/post/69-3.png" width="300" /></p>
-<p>위의 결과들을 토대로 이제 간단하게 EM algorithm을 돌릴 수 있다. 먼저 E step에서는 $p(z_j = 1|x)$를 계산할 것이다. 각 데이터에 대해 $j$ 번째 클러스터에 속할 확률, 혹은 posterior를 계산하는 과정이다. 이 값은 Bayes rule을 통해 간단하게 다음과 같이 계산할 수 있다.</p>
-<p>$$ p(z_j = 1|x) = \frac{p(z_j=1)p(x|z_j=1)}{\sum_j^k p(z_j=1)p(x|z_j=1)} = \frac{\pi_j N(x|\mu_j, \Sigma_j)}{\sum_j^k \pi_j N(x|\mu_j \Sigma_j)} $$</p>
-<p>다음으로 $z$를 fix했을 때 다음과 같이 나머지 paramter를 계산할 수 있다.</p>
-<p>$$ \mu_j = \frac{1}{\sum_i p(z_j=1|x)} \sum_i p(z_{ij}=1|x) x_i$$</p>
-<p>$$ \Sigma_j = \frac{1}{\sum_i p(z_j=1|x)} \sum_i p(z_{ij}=1|x) (x_i-\mu_j) (x_i-\mu_j)^\top$$</p>
-<p>$$ \pi_j = \frac{\sum_i p(z_j=1|x)}{N}$$</p>
-<p>정리하자면, GMM을 풀기 위한 EM 알고리즘은, 먼저 각각의 데이터가 어느 클러스터에 속할지에 대한 정보를 update해 ($z$를 업데이트 하여) expectation을 계산하고, 다음으로 업데이트 된 정보들을 사용해 나머지 값들로 가장 log likelihood를 최대화하는 parameter들을 ($\mu, \Sigma, \pi$를) 찾아낸다. 알고리즘을 돌리면 아래처럼 iteration이 지날 때 마다 점점 좋은 값을 찾아준다. (출처: <a href="http://kipl.tistory.com/64">Geometry &amp; Recognition :: Gaussian Mixture Model &amp; K-means</a>)</p>
-<p><img src="http://SanghyukChun.github.io/images/post/69-4.gif" width="500" /></p>
-<p>EM 알고리즘에 대한 심도있는 이해 없이 이 글을 이해하는 것은 조금 어려울 수 있다. 이 글이 잘 이해가 되지 않는다면 먼저 EM 알고리즘에 대해 설명한 <a href="http://SanghyukChun.github.io/70">다음 글</a>을 읽어본 다음 다시 읽어보기를 권한다.</p>
-<h3>정리</h3>
-<p>Clustering은 unsupervised learning 분야에서 가장 활발히 연구되는 분야 중 하나이다. 이 글에서는 여러 종류의 클러스터링 알고리즘 중에서 optimization function을 (1) 거리 기반으로 세우고 그것을 푸는 알고리즘과 (2) 확률과 확률분포를 기반으로 세우고 그것을 푸는 알고리즘을 소개하였다. 특히 GMM은 다음 글에서 다룰 주제인 EM algorithm과 밀접하게 관련되는 내용이므로 한 번 쯤은 책이나 렉쳐노트를 정독하는 것을 권한다.</p>
-
-<h3>변경 이력</h3>
-<ul>
-  <li>2015년 3월 25일: 글 등록</li>
-  <li>2015년 6월 14일: EM 알고리즘 링크 추가 및 설명 변경</li>
-</ul>
-
-<h3>Reference</h3>
-<ul>
-  <li>Bishop, Christopher M. Pattern recognition and machine learning. Vol. 4. No. 4. New York: springer, 2006. Chapter 9</li>
-  <li><a href="http://kipl.tistory.com/64">Geometry &amp; Recognition :: Gaussian Mixture Model &amp; K-means</a></li>
-</ul>
-
-<hr />
-
-<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
-
-<ul>
-  <li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-  <li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-  <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-  <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-  <li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-  <li>Regression and Logistic Regression</li>
-  <li>PAC Learning &amp; Statistical Learning Theory</li>
-  <li>Support Vector Machine</li>
-  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
-  <li>Graphical Model</li>
-  <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-  <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-  <li>Hidden Markov Model</li>
-  <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-  <li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
-    <ul>
-      <li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
-    </ul>
-  </li>
-  <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-  <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
-  <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
-    <ul>
-      <li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
-    </ul>
-  </li>
-</ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (8) Classification Introduction (Decision Tree, Naïve Bayes, KNN)]]></title>
-    <link href="http://SanghyukChun.github.io/64/"/>
-    <updated>2015-03-25T02:10:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/64</id>
-		<content type="html"><![CDATA[<h3>들어가며</h3>
-<p><a href="http://SanghyukChun.github.io/57#57-4-ClassML">첫 번째 글</a>에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 이 글에서는 그 중 Supervised Learning의 가장 대표적인 예시인 Classification에 대해 다룰 것이며 가장 대표적이고 간단한 세 가지 알고리즘에 대해서 역시 다룰 것이다.</p>
-<h3>What is Classification?</h3>
-<p><a href="http://en.wikipedia.org/wiki/Statistical_classification">Classification</a>은 <a href="http://en.wikipedia.org/wiki/Supervised_learning">Supervised Learning</a>의 일종으로, 기존에 존재하는 데이터와 category와의 관계를 learning하여 새로 관측된 데이터의 category를 판별하는 문제이다. 스팸 필터를 예로 들어들어보자. 스팸 필터의 데이터는 이메일이고, category, 혹은 label, class는 spam메일인지 일반 메일인지를 판별하는 것이 될 것이다. 스팸필터는 먼저 스팸 메일, 그리고 일반 메일을 learning을 한 이후, 새로운 데이터 (혹은 메일)이 input으로 들어왔을 때 해당 메일이 스팸인지 일반 메일인지 판별하는 문제를 풀어야하며, 이런 문제를 classification이라고 한다.</p>
-<p><a href="http://SanghyukChun.github.io/57">첫 번째 글</a>에서 머신러닝 문제는 먼저 주어진 데이터에 대한 가정을 하고, 해당 가정을 만족하는 best hypothesis를 찾는 문제라고 언급한 적이 있다. Classification 문제 역시 Machine Learning 문제이므로 데이터에 대한 가정을 먼저 해야하고, best hypothesis를 찾는 과정을 거친다. 따라서 각각의 서로 다른 classification algorithm들은 서로 다른 assumption을 가지고 있으며, 해당 assumption을 가장 잘 만족하는 function parameter를 계산하는 과정이다. 앞으로 설명하게 될 알고리즘들에 대한 설명을 읽을 때 데이터에 대해 어떤 가정을 하였는지 꼼꼼히 확인하면서 읽으면 알고리즘을 이해하기 한결 수월할 것이다.</p>
-<h3>Decision Tree</h3>
-<p><a href="http://en.wikipedia.org/wiki/Decision_tree">Decision Tree</a>는 가장 단순한 classifier 중 하나이다. 이 Decision Tree의 구조는 매우 단순하다.</p>
-<p><img src="http://SanghyukChun.github.io/images/post/64-1.png" width="600" /></p>
-<p>위의 그림은 오늘 외출을 할까 말까를 결정하는 decision tree이다. 이렇듯 decision tree는 tree구조를 가지고 있으며, root에서부터 적절한 node를 선택하면서 진행하다가 최종 결정을 내리게 되는 model이다. Decision tree의 가장 좋은 점은 단순하다는 점이다. 누구나 쉽게 이해할 수 있고, 그렇기 때문에 쉽게 디버깅할 수 있다. 예를 들어 위의 예시에서 습도가 높아도 나갈만하다는 생각이 든다면 맨 왼쪽의 No를 Yes로 바꾸기만 하면 간단하게 로직을 바꿀 수 있다. 그러나 다른 모델들은 그런 점들이 비교적 어렵다. Machine Learning에서 말하는 decision tree는 <a href="http://en.wikipedia.org/wiki/Decision_tree_learning">decision tree learning</a>으로, 일일이 node마다 로직을 사람이 써넣어 만드는 것을 의미하는게 아니라, node 개수, depth, 각각의 node에서 내려야하는 결정 등을 데이터를 통해 learning하는 algorithm들을 사용해 만든 decision tree를 의미한다.</p>
-<p>많이 쓰이는 알고리즘들로는 <a href="http://en.wikipedia.org/wiki/ID3_algorithm">ID3</a>, <a href="http://en.wikipedia.org/wiki/C4.5_algorithm">C4.5</a>, <a href="http://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees">CART</a>, <a href="http://en.wikipedia.org/wiki/CHAID">CHAID</a>, <a href="http://en.wikipedia.org/wiki/Multivariate_adaptive_regression_splines">MARS</a> 등이 있으며, 보통 C4.5를 가장 많이 사용한다.</p>
-<p>C4.5는 ID3의 몇 가지 문제점들을 개선한 알고리즘으로, 그 기본 개념은 ID3와 크게 다르지 않다. 추후 이 글 혹은 다른 글에 ID3 알고리즘에 대한 내용을 추가하도록 하겠다.</p>
-<h3>Regression Tree and Ensemble method</h3>
-<p>Decision tree는 output value가 반드시 binary여야한다는 제약조건이 있기 때문에 스팸 필터 등에서는 사용할 수 있지만, 실제 모든 데이터가 binary만을 output으로 가지지 않으므로 모든 데이터에 사용하려면 변형이 필요하다. <a href="http://en.wikipedia.org/wiki/Decision_tree_learning#Types">Regression tree</a>는 binary가 아니라 real value를 output으로 가지는 모델로, learning하는 방법은 크게 다르지 않다고 한다.</p>
-<p>가끔은 하나의 decision tree를 사용하는 것이 아니라 한 번에 여러 개의 decision tree들을 만들어서 각각의 decision tree들이 내리는 결정을 종합적으로 판단하여 (ensemble) 결정을 내리기도 한다. <a href="http://en.wikipedia.org/wiki/Bootstrap_aggregating">Bagging decision tree</a>, <a href="http://en.wikipedia.org/wiki/Random_forest">random forest</a>등이 이에 속한다. 이런 식으로 여러 개의 classifier를 사용해 decision을 내리는 방법을 ensemble method라고 하는데, industry에서는 machine learning algorithm의 성능을 높이기 위해서 여러 개의 알고리즘들을 ensemble method를 사용하여 한 번에 같이 사용하기도 한다. 대표적인 예로 <a href="http://en.wikipedia.org/wiki/AdaBoost">AdaBoost</a> 등이 있다.</p>
-<p>Ensemble method에 대해서는 나중에 따로 다시 설명할 예정이므로 그 글을 참고하면 좋을 것 같다. (링크는 추후 추가 예정)</p>
-<h3>Naïve Bayes</h3>
-<p><a href="http://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naïve Bayes Classifier</a>는 <a href="58-1-Bayes">Bayesian rule</a>에 근거한 classifier이다. Naïve Bayes는 일종의 확률 모델로, 약간의 가정을 통해 문제를 간단하게 푸는 방법을 제안한다. 만약 데이터의 feature가 3개 있고, 각각이 binary라고 해보자. 예를 들어 남자인지 여자인지, 성인인지 아닌지, 키가 큰지 작인지 등의 feature를 사용해 사람을 구분해야한다고 생각해보자. 이 경우 적어도 8개의 데이터는 있어야 모든 경우의 수를 설명할 수 있게 된다. 그런데 보통 데이터를 설명하는 feature의 개수는 이보다 훨씬 많은 경우가 많다. 예를 들어 feature가 10개 정도 있고 각각이 binary라면, 제대로 모든 데이터를 설명하기 위해서는 $2^{10}$, 약 1000개 이상의 데이터가 필요하다. 즉, 필요한 데이터의 개수가 feature 혹은 데이터의 dimension에 exponential하다. 이런 경우 그냥 Bayes rule을 사용해 분류를 하게 되면 overfitting이 되거나 데이터 자체가 부족해 제대로 된 classification을 하기 어려울 수 있다. Naïve bayes는 이런 문제를 해결하기 위해 새로운 가정을 하나 하게 된다. 바로 모든 feature들이 i.i.d.하다는 것이다. i.i.d는 independent and identically distributed의 준말로, 모든 feature들이 서로 independent하며, 같은 분포를 가진다는 의미이다. 당연히 실제로는 feature들이 서로 긴밀하게 관련되어있고 다른 분포를 가질 것이므로 이 가정은 틀린 가정이 될 수 있다. 그러나 만약 모든 feature가 i.i.d.하다고 가정하게 된다면 우리가 필요한 최소한의 데이터 개수는 feature의 개수에 exponential하게 필요한게 아니라 linear하게 필요하게 된다. 간단한 가정으로 모델의 complexity를 크게 줄일 수 있는 것이다. 때문에 Naïve Bayes 뿐 아니라 많은 모델에서 실제 데이터가 그런 분포를 보이지 않더라도 그 데이터의 분포를 특정한 형태로 가정하여 문제를 간단하게 만드는 기술을 사용한다.</p>
-<p>조금 더 엄밀하게 수식을 사용해 설명을 해보자. 우리가 가지고 있는 input data 를 $x = (x_1, \ldots, x_n)$이라고 가정해보자. 즉 우리는 총 $n$개의 feature를 가지고 있다고 가정해보자 (보통 $n$은 데이터의 개수를 의미하지만, wikipedia의 notation을 따라가기 위하여 이 글에서도 dimension을 나타내기 위해 $n$을 사용하였다). 그리고 Class의 개수는 $k$라고 해보자. 우리의 목표는 $p(C|x_1, \ldots, x_n) = p(C|x)$를 구하는 것이다. 즉, 1부터 $k$까지의 class 중에서 가장 확률이 높은 class를 찾아내어 이를 사용해 classification을 하겠다는 것이다. Bayes rule을 알고 있으므로 이 식을 bayes rule을 사용해 전개하는 것은 간단하다.</p>
-<p>$$ p(C|x) = \frac{p(C) p(x|C)}{p(x)} $$</p>
-<p>이 때 분모에 있는 데이터의 확률은 normalize term이기 때문에 모든 값을 계산하고 나서 한 번에 계산하면 되므로 우리는 $p(x,C) = p(C) p(x|C)$, 다시 말해 prior와 likelihood를 계산해야만한다. 그러나 이 값은 joint probability이므로 데이터에서부터 이 값을 알아내기 위해서는 &#8216;엄청나게 많은&#8217; 데이터가 필요하다. 구체적으로는 앞서 말한 것 처럼 dimension에 exponential하게 많은 데이터 개수를 필요로 한다. 그러나 만약 우리가 x가 모두 indepent하다고 가정한다면 간단하게 다음과 같은 식으로 나타낼 수 있다.</p>
-<p>$$ p(C) p(x_1, \ldots, x_n | C) = p(C) p(x_1|C) p(x_2|C) \ldots = p(C) \prod p(x_i|C)$$</p>
-<p>따라서 normalize term을 $Z$로 표현한다면, 우리가 구하고자 하는 최종 posterior는 $p(C|x) = \frac{1}{Z} p(C)\prod p(x_i|C)$로 나타낼 수 있게 된다.</p>
-<h3>KNN</h3>
-<p><a href="http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">K-Nearest Neighbors algorithm (KNN)</a>은 구현하기 어렵지 않으면서도 비교적 나쁘지 않은 성능을 내는 Classification Algorithm 중 하나이다. KNN은 가까운 데이터는 같은 label일 가능성이 크다고 가정하고 새로운 데이터가 들어오면, 그 데이터와 가장 가까운 k개의 데이터를 training set에서 뽑는다. 뽑은 k개의 데이터들의 label을 관측하고 그 중 가장 많은 label을 새로운 데이터의 label로 assign하는 알고리즘이다 (이런 방식을 majority voting이라고 한다). 이때 &#8216;가까움&#8217;은 Euclidean distance로 측정해도 되고, 다른 metric이나 measure를 사용해도 된다. 이때 distance 혹은 similarity를 측정하기 위해서 반드시 metric을 사용해야하는 것은 아니다. 즉, metric의 세 가지 성질을 만족하지 않는 measure일지라도 두 데이터가 얼마나 &#8216;비슷하냐&#8217;를 measure할 수 있는 measure라면 KNN에 적용할 수 있다. 아래 그림은 KNN이 어떻게 동작하는지 알 수 있는 간단한 예시이다. 아래 그림을 보면 k를 3으로 골랐을 때 초록색 데이터의 label은 빨강이 되고, k를 5로 골랐을 때는 파란색이 됨을 알 수 있다.</p>
-<p><img src="http://SanghyukChun.github.io/images/post/64-2.png" width="500" /></p>
-<p>KNN은 구현하기에도 매우 간단하고 (새로 들어온 점과 나머지 점들간의 distance를 측정한 후 sorting하기만 하면 된다) 성능도 보통 크게 나쁘지 않은 값을 보이기 때문에 간단하게 개발할 필요가 있는 경우에 많이 사용하게 된다. 사실 대부분의 머신러닝 툴박스들은 KNN의 다양한 variation까지 built-in function으로 지원한다. Matlab의 knnclassify가 대표적인 예. 또한 KNN은 <a href="http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm#Properties">유용한 성질들</a>이 많이 있다. 예를 들어 만약 데이터의 개수가 거의 무한하게 있다면, KNN classifier의 error는 bayes error rate의 두 배로 bound가 된다는 특성이 있다. 즉, 데이터가 엄청나게 많다면, KNN은 상당히 좋은 error bound를 가지게 된다는 것이다. 즉, 단순한 휴리스틱 알고리즘이 아니라 엄밀하게 수학적으로 우수한 알고리즘임을 증명할 수 있는 알고리즘이라는 뜻이다. 또한 distance를 마음대로 바꿀 수 있기 때문에 KNN은 변형하기에도 간단한 편이므로 데이터에 대한 가정을 모델에 반영하여 변형하기에 간편하다는 장점이 있다.</p>
-<h3>정리</h3>
-<p>가장 간단하게 적용할 수 있는 세 가지 classification algorithm에 대해 훑어보았다. 개인적으로 KNN은 정말 직관적일뿐 아니라 잘 동작하는 알고리즘이기 때문에, 개인적으로 어떤 문제를 해결해야할 때 가장 먼저 이 데이터가 어느 정도 잘 분류되는지 테스트하는 용도로 애용한다. 중요한 점은, 각각의 classification algorithm이 풀려고 하는 &#8216;문제&#8217; 혹은 model은 서로 다른 가정을 가지고 있으며, 그 가정에 따라 문제를 푸는 방법이 아주 많이 바뀐다는 것이다. 즉, 어떤 새로운 classification algorithm을 만들어야 할 때는 (이는 classification 뿐 아니라 모든 알고리즘을 만들어야 할 때도 마찬가지인데) 먼저 어떤 문제를 풀어야하는지 문제를 정의해야하며, 문제를 정의하기 위해 어떤 모델을 가정해야한다는 것이다. 예를 들어 Naïve Bayes는 데이터의 각각의 feature들이 서로 i.i.d하다는 가정을 하고 있고, KNN은 &#8216;가까운&#8217; 데이터와 내가 같은 label을 가지고 있을 확률이 높다는 가정을 하고 있다. 이렇듯 Machine learning algorithm을 개발하는 일에서 가장 중요한 것은 좋은 문제를 먼저 정의하는 것에서부터 시작하는 것이 아닐까 생각한다.</p>
-
-<h3>Reference</h3>
-<ul>
-  <li>Bishop, Christopher M. Pattern recognition and machine learning. Vol. 4. No. 4. New York: springer, 2006. Chapter 9</li>
-</ul>
-
-<h3>변경 이력</h3>
-<ul>
-  <li>2015년 3월 25일: 글 등록</li>
 </ul>
 
 <hr />

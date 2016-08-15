@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Paper-Review | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/paper-review/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-03-26T11:47:00+09:00</updated>
+  <updated>2016-08-16T00:58:37+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,427 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Practical Bayesian Optimization of Machine Learning Algorithms (NIPS 2012)]]></title>
+    <link href="http://SanghyukChun.github.io/99/"/>
+    <updated>2016-08-16T00:58:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/99</id>
+    <content type="html"><![CDATA[<ul class="no-float" id="markdown-toc">
+  <li><a href="#section">들어가며</a></li>
+  <li><a href="#hyperparameter-tuning-as-optimization-problem">Hyperparameter Tuning as Optimization Problem</a></li>
+  <li><a href="#bayesian-optimization-for-black-box-function">Bayesian Optimization for “Black-box” function</a>    <ul>
+      <li><a href="#stochastic-process">Stochastic Process</a></li>
+      <li><a href="#gaussian-process">Gaussian Process</a>        <ul>
+          <li><a href="#gp-with-noisy-data">GP with Noisy data</a></li>
+        </ul>
+      </li>
+      <li><a href="#acquisition-function">Acquisition Function</a>        <ul>
+          <li><a href="#probability-of-improvement">Probability of Improvement</a></li>
+          <li><a href="#expected-improvement">Expected Improvement</a></li>
+          <li><a href="#ucb">UCB</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#limitation-of-bayesian-optimization">Limitation of Bayesian Optimization</a></li>
+  <li><a href="#practical-bayesian-optimization">Practical Bayesian Optimization</a>    <ul>
+      <li><a href="#expected-improvement-and-matern-52-kernel-function">Expected Improvement and Matern 5/2 Kernel function</a></li>
+      <li><a href="#integrated-acquisition-function-marginalize-hyperparameter">Integrated Acquisition Function (marginalize hyperparameter)</a></li>
+      <li><a href="#expected-improvement-per-second">Expected Improvement per second</a></li>
+      <li><a href="#monte-carlo-acquisition-for-parallelizing-bayesian-optimization">Monte Carlo Acquisition for Parallelizing Bayesian Optimization</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+  </li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#section-1">변경 이력</a></li>
+</ul>
+
+<h3 id="section">들어가며</h3>
+<p>Machine Learning 모델을 만들다보면 Hyperparameter 라는 녀석을 다뤄야 하는 일이 종종 발생한다.
+예를 들면 Random forest의 forest 개수라거나, Neural network의 layer 개수, learning rate, momentum 값 등등..
+문제는 이런 hyperparameter들을 어떻게 설정하느냐에 따라 그 결과가 크게 바뀌기 때문에 소위 말하는 ‘튜닝’에 시간을 매우 많이 쏟아야한다는 점이다.</p>
+
+<p>이 논문은 hyperparameter tuning 문제를 Bayesian optimization을 사용해여 해결하는 방법을 제안한다.
+Bayesian optimization은 알려지지 않은 “black-box” function을 optimization할 때 많이 사용되는 방법이다.
+그러나 Bayesian optimization은 몇 가지 이유로 practical하게 쓰기 어려운데,
+1) (kernel function, acquisition function 등) 모델을 어떤 것을 고르냐에 따라 성능이 크게 바뀐다,
+2) Baysian optimization 자체도 hyperparameter가 있어서 이 hyperparameter들을 튜닝해야한다,
+3) Sequential update를 해야하기 때문에 parallelization이 되지 않는다
+등의 이슈가 있다.</p>
+
+<p>이 논문은
+1) empirical하게 좋은 성능을 보이는 적절한 kernel function과 acquisition function을 제안하고,
+2) Baysian optimization의 hyperparameter를 (MCMC로 풀 수 있는) fully baysian approach를 통해 전체 optimization에서 한 번에 계산할 수 있는 방법을 제안할 뿐 아니라,
+3) MCMC를 사용해 풀 수 있는 theoretically tractable parallelized Bayesian optimization을 제안한다.</p>
+
+<p>사실 이 논문을 제대로 이해하기 위해서는 아래 개념들에 대해 이미 잘 알고 있어야한다.</p>
+
+<ul>
+  <li>Stochastic process (Random process라고도 부른다)</li>
+  <li>Gaussian process (GP) &amp; kernel function of GP</li>
+  <li>Bayesian optimization &amp; acquisition function</li>
+  <li>Markov chain Monte Carlo (MCMC)</li>
+</ul>
+
+<p>마지막 MCMC는 이 글에서는 다루지 않기로 하고, 나머지들에 대해서는 차근차근 정리하면서 내용을 진행해보도록 하겠다.</p>
+
+<h3 id="hyperparameter-tuning-as-optimization-problem">Hyperparameter Tuning as Optimization Problem</h3>
+<p>보통 hyperparameter를 찾기 위해 사용되는 방법들로는 Grid search, Random search 등의 방법들이 있다.
+Random forest 모델 하나를 예로 들어서 위 방법들에 대해 자세히 살펴보자.</p>
+
+<p>Random forest에서 사용하는 hyperparameter는, tree의 개수 (n_estimators), split criteria (criterion), max depth (max_depth), leaf 당 최소 샘플 개수 (min_samples_leaf), … 등등이 있다. (자세한건 <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">Scikit learn의 Random Forest 코드 참고</a>)</p>
+
+<p>우리가 찾고 싶은 hyperparameter는,</p>
+
+<p><code>
+n_estimators = [10, 50, 100, 200]
+criterion = ['gini', 'entropy']
+max_depth = [None, 100, 10]
+min_samples_leaf = [1, 5, 10, 20]
+</code></p>
+
+<p>의 조합 중에 하나라고 가정해보자.</p>
+
+<p>먼저 Grid search는 모든 parameter의 경우의 수에 대해 cross-validation 결과가 가장 좋은 parameter를 고르는 방법이다.
+즉, 위에 나열된 hyperparameter의 모든 가능한 경우의 수는 4 x 2 x 3 x 4 = 96개인데, 모든 96개의 parameter들에 대해서
+training data를 80:20으로 나누어 (꼭 80:20일 필요는 없다) 80으로 train을 하고, 20으로 test을 했을 때, test 결과가 제일 좋은 parameter를 고르는 것이다.</p>
+
+<p>이 방법은, 주어진 공간 내에서 가장 좋은 결과를 얻을 수 있다는 장점이 있지만, 시간이 정말 정말 오래걸린다는 단점이 존재한다.
+또한, 예시에서도 볼 수 있었듯, parameter의 candidate을 늘릴 때 마다 그 만큼의 시간이 더 필요하기 때문에,
+정해진 시간 안에 parameter를 찾기 위해서는 어쩔 수 없이 hyperparameter의 candidate을 더 늘리지 못하고, candidate set이 제한된다는 단점이 존재한다.</p>
+
+<p>이런 단점을 피하기 위해 나온 방법이 바로 random search이다.
+Random search는 모든 grid를 전부 search하는 대신, random하게 일부의 parameter들만 관측한 후, 그 중에서 가장 좋은 parameter를 고른다.
+Bengio 연구팀이 2012년에 발표한 논문 <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">2</a>에 따르면,
+high dimensional hyperparameter optimization에서는, grid search를 하는 것 보다, random search를 했을 때 성능이 더 좋을 수 있다고 주장하고 있다.</p>
+
+<p><img class="center" src="/images/post/99-1.png" width="600"></p>
+
+<p>서로 importance가 다른 두 개의 parameter가 있다고 가정해보자. Grid search는 중요하지 않은 parameter와 중요한 parameter를 동일하게 관측해야하기 때문에 정작 중요한 parameter를 다양하게 시도해볼 수 있는 기회가 적지만, random search는 grid로 제한되지 않기 때문에 확률적으로 중요한 parameter를 더 살펴볼 수 있는 기회를 더 받게 된다. 출처: <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">[2]</a></p>
+
+<p>Machine Learning에서 hyperparameter search가 어려운 이유 중 하나는, hyperparameter가 바뀔 때 마다 모델이 바뀌게 되므로 다시 모델을 새로 learning해야한다는 점이다.
+만약 실험 하나하나가 시간이 엄청 오래걸린다면, full grid search를 시도하기는 어려울 것이다. 그렇기에 random search가 꽤 유용하게 사용될 수 있는 여지가 더 많고,
+실제로 나도 hyperparameter를 튜닝해야겠다싶으면 random search를 사용한다. (<a href="http://scikit-learn.org/stable/modules/grid_search.html">Scikit learn에서도 관련 패키지를 제공한다.</a>)</p>
+
+<p>Grid search와 random search의 좋은 점 중 하나는, 모든 trial들이 independent하므로 parallelization이 자연스럽게 이루어진다는 점이다.</p>
+
+<h3 id="bayesian-optimization-for-black-box-function">Bayesian Optimization for “Black-box” function</h3>
+<p>Bayesian optimization은 다음과 같은 아주 무난한 optimization을 푸는 방법론 중 하나이다.</p>
+
+<script type="math/tex; mode=display"> x^* = \arg\min_{x \in X} f(x). </script>
+
+<p>이때, $X$는 bounded domain이고, $f(x)$는 그 모양을 모르는, 즉 input을 넣었을 때 output이 무엇인지만 알 수 있는 black box function이라 가정하자.
+Optimization에는 여러 form이 있지만, minimization을 다루는 것이 일반적이기 때문에 여기에서도 minimization 꼴을 사용하도록 하겠다.
+Bayesian optimization은 $f(x)$가 expensive black-box function일 때, 즉 한 번 input을 넣어서 output을 확인하는 것 자체가 cost가 많이 드는 function일 때 많이 사용하는 optimization method이다.</p>
+
+<p>Bayesian optimization은 다음과 같은 방식으로 작동한다.</p>
+
+<ol>
+  <li>먼저 지금까지 관측된 데이터들 $D = [(x<em>1, f(x</em>1)), (x<em>2, f(x</em>2)), \ldots]$ 를 통해, 전체 function f(x)를 <strong>어떤 방식을 사용해 estimate한다.</strong></li>
+  <li>Function f(x)를 더 정밀하게 예측하기 위해 다음으로 관측할 지점 $(x<em>{n+1}, f(x</em>{n+1}))$ 을 <strong>어떤 decision rule을 통해 선택한다.</strong></li>
+  <li>새로 관측한 $(x<em>{n+1}, f(x</em>{n+1}))$ 을 $D$에 추가하고, 적절한 stopping criteria에 도달할 때 까지 다시 1로 돌아가 반복한다.</li>
+</ol>
+
+<p>1에서 언급한 estimation을 할 때에는 $f(x)$가 Gaussian process prior를 가진다고 가정한 다음, posterior를 계산하여 function을 estimate한다.
+2에서는 acquisition function $a(x | D)$를 디자인해서 $\arg\max_x a(x | D)$ 를 계산해 다음 지점을 고른다.</p>
+
+<p>간단한 예시를 통해서 이게 무슨 말인지 조금 더 자세히 살펴보자.</p>
+
+<p>아래 그림에서 빨간색 점선은 우리가 찾으려고 하는 unknown black box function $f(x)$ 를 나타내고,
+까만색 실선은 지금까지 관측한 데이터를 바탕으로 우리가 예측한 estimated function $\widehat f(x)$ 의 expectation을 의미한다.
+까만선 주변에 있는 회색 영역은, function f(x)가 존재할 confidence bound이고 (쉽게 말해서 function의 variance이다),
+밑에 있는 $EI(x)$는 위에서 언급한 acquisition function을 의미한다. (어떻게 구하는지는 아직 신경쓰지 말자)
+출처: <a href="Practical Bayesian Optimization of Machine Learning Algorithms">[3]</a></p>
+
+<p><img class="center" src="/images/post/99-2.png" width="600">
+지금까지 관측한 데이터를 바탕으로, (acquisition function 값이 제일 큰) 파란색 점이 찍힌 부분을 관측하는 것이 가장 좋다는 것을 알 수 있다.</p>
+
+<p><img class="center" src="/images/post/99-3.png" width="600">
+위에서 acquisition function 값이 제일 컸던 지점의 function 값을 관측하고 estimatation을 update한다. 함수의 uncertainty를 의미하는 회색 영역이 크게 감소했음을 알 수 있다. 그러나 여전히 좌측 부분과 우측 부분의 uncertainty가 꽤 큼을 알 수 있다. 다시 한 번 다음 관측할 point를 acquisition function을 통해 고른다.</p>
+
+<p><img class="center" src="/images/post/99-4.png" width="600">
+계속 update를 진행한 결과, estimation과 실제 function이 거의 흡사해졌다. 이제 여태까지 관측한 지점 중 best point를 argmin f(x) 로 선택한다.</p>
+
+<p>이것이 Bayesian optimization의 대략적인 procedure이다. 여기까지 설명한 내용은 완전히 새로운 것이 아니라, 오래 전에 이미 제안되었었고, 계속 쓰이던 방법이다.
+이 내용을 완전히 이해하고 있어야 이 글에서 다루는 논문을 이해할 수 있다.
+앞에서 Bayesian optimization을 위해서는 두 가지가 필요하다는 언급을 했었다. 하나는 function을 estimate하는 방법과, 또 하나는 다음 관측 지점을 고를 acquisition function이다.
+이 두 가지 개념들이 대해 다음 두 subsection에서 조금 더 자세히 살펴보도록 하자.</p>
+
+<h4 id="stochastic-process">Stochastic Process</h4>
+<p>Stochastic process가 무엇인지 설명하기에 앞서, Random variable이란 무엇인지 알고 있어야한다.
+특히 ‘Random variable은 함수이다’ 라는 개념을 이해하고 있어야하는데, 이 개념에 대해 살펴보도록 하자.</p>
+
+<p>Random variable은 probability space에서 어떤 real value R로 가는 function으로 정의가 된다.
+이때 이 real value R이 pdf나 cdf를 의미하는 것이 아니라, random variable의 값 그 자체가 된다.
+Probability space란, 확률 값이 정의가 되는 공간이고, random variable이란 그 공간에서 실제 real value로 가는 function인 것이다.</p>
+
+<p>주사위를 예로 들어보자. 먼저 주사위의 probability space는 <code>{1, 2, 3, 4, 5, 6}</code> 으로 정의가 되며,
+각각의 값이 나올 확률은 동일하게 $Pr(X=1) = Pr(X=2) = \ldots = Pr(X=6) = 1/6$ 으로 정의가 된다.
+여기에서 주사위의 random variable X는 다음과 같이 정의된다.</p>
+
+<script type="math/tex; mode=display"> X= \begin{cases} 1 \mbox{ with probability } 1/6,\\ 2 \mbox{ with probability } 1/6,\\ 3 \mbox{ with probability } 1/6, \\ 4 \mbox{ with probability } 1/6, \\ 5 \mbox{ with probability } 1/6, \\ 6 \mbox{ with probability } 1/6\end{cases} </script>
+
+<p>이 개념을 조금 더 확장시킨 것이 stochastic process이다.
+Stochastic process는 어떤 ordered set T로 indexed된 random variable들의 collection으로 정의된다.</p>
+
+<script type="math/tex; mode=display"> \{ X_t : t \in T \} </script>
+
+<p>Ordered set T는 보통 시간이나 공간 등의 개념과 대응된다. Stochastic process라는 것 자체가, 시간에 따른 어떤 값의 변화를 추정하기 위해 도입된 개념이다보니,
+(자그마치 아인슈타인이 브라운 운동 증명할 때 썼던 개념이라고 한다) 일반적으로는 이 ordered set은 시간으로 생각해도 충분하다.
+앞서 설명한 random variable의 collection을 조금 더 간단하게 이야기하면, stochastic process는 probability space와 시간 T에 대한 function이라고 생각할 수 있다.
+즉, 똑같은 probability space에서 한 지점을 sample했을 때, random varible은 값이 나오고 (주사위의 눈금이 나오고),
+stochastic process는 t에 대한 함수가 (random variable $X_t$가) 나오게 된다. 그림으로 보면 아래와 같다.</p>
+
+<div class="caption">
+<img class="center" src="/images/post/99-5.png" width="400">
+<p>Random variable $X$에서 값을 sample하면 real value R을 가지는 특정 값을 얻게 된다. 즉, X는 probability space에서 R로 가는 함수라고 할 수 있다.</p>
+</div>
+
+<div class="caption">
+<img class="center" src="/images/post/99-6.png" width="400">
+<p>Stochastic process $X_t$에서 값을 sample하면 시간 t에 대한 서로 다른 함수를 얻게 된다. 즉, $X_t$는 probability space에서 다른 function space로 가는 함수라고 할 수 있다.</p>
+</div>
+
+<p>Random process와 stochastic process에 대한 (그리고 뒤에서 설명할 Gaussian process 역시) 조금 더 자세한 내용은 reference에 추가한 블로그 글 <a href="http://enginius.tistory.com/489">[4]</a>을 참고하면 좋을 것 같다. (위 그림의 출처 역시 같은 블로그이다.)</p>
+
+<h4 id="gaussian-process">Gaussian Process</h4>
+<p>Gaussian process, 줄여서 GP는 continuous domain에 대해 정의되는 statistical distribution이다.
+이때, input domain에 있는 모든 point들은 normal distribution random variable이 되며,
+아무 finite한 GP sample들을 뽑더라도, 그 sample들은 multivariate normal distribution을 가지게 된다.</p>
+
+<p>GP의 개념은 이 정도로만 설명을 마무리하고, formulation에 대해 살펴보자.
+GP 하나를 정의하기 위해서는 mean function과 kernel function 두 가지 함수가 먼저 정의되어야 한다.</p>
+
+<p>먼저 mean function $m(x)$는 이름에서도 쉽게 유추할 수 있듯 point x에서의 mean value를 나타내는 x에 대한 함수이다.
+보통은 constant value m을 많이 선택하며, 그마저도 선택하지 않고 그냥 zero-mean을 고르는 경우도 많다고 한다.</p>
+
+<p>Kernel function이 상당히 중요한데, kernel function은 주어진 GP sample들이 서로 어떤 relationship을 가지는지, 어떤 covariance matrix를 형성하게 되는지 정의하는 함수이다.
+Kernel function $k(x, x^\prime)$은 점 두 개에 대해 정의가 되는데, 일반적으로 점 사이의 거리가 가까우면 relationship이 크고, 멀먼 작을 것이라는 가정을 하게 된다.
+가장 간단한 kernel function인 squared-exponential kernel function은 다음과 같다. 이때, $x_d$는 $x$의 d 차원 value이고, $\alpha, \theta_d$는 hyperparameter이다.
+($\theta_d$는 1부터 D까지 총 D개 존재한다.)</p>
+
+<script type="math/tex; mode=display"> k_{sqe}(x, x^\prime) = \alpha \exp \left\{ -\frac{1}{2} \sum_{d=1}^D \left( \frac{x_d - x_d^\prime}{\theta_d} \right) \right\}. </script>
+
+<p>Kernel function을 사용해 두 점 사이의 relation을 정의하고 나면, GP sample collection이 주어졌을 때, 해당 sample들의 covariance matrix를 다음과 같이 정의할 수 있다.
+이 경우는 sample이 총 n개가 있고, $k_{ij} := k(x_i, x_j)$ 라고 정의하도록 하겠다.</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+ K = \begin{pmatrix} k_{1,1} & k_{1,2} & \cdots & k_{1,n} \\ k_{2,1} & k_{2,2} & \cdots & k_{2,n} \\ \vdots  & \vdots  & \ddots & \vdots  \\ k_{n,1} & k_{n,2} & \cdots & k_{n,n} \end{pmatrix}.  %]]&gt;</script>
+
+<p>Mean function $m(x)$와 kernel function $k(x, x^\prime)$이 정의가 되었으므로, 어떤 point x가 주어졌을 때, (앞에서 모든 GP의 sample은 normal ditribution r.v.라고 했음을 기억하자)
+그 점의 mean과 variance를 계산할 수 있으므로, 이 둘만 정의가 된다면 아무 임의의 지점에 대해 Gaussian distribution r.v. 을 얻을 수 있다.</p>
+
+<p>이 글에서는 function f(x)가 GP prior를 가진다고 가정했을 때, likelihood가 주어졌을 때 posterior가 어떻게 update되는지까지는 다루지 않을 것이다.
+조금만 찾아보면 잘 정리된 내용들을 찾을 수 있을 것이다.</p>
+
+<h5 id="gp-with-noisy-data">GP with Noisy data</h5>
+<p>모든 함수가 항상 deterministic output을 가지지는 않는다. 오히려 거의 대부분의 real world function들은 관측할 때 마다 그 값이 바뀌게 된다.
+이를 보통 우리는 noise라는 현상으로 설명하고는 한다. 조금 더 formal하게 적어보자.</p>
+
+<p>다음과 같은 observation pair ${x_i, y_i}$ 가 있다고 가정해보자. 이 값은, input $x_i$와, 그 때 관측된 함수값 $y_i$의 pair로,
+만약 noise가 없다면 $y_i = f(x_i)$ 라고 바로 쓸 수 있지만, 대부분의 경우는 noise가 있어서 그렇게 표현할 수 없다.
+가장 많이 쓰이는 방법은 white Gaussian noise를 추가하는 방법이다. 따라서 이런 경우에 y는 다음과 같이 표현된다.</p>
+
+<script type="math/tex; mode=display"> y_i \sim \mathcal N(f(x_i), \nu). </script>
+
+<p>이때, $\nu$는 noise의 세기를 나타내는 hyperparameter가 된다.
+이렇게 표현할 경우, noise가 없을 때와 있을 때 GP를 fit한 결과는 아래와 같은 차이가 나게 된다.</p>
+
+<p><img class="center" src="/images/post/99-12.png" width="600"></p>
+
+<h4 id="acquisition-function">Acquisition Function</h4>
+<p>Function f(x)가 GP prior를 가지는 Bayesian optimization을 진행 중이라고 가정해보자.
+f(x)의 모든 point x에 대해, 우리는 mean과 variance를 계산할 수 있다 (위에 언급되었던 그림 중 까만 선과 회색 영역).
+이때 다음으로 관측해야할 부분이 어디인지 어떻게 알 수 있을까?</p>
+
+<p>한 가지 방법은 estimated mean의 값이 가장 작은 지점은 관측하여 현재까지 관측된 값들을 기준으로 가장 좋은 점을 찾아보는 것이다.
+또 다른 방법은 variance의 값이 가장 큰 지점을 관측하여, 함수의 모양을 더 정교하게 탐색하는 방법이 있다.
+즉, 다음에 어떤 점을 탐색하느냐를 결정하는 문제는 explore-exploit 문제가 된다. Explore는 high variance point를 관측하는 것, exploit은 low mean point를 관측하는 것이 되겠다.
+Acquisition function이란 explore와 exploit을 적절하게 균형을 잡아주는 역할을 하며, 여러 종류가 있지만, 여기에서는 세 가지만 다루도록 하겠다
+(Probability of Improvement, Expected Improvement, UCB).</p>
+
+<p>이 섹션의 남은 부분에서, $f^\prime$ 이란, 지금까지 관측한 function 값 중에서 가장 minimum 값을 지칭하도록 하겠다.</p>
+
+<h5 id="probability-of-improvement">Probability of Improvement</h5>
+<p>Probability of improvement (PI)는, 특정 지점의 함수 값이 지금 best 함수 값인 f’ 보다 작을 확률을 사용한다.
+즉, PI의 utility function은 다음과 같다.</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+ u(x) = \begin{cases} 0 ~ & ~f(x) > f^\prime \\ 1 ~ & f(x) \leq f^\prime \end{cases}.  %]]&gt;</script>
+
+<p>Estimated function f(x)의 값은 정해진 값이 아니라 확률 값이기 때문에, PI는 x에서의 u(x)의 expectation으로 표현된다.</p>
+
+<script type="math/tex; mode=display"> a_{PI} (x) = \mathbb E [u(x) \| x, D] = \int_{-\infty}^{f^\prime} \mathcal N (f; \mu(x), k(x,x))df = \Phi (f^\prime; \mu(x), k(x,x)). </script>
+
+<p>이때 $\mathcal N(f;\mu(x), k(x,x))$는 mean function $\mu(x)$와 kernel function $k(x, x)$로 표현되는 normal distribution이고, $\Phi(\cdot)$은 cdf를 의미한다.
+PI를 그림으로 나타내면 아래와 같다. 아래 그림에서 이미 explore가 많이 된 지점이 PI가 높은 것에 주목하라.
+(밑에 나올 그림들의 출처는 모두 <a href="http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf">[5]</a> 이다.)</p>
+
+<p><img class="center" src="/images/post/99-7.png" width="500"></p>
+
+<h5 id="expected-improvement">Expected Improvement</h5>
+<p>PI의 가장 큰 문제점 중 하나는, ‘improvement’ 될 수 있는 확률만 보기 때문에, 확률이 조금 더 낫을지라도, 궁극적으로는 더 큰 improvement가 가능한 point를 고를 수 없다는 점이다.
+다시 말하면 exploit에 집중하느라 explore에 취약하다는 단점이 있다.
+Expected improvement (EI)는 utility function을 0, 1이 아니라, linear 꼴로 정의하기 때문에 그 차이를 반영할 수 있다. (Step function과 ReLU의 차이라고 보면 된다)
+EI의 utility function은 다음과 같다.</p>
+
+<script type="math/tex; mode=display"> u(x) = \max(0, f^\prime - f(x)). </script>
+
+<p>주의할 점은, EI가 PI의 expectation이 아니라는 점이다. 그냥 이름만 비슷한거고 완전히 다른 function이라고 생각하면 된다.
+PI와 마찬가지로 EI역시 u(x)의 expectation을 계산해야 한다.</p>
+
+<script type="math/tex; mode=display"> a_{EI} (x) = \mathbb E [u(x) \| x, D] = \int_{-\infty}^{f^\prime} \mathcal N (f; \mu(x), k(x,x))df = (f^\prime - \mu(x))\Phi(f^\prime;\mu(x),k(x,x)) + k(x,x) \mathcal N (f^\prime;\mu(x),k(x,x)). </script>
+
+<p>EI를 그림으로 나타내면 다음과 같다. PI처럼 이미 explore가 많이 된 곳을 또 찾는 실수는 덜 저지른다는 것을 볼 수 있다.</p>
+
+<p><img class="center" src="/images/post/99-8.png" width="500"></p>
+
+<h5 id="ucb">UCB</h5>
+
+<p>UCB는 우리가 이미 잘 알고 있는 그 UCB이며, acquisition function은 다음과 같다.</p>
+
+<script type="math/tex; mode=display"> a_{UCB}(x;\beta) = \mu(x) - \beta\sigma(x). </script>
+
+<p>UCB의 문제점이라면, explore-exploit trade-off parameter인 $\beta$의 존재이다.
+Form도 간단하고, 조절하기 쉽기도 하지만, hyperparameter를 또 조정해야한다는 문제 때문에 이 논문에서는 다루지 않는다.
+UCB 역시 그림으로 나타내면 다음과 같다.</p>
+
+<p><img class="center" src="/images/post/99-9.png" width="500"></p>
+
+<p>이 이외에도 Entropy search, Thompson sampling 등의 다양한 acquisition function이 있지만 이 글에서는 다루지 않도록 하겠다.</p>
+
+<h3 id="limitation-of-bayesian-optimization">Limitation of Bayesian Optimization</h3>
+<p>지금까지 Bayesian optimization (BO)에 대해 ‘간략히’ 알아봤다. 여기까지 글을 읽으면서 느꼈겠지만, Bayesian optimization은 굉장히 impractical하다.
+여러가지 이유가 있는데, 크게는 다음과 같은 이유들이 있다.</p>
+
+<ul>
+  <li>Hyperparameter search를 하기 위해 BO를 사용하는데, BO를 사용하기 위해서는 GP의 hyperparameter들을 튜닝해야한다 (kernel function의 parameter 등)</li>
+  <li>어떤 stochastic assumption을 하느냐에 따라 (어떤 kernel function을 사용해야할지 등) 결과가 천차만별로 바뀌는데, (model selection에 민감한데) 어떤 선택이 가장 좋은지에 대한 가이드가 전혀 없다.</li>
+  <li>Acquisition function을 사용해 다음 지점을 찾는 과정 자체가 sequential하기 때문에 grid search나 random search와는 다르게 parallelization이 불가능하다.</li>
+  <li>위에 대한 문제점들이 전부 해결된다고 하더라도 software implementation이 쉽지 않다.</li>
+</ul>
+
+<p>이런 문제점들을 해결하기 위해 이 논문은 (그렇다 이제서야 이 논문이 어떤 일을 했는지 얘기할 수 있게 되었다) 먼저 kernel function을 여러 실험적 결과 등을 통해
+Matern 5/2 kernel이 가장 실험적으로 좋은 결과를 낸다는 결론을 내린다 (즉, kernel function은 언제나 Matern 5/2를 쓰면 된다). 또한 acquisition function도 EI로 고정한다.
+다음으로 GP의 hyperparameter들을 Bayesian approach를 통해 acquisition function을 hyperparameter에 대해 marginalize한다.
+이 marginalized acquisition function은 (integrated acquisition function이라고 한다) MCMC로 풀 수 있는데, 자세한 얘기는 뒤에서 이어서 하도록 하겠다.
+마지막으로 이 논문은 이론적으로 tractable한 Bayesian optimization의 parallelized version을 (MCMC estimation이다) 제안한다.</p>
+
+<p>저자들이 작성한 코드 역시 GitHub에 공개가 되어있다. (HIPS repo에 있는 코드가 최신이다. 둘이 라이센스가 다르기 때문에 상황에 맞춰 쓰면 된다.)</p>
+
+<ul>
+  <li><a href="https://github.com/JasperSnoek/spearmint">https://github.com/JasperSnoek/spearmint</a> (Out-dated, Fully open source)</li>
+  <li><a href="https://github.com/HIPS/Spearmint">https://github.com/HIPS/Spearmint</a> (Up-to-dated, non-commercial use, academic use only)</li>
+</ul>
+
+<p>그 밖에도 최근 다른 곳에서도 이 내용을 implement한 것 같다.</p>
+
+<ul>
+  <li><a href="https://github.com/fdiehl/apsis">https://github.com/fdiehl/apsis</a></li>
+</ul>
+
+<h3 id="practical-bayesian-optimization">Practical Bayesian Optimization</h3>
+
+<h4 id="expected-improvement-and-matern-52-kernel-function">Expected Improvement and Matern 5/2 Kernel function</h4>
+
+<p>앞에서도 설명했듯, 이 논문은 먼저 acquisition function으로는 EI를 사용하고, kernel function으로는 Matern 5/2를 사용한다.
+Kernel function을 무엇을 고르냐에 따라 어떤 변화가 나타나는지 보여주는 좋은 그림이 하나 있어 첨부한다. 출처: <a href="http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf">[5]</a></p>
+
+<p><img class="center" src="/images/post/99-10.png" width="500"></p>
+
+<p>가장 많이 쓰이는 Squared-exponential function의 가장 큰 문제는 ‘smoothness’로, 복잡한 모델을 표현하기에는 너무 ‘smooth’한 function만 estimate할 수 있다는 단점이 있다.
+이를 해결하기 위해 이 논문에서는 Matern kernel function을 사용하며, 특히 그 hyperparameter로 5와 2를 사용하는 Matern 5/2를 사용하고 있다.
+이 결과는 아무 값이나 고른건 아니고, 실제로 structured SVM의 hyperparameter를 찾을 때 여러 kernel function 중에서 가장 좋은 kernel이 무엇인지 아래와 같은 실험들 끝에 얻은 결과이다.</p>
+
+<p><img class="center" src="/images/post/99-11.png" width="500"></p>
+
+<p>Matern 5/2 kernel의 구체적인 식은 다음과 같다.</p>
+
+<script type="math/tex; mode=display"> K_{M52}(x, x^\prime) = \theta_0 \left( 1 + \sqrt{5 r^2(x, x^\prime)} + \frac{5}{3} r^2(x, x^\prime) \right) \exp \left\{ -\sqrt{5 r^2 (x, x^\prime)} \right\}. </script>
+
+<script type="math/tex; mode=display"> r^2 (x, x^\prime) = \sum_{d=1}^D (x_d - x_d^\prime)^2 / \theta_d^2. </script>
+
+<p>따라서 이 GP의 hyperparameter는 $\theta_0, \theta_d$로, d가 1부터 D까지 있으니 총 D+1 개의 hyperparameter를 필요로 한다.</p>
+
+<p>앞으로 별 다른 언급이 없다면 kernel function은 Matern 5/2, acquisition function으로는 EI를 사용한다.</p>
+
+<h4 id="integrated-acquisition-function-marginalize-hyperparameter">Integrated Acquisition Function (marginalize hyperparameter)</h4>
+
+<p>이제 covariance의 형태를 결정했으니, GP의 hyperparameter를 없애는 일이 남았다.
+우리가 optimize하고 싶은 hyperparameter의 dimension이 D라고 해보자 (위에서 언급했던 random forest의 경우, hyperparameter는 n_estimators, criterion, max_depth, min_samples_leaf로 D=4다). 이때 GP의 hyperparameter의 개수는 D+3개가 된다. 바로 앞에서 언급한 D+1개와, constant mean function의 값 m, 그리고 noise $\nu$가 그것이다.</p>
+
+<p>이 논문에서는 hyperparameter를 완전하게 Bayesian으로 처리하기 위하여 모든 hyperparameter $\theta$ (D+3 dimensional vector)에 대해
+acquisition function을 marginalize한 다음에, 다음과 같은 integrated acquisition function을 계산하는 방법을 제안한다.</p>
+
+<script type="math/tex; mode=display"> \widehat a (x; \{x_n, y_n\}) = \int a(x; \{x_n, y_n\}, \theta) p(\theta \| \{x_n, y_n\})_{n=1}^N) d\theta. </script>
+
+<p>PI와 EI에 대해서는 이 integrated acquisition function을 계산하기 위해 다양한 GP hyperparameter에 대한 GP posterior를 계산한 다음,
+integrated acquisition function의 Monte Carlo estimatation을 구하는 것이 가능하다. 이 논문에서는 slide sampling을 사용해 구할 수 있다고 언급되어있다.
+말이 조금 어려운데, 그냥 쉽게 생각해보면, sampling을 통해 얻은 여러 hyperparameter들에 대해 EI를 전부 구한 다음, 그것들을 사용해 expectation 계산을 하면 integrated EI를 구할 수 있다.
+그림으로 표현하면 아래와 같다.</p>
+
+<p><img class="center" src="/images/post/99-13.png" width="400"></p>
+
+<h4 id="expected-improvement-per-second">Expected Improvement per second</h4>
+<p>위에서 구한 integrated EI를 사용한다고 하더라도, 아직 몇 가지 문제점들이 남아있다. 그 중 하나는, 모든 hyperparameter에 대해 실험 시간이 똑같지 않다는 점이다.
+예를 들어 deep learning layer가 2인 것과 500인 것은 실험 시간의 차이가 어마어마하다.
+따라서 실제로는 가장 최소한의 시행을 통해 optimization을 진행한다고 하더라도, 실제 소요 시간은 엄청 클 수도 있는 것이다.
+이 논문은 그런 문제를 해결하기 위해, 필요한 경우 EI per second 라는 새로운 acquisition function을 제안한다.</p>
+
+<p>아마도 NIPS 논문이 page limitation이 빡빡해서 그런지 정확한 formulation은 나와있지 않지만, 요점은 objective function f(x) 말고도,
+duration function c(x) 라는 것을 따로 정의한 다음, 이 함수를 사용해 ‘cost’를 모델링하는 것이다.
+c(x)도 GP라고 assume하는 것 같은데, c(x)와 f(x)가 independent하다고 가정하면 쉽게 acquisition function을 구할 수 있는 모양이다.
+아래 실험결과에서도 볼 수 있듯, 오히려 실제 실행 시간의 관점에서는 EI per second가 더 빠른 것을 알 수 있다.</p>
+
+<p><img class="center" src="/images/post/99-15.png" width="500"></p>
+
+<h4 id="monte-carlo-acquisition-for-parallelizing-bayesian-optimization">Monte Carlo Acquisition for Parallelizing Bayesian Optimization</h4>
+<p>이제 이 논문의 마지막 하이라이트만 남았다. Acquisition function을 optimize하면서 다음 point를 고르는 방식은 parallelization하기가 쉽지 않다.
+매 번 포인트를 고를 때 마다 이 function이 바뀌기 때문인데, 여러 heuristic을 사용할 수는 있지만, theoretically tractable한 결과를 얻기는 쉽지 않다.</p>
+
+<p>다음과 같은 문제 상황을 가정해보자. N개의 데이터의 evaluation이 끝난 상황이고 $(\{x_n, y_n\}_{n=1}^N)$ J개의 point들에서 $(\{x_j\}_{j=1}^J)$ 실험을 진행 중이라고 가정해보자. (아직 결과는 나오지 않았다)
+이론상 지금까지 진행한 실험과 $(\{x_n, y_n\}_{n=1}^N)$ 현재 진행 중인 실험 $(\{x_j\}_{j=1}^J)$ 을 모두 고려하여 다음 point를 고르기 위해서는,
+acquisition function의 J개의 아직 결과가 나오지 않은 point들에 대한 expectation을 구한 다음, 그 결과를 acquisition function으로 사용하면 된다.</p>
+
+<script type="math/tex; mode=display"> \widehat a (x; \{x_n, y_n\}, \theta, \{x_j\}) = \int a (x; \{x_n, y_n\}, \theta, \{x_j, y_j\}) p(\{y_j\}_{j=1}^J \| \{x_j\}_{j=1}^J, \{x_n, y_n\}_{n=1}^N)dy_1, \ldots, dy_J. </script>
+
+<p>다행스럽게도, y가 Gaussian distribution이기 때문에 이 expectation은 쉽게 계산할 수 있으며,
+단순히 동시에 진행하는 실험의 숫자를 늘리는 것으로 parallelization을 할 수 있기 때문에 parallelization 역시 간단하게 할 수 있다.
+이 방법론을 GP EI MCMC라고 하며, 그림으로 나타내면 아래와 같다.</p>
+
+<p><img class="center" src="/images/post/99-14.png" width="400"></p>
+
+<h4 id="conclusion">Conclusion</h4>
+<p>이 논문의 꽃이라 할 수 있는 실험 결과는 스킵하도록 하겠다. 그냥 “압도적으로 좋다” 정도로 이해하고 넘어가자.
+사실 또 하나 언급하지 않은 점은, supplimentary material에 있는 구체적인 acquisition function optimization 방법이다.
+이 논문은 개념적으로 알고 있어야하는 내용이 안그래도 많은데, 이 얘기를 하려면 여기에서 더 많은 얘기를 해야해서 넘기기로 하였다.
+나중에 여유가 있을 때 추가 포스트를 쓰던가 해야겠다.</p>
+
+<p>이 논문은 잘 쓰기만하면 굉장히 outperform한 성능을 낼 수 있는 Bayesian optimization 기반 hyperparameter search 알고리즘을 제안한다.
+핵심은 어떻게 다음 point를 고를 것인지 설정하는 acquisition function을 design하느냐인데,
+이 논문은 GP의 hyperparameter도 acquisition function에 녹이고, parallelization을 하기 위해 아직 진행 중인 실험의 expectation또한
+이 acquisition function에 녹임으로써 원래 Bayesian optimization이 가지고 있었던 한계를 극복한다.
+그뿐 아니라 실험적으로 우수한 kernel function인 Matern 5/2를 기본 kernel function제안함으로써 model selection 이슈도 피해간다.</p>
+
+<p>실제 구현해서 사용하기는 어려운 내용이지만, 잘 숙지해두면 분명 도움이 될 수 있는 아이디어라 생각한다.</p>
+
+<h3 id="references">References</h3>
+<ol class="reference">
+	<li><a href="http://papers.nips.cc/paper/4522-practical">[NIPS] Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. "Practical bayesian optimization of machine learning algorithms.", 2012.</a></li>
+	<li><a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">[JMLR] Bergstra, James, and Yoshua Bengio. "Random search for hyper-parameter optimization.", 2012</a></li>
+	<li><a href="http://becs.aalto.fi/en/research/bayes/courses/4613/Vik_Kamath_Presentation.pdf">http://becs.aalto.fi/en/research/bayes/courses/4613/Vik_Kamath_Presentation.pdf</a></li>
+	<li><a href="http://enginius.tistory.com/489">http://enginius.tistory.com/489</a></li>
+	<li><a href="http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf">http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf</a></li>
+	<li><a href="http://www.dmi.usherb.ca/~larocheh/publications/gpopt_nips_appendix.pdf">[NIPS] Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. "Practical bayesian optimization of machine learning algorithms." Supplimentary material, 2012.</a></li>
+</ol>
+
+<h3 id="section-1">변경 이력</h3>
+<ul>
+  <li>2016년 8월 16일: 글 등록</li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AlphaGo의 알고리즘과 모델]]></title>
@@ -567,114 +988,6 @@
 
 <h3>Reference</h3>
 <ul><li><p><a href="http://arxiv.org/abs/1406.6247">Mnih, Volodymyr, Nicolas Heess, and Alex Graves. "Recurrent models of visual attention." Advances in Neural Information Processing Systems. 2014.</a></p></li></ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Playing Atari with Deep Reinforcement Learning (NIPS 2013)]]></title>
-    <link href="http://SanghyukChun.github.io/90/"/>
-    <updated>2015-09-15T19:56:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/90</id>
-    <content type="html"><![CDATA[<p>이번에 리뷰할 논문은 Google DeepMind가 NIPS 2013에 발표한 Deep Learning과 Reinforcement Learning을 결합한 <a href="http://arxiv.org/abs/1312.5602">Playing Atari with Deep Reinforcement Learning</a> 이라는 논문이다. 그 전에도 DNN과 RL을 결합하려는 시도는 있었지만, 거의 사람이 플레이하는 수준으로 의미있는 수준까지 도달한 work은 이 work이 처음인듯 하다. 글을 시작하기 전에 먼저 이 논문에서 한 결과부터 살펴보자. Atari라는 게임 콘솔을 가지고 이 논문의 method를 적용한 결과이다. 2분 5초부터 시작되는 터널링 전략이 진짜 걸작이다.</p>
-
-<div style="text-align: center;"><iframe width="420" height="315" align="middle" src="https://www.youtube.com/embed/iqXKQf2BOSE" frameborder="0" allowfullscreen=""></iframe></div>
-
-<p>충격적인 사실은 다른 hand-coding feature나 parameter 튜닝 없이 오직! vision data만 사용해서 이런 결과를 냈다는 사실이다. 빨간 공이 object고  빨간 판이 내가 움직이는거라는 기본적인 hand-craft feature 조차 없이 이런 결과를 냈다는 것이다. Deep leanring이 RL에서 뛰어난 성과를 보이지 못한 이유가 주로 데이터에 관련된 것이었음을 생각해보면 대단한 결과라고 할 수 있다. 최근에는 이 work을 기반으로 <a href="http://arxiv.org/abs/1406.6247">Image Attention (NIPS 2015)</a> 이라고 부르는 work도 나온 것 같다. Image Attention 논문은 다음에 정리해보도록하겠다.</p>
-
-<h3>Background</h3>
-<p>이 논문은 RL 중에서도 MDP에 초점을 맞추고 있으며 (사실 MDP가 아닌 RL은 거의 없다고 봐도 무방하지만) 그 중에서도 model-free technique 중 하나인 <a href="https://en.wikipedia.org/wiki/Q-learning">Q-learning algorithm</a>을 neural network를 통해 해결하고 있다. 이 글은 RL에 대해 어느 정도 기초적인 지식이 있다고 가정하고 쓸 것이기 때문에 조금 더 자세한 내용은 <s>추후 작성할 RL 관련 포스트나</s> <a href="http://SanghyukChun.github.io/76">이 포스트</a>나 다른 reference들을 참고하면서 읽으면 좋을 것 같다.</p>
-<p>Reinforcement Learning을 위해서는 먼저 환경 $\mathcal E$을 정의해야한다. 이 논문에서는 Atari 에뮬레이터가 환경이 될 것이다. Atari 에뮬레이터 환경을 구성하는 요소는 action의 sequence들, observe하는 화면과 최종 reward (점수)가 될 것이다. 그림으로 표현하면 다음과 같은 식이다.</p>
-
-<p><img src="/images/post/90-6.png" width="600"></p>
-
-<p>매 시간마다 agent는 legal game action $\mathcal A = \{1, \ldots, K\}$ 중에서 action $a_t$를 하나 선택한다. 예를 들어 아래 그림과 같은 컨트롤러의 버튼 중 어떤 버튼을 누를 거인지를 결정하는 것이다. 옆으로 움직이는 버튼, 기타 다른 버튼들 하나하나가 $\mathcal A$의 element이며, 그 중 하나가 action $a_t$가 되는 것이다.</p>
-
-<p><img class="center" src="/images/post/90-1.png" width="200"></p>
-
-<p>게임을 하는 동안 컨트롤러의 버튼을 누르는 action들이 모이게 되면 현재 점수에 어떻게든 영향을 주게 되고, 그 결과로 최종 점수가 결정된다. 즉, Atari 게임 환경에서 reward $r_t$는 게임 score이며, 현재 내가 선택한 action은 바로 reward에 반영되는 것이 아니라 엄청나게 나중에 반영될 수도 있는 것이다.</p>
-<p>또한 게임 조작을 통해 변화하는 것 중 우리가 관측할 수 있는 것은 실제 게임 화면의 pixel 값들 뿐이다 (이 논문에서는 time stamp $t$에서의 픽셀 값을 $x_t$라고 정의하였다). 때문에 이 논문에서는 vision 데이터를 사용해서 state를 정의하는데, state를 정의하는 방식이 상당히 재미있다. 간단하게 $x_t$를 state로 삼으면 될 것 같지만, 실제로는 화면 하나만 보고 알 수 있는 정보가 제한적이고 현재 상태를 정확하게 판단하기 위해서는 vision정보와 내가 행한 action을 포함한 과거 history들까지 모두 있지 않으면 안되기 때문에 이 논문은 state $s_t$를 action과 image의 sequence로 정의한다. 예를 들어 아래 스크린샷에서 공은 왼쪽으로 움직일까 오른쪽으로 움직일까? 만약 관성을 implement한 게임이라면 (움직이는 버튼에서 손을 떼도 조금 움직이는 게임이라면) 과연 play agent는 위로 올라가고 있을까 아니면 아래로 내려가고 있을까 그것도 아니면 멈춰있을까? 이렇듯 한 time stamp에 대한 vision 데이터로는 파악할 수 있는 데이터가 너무 제한적이기 때문에 모든 history가 반드시 필요하다.</p>
-<p><img class="center" src="/images/post/90-2.png" width="300"></p>
-<p>다시 말해서, $s_t  = x_1, a_1, \ldots, a_{t-1}, x_t$ 가 된다. 이런 방식으로 modeling을 하게 되면 policy 혹은 strategy를 learning할 때 모든 과거 sequence를 고려해서 strategy가 결정되게 된다. 게임은 언젠가 끝나게 되어있기 때문에 모든 $s_t$는 finite한 길이를 가지고 있으며 (비록 어마어마하게 크지만) $s_t$의 domain 역시 유한하다. 따라서 이 모델은 엄청나게 large하지만 어쨌거나 finite한 Markov dicision process(MDP)가 된다.</p>
-<p>우리의 목표는 에뮬레이터에 agent가 어떤 strategy를 통해 게임을 조작하여, 최종적으로 게임이 끝났을 때 게임에서 가장 높은 점수를 획득하는 것이다. 즉, reward에 대한 수학적 정의만 있다면 이 문제는 간단한 optimization 문제가 된다. 게임은 보통 시간 마다 reward를 받는다. 하지만 일반적으로 시간이 오래 지날수록 해당 reward의 가치는 점점 내려가는데 이를 고려하기 위하여 discount factor $\gamma$가 정의된다. 시간 $t$의 reward를 t라고 한다면 time $T$에서의 discount factor를 고려한 future reward는 다음과 같이 정의한다.</p>
-<p>$$R_t = \sum_{t^\prime=t}^T \gamma^{t^\prime-t} r_{t^\prime}.$$</p>
-<p>Reward function을 정의했으니 Q-function (action-value function) 역시 정의할 수 있다. $\pi$를 $s_t$에서 $a_t$를 mapping하는 policy function이라하면, optimal Q-function $Q^*$는 다음과 같이 정의할 수 있다.</p>
-<p>$$Q^*(s,a) = \max_\pi \mathbb E \big[ R_t \big| s_t = s, a_t = a, \pi \big]. $$</p>
-<p>MDP에서는 이 optimal action value function 혹은 optimal Q-function 하나만 제대로 알고 있다면 언제나 주어진 state에 대해 가장 $Q^*$의 값을 크게 만드는 action을 고르는 간단한 policy만으로도 반드시 항상 optimal한 action을 고를 수 있다는 이론적 결과가 있기 때문에 Q-function은 매우매우 중요하다. 이 논문에서도 $Q^*$를 찾는 neural network를 만들어서 문제를 해결하고 있으니, Q-function에 대한 이해가 필수적이다.</p>
-<p>다시 본문으로 돌아와서, Optimal Q-function은 <a href="https://en.wikipedia.org/wiki/Bellman_equation">Bellman equation</a>이라는 중요한 특성을 따르게 된다. 이 equation을 intuition은 대충 이런식이다: seqeunce $s^\prime$의 다음 time stamp에서의 optimal Q-function $Q^* (s^\prime, a^\prime)$ 값이 모든 action $a^\prime$에 대해서 알려져 있다면, optimal strategy는 $r + \gamma Q^* (s^\prime, a^\prime)$의 expected value를 maximize하는 것이라는 것이다. 이를 수식으로 표현하면 다음과 같다.</p>
-<p>$$Q^*(s,a) = \mathbb E_{s^\prime \sim \mathcal E} \bigg[ r + \gamma Q^* (s^\prime, a^\prime) ~\big|~ s,a \bigg].$$</p>
-<p>많은 RL algorithm 들에서는 Q-function을 estimate하기 위하여 이 Bellman equation을 value iteration algorithm이라는 것을 통해 iterative update하여 구하게 된다. Value iteration algorithm에서는 매 $i$ 번쨰 iteration마다 다음과 같은 procedure를 수행하게 된다.</p>
-<p>$$Q_{i+1} (s,a) = \mathbb E \bigg[ r + \gamma Q^* (s^\prime, a^\prime) ~\big|~ s,a \bigg].$$</p>
-<p>이런 value iteration algorithm은 MDP에서 $Q_i \to Q^* \mbox{ as } i\to\infty$라는 것이 알려져 있다. 그러나 이런 방식은 이론적으로는 의미가 있을지 몰라도 실제로는 완전히 impractical한데, 이 과정을 모든 seqeunce에 대해 독립적으로 시행해야하기 때문이다. 따라서 보통은 action-value function을 다음과 같은 식으로 적절한 approximator를 사용하여 approximation한다.</p>
-<p>$$Q(s,a;\theta) \simeq Q^* (s,a).$$</p>
-<p>보통 linear function으로 approximation하지만, 간혹 non-linear function으로 모델링하는 경우도 있다. 예를 들어 deep network를 쓰는 방법이 있는데, 이 논문은 기존 방법들에 비해 RL에 적합한 Deep Network 모델을 제안하여 뛰어난 non-linear function approximator를 제안한다.</p>
-<p>일반적으로 RL에 deep learning approach를 바로 적용했을 때 몇 가지 이슈가 생기게 되는데, 먼저 deep learning을 하기 위해서는 엄청나게 많은 hand labelled training data가 필요하지만, RL에서는 모든 state와 action에 대한 labelled data가 없기 때문에 이를 어떻게 handle해야할지를 모델에서 고려해야만한다. 또한 현재까지 연구된 많은 deep learning structure들은 data가 i.i.d.하다고 가정하지만, 실제 RL 환경에서는 state들이 엄청나게 correlated되어있기 때문에 제대로 된 learning이 어렵다. 예를 들어 위 핑퐁 게임 화면에서 한 프레임 더 지난 화면과 지금 화면은 정말 엄청나게 높은 correlation을 가지지만, standard feed-forward deep learning은 그것을 처리할 수 있는 모델이 아니기 때문에 문제가 발생한다. 이 논문은 그 문제를 experience replay라는 것으로 해결하는데, 자세한 내용은 다음 section에서 다루도록 하겠다.</p>
-
-<h3>Deep Q-Learning</h3>
-<p>앞에서 정의한 Q-function을 modeling한 network를 ($Q(s,a;\theta) \simeq Q^* (s,a)$, 이때 $\theta$는 weight나 bias 등 neural network의 model parameter들) 이 논문에서는 Q-network라고 부르고 있다. 만약 parameter가 $\theta$가 정해진다면, 우리는 state $s$와 action $a$를 Q-network에 넣어서 forward pass를 돌리게 되면 해당하는 Q-value를 얻을 수 있을 것이다. 따라서 parameter가 정해진다면 주어진 $s$에 대해 모든 $a$에서의 Q-value를 얻을 수 있고, 이를 통해서 $Q^*$의 값과 그것을 achieve하는 action $a^*$를 구하는 것도 가능해진다. 다시 말해서 이 Q-network를 올바른 방향으로 update하는 알고리즘을 design하기만 한다면 주어진 문제를 해결할 수 있는 것이다. 이 논문에서는 Q-network가 우리가 원하는 목적대로 train되도록 하기 위하여 i 번째 iteration에서 아래와 같은 loss function을 가지도록 design한다. 이 논문은 현재 Q-network가 항상 target Q-value에 가까워지도록 loss를 설정함으로써 마치 value iteration이 converge하듯 Q-network의 update가 converge할 때 까지 iterative algorithm을 돌리도록 하는 것이다. 이때 $y_i$는 iteration i의 target value이고, $\rho(s,a)$는 sequence $s$와 action $a$의 probability distribution이며, 이를 이 논문에서는 behaviour distribution이라고 정의한다.</p>
-<p>$$L_i (\theta_i) = \mathbb E_{s,a\sim \rho(\cdot)} \bigg[ \big(y_i - Q(s,a;w_i) \big)^2 \bigg], $$</p>
-<p>$$\mbox{where, }y_i = \mathbb E_{s^\prime \sim \mathcal E} \bigg[r + \gamma \max_{a^\prime} Q(s^\prime, a^\prime;w_{i-1}) ~\big|~ s, a \bigg]. $$</p>
-<p>주의할 점은, optimization 과정에서 parameter $\theta$가 update되는 동안 loss function $L_i(\theta_i)$ 의 이전 iteration paramter $\theta_{i-1}$은 고정된다는 것이다. 이를 'freeze target Q-network' 라고 부르는데, 이렇게하는 이유는 supervised learning과는 다르게, target의 값이 $\theta$의 값에 (민감하게) 영향을 받기 때문에 stable한 learning을 위하여 $\theta$값을 고정하는 것이다. 이건 아래에서 조금 더 자세하게 설명하도록 하겠다. 이제 loss function을 정의되었으므로 gradient값만 있다면 그 값을 사용해서 backpropagation을 돌리면 쉽게 update할 수 있다. 이 network의 loss의 gradient는 다음과 같이 구할 수 있다.</p>
-<p>$$\nabla_{\theta_i} L_i (\theta_i) = \mathbb E_{s,a\sim \rho(\cdot); s^\prime \sim \mathcal E} \bigg[ \big( r + \gamma \max_{a^\prime} Q(s^\prime, a^\prime; \theta_{i-1}) - Q(s,a;\theta_i) \big) \nabla_{\theta_i} Q(s,a;\theta_i)\bigg]$$</p>
-<p>하지만 이렇게 build한 Deep RL을 바로 사용할 수는 없고, 아래와 같은 몇 가지 이슈들을 처리해야한다.</p>
-
-<ul>
-  <li>Deep Learning은 데이터가 i.i.d.하다고 가정하지만 실제 RL input의 데이터는 sequential하고 highly correlated 되어있다.</li>
-  <li>Policy 변화에 따른 (이 경우는 w의 변화에 따른) Q-value의 변화량이 너무 크기 때문에 policy가 oscillate하기 쉽다.</li>
-  <li>위와 같은 세팅에서는 reward와 Q-value의 값이 엄청나게 커질 수 있기 때문에 stable한 SGD 업데이트가 어려워진다.</li>
-</ul>
-
-<p>첫 번째 이슈는 이미 전 문단에서 간단하게 언급했었으니 생략한다. 두 번째 문제도 크게 어렵지 않게 생각할 수 있는데, 게임을 하는 방식을 아주 조금만 바꾸더라도 게임의 결과가 완전히 크게 바뀌기 때문에 이런 현상이 발생한다. 핑퐁 게임에서 움직이는 속도를 조금 늦춘다거나 했다가는 바로 한 점을 잃게 될 것이다. 또한 앞에서 설명한 것 처럼 supervised learning과는 다르게 target의 값이 parameter에 영향을 아주 민감하게 받기 때문에, 이 값을 고정해주는 과정이 필요하다. 마지막 조건은 좀 practical한 이슈인데, Q-value의 값이 얼마나 커질지 모르기 때문에 stable update가 힘들 수도 있다. 이 논문에서는 다음과 같은 세 가지 방법으로 각각의 issue를 handling한다</p>
-
-<ul>
-  <li>Experience replay</li>
-  <li>Freeze target Q-network</li>
-  <li>Clip reward or normalize network adaptively to sensible range</li>
-</ul>
-
-<p>이 중에서 두 번째 idea는 이미 설명했고 (update하는 동안 target을 계산하기 위해 사용하는 paramter를 고정), 세 번째 idea는 reward의 값을 [-1,0,1] 중에서 하나만 선택하도록 강제하는 아이디어이다. 즉, 내가 100점을 얻거나 10000점을 얻거나 항상 reward는 +1 이다. 'highest' score를 얻는 것은 불가능하지만, 이렇게 설정함으로써 조금 더 stable한 update가 가능해진다. 그리고 그와는 별개로 모든 게임에 적용가능한 DQL을 learning할 수 있다는 장점도 있다. 실제로 실험에서는 모든 게임을 단 하나의 네트워크로만 learning해서 기존의 모든 방법을 beating한다.</p>
-<p>그럼 이제 마지막으로 이 논문의 핵심 아이디어라고 할 수 있는 experience replay에 대해 살펴보자. Experience replay는 agent의 experine를 각 time stamp마다 다음과 같은 튜플 형태로 메모리 $\mathcal D = e_1, \ldots, e_N$ 에 저장한 후 이를 다시 사용하는 것이다.</p>
-<p>$$e_t = (s_t, a_t, r_t, s_{t+1}).$$</p>
-<p>Experience replay는 이렇게 experience $e_t$를 메모리 $\mathcal D$에 저장해두었다가, 일부를 uniformly random하게 sample하여 mini-batch를 구성한 다음 parameter $\theta$를 mini-batch에 대해 backpropagation으로 update하는 과정을 의미한다.</p>
-<p>Experience replay를 사용함으로써 data의 correlation을 깰 수 있고, 조금 더 i.i.d.한 세팅으로 network를 train할 수 있게 된다. 또한 방대한 과거 데이터가 한 번만 update되고 버려지는 비효율적 접근이 대신에, 지속적으로 추후 update에도 영향을 줄 수 있도록 접근하기 때문에 데이터 사용도 훨씬 효율적이라는 장점이 있다. 실제로 실험에서는 메모리 용량의 한계 때문에 bucket을 $N$으로 고정하고, FIFO 형태로 저장을 한 모양이다.</p>
-<p>Experience replay가 끝난 후 agent는 action을 $\epsilon$-greedy policy라는 것을 사용해 선택하고 실행한다. 이 방법은 action을 $\epsilon$의 확률로 random하게 고르거나 $1-\epsilon$의 확률로 MDP의 optimal action selection criteria인 $a_t = \arg\max_a Q^*(s_t, a;\theta) $로 고르는 policy를 의미한다.</p>
-<p>참고로, arbitrary length의 input을 다루는 것이 general feed-forward network에서는 어렵기 때문에, 이 논문에서는 function $\phi$라는 것을 정의해서 모든 $s_t$의 length를 fix한다. 이 알고리즘을 수식적으로 기술하면 다음과 같이 기술할 수 있다.</p>
-
-<p><img src="/images/post/90-3.png" width="600"></p>
-
-<p>Equation 3은 위에서 증명한 gradient 값이고, 함수 $\phi$는 다음과 같다: 주어진 history 중에서 가장 마지막 4개의 frame을 stack으로 쌓는 것. 이때 각각의 frame은 원래 128색 210 by 160 픽셀으로 구성되어있지만, gray-scale로 만들고 110 by 84로 down sampling한 후 84 by 84로 크롭한다. 이때 크롭을 하는 이유는 주어진 툴에서 정사각형 사진만 GPU 연산이 되기 때문이라고..</p>
-<p>이렇게 experience replay라는 아이디어를 사용한 DQL은 몇 가지 이점이 있다.</p>
-
-<ul>
-  <li>각각의 experience가 potentially 많은 weight update에 reuse되기 때문에 experience를 weight update 한 번에만 사용하는 기존 방법보다 훨씬 data efficiency하다.</li>
-  <li>두 번째로, mini-batch를 만드는 sampling 과정을 통해 데이터들 간의 high correlation을 효율적으로 관리하고, 이를 통해 보다 효율적인 update를 할 수 있다. 이 방법은 random하게 sample을 뽑아서 mini-batch로 구성하기 때문에 이런 high correlation을 break해서 update의 효율성을 높이기 때문이다.</li>
-  <li>마지막으로 이 방법을 통해 parameter를 update하게 되면 다음 training을 위한 data sample을 어느 정도 determine할 수 있다. 예를 들어서 내가 지금 오른쪽으로 움직이는 쪽으로 action을 고른다면 다음 sample들은 내가 오른쪽에 있는 상태의 sample들이 dominate하게 나올 것이라고 예측할 수 있다. 따라서 이 방법을 통해 training을 위한 다음 데이터를 무작정 뽑는 것이 아니라 현재 action을 고려하여 효율적으로 뽑을 수 있다.</li>
-</ul>
-
-<p>몇 가지 주의점이라면 freeze target Q-network, 혹은 off-policy가 반드시 필요하다는 점 정도가 있겠다. 한계점으로는 메모리의 한계 때문에 앞에서 말한 것처럼 모든 history를 저장하지 못한다는 점과, uniform sampling을 사용하기 때문에 모든 과거 experience가 동일한 weight를 가진다는 점이다. 이 논문에서는 조금 더 wise한 sampling을 하게 되면 성능 향상이 있을 수도 있다고 언급하고 있다.</p>
-
-<h3>Model Architecture of DQL and Experiment</h3>
-<p>이제 구체적으로 어떤 neural network 모델을 사용해 learning을 하게 될지 알아보자. 항상 관심있게 살펴봐야 할 내용은 (1) input data는 무엇인가 (2) output data는 무엇인가 (3) 구체적인 network 구조는 어떻게 되는가 정도가 있겠다. 이 논문에서는 input으로 $\phi(s_t)$를 받고, output으로 가능한 모든 action에 대한 Q-value를 출력한다. 즉, 버튼이 4개 있다면 output은 4개이고, 12개 있다면 output은 12개이다. 실제 논문에서는 게임 종류에 따라 action을 4개에서 18개 사이에서 고른 것 같다. 이렇게 모델을 고르게 되면 $Q^*$를 단 한번의 forward pass 만으로 구할 수 있다는 장점이 있기 때문에 이 논문에서는 이러한 방법을 선택하였다. 구체적인 네트워크는 CNN을 사용한다. 인풋 데이터는 $\phi(s_t)$를 넣는다고 했으므로 84 by 84로 크롭한 후에 4개의 history를 stack으로 쌓은 데이터가 들어오게 된다. 그러니까 대충 다음과 같은 식이다.</p>
-<p><img src="/images/post/90-5.png" width="600"></p>
-<p>이 네트워크를 사용한 자세한 실험 결과는 다음 표에 나와있다. 각각의 숫자는 모두 reward를 의미하기 때문에 값이 클 수록 좋은 결과이다.</p>
-<p><img src="/images/post/90-4.png" width="600"></p>
-<p>Breakout, Enduro, Pong은 심지어 사람보다도 좋은 것을 알 수 있고, Space Invaders를 제외하면 기존 모델들보다 best 뿐 아니라 avg 까지 뛰어난 것을 볼 수 있다. 논문에서는 Q*bert, Seaquest, Spae Invaders 등의 게임에서 사람의 performance에 한참 미치지 못하는 이유로 이 게임들은 전략이 엄청나게 긴 time scale로 필요하기 때문에 조금 더 challenge한 문제라고 주장하고 있다. 아마 하드웨어의 발달과 모델의 발달로 언젠가는 극복할 수 있을 것으로 보인다.</p>
-
-<h3>Summary of DQL</h3>
-
-<ul>
-  <li>문제 정의 자체가 흥미롭다. 특히 state space를 sequence of iamges and action으로 구성했다는 점이 흥미롭다.</li>
-  <li>State에 대한 hand-craft feature가 전혀 없다. 오직 이미지 sequence만을 사용해서 CNN으로 feature를 자동으로 만들어내는 방법으로 이를 해결하고 있다는 점이 흥미롭다.</li>
-  <li>Q-function을 learning하는 neural network를 구성하였는데 몇 가지 stable update를 위하여 ‘off-policy’를 사용하고, ‘experience replay’ 기법을 사용한다.</li>
-  <li>Experience replay는 매 시간마다 experience tuple $e_t$를 메모리에 저장하고, 메모리에서 $e_t$를 uniformly sample하여 뽑아 mini-batch를 구성하고 이를 (off-policy를 적용한 채로 혹은 target network를 freeze하고) 사용해 parameter를 update하는 아이디어이다.</li>
-  <li>서로 다른 Atari 게임 7개에 대한 policy를 learning하기 위해 단 하나의 neural network만을 사용했고, 그 결과가 기존 결과를 outperform한다.</li>
-</ul>
-
-<h3>Reference</h3>
-
-<ul>
-  <li><a href="http://arxiv.org/abs/1312.5602">Mnih, Volodymyr, et al. “Playing atari with deep reinforcement learning.” NIPS (2013).</a></li>
-  <li><a href="http://www.iclr.cc/lib/exe/fetch.php?media=iclr2015:silver-iclr2015.pdf">Deep Reinforcement Learning - ICLR 2015 tutorial</a></li>
-</ul>
 ]]></content>
   </entry>
   

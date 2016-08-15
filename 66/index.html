@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Machine learning 스터디 (10) PAC Learning & Statistical Learning Theory - README</title>
+  <meta name="author" content="Sanghyuk Chun">
+
+  
+  <meta name="description" content="내 멋대로 정리해보는 Machine Learning. PAC Learning & Statistical Learning Theory">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  
+  <link rel="canonical" href="http://SanghyukChun.github.io/66">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/layout480.css" media="only screen and (max-width : 750px)" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="README" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <script src="/javascripts/modernizr-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script>
+$(function() {
+  $('.tip').attr('data-toggle','tooltip');
+  $('.tip').attr('data-placement','top');
+  $('.tip').tooltip();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        //inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+</script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42711199-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  
+  <div id="main">
+  	<header role="banner"><hgroup>
+  <h1><a id="blog-title" href="/">README&nbsp;&nbsp; </a>
+  
+    <span style="white-space:nowrap;">SanghyukChun's Blog</span>
+  
+  </h1>
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  	<nav role="navigation"><ul class="main-navigation list-inline">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/search">Search</a></li>
+  <li><a href="http://sanghyuk.kaist.ac.kr/">Homepage</a></li>
+  
+</ul>
+</nav>
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title"><a href="">Machine Learning 스터디 (10) PAC Learning & Statistical Learning Theory</a></h1>
+    
+    
+      <p class="meta text-right mB50">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-05-06T00:26:00+09:00" pubdate data-updated="true">May 6<span>th</span>, 2016</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><ul id="markdown-toc">
+  <li><a href="#section">들어가며</a></li>
+  <li><a href="#motivation">Motivation</a></li>
+  <li><a href="#revisit-machine-learning-in-function-approximation-view">Revisit: Machine Learning in function approximation view</a></li>
+  <li><a href="#overfitting-revisited">Overfitting: revisited</a></li>
+  <li><a href="#pac-learning-with-finite-hypothesis-space">PAC Learning with Finite Hypothesis Space</a></li>
+  <li><a href="#pac-leanring-with-infinite-hypothesis-space">PAC Leanring with Infinite Hypothesis Space</a>    <ul>
+      <li><a href="#vc-dimension">VC Dimension</a></li>
+    </ul>
+  </li>
+  <li><a href="#structure-risk-minimization">Structure Risk Minimization</a></li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#section-1">변경 이력</a></li>
+  <li><a href="#machine-learning---">Machine Learning 스터디의 다른 글들</a></li>
+</ul>
+
+<h3 id="section">들어가며</h3>
+<p>어떤 머신러닝 모델이 있다고 가정해보자. 이 모델이 다른 모델에 비해 뛰어나다고 주장하려면 어떤 것들이 필요할까? 알고리즘이 얼마나 더 뛰어난지 주장하기 위해서는 알고리즘의 수렴성이나 complexity 등에 대해 논하면 되지만, 모델이 얼마나 뛰어난지는 어떻게 설명할 수 있을까? 이번 글에서 설명할 PAC (Probably Approximately Correct) 라는 개념은 이렇듯 모델의 성능을 이론적으로 측정하는 방법이라고 할 수 있다. 이 글에서는 PAC의 기본 개념을 설명하고, 핵심이라 할 수 있는 PAC bound에 대해 설명할 것이다. 또한 모델의 hypothesis space가 infinite한 경우 (거의 모든 continous parameter를 가지는 모델의 경우) VC dimension이라는 것을 통해 PAC bound를 어떻게 다시 bound 시킬 수 있는지 등에 대해 설명할 것이다.</p>
+
+<h3 id="motivation">Motivation</h3>
+<p>맨 앞 글에서도 잠시 언급했듯, 우리의 motivation은 특정한 모델이 얼마나 뛰어난지를 측정하는 것이다. 모델이 ‘뛰어나다’ 라고 말하기 위해서는, 다른 모델에 비해 learning하는 데에 필요한 데이터의 수가 적어야할 것이고, learning한 이후에 inference를 했을 때 그 결과가 좋아야할 것이고, 마지막으로 learning이 가능한 상황이 많이 있어야한다. 예를 들어서 어떤 모델을 만들었는데, 이 모델이 너무 복잡해서 100번 learning시켰을 때 (overfitting등의 이슈로 인해) 오직 3번 정도만 제대로 learning이 된다고 하면 이 모델은 쓸모없는 모델일 것이다.
+따라서 ‘좋은 모델’ 인지 여부를 판단하기 위해서는 다음과 같은 질문들에 대답을 해야한다.</p>
+
+<ul>
+  <li>“Seccessful” learning을 할 확률</li>
+  <li>Learning에 필요한 training example의 개수</li>
+  <li>ML algorithm에 의해 구해진 approximated target function의 정확도</li>
+</ul>
+
+<p>이런 질문들에 답을 하기 위해 등장하게 된 분야가 바로 <a href="https://en.wikipedia.org/wiki/Computational_learning_theory">Computational learning theory</a>으로, machine learning algorithm의 분석을 위한 수학적이고 이론적인 분야라고 생각하면 될 것 같다. 오늘 다루게 될 PAC는 이 computational learning theory의 한 부분으로, 가장 간단한 이론 중 하나이지만, 그 만큼 이론적으로 시사하는 바가 많은 이론이기 때문에 많은 machine learning course에서 한 번은 언급하고 넘어가는 경우가 많다.</p>
+
+<h3 id="revisit-machine-learning-in-function-approximation-view">Revisit: Machine Learning in function approximation view</h3>
+<p><a href="/57">맨 처음 글</a>에서 잠시 다뤘던 내용이지만, machine learning이라는 것이 어떤 것인지에 대해 다시 살펴보도록하자. 그때도 언급했지만, machine learning이라는 것을 구성하는 것은 크게 다음과 같다. 이 글에서는 이 글에 맞는 용어로 재구성했다. 참고로 이 글에서는 machine learning의 역할이 특정 데이터의 결과를 예측하는 function을 찾는 것이라고 가정한다. 즉, 특정 데이터가 어느 class에 속하는지 판단하는 function을 찾는 문제라고 생각할 것이다. 따라서 error는 항상 정확하게 정의된다 (함수 값이 정확하게 찾아진 데이터의 수와, 그렇지 않은 수에 대해 바로 error가 0에서 1사이의 값으로 정의된다).</p>
+
+<ul>
+  <li>Instance $X$: 모든 데이터의 공간이라 할 수 있다. 즉, 모든 픽셀이 0 또는 1인 28 by 28 흑백 이미지라고 한다면 $2^{784}$ 크기의 set이 될 것이다.</li>
+  <li>Target concept $c$: 혹은 우리에게 조금 더 익숙한 용어로 표현하면 ‘target function’이다. Instance space의 subset으로 정의가 되며, 주어진 데이터가 어떤 값을 가지는지 판단하는 함수라고 생각하면 된다. 예를 들어 MNIST classification 문제에서는 주어진 데이터 x가 [0-9] 사이의 데이터 중에서 어디에 속하는지 판단하는 함수가 될 것이다.</li>
+  <li>Hypothesis space $H$: 주어진 $c$와 최대한 비슷한 approximated function (hypothesis) $h$가 속하는 function space이다. 예를 들어 함수가 linear라 가정한다면 Hypothesis space는 모든 linear function의 function space가 된다.</li>
+  <li>Training Data $D$: 모든 instance space를 다 볼수는 없으니 그 중 일부의 데이터만이 training data로 주어진다.</li>
+  <li>Machine learning 모델은 위의 4가지가 주어졌을 때, 다음과 같은 두 가지 질문을 판단해야한다.
+    <ol>
+      <li>주어진 training data $x \in D$에 대해 Hypothesis $h \in H$가 $c(x)$와 얼마나 비슷한가?</li>
+      <li>모든 data $x \in X$에 대해 Hypothesis $h \in H$가 $c(x)$와 얼마나 비슷한가?</li>
+    </ol>
+  </li>
+</ul>
+
+<p>좀 더 자세히 설명하기 이전에 …. There is no free lunch 라고 한다.</p>
+
+<p>여기에서 한 가지 재미있는 점이 있는데,</p>
+
+<script type="math/tex; mode=display"> Pr[ \mbox{error}_{true} (h) \leq \mbox{error}_{train}(h) + \varepsilon ] \leq \| H \| exp(-2m\varepsilon^2). </script>
+
+<h3 id="overfitting-revisited">Overfitting: revisited</h3>
+<p>앞선 섹션의 마지막 두 질문, 주어진 training data와 모든 data에 대해 hypothesis $h$와 $c$가 얼마나 비슷한지에 대한 질문은 각각 training error와 true error의 값이 어떻게 되는가를 물어보는 질문과 동일하며, 이 둘은 각각 traning data set $D$와 전체 데이터셋 $X$에서의 learning된 hypothesis $h$의 error로 정의된다. 수식으로 표현하면 다음과 같다.</p>
+
+<p><script type="math/tex"> error_{true}(h) := \mbox{Pr}_{x\in X} [c(x) \neq h(x)] </script>
+<script type="math/tex"> error_{train}(h) := \mbox{Pr}_{x\in D} [c(x) \neq h(x)] </script></p>
+
+<p>당연한 얘기지만, 모든 데이터에 대해 true error를 측정하는 것은 불가능하다. 그러나 만약 우리가 test data를 모든 데이터셋에서 uniformly random하게 (i.i.d하게) 뽑는다면 test error는 true error의 unbiased estimator라고 할 수 있다. 이 글에서는 반드시 test data가 i.i.d하게 뽑혔다고 가정하고 test error를 true error의 unbiased estimation으로 취급할 것이다. 즉, 앞으로 test error라고 언급하는 것들은 전부 true error와 같다고 생각해도 된다.</p>
+
+<p>우리가 model을 learning하기 위해, 혹은 적절한 $h$를 찾기 위해 할 수 있는 가장 간단한 방법은 바로 현재 주어진 training data에서 가장 error가 낮은 hypothesis를 찾는 것이다. 수식으로 쓰면, $h = \arg\min_h error_{train}(h)$가 될 것이다. 여기에서 $h$와 training error가 서로 dependent하다는 사실을 기억해야한다. 이 방법은 주어진 데이터에 대해서 risk를 minimization하는 문제를 푸는 것이기 때문에 우리는 이를 empirical risk minimization이라고 부른다. 그러나 이 방법에는 한 가지 문제가 있는데, 앞서 설명한 test error와는 다르게 training error는 true error의 unbiased estimator가 아니기 때문이다. 왜냐하면 앞에서 설명했듯 $h$가 training data에서부터 골라진 값이기 때문에 training error가 $h$에 dependent하게 되고, 따라서 training error는 true error의 unbiased estimator가 아니라는 결론을 내릴 수 있다.</p>
+
+<p>따라서 우리가 만든 $h$는 항상 true error보다 training error가 좋은 결과를 얻을 것이라는 생각을 할 수 있다.</p>
+
+<h3 id="pac-learning-with-finite-hypothesis-space">PAC Learning with Finite Hypothesis Space</h3>
+
+<script type="math/tex; mode=display"> m \geq \frac{1}{2\varepsilon^2} (\ln \|H\| + \ln(1/\delta)). </script>
+
+<script type="math/tex; mode=display">\mbox{error}_{true}(h) \leq \mbox{error}_{train}(h) + \sqrt{\frac{\ln \|H\| + \ln \frac{1}{\delta}}{m}}.</script>
+
+<h3 id="pac-leanring-with-infinite-hypothesis-space">PAC Leanring with Infinite Hypothesis Space</h3>
+
+<h4 id="vc-dimension">VC Dimension</h4>
+
+<h3 id="structure-risk-minimization">Structure Risk Minimization</h3>
+
+<h3 id="references">References</h3>
+<ol class="reference">
+  <li>hi</li>
+  <li>hello</li>
+</ol>
+
+<h3 id="section-1">변경 이력</h3>
+<ul>
+  <li>2016년 3월 : 글 등록</li>
+</ul>
+
+<hr />
+
+<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
+
+<ul>
+  <li><a href="/57">Machine Learning이란?</a></li>
+  <li><a href="/58">Probability Theory</a></li>
+  <li><a href="/59">Overfitting</a></li>
+  <li><a href="/60">Algorithm</a></li>
+  <li><a href="/61">Decision Theory</a></li>
+  <li><a href="/62">Information Theory</a></li>
+  <li><a href="/63">Convex Optimzation</a></li>
+  <li><a href="/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+  <li>Regression and Logistic Regression</li>
+  <li>PAC Learning &amp; Statistical Learning Theory</li>
+  <li>Support Vector Machine</li>
+  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
+  <li>Graphical Model</li>
+  <li><a href="/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+  <li><a href="/70">EM algorithm</a></li>
+  <li>Hidden Markov Model</li>
+  <li><a href="/72">Dimensionality Reduction (LDA, PCA)</a></li>
+  <li><a href="/73">Recommendation System (Matrix Completion)</a>
+    <ul>
+      <li><a href="/95">Recommendation System with Implicit Feedback</a></li>
+    </ul>
+  </li>
+  <li><a href="/74">Neural Network Introduction</a></li>
+  <li><a href="/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
+  <li><a href="/76">Reinforcement Learning</a>
+    <ul>
+      <li><a href="/96">Multi-armed Bandit</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<hr>
+  
+</article>
+
+  <section>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+  <div class="mT30">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 블로그 포스트 하단 -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-5347633964054949"
+         data-ad-slot="9605924118"
+         data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/99/">Practical Bayesian Optimization of Machine Learning Algorithms (NIPS 2012)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/66/">Machine Learning 스터디 (10) PAC Learning & Statistical Learning Theory</a>
+      </li>
+    
+      <li class="post">
+        <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
+      </li>
+    
+      <li class="post">
+        <a href="/97/">AlphaGo의 알고리즘과 모델</a>
+      </li>
+    
+      <li class="post">
+        <a href="/96/">Machine Learning 스터디 (20-1) Multi-armed Bandit</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Sanghyuk Chun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sanghyukchun';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://SanghyukChun.github.io/66/';
+        var disqus_url = 'http://SanghyukChun.github.io/66/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=182012898639519&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
