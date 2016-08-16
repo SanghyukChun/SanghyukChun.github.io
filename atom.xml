@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-08-16T00:58:37+09:00</updated>
+  <updated>2016-08-16T09:12:50+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -428,137 +428,6 @@ acquisition function의 J개의 아직 결과가 나오지 않은 point들에 �
 <h3 id="section-1">변경 이력</h3>
 <ul>
   <li>2016년 8월 16일: 글 등록</li>
-</ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (10) PAC Learning & Statistical Learning Theory]]></title>
-    <link href="http://SanghyukChun.github.io/66/"/>
-    <updated>2016-05-06T00:26:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/66</id>
-		<content type="html"><![CDATA[<ul id="markdown-toc">
-  <li><a href="#section">들어가며</a></li>
-  <li><a href="#motivation">Motivation</a></li>
-  <li><a href="#revisit-machine-learning-in-function-approximation-view">Revisit: Machine Learning in function approximation view</a></li>
-  <li><a href="#overfitting-revisited">Overfitting: revisited</a></li>
-  <li><a href="#pac-learning-with-finite-hypothesis-space">PAC Learning with Finite Hypothesis Space</a></li>
-  <li><a href="#pac-leanring-with-infinite-hypothesis-space">PAC Leanring with Infinite Hypothesis Space</a>    <ul>
-      <li><a href="#vc-dimension">VC Dimension</a></li>
-    </ul>
-  </li>
-  <li><a href="#structure-risk-minimization">Structure Risk Minimization</a></li>
-  <li><a href="#references">References</a></li>
-  <li><a href="#section-1">변경 이력</a></li>
-  <li><a href="#machine-learning---">Machine Learning 스터디의 다른 글들</a></li>
-</ul>
-
-<h3 id="section">들어가며</h3>
-<p>어떤 머신러닝 모델이 있다고 가정해보자. 이 모델이 다른 모델에 비해 뛰어나다고 주장하려면 어떤 것들이 필요할까? 알고리즘이 얼마나 더 뛰어난지 주장하기 위해서는 알고리즘의 수렴성이나 complexity 등에 대해 논하면 되지만, 모델이 얼마나 뛰어난지는 어떻게 설명할 수 있을까? 이번 글에서 설명할 PAC (Probably Approximately Correct) 라는 개념은 이렇듯 모델의 성능을 이론적으로 측정하는 방법이라고 할 수 있다. 이 글에서는 PAC의 기본 개념을 설명하고, 핵심이라 할 수 있는 PAC bound에 대해 설명할 것이다. 또한 모델의 hypothesis space가 infinite한 경우 (거의 모든 continous parameter를 가지는 모델의 경우) VC dimension이라는 것을 통해 PAC bound를 어떻게 다시 bound 시킬 수 있는지 등에 대해 설명할 것이다.</p>
-
-<h3 id="motivation">Motivation</h3>
-<p>맨 앞 글에서도 잠시 언급했듯, 우리의 motivation은 특정한 모델이 얼마나 뛰어난지를 측정하는 것이다. 모델이 ‘뛰어나다’ 라고 말하기 위해서는, 다른 모델에 비해 learning하는 데에 필요한 데이터의 수가 적어야할 것이고, learning한 이후에 inference를 했을 때 그 결과가 좋아야할 것이고, 마지막으로 learning이 가능한 상황이 많이 있어야한다. 예를 들어서 어떤 모델을 만들었는데, 이 모델이 너무 복잡해서 100번 learning시켰을 때 (overfitting등의 이슈로 인해) 오직 3번 정도만 제대로 learning이 된다고 하면 이 모델은 쓸모없는 모델일 것이다.
-따라서 ‘좋은 모델’ 인지 여부를 판단하기 위해서는 다음과 같은 질문들에 대답을 해야한다.</p>
-
-<ul>
-  <li>“Seccessful” learning을 할 확률</li>
-  <li>Learning에 필요한 training example의 개수</li>
-  <li>ML algorithm에 의해 구해진 approximated target function의 정확도</li>
-</ul>
-
-<p>이런 질문들에 답을 하기 위해 등장하게 된 분야가 바로 <a href="https://en.wikipedia.org/wiki/Computational_learning_theory">Computational learning theory</a>으로, machine learning algorithm의 분석을 위한 수학적이고 이론적인 분야라고 생각하면 될 것 같다. 오늘 다루게 될 PAC는 이 computational learning theory의 한 부분으로, 가장 간단한 이론 중 하나이지만, 그 만큼 이론적으로 시사하는 바가 많은 이론이기 때문에 많은 machine learning course에서 한 번은 언급하고 넘어가는 경우가 많다.</p>
-
-<h3 id="revisit-machine-learning-in-function-approximation-view">Revisit: Machine Learning in function approximation view</h3>
-<p><a href="http://SanghyukChun.github.io/57">맨 처음 글</a>에서 잠시 다뤘던 내용이지만, machine learning이라는 것이 어떤 것인지에 대해 다시 살펴보도록하자. 그때도 언급했지만, machine learning이라는 것을 구성하는 것은 크게 다음과 같다. 이 글에서는 이 글에 맞는 용어로 재구성했다. 참고로 이 글에서는 machine learning의 역할이 특정 데이터의 결과를 예측하는 function을 찾는 것이라고 가정한다. 즉, 특정 데이터가 어느 class에 속하는지 판단하는 function을 찾는 문제라고 생각할 것이다. 따라서 error는 항상 정확하게 정의된다 (함수 값이 정확하게 찾아진 데이터의 수와, 그렇지 않은 수에 대해 바로 error가 0에서 1사이의 값으로 정의된다).</p>
-
-<ul>
-  <li>Instance $X$: 모든 데이터의 공간이라 할 수 있다. 즉, 모든 픽셀이 0 또는 1인 28 by 28 흑백 이미지라고 한다면 $2^{784}$ 크기의 set이 될 것이다.</li>
-  <li>Target concept $c$: 혹은 우리에게 조금 더 익숙한 용어로 표현하면 ‘target function’이다. Instance space의 subset으로 정의가 되며, 주어진 데이터가 어떤 값을 가지는지 판단하는 함수라고 생각하면 된다. 예를 들어 MNIST classification 문제에서는 주어진 데이터 x가 [0-9] 사이의 데이터 중에서 어디에 속하는지 판단하는 함수가 될 것이다.</li>
-  <li>Hypothesis space $H$: 주어진 $c$와 최대한 비슷한 approximated function (hypothesis) $h$가 속하는 function space이다. 예를 들어 함수가 linear라 가정한다면 Hypothesis space는 모든 linear function의 function space가 된다.</li>
-  <li>Training Data $D$: 모든 instance space를 다 볼수는 없으니 그 중 일부의 데이터만이 training data로 주어진다.</li>
-  <li>Machine learning 모델은 위의 4가지가 주어졌을 때, 다음과 같은 두 가지 질문을 판단해야한다.
-    <ol>
-      <li>주어진 training data $x \in D$에 대해 Hypothesis $h \in H$가 $c(x)$와 얼마나 비슷한가?</li>
-      <li>모든 data $x \in X$에 대해 Hypothesis $h \in H$가 $c(x)$와 얼마나 비슷한가?</li>
-    </ol>
-  </li>
-</ul>
-
-<p>좀 더 자세히 설명하기 이전에 …. There is no free lunch 라고 한다.</p>
-
-<p>여기에서 한 가지 재미있는 점이 있는데,</p>
-
-<script type="math/tex; mode=display"> Pr[ \mbox{error}_{true} (h) \leq \mbox{error}_{train}(h) + \varepsilon ] \leq \| H \| exp(-2m\varepsilon^2). </script>
-
-<h3 id="overfitting-revisited">Overfitting: revisited</h3>
-<p>앞선 섹션의 마지막 두 질문, 주어진 training data와 모든 data에 대해 hypothesis $h$와 $c$가 얼마나 비슷한지에 대한 질문은 각각 training error와 true error의 값이 어떻게 되는가를 물어보는 질문과 동일하며, 이 둘은 각각 traning data set $D$와 전체 데이터셋 $X$에서의 learning된 hypothesis $h$의 error로 정의된다. 수식으로 표현하면 다음과 같다.</p>
-
-<p><script type="math/tex"> error_{true}(h) := \mbox{Pr}_{x\in X} [c(x) \neq h(x)] </script>
-<script type="math/tex"> error_{train}(h) := \mbox{Pr}_{x\in D} [c(x) \neq h(x)] </script></p>
-
-<p>당연한 얘기지만, 모든 데이터에 대해 true error를 측정하는 것은 불가능하다. 그러나 만약 우리가 test data를 모든 데이터셋에서 uniformly random하게 (i.i.d하게) 뽑는다면 test error는 true error의 unbiased estimator라고 할 수 있다. 이 글에서는 반드시 test data가 i.i.d하게 뽑혔다고 가정하고 test error를 true error의 unbiased estimation으로 취급할 것이다. 즉, 앞으로 test error라고 언급하는 것들은 전부 true error와 같다고 생각해도 된다.</p>
-
-<p>우리가 model을 learning하기 위해, 혹은 적절한 $h$를 찾기 위해 할 수 있는 가장 간단한 방법은 바로 현재 주어진 training data에서 가장 error가 낮은 hypothesis를 찾는 것이다. 수식으로 쓰면, $h = \arg\min_h error_{train}(h)$가 될 것이다. 여기에서 $h$와 training error가 서로 dependent하다는 사실을 기억해야한다. 이 방법은 주어진 데이터에 대해서 risk를 minimization하는 문제를 푸는 것이기 때문에 우리는 이를 empirical risk minimization이라고 부른다. 그러나 이 방법에는 한 가지 문제가 있는데, 앞서 설명한 test error와는 다르게 training error는 true error의 unbiased estimator가 아니기 때문이다. 왜냐하면 앞에서 설명했듯 $h$가 training data에서부터 골라진 값이기 때문에 training error가 $h$에 dependent하게 되고, 따라서 training error는 true error의 unbiased estimator가 아니라는 결론을 내릴 수 있다.</p>
-
-<p>따라서 우리가 만든 $h$는 항상 true error보다 training error가 좋은 결과를 얻을 것이라는 생각을 할 수 있다.</p>
-
-<h3 id="pac-learning-with-finite-hypothesis-space">PAC Learning with Finite Hypothesis Space</h3>
-
-<script type="math/tex; mode=display"> m \geq \frac{1}{2\varepsilon^2} (\ln \|H\| + \ln(1/\delta)). </script>
-
-<script type="math/tex; mode=display">\mbox{error}_{true}(h) \leq \mbox{error}_{train}(h) + \sqrt{\frac{\ln \|H\| + \ln \frac{1}{\delta}}{m}}.</script>
-
-<h3 id="pac-leanring-with-infinite-hypothesis-space">PAC Leanring with Infinite Hypothesis Space</h3>
-
-<h4 id="vc-dimension">VC Dimension</h4>
-
-<h3 id="structure-risk-minimization">Structure Risk Minimization</h3>
-
-<h3 id="references">References</h3>
-<ol class="reference">
-  <li>hi</li>
-  <li>hello</li>
-</ol>
-
-<h3 id="section-1">변경 이력</h3>
-<ul>
-  <li>2016년 3월 : 글 등록</li>
-</ul>
-
-<hr />
-
-<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
-
-<ul>
-  <li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
-  <li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
-  <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
-  <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
-  <li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
-  <li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
-  <li>Regression and Logistic Regression</li>
-  <li>PAC Learning &amp; Statistical Learning Theory</li>
-  <li>Support Vector Machine</li>
-  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
-  <li>Graphical Model</li>
-  <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
-  <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
-  <li>Hidden Markov Model</li>
-  <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
-  <li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
-    <ul>
-      <li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
-    </ul>
-  </li>
-  <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
-  <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
-  <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
-    <ul>
-      <li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
-    </ul>
-  </li>
 </ul>
 ]]></content>
   </entry>
@@ -2847,6 +2716,98 @@ Caption은 일이 좀 커질 것 같아서..</p>
 <h3>변경 이력</h3>
 <ul>
   <li>2015년 6월 14일: 글 등록</li>
+</ul>
+
+<hr />
+
+<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
+
+<ul>
+  <li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+  <li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+  <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
+  <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
+  <li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+  <li>Regression and Logistic Regression</li>
+  <li>PAC Learning &amp; Statistical Learning Theory</li>
+  <li>Support Vector Machine</li>
+  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
+  <li>Graphical Model</li>
+  <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+  <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+  <li>Hidden Markov Model</li>
+  <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
+  <li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+    <ul>
+      <li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+    </ul>
+  </li>
+  <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
+  <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
+  <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+    <ul>
+      <li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+    </ul>
+  </li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (13) Clustering (K-means, Gaussian Mixture Model)]]></title>
+    <link href="http://SanghyukChun.github.io/69/"/>
+    <updated>2015-03-25T03:20:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/69</id>
+		<content type="html"><![CDATA[<h3>들어가며</h3>
+<p><a href="57-4-ClassML">첫 번째 글</a>에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 앞서 이미 그 중 <a href="http://SanghyukChun.github.io/64">Supervised Learning</a>을 간략하게 다룬 글이 있었고, 이 글에서는 그 중 Unsupervised Learning의 가장 대표적인 예시인 Clustering 대해 다룰 것이며 가장 대표적이고 간단한 두 가지 알고리즘에 대해서 역시 다룰 것이다.</p>
+<h3>What is Clustering?</h3>
+<p><a href="http://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a>은 <a href="http://en.wikipedia.org/wiki/Unsupervised_learning">Unsupervised Learning</a>의 일종으로, label 데이터 없이 주어진 데이터들을 가장 잘 설명하는 cluster를 찾는 문제이다. 왜 클러스터링이 필요할까? Classification을 하기 위해서는 데이터와 각각의 데이터의 label이 필요하지만, 실제로는 데이터는 존재하지만 그 데이터의 label이나 category가 무엇인지 알 수 없는 경우가 많기 때문에 classfication이 아닌 다른 방법을 통해 데이터들을 설명해야하는 경우가 발생한다. 아래 그림은 클러스터링이 어떤 것인지 잘 보여주는 그림이다.</p>
+<p><img src="http://SanghyukChun.github.io/images/post/69-1.png" width="500" /></p>
+<p>우리에게 처음 주어진 것은 왼쪽 파란 데이터이다. 각각의 데이터에 대한 정보는 아무 것도 없는 상태에서 주어진 데이터들을 가장 잘 설명하는 클러스터를 찾아내는 것이 클러스터링의 목적이다. 따라서 클러스터링은 대부분 Optimization 문제를 푸는 경우가 많다. 이는 클러스터링 뿐 아니라 다른 많은 unsupervised learning에서도 역시 마찬가지이다.</p>
+<p><a href="http://SanghyukChun.github.io/57">첫 번째 글</a>과 <a href="http://SanghyukChun.github.io/64">이전 글</a>에서 머신러닝 문제는 먼저 주어진 데이터에 대한 가정을 하고, 해당 가정을 만족하는 best hypothesis를 찾는 문제라고 언급한 적이 있다. Clustering 문제 역시 Machine Learning 문제이므로 데이터에 대한 가정을 먼저 해야하고, best hypothesis를 찾는 과정을 거친다. 따라서 각각의 서로 다른 clustering algorithm들은 서로 다른 assumption을 가지고 있으며, 해당 assumption을 가장 잘 만족하는 function parameter를 계산하는 과정이다. 앞으로 설명하게 될 알고리즘들에 대한 설명을 읽을 때 데이터에 대해 어떤 가정을 하였는지 꼼꼼히 확인하면서 읽으면 알고리즘을 이해하기 한결 수월할 것이다.</p>
+<h3>K-means</h3>
+<p>클러스터를 정의하는 방법에는 여러 가지가 있을 수 있지만, 가장 간단한 정의 중 하나는 클러스터 내부에 속한 데이터들이 서로 &#8216;가깝다&#8217;라고 정의하고, &#8216;가장 가까운&#8217; 내부 거리를 가지는 클러스터를 고르는 것이다. <a href="http://en.wikipedia.org/wiki/K-means_clustering">K-means</a>는 같은 클러스터에 속한 데이터는 서로 &#8216;가깝다&#8217; 라고 가정한다. 이때 각각의 클러스터마다 &#8216;중심&#8217;이 하나씩 존재하고, 각각의 데이터가 그 중심과 &#8216;얼마나 가까운가&#8217;를 cost로 정의한다. K-means는 이렇게 정의된 cost를 가장 줄이는 클러스터를 찾는 알고리즘이다. 수식으로 적으면 다음과 같다.</p>
+<p>$$ \min_{b,w} \sum_i^n \sum_j^k w_{ij} \| x_i - b_j \|_2^2 \text{ s.t. } \sum_j w_{ij} = 1, \forall j$$</p>
+<p>데이터는 $n$개 있으며 클러스터는 $k$개 있다고 가정했다. 이때, $b_j$는 $j$ 번째 클러스터의 &#8216;중심&#8217;을 의미하며, $w_{ij}$는 $i$ 번째 데이터가 $j$ 번째 클러스터에 속하면 1, 아니면 0을 가지는 binary variable이다. 또한 뒤에 붙는 조건은 반드시 각 데이터 별로 한 개의 클러스터에 assign이 되어야한다는 constraint이다.</p>
+<p>이 문제는 풀기 쉬운 문제가 아니다. Binary variable $w_{ij}$ 때문에, 모든 cluster 조합을 하나하나 확인해야만 optimal한 값을 구할 수 있다. 즉, jointly optimize하는 것이 매우 어렵다. 그러나 재미있게도 $b$와 $w$ 둘 중 하나를 고정하고 나머지 하나를 update하는 것은 매우 간단하다. 나머지 값이 고정되었을 때 $b_j$의 optimal값은 $j$ 번째 클러스터의 &#8216;mean&#8217;을 계산하는 것이다 (이 때문에 &#8216;$k$&#8217; 개의 &#8216;mean&#8217;을 찾는다고 해서 k-means 알고리즘이다). $w_{ij}$의 optimal 값은 모든 데이터 i에 대해, 각각 모든 클러스터 중에서 $x_i - b_j$가 가장 작은 클러스터에 assign하는 것이 optimal한 solution이다. 이렇듯 만약 다른 변수 하나를 정확하게 알고 있다고 생각하면 아주 간단한 방법으로 alternative optimization이 가능하다. 사실 이 개념은 예전에 적은 <a href="http://SanghyukChun.github.io/63">convex optimization</a>글에서 잠깐 언급했던 coordinate descent 방법과 거의 유사하다. K-means 알고리즘은 이렇게 $b$와 $w$를 alternative하게 계속 update하면서 $b$와 $w$가 더 이상 바뀌지 않을 때 까지 계산을 반복하는 알고리즘이다. 안타깝게도 K-means는 global optimum에 수렴하지 않고 local한 optimum에 수렴하므로 initialization에 매우매우 취약하다는 단점이 존재한다.</p>
+<p>또한 여담으로 K-means objective function에 사용한 $\ell_2$ norm의 제곱이 outlier 혹은 noise에 매우 취약하기 때문에 조금 더 outlier에 덜 sensitive한 &#8216;robust한&#8217; norm을 사용하는 방법도 존재한다. 예를 들어 $\ell_2$ norm의 제곱을 $\ell_1$ norm으로 바꾸면 &#8216;mean&#8217; 대신에 &#8216;median&#8217;을 찾는 문제로 바뀌게 된다. 이를 <a href="http://en.wikipedia.org/wiki/K-medians_clustering">k-median</a>이라고 부른다. 그 밖에도 k-means의 robustness를 개선하기 위한 다양한 방법들이 개발이 되어있지만 이 글에서는 다루지 않도록 하겠다.</p>
+<h3>Gaussian Mixture Model</h3>
+<p>K-means algorithm의 key idea는 &#8216;alternative update&#8217;이다. 즉, coordinate wise로 다른 변수들을 고정한 채로 &#8216;alternative&#8217;하게 변수들을 update함으로써 jointly optimization을 할 수 없는 문제를 푸는 것이다. 비록 그 결과가 global하지 않은 local에 converge하더라도, 찾지 못하는 것보다는 훨씬 낫기 때문에 실제로 이런 방법이 많이 쓰인다. 이번 섹션에서는 이런 방법을 사용하는 또 다른 알고리즘을 하나 소개하도록 하겠다.</p>
+<p>Gaussian Mixture Model, Mixture of Gaussian, GMM, 혹은 MoG는 데이터가 &#8216;Gaussian&#8217;의 &#8216;Mixture&#8217;로 구성이 되어있다고 가정한다. 보통 GMM이라고 많이 부르며, 이 글에서 다루는 GMM은 가장 optimal한 GMM을 찾는 알고리즘을 의미한다. 즉, 데이터가 $k$개의 gaussian으로 구성되어있다고 했을 때, 가장 데이터를 잘 설명하는 $k$개의 평균과 covariance를 찾는 알고리즘이다. 아래 그림은 3개의 gaussian으로 구성되어있다고 가정하고 그 gaussian 분포들을 찾은 결과이다.</p>
+<p><img src="http://SanghyukChun.github.io/images/post/69-2.png" width="500" /></p>
+<p>모든 machine learning 문제는 &#8216;performance measure&#8217;를 가진다고 예전에 얘기한 적이 있다. GMM의 performance measure는 log likelihood function이다. 즉, 주어진 paramter에 대해 데이터 X의 확률을 가장 크게 만드는 parameter를 찾는 것이 목표가 된다. log likelihood는 $\ln p(X|\theta)$로 정의가 된다. 우리가 찾아야하는 parameter $\theta$는 각각의 gaussian의 평균 $\mu_j$, covariance $\Sigma_j$, 그리고 마지막으로 각각의 데이터가 각각의 gaussian에 속할 확률 $\pi_j$로 구성된다. 따라서 주어진 $\mu_j, \Sigma_j$에 대한 $x_i$의 multinomial gaussian distribution을 $N(x_i|\mu_j, \Sigma_j)$라고 정의한다면 log likelihood function은 다음과 같이 기술할 수 있다.</p>
+<p>$$ \ln p(X|\pi, \mu, \Sigma) = \sum_i^n \ln \sum_j^k \pi_j N (x_i | \mu_j, \Sigma_j) $$</p>
+<p>그러나 역시 이 문제도 jointly update가 매우매우 어려운 문제이다. 그러나 K-means와 비슷하게도 $\pi$를 고정하고 $\mu, \Sigma$를 계산하는 것은 쉬우며, 그 반대 역시 쉽다. 따라서 비슷하게 alternative update를 통해 문제를 해결하는 알고리즘을 어렵지 않게 디자인 할 수 있다. 역시 이 알고리즘도 global로 수렴하지 않고 local로만 수렴하게 된다. GMM을 풀기 위해서 사용되는 알고리즘 중 가장 유명한 알고리즘으로는 <a href="http://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm">&#8216;EM&#8217; 알고리즘</a>이 존재한다. 이 알고리즘에 대해서는 <a href="http://SanghyukChun.github.io/70">다음 글</a>에서 더 자세하게 설명하도록 하고, 이 글에서는 EM 알고리즘이라는 것을 알고 있는 상태에서 어떻게 각 step을 해결할 수 있는지에 대해서만 다루도록 하겠다. E-step에서는 현재 주어진 $\mu, \Sigma, \pi$들을 사용해 가장 &#8216;expectation&#8217;이 높은 latent variable의 값을 찾아내며, M-step에서는 새로 estimate된 latent variable을 사용해 그 값을 maximize하는 $\mu, \Sigma, \pi$를 찾는다. EM 알고리즘은 E-step과 M-step이 계속 번갈아 진행되며, 더 이상 값이 변하지 않을 때 까지 반복된다. K-means를 이런 관점으로 바라보게 된다면, cluster information $w_{ij}$를 update하는 과정이 E-step, $b$를 update하는 과정을 M-step이라고 할 수 있다. (그러나 K-means을 푸는 알고리즘은 엄밀하게 말하면 EM 알고리즘이 아니다)</p>
+<p>사실 엄밀하게 설명하면 GMM을 푸는 EM에서 E-step 때 update하는 것은 정확하게 $\pi$와 같은 것은 아니다. EM으로 이 문제를 풀기 위해서 우리는 새로운 &#8216;latent&#8217; variable을 introduce해야한다. latent variable은 쉽게 생각하면 graphical model에서 hidden variable에 해당하는 값이다. 다음에 EM 알고리즘에 대해 자세히 다룰 때 다시 설명하겠지만, 이렇게 latent variable을 설정하는 이유는 어떤 특정 variable의 marginal distribution을 optimize하는 것은 어려울 때, latent variable을 사용해 그 variable과 latent variable의 joint distribution을 다루는 것은 간단할 수 있기 때문이다. GMM에서는 latent variable $z$를 introduce하게 된다. $z$는 $k$-ary variable로, $z$의 $j$ 번째 dimension인 $z_j$는 Binary random variable이며, $p(z_j=1) = pi_j, $ where $\sum_j z_j = 1$ and $\sum_j \pi_j = 1$ 이라는 조건을 가지고 있다. $z$의 marginal probability는 $p(z) = \prod_j \pi_j^{z_j}$로 어렵지 않게 계산할 수 있으며, 비슷하게 주어진 데이터 $x$에 대한 conditional distribution 역시 간단하게 다음과 같이 표현된다. $p(x|z) = \prod_j N(x|\mu_j, \Sigma_j)^{z_j}$.</p>
+<p>따라서 앞선 식들로부터 joint distribution을 얻을 수 있고, 그 값을 marginalize해 다음과 같은 결과를 얻을 수 있다.</p>
+<p>$$ p(x) = \sum_z p(x,z) = \sum_z p(z)p(x|z) = \sum_j \pi_j N(x|\mu_j, \Sigma_j) $$</p>
+<p>정리하자면, 각각의 data point $x_i$ in GMM의 graphical representation은 다음과 같이 표현할 수 있다.</p>
+<p><img src="http://SanghyukChun.github.io/images/post/69-3.png" width="300" /></p>
+<p>위의 결과들을 토대로 이제 간단하게 EM algorithm을 돌릴 수 있다. 먼저 E step에서는 $p(z_j = 1|x)$를 계산할 것이다. 각 데이터에 대해 $j$ 번째 클러스터에 속할 확률, 혹은 posterior를 계산하는 과정이다. 이 값은 Bayes rule을 통해 간단하게 다음과 같이 계산할 수 있다.</p>
+<p>$$ p(z_j = 1|x) = \frac{p(z_j=1)p(x|z_j=1)}{\sum_j^k p(z_j=1)p(x|z_j=1)} = \frac{\pi_j N(x|\mu_j, \Sigma_j)}{\sum_j^k \pi_j N(x|\mu_j \Sigma_j)} $$</p>
+<p>다음으로 $z$를 fix했을 때 다음과 같이 나머지 paramter를 계산할 수 있다.</p>
+<p>$$ \mu_j = \frac{1}{\sum_i p(z_j=1|x)} \sum_i p(z_{ij}=1|x) x_i$$</p>
+<p>$$ \Sigma_j = \frac{1}{\sum_i p(z_j=1|x)} \sum_i p(z_{ij}=1|x) (x_i-\mu_j) (x_i-\mu_j)^\top$$</p>
+<p>$$ \pi_j = \frac{\sum_i p(z_j=1|x)}{N}$$</p>
+<p>정리하자면, GMM을 풀기 위한 EM 알고리즘은, 먼저 각각의 데이터가 어느 클러스터에 속할지에 대한 정보를 update해 ($z$를 업데이트 하여) expectation을 계산하고, 다음으로 업데이트 된 정보들을 사용해 나머지 값들로 가장 log likelihood를 최대화하는 parameter들을 ($\mu, \Sigma, \pi$를) 찾아낸다. 알고리즘을 돌리면 아래처럼 iteration이 지날 때 마다 점점 좋은 값을 찾아준다. (출처: <a href="http://kipl.tistory.com/64">Geometry &amp; Recognition :: Gaussian Mixture Model &amp; K-means</a>)</p>
+<p><img src="http://SanghyukChun.github.io/images/post/69-4.gif" width="500" /></p>
+<p>EM 알고리즘에 대한 심도있는 이해 없이 이 글을 이해하는 것은 조금 어려울 수 있다. 이 글이 잘 이해가 되지 않는다면 먼저 EM 알고리즘에 대해 설명한 <a href="http://SanghyukChun.github.io/70">다음 글</a>을 읽어본 다음 다시 읽어보기를 권한다.</p>
+<h3>정리</h3>
+<p>Clustering은 unsupervised learning 분야에서 가장 활발히 연구되는 분야 중 하나이다. 이 글에서는 여러 종류의 클러스터링 알고리즘 중에서 optimization function을 (1) 거리 기반으로 세우고 그것을 푸는 알고리즘과 (2) 확률과 확률분포를 기반으로 세우고 그것을 푸는 알고리즘을 소개하였다. 특히 GMM은 다음 글에서 다룰 주제인 EM algorithm과 밀접하게 관련되는 내용이므로 한 번 쯤은 책이나 렉쳐노트를 정독하는 것을 권한다.</p>
+
+<h3>변경 이력</h3>
+<ul>
+  <li>2015년 3월 25일: 글 등록</li>
+  <li>2015년 6월 14일: EM 알고리즘 링크 추가 및 설명 변경</li>
+</ul>
+
+<h3>Reference</h3>
+<ul>
+  <li>Bishop, Christopher M. Pattern recognition and machine learning. Vol. 4. No. 4. New York: springer, 2006. Chapter 9</li>
+  <li><a href="http://kipl.tistory.com/64">Geometry &amp; Recognition :: Gaussian Mixture Model &amp; K-means</a></li>
 </ul>
 
 <hr />
