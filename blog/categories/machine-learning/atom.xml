@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-08-16T09:12:50+09:00</updated>
+  <updated>2016-08-21T23:48:05+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -418,13 +418,14 @@ acquisition function의 J개의 아직 결과가 나오지 않은 point들에 �
 <p>실제 구현해서 사용하기는 어려운 내용이지만, 잘 숙지해두면 분명 도움이 될 수 있는 아이디어라 생각한다.</p>
 
 <h3 id="references">References</h3>
+
 <ol class="reference">
-	<li><a href="http://papers.nips.cc/paper/4522-practical">[NIPS] Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. "Practical bayesian optimization of machine learning algorithms.", 2012.</a></li>
-	<li><a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">[JMLR] Bergstra, James, and Yoshua Bengio. "Random search for hyper-parameter optimization.", 2012</a></li>
-	<li><a href="http://becs.aalto.fi/en/research/bayes/courses/4613/Vik_Kamath_Presentation.pdf">http://becs.aalto.fi/en/research/bayes/courses/4613/Vik_Kamath_Presentation.pdf</a></li>
-	<li><a href="http://enginius.tistory.com/489">http://enginius.tistory.com/489</a></li>
-	<li><a href="http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf">http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf</a></li>
-	<li><a href="http://www.dmi.usherb.ca/~larocheh/publications/gpopt_nips_appendix.pdf">[NIPS] Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. "Practical bayesian optimization of machine learning algorithms." Supplimentary material, 2012.</a></li>
+  <li><a href="http://papers.nips.cc/paper/4522-practical">[NIPS] Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. “Practical bayesian optimization of machine learning algorithms.”, 2012.</a></li>
+  <li><a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">[JMLR] Bergstra, James, and Yoshua Bengio. “Random search for hyper-parameter optimization.”, 2012</a></li>
+  <li><a href="http://becs.aalto.fi/en/research/bayes/courses/4613/Vik_Kamath_Presentation.pdf">http://becs.aalto.fi/en/research/bayes/courses/4613/Vik_Kamath_Presentation.pdf</a></li>
+  <li><a href="http://enginius.tistory.com/489">http://enginius.tistory.com/489</a></li>
+  <li><a href="http://www.iro.umontreal.ca/~bengioy/cifar/NCAP2014-summerschool/slides/Ryan_adams_140814_bayesopt_ncap.pdf">Bayesian Optimization for Machine Learning, Ryan P.Adams, et. al</a></li>
+  <li><a href="http://www.dmi.usherb.ca/~larocheh/publications/gpopt_nips_appendix.pdf">[NIPS] Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. “Practical bayesian optimization of machine learning algorithms.” Supplimentary material, 2012.</a></li>
 </ol>
 
 <h3 id="section-1">변경 이력</h3>
