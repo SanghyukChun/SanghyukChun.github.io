@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-08-21T23:52:04+09:00</updated>
+  <updated>2016-08-22T00:11:09+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -294,7 +294,8 @@ dominat strategy와 Pareto optimality까지, 전체적으로 간단한 개념들
 </ul>
 
 <hr />
-<p>### <a href="http://SanghyukChun.github.io/blog/categories/game-theory-study/">Game Theory 스터디</a>의 다른 글들</p>
+
+<h3 id="game-theory-blogcategoriesgame-theory-study--"><a href="http://SanghyukChun.github.io/blog/categories/game-theory-study/">Game Theory 스터디</a>의 다른 글들</h3>
 
 <h4 id="game-theoryhttpswwwcourseraorglearngame-theory-1"><a href="https://www.coursera.org/learn/game-theory-1">Game Theory</a></h4>
 
