@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Game-Theory-Study | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/game-theory-study/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-12-18T16:03:02+09:00</updated>
+  <updated>2016-12-18T16:03:44+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,103 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Game Theory Study (2) Mixed-Strategy Nash Equilibrium]]></title>
-    <link href="http://SanghyukChun.github.io/102/"/>
-    <updated>2016-08-29T00:40:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/102</id>
-    <content type="html"><![CDATA[<h3 id="section">들어가며</h3>
-<p>이 글은 Coursera의 <a href="https://www.coursera.org/learn/game-theory-1">Game Theory</a> course의 2주차 강의를 요약한 글이다.
-첫 주에서 간단한 예제들을 통해 normal form game을 엄밀하게 정의하고, pure strategy 상황에서의 Nash equilibrium 등을 정의했다면,
-이번 주에는 좀 더 일반화된 strategy인 mixed strategy에 대해 다루고, 해당 상황에서의 NE에 대해 다룬다.</p>
-
-<h3 id="mixed-strategy">Mixed Strategy</h3>
-<p>첫 주차 글에서 다룬 Matching Pennies 문제를 다시 살펴보자. 이 문제에서 한 가지 알 수 있는 사실은, deterministic한 strategy를 고르는 것은 적절한 strategy가 아니라는 사실이다.
-즉, A가 Head를 고른다면, B는 반드시 Tail을 고르게 되고, … 이 과정이 cycle이 발생하여 NE가 성립하지 않는다는 사실은 이미 앞에서 살펴보았다.</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th> </th>
-      <th>Head</th>
-      <th>Tails</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Head</td>
-      <td>1, -1</td>
-      <td>-1, 1</td>
-    </tr>
-    <tr>
-      <td>Tails</td>
-      <td>-1, 1</td>
-      <td>1, -1</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>사실 이 상황에서 가장 적절한 전략은, random하게 play를 함으로써 상대방을 교란시키는 것이다. 즉, A가 Head/Tail을 50:50으로 고르게 된다면, B는 Head를 고르나 Tail을 고르나, expected payoff가 동일하기 때문에 전략을 세우기가 한 층 더 어려워진다. Mixed strategy를 간단하게 표현하면, <strong>deterministic한 pure strategy를 probabilistic하게 바꾼 것</strong> 정도로 이해할 수 있을 것 같다. 이제 조금 더 엄밀하게 정의해보자.</p>
-
-<p>Strategy $s_i$는 action set $A_i$에 대한 probability distribution으로 정의할 수 있다. 이때, pure strategy와 mixed strategy는 각각 다음과 같이 정의할 수 있다.</p>
-
-<ul>
-  <li>Pure strategy: $s_i$는 반드시 하나의 action만 1의 확률로 고르고, 나머지는 0의 확률로 고른다.</li>
-  <li>Mixed strategy: $s_i$의 distribution에서 하나보다 많은 positive value가 있다.</li>
-</ul>
-
-<p>여기에서, 모든 i에게 가능한 모든 strategy set을 $S_i$라 정의하고, 모든 i에 대한 strategy 들의 조합을 (cross product를) ‘all strategy profile’ $S$ 라고 정의하자.</p>
-
-<p>여기에서 문제가 한 가지 생긴다. Pure strategy에서는 반드시 하나의 결과가 나오지만 mixed strategy에서는 여러 결과가 확률적으로 나오기 때문에 이전에 사용했었던 best response와 Nash equilibrium의 정의를 그대로 사용할 수 없게 된다. (참고로, pure strategy에서의 best response는 ‘action’에 대해 정의가 되고, NE 역시 action set에 대해서 정의가 된다.)</p>
-
-<p>이 문제를 해결하기 위해서 먼저 다음과 같은 질문을 던져보자, Player들이 strategy $s$에 따라 게임을 했을 때, payoff를 어떻게 정의하는 것이 좋을까? 예를 들어서 위의 Matching Pennies 게임에서 A가 Head를 고르고, B가 Tail를 골랐다면, 이에 해당하는 payoff는 (1, -1)이기 때문에 utility는 그냥 payoff값을 사용하면 된다. 그렇다면 A와 B가 각각 Head를 50%, Tail을 50% 확률로 선택하는 상황이라면 payoff는 어떻게 정의해야할까? 확률적으로 payoff가 정해지기 때문에 주어진 mixed strategy에 대해 정확한 payoff 값을 정하는 것은 불가능하다. 대신 간단한 대안으로 payoff의 expectation으로 utility function을 정의할 수 있다.</p>
-
-<p>이제 앞에서 정의한 strategy, strategy set, 그리고 utility function을 사용하면, pure strategy에서 했던 것과 거의 비슷한 방법으로 best response와 Nash equilibrium을 정의하는 것이 가능하다.</p>
-
-<script type="math/tex; mode=display"> s_i^* \in \mbox{BR}(s_{-i}) ~\mbox{iff}~ \forall s_i \in S_i, u(s_i^*, s_{-i}) \geq u_i(s_i, s_{-i}).</script>
-
-<script type="math/tex; mode=display">s = (s_1, \ldots, s_n) ~\mbox{is a Nash Equilibrium iff}~ \forall i, s_i \in BR(s_{-i}).</script>
-
-<p>간단하게 생각하면 deterministic한 개념이었던 action a와 utility function만 변하고 나머지는 동일하다. 이것으로 끝이 아니라, 이렇게 Nash equilibrium을 정의하게 되면 다음과 같은 엄청난 theorem이 나오게 된다.</p>
-
-<blockquote>
-  <p>Theorem (Nash, 1950). Every finite game has a Nash equilibrium.</p>
-</blockquote>
-
-<p>분명 첫 주 글에서는 ‘pure strategy’ Nash equilibrium은 항상 존재하는건 아니다라고 했는데, mixed strategy 개념으로 NE를 정의하는 순간, 모든 finite game에서 NE가 있다는 것을 보장할 수 있는 것이다. 예를 들어 Matching Pennies는 (당연하게도) 둘 다 50%의 확률로 head/tail을 고르는 것이 NE가 된다.</p>
-
-<h3 id="computing-mixed-nash-equilibrium">Computing Mixed Nash Equilibrium</h3>
-<p>이제 NE를 정의했으니, 실제 NE를 어떻게 찾아낼 수 있는지 예제를 통해서 알아보자. Battles of Sexes 문제를 다시 살펴보자.</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th> </th>
-      <th>B</th>
-      <th>F</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>B</td>
-      <td>2, 1</td>
-      <td>0, 0</td>
-    </tr>
-    <tr>
-      <td>F</td>
-      <td>0, 0</td>
-      <td>1, 2</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>정의에 따라, NE는 서로의 utility function을 maximize해야만 한다. 만약 player 2가 B를 p의 확률로, F를 1-p의 확률로 play한다고 가정해보자. 이 경우 player 2의 utility는 다음과 같이 계산할 수 있다.</p>
-
-<script type="math/tex; mode=display">  </script>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Game Theory Study (1) Introduction and Overview]]></title>

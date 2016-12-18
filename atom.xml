@@ -4,7 +4,7 @@
   <title><![CDATA[README]]></title>
   <link href="http://SanghyukChun.github.io/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-12-18T16:03:02+09:00</updated>
+  <updated>2016-12-18T16:03:44+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -240,103 +240,6 @@
     </ul>
   </li>
 </ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Game Theory Study (2) Mixed-Strategy Nash Equilibrium]]></title>
-    <link href="http://SanghyukChun.github.io/102/"/>
-    <updated>2016-08-29T00:40:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/102</id>
-		<content type="html"><![CDATA[<h3 id="section">들어가며</h3>
-<p>이 글은 Coursera의 <a href="https://www.coursera.org/learn/game-theory-1">Game Theory</a> course의 2주차 강의를 요약한 글이다.
-첫 주에서 간단한 예제들을 통해 normal form game을 엄밀하게 정의하고, pure strategy 상황에서의 Nash equilibrium 등을 정의했다면,
-이번 주에는 좀 더 일반화된 strategy인 mixed strategy에 대해 다루고, 해당 상황에서의 NE에 대해 다룬다.</p>
-
-<h3 id="mixed-strategy">Mixed Strategy</h3>
-<p>첫 주차 글에서 다룬 Matching Pennies 문제를 다시 살펴보자. 이 문제에서 한 가지 알 수 있는 사실은, deterministic한 strategy를 고르는 것은 적절한 strategy가 아니라는 사실이다.
-즉, A가 Head를 고른다면, B는 반드시 Tail을 고르게 되고, … 이 과정이 cycle이 발생하여 NE가 성립하지 않는다는 사실은 이미 앞에서 살펴보았다.</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th> </th>
-      <th>Head</th>
-      <th>Tails</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Head</td>
-      <td>1, -1</td>
-      <td>-1, 1</td>
-    </tr>
-    <tr>
-      <td>Tails</td>
-      <td>-1, 1</td>
-      <td>1, -1</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>사실 이 상황에서 가장 적절한 전략은, random하게 play를 함으로써 상대방을 교란시키는 것이다. 즉, A가 Head/Tail을 50:50으로 고르게 된다면, B는 Head를 고르나 Tail을 고르나, expected payoff가 동일하기 때문에 전략을 세우기가 한 층 더 어려워진다. Mixed strategy를 간단하게 표현하면, <strong>deterministic한 pure strategy를 probabilistic하게 바꾼 것</strong> 정도로 이해할 수 있을 것 같다. 이제 조금 더 엄밀하게 정의해보자.</p>
-
-<p>Strategy $s_i$는 action set $A_i$에 대한 probability distribution으로 정의할 수 있다. 이때, pure strategy와 mixed strategy는 각각 다음과 같이 정의할 수 있다.</p>
-
-<ul>
-  <li>Pure strategy: $s_i$는 반드시 하나의 action만 1의 확률로 고르고, 나머지는 0의 확률로 고른다.</li>
-  <li>Mixed strategy: $s_i$의 distribution에서 하나보다 많은 positive value가 있다.</li>
-</ul>
-
-<p>여기에서, 모든 i에게 가능한 모든 strategy set을 $S_i$라 정의하고, 모든 i에 대한 strategy 들의 조합을 (cross product를) ‘all strategy profile’ $S$ 라고 정의하자.</p>
-
-<p>여기에서 문제가 한 가지 생긴다. Pure strategy에서는 반드시 하나의 결과가 나오지만 mixed strategy에서는 여러 결과가 확률적으로 나오기 때문에 이전에 사용했었던 best response와 Nash equilibrium의 정의를 그대로 사용할 수 없게 된다. (참고로, pure strategy에서의 best response는 ‘action’에 대해 정의가 되고, NE 역시 action set에 대해서 정의가 된다.)</p>
-
-<p>이 문제를 해결하기 위해서 먼저 다음과 같은 질문을 던져보자, Player들이 strategy $s$에 따라 게임을 했을 때, payoff를 어떻게 정의하는 것이 좋을까? 예를 들어서 위의 Matching Pennies 게임에서 A가 Head를 고르고, B가 Tail를 골랐다면, 이에 해당하는 payoff는 (1, -1)이기 때문에 utility는 그냥 payoff값을 사용하면 된다. 그렇다면 A와 B가 각각 Head를 50%, Tail을 50% 확률로 선택하는 상황이라면 payoff는 어떻게 정의해야할까? 확률적으로 payoff가 정해지기 때문에 주어진 mixed strategy에 대해 정확한 payoff 값을 정하는 것은 불가능하다. 대신 간단한 대안으로 payoff의 expectation으로 utility function을 정의할 수 있다.</p>
-
-<p>이제 앞에서 정의한 strategy, strategy set, 그리고 utility function을 사용하면, pure strategy에서 했던 것과 거의 비슷한 방법으로 best response와 Nash equilibrium을 정의하는 것이 가능하다.</p>
-
-<script type="math/tex; mode=display"> s_i^* \in \mbox{BR}(s_{-i}) ~\mbox{iff}~ \forall s_i \in S_i, u(s_i^*, s_{-i}) \geq u_i(s_i, s_{-i}).</script>
-
-<script type="math/tex; mode=display">s = (s_1, \ldots, s_n) ~\mbox{is a Nash Equilibrium iff}~ \forall i, s_i \in BR(s_{-i}).</script>
-
-<p>간단하게 생각하면 deterministic한 개념이었던 action a와 utility function만 변하고 나머지는 동일하다. 이것으로 끝이 아니라, 이렇게 Nash equilibrium을 정의하게 되면 다음과 같은 엄청난 theorem이 나오게 된다.</p>
-
-<blockquote>
-  <p>Theorem (Nash, 1950). Every finite game has a Nash equilibrium.</p>
-</blockquote>
-
-<p>분명 첫 주 글에서는 ‘pure strategy’ Nash equilibrium은 항상 존재하는건 아니다라고 했는데, mixed strategy 개념으로 NE를 정의하는 순간, 모든 finite game에서 NE가 있다는 것을 보장할 수 있는 것이다. 예를 들어 Matching Pennies는 (당연하게도) 둘 다 50%의 확률로 head/tail을 고르는 것이 NE가 된다.</p>
-
-<h3 id="computing-mixed-nash-equilibrium">Computing Mixed Nash Equilibrium</h3>
-<p>이제 NE를 정의했으니, 실제 NE를 어떻게 찾아낼 수 있는지 예제를 통해서 알아보자. Battles of Sexes 문제를 다시 살펴보자.</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th> </th>
-      <th>B</th>
-      <th>F</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>B</td>
-      <td>2, 1</td>
-      <td>0, 0</td>
-    </tr>
-    <tr>
-      <td>F</td>
-      <td>0, 0</td>
-      <td>1, 2</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>정의에 따라, NE는 서로의 utility function을 maximize해야만 한다. 만약 player 2가 B를 p의 확률로, F를 1-p의 확률로 play한다고 가정해보자. 이 경우 player 2의 utility는 다음과 같이 계산할 수 있다.</p>
-
-<script type="math/tex; mode=display">  </script>
-
 ]]></content>
   </entry>
   
@@ -3218,6 +3121,103 @@ Caption은 일이 좀 커질 것 같아서..</p>
 <h3>Reference</h3>
 <ul>
   <li><a href="http://arxiv.org/abs/1502.03167">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a>, Sergey Ioffe, Christian Szegedy, ICML 2015</li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (16) Dimensionality Reduction (PCA, LDA)]]></title>
+    <link href="http://SanghyukChun.github.io/72/"/>
+    <updated>2015-06-17T05:21:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/72</id>
+		<content type="html"><![CDATA[<h3>들어가며</h3>
+<p>Machine Learning problem을 풀다보면, 종종 high dimensional 데이터를 다뤄야할 일이 생긴다. 그런데 dimension 높은 데이터를 다루다보면 여러 문제가 발생하는데, 높은 dimension으로 인해 생기는 대표적인 문제가 <a href="http://SanghyukChun.github.io/59#59-4-cd">예전 글</a>에서 다뤘던 Curse of dimensionality이다. 또한 많은 algorithm들에서 dimension이 complexity에 영향을 주는 경우가 많으므로 높은 dimension은 알고리즘의 성능에 악영향을 미치는 경우가 많다. 그렇기 때문에 많은 경우 데이터의 dimension이 높다면 다양한 방식의 dimenionality reduction 기술을 적용해 데이터의 차원을 낮추는 작업을 한다. 일반적으로 많이 사용하는 Dimensionality Reduction으로는 LDA와 PCA가 있으며, ICA, CCA 등의 방법도 종종 사용되며, 그 이외에도 RBM, Auto-encoder 등의 Neural network와 관련된 모델들도 존재한다. 이 글에서는 가장 많이 사용되는 방법들인 LDA와 PCA에 대해서만 다룰 것이다.</p>
+<h3>Recall: Curse of Dimensonality</h3>
+<p>Curse of Dimensionality는 데이터의 차원이 높아질수록 발생하는 여러 문제들을 통틀어 일컫는 말이다. 이런 문제가 발생하는 이유는 차원이 높아질수록 우리가 일반적으로 사용하는 Euclidean distance가 예상치 못한 방식으로 동작하기 때문이다. 예를 들어 d-차원 공간에서 임의의 점으로부터 거리가 1인 점들을 모아놓은 공간을 생각해봤을 때, d가 점점 커지면 커질수록 그 구의 대부분의 부피가 거의 surface에 가까운 엄청나게 얇은 shell에 존재한다는 것을 이미 예전 글에서 증명한바 있다. 다시 말해서 아주 높은 차원의 데이터는 우리가 원하지 않는 방향으로 움직일 가능성이 크다.</p>
+<h3>Feature Extraction</h3>
+<p>많은 상황에서 차원의 크기는 feature의 개수를 의미한다. 예를 들어 키, 몸무게, 나이, 성별이라는 네 가지 정보를 가지고 클러스터링을 한다고 생각해보자. 이 경우 데이터의 차원은 4이다. 그런데 아마도 이 네 가지 정보 이외에도 소득, 학력, 자산크기 등의 정보 등을 추가로 사용해 클러스터링을 한다면 더 좋은 클러스터링이 가능할지도 모른다. 문제는, 모든 feature가 전부 의미있는 feature는 아닐 수 있다는 것이다. 몸무게 정보를 사용하여 클러스터링한 것과 사용하지 않고 클러스터링한 것 중에서 몸무게 정보를 사용하지 않고 클러스터링 한 것이 더 좋을 수도 있다는 것이다. 이렇게 주어진 정보들 중에서 정말 의미 있는 feature를 뽑아내는 과정을 feature extration이라고 한다. 가장 간단한 feature extraction은 모든 feature를 사용해보기도 하고 사용해보지 않기도 하면서 $2^d$ 개의 조합을 모두 확인해보는 것이다. 그러나 이 방법은 차원의 크기에 exponential할 뿐 아니라, 만약 기존 feature가 highly correlate되어있고, 여러 개의 feature를 묶어서 한 feature로 만들어야 성능이 좋아지는 경우 등에 대해 좋은 성능을 내기 어렵다. 따라서 이런 상황에서도 dimensionality reduction 방법을 사용해 feature를 뽑아낼 수 있다. 만약 우리가 100개의 feature를 가지고 있을 때, &#8216;가장 좋은&#8217; 30개의 feature만 뽑기 위해서 30차원으로 dimensionality reduction을 하는 것이다.</p>
+<h3>Dimensionality Reduction</h3>
+<p>데이터의 차원을 낮춘다는 것의 의미는, 현재 데이터가 존재하는 차원에서 그보다 낮은 다른 차원으로 데이터들을 mapping시키는 map을 찾는다는 것과 같다고 할 수 있다. 이때 어떤 임의의 차원에서 그보다 낮은 임의의 낮은 차원으로 가는 mapping은 셀 수 없이 많다. 그렇다면 우리는 어떤 mapping을 선택해야할까? 예를 들어 가장 간단한 방법으로, d 차원 데이터를 d&#8217; 차원으로 보내고 싶을 때, 앞에서 설명했던 간단한 방법처럼 임의의 d&#8217; 개의 축을 골라서 그 축만 사용하는 방법도 있을 수 있고, <a class="red tip" title="projection이라고도 한다.">d에서 d&#8217;으로 가는 linear map</a>을 임의로 하나 고르는 것도 가능하다. 물론 non linear map도 가능하지만, 이 글에서 다룰 LDA와 PCA 두 가지 방법은 모두 linear mapping을 찾는 알고리즘이다. LDA는 supervised learning이며, PCA는 unsupervised learning에 해당하게 된다. 모든 문제에서 데이터는 matrix $X$로 표기되며, 데이터의 차원은 d이고, 개수는 n개이다. 따라서 $X$는 d by n matrix가 된다.</p>
+<h3>LDA</h3>
+<p><a href="http://en.wikipedia.org/wiki/Linear_discriminant_analysis">Linear Discriminant Analysis (LDA)</a>는 Dimensionality reduction만을 위한 방법은 아니다. LDA로 약어가 표시되는 것들이 꽤 많아서 (예: Latent Dirichelt Allocation) 이 모델을 처음 제안한 사람의 이름을 따서 Fisher&#8217;s LDA 라고 부르기도 한다. LDA는 여러 클래스가 존재할 때 그 클래스들을 최대한 잘 분리시키는 projection을 찾는다. 철학은 굉장히 단순한데, projection 시킨 데이터들에서 같은 클래스에 속하는 데이터들의 variance는 최대한 줄이고 ($\sigma_{within}$), 각 데이터들의 평균 값들의 variance는 최대한 키워서 ($\sigma_{between}$) 클래스들끼리 최대한 멀리 떨어지게 만드는 것이다. 이를 수식으로 표현하면 다음과 같은 수식을 얻을 수 있다.</p>
+<p>$$S = \frac{\sigma_{between}^2}{\sigma_{within}^2}$$</p>
+<p>일단 가장 간단한 상황인 클래스가 2개일 때의 상황만 고려해보도록하자. 참고로 LDA의 결과는 항상 클래스 개수 - 1 개까지의 벡터 밖에 찾을 수 없기 때문에, 이 상황에서 우리가 찾게 될 projection은 1차원 projection을 찾는 것이므로 간단하게 vector $w$로 기술하도록 하겠다. 클래스가 2개 뿐이라면, 위의 식은 엄청 간단한 수식으로 바뀌게 된다. 먼저 $\sigma_{between}$은 데이터가 단 두 개 뿐이기 때문에 간단하게 $ (w \cdot \mu_1 - w \cdot \mu_2 )^2 $으로 표현이 된다. 이때, $\mu_1, \mu_2$는 각각 1번째 클래스와 2번째 클래스에 속한 데이터들의 평균 값이다. 다음으로 $\sigma_{within}$ 역시 어렵지 않게 계산할 수가 있다. Projection을 하게 되면 데이터의 variance는 $w^\top \Sigma w$로 표현이 되기 때문에, 1번 클래스와 2번 클래스에 대해 이 값을 계산하고 더해주기만 하면 된다. 식을 정리해보면</p>
+<p>$$w = \arg\min_w \frac{\sigma_{between}^2}{\sigma_{within}^2} = \arg\min_w\frac{(w \cdot \mu_1 - w \cdot \mu_2 )^2}{w^\top \Sigma_1 w + w^\top \Sigma_2 w} $$</p>
+<p>그리고 위 식을 w에 대해 미분하고 좀 정리해보면 $w \propto	(\Sigma_1 + \Sigma_2)^{-1}(\mu_1 - \mu_2) $ 라는 식을 얻을 수 있다.</p>
+<h3>Multiclass LDA</h3>
+<p>그러면 클래스가 2개보다 많을 때, 벡터 $w$가 아닌 subspace $U$를 찾는 과정은 어떻게 되는지 살펴보도록하자. 다시 $\sigma_{within}$과 $\sigma_{between}$을 살펴보자. 먼저 $\sigma_{between}$은 위와 비슷한 형태로 표현할 수 없다. 그러나 우리가 각각의 클래스의 평균을 $\mu_i$라고 정의한다면, 그냥 이 값들의 variance를 계산하기만 하면 된다. 이 variance는 $\sum_i (\mu_i - \mu)(\mu_i-\mu)^\top$로 표현이 된다. 이때 $\mu$는 모든 평균들의 평균이다. 이 variance가 있으므로, projection하여 얻는 variance도 앞 뒤에 proejction matrix를 곱해 쉽게 계산할 수 있다. $\sigma_{within}$은 위와 비슷한 방식으로 $\sigma_{within} = U^\top \left(\sum_i \Sigma_i \right) U $로 표현할 수 있다. 이때 $\Sigma_i$는 i번째 클래스의 variance이다. 이 식을 정리해보면 다음과 같은 식을 얻는다.</p>
+<p>$$U = \arg\min_U \frac{\sigma_{between}^2}{\sigma_{within}^2} = \arg\min_U \frac{U^\top \left(\sum_i (\mu_i - \mu)(\mu_i-\mu)^\top\right) U}{U^\top \left(\sum_i \Sigma_i \right) U} = \arg\max_U \frac{U^\top A U}{U^\top B} $$</p>
+<p>$A$와 $B$는 각각 괄호 안에 있는 값을 의미한다. 위 식에서 보게 되면, 분자에 해당하는 부분이 rank가 클래스 개수 - 1 이기 때문에, 우리가 이 식을 풀었을 때도 $U$의 rank가 클래스 개수 - 1이 되므로 LDA가 구할 수 있는 subspace의 축 개수가 클래스 개수 - 1로 제한되는 것이다. 이 식을 풀기 위해서는 eigenvalue를 계산하는 것으로 간단하게 식을 풀 수 있다. 지금부터 왜 이 식이 eigenvalue를 푸는 것으로 해결이 가능한지를 살펴보자.</p>
+<h3>General Eigenvector problem</h3>
+<p>문제를 간단하게 하기 위해 전체 subspace가 아닌 vector $w$만 고려해보도록 하자. 따라서 식은</p>
+<p>$$\min_w \frac{w^\top A w}{w^\top B w}$$</p>
+<p>로 표현 가능하다. 이제 이 식을 w에 대해서 미분해보면 다음과 같은 식을 얻게 된다</p>
+<p>$$\left(w^\top B w\right)^2 \big[ 2A w \left( w^\top B w \right) - 2B w \left( w^\top A w \right) \big] = 0$$</p>
+<p>이를 잘 정리하면</p>
+<p>$$Aw = \frac{w^\top A w} {w^\top B w} B w$$</p>
+<p>로 표현이 되고, 우리가 원래 풀려고 했던 $\frac{w^\top A w} {w^\top B w}$를 $\lambda$라고 정의하면 식이 $A w = \lambda B w$라는 엄청 간단한 식이 나오게 된다. 이런 형태를 만족하는 $\lambda$를 찾는 문제를 general eigenvalue problem이라 부른다. 만약 $B$가 Identity matrix라면 우리가 아는 일반 eigenvalue problem이 된다. 따라서 원래 문제가 $\lambda$의 minimum을 찾는 것이었으니 이제 가장 작은 general eigenvalue를 찾기만 하면 우리가 풀고 싶었던 문제를 풀 수 있는 것이다.</p>
+<h3>PCA</h3>
+<p><a href="http://en.wikipedia.org/wiki/Principal_component_analysis">Principal Component Analysis (PCA)</a>는 Dimensionality reduction의 가장 대표적인 방법 중 하나이다. PCA는 projection된 데이터의 variance가 최대화되는 projection matrix를 찾는 문제이다. 그런데 <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition#Low-rank_matrix_approximation">Eckart–Young theorem</a>에 의해서, 이 문제의 답이 데이터 $X$에 대한 <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular value decomposition(SVD)</a>으로 계산할 수 있다는 것이 알려져 있다. 그래서 PCA를 variance를 maximize하는 원래 정의대로 설명이 하는 경우도 많고, low rank matrix 문제로 설명하는 경우도 있다. 이 글에서는 low rank matrix estimation 문제로 설명하도록 하겠다. 이 문제의 objective는 아래 식과 같다.</p>
+<p>$$\min_{rank(Z)=k} \| X - Z \|_F^2$$</p>
+<p>이때 $\|A\|_F$는 <a href="http://mathworld.wolfram.com/FrobeniusNorm.html">Frobenius norm</a>을 의미한다. 이 norm은 matrix의 모든 element들의 제곱을 더한 값이며, $\| A \|_F^2 = {\tt tr} (A A^\top) = {\tt tr} (A^\top A) $ 라는 특성이 알려져있다. 이제 위의 식에서 $Z$를 UV decomposition한 후 대입해보면 다음과 같은 식을 얻는다.</p>
+<p>$$\min_{U\in R^{d \times k}, V\in R^{n \times k}, U^\top U = I} \|X - UV^\top\|_F^2$$</p>
+<p>이 식을 $V$에 대해 미분하면 optimal한 V는 $V=X^\top U$로 표현이 됨을 알 수 있으며, 이를 위의 식에 대입한 후, Frobenius norm의 성질을 잘 활용하면 아래와 같은 식이 나온다.</p>
+<p>$$\max_{U\in R^{d \times k}, U^\top U = I} {\tt tr} (U^\top X X^\top U)$$</p>
+<p>가 되며, 이 식의 답은 SVD를 통해 계산할 수 있다는 것을 알 수 있다. 그러나 만약 $X$의 mean이 0가 아니게 되면 UV decomposition을 하는 과정에서 문제가 생기게 되서 같은 방식으로 깔끔하게 구할 수가 없다. 이 과정은 다소 복잡하므로 생략하고 결과만 얘기하면, 그냥 $\hat X = X - \frac{1}{n} X \mathbf 1$을 SVD하면 된다. 뒤에 있는 term은 그냥 X의 평균값이다.</p>
+<p>정리하면, 임의의 데이터 X에 대한 PCA는 다음과 같이 구할 수 있다.</p>
+<ol>
+	<li>데이터 $X$의 empirical mean을 계산한 후 모든 데이터에서 평균을 빼준다.</li>
+	<li>새로 만들어진 데이터 $\hat X$의 가장 큰 singular value부터 k번째 큰 singular value까지에 대응하는 singular vector들을 구한다. (SVD를 통해)</li>
+	<li>뽑아낸 k개의 singular vector로 U를 구성하고 return한다.</li>
+</ol>
+<p>쉽지만 그만큼 강력하다. 하지만 PCA의 경우 Frobenius norm의 제곱값을 사용하므로 각 element들이 norm을 계산할 때 한 번 제곱되고, 다시 전체에 제곱을 취할 때 또 제곱이 취해지므로 조금이라도 원래 데이터와 다른 outlier가 존재하게 된다면 그 효과가 굉장히 극적으로 증폭되기 때문에 noise에 취약하다. 이를 방지하기 위해 objective의 norm을 1-norm으로 바꾸거나 하는 등의 robust PCA 연구도 활발하게 진행되고 있다.</p>
+<h3>정리</h3>
+<p>Dimensionality Reduction은 매우 유용하고 많이 쓰이는 툴이다. 특히 PCA는 굉장히 빈번하게 사용되고 알고리즘도 매우 간단하기 때문에 알아두면 쓰임새가 많다. 이 글에서는 LDA와 PCA만 다뤘지만, ICA, CCA, RBM 등 굉장히 많은 dimensionality reduction 기술들이 존재한다. 이 중 RBM은 추후에 다시 한 번 자세하게 설명하도록 하겠다.</p>
+
+<h3>변경 이력</h3>
+<ul>
+  <li>2015년 6월 17일: 글 등록</li>
+</ul>
+
+<h3>Reference</h3>
+<ul>
+  <li>Nie, Feiping, Jianjun Yuan, and Heng Huang. “Optimal mean robust principal component analysis.” Proceedings of the 31st International Conference on Machine Learning (ICML-14). 2014.</li>
+</ul>
+
+<hr />
+
+<h3 id="machine-learning---">Machine Learning 스터디의 다른 글들</h3>
+
+<ul>
+  <li><a href="http://SanghyukChun.github.io/57">Machine Learning이란?</a></li>
+  <li><a href="http://SanghyukChun.github.io/58">Probability Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/59">Overfitting</a></li>
+  <li><a href="http://SanghyukChun.github.io/60">Algorithm</a></li>
+  <li><a href="http://SanghyukChun.github.io/61">Decision Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/62">Information Theory</a></li>
+  <li><a href="http://SanghyukChun.github.io/63">Convex Optimzation</a></li>
+  <li><a href="http://SanghyukChun.github.io/64">Classification Introduction (Decision Tree, Naïve Bayes, KNN)</a></li>
+  <li>Regression and Logistic Regression</li>
+  <li>PAC Learning &amp; Statistical Learning Theory</li>
+  <li>Support Vector Machine</li>
+  <li>Ensemble Learning (Random Forest, Ada Boost)</li>
+  <li>Graphical Model</li>
+  <li><a href="http://SanghyukChun.github.io/69">Clustering (K-means, Gaussian Mixture Model)</a></li>
+  <li><a href="http://SanghyukChun.github.io/70">EM algorithm</a></li>
+  <li>Hidden Markov Model</li>
+  <li><a href="http://SanghyukChun.github.io/72">Dimensionality Reduction (LDA, PCA)</a></li>
+  <li><a href="http://SanghyukChun.github.io/73">Recommendation System (Matrix Completion)</a>
+    <ul>
+      <li><a href="http://SanghyukChun.github.io/95">Recommendation System with Implicit Feedback</a></li>
+    </ul>
+  </li>
+  <li><a href="http://SanghyukChun.github.io/74">Neural Network Introduction</a></li>
+  <li><a href="http://SanghyukChun.github.io/75">Deep Learning 1 - RBM, DNN, CNN</a></li>
+  <li><a href="http://SanghyukChun.github.io/76">Reinforcement Learning</a>
+    <ul>
+      <li><a href="http://SanghyukChun.github.io/96">Multi-armed Bandit</a></li>
+    </ul>
+  </li>
 </ul>
 ]]></content>
   </entry>
