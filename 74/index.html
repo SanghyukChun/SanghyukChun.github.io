@@ -201,7 +201,7 @@ $(function() {
 </ol>
 <p>이때, chain rule을 사용한다는 의미는 아래 그림에서 나타내는 것처럼, 앞에서 계산된 gradient를 사용해 지금 gradient 값을 update한다는 의미이다. (그림은 bengio의 <a href="http://www.iro.umontreal.ca/~bengioy/dlbook/">deep learning book</a> <a href="http://www.iro.umontreal.ca/~bengioy/dlbook/mlp.html">Ch6</a> 에서 가져왔다.)</p>
 <p><img src="/images/post/74-6.png" width="400" /></p>
-<p>두 그림 모두 $\frac{\partial z}{\partial x}$를 구하는 것이 목적인데, 직접 그 값을 계산하는 대신, $y$ layer에서 이미 계산한 derivative인 $\frac{\partial z}{\partial y}$와 $y$ layer와 $x$에만 관계있는 $\frac{\partial y}{\partial x}$를 사용하여 원하는 값을 계산하고 있다. 만약 $x$ 아래에 $x^\prime$이라는 parameter가 또 있다면, $\frac{\partial z}{\partial x}$와 $\frac{\partial x}{\partial x^\prime}$을 사용하여 $\frac{\partial z}{\partial x^\prime}$을 계산할 수 있는 것이다. 때문에 우리가 backpropagation algorithm에서 필요한 것은 내가 지금 update하려는 paramter의 바로 전 variable의 derivative와, 지금 paramter로 바로 전 variable을 미분한 값 두 개 뿐이다. 이 과정을 output layer에서부터 하나하나 내려오면서 반복된다. 즉, output -&gt; hidden k, hidden k -&gt; hidden k-1, &#8230; hidden 2 -&gt; hidden 1, hidden 1 -&gt; input의 과정을 거치면서 계속 weight가 update되는 것이다. 예를 들어서 decision layer와 가장 가까운 weight는 직접 derivative를 계산하여 구할 수 있고, 그보다 더 아래에 있는 layer의 weight는 그 바로 전 layer의 weight와 해당 layer의 activation function의 미분 값을 곱하여 계산할 수 있다. 이해가 조금 어렵다면 아래의 <a href="74#example">예제</a>를 천천히 읽어보기를 권한다.</p>
+<p>두 그림 모두 $\frac{\partial z}{\partial x}$를 구하는 것이 목적인데, 직접 그 값을 계산하는 대신, $y$ layer에서 이미 계산한 derivative인 $\frac{\partial z}{\partial y}$와 $y$ layer와 $x$에만 관계있는 $\frac{\partial y}{\partial x}$를 사용하여 원하는 값을 계산하고 있다. 만약 $x$ 아래에 $x^\prime$이라는 parameter가 또 있다면, $\frac{\partial z}{\partial x}$와 $\frac{\partial x}{\partial x^\prime}$을 사용하여 $\frac{\partial z}{\partial x^\prime}$을 계산할 수 있는 것이다. 때문에 우리가 backpropagation algorithm에서 필요한 것은 내가 지금 update하려는 paramter의 바로 전 variable의 derivative와, 지금 paramter로 바로 전 variable을 미분한 값 두 개 뿐이다. 이 과정을 output layer에서부터 하나하나 내려오면서 반복된다. 즉, output -&gt; hidden k, hidden k -&gt; hidden k-1, &#8230; hidden 2 -&gt; hidden 1, hidden 1 -&gt; input의 과정을 거치면서 계속 weight가 update되는 것이다. 예를 들어서 decision layer와 가장 가까운 weight는 직접 derivative를 계산하여 구할 수 있고, 그보다 더 아래에 있는 layer의 weight는 그 바로 전 layer의 weight와 해당 layer의 activation function의 미분 값을 곱하여 계산할 수 있다. 이해가 조금 어렵다면 아래의 <a href="/74#example">예제</a>를 천천히 읽어보기를 권한다.</p>
 <p>이 과정을 맨 위에서 아래까지 반복하면 전체 gradient를 구할 수 있고, 이 gradient를 사용해 parameter들을 update할 수 있다. 이렇게 한 번의 iteration이 진행되고, 충분히 converge했다고 판단할 때 까지 이런 iteration을 계속 반복하는 것이 feed-forward network의 parameter를 update하는 방법이다.</p>
 <p>이를 그림으로 표현하면 아래와 같다. (출처: <a href="http://tex.stackexchange.com/questions/162326/drawing-back-propagation-neural-network">링크</a>)</p>
 <p><img src="/images/post/42-1.png" width="600" /></p>
@@ -334,6 +334,14 @@ $(function() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/66/">Machine Learning 스터디 (10) PAC Learning & Statistical Learning Theory</a>
+      </li>
+    
+      <li class="post">
+        <a href="/102/">Game Theory Study (2) Mixed-Strategy Nash Equilibrium</a>
+      </li>
+    
+      <li class="post">
         <a href="/101/">Game Theory Study (1) Introduction and Overview</a>
       </li>
     
@@ -343,14 +351,6 @@ $(function() {
     
       <li class="post">
         <a href="/98/">Octopress Markdown Kramdown으로 이전하기</a>
-      </li>
-    
-      <li class="post">
-        <a href="/97/">AlphaGo의 알고리즘과 모델</a>
-      </li>
-    
-      <li class="post">
-        <a href="/96/">Machine Learning 스터디 (20-1) Multi-armed Bandit</a>
       </li>
     
   </ul>

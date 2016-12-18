@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Machine-Learning | README]]></title>
   <link href="http://SanghyukChun.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://SanghyukChun.github.io/"/>
-  <updated>2016-08-22T00:11:09+09:00</updated>
+  <updated>2016-12-18T16:03:02+09:00</updated>
   <id>http://SanghyukChun.github.io/</id>
   <author>
     <name><![CDATA[Sanghyuk Chun]]></name>
@@ -12,6 +12,227 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Machine learning 스터디 (10) PAC Learning & Statistical Learning Theory]]></title>
+    <link href="http://SanghyukChun.github.io/66/"/>
+    <updated>2016-12-18T16:00:00+09:00</updated>
+    <id>http://SanghyukChun.github.io/66</id>
+    <content type="html"><![CDATA[<h3 id="section">들어가며</h3>
+<p>어떤 머신러닝 모델이 있을 때 이 모델이 다른 모델에 비해 뛰어나다고 주장하려면 어떤 것들이 필요할까? 알고리즘은 수렴성이나 complexity 등으로 성능을 논하지만, 모델의 성능을 표현하기 위해서는 다른 무언가가 필요하다. 이번 글에서는 <a href="https://en.wikipedia.org/wiki/Probably_approximately_correct_learning">PAC (Probably Approximately Correct)</a> 라는 개념을 설명할 것이다. PAC는 이론적으로 모델의 성능을 측정하는 방법 중 하나로, 비록 practical하게 모델의 성능 측정에 쓰기는 힘들지만 개념적으로 왜 특정 모델이 더 좋은지, 언제 모델의 성능이 좋고 언제 나쁜지에 대해 설명하는 것은 가능하다. 이 글에서는 Computational learning theory 라는 분야를 언급하고, 그 다음 PAC의 기본 개념과 그 intuition을 설명할 것이다. 그리고 VC dimension을 소개하여 일반적인 infinite hypothesis space에서 PAC bound를 어떻게 다시 bound 시킬 수 있는지 등에 대해 설명할 것이다.</p>
+
+<h3 id="motivation">Motivation</h3>
+<p>다시 원래 질문으로 되돌아가서 모델이 ‘뛰어나다’ 라고 말하기 위해서는 어떤 요소들이 필요할지 생각해보자. 먼저 다른 모델에 비해 learning하는 데에 필요한 데이터의 수가 적어야할 것이고, learning한 이후에 inference를 했을 때 그 결과가 좋아야할 것이고, 마지막으로 learning이 가능한 상황이 많이 있어야한다. 예를 들어서 어떤 모델을 만들었는데, 이 모델이 너무 복잡해서 100번 learning시켰을 때 (overfitting등의 이슈로 인해) 오직 3번 정도만 제대로 learning이 된다고 하면 이 모델은 쓸모없는 모델일 것이다.
+따라서 ‘좋은 모델’ 인지 여부를 판단하기 위해서는 다음과 같은 질문들에 대답을 해야한다.</p>
+
+<ul>
+  <li>“Seccessful” learning을 할 확률</li>
+  <li>Learning에 필요한 training example의 개수</li>
+  <li>ML algorithm에 의해 구해진 approximated target function의 정확도</li>
+</ul>
+
+<p>이런 질문들에 답을 하기 위해 등장하게 된 분야가 바로 <a href="https://en.wikipedia.org/wiki/Computational_learning_theory">Computational learning theory</a>으로, machine learning algorithm의 분석을 위한 수학적이고 이론적인 분야라고 생각하면 될 것 같다. 오늘 다루게 될 PAC는 이 computational learning theory의 한 부분으로, 가장 간단한 이론 중 하나이지만, 그 만큼 이론적으로 시사하는 바가 많은 이론이기 때문에 많은 machine learning course에서 한 번은 언급하고 넘어가는 경우가 많다.</p>
+
+<h3 id="revisit-machine-learning-in-function-approximation-view">Revisit: Machine Learning in function approximation view</h3>
+<p><a href="/57">맨 처음 글</a>에서 설명했던 Machine learning의 구성요소에 대해 다시 살펴보도록 하자. 이 글에서는 machine learning의 역할이 특정 데이터의 결과를 예측하는 function을 찾는 것이라고 가정할 것이며, 따라서 error는 함수 값이 정확하게 찾아진 데이터의 수와, 그렇지 않은 수에 의해 0에서 1사이의 값으로 정확하게 정의된다. 이때 Machine learning은 다음 요소들로 구성된다.</p>
+
+<ul>
+  <li>Instance $X$: 모든 데이터의 공간이라 할 수 있다. 즉, 모든 픽셀이 0 또는 1인 28 by 28 흑백 이미지라고 한다면 $2^{784}$ 크기의 set이 될 것이다.</li>
+  <li>Target concept $c$: 혹은 우리에게 조금 더 익숙한 용어로 표현하면 ‘target function’이다. Instance space의 subset으로 정의가 되며, 주어진 데이터가 어떤 값을 가지는지 판단하는 함수라고 생각하면 된다. 예를 들어 MNIST classification 문제에서는 주어진 데이터 x가 [0-9] 사이의 데이터 중에서 어디에 속하는지 판단하는 함수가 될 것이다.</li>
+  <li>Hypothesis space $H$: 주어진 $c$와 최대한 비슷한 approximated function (hypothesis) $h$가 속하는 function space이다. 예를 들어 함수가 linear라 가정한다면 Hypothesis space는 모든 linear function의 function space가 된다.</li>
+  <li>Training Data $D$: 모든 instance space를 다 볼수는 없으니 그 중 일부의 데이터만이 training data로 주어진다.</li>
+</ul>
+
+<p>위의 4가지 요소가 주어졌을 때, Machine learning 모델은 전체 데이터셋 $x \in X$ 에 대해 가장 target concept $c(x)$와 비슷한 hypothesis $h(x)$를 찾아야한다. 하지만 실제로는 training sample $x \in D$ 만 관측할 수 있으므로, training error 관점에서 hypothesis를 찾아야한다. 여기에서 중요한 점은 전체 instance $X$의 subset인 training instance $D$에서 error가 minimize가 된 모델이, 전체 instance에 대해서도 역시 작은 error를 보일 것인지, 만약 그렇지 않다면 training error와 true error가 얼마나 차이날 것인가 하는 점이다. 이 둘의 관계는 아래와 같은 그림으로 이해할 수 있다.</p>
+
+<p><img class="center" src="/images/post/66-1.png" width="400"></p>
+
+<p>위의 그림에서 $h$와 $c$가 정확히 겹쳐지지 않는 것을 볼 수 있다. 여기에서 ‘There is no free lunch’ 라는 머신러닝의 큰 교훈이 나온다. 만약 우리가 어떤 모델을 training data에서 관측하지 못한 데이터에 대해서도 더 generalize하고 싶다면 모델에 대한 더 많은 assumption이 필요하다는 의미이다. 이 assumption은 흔히 regularization으로 표현되기도 한다. Multi-layered perceptron 모델에서 dropout이나 batch normalization, l2-regularization 등과 같은 더 많은 assumption이 있어야 더 generalized된 모델을 얻을 수 있다는 것이다.</p>
+
+<p>여기에서 한 가지 또 중요한 점이 있는데, 심지어 데이터에 noise가 전혀 없어서 우리가 항상 정확한 target value를 알 수 있다고 하더라도, true error와 train error의 차이는 언제나 발생할 수 있다는 것이다. 이해를 돕기 위하여 예를 들어보자. 만약 아래와 같은 데이터가 있어서, 박스 R의 안 쪽은 +, 바깥쪽은 -인 target value를 가진다고 가정해보자. 전체 도메인에서 우리는 uniformly sample된 데이터들의 target value만을 알고 있다고 가정하자. 이 상황에서, 우리가 이 경계 R이 box라는 것을 알고 있을뿐아니라, error가 전혀 없는 데이터를 가지고 있다고 하더라도, R과 “정확하게 같은” 경계를 얻는 것은 거의 불가능하다는 사실을 알 수 있다.</p>
+
+<p><img class="center" src="/images/post/66-3.png" width="400"></p>
+
+<p>물론 엄청나게 많은 데이터가 있으면 “거의 같은” 경계를 얻을 수는 있겠지만, “정확하게 같은” 경계를 얻는 것은 역시 거의 불가능하다.
+따라서 우리는 “정확한” 모델을 얻기위해 얼마나 많은 데이터가 필요한가? 라는 질문이 아니라 “이 정도의 아주 작은 error를 높은 확률로 달성하기 위해 어느 정도의 데이터가 필요할까?” 정도로 질문을 바꿔야한다.</p>
+
+<h3 id="overfitting-revisited">Overfitting: revisited</h3>
+<p>이제 true error와 train error를 정의해보자. 이 둘은 각각 전체 데이터셋 $X$와 traning data set $D$에서의 learning된 hypothesis $h$의 error로 정의된다. 수식으로 표현하면 다음과 같다.</p>
+
+<script type="math/tex; mode=display"> \mbox{error}_{true}(h) := \mbox{Pr}_{x\in X} [c(x) \neq h(x)] </script>
+
+<script type="math/tex; mode=display"> \mbox{error}_{train}(h) := \mbox{Pr}_{x\in D} [c(x) \neq h(x)] </script>
+
+<p>당연한 얘기지만, 우리가 모든 데이터를 관측할 수 없기 때문에 정확한 true error를 측정하는 것은 불가능하다. 그러나 만약 우리가 test data를 모든 데이터셋에서 uniformly random하게 (i.i.d하게) 뽑는다면 test error는 true error의 unbiased estimator가 된다. 이 글에서는 반드시 test data가 i.i.d하게 뽑혔다고 가정하고 test error를 true error의 unbiased estimation으로 취급할 것이다. 즉, 앞으로 test error라고 언급하는 것들은 전부 true error와 같다고 생각해도 된다.</p>
+
+<p>그러나 test error와는 달리, training error는 true error의 unbiased estimator가 아니다. 왜냐하면 error가 hypothesis $h$에 의해 결정이 되는데, $h$는 다음과 같이 training data $D$에 dependent하기 때문이다.</p>
+
+<script type="math/tex; mode=display">h = \arg\min_h \mbox{error}_{train}(h)</script>
+
+<p>위와 같이 train error를 minimize하는 것을 empirical risk minimization이라고 부르며, $h$는 항상 true error보다 training error가 더 좋을 것이라는 추측 역시 할 수 있다. 여기에서 우리는 overfitting이라는 것을 다음과 같이 정의할 수 있다.</p>
+
+<p>Hypothesis $h \in H$는 다음과 같은 조건을 만족하는 $h^\prime \in H$가 존재할 때 train data에 overfitting 되었다고 정의한다.</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+\mbox{error}_{train}(h) < \mbox{error}_{train}(h^\prime) \mbox{ and } \mbox{error}_{true}(h) > \mbox{error}_{true}(h^\prime). %]]&gt;</script>
+
+<p>여기에서 우리는 머신러닝의 또 한가지 큰 교훈인 “Occam’s razor”를 배울 수 있다.
+먼저 아래 그림을 살펴보자. 이 그림은 decision tree의 size가 커지면 커질수록 (모델이 더 복잡해지면 복잡해질수록) training error는 감소하지만 true error는 오히려 증가한다는 것을 보여준다.</p>
+
+<p><img class="center" src="/images/post/66-2.png" width="400"></p>
+
+<p>여기에서 우리는 model의 complexity가 커질수록 overfitting의 효과가 더 강력해진다는 것을 알 수 있으며, 이를 Occam’s razor라고 한다. 즉, 할 수 있으면 최대한 간단한 모델이 좋다는 것이다.
+또 하나 흥미로운 점은, 만약 training data가 infinite하여 모든 data space를 포함할 경우 더 이상 overfitting 문제는 없을 것이라는 것이다. 그러나 실제로는 무한한 데이터를 전부 학습하는 것이 불가능하고 제한된 숫자의 데이터만을 사용해야하기 때문에 그런 일은 발생하지 않는다. 그 대신, 우리는 ‘얼마나 많은 데이터가 있어야 overfitting 이슈가 줄어들까?’ 라는 유의미한 질문을 할 수 있다.</p>
+
+<h3 id="pac-learning-introduction">PAC Learning: Introduction</h3>
+
+<p>PAC (Probably Approximately Correct) learning이란 수학적으로 머신러닝 모델을 분석하는 framework으로, “높은 확률로 (Probably)” 주어진 모델이 “작은 error를 가진다 (Approximatly Correct)”와 같은 식의 분석을 할 수 있다. 앞으로 진행하는 모든 설명과 증명에서 data에 noise가 없다고 가정하도록 하겠다. 앞에서도 보았듯, 데이터가 전혀 노이즈가 없다고 하더라도 정확하게 true error가 0이 되는 모델을 얻는 것은 거의 불가능하기 때문에 확률적으로, 그리고 error라는 관점에서 모델을 분석하게 되는 것이다.</p>
+
+<p>PAC bound는 다음과 같은 4가지 요소들로 구성된다.</p>
+<ul>
+	<li>Training data의 샘플 수 $m$</li>
+	<li>Train error와 true error의 gap $\varepsilon$, $\mbox{error}_{true}(h) \leq \mbox{error}_{train}(h) + \varepsilon$</li>
+	<li>Hypothesis space의 complexity $| H |$, 만약 model parameter가 infinite하다면 다른 표현이 필요하다</li>
+	<li>Confidence of the relation: at least $(1-\delta)$</li>
+</ul>
+
+<p>그리고 finite hypothesis space에 대해, PAC bound는 다음과 같이 주어진다.</p>
+
+<script type="math/tex; mode=display"> Pr[ \mbox{error}_{true} (h) \leq \mbox{error}_{train}(h) + \varepsilon ] \leq \| H \| \exp(-2m\varepsilon^2). </script>
+
+<p>수식에서 볼 수 있듯 PAC bound는 true error와 train error의 gap의 upper bound를 training data의 개수 $m$, model complexity $|H|$, 그리고 error와 그 confidence $\varepsilon$과 $\delta$에 대해 표현하는 bound이다. 이 bound에서부터 우리는 모델의 성능, 정확히 말하면 generalization과 overfitting에 대한 앞에서 살펴본 intuition을 다시 한 번 확인할 수 있다.
+왜냐하면 true error와 train error의 gap $\varepsilon$이 generalization, 그리고 overfitting과 관련된 term이기 때문이다. Generalization은 그 정의 자체가 $\varepsilon$과 큰 차이가 없으니 넘어가고, 왜 overfitting과 관련된 term인지만 살펴보자. 앞에서 overfitting을 정의할 때, train error는 더 나쁘지만, true error는 더 좋은 대체 모델 $h^\prime$ 이 존재할 때 $h$가 train data에 overfit되었다 정의했는데, $\varepsilon$이 커지면 커질수록 그런 모델 $h^\prime$이 존재할 확률이 커지므로, $\varepsilon$은 overfitting과 관련된 term이 되는 것이다.
+따라서 이로부터 우리는 다음과 같은 intuition들을 얻을 수 있다.</p>
+
+<ul>
+	<li>Training data의 개수가 많으면 많을수록 ($m$이 클수록) 모델은 더 generalize되고, overfitting의 위험성도 작아진다.</li>
+	<li>Model complexity가 높을수록 ($|H|$가 클수록) 모델 generalization은 더 어려워지고, overfitting의 위험성 역시 커진다.</li>
+	<li>Model의 성능을 끌어올리려면 (true error를 줄이려면) train error를 줄이거나, training sample을 늘리거나, 모델 complexity를 줄여야한다.</li>
+</ul>
+
+<h3 id="pac-learning-with-finite-hypothesis-space-proof">PAC Learning with Finite Hypothesis Space: Proof</h3>
+
+<p>이제 앞에서 살펴본 hypothesis space가 finite할 때 PAC bound를 증명해보자. 먼저 문제를 단순화하기 위해 $\mbox{error}_{train}(h) = 0$ 라고 가정하자. 이때 우리는 training error는 0이면서, true error는 $\varepsilon$ 보다 큰 hypothesis $h^\prime$가 존재할 확률이 다음과 같음을 보일 수 있다.</p>
+
+<script type="math/tex; mode=display"> Pr(\exists h^\prime) \leq \|H\| \exp(\varepsilon m).</script>
+
+<p>이 수식을 (A)라 하고 증명은 잠시 뒤로 넘기자. 이제 $|H| \exp(\varepsilon m) \leq \delta$를 만족하는 $\delta$를 하나 잡아보자. 이 간단한 수식에서부터 우리는 training sample의 개수와 true error의 upper bound를 $\varepsilon$, $|H|$, $\delta$, $m$에 대한 term으로 표현할 수 있다.</p>
+
+<script type="math/tex; mode=display"> m \geq \frac{1}{\varepsilon} (\ln \|H\| + \ln(1/\delta)). </script>
+
+<script type="math/tex; mode=display"> \mbox{error}_{true}(h) \leq \frac{1}{m} (\ln \|H\| + \ln(1/\delta)) \mbox{ with probability at least } \delta.</script>
+
+<p>즉, 이 bound들을 통해서 모델이 복잡할수록, 그리고 error에 대한 upper bound가 작아질수록 더 많은 데이터가 필요하다는 사실을 알 수 있다.
+만약 우리가 어떤 모델의 성능을 더 개선시키고 싶다고 했을 때 (true error를 더 줄이고 싶을 때), 위의 수식에서부터 training error를 줄이거나, training sample의 개수를 늘리거나, 더 간단한 모델을 고르는 등의 (Occam’s razer) action을 취해야한다는 것 역시 알 수 있다.</p>
+
+<p>그러나 위의 intuition들은 전부 traininig error가 0일 때 얻은 값이기 때문에 training error가 0이 아닐 때에 대해서도 bound를 증명해야한다. 다행히 위에서 얻은 결과를 사용하면 traininig error가 0이 아닐 때도 <a href="https://en.wikipedia.org/wiki/Hoeffding's_inequality">Hoeffding bound</a>를 통해 다음과 같은 bound를 얻는 것이 가능하다. (증명은 생략한다.)</p>
+
+<script type="math/tex; mode=display"> Pr[(\exists h \in H) ~\mbox{error}_{true}(h) > \mbox{error}_{train}(h) + \varepsilon] \leq \|H\| \exp(-2m\varepsilon^2). </script>
+
+<p>그리고 위에서 얻은 두 개의 bound 역시 아래와 같이 새롭게 증명할 수 있다.</p>
+
+<script type="math/tex; mode=display"> m \geq \frac{1}{2\varepsilon^2} (\ln \|H\| + \ln(1/\delta)). </script>
+
+<script type="math/tex; mode=display">\mbox{error}_{true}(h) \leq \mbox{error}_{train}(h) + \sqrt{\frac{\ln \|H\| + \ln \frac{1}{\delta}}{m}}.</script>
+
+<p>식의 모양은 살짝 바뀌었지만 근본적인 intuition은 그대로 유지된다.</p>
+
+<h4 id="pac-learning-with-finite-hypothesis-space-proof-of-a">PAC Learning with Finite Hypothesis Space: Proof of (A)</h4>
+
+<p>사실 앞 section에서 증명한 수식은 전부 다음 수식에서부터 시작한다. 이 section에서는 아래 수식을 증명해보겠다.</p>
+
+<script type="math/tex; mode=display"> Pr(\exists h^\prime) \leq \|H\| \exp(\varepsilon m).</script>
+
+<p>수식을 좀 더 간단하게 적기 위해 $\mbox{error}_{true}(h)$를 $err(h)$로 표현하도록 하자. 이제 Hypothesis $h^\prime$이 $err(h^\prime) &gt; \varepsilon$라는 조건을 만족할 때, $h^\prime$이 ‘bad’하다고하고, bad hypothesis들의 set을 $B$라고 부르자. 모든 training sample에 대해 error가 0이고 ($h^\prime(x_i) = c(x_i) ~\forall x_i \in D$, $h^\prime$ is consistent with training samples), 모든 true sample들에 대해서는 $err(h^\prime) &gt; \varepsilon$를 만족하는 hypothesis $h^\prime$이 존재한다고 가정해보자. 이때 $h^\prime$은 $B$에 속하는 element이고, 이런 hypothesis는 하나보다 더 많을 수 있기 때문에, 아래와 같은 수식을 유도할 수 있다.</p>
+
+<p><img class="center" src="/images/post/66-4.png" width="600"></p>
+
+<p>이제 $B$는 $H$의 subset이므로 다음과 같은 수식을 유도할 수 있고, 증명이 끝이 난다.</p>
+
+<script type="math/tex; mode=display"> Pr(err(h) > \varepsilon) \leq \|B\|(1-\varepsilon)^m \leq \|H\|(1-\varepsilon)^m \leq \|H\|\exp(-\varepsilon m). </script>
+
+<h3 id="pac-leanring-with-infinite-hypothesis-space">PAC Leanring with Infinite Hypothesis Space</h3>
+
+<p>위에서 열심히 증명하기는 했으나, 이 bound는 사실 practical하게는 아무런 쓸모가 없는 bound이다. 왜냐하면 $|H|$가 finite한 어떤 값을 가진다고 가정했기 때문인데, 만약 $f(x | a, b) = ax + b$ 라는 함수만 주어지더라고 a와 b이 real number라면 $H$가 infinite set이 되기 때문에 bound가 의미가 없어진다. 이 때문에 새롭게 도입되는 개념이 VC (Vapnik–Chervonenkis) dimension이라는 개념이다.</p>
+
+<p>VC dimension $VC(H)$는 hypothesis space $H$에 대해 정의되며, classification algorithm의 capacity를 측정하기 위해 사용되는 방법이며, Instance space $X$에 대해 Hypothesis space H의 VC(H)는 $H$로 shatter할 수 있는 가장 큰 $X$의 finite subset 크기와 같다. 이때 shatter란 labeling에 상관없이 정확하게 classify하는 것을 의미한다. 이 개념은 실제 예시를 통해 이해하는 것이 제일 빠르므로 몇 가지 예시들을 들어보도록 하자.</p>
+
+<p>먼저 linear model은 $d$-dimensional space에서 VC dimension이 d + 1 이다. 자고로 이런건 말보다 그림인 법이다.</p>
+
+<p><img class="center" src="/images/post/66-5.png" width="400">
+<img class="center" src="/images/post/66-6.png" width="400"></p>
+
+<p>(출처: <a href="http://www.cs.cmu.edu/~guestrin/Class/15781/slides/learningtheory-bns-annotated.pdf">http://www.cs.cmu.edu/~guestrin/Class/15781/slides/learningtheory-bns-annotated.pdf</a>)</p>
+
+<p>또한 KNN에서 K가 1인, 즉 1-NN의 VC dimension은 무한대이다. 역시 그림으로 확인해보자. (같은 출처)</p>
+
+<p><img class="center" src="/images/post/66-7.png" width="400"></p>
+
+<p>마지막으로 $k$개의 boolean variable을 가지는 decision tree는 총 $2^k$개의 leaf node를 사용해 모든 sample을 분류할 수 있으므로 VC dimension은 $2^k$이다.</p>
+
+<p>이제 $|H|$를 VC(H)로 bound시켜보자. VC(H)의 값이 finite value $k$라고 가정해보자. 이는 곧 hypothesis H를 사용하여 k개의 example을 shatter할 수 있다는 의미이며, 이 경우 (binary class라고 했을 때) 총 $2^k$ 개의 labeling case가 존재한다. 여기에서 hypothesis space가 서로 다른 모든 $2^k$개의 case를 shatter할 수 있으므로 $|H| \geq 2^k$ 라는 것을 알 수 있다. 따라서 이 값에서부터 다음과 같은 매우 loose한 bound를 얻을 수 있다.</p>
+
+<script type="math/tex; mode=display">VC(H) = k \leq \log_2 \|H\|.</script>
+
+<p>실제로 이 bound는 매우 loose하기 때문에 이 값을 그대로 사용하지는 않지만, VC(H)와 $|H|$가 어떤 관계를 가진다는 사실에 주목하자. 자세한 증명은 생략하도록 하겠지만, VC dimension을 도입하면 기존에 얻었던 finite hypothesis space에 대해 구한 PAC bound를 다음과 같이 변형할 수 있다.</p>
+
+<script type="math/tex; mode=display"> m \geq \frac{1}{\varepsilon} (4 \log_2 (2/\delta) + 8 VC(H) \log_2(13/\varepsilon)). </script>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+ \mbox{error}_{true}(h) < \mbox{error}_{train}(h) + \sqrt{\frac{VC(H) (\ln \frac{2m}{VC(H)} + 1) + \ln \frac{4}{\delta} }{m}}.  %]]&gt;</script>
+
+<p>위 bound에서 얻을 수 있는 intuition은 여전히 유효하다. 아래 bound가 조금 바뀌었는데, 만약 $VC(H) &lt; 2m$ 정도로 충분히 많은 traininig dataset 하에서는 VC dimension이 작을수록, 즉 모델이 더 단순할수록 overfitting의 degree가 작아지는 Occam’s razor가 여전히 유효하다는 사실을 알 수 있다.
+여기에서 bound의 우항에 존재하는 다음 term을 structure error 혹은 risk라고 부르며, empirical error 대신 이 값을 바로 optimize하는 방식으로 이론적으로 더 나은 모델을 얻는 것이 가능하다. (<a href="https://en.wikipedia.org/wiki/Structural_risk_minimization">Structural risk minimization</a>이라고 부른다.)</p>
+
+<script type="math/tex; mode=display"> \mbox{error}_{train}(h) + \sqrt{\frac{VC(H) (\ln \frac{2m}{VC(H)} + 1) + \ln \frac{4}{\delta} }{m}}. </script>
+
+<p>문제는 앞에서 살펴본 것처럼 VC dimension을 실제로 구하는 것이 엄청나게 어렵다는 것이다. 그러나 이 minimization을 실제로 할 수만 있다면 매우 강력한 model을 학습할 수 있는데, 실제로 SVM이 이런 방식으로 학습이 되기 때문에 매우 매력적인 model이라고 할 수 있다. 좀 더 자세한건 <a href="http://www.svms.org/srm/">링크</a>를 들어가서 확인해보면 좋을 것 같다.</p>
+
+<h3 id="section-1">정리</h3>
+
+<p>이 글에서는 ‘좋은 모델’이란 무엇인지 논하고, 실제로 그것들에 대한 이론적 bound를 제공하는 PAC bound에 대해 설명하였다. PAC bound는 training error, true error (test error), training data의 개수, 모델의 complexity, confidence level로 표현되는 bound로, 우리가 막연하게 ‘그럴 것이다’ 라고 생각하는 intuition들을 수식적으로 해석할 수 있게 해준다. Finite hypothesis space에 대한 증명에서부터 시작하여 최종적으로는 VC dimension까지 포함된 infinite hypothesis space에서의 PAC bound도 설명하였다.
+이것 자체로는 큰 쓸모가 없어보일지는 몰라도, 모델이 얼마나 강력한지 측정하기 위해서도, 그리고 더 강력한 모델을 만들기 위해서라도 PAC라는 개념은 한 번쯤은 살펴봐야할 개념이 아닌가싶다.
+참고로 이 글에서는 PAC learnable이 무엇인지 다루지는 않았다. 중요한 개념이기는 하지만, intuition 위주로 설명한 글이라서 제외하였는데, 자세한건 <a href="https://en.wikipedia.org/wiki/Probably_approximately_correct_learning">위키</a>를 참고하면 좋을 것 같다.</p>
+
+<h3 id="references">References</h3>
+<ol class="reference">
+  <li>Kearns, Michael J., and Umesh Virkumar Vazirani. An introduction to computational learning theory. MIT press, 1994.</li>
+  <li><a href="https://en.wikipedia.org/wiki/Probably_approximately_correct_learning">https://en.wikipedia.org/wiki/Probably_approximately_correct_learning</a></li>
+</ol>
+
+<h3 id="section-2">변경 이력</h3>
+<ul>
+  <li>2016년 12월 18일: 글 등록</li>
+</ul>
+
+<p><hr>
+### Machine Learning 스터디의 다른 글들
+
+* [Machine Learning이란?](/57)
+* [Probability Theory](/58)
+* [Overfitting](/59)
+* [Algorithm](/60)
+* [Decision Theory](/61)
+* [Information Theory](/62)
+* [Convex Optimzation](/63)
+* [Classification Introduction (Decision Tree, Naïve Bayes, KNN)](/64)
+* Regression and Logistic Regression
+* PAC Learning & Statistical Learning Theory
+* Support Vector Machine
+* Ensemble Learning (Random Forest, Ada Boost)
+* Graphical Model
+* [Clustering (K-means, Gaussian Mixture Model)](/69)
+* [EM algorithm](/70)
+* Hidden Markov Model
+* [Dimensionality Reduction (LDA, PCA)](/72)
+* [Recommendation System (Matrix Completion)](/73)
+	* [Recommendation System with Implicit Feedback](/95)
+* [Neural Network Introduction](/74)
+* [Deep Learning 1 - RBM, DNN, CNN](/75)
+* [Reinforcement Learning](/76)
+	* [Multi-armed Bandit](/96)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Practical Bayesian Optimization of Machine Learning Algorithms (NIPS 2012)]]></title>
@@ -821,112 +1042,6 @@ acquisition function의 J개의 아직 결과가 나오지 않은 point들에 �
 <ul>
   <li>2016년 3월 6일: 글 등록</li>
 </ul>
-
-<p><hr>
-### Machine Learning 스터디의 다른 글들
-
-* [Machine Learning이란?](/57)
-* [Probability Theory](/58)
-* [Overfitting](/59)
-* [Algorithm](/60)
-* [Decision Theory](/61)
-* [Information Theory](/62)
-* [Convex Optimzation](/63)
-* [Classification Introduction (Decision Tree, Naïve Bayes, KNN)](/64)
-* Regression and Logistic Regression
-* PAC Learning & Statistical Learning Theory
-* Support Vector Machine
-* Ensemble Learning (Random Forest, Ada Boost)
-* Graphical Model
-* [Clustering (K-means, Gaussian Mixture Model)](/69)
-* [EM algorithm](/70)
-* Hidden Markov Model
-* [Dimensionality Reduction (LDA, PCA)](/72)
-* [Recommendation System (Matrix Completion)](/73)
-	* [Recommendation System with Implicit Feedback](/95)
-* [Neural Network Introduction](/74)
-* [Deep Learning 1 - RBM, DNN, CNN](/75)
-* [Reinforcement Learning](/76)
-	* [Multi-armed Bandit](/96)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine learning 스터디 (17) Recommendation System (Matrix Completion)]]></title>
-    <link href="http://SanghyukChun.github.io/73/"/>
-    <updated>2016-03-01T17:58:00+09:00</updated>
-    <id>http://SanghyukChun.github.io/73</id>
-    <content type="html"><![CDATA[<h3>들어가며</h3>
-<p>이 글에서는 recommendation 문제가 어떤 문제인지에 대해 간략하게 설명하고, 각각을 푸는 가장 대표적인 알고리즘인 matrix factorization에 대해서 설명할 것이다. 이 글의 많은 부분이 예전에 적었던 글 <a href="http://SanghyukChun.github.io/30">[1]</a>, <a href="http://SanghyukChun.github.io/31">[2]</a>을 기반으로 작성하였으니, 궁금하다면 추가로 읽어보면 좋을 것 같다.</p>
-<h3>Recommendation Problem</h3>
-<p>Recommendation problem은 여태까지 사용자가 item에 대해 evaluate한 history data를 기반으로 사용자가 아직 사용하지 않은 item에 대한 사용자의 평가를 예측하는 문제라고 할 수 있다. 추천과 랭킹 문제는 마케팅을 포함한 다양한 분야에서 오랜 세월 관심을 가져왔던 분야이다. 특히 광고를 제작하는 사람들 입장에서는 적은 비용으로 최대한의 효율을 낼 수 있는 타겟광고는 그야말로 금덩이나 다름없는 영역이라 할 수 있을 것이다. 추천은 그만큼 제한된 자원을 최대한 효율적으로 분배할 수 있는 방법이기도 하며, 사람들의 지갑을 더 열게 할 수 있는 중요한 문제인 것이다. Netflix와 왓챠는 내가 점수를 매긴 별점을 바탕으로 내가 좋아할만한 영화나 드라마를 추천해준다. 아마존, 이베이, Gmarket 등의 온라인 쇼핑몰들 역시 내가 클릭했던 상품들의 history를 기반으로 내가 좋아할만한, 사고싶어할만한 상품들을 추천해주거나, 이 상품들을 묶어서 하나의 작은 할인 패키지를 구성하기도 한다. 페이스북은 내가 좋아요를 누른 포스트들을 바탕으로 내가 좋아할만한 페이지를 추천하고, 타겟 광고를 내보낸다. 우리가 지금은 너무나 자연스럽게 받아들이는 이 사실들은 전부 머신러닝에 의해 가능해진 것들이다.</p>
-<h3>Matrix Completion</h3>
-<p>그러면 이제 추천 문제를 보다 엄밀하게 정의해보도록 하자. 먼저 데이터에 대해 살펴보도록 하자. 이 문제에서는 사용자와 상품이라는 두 가지 요소들이 존재한다. 사용자 $u$가 아이템 $i$를 얼마나 좋아할 것인지 나타내는 값을 rating $r_{ui}$라 하자. 이때, 이 rating은 Netflix처럼 1에서 5 사이의 real value일수도 있으며, 아마존이나 페이스북처럼 클릭했는지 하지 않았는지에 대한 데이터일수도 있다. 앞선 경우는 사용자가 자신이 얼마나 이 아이템을 좋아하는지 '명시적으로' 나타냈기 때문에 explicit feedback이라 부르며, 후자의 경우는 사용자가 해당 상품을 좋아했는지 싫어했는지 표현을 직접적으로 하지 않으므로 'implicit feedback'이라고 부른다. 이에 대해서는 나중에 다른 글을 통해 더 자세히 다루도록 하겠다. (<a href="http://SanghyukChun.github.io/95">Implicit feedback에 대한 글</a>을 새로 추가하였다) 지금은 $r_{ui}$의 정확한 값을 알고 있고, 이 값이 전혀 noise가 없는 값이라고 가정하고 문제를 계속 설명하도록 하겠다. 이런 경우 우리가 가지고 있는 데이터는 $r_{ui}$들의 값이 될 것이고, 대략 아래와 같은 방식으로 matrix로 표현할 수 있을 것이다.</p>
-<p><a align="center" href="http://www.codecogs.com/eqnedit.php?latex=movie.&space;{\begin{matrix}&space;1&space;&amp;&space;2&space;&amp;&space;3&space;&amp;&space;4&space;&amp;&space;5&space;&amp;6&space;&amp;&space;7&space;&amp;&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&amp;&space;5&space;&amp;&space;*&space;&amp;&space;4&space;&amp;&space;1&space;&amp;*&space;&amp;&space;*&space;&amp;&space;2&space;\\&space;*&space;&amp;&space;3&space;&amp;&space;5&space;&amp;&space;1&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;3&space;\\&space;4&space;&amp;&space;1&space;&amp;&space;*&space;&amp;&space;4&space;&amp;&space;1&space;&amp;*&space;&amp;&space;3&space;&amp;&space;2&space;\\&space;5&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;2&space;&amp;&space;3&space;&amp;&space;*&space;&amp;&space;*&space;\\&space;*&space;&amp;&space;2&space;&amp;&space;4&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;1&space;&amp;&space;2&space;\\&space;5&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;5&space;&amp;&space;4&space;&amp;*&space;&amp;&space;*&space;&amp;&space;4&space;\\&space;1&space;&amp;&space;*&space;&amp;&space;5&space;&amp;&space;2&space;&amp;&space;3&space;&amp;1&space;&amp;&space;5&space;&amp;&space;3&space;\\&space;*&space;&amp;&space;3&space;&amp;&space;2&space;&amp;&space;1&space;&amp;&space;4&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;*&space;\\&space;\end{bmatrix}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?movie.&space;{\begin{matrix}&space;1&space;&amp;&space;2&space;&amp;&space;3&space;&amp;&space;4&space;&amp;&space;5&space;&amp;6&space;&amp;&space;7&space;&amp;&space;8\end{matrix}}&space;\\&space;\left\{\begin{matrix}&space;user&space;1&space;\\&space;user&space;2&space;\\&space;user3&space;\\&space;user4&space;\\&space;user5&space;\\&space;user6&space;\\&space;user7&space;\\user8\,&space;\end{matrix}\right.&space;\begin{bmatrix}&space;3&space;&amp;&space;5&space;&amp;&space;*&space;&amp;&space;4&space;&amp;&space;1&space;&amp;*&space;&amp;&space;*&space;&amp;&space;2&space;\\&space;*&space;&amp;&space;3&space;&amp;&space;5&space;&amp;&space;1&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;3&space;\\&space;4&space;&amp;&space;1&space;&amp;&space;*&space;&amp;&space;4&space;&amp;&space;1&space;&amp;*&space;&amp;&space;3&space;&amp;&space;2&space;\\&space;5&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;2&space;&amp;&space;3&space;&amp;&space;*&space;&amp;&space;*&space;\\&space;*&space;&amp;&space;2&space;&amp;&space;4&space;&amp;&space;2&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;1&space;&amp;&space;2&space;\\&space;5&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;5&space;&amp;&space;4&space;&amp;*&space;&amp;&space;*&space;&amp;&space;4&space;\\&space;1&space;&amp;&space;*&space;&amp;&space;5&space;&amp;&space;2&space;&amp;&space;3&space;&amp;1&space;&amp;&space;5&space;&amp;&space;3&space;\\&space;*&space;&amp;&space;3&space;&amp;&space;2&space;&amp;&space;1&space;&amp;&space;4&space;&amp;&space;*&space;&amp;&space;*&space;&amp;&space;*&space;\\&space;\end{bmatrix}" title="movie. {\begin{matrix} 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp;6 &amp; 7 &amp; 8\end{matrix}} \\ \left\{\begin{matrix} user 1 \\ user 2 \\ user3 \\ user4 \\ user5 \\ user6 \\ user7 \\user8\, \end{matrix}\right. \begin{bmatrix} 3 &amp; 5 &amp; * &amp; 4 &amp; 1 &amp;* &amp; * &amp; 2 \\ * &amp; 3 &amp; 5 &amp; 1 &amp; 2 &amp; * &amp; * &amp; 3 \\ 4 &amp; 1 &amp; * &amp; 4 &amp; 1 &amp;* &amp; 3 &amp; 2 \\ 5 &amp; 2 &amp; * &amp; * &amp; 2 &amp; 3 &amp; * &amp; * \\ * &amp; 2 &amp; 4 &amp; 2 &amp; * &amp; * &amp; 1 &amp; 2 \\ 5 &amp; * &amp; * &amp; 5 &amp; 4 &amp;* &amp; * &amp; 4 \\ 1 &amp; * &amp; 5 &amp; 2 &amp; 3 &amp;1 &amp; 5 &amp; 3 \\ * &amp; 3 &amp; 2 &amp; 1 &amp; 4 &amp; * &amp; * &amp; * \\ \end{bmatrix}" /></a></p>
-<p>이때 *은 아직 사용자가 평가하지 않은 데이터를 의미한다. 이제 recommendation problem은 이 매트릭스의 비어있는 부분의 값을 예측하는 문제로 바꿔서 생각할 수 있다. 이를 수식으로 표현하면 아래와 같은 형태로 표현하는 것이 가능하다.</p>
-<p>$$\min_{\hat R} \| \hat R - R \|_F^2 $$</p>
-<p>이때 $R$는 비어있는 곳이 없는 원래 데이터를 의미한다. User의 숫자를 n, item의 개수를 m이라고 하면 R은 n by m matrix가 될 것이다. $\hat R$는 원래 데이터로부터 비어있는 곳을 복구한 데이터를 의미한다. 여기에서, 원래 데이터 matrix $R$에서 값이 없었던 부분은 제외하고 error를 (oot mean squared error라 하여 RMSE라 부른다) 계산하는 것이 이 문제의 objective function이 된다. 이런 문제를 일컬어, 비어있는 matrix를 완성시키는 문제다 해서 <a href="https://en.wikipedia.org/wiki/Matrix_completion">Matrix Completion</a>이라고 부른다. 따라서 앞으로 남은 글에서는 recommendation problem이라는 말 대신, matrix completion이라는 이름으로 바꿔서 부를 것이다.</p>
-
-<h3>Matrix Factorization</h3>
-<p>그러면 앞서 설명한 matrix completion 문제를 어떻게 해결할 수 있을까? 지금까지는 문제를 정의하는 법에 대해서만 설명했지만, 이제부터는 이 문제를 풀기 위한 가정과 그 가정을 사용하여 만든 모델, 그리고 그 모델을 풀기위한 알고리즘을 설명할 것이다. Matrix Completion 문제를 풀기 위한 방법은 여러 가지가 있다. 이전 글 <a href="http://SanghyukChun.github.io/31">[2]</a> 에서 다뤘던 baseline predictor와 neighborhood method 등의 방법도 그런 방법들 중 하나이지만, 이 글에서는 단일 모델로 가장 우수한 성능을 보이는 것으로 알려진 matrix factorization에 대해서만 다룰 것이다. Matrix factorization의 가정은 original data matrix $R$가 low rank matrix라는 것이다. 따라서 우리가 복원하는 $\hat R$ 역시 low rank 조건을 가지게 되므로 constrained optimization 문제로 바꿔서 쓸 수 있게 된다. 이 경우 optimal한 matrix completion의 objective function은 다음처럼 표현된다.</p>
-<p>$$\min ~\mbox{rank}(\hat R) ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i$$</p>
-<p>여기에서 $\Omega(A_{ij} - B_{ij})$는 matrix A와 B의 i,j 번째 element 중 하나라도 비어있으면 0, 둘 다 element가 존재하면 둘의 차이로 정의가 된다.</p>
-<p>이 문제를 어떻게 풀지에 대해 논하기 전에 먼저 low rank assumption은 어떤 의미가 있는지에 대해 먼저 논해보자. 먼저 모든 matrix는 다른 두 matrix의 곱으로 표현이 가능하다. 이때 만약 matrix의 rank가 작다면 두 matrix 의 rank역시 더 작은 형태로 표현이 가능하게 된다. 즉, 원래 n by m matrix R이 n이나 m보다 작은 k만큼의 rank를 가졌을 때, R은 n by k matrix P와 m by k matrix Q의 곱으로 표현할 수 있다. 즉, $R = P Q^\top$ 으로 표현이 된다는 사실이 이미 알려져있다.</p>
-<p>$p_u$와 $q_i$는 각각 P와 Q의 u, i번째 row vector라고 정의하면 (둘 다 k차원 벡터가 된다) 앞선 수식에서부터 우리는 다음과 같은 수식을 얻을 수 있다.</p>
-<p>$$r_{ui} = p_u \cdot q_i$$</p>
-<p>이 사실로부터 우리는 user u가 item i의 점수를 주는 방식은, user u의 item들에 대한 숨겨진(latent) interest $p_u$와 그에 대응하는 item들의 숨겨진 특성 $q_i$에 의해 결정된다는 사실을 알 수 있다. 이를 그림으로 표현하면 다음과 같다.</p>
-<p><img class="center" src="/images/post/30-1.png" width="400"></p>
-<p>따라서 앞에서 설명했던 rank를 minimize하는 문제는, 최대한 적은 latent feature를 사용하여 user와 item을 표현하도록 하는 문제가 되는 것이다. 그러나 실제로는 rank condition이 convex optimization이 아니기 때문에 이 문제를 optimal하게 풀 수 없다는 문제점이 존재한다. 여기에서 두 가지 접근 방법이 가능하다. 하나는 rank condition을 convex 조건으로 바꿔서 푸는 convex relaxation이 있고, 또 하나는 rank의 값은 우리가 직접 넣어주는 hyper-parameter로 사용하고, 대신 RMSE를 minize하는 방법이 있다. 각각의 objective function은 다음과 같이 표현된다.</p>
-<p>$$\min_{\hat R} \| \hat R \|_* ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i.$$</p>
-<p>$$\min_{\hat R} \sum_{u,i \in \kappa} (r_{ui} - \hat r_{ui})^2 ~\mbox{ s.t. }~ \mbox{rank}(\hat R) = k.$$</p>
-<p>여기에서 $u,i \in \kappa$는, 전체 데이터 중에서 오직 관측된 u,i pair만을 의미한다. 즉, $\Omega$ notation을 대체하는 기호라고 생각하면 된다.</p>
-<p>전자는 항상 convex relaxed된 문제에서는 optimal한 solution을 찾을 수 있다는 것이 보장된다는 장점이 있지만, 원래 문제와 다른 문제를 풀기 때문에 원래 문제와 같은 optimal solution을 갖는 상황이 아니면 의미가 없을 수 있다는 문제점이 있다. 후자는 convex한 방법론을 사용할 수 없기 때문에 global optimal solution 대신 local optimal solution을 얻게 되지만, practical하게 잘 동작한다는 장점이 존재한다. 이 글에서는 둘 다 짤막하게 (그러나 너무 깊지 않게) 다뤄볼까 한다.</p>
-
-<h3>Methodology 1: Convex Relaxation</h3>
-<p>먼저 왜 rank condition이 non-convex condition인지부터 살펴보자. Matrix X의 rank는 X의 0이 아닌 singular value들의 숫자로, 다시 말해 이들의 l-0 norm의 합으로 표현이 가능하다. 즉, 원래 objective function은 다음처럼 표현할 수 있다.</p>
-<p>$$\min \sum_\ell \| \sigma_\ell(\hat R) \|_0 ~\mbox{ s.t. }~ \Omega(r_{ui} - \hat r_{ui}) = 0 ~\forall u,i$$</p>
-<p>이때, $\sigma_i(A)$는 A의 i번째 singular value를 의미한다. 만약 matrix의 rank k가 full rank가 아니라면, 정확하게 k개의 singular value만 값이 0이 아니고, 나머지 singular value들의 값은 0이 된다. 따라서 이 문제가 위에 적은 것 처럼 l-0 norm의 합으로 표현이 되는 것이다. 문제는 이 l-0 norm 자체가 non-convex norm이라는 것이다. 보통 l-0 norm을 relax하는 가장 tight한 방법 중 하나가, l-0 norm을 l-1 norm으로 바꾸는 것이다. 이때, matrix A의 singular value들의 l-1 norm합은, matrix A의 nuclear norm $\| A \|_* $이 된다. 따라서 위의 문제를 $ \min \sum_\ell \| \sigma_\ell(\hat R) \|_1 $으로 relax하게 될 경우 (편의상 constriant는 생략한다), objective function은 $\min \| \hat R\|_*$을 하는 것과 같다.</p>
-<p>이 문제는 convex problem이기 때문에 아무 convex solver를 가져와서 문제를 풀면 된다. 그러나 조금 더 효율적인 풀이방법을 위하여 singular value thresholding이라는 alternating update 방식의 알고리즘도 제안이 되어있는 상태이다. 이 글에서는 최대한 개념 위주로 설명을 할 생각이기 때문에, 설명 대신 좋은 review paper <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">[3]</a>와 원본 논문 <a href="http://statweb.stanford.edu/~candes/papers/MatrixCompletion.pdf">[4]</a>을 reference로 추가한다.</p>
-<p>이렇듯 convex relaxation에서 algorithm은 보통 큰 issue는 아니다. 물론 기존 solver보다 더 좋은 알고리즘을 제안하는 것도 중요한 일이지만, convex relaxation에서 가장 critical한 issue는, relaxed problem이 언제 원래 problem과 같은 해를 가지는지에 대한 조건이 무엇이냐 하는 것이다. 즉, 내가 그 어떤 조건에서도 relaxed problem을 사용해서 원래 문제를 풀 수 없다면, 그 convex relaxation은 가치가 없는 relaxation이 되는 것이다. 아마도 데이터가 많으면 많을수록 복원이 쉬울 것이고, 적으면 적을수록 복원이 어려워지다가, 어느 순간부터 복원이 불가능해지는 시점이 존재할 것이라는 것이다. 예를 들어 데이터가 하나 빼고 전부 있다면 MC가 어려운 문제가 아닐 수 있지만, 반대로 데이터가 하나만 있다면 복원할 수 있는 경우의 수가 거의 무한하게 많을 것이라는 것이다. 다행히도 리뷰 페이퍼 <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">[3]</a>의 Theorem 1에도 나와있듯, user와 item 숫자 중 더 큰 숫자를 $n_0$라고 했을 때, convex relaxed problem이 optimal한 solution을 얻기 위해서는 order of $n_0 \log^2 n_0$ 만큼의 observed data가 필요하다는 증명이 이미 되어있다. 이에 대한 자세한 설명은 해당 논문을 읽어보면 좋을 것 같고, 이 글에서는 생략하도록 하겠다.</p>
-
-<h3>Methodology 2: Solve Non-convex Problem Directly</h3>
-<p>두 번째 방법으로는 non-convex한 objective function을 바로 푸는 것이다. 혼동을 피하기 위하여 이 objective function을 다시 적어보자.</p>
-<p>$$\min_{\hat R} \sum_{u,i \in \kappa} (r_{ui} - \hat r_{ui})^2 ~\mbox{ s.t. }~ \mbox{rank}(\hat R) = k.$$</p>
-<p>그리고, 이미 앞에서 $\hat r_{ui} = p_u \cdot q_i$로 표현할 수 있다는 것 까지 확인했었으므로, 이를 기반으로 문제를 적으면 다음과 같은 문제가 된다.</p>
-<p>$$\min_{P,Q} \sum_{u,i \in \kappa} (r_{ui} - p_u \cdot q_i)^2.$$</p>
-<p>앞에서 설명한 것 처럼 P,Q는 각각 n by k, m by k matrix가 된다. 이때, overfitting을 피하고 보다 generalized된 문제로 바꿔주기 위하여 regularization term을 뒤에 붙여주면 문제는 다음과 같이 바뀐다.</p>
-<p>$$\min_{P,Q} \sum_{u,i \in \kappa} (r_{ui} - p_u \cdot q_i)^2 + \lambda ( \| p_u \|_2^2 + \| q_i \|_2^2 ) .$$</p>
-<p>이 pair-wise optimization 문제는 non-convex 문제이지만, gradient descent method로 local optimum에 수렴하는 결과를 얻을 수 있으며 실제로 꽤 효율적으로 좋은 결과를 얻을 수 있다.</p>
-<p>또 다른 solver로는 Alternating Least Square (ALS) 라는 방법이 있다. 이 방법은 alternative하게 주어진 objective를 update하는 방법인데, 주어진 objective가 pairwise optimization으로 생각하면 non-convex이지만, p나 q 중 하나를 고정하고 나머지에 대해 optimization을 하게 되면 convex, 그것도 closed form으로 계산된다는 점을 이용한 방법이다. 따라서 이 방법을 사용해 예전에 설명했었던 k-means style의 알고리즘을 설계할 수 있는데, 이를 ALS라고 부르는 것이다. Gradient descent가 더 빠른 경우도 있지만, ALS를 사용하게 되면 각각의 element들이 다른 element에 independent하기 때문에 분산처리가 간편하기 때문에 실제로는 ALS 방법도 많이 사용된다고 한다.</p>
-<p>지금까지 설명한 방법은 그야말로 가장 기본이 되는 모델이고, 이 모델을 조금 더 확장해보도록 하자. 가장 간단하게 확장할 수 있는 방법은 bias term을 추가하는 것이다. 예를 들어서 어떤 user는 항상 모든 영화 평점을 비교적 '짜게' 주는 user가 있을 수 있고, 반대로 모든 영화에 점수를 후하게 주는 user도 있을 수 있다. 어떤 영화는 개봉 전부터 평단이나 기자들에게서 호평을 받았거나 유명 배우가 나와 기본 점수가 높을 수도 있고, 그 반대도 가능하다. 따라서 이런 현상들을 반영할 수 있는 bias term이 추가가 되는 것은 지극히 자연스럽다고 할 수 있다. user의 bias를 $b_u$, item의 bias를 $b_i$라고 하면 (이 값들은 vector가 아니라 scalar value이다) user u의 item i에 대한 bias $b_{ui}$는 $b_{ui} = \mu + b_u + b_i$로 표현할 수 있을 것이다. 여기에서 $\mu$는 전체 모든 r_{ui}의 평균 값으로, bias라는 개념이 평균에서부터 얼마나 멀어지는 가에 대한 개념이므로 평균 값도 함께 고려하는 것이다. $\mu$는 데이터와 함께 주어지는 값이고, bias term들은 p,q처럼 optimization을 통해 찾아야하는 optimization parameter가 된다. 이를 사용하면 reconstructed rating $\hat r_{ui}$는 다음과 같이 표현된다.</p>
-<p>$$\hat r_{ui} = \mu + b_u + b_i + p_u \cdot q_i.$$</p>
-<p>이제 이 결과를 원래 objective에 대입하면 다음과 같은 식을 얻게 된다.</p>
-<p>$$\min_{P,Q,B} \sum_{u,i \in \kappa} (r_{ui} - \mu - b_u - b_i - p_u \cdot q_i)^2 + \lambda ( \| p_u \|_2^2 + \| q_i \|_2^2 + b_u^2 + b_i^2 ) .$$</p>
-<p>마찬가지로 이 결과 역시 gradient method나 ALS로 푸는 것이 가능하다.</p>
-
-<h3>Matrix Factorization in Netflix Prize Competition</h3>
-<p>위의 methodology 2는 실제로 Netflix problem에서 (<a href="http://SanghyukChun.github.io/30">[1]</a> 참고) 단일 성능이 가장 우수했던 알고리즘을 소개한 것이다. 조금 더 구체적으로는 다음과 같은 그래프로 표현할 수 있다. (출처: <a href="http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf">[5]</a>)</p>
-<p><img class="center" src="/images/post/73-1.png" width="600"></p>
-<p>Plain은 진짜 가장 기본 term만 사용한 것이고, with bias는, 앞에서 설명한 bias를 사용한 방식이다. Implicit feedback은 생략하고, temporal dynamics는 rating이 시간에 따라 바뀐다고 가정하고 다음과 같이 모델을 설계한 것이다.</p>
-<p>$$\hat r_{ui}(t) = \mu + b_u(t) + b_i(t) + p_u(t) \cdot q_i.$$</p>
-<p>여기에서, item의 성질 $q_i$는 static하다고 가정하고, 대신 사람이 평가하는 방식인 $p_u$만 시간에 대해 변한다고 가정하는 것이다. 이 모델은 시간이 지남에 따라 사람들이 서로 상호작용하고, 그로 인해 별점을 매기는 방식이 바뀔 수 있다는 것을 가정으로 한 방법으로, 실제 최종 결과를 살펴보면 이 방식을 채용한 방법이 가장 우수한 결과를 얻는 것을 확인할 수 있다. 실제 Netflix prize에서는 다른 방법들까지 고려한 ensemble method가 더 좋은 성능을 내지만, 실제로 RMSE metric에서 단일 모델로 가장 좋은 성능을 내는 것은 여전히 matrix factorization 기반 접근법이다.</p>
-
-<h3>정리</h3>
-<p>이 글에서는 recommendation 문제가 어떤 문제인지 설명하고, 보다 수학적으로 정의된 matrix completion 문제로 recommendation을 설명한다. 그 후 이 문제를 푸는 가장 popular한 방법인 matrix factorization에 대해서 다룬다. 해당 문제가 non-convex 문제이기 때문에 convex relaxation을 통해 문제를 푸는 방법 (더 늦게 나온 방법이다), non-convex optimization을 바로 푸는 방법 (Netflix prize에서 실제 사용했던 방법) 두 가지를 소개하고 각각에 대해 간략하게 설명한다. 실제 recommendation은 matrix factorization 뿐 아니라 여러 다른 methodology들을 결합해서 문제를 풀게 되지만, 여전히 단일 model로 가장 좋은 performance를 보여주는 것은 matrix factorization을 기반으로 한 방법론들이기 때문에 matrix factorization을 제대로 아는 것이 recommendation 문제를 풀기 위한 첫 걸음이라 할 수 있을 것이다.</p>
-
-<h3>변경 이력</h3>
-<ul>
-  <li>2016년 3월 1일: 글 등록</li>
-</ul>
-
-<h3>References</h3>
-<ol class="reference">
-	<li><a href="http://SanghyukChun.github.io/30">인터넷 속의 수학 - How Does Netflix Recommend Movies? (1/2)</a></li>
-	<li><a href="http://SanghyukChun.github.io/31">인터넷 속의 수학 - How Does Netflix Recommend Movies? (2/2)</a></li>
-	<li><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.365.8055">Kennedy, Ryan. "Low-rank matrix completion.", 2013</a></li>
-	<li><a href="http://statweb.stanford.edu/~candes/papers/MatrixCompletion.pdf">Candès, Emmanuel J., and Benjamin Recht. "Exact matrix completion via convex optimization.", 2009</a></li>
-	<li><a href="http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf">Koren, Yehuda, Robert Bell, and Chris Volinsky. "Matrix factorization techniques for recommender systems.", 2009</a></li>
-</ol>
 
 <p><hr>
 ### Machine Learning 스터디의 다른 글들
