@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="author" content="Sanghyuk Chun">
+<title>Machine learning 스터디 (6) Information Theory | Sanghyuk Chun</title>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+
+      <link rel="stylesheet" href="/css/main.min.f2f8ede1cb9b9227e639b1cf091fee8894cc757917d3a351f6a374fe5e29da36.css" integrity="sha256-8vjt4cubkifmObHPCR/uiJTMdXkX06NR9qN0/l4p2jY=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/syntax.min.4311b2541a80a1f1e51893a5b1e0a9e32f8be7e92bc3787ccb916cc25c70e8bd.css" integrity="sha256-QxGyVBqAofHlGJOlseCp4y&#43;L5&#43;krw3h8y5Fswlxw6L0=" crossorigin="anonymous">
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+      <script src="/js/main.23cd0c7d837263b9eaeb96ee2d9ccfa2969daa3fa00fa1c1fe8701a9b87251a1.js" integrity="sha256-I80MfYNyY7nq65buLZzPopadqj&#43;gD6HB/ocBqbhyUaE=" crossorigin="anonymous"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-42711199-4"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-42711199-4');
+</script>
+
+
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<script>
+  window.MathJax = {
+    options: {
+    maxBuffer: 10000
+    },
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>  
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.tip').forEach(el => {
+    el.setAttribute('data-bs-toggle', 'tooltip');
+    el.setAttribute('data-bs-placement', 'top');
+    new bootstrap.Tooltip(el);
+  });
+});
+</script>
+</head>
+
+<body>
+  <div class="page-container mt-5">
+    <header class="row">
+      <h1 class="codefont"><a class="text-decoration-none text-body" href="/blog">Writing | Sanghyuk Chun</a></h1>
+<nav class="gap-3 mb-4 codefont">
+    <a href="/" class="text-body text-decoration-none">Index</a><span class="mx-2">/</span>
+    <a href="/blog" class="text-body text-decoration-none ms-5">Blog</a><span class="mx-2">/</span>
+    <a href="https://sanghyukchun.github.io/home/" class="text-body text-decoration-none ms-5">Homepage</a><span class="mx-2">/</span>
+</nav>
+    </header>
+    <main class="row">
+      
+<article class="mt-5 mb-5">
+  <h3 class="mb-4">Machine learning 스터디 (6) Information Theory</h3>
+  
+  
+  <p class="text-muted text-end" datetime="2014-08-20T00:20:00&#43;00:00">August 20, 2014</p>
+
+  
+
+  <div class="content">
+    <h3>들어가며</h3>
+<p>Information Theory는 섀년이라는 걸출한 천재가 이룩해낸 매우 뛰어난 이론이다. 이 이론 덕분에 우리는 이렇게 인터넷도 할 수 있고, 무선통신도 할 수 있는 것이다. 이 이론 덕분에 불안정한 noisy한 channel에서도 유한한 시간 안에 우리가 전달하고 싶은 정보를 전부 전달할 수 있다는 것을 확신할 수 있고, 이론적인 한계값까지 도출이 가능한 엄청난 이론이다. Machine Learning에서도 이런 information theory 측면에서 문제를 바라보는 경우가 종종 있는데, Entropy, Mutual Information, KL-divergence 등이 그것이다. 이 글에서는 그런 Machine Learning의 관점에서 많이 쓰이는 기초적인 정보이론의 개념들을 짚고 넘어가볼까 한다.</p>
+<h3>Entropy</h3>
+<p>엔트로피는 '정보'의 단위라고 할 수 있다. 어떤 distibution p(x)에서 generate되는 discrete random variable x가 있다고 해보자. 이 random variable x가 전달할 수 있는 정보량은 어떻게 계산할 수 있을까. 여기에서 '정보'란 얼만큼의 bit가 있어야 x에 대한 정보를 완벽하게 얻을 수 있는가로 정의해보자. 예를 들어서 fair한 동전 던지기의 정보량은 1이다. 한 비트만 있으면 반드시 그 동전 던지기의 distribution을 서술할 수 있다. 그러나 만약 fair coin이 아니라면 한 면이 나올 확률이 다른 면이 나올 확률보다 상대적으로 더 크기 때문에 한 비트보다도 더 적은 정보를 사용해 값을 맞추는 것이 가능해진다. 이런 정보의 양을 <a href="http://en.wikipedia.org/wiki/Entropy_(information_theory)">Entropy</a>라는 것으로 정의하게 되는데, 간단하게 생각하면 열역학2법칙의 그 엔트로피와 동일하다. 즉, 엔트로피가 커질수록 불확실성이 높아지고 정보량은 더 많아진다. Entropy는 $H(x) = - \sum_x p(x) log_2 p(x) $로 정의가 되며, 만약 p(x)가 0으로 가면 $\log_2 p(x)$는 음의 무한으로 발산하지만, p(x)가 0이 되는 속도가 더 빠르기 때문에 엔트로피는 0이 된다.</p>
+<p>그럼 왜 엔트로피는 이런 꼴을 하게 되는 것일까. 만약 우리가 전체 N개의 object들이 있고, 이 object들이 K개의 bin으로 나뉘어져있다고 해보자. 그리고 i번째 bin에 들어갈 수 있는 object의 개수를 $n_i$라고 했을 때, object들이 bin에 들어갈 수 있는 permutation의 개수는 $W = \frac{N!}{\prod_i n_i!}$와 같으며 이를 multiplicity라고 한다. 엔트로피란 이 multiplicity에 비례하는, 정확히는 log를 취한 값을 엔트로피라고 하게 된다. 즉 Entropy H는 multiplicity W에 대해 다음과 같이 표현된다.</p>
+<p>$$H = \frac{1}{N}\ln W = \frac{1}{N}\ln N! - \frac{1}{N}\sum_i \ln n_i ! $$</p>
+<p>이때 $\lim N \to \infty $ 라고 해보자, 그러면 우리는 <a href="http://en.wikipedia.org/wiki/Stirling's_approximation">Stirling 근사</a>를 할 수 있는데 이는 $\ln N! \simeq N \ln N - N$으로 주어진다. 이를 대입해서 잘 정리해보면 아래와 같은 식을 얻을 수 있다.</p>
+<p>$$H = -\lim_{N \to \infty} \sum_i \left( \frac{n_i}{N} \right) \ln \left( \frac{n_i}{N} \right) = - \sum_i p_i \ln p_i $$</p>
+<p>이는 위에서 정의한 엔트로피의 값과 일치한다.</p>
+<p>그런데 이 값은 discrete한 random variable에 대해 정의된 값이고 continous한 random variable x에 대해서는 <a href="http://en.wikipedia.org/wiki/Differential_entropy">differencial entropy</a>라는 정의할 수 있다. <a href="http://en.wikipedia.org/wiki/Mean_value_theorem">평균값 정리</a>에 의해서 우리는 다음을 만족하는 value $x_i$를 반드시 찾을 수 있다</p>
+<p>$$ \int_{i\Delta}^{(i+1)\Delta} p(x) dx = p(x_i) \Delta$$</p>
+<p>엔트로피는 discrete한 random variable에 대한 값이었는데, 위 식을 통해 continous variable x를 위의 식을 만족하는 $x_i$로 치환하는 방식으로 quantize할 수 있다. 또한 이런 경우 각 $x_i$를 관측할 확률이 $p(x_i)\Delta$로 계산되므로, 이렇게 했을 경우 엔트로피는 아래와 같이 계산할 수 있다.</p>
+<p>$$H_\Delta = -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = - \sum_i p(x_i) \Delta p(x_i) - \ln \Delta $$</p>
+<p>이때, 오른쪽 term은 x에 대한 값이 아니니까 일단 먼저 무시하고, $\lim \Delta \to 0$를 취해보자. 이렇게 계산할 경우 아래 식이 얻어진다.</p>
+<p>$$\lim_{\Delta \to 0} H_\Delta = \lim_{\Delta \to 0} -\sum_i p(x_i) \Delta \ln ( p(x_i) \Delta ) = -\int p(x) \ln p(x) dx$$</p>
+<p>이때, 맨 오른쪽 term을 differencial entropy라고 정의한다. 즉, differencial entropy는 다음과 같이 정의된다.</p>
+<p>$$H(x) = -\int p(x) \ln p(x) dx$$</p>
+<p>마지막으로 random variable이 x,y 두 개가 있고 이 둘의 joint distribution p(x,y)가 있다고 해보자. 우리가 알고 있는 정보는 x의 value라고 했을 때 우리는 y의 information의 양을 계산할 수 있을까? 이를 <a href="http://en.wikipedia.org/wiki/Conditional_entropy">Conditional Entropy</a>라고 하는데 이때 y에 대해 필요한 additioanl information은 $p(y|x)$이며, x와 y의 확률은 p(x,y)이므로 Conditional Entropy는 아래와 같이 정의된다.</p>
+<p>$$H(y|x) = - \int \int p(y,x) \ln p(y|x) dy dx$$</p>
+<p>이 값은 다음과 같은 chain rule을 항상 만족시킨다.</p>
+<p>$$H(x,y) = H(y|x) + H(x)$$</p>
+<h3>KL divergence</h3>
+<p>어떤 probability distribution p(x)와 p(y)가 있다고 했을 때 이 둘의 차이, 혹은 distance를 정의할 수는 없을까. 예를 들어 p(x)라는 우리가 모르는 unknown distribution이 있을 때, 우리가 추측한 $p(\hat x)$와 true distribution p(x)가 얼마나 차이나는지를 계산할 수 있는 방법은 없을까. 만약 우리가 q(x)를 사용해서 x를 transmitting하는 coding scheme을 construct했다고 해보자. 그리고 true distribution을 p(x)였다고 했을 때, q(x)를 사용하였을 때 얼마나 더 많은 정보량이 필요할 것인지 measure할 수 있을 것이다. 이를 <a href="http://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler divergence</a> 혹은 KL divergence라고 하며 수식은 아래와 같다.</p>
+<p>$$KL(p\|\|q) = - \int p(x) \ln q(x) - \left( -\int p(x) \ln p(x) dx \right) \\\\ = -p(x) \ln \left[ \frac{q(x)}{p(x)} \right] dx $$</p>
+<p>정확히 얘기하면 이 값은 'distance'가 될 수는 없다. 왜냐하면 distance, 혹은 metric은 symmetric해야하는데 KL divergence는 $KL(p\|\|q) \neq KL(q\|\|p)$ 이기 때문이다.</p>
+<p>KL divergence는 언제나 0 보다 크거나 같은데, 같은 경우는 오직 p(x)와 q(x)가 일치하는 경우 뿐이다. 이를 증명하기 위해서는 convexity 컨셉과 Jensen's inequality를 도입하면 쉽게 증명이 가능하지만, 여기에서는 생갹하도록 하겠다.</p>
+<p>중요한 점은, KL divergence는 두 distribution의 차이를 define할 수 있는 좋은 수단 중 하나라는 것이며, 다시 말해 원래 true distribution p(x)와 우리가 estimate한 q(x)가 얼마나 비슷한지를 measure할 수 있는 수단이라는 점이다.</p>
+<h3>Mutual Information</h3>
+<p><a href="http://en.wikipedia.org/wiki/Mutual_information">Mutual Information</a>은 두 random variable들이 얼마나 mutual dependence한지를 measure하는 방법을 의미한다. 만약 random variable x와 y가 independent하다면 joint distribution p(x,y) 는 p(x,y) = p(x)p(y) 로 주어지게 될 것이며, 만약 둘이 dependent한 경우에는 두 값이 달라질 것이다. 그렇다면 만약 true distribution을 p(x,y)라고 했을 때, 새롭게 우리가 x와 y가 independent하다고 estimate하고 구한 p(x)p(y)와의 KL-divergence를 구할 수 있지 않을까? 당연히 이 값은 x와 y가 independent할 때만 0이고 그 이외에는 항상 0보다 크다. 즉, 두 random variable이 얼마나 mutually dependent한가, 얼마나 Mutual하게 information을 많이 가지고 있느냐를 측정할 수 있는 도구가 되므로 이를 Mutual information이라 한다. 수식으로 표현해보면 아래와 같다.</p>
+<p>$$I(x,y) = KL(p(x,y)\|\|p(x)p(y) \\\\ = - \int \int p(x,y) \ln \left( \frac{p(x)p(y)}{p(x,y)} \right) dx dy$$</p>
+<p>위의 값을 Mutual Information이라 하며, 이 값은 항상 다음과 같은 관계를 만족시킨다.</p>
+<p>$$I(x,y) = H(x) - H(x|y) = H(y) - H(y|x)$$</p>
+<h3>Machine Learning and Information Theory</h3>
+<p>Entropy는 주어진 bin에 얼마나 비슷한 element들이 들어있는지를 측정하는 척도로 쓰일 수 있으며, decision tree를 learning하는 알고리듬 등에서도 사용할 수 있다. 또한 KL-divergence는 두 distribution과의 거리를 의미하므로, density estimation 관점에서 바라봤을 때 우리가 estimate하는 distribution과 원래 true distribution이 얼마나 유사한지, 우리가 얼마나 잘 density estimation을 했는지 evaluation을 하는 용도 등으로 쓰일 수 있다. 마지막으로 Mutual information을 Bayes perspective에서 바라보게 된다면, 만약 우리가 어떤 데이터 x의 prior p(x)를 관측하고, 새로운 데이터 y를 관측해 얻은 posterior distribution p(y|x)가 있다고 했을 때, Mutual information은 이전 관측 x를 통해 새로운 관측 y의 uncertainty가 얼마나 reduction 되는지를 의미하게 되는 것과 동일하다는 것을 알 수 있다.</p>
+<p>정보이론 자체는 Machine Learning과 크게 관계가 없어보이지만, 그 개념들은 생각보다 꽤 많은 부분에서 사용되게 되므로 좀 간략하게 다루게 되었다.</p>
+<p>추가: 정보이론이 어떻게 머신러닝에 유용하게 쓰일 수 있는가에 대한 lecture와 book link들 <a href="http://www.inference.phy.cam.ac.uk/itprnn_lectures/">[1]</a>, <a href="http://www.inference.phy.cam.ac.uk/mackay/itila/book.html">[2]</a></p>
+<h3>변경 이력</h3>
+<ul>
+<li>2014년 8월 19일: 글 등록</li>
+<li>2014년 10월 9일: 정보이론, 머신러닝 렉쳐 및 책 링크 등록</li>
+<li>2015년 2월 28일: 변경 이력 추가</li>
+</ul>
+<p><a href="/categories/machine-learning-study/">다른 machine learning study 글 보러가기</a></p>
+
+  </div>
+</article>
+
+  <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "sanghyukchun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    </main>
+    <footer class="row">
+      <footer class="text-center text-muted small pt-4 border-top mt-5 mb-5">
+<p class="mb-0">&copy; 2025. All rights reserved - Sanghyuk Chun - Powered by <a href="https://gohugo.io/" class="text-decoration-none">Hugo</a></p>
+</footer>
+    </footer>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="author" content="Sanghyuk Chun">
+<title>Coursera Neural Networks for Machine Learning Week4 &amp; 5 - Applications | Sanghyuk Chun</title>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+
+      <link rel="stylesheet" href="/css/main.min.f2f8ede1cb9b9227e639b1cf091fee8894cc757917d3a351f6a374fe5e29da36.css" integrity="sha256-8vjt4cubkifmObHPCR/uiJTMdXkX06NR9qN0/l4p2jY=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/syntax.min.4311b2541a80a1f1e51893a5b1e0a9e32f8be7e92bc3787ccb916cc25c70e8bd.css" integrity="sha256-QxGyVBqAofHlGJOlseCp4y&#43;L5&#43;krw3h8y5Fswlxw6L0=" crossorigin="anonymous">
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+      <script src="/js/main.23cd0c7d837263b9eaeb96ee2d9ccfa2969daa3fa00fa1c1fe8701a9b87251a1.js" integrity="sha256-I80MfYNyY7nq65buLZzPopadqj&#43;gD6HB/ocBqbhyUaE=" crossorigin="anonymous"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-42711199-4"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-42711199-4');
+</script>
+
+
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<script>
+  window.MathJax = {
+    options: {
+    maxBuffer: 10000
+    },
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>  
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.tip').forEach(el => {
+    el.setAttribute('data-bs-toggle', 'tooltip');
+    el.setAttribute('data-bs-placement', 'top');
+    new bootstrap.Tooltip(el);
+  });
+});
+</script>
+</head>
+
+<body>
+  <div class="page-container mt-5">
+    <header class="row">
+      <h1 class="codefont"><a class="text-decoration-none text-body" href="/blog">Writing | Sanghyuk Chun</a></h1>
+<nav class="gap-3 mb-4 codefont">
+    <a href="/" class="text-body text-decoration-none">Index</a><span class="mx-2">/</span>
+    <a href="/blog" class="text-body text-decoration-none ms-5">Blog</a><span class="mx-2">/</span>
+    <a href="https://sanghyukchun.github.io/home/" class="text-body text-decoration-none ms-5">Homepage</a><span class="mx-2">/</span>
+</nav>
+    </header>
+    <main class="row">
+      
+<article class="mt-5 mb-5">
+  <h3 class="mb-4">Coursera Neural Networks for Machine Learning Week4 &amp; 5 - Applications</h3>
+  
+  
+  <p class="text-muted text-end" datetime="2014-04-05T00:00:00&#43;00:00">April 5, 2014</p>
+
+  
+
+  <div class="content">
+    <h3>들어가기 전에</h3>
+<p>이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 <a href="https://class.coursera.org/neuralnets-2012-001/lecture">Neural Networks for Machine Learning</a> 4주차와 5주차 강의를 요약한 글이다. 이 강의에서는 이론적인 형태의 무언가를 배운다기보다는 real application의 예로 Neural Network를 사용해 word prediction (NLP에서 쓰이는) 그리고 object recognition를 하는 방법에 대해 다룬다. 내가 관심이 있는 부분은 실제 이 NN을 어떻게 적용하냐라기 보다는 NN이란 무엇이며 어떤 이론적 배경이 있는 것이며 그 알고리듬에 더 관심이 있기 때문에 대부분이 engineerning issue인 이번 두 강의들은 대략적으로 어떤 내용에 대해서 다루는지만 아주 간략하게 기술하였다.</p>
+<h3>Learning feature vectors for words</h3>
+<p>Speech recoginition에서 가장 중요한 문제 중 하나는 바로 제대로 인식되지 않은 단어가 무엇일지 추측하는 것이다. 아무리 기술이 좋아지더라도 speech를 완전하게 복원하는 것은 불가능하다. 살제 사람들도 완전하게 speech를 인식하는 것은 아니고 때에 따라 적당히 추측해서 이해하는 것처럼, 이런 문제가 음성 인식에서 많이 중요한 문제로 대두되고 있다. 나도 seri를 사용하다보면 음성인식률이 생각보다 좋지않아서 실망하고는 하는데, 이런 문제점을 해결하기 위해 다양한 방법들이 제시되고 있다. 이 강의는 이런 것들을 개선시키기 위해 neural network를 도입했었던 연구들에 대해 다룬다. 참고로 여기에서 사용하는 모든 NN들은 softmax function neuron을 사용하고 error function은 cross entropy error를 사용한다. 이유는 sigmoid function을 사용했을 때 error가 rmse라면 제대로 우리가 원하는 방향으로 학습하기가 어렵기 때문이다. 왜냐하면 sigmoid function은 양 쪽 끝 부분이 거의 평평하기 때문에 만약 우리가 정 반대쪽 방향에서 rmse의 gradient 방향을 취하게 된다면 거의 변화가 없다고 판단할 수도 있기 때문이다. 따라서 이런 방법을 개선하기 위해서 cross entropy error를 사용하였고, 이 방법을 사용하기 위하여 sigmoid를 softmax로 바꿔서 probability distribution으로 만들어준 것이다. 아무튼 이 강의에서 설명하는 방법들은 이런 방법들에 기반해서 NN을 만든다. 아무튼 우리가 처음에 풀려고 했었던 단어를 추측하는 고전적인 방법 중에 <a href="http://en.wikipedia.org/wiki/N-gram">N-gram</a>문제라는 것이 있는데, n개의 단어 배열들을 학습하여 임의의 n-1개의 단어가 주어졌을 때 그 다음 단어가 무엇일지 예측하는 문제이다. 실제로 자연언어처리에서 많이 사용하는 기법 중 하나인데, 보통 trigram을 많이 사용한다 (3개의 단어 시퀀스를 학습) 그런데 이 경우 우리가 모든 단어를 학습할 수도 없고, 우리가 관측하지 못한 단어배열이라고 해서 세상에 존재하지 않는 단어 배열이라 확신할 수가 없기 때문에 당연히 성능 역시 좋지 않을 것이라고 예측할 수 있을 것이다. 대신 input을 앞의 2개의 단어를 취하고 그 output을 세 번째 단어로 하는 neural network를 학습할 수도 있을 것이다. 하지만 이렇게 할 경우 output의 양이 너무 많아지므로 대신 3번째 단어의 후보군들의 집합을 같이 넣어서 결과를 얻는 방식을 취할 수도 있을 것이다. 더 성능을 높이기 위해서 엄청 긴 word seqeunce를 통채로 학습하고, 임의의 단어의 앞의 n개 단어 뒤의 m개 단어를 보고 추측하는 것이 가능할 것이다. 이 경우, 지금 단어가 random인지 제대로 된 단어인지 일부러 섞어서 learning을 하게 되면 output을 binary로 받는 것이 가능해져서 엄청나게 빠른 test time을 가질 수가 있게 된다는 장점이 있다.</p>
+<h3>Object recognition with neural nets</h3>
+<p>우리가 물체를 인식하는 것을 매우 자연스러운 일로 생각하지만 실제로 이것을 구현하는 것은 절대로 쉬운 일이 아니다. 우리는 물체가 살짝 가려져 있어도 구분이 가능하고, 또한 해당 물체를 유동적으로 인식한다. 무슨 말인가하면, 인식 알고리듬을 디자인하는데 있어서 문제점은 (1) 물체가 다른 물체 혹은 주변 환경에 의해서 가려진 상태일 때 (2) 밝기와 조명에 따른 해당 물체의 색 변화 (pixel 정보가 변한다) (3) 같은 클래스에 속해도 조금씩 다른 모습 - 예를 들어서 손글씨 숫자는 비록 같은 숫자이나 전부 필체가 달라서 variation이 있다. (4) 물체가 정의되는 것은 모양이 아니라 다른 방법으로 결정되는 경우도 많다 - 예를 들어 의자는 모습으로 구분하는 것이 아니라 그 사용처가 어디인가에 따라 분류해야 구분할 수 있을 것이다.</p>
+<p>그 밖에도 결국 우리가 사용할 수 있는 정보는 image 정보이고, 디지털 input image는 단순한 pixel map이다. 예를 들어서 1024 by 720 pixel의 사진이라고 한다면 총 737280개의 pixel이 input이 될 것이다. 각 pixel은 RGB정보를 가지고 있으므로 값은 (0,0,0) ~ (255,255,255) 사이의 값으로 정해질 것이다. 색상이 중요하지 않은 경우에는 흑백 사진으로 바꾸어 단순히 밝기로만 판단하기도 한다. 아무튼 그렇기 때문에 약간의 물체의 이동도 성능을 크게 바꿔버릴 수 있다. 단순히 옆으로 이동한 것 뿐 아니라 회전된 정보나 뒤집힌 정보는 우리가 인식 알고리듬을 작성하는데에 매우 어려운 부분으로 작용한다. 따라서 우리는 모든 정보를 normalization시켜야할 필요가 있으며 align해야 할 필요가 있다. 이런 처리 없이는 올바른 정보를 학습하기가 매우 어려워질 것이다.</p>
+<p>이 강의에서는 이런 문제점들을 가지고 있는 object recognition을 neural network로 접근한다. 이런 경우 determistic method보다 훨씬 더 좋은 성능을 낼 수 있으리라는 것은 자명할 것이다. Input은 pixel map이고, output은 어떤 object인지 알려주는 label 혹은 class가 될 것이다. 이런 Hidden layer가 포함된 neural network를 backpropagation 방법을 사용하여 learning한다. 실제로 많은 image recoginition에서 neural network를 사용하고 있으며, 앞에서 설명했었던 여러 문제점들을 해결해주는 경우가 많다. 또한 아마 이런 목적을 가지고 설계된 알고리듬 중에서는 neural network가 가장 성능이 좋을 것이다.</p>
+<h3>Coursera Neural Networks for Machine Learning</h3>
+<p>다른 요약글들 보기 (<a href="/categories/cousera-nn/">카테고리로 이동</a>)</p>
+<ul>
+	<li>Lecture 1: <a href="/posts/39">Introduction</a></li>
+	<li>Lecture 2: <a href="/posts/40">The Perceptron learning procedure</a></li>
+	<li>Lecture 3: <a href="/posts/42">The backpropagation learning proccedure</a></li>
+	<li>Lecture 4: <a href="/posts/43">Learning feature vectors for words</a></li>
+	<li>Lecture 5: <a href="/posts/43">Object recognition with neural nets</a></li>
+	<li>Lecture 6: Optimization: How to make the learning go faster</li>
+	<li>Lecture 7: Recurrent neural networks</li>
+	<li>Lecture 8: More recurrent neural networks</li>
+	<li>Lecture 9: Ways to make neural networks generalize better</li>
+	<li>Lecture 10: Combining multiple neural networks to improve generalization</li>
+	<li>Lecture 11: Hopfield nets and Boltzmann machines</li>
+	<li>Lecture 12: Restricted Boltzmann machines (RBMs)</li>
+	<li>Lecture 13: Stacking RBMs to make Deep Belief Nets</li>
+	<li>Lecture 14: Deep neural nets with generative pre-training</li>
+	<li>Lecture 15: Modeling hierarchical structure with neural nets</li>
+	<li>Lecture 16: Recent applications of deep neural nets</li>
+</ul>
+  </div>
+</article>
+
+  <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "sanghyukchun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    </main>
+    <footer class="row">
+      <footer class="text-center text-muted small pt-4 border-top mt-5 mb-5">
+<p class="mb-0">&copy; 2025. All rights reserved - Sanghyuk Chun - Powered by <a href="https://gohugo.io/" class="text-decoration-none">Hugo</a></p>
+</footer>
+    </footer>
+  </div>
+</body>
+
+</html>

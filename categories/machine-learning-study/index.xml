@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine-Learning-Study on Sanghyuk Chun</title>
+    <link>/categories/machine-learning-study/</link>
+    <description>Recent content in Machine-Learning-Study on Sanghyuk Chun</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 18 Dec 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/machine-learning-study/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Machine learning 스터디 (10) PAC Learning &amp; Statistical Learning Theory</title>
+      <link>/posts/66/</link>
+      <pubDate>Sun, 18 Dec 2016 00:00:00 +0000</pubDate>
+      <guid>/posts/66/</guid>
+      <description>&lt;h3 id=&#34;들어가며&#34;&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;어떤 머신러닝 모델이 있을 때 이 모델이 다른 모델에 비해 뛰어나다고 주장하려면 어떤 것들이 필요할까? 알고리즘은 수렴성이나 complexity 등으로 성능을 논하지만, 모델의 성능을 표현하기 위해서는 다른 무언가가 필요하다. 이번 글에서는 &lt;a href=&#34;https://en.wikipedia.org/wiki/Probably_approximately_correct_learning&#34;&gt;PAC (Probably Approximately Correct)&lt;/a&gt; 라는 개념을 설명할 것이다. PAC는 이론적으로 모델의 성능을 측정하는 방법 중 하나로, 비록 practical하게 모델의 성능 측정에 쓰기는 힘들지만 개념적으로 왜 특정 모델이 더 좋은지, 언제 모델의 성능이 좋고 언제 나쁜지에 대해 설명하는 것은 가능하다. 이 글에서는 Computational learning theory 라는 분야를 언급하고, 그 다음 PAC의 기본 개념과 그 intuition을 설명할 것이다. 그리고 VC dimension을 소개하여 일반적인 infinite hypothesis space에서 PAC bound를 어떻게 다시 bound 시킬 수 있는지 등에 대해 설명할 것이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (20-1) Multi-armed Bandit</title>
+      <link>/posts/96/</link>
+      <pubDate>Sun, 13 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/posts/96/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;이 글에서는 reinforcement learning의 한 갈래 중 하나인 Multi-armed Bandit에 대해 다룰 것이다. Multi-armed Bandit이 어떤 문제인지에 대해 간략히 설명한 다음, 좀 더 formal하게 문제를 정의하고, 이 문제를 푸는 여러 알고리즘들에 대해 다룰 것이다. 연구가 워낙 오래 진행된 분야라서 모델이나 알고리즘의 종류가 엄청나게 많지만, variation 중에서 몇 가지 간단한 것들 위주로 설명해보도록 하겠다.&lt;/p&gt;&#xA;&lt;h3&gt;Motivation: Exploration and Exploitation Trade-off&lt;/h3&gt;&#xA;&lt;p&gt;외팔이 강도가 (one-armed bandit이) 우연한 기회로 눈 앞에 여러 개의 슬롯머신을 공짜로 H시간 동안 플레이 할 수 있는 기회를 얻었다고 생각해보자. 이때 강도는 한 번에 한 개의 슬롯머신의 arm만 당길 수 있으며 (즉 총 H번 시도할 수 있다) 각각의 슬롯머신에서 얻을 수 있는 reward는 다르다고 가정한다. 또한 reward는 어떤 probabilistic distribution에 의해 draw되는 random variable이라고 했을 때, 이때 강도가 가장 수익을 최대화하기 위해서는 arm을 어떤 순서대로, 어떤 policy대로 당겨야할까?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (17-1) Recommendation System with Implicit Feedback</title>
+      <link>/posts/95/</link>
+      <pubDate>Sun, 06 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/posts/95/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;이전 글&lt;a href=&#34;/posts/73&#34;&gt;[1]&lt;/a&gt;에서 다룬 recommendation system은 사용자가 점수를 정확하게 매긴 경우에 대해, 즉 explicit feedback에 대해서만 문제를 푸는 방식이다. 그러나 실제로는 사용자가 점수를 직접 매기는 대신에 단순히 클릭했거나, 조회, 구매한 간접적인 정보, 즉 implicit feedback에만 의존하게 되는 경우도 빈번하게 발생하게 된다. 이 글에서는 그런 implicit feedback만 존재하는 상황에서 어떻게 matrix completion 문제를 디자인하고 해결하는지에 대해 총 세 개의 논문을 들어 설명할 것이다.&lt;/p&gt;&#xA;&lt;p&gt;이 글의 맨 앞은 implicit feedback이 정확히 무엇이고, 어떤 상황의 문제들이 있는지에 대해 설명할 것이다. 그리고 총 세 개의 논문에서 어떤 방법으로 문제를 접근하는가 설명하도록 할 것이다. 소개할 논문은 &lt;a href=&#34;http://yifanhu.net/PUB/cf.pdf&#34;&gt;Collaborative Filtering for Implicit Feedback Datasets [2]&lt;/a&gt;, &lt;a href=&#34;http://stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf&#34;&gt;Logistic Matrix Factorization for Implicit Feedback Data [3]&lt;/a&gt;, &lt;a href=&#34;http://www.ismll.uni-hildesheim.de/pub/pdfs/Gantner_et_al2011_KDDCup.pdf&#34;&gt;Bayesian Personalized Ranking for Non-Uniformly Sampled Items [4]&lt;/a&gt; 총 세가지이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (17) Recommendation System (Matrix Completion)</title>
+      <link>/posts/73/</link>
+      <pubDate>Tue, 01 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/posts/73/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;이 글에서는 recommendation 문제가 어떤 문제인지에 대해 간략하게 설명하고, 각각을 푸는 가장 대표적인 알고리즘인 matrix factorization에 대해서 설명할 것이다. 이 글의 많은 부분이 예전에 적었던 글 &lt;a href=&#34;/posts/30&#34;&gt;[1]&lt;/a&gt;, &lt;a href=&#34;/posts/31&#34;&gt;[2]&lt;/a&gt;을 기반으로 작성하였으니, 궁금하다면 추가로 읽어보면 좋을 것 같다.&lt;/p&gt;&#xA;&lt;h3&gt;Recommendation Problem&lt;/h3&gt;&#xA;&lt;p&gt;Recommendation problem은 여태까지 사용자가 item에 대해 evaluate한 history data를 기반으로 사용자가 아직 사용하지 않은 item에 대한 사용자의 평가를 예측하는 문제라고 할 수 있다. 추천과 랭킹 문제는 마케팅을 포함한 다양한 분야에서 오랜 세월 관심을 가져왔던 분야이다. 특히 광고를 제작하는 사람들 입장에서는 적은 비용으로 최대한의 효율을 낼 수 있는 타겟광고는 그야말로 금덩이나 다름없는 영역이라 할 수 있을 것이다. 추천은 그만큼 제한된 자원을 최대한 효율적으로 분배할 수 있는 방법이기도 하며, 사람들의 지갑을 더 열게 할 수 있는 중요한 문제인 것이다. Netflix와 왓챠는 내가 점수를 매긴 별점을 바탕으로 내가 좋아할만한 영화나 드라마를 추천해준다. 아마존, 이베이, Gmarket 등의 온라인 쇼핑몰들 역시 내가 클릭했던 상품들의 history를 기반으로 내가 좋아할만한, 사고싶어할만한 상품들을 추천해주거나, 이 상품들을 묶어서 하나의 작은 할인 패키지를 구성하기도 한다. 페이스북은 내가 좋아요를 누른 포스트들을 바탕으로 내가 좋아할만한 페이지를 추천하고, 타겟 광고를 내보낸다. 우리가 지금은 너무나 자연스럽게 받아들이는 이 사실들은 전부 머신러닝에 의해 가능해진 것들이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (19) Deep Learning - RBM, DBN, CNN</title>
+      <link>/posts/75/</link>
+      <pubDate>Mon, 21 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/75/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/74&#34;&gt;이전 글&lt;/a&gt;에서 기본적인 neural network에 대한 introduction과, feed-forward network를 푸는 &lt;a href=&#34;/posts/74#backprop&#34;&gt;backpropagtion 알고리즘&lt;/a&gt;과 optimization을 하기 위해 기본적으로 사용되는 &lt;a href=&#34;/posts/74#sgd&#34;&gt;stochastic gradient descent&lt;/a&gt;에 대해 다루었다. 이 글에서는 deep learning이란 것은 정확히 무엇이며, 왜 deep learning이 최근 크게 급부상하게 되었는지에 대해 시간 순으로 다룰 것이다. 이 글에서는 unsupervised learning의 한 방법인 Restricted Boltzmann Machine (RBM)과 그것을 사용한 Deep Belief Network (DBN)에 대해 다룰 것이다. 또 다른 unsupervised learning 방법 중 하나인 (denoising) auto-encoder 역시 다루고자하였으나, 이 내용까지 전부 다루기에는 내용이 너무 길어져서 이 글에서는 생략하였다. 주의할 점은, 2007년 2008년에 막 deep learning이라는 이름으로 나왔던 연구들인 unsupervised pretraining 방법들은 현재 거의 쓰이지 않는 연구방법들이라는 것이다. 때문에 지금까지도 사용되는 조금 더 practical한 방법들인 neural network regularization (예를 들어서 ReLU, Dropout 등), optimization method (momentum, adagrad 등)에 대해서는 이 이후 한 번의 posting을 더 하여 다루도록 하겠다. 추가로, 오래된 work임에도 불구하고 아직도 computer vision 쪽에서 엄청나게 많이 사용하는 Convolutional Neural Network (CNN) 에 대해서도 다루도록 하겠다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (20) Reinforcement Learning</title>
+      <link>/posts/76/</link>
+      <pubDate>Mon, 21 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/76/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/57&#34;&gt;첫 글&lt;/a&gt;에서 Machine Learning은 크게 세 가지로 구분된다는 얘기를 했었지만, 지금까지 다뤘던 주제들은 모두 supervised learning이거나 unsupervised learning이었다. Reinforcement learning은 그 둘과는 구분되는 명백히 다른 task이지만, machine learning에서 그만큼 대중적인 분야는 아니다. 아직까지 reinforcement learning을 사용한 적절한 application이 많이 제안된 것도 아니라서 practical하게 많이 사용지도 않는다. 그러나 reinforcement learning을 사용하면 supervised, unsupervised learning와는 전혀 다른 방법으로 문제를 접근하는 것이 가능하다. 최근 deep learning과 reinforcement learning을 결합한 재미있는 연구주제들도 나오고 있는 만큼 (&lt;a href=&#34;/posts/90&#34;&gt;Atari 리뷰&lt;/a&gt;, &lt;a href=&#34;/posts/91&#34;&gt;Visual Attention 리뷰&lt;/a&gt;), 앞으로 더 재미있는 방향으로 연구될 수 있는 주제가 아닐까 생각한다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (18) Neural Network Introduction</title>
+      <link>/posts/74/</link>
+      <pubDate>Sun, 13 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/74/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;최근 Machine Learning 분야에서 가장 뜨거운 분야는 누가 뭐래도 Deep Learning이다. 엄청나게 많은 사람들이 관심을 가지고 있고, 공부하고 응용하고 있지만, 체계적으로 공부할 수 있는 자료가 많이 없다는 것이 개인적으로 조금 안타깝다. 이제 막 각광받기 시작한지 10년 정도 지났고, 매년 새로운 자료들이 쏟아져나오기 때문에 책이나 정리된 글을 찾기가 쉽지가 않다. 그러나 Deep Learning은 결국 artificial neural network를 조금 더 복잡하게 만들어놓은 모델이고, 기본적인 neural network에 대한 이해만 뒷받침된다면 자세한 내용들은 천천히 탑을 쌓는 것이 가능하다고 생각한다. 이 글에서는 neural network의 가장 기본적인 model에 대해 다루고, model paramter를 update하는 algorithm인 backpropagation에 대해서 다룰 것이다. 조금 더 advanced한 topic들은 이 다음 글에서 다룰 예정이다. 이 글의 일부 문단은 &lt;a href=&#34;/categories/neural-network/&#34;&gt;이전 글들&lt;/a&gt;을 참고하였다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (16) Dimensionality Reduction (PCA, LDA)</title>
+      <link>/posts/72/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/72/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;Machine Learning problem을 풀다보면, 종종 high dimensional 데이터를 다뤄야할 일이 생긴다. 그런데 dimension 높은 데이터를 다루다보면 여러 문제가 발생하는데, 높은 dimension으로 인해 생기는 대표적인 문제가 &lt;a href=&#34;/posts/59#59-4-cd&#34;&gt;예전 글&lt;/a&gt;에서 다뤘던 Curse of dimensionality이다. 또한 많은 algorithm들에서 dimension이 complexity에 영향을 주는 경우가 많으므로 높은 dimension은 알고리즘의 성능에 악영향을 미치는 경우가 많다. 그렇기 때문에 많은 경우 데이터의 dimension이 높다면 다양한 방식의 dimenionality reduction 기술을 적용해 데이터의 차원을 낮추는 작업을 한다. 일반적으로 많이 사용하는 Dimensionality Reduction으로는 LDA와 PCA가 있으며, ICA, CCA 등의 방법도 종종 사용되며, 그 이외에도 RBM, Auto-encoder 등의 Neural network와 관련된 모델들도 존재한다. 이 글에서는 가장 많이 사용되는 방법들인 LDA와 PCA에 대해서만 다룰 것이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (14) EM algorithm</title>
+      <link>/posts/70/</link>
+      <pubDate>Sun, 14 Jun 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/70/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm&#34;&gt;EM 알고리즘&lt;/a&gt;은 &lt;a href=&#34;https://en.wikipedia.org/wiki/Latent_variable&#34;&gt;latent variable&lt;/a&gt;이 존재하는 probabilistic model의 maximum likelihood 혹은 maximum a posterior 문제를 풀기 위한 알고리즘 중 하나이다. 굉장히 많은 probabilistic 모델을 풀기 위해 널리 사용되는 알고리즘 중 하나이며, iterative한 알고리즘 중 하나이다. Clustering에서 다뤘던 GMM은 물론이고, HMM, RBM 등의 문제를 해결하는데 있어서도 사용되는 알고리즘이다. 이 글에서는 EM 알고리즘이 무엇인지, latent variable이 존재하는 probabilistic model은 무엇이며 어떤 장점이 있는지를 다룰 것이며, EM 알고리즘의 의미와 더 나아가 이 알고리즘이 어떻게 MLE나 MAP문제를 해결하는지에 대해 다룰 것이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (13) Clustering (K-means, Gaussian Mixture Model)</title>
+      <link>/posts/69/</link>
+      <pubDate>Wed, 25 Mar 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/69/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/57-4-ClassML&#34;&gt;첫 번째 글&lt;/a&gt;에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 앞서 이미 그 중 &lt;a href=&#34;/posts/64&#34;&gt;Supervised Learning&lt;/a&gt;을 간략하게 다룬 글이 있었고, 이 글에서는 그 중 Unsupervised Learning의 가장 대표적인 예시인 Clustering 대해 다룰 것이며 가장 대표적이고 간단한 두 가지 알고리즘에 대해서 역시 다룰 것이다.&lt;/p&gt;&#xA;&lt;h3&gt;What is Clustering?&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Cluster_analysis&#34;&gt;Clustering&lt;/a&gt;은 &lt;a href=&#34;http://en.wikipedia.org/wiki/Unsupervised_learning&#34;&gt;Unsupervised Learning&lt;/a&gt;의 일종으로, label 데이터 없이 주어진 데이터들을 가장 잘 설명하는 cluster를 찾는 문제이다. 왜 클러스터링이 필요할까? Classification을 하기 위해서는 데이터와 각각의 데이터의 label이 필요하지만, 실제로는 데이터는 존재하지만 그 데이터의 label이나 category가 무엇인지 알 수 없는 경우가 많기 때문에 classfication이 아닌 다른 방법을 통해 데이터들을 설명해야하는 경우가 발생한다. 아래 그림은 클러스터링이 어떤 것인지 잘 보여주는 그림이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (8) Classification Introduction (Decision Tree, Naïve Bayes, KNN)</title>
+      <link>/posts/64/</link>
+      <pubDate>Wed, 25 Mar 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/64/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/57#57-4-ClassML&#34;&gt;첫 번째 글&lt;/a&gt;에서 설명했던 것 처럼 Machine Learning은 크게 Supervised Learning, Unsupervised Learning 그리고 Reinforcement Learning으로 구분된다. 이 글에서는 그 중 Supervised Learning의 가장 대표적인 예시인 Classification에 대해 다룰 것이며 가장 대표적이고 간단한 세 가지 알고리즘에 대해서 역시 다룰 것이다.&lt;/p&gt;&#xA;&lt;h3&gt;What is Classification?&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Statistical_classification&#34;&gt;Classification&lt;/a&gt;은 &lt;a href=&#34;http://en.wikipedia.org/wiki/Supervised_learning&#34;&gt;Supervised Learning&lt;/a&gt;의 일종으로, 기존에 존재하는 데이터와 category와의 관계를 learning하여 새로 관측된 데이터의 category를 판별하는 문제이다. 스팸 필터를 예로 들어들어보자. 스팸 필터의 데이터는 이메일이고, category, 혹은 label, class는 spam메일인지 일반 메일인지를 판별하는 것이 될 것이다. 스팸필터는 먼저 스팸 메일, 그리고 일반 메일을 learning을 한 이후, 새로운 데이터 (혹은 메일)이 input으로 들어왔을 때 해당 메일이 스팸인지 일반 메일인지 판별하는 문제를 풀어야하며, 이런 문제를 classification이라고 한다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (7) Convex Optimization</title>
+      <link>/posts/63/</link>
+      <pubDate>Wed, 10 Sep 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/63/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;Machine learning 문제를 풀다보면 Objective function을 만들고 그 objective function을 optimize 해야하는 경우가 매우 빈번하게 발생한다. 간단히 생각해서 loss function을 minimize하는 것도 optimization이다. 그렇다면 그런 optimization은 도대체 어떻게 해야하는 것일까. 여러가지 방법이 있겠지만 이번 글에서는 간단한 optimization이라는 것에 대한 컨셉을 다루고, 그 중 특수 케이스인 convex optimization에 대해 다루도록 하겠다.&lt;/p&gt;&#xA;&lt;h3&gt;Optimization&lt;/h3&gt;&#xA;&lt;p&gt;대부분의 Optimization은 아래와 같은 식으로 표현할 수 있을 것이다.&lt;/p&gt;&#xA;&lt;p&gt;$$ \min f(x) \text{ s.t. } g(x) = c $$&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (6) Information Theory</title>
+      <link>/posts/62/</link>
+      <pubDate>Wed, 20 Aug 2014 00:20:00 +0000</pubDate>
+      <guid>/posts/62/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;Information Theory는 섀년이라는 걸출한 천재가 이룩해낸 매우 뛰어난 이론이다. 이 이론 덕분에 우리는 이렇게 인터넷도 할 수 있고, 무선통신도 할 수 있는 것이다. 이 이론 덕분에 불안정한 noisy한 channel에서도 유한한 시간 안에 우리가 전달하고 싶은 정보를 전부 전달할 수 있다는 것을 확신할 수 있고, 이론적인 한계값까지 도출이 가능한 엄청난 이론이다. Machine Learning에서도 이런 information theory 측면에서 문제를 바라보는 경우가 종종 있는데, Entropy, Mutual Information, KL-divergence 등이 그것이다. 이 글에서는 그런 Machine Learning의 관점에서 많이 쓰이는 기초적인 정보이론의 개념들을 짚고 넘어가볼까 한다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (5) Decision Theory</title>
+      <link>/posts/61/</link>
+      <pubDate>Tue, 19 Aug 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/61/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;그 어떤 좋은 알고리즘을 선택하더라도, 최종적으로 특정 문제에 대해 inference를 하기 위해서는 decision making을 해야만 한다. 그렇다면 decision은 어떻게 내릴 수 있을까? 라는 질문이 자연스럽게 들 수 있는데, decision theory는 어떻게 decision을 내릴지에 대해 다룬다. 내가 지금 결정한 parameter는 적당한 parameter인가? 예를 들어서 내가 임의의 데이터를 가장 잘 설명할 수 있는 1차함수를 그려야하는 상황이라고 했을 때, 나는 그 &#39;가장 잘 설명할 수 있는&#39; parameter를 어떻게 decide할 수 있을까, 어떻게 decision making을 할 수 있을까. 혹은 Classification problem에서 해당 data가 어떤 class에 속하는지 어떤 방식으로 decision을 내려야할까?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (4) Algorithm</title>
+      <link>/posts/60/</link>
+      <pubDate>Sun, 10 Aug 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/60/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;Machine Learning을 제대로 이해하기 위해서는 알고리즘에 대한 이해가 필수적이다. 어떤 알고리즘이 좋은 것이고 어떤 알고리즘이 나쁜 것인지에 대한 구분이 이뤄져야지만 향후 논의하게 될 많은 주제들에 대해 얘기하기 쉬워진다. 어떤 문제가 풀 수 있는 문제이고 어떤 문제가 풀 수 없는 문제인가? 풀 수 있다 없다는 어떻게 정의하는가? 등에 대해 이해해야만 머신러닝 알고리즘들에서 얘기하는 local optimum이나 compuation complexity 등에 대해 이해할 수 있을 것이다. (잘 모르는 개념이더라도 영화 이미테이션 게임을 봤다면 금방 이해할 수 있을 것이다)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (3) Overfitting</title>
+      <link>/posts/59/</link>
+      <pubDate>Mon, 04 Aug 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/59/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;Overfitting은 Machine Learning Algorithm을 design하고 실제 구현을 할 때 Algorithm 설계를 제외하면 가장 어렵고 머리를 아프게 하는 문제 중 하나이다. Overfitting을 잘 관리하지 못하면 실전에서 써먹을 수 없는 알고리즘이 되기 때문에 overfitting을 잘 관리하는 것의 중요성은 몇 번을 강조해도 부족하지 않다. 보통 overfitting을 따로 chapter로 빼거나 하는 등으로 설명하는 경우가 많이 없지만, 나는 그만큼 overfitting과 관련된 이슈들이 중요하다고 생각하고, 다룰 얘기가 많다고 생각하기 때문에 이 글을 통해 overfitting의 개념과 그것을 해결하기 위한 방법, overfitting이 발생하는 근본적인 원인 등에 대해 다루도록 하겠다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (2) Probability Theory</title>
+      <link>/posts/58/</link>
+      <pubDate>Sun, 03 Aug 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/58/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;Probability thoery는 Machine Learning을 공부하기 전에 필수적으로 이해해야하는 개념들 중 하나이다. 이 글에서는 가장 기본적인 확률 개념에 대해서는 알고 있다고 가정한다. 예를 들어  independence, joint probability, marginal probability, conditional probability 등 기본적인 개념이나 $p(X) = \sum_Y p(X,Y) $ 혹은 $p(X,Y) = p(Y|X) p(X)$ 등 자주 사용되는 관계 등에 대해서는 이미 알고 있다고 생각했고, 또한 random variable 등에 대한 기본적인 지식이 이미 존재한다고 가정하고 글을 작성하였다. 만약 이런 개념들에 대해 잘 알지 못한다면 다른 글이나 강의 등을 통해 그 개념들을 먼저 이해하고 글을 읽으면 좋다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (1) Machine Learning이란?</title>
+      <link>/posts/57/</link>
+      <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/57/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;Machine learning이라는 것을 접한지 어느새 거의 1년 반이 넘는 시간이 지났다. 많은 &lt;a href=&#34;/categories/machine-learning/&#34;&gt;Machine learning 관련 글들&lt;/a&gt;을 써왔지만, 제대로 정리된 글이 없어 근래에 다시 머신러닝에 대해 공부를 하는 김에 제대로 정리해보기로 했다. 이번 8월부터 연구실에서 머신러닝 스터디를 하기로 한 김에 새로 다시 읽고 있는 Bishop 책을 중심으로 글을 작성할 것 같다. 나는 Machine Learning을 차근차근 공부하기에 적절한 자료가 없는 것이 항상 아쉬웠다. Lecture나 책이 있지만, 불필요하게 내용이 너무 많거나 처음 개념을 잡기에는 시간이 오래 걸리는 경우가 많았다. 또한 Machine Learning은 한글 자료도 많지 않다. 이 스터디에서는 최대한 내가 중요하다고 생각되는 기초적인 머신러닝 개념들에 대해 다룰 예정이다. 이 스터디 글은 머신러닝을 모르는 사람도 차근차근 순서대로 읽을 수 있도록 작성할 것이며 해당 주제를 이해하기 위해 필요한 &#39;개념&#39; 설명 등에 집중하려고 한다. 앞서 말한대로 주로 Bishop을 중심으로 작성하게 될 것 같으며, 필요하면 다른 책이나 논문을 참고해서 글을 작성해보려 한다. 이 스터디에 작성하는 모든 표현들은 가급적 원래 단어를 영어로 쓰거나 한글 독음을 사용하여 작성할 것이다. 즉, Machine Learning은 머신러닝이나 Machine Learning으로 표기될 것이며, 거의 모든 경우에 기계학습으로 표기되지 않을 것이다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

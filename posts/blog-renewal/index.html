@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="author" content="Sanghyuk Chun">
+<title>블로그 리뉴얼 | Sanghyuk Chun</title>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+
+      <link rel="stylesheet" href="/css/main.min.f2f8ede1cb9b9227e639b1cf091fee8894cc757917d3a351f6a374fe5e29da36.css" integrity="sha256-8vjt4cubkifmObHPCR/uiJTMdXkX06NR9qN0/l4p2jY=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/syntax.min.4311b2541a80a1f1e51893a5b1e0a9e32f8be7e92bc3787ccb916cc25c70e8bd.css" integrity="sha256-QxGyVBqAofHlGJOlseCp4y&#43;L5&#43;krw3h8y5Fswlxw6L0=" crossorigin="anonymous">
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+      <script src="/js/main.23cd0c7d837263b9eaeb96ee2d9ccfa2969daa3fa00fa1c1fe8701a9b87251a1.js" integrity="sha256-I80MfYNyY7nq65buLZzPopadqj&#43;gD6HB/ocBqbhyUaE=" crossorigin="anonymous"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-42711199-4"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-42711199-4');
+</script>
+
+
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<script>
+  window.MathJax = {
+    options: {
+    maxBuffer: 10000
+    },
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>  
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.tip').forEach(el => {
+    el.setAttribute('data-bs-toggle', 'tooltip');
+    el.setAttribute('data-bs-placement', 'top');
+    new bootstrap.Tooltip(el);
+  });
+});
+</script>
+</head>
+
+<body>
+  <div class="page-container mt-5">
+    <header class="row">
+      <h1 class="codefont"><a class="text-decoration-none text-body" href="/blog">Writing | Sanghyuk Chun</a></h1>
+<nav class="gap-3 mb-4 codefont">
+    <a href="/" class="text-body text-decoration-none">Index</a><span class="mx-2">/</span>
+    <a href="/blog" class="text-body text-decoration-none ms-5">Blog</a><span class="mx-2">/</span>
+    <a href="https://sanghyukchun.github.io/home/" class="text-body text-decoration-none ms-5">Homepage</a><span class="mx-2">/</span>
+</nav>
+    </header>
+    <main class="row">
+      
+<article class="mt-5 mb-5">
+  <h3 class="mb-4">블로그 리뉴얼</h3>
+  
+  
+  <p class="text-muted text-end" datetime="2025-04-14T00:00:00&#43;00:00">April 14, 2025</p>
+
+  
+
+  <div class="content">
+    <p>그 동안 계속 버티고 버티다 아래 이유들로 결국 거의 10년 만에 블로그를 갈아엎기로 결정했다.</p>
+<ol>
+<li>내 academic profile 페이지 주소가 <a href="https://sanghyukchun.github.io/home/">https://sanghyukchun.github.io/home/</a> 이다보니 혹시라도 누군가 현재 블로그 주소인 <a href="https://sanghyukchun.github.io/">https://sanghyukchun.github.io/</a> 로 들어왔을 때 blog나 아카데믹 프로필 중 어디로 진입할지 선택권을 주고 싶었다. 내 커리어 초기에는 내 아카데믹 프로필을 접근하는 사람보다 블로그 접속자가 훨씬 많아 url을 건드릴 수가 없었지만, 이제는 내 블로그를 들어오는 사람이 사실상 없고, 대부분은 내 아카데믹 프로필을 보러 오는 사람들이라 이제는 바꿀 때가 된 것 같다.</li>
+<li>그래도 기존에 내 블로그를 들어오던 사람도 가끔 있고, 구글에 10년 이상 인덱싱된 자료들도 많으니 최대한 간단하게 index 파일만 갈아끼고 싶었으나&hellip; 원래 블로그로 사용하던 octopress가 도저히 설치가 안된다. 그렇겠지.. 10년 전 dependency를 가진 framework니까.. 몇 번 시도해보다 이건 아니라고 결론을 내렸다. 따라서 public 에서 index만 html로 짜서 갈아끼는 것 또한 고려하였으나&hellip;</li>
+<li>사실 기존 블로그에서 MathJax가 깨진지 정말 오래되어 포스트 들의 가치도 거의 없어진 상태였다.</li>
+</ol>
+<p>따라서 index 페이지를 새로 만들어야싶은데, 기존 Octopress 코드는 사용할 수 없는 상태이고, 어차피 기존 블로그 포스트 들에 있는 수 많은 수식들이 다 깨져서 무용지물인 상태이니, 그냥 이번 기회에 예전부터 호시탐탐 노리고 있던 Hugo로 아예 새로 짜기로 결정하였다. Hugo로 바꾸겠다는 생각을 했던 가장 큰 이유는 Octopress가 빌드가 너무너무너무 느려서 사실상 마지막에 블로그 포스트를 쓸 때에는 실시간으로 화면을 보면서 글을 쓴게 아니라, 그냥 마크다운에 글만 쭉 쓰고 (그때는 마크다운에서 latex 수식을 포팅해서 볼 수 있는 뷰어도 거의 없었다) 다 쓴 다음 컴파일해서 몇 분 기다렸다가 글 보고 틀린 부분 수정하고 다시 개발 서버 내렸다 다시 올리고 (싱크가 너무 느려서) 하는 짓을 반복하느라 생산성이 바닥이었다. 그 즈음 Hugo로 내부 프로젝트 들을 짜보니까 훨씬 빠르고 기능도 마음에 들어서 마이그레이션을 계속 생각은 하고 있었다.</p>
+<p>아마 5년만 전이었어도 2-3일 정도 문서 읽으면서 삽질하다가 내가 원하는 부분 못찾아서 하다 포기했겠지만, 이제는 LLM의 시대. ChatGPT에게 물어보면서 엄청나게 빠르게 Hugo customization을 하는데 성공했다. 기존 포스트와 리소스 들도 <code>hugo import jekyll</code> 을 통해 거의 대부분 문제없이 migration할 수 있었다 (요즘 유행하는 Vibe coding으로 짰다고 할 수 있다 ㅎㅎ). 다만 작업을 하다보니 소소하게 신경이 쓰이는 것들이 있어서 약간의 시간이 걸렸는데,</p>
+<ol>
+<li>기존 포스트 중에 너무 질 낮은 포스트가 많았다. 아무래도 지금보다도 더 성숙하지 못하던 시절에 쓴 글이니 그럴 수 있지&hellip; 내 생각에 불필요한 포스트 들은 삭제처리하였다.</li>
+<li>아무리 생각해도 <code>https://sanghyukchun.github.io/&lt;post_name&gt;</code> 형태의 주소는 너무 unsafe하다. 앞으로 내가 어떤 subpage를 만들지 모르는 일이니까. 예를 들어 내가 갑자기 <code>/home</code> 이라는 포스트 제목을 만든다면 상당히 귀찮아지겠지. 이번 기회에 기존 post를 전부 <code>&lt;baseurl&gt;/posts/&lt;post_name&gt;</code> 으로 전부 포팅해버렸다.</li>
+<li>그렇게 하니까 기존에 하드 코딩 되어있던 포스트 사이 citation link들이 다 깨져서 전부 확인해가면서 valid url로 업데이트 해주었다.</li>
+</ol>
+<p>사실 이렇게 하면 기존에 내 블로그 포스트를 저장해놓고 보시던 분들은 주소가 바뀌어서 곤란할 수도 있다. 하지만 조금만 관심을 갖고 원래 주소로 접속하고 글을 클릭해보면 <code>/posts/</code> 를 붙이기만 하면 다시 정상 동작한다는 것을 알 수 있으니까 괜찮다고 생각했다. 10년 전 처럼 내 글이 인터넷에서 접근 가능한 거의 유일한 한국어 머신러닝 자료도 아니고, 게다가 내가 적었던 글들이 상당히 outdated knowledge라는 점을 감안한다면 이제는 혹시라도 내 블로그에서 지식을 얻고 있던 분들을 위해 방치하고 있던 것들을 다시 정상화해도 될 것 같다는 판단을 했다.</p>
+<p>주말에 짬을 내서 갈아엎고 나니까 의외로 글도 좀 써보고 싶기도 하고&hellip;. 앞으로 가끔 생각날 때 마다 글을 좀 써볼까 싶다.</p>
+
+  </div>
+</article>
+
+  <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "sanghyukchun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    </main>
+    <footer class="row">
+      <footer class="text-center text-muted small pt-4 border-top mt-5 mb-5">
+<p class="mb-0">&copy; 2025. All rights reserved - Sanghyuk Chun - Powered by <a href="https://gohugo.io/" class="text-decoration-none">Hugo</a></p>
+</footer>
+    </footer>
+  </div>
+</body>
+
+</html>

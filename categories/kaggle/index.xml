@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kaggle on Sanghyuk Chun</title>
+    <link>/categories/kaggle/</link>
+    <description>Recent content in Kaggle on Sanghyuk Chun</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 26 Sep 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/kaggle/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kaggle competition - Poker rule induction</title>
+      <link>/posts/87/</link>
+      <pubDate>Sat, 26 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/87/</guid>
+      <description>&lt;p&gt;이 글은 2015년 봄 내가 조교를 했었던 KAIST 빅데이터 분석개론 수업에서 중간 프로젝트로 나왔었던 Kaggle Competition을 내가 개인적으로 진행해보면서 느꼈던 점들을 시간 순서에 맞춰 적은 일종의 개발기이다. &lt;a href=&#34;https://github.com/SanghyukChun/kaggle-poker_rule&#34;&gt;깃허브 레포지토리&lt;/a&gt;도 있으니 코드가 궁금하다면 이 레포지토리를 확인하면 될 것 같다. 깃허브 기준으로 이 프로젝트는 2015년 3월 20일부터 4월 19일까지 대략 한 달간 진행하였다.&lt;/p&gt;&#xA;&lt;p&gt;이 competition을 위하여 4가지 정도의 아이디어를 냈었다. 먼저 normal KNN을 최대한 튜닝해보는 것, 문제가 &#39;rule&#39;이라는 것에 초점을 맞추어 rule을 정의하고 그것을 learning하는 방법, 세 번째로 card set에 대한 확률모델을 정의하여 likelihood를 maximization하는 방법, 마지막으로 기존 KNN의 input을 적당하게 바꾸어 KNN으로 처리하는 방법이었다. 이 중 실제로 submission까지 이어진 아이디어는 처음과 마지막 아이디어인데, 첫 번째는 0.67575, 두 번째에는 0.96908을 달성하였다. 이 글에서는 각각의 아이디어를 생각하게 된 계기와 왜 실패했고, 왜 성공했는지에 대해 정리해보도록하겠다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

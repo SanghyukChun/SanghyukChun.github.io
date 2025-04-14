@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Seminar on Sanghyuk Chun</title>
+    <link>/categories/seminar/</link>
+    <description>Recent content in Seminar on Sanghyuk Chun</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 29 Sep 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/seminar/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Basic Principles in Deep Neural Networks</title>
+      <link>/posts/54/</link>
+      <pubDate>Mon, 29 Sep 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/54/</guid>
+      <description>&lt;h3&gt;들어가기 전에&lt;/h3&gt;&#xA;&lt;p&gt;이 포스트는 2014년 6월 16일 카이스트에서 당시 Yoshua Bengio 교수님 연구실에서 포닥 과정을 밟고 계신 조경현 박사님의 The Basic Principles in Deep Neural Networks 라는 이름의 세미나를 요약한 내용이다. 내용은 주로 Deep learnining을 supervised learning, unsupervised learning의 관점에서 각각 바라보면서 어떤 컨셉들이고, 어떤 연구들이 진행이 되어있는지 훑어보는 정도의 간단한 내용이었다.&lt;/p&gt;&#xA;&lt;p&gt;어쩌다보니 1년 넘게 포스팅을 못하다가 이제와서 포스트를 등록하게 되었는데, 이 글을 제대로 정리할 정도로 여유가 없기도 했고, 내가 이 내용을 이해할 수 있을 정도의 내공이 없기 때문이기도 했다. 지금은 어느 정도 여유가 생기기도 했고, 내가 내용을 대략이나마 이해하고 있기 때문에 일 년 전 내용이기는 하지만, 다시 한 번 내용을 정리해서 올려본다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

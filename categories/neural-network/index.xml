@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Neural-Network on Sanghyuk Chun</title>
+    <link>/categories/neural-network/</link>
+    <description>Recent content in Neural-Network on Sanghyuk Chun</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 15 Mar 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/neural-network/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AlphaGo의 알고리즘과 모델</title>
+      <link>/posts/97/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/posts/97/</guid>
+      <description>&lt;h3 id=&#34;들어가며&#34;&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;근 일주일 동안 가장 뜨거웠던 주제를 하나 꼽으라면 누가 뭐래도 &amp;ldquo;알파고&amp;quot;일 것이다. 글을 쓰고 있는 2016년 3월 13일 기준으로 알파고와 이세돌 사범과의 경기에서 최종 승리를 확정지은 상태이며, 오늘 이세돌 사범이 첫 승을 거둠으로써 5국 중 3대 1의 상황이 되었다. 내일 모레 있을 경기에서 3-2가 될지 4-1이 될지가 최종 결정이 될 것이며, 어느 결과가 나오더라도 AI 분야에서는 기념비적인 사건이 될 것이다.&lt;/p&gt;&#xA;&lt;p&gt;덕분에 AI (정확하게는 딥러닝)이 사람들의 이목을 집중적으로 받게되면서 불분명한 정보가 마구 흘러다니는 것 같아서 제대로 딥마인드에서 어떤 모델과 알고리즘을 사용한 것인지 직접 알아보고 정리해보기로 했다. 이 글에서는 deep learning, CNN &lt;a href=&#34;/posts/75/#75-cnn&#34;&gt;[7]&lt;/a&gt;, deep Q-learning &lt;a href=&#34;/posts/90&#34;&gt;[9]&lt;/a&gt;등의 용어들을 설명없이 사용할 예정이므로, 해당 개념들에 관심이 있다면 내가 쓴 이전 글들 &lt;a href=&#34;/posts75/#75-cnn&#34;&gt;[7]&lt;/a&gt;, &lt;a href=&#34;/posts/90&#34;&gt;[9]&lt;/a&gt; 이나 다른 외부 자료들을 참고하면 좋을 것 같다.&#xA;이 글은 Google Deep Mind에서 2016년 Nature에 발표한 matering the Game of Go with Deep Neural Network and Tree Search &lt;a href=&#34;http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html&#34;&gt;[1]&lt;/a&gt;를 기반으로 작성되었다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Show, Attend and Tell: Neural Image Caption Generation with Visual Attention (ICML2015)</title>
+      <link>/posts/93/</link>
+      <pubDate>Mon, 19 Oct 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/93/</guid>
+      <description>&lt;p&gt;주어진 이미지에 대한 설명을 하는 문장, 혹은 캡션을 생성하는 문제를 image caption 문제라고 한다. 이 문제는 여러 가지 문제들이 복합적으로 얽혀있는 문제라고 할 수 있는데, 먼저 이미지가 어떤 것에 대한 이미지인지 판별하기 위하여 object recognition을 정확하게 할 수 있어야한다. 그 다음에는 detect한 object들 사이의 관계를 추론하여 이미지가 나타내는 event가 무엇인지 알아내어야 하고, 마지막으로 event를 caption으로, 즉 natural language로 재생성해야한다. 얼핏 생각하면 간단한 문제같지만 자그마치 비전과 NLP 분야의 핵심 문제들이 복합적으로 얽혀있는 복잡한 문제인 것이다. &lt;s&gt;방금 너희들이 본 건 간단해 보이지만 자그마치 3개의 퀑 기술이 합쳐진 컴비네이션!&lt;/s&gt; 예를 들어보자.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>고흐의 그림을 따라그리는 Neural Network, A Neural Algorithm of Artistic Style (2015)</title>
+      <link>/posts/92/</link>
+      <pubDate>Wed, 14 Oct 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/92/</guid>
+      <description>&lt;p&gt;얼마 전, &lt;a href=&#34;http://arxiv.org/abs/1508.06576 &#34;&gt;&#39;A Neural Algorithm of Artistic Style &#39;&lt;/a&gt; 이라는 이름의 충격적인 논문이 arXiv에 업로드되었다. 기술 전문 잡지나 신문이 아닌 스브스뉴스 같은 일반적인 기사를 보도하는 매체에서도 보도가 되었을 정도로 요즘 꽤 이슈가 되고 있는 논문이다.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149&#34;&gt;스브스뉴스: &amp;ldquo;이건 &amp;lsquo;반 고흐&amp;rsquo;의 그림이 아닌 &amp;lsquo;컴퓨터&amp;rsquo;의 그림입니다.&amp;quot;&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://www.dailymail.co.uk/sciencetech/article-3214634/The-algorithm-learn-copy-artist-Neural-network-recreate-snaps-style-Van-Gogh-Picasso.html&#34;&gt;DailyMail: &amp;ldquo;The algorithm that can learn to copy ANY artist: Neural network can recreate your snaps in the style of Van Gogh or Picasso&amp;rdquo;&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://www.theguardian.com/technology/2015/sep/02/computer-algorithm-recreates-van-gogh-painting-picasso&#34;&gt;The Guardian: &amp;ldquo;Computer algorithm recreates Van Gogh painting in one hour&amp;rdquo;&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;자고로 백문이 불여일견이라, 이게 도대체 무슨 contribution이 있길래 사람들의 이목이 쏠리고 있는지 논문에 첨부되어있는 그림을 먼저 보자.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (19) Deep Learning - RBM, DBN, CNN</title>
+      <link>/posts/75/</link>
+      <pubDate>Mon, 21 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/75/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/74&#34;&gt;이전 글&lt;/a&gt;에서 기본적인 neural network에 대한 introduction과, feed-forward network를 푸는 &lt;a href=&#34;/posts/74#backprop&#34;&gt;backpropagtion 알고리즘&lt;/a&gt;과 optimization을 하기 위해 기본적으로 사용되는 &lt;a href=&#34;/posts/74#sgd&#34;&gt;stochastic gradient descent&lt;/a&gt;에 대해 다루었다. 이 글에서는 deep learning이란 것은 정확히 무엇이며, 왜 deep learning이 최근 크게 급부상하게 되었는지에 대해 시간 순으로 다룰 것이다. 이 글에서는 unsupervised learning의 한 방법인 Restricted Boltzmann Machine (RBM)과 그것을 사용한 Deep Belief Network (DBN)에 대해 다룰 것이다. 또 다른 unsupervised learning 방법 중 하나인 (denoising) auto-encoder 역시 다루고자하였으나, 이 내용까지 전부 다루기에는 내용이 너무 길어져서 이 글에서는 생략하였다. 주의할 점은, 2007년 2008년에 막 deep learning이라는 이름으로 나왔던 연구들인 unsupervised pretraining 방법들은 현재 거의 쓰이지 않는 연구방법들이라는 것이다. 때문에 지금까지도 사용되는 조금 더 practical한 방법들인 neural network regularization (예를 들어서 ReLU, Dropout 등), optimization method (momentum, adagrad 등)에 대해서는 이 이후 한 번의 posting을 더 하여 다루도록 하겠다. 추가로, 오래된 work임에도 불구하고 아직도 computer vision 쪽에서 엄청나게 많이 사용하는 Convolutional Neural Network (CNN) 에 대해서도 다루도록 하겠다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Recurrent Models of Visual Attention (NIPS 2014)</title>
+      <link>/posts/91/</link>
+      <pubDate>Sat, 19 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/91/</guid>
+      <description>&lt;p&gt;이번에 리뷰할 논문은 Google DeepMind가 NIPS 2014에 발표한 Recurrent Neural Networ와 Reinforcement Learning을 결합한 &lt;a href=&#34;http://arxiv.org/abs/1406.6247&#34;&gt;Recurrent Models of Visual Attention&lt;/a&gt; 이라는 논문이다. &lt;a href=&#34;/posts/90&#34;&gt;지난 글&lt;/a&gt;에서 리뷰했던 &lt;a href=&#34;http://arxiv.org/abs/1312.5602&#34;&gt;Playing Atari With Deep Reinforcement Learning&lt;/a&gt;과 같은 연구팀에서 진행한 연구인듯하다. Atari 논문에서는 전통적인 RL 문제인 &#39;게임&#39;을 풀기 위하여 CNN으로 action-value function을 모델링하고 value iteration을 대체하는 새로운 action-value function learning 모델과 알고리즘을 제안했다면, 이 논문은 기존 RL 문제라기보다는 오히려 좀 더 클래식한 classification 문제라고 할 수 있는 image recognition 문제에 RNN 구조와 RL 구조를 결합하여 reward maximization optimization problem을 푸는 모델과 알고리즘을 제안한다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Playing Atari with Deep Reinforcement Learning (NIPS 2013)</title>
+      <link>/posts/90/</link>
+      <pubDate>Tue, 15 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/90/</guid>
+      <description>&lt;p&gt;이번에 리뷰할 논문은 Google DeepMind가 NIPS 2013에 발표한 Deep Learning과 Reinforcement Learning을 결합한 &lt;a href=&#34;http://arxiv.org/abs/1312.5602&#34;&gt;Playing Atari with Deep Reinforcement Learning&lt;/a&gt; 이라는 논문이다. 그 전에도 DNN과 RL을 결합하려는 시도는 있었지만, 거의 사람이 플레이하는 수준으로 의미있는 수준까지 도달한 work은 이 work이 처음인듯 하다. 글을 시작하기 전에 먼저 이 논문에서 한 결과부터 살펴보자. Atari라는 게임 콘솔을 가지고 이 논문의 method를 적용한 결과이다. 2분 5초부터 시작되는 터널링 전략이 진짜 걸작이다.&lt;/p&gt;&#xA;&lt;div style=&#34;text-align: center;&#34;&gt;&lt;iframe width=&#34;420&#34; height=&#34;315&#34; align=&#34;middle&#34; src=&#34;https://www.youtube.com/embed/iqXKQf2BOSE&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&#xA;&lt;p&gt;충격적인 사실은 다른 hand-coding feature나 parameter 튜닝 없이 오직! vision data만 사용해서 이런 결과를 냈다는 사실이다. 빨간 공이 object고  빨간 판이 내가 움직이는거라는 기본적인 hand-craft feature 조차 없이 이런 결과를 냈다는 것이다. Deep leanring이 RL에서 뛰어난 성과를 보이지 못한 이유가 주로 데이터에 관련된 것이었음을 생각해보면 대단한 결과라고 할 수 있다. 최근에는 이 work을 기반으로 &lt;a href=&#34;http://arxiv.org/abs/1406.6247&#34;&gt;Image Attention (NIPS 2015)&lt;/a&gt; 이라고 부르는 work도 나온 것 같다. Image Attention 논문은 다음에 정리해보도록하겠다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Recurrent Neural Network Regularization</title>
+      <link>/posts/89/</link>
+      <pubDate>Mon, 14 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/89/</guid>
+      <description>&lt;p&gt;이번에 review할 논문은 &lt;a href=&#34;http://arxiv.org/abs/1409.2329&#34;&gt;Recurrent neural network regularization&lt;/a&gt;이라는 논문이다. 아직 학회나 저널에 publish된 논문은 아니지만 ICLR 2015 review를 기다리는 모양. 이 논문은 최근 머신러닝 분야에서 가장 주목받고 있는 분야는 Deep learning, 그 중에서도 요즘 가장 활발하게 연구 중인 Recurrent Neural Network, 혹은 RNN에 관한 논문이다. RNN은 sequencial data를 처리하는데에 적합한 형태로 디자인 되어있으며, 현재 language model, speech recognition, machine translation 등에서 우수한 결과를 성취하고 있는 neural network model 중 하나이다. 이 논문은 popular한 RNN 중 하나인 LSTM 모델을 regularization 시켜서 보다 기존 결과들보다 더 잘 동작하는 결과를 제안한다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine learning 스터디 (18) Neural Network Introduction</title>
+      <link>/posts/74/</link>
+      <pubDate>Sun, 13 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/74/</guid>
+      <description>&lt;h3&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;최근 Machine Learning 분야에서 가장 뜨거운 분야는 누가 뭐래도 Deep Learning이다. 엄청나게 많은 사람들이 관심을 가지고 있고, 공부하고 응용하고 있지만, 체계적으로 공부할 수 있는 자료가 많이 없다는 것이 개인적으로 조금 안타깝다. 이제 막 각광받기 시작한지 10년 정도 지났고, 매년 새로운 자료들이 쏟아져나오기 때문에 책이나 정리된 글을 찾기가 쉽지가 않다. 그러나 Deep Learning은 결국 artificial neural network를 조금 더 복잡하게 만들어놓은 모델이고, 기본적인 neural network에 대한 이해만 뒷받침된다면 자세한 내용들은 천천히 탑을 쌓는 것이 가능하다고 생각한다. 이 글에서는 neural network의 가장 기본적인 model에 대해 다루고, model paramter를 update하는 algorithm인 backpropagation에 대해서 다룰 것이다. 조금 더 advanced한 topic들은 이 다음 글에서 다룰 예정이다. 이 글의 일부 문단은 &lt;a href=&#34;/categories/neural-network/&#34;&gt;이전 글들&lt;/a&gt;을 참고하였다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Batch Normalization (ICML 2015)</title>
+      <link>/posts/88/</link>
+      <pubDate>Tue, 25 Aug 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/88/</guid>
+      <description>&lt;p&gt;Batch Normalization은 현재 &lt;a href=&#34;http://image-net.org/challenges/LSVRC/2015/&#34;&gt;ImageNet competition&lt;/a&gt;에서 state-of-art (Top-5 error: 4.9%)를 기록하고 있는 Neural Network model의 기본 아이디어이다. 이 글에서는 arXiv에 제출된 (그리고 ICML 2015에 publish된) &lt;a href=&#34;http://arxiv.org/abs/1502.03167&#34;&gt;Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift&lt;/a&gt; 논문을 리뷰하고, batch normalization이 어떤 기술이고, 어떤 원리에 의해 작동하는지 등에 대해 다룰 것이다.&lt;/p&gt;&#xA;&lt;h3&gt;Motivation: Deep learning의 속도를 어떻게 더 빠르게 만들 수 있을까?&lt;/h3&gt;&#xA;&lt;p&gt;Deep learning이 잘 동작하고, 뛰어난 성능을 보인다는 것은 이제 누구나 알고 있다. 그러나 여전히 deep learning은 굉장히 시간이 오래 걸리는 작업이고, 그만큼 computation power도 많이 필요로 한다. 그 동안의 연구 결과를 보면, converge한 것 처럼 보이더라도 더 많이 돌리게 된다면 더 좋은 결과로 수렴한다는 것을 알 수 있는 만큼, deep neural network의 train 속도를 높이는 것은 전체적인 성능 향상에 도움이 될 것이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Basic Principles in Deep Neural Networks</title>
+      <link>/posts/54/</link>
+      <pubDate>Mon, 29 Sep 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/54/</guid>
+      <description>&lt;h3&gt;들어가기 전에&lt;/h3&gt;&#xA;&lt;p&gt;이 포스트는 2014년 6월 16일 카이스트에서 당시 Yoshua Bengio 교수님 연구실에서 포닥 과정을 밟고 계신 조경현 박사님의 The Basic Principles in Deep Neural Networks 라는 이름의 세미나를 요약한 내용이다. 내용은 주로 Deep learnining을 supervised learning, unsupervised learning의 관점에서 각각 바라보면서 어떤 컨셉들이고, 어떤 연구들이 진행이 되어있는지 훑어보는 정도의 간단한 내용이었다.&lt;/p&gt;&#xA;&lt;p&gt;어쩌다보니 1년 넘게 포스팅을 못하다가 이제와서 포스트를 등록하게 되었는데, 이 글을 제대로 정리할 정도로 여유가 없기도 했고, 내가 이 내용을 이해할 수 있을 정도의 내공이 없기 때문이기도 했다. 지금은 어느 정도 여유가 생기기도 했고, 내가 내용을 대략이나마 이해하고 있기 때문에 일 년 전 내용이기는 하지만, 다시 한 번 내용을 정리해서 올려본다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Coursera Neural Networks for Machine Learning Week4 &amp; 5 - Applications</title>
+      <link>/posts/43/</link>
+      <pubDate>Sat, 05 Apr 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/43/</guid>
+      <description>&lt;h3&gt;들어가기 전에&lt;/h3&gt;&#xA;&lt;p&gt;이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 &lt;a href=&#34;https://class.coursera.org/neuralnets-2012-001/lecture&#34;&gt;Neural Networks for Machine Learning&lt;/a&gt; 4주차와 5주차 강의를 요약한 글이다. 이 강의에서는 이론적인 형태의 무언가를 배운다기보다는 real application의 예로 Neural Network를 사용해 word prediction (NLP에서 쓰이는) 그리고 object recognition를 하는 방법에 대해 다룬다. 내가 관심이 있는 부분은 실제 이 NN을 어떻게 적용하냐라기 보다는 NN이란 무엇이며 어떤 이론적 배경이 있는 것이며 그 알고리듬에 더 관심이 있기 때문에 대부분이 engineerning issue인 이번 두 강의들은 대략적으로 어떤 내용에 대해서 다루는지만 아주 간략하게 기술하였다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Coursera Neural Networks for Machine Learning Week3 - Backpropagation</title>
+      <link>/posts/42/</link>
+      <pubDate>Wed, 26 Mar 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/42/</guid>
+      <description>&lt;h3&gt;들어가기 전에&lt;/h3&gt;&#xA;&lt;p&gt;이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 &lt;a href=&#34;https://class.coursera.org/neuralnets-2012-001/lecture&#34;&gt;Neural Networks for Machine Learning&lt;/a&gt; 3주차 강의를 요약한 글이다. 이 렉쳐에서는 Perceptron의 한계를 극복하기 위해 도입된 multi-layer feed forward network를 learning하는 algorithm인 backpropagation algorithm에 대해서 다룬다.&lt;/p&gt;&#xA;&lt;h3&gt;Learning the weights of a linear neuron&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/40#what-perceptrons-cant-do&#34;&gt;Lecture 2의 마지막&lt;/a&gt;에서 다뤘던 perceptron의 가장 큰 문제점은 문제가 조금만 복잡해지거나, linear하게 표현되지 않는 문제는 올바른 결과로 수렴할 수 없다는 것이었다. 예를 들어서 엄청나게 간단한 로직인 xor은 perceptron으로 learning될 수 없다. 이런 문제를 해결하기 위해 &lt;a class=&#34;red tip&#34; title=&#34;이 렉쳐에서는 multi-layer perceptron이라고 지칭한다.&#34;&gt;multi-layer feed forwad neural network&lt;/a&gt;의 필요성이 대두된다. 일단 우리는 기존의 perceptron algorithm으로는 해당 문제를 해결할 수 없다는 것을 알고있으므로, 무언가 다른 알고리듬을 한 번 고안해보도록 하자. 가장 간단하게 생각할 수 있는 알고리듬은 어떤 error function을 정의하고 그 error를 minimize시키는 network를 learning하는 것일 것이다. 그렇다면 어떤 error function을 minimize해야할까? 간단하게 neural network의 output을 계산해서 expected value (target value)와 actual output value의 차이를 error로 정의하면 어떨까? 즉, neural network의 output이 우리가 원하는 output과 가장 근접한 weight를 learning하는 방법을 취하는 것이다. 근데 여기에서 문제가 하나 생기게 되는데, 바로 이 error function이 weight에 대해서 convex하지가 않다는 것이다. 당연히 관련되는 weight set도 엄청나게 많고, network자체가 convex한 form이 아니기 때문이다. 즉, 실제 좋은 performance를 내는 weight들의 여러 set을 취해 그 중간 값을 취해 얻은 weight가 좋은 weight가 아닐 수도 있다는 것이다. perceptron algorithm의 가장 attractive한 점은 algorithm이 convex하기 때문에 언제나 같은 값으로 converge한다는 점인데, 이런 방식으로는 그런 convergence가 보장이 안되는 것이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Coursera Neural Networks for Machine Learning Week2 - Perceptron</title>
+      <link>/posts/40/</link>
+      <pubDate>Fri, 21 Mar 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/40/</guid>
+      <description>&lt;h3&gt;들어가기 전에&lt;/h3&gt;&#xA;&lt;p&gt;이 글은 Geoffrey Hinton 교수가 2012년 Coursera에서 강의 한 &lt;a href=&#34;https://class.coursera.org/neuralnets-2012-001/lecture&#34;&gt;Neural Networks for Machine Learning&lt;/a&gt; 2주차 강의를 요약한 글이다. 첫 주 강의에서 Neural Network란 무엇이며 어떤 종류의 Neural Network들이 있는지 등에 대해 간략하게 다뤘다면, 이 강의에서는 가장 오래된 Neural Network 중 하나인 Perceptron을 설명하는 내용이 주가 된다.&lt;/p&gt;&#xA;&lt;h3&gt;An overview of the main types of neural network architecture&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/39&#34;&gt;이전 글&lt;/a&gt;에서 Neuron들에는 어떤 종류가 있을 수 있는가 다뤘었다. 대충 linear neuron, linear threshold neuron, binary neuron, binary threshold neuron, sigmod neuron 등이 있었다. 그렇다면 neuron들로 구성된 neural network에는 어떤 type들로 구분되는가도 간략하게 알아보도록 해보자.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Coursera Neural Networks for Machine Learning Week1 - Neural Network and Machine Learning</title>
+      <link>/posts/39/</link>
+      <pubDate>Mon, 17 Mar 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/39/</guid>
+      <description>&lt;h3&gt;들어가기 전에&lt;/h3&gt;&#xA;&lt;p&gt;약 반 년 전에 &lt;a href=&#34;https://www.coursera.org/&#34;&gt;Coursera&lt;/a&gt;에서 &lt;a href=&#34;https://class.coursera.org/ml-003/lecture&#34;&gt;Andrew Ng 교수의 Machin Learning Class&lt;/a&gt;를 수강한 적이 있다. 사실 당시에 이 course를 수강할 때, 이 course는 introduction course로만 듣고, Geoffrey Hinton 교수의 Neural Network 강의를 들을 생각이었는데, 시간에 쫓기다보니 어느새 나는 석사생이 되었고, 아직도 이 강의를 듣지 못한 상태였다. 그러다가 최근 우연하게 이 강의를 다시 들여다 볼 일이 생기게 되었고, 약 2-3주 동안 이 강의를 듣고 요약글을 꾸준하게 올려 볼 생각이다. &lt;a href=&#34;/posts/10&#34;&gt;예전 글&lt;/a&gt;에서 언급했지만, 내가 너무 쉽다고 생각되면 과감하게 중간부터 요약을 관둘 생각이다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

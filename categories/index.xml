@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Sanghyuk Chun</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on Sanghyuk Chun</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 14 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Development</title>
+      <link>/categories/development/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>/categories/development/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Machine-Learning</title>
+      <link>/categories/machine-learning/</link>
+      <pubDate>Sun, 18 Dec 2016 00:00:00 +0000</pubDate>
+      <guid>/categories/machine-learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Machine-Learning-Study</title>
+      <link>/categories/machine-learning-study/</link>
+      <pubDate>Sun, 18 Dec 2016 00:00:00 +0000</pubDate>
+      <guid>/categories/machine-learning-study/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Paper-Review</title>
+      <link>/categories/paper-review/</link>
+      <pubDate>Tue, 16 Aug 2016 00:58:00 +0000</pubDate>
+      <guid>/categories/paper-review/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Research</title>
+      <link>/categories/research/</link>
+      <pubDate>Tue, 16 Aug 2016 00:58:00 +0000</pubDate>
+      <guid>/categories/research/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deep-Learning</title>
+      <link>/categories/deep-learning/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/categories/deep-learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Neural-Network</title>
+      <link>/categories/neural-network/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/categories/neural-network/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reinforcement-Learning</title>
+      <link>/categories/reinforcement-learning/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/categories/reinforcement-learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kaggle</title>
+      <link>/categories/kaggle/</link>
+      <pubDate>Sat, 26 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/categories/kaggle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Seminar</title>
+      <link>/categories/seminar/</link>
+      <pubDate>Mon, 29 Sep 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/seminar/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Conference</title>
+      <link>/categories/conference/</link>
+      <pubDate>Thu, 26 Jun 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/conference/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>KAIST</title>
+      <link>/categories/kaist/</link>
+      <pubDate>Wed, 23 Apr 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/kaist/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lecture</title>
+      <link>/categories/lecture/</link>
+      <pubDate>Wed, 23 Apr 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/lecture/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Modeling</title>
+      <link>/categories/modeling/</link>
+      <pubDate>Wed, 23 Apr 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/modeling/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Network</title>
+      <link>/categories/network/</link>
+      <pubDate>Wed, 23 Apr 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/network/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Network-Science</title>
+      <link>/categories/network-science/</link>
+      <pubDate>Wed, 23 Apr 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/network-science/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cousera</title>
+      <link>/categories/cousera/</link>
+      <pubDate>Sat, 05 Apr 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/cousera/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cousera-NN</title>
+      <link>/categories/cousera-nn/</link>
+      <pubDate>Sat, 05 Apr 2014 00:00:00 +0000</pubDate>
+      <guid>/categories/cousera-nn/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Math-in-Internet</title>
+      <link>/categories/math-in-internet/</link>
+      <pubDate>Thu, 12 Dec 2013 00:00:00 +0000</pubDate>
+      <guid>/categories/math-in-internet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Big-Data</title>
+      <link>/categories/big-data/</link>
+      <pubDate>Mon, 02 Dec 2013 00:00:00 +0000</pubDate>
+      <guid>/categories/big-data/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

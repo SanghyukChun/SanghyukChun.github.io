@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Big-Data on Sanghyuk Chun</title>
+    <link>/categories/big-data/</link>
+    <description>Recent content in Big-Data on Sanghyuk Chun</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 02 Dec 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/big-data/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>인터넷 속의 수학 - How does Netflix recommend movies? (2/2)</title>
+      <link>/posts/31/</link>
+      <pubDate>Mon, 02 Dec 2013 00:00:00 +0000</pubDate>
+      <guid>/posts/31/</guid>
+      <description>&lt;p&gt;본 포스팅은 &lt;a href=&#34;/posts/29&#34;&gt;단기강좌 인터넷 속의 수학&lt;/a&gt;의 강의 들을 요약하는 포스트입니다.&lt;/p&gt;&#xA;&lt;h3&gt;Recall: Machine Learning&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/21&#34;&gt;이전의&lt;/a&gt; &lt;a href=&#34;/posts/30&#34;&gt;많은&lt;/a&gt; &lt;a href=&#34;/categories/machine-learning&#34;&gt;포스트 들&lt;/a&gt;에서도 설명했듯이 Machine Learning은 데이터를 통해 새로운 시스템을 만드는 것을 의미한다. 그렇다면 굳이 사람이 아니라 기계가 이런 일을 해야하는 이유가 있을까? 무엇보다 기계는 사람보다 단순 계산을 훨씬 빠르게 할 수 있다. 간단한 예를 하나 들어보자. 페르마 숫자라는 문제가 있다.&lt;/p&gt;&#xA;&lt;p&gt;$$ {F_n} = 2^{2^n} +1 $$&lt;/p&gt;&#xA;&lt;p&gt;이 숫자는 위와 같이 표현이 되는데, 페르마는 모든 n에 대해서 이 숫자가 소수라는 주장을 하였다. 그러나 100년 뒤 오일러가 이의 반례를 찾아냈다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>인터넷 속의 수학 - How does Netflix recommend movies? (1/2)</title>
+      <link>/posts/30/</link>
+      <pubDate>Wed, 27 Nov 2013 00:00:00 +0000</pubDate>
+      <guid>/posts/30/</guid>
+      <description>&lt;p&gt;본 포스팅은 &lt;a href=&#34;/posts/29&#34;&gt;단기강좌 인터넷 속의 수학&lt;/a&gt;의 강의 들을 요약하는 포스트입니다.&lt;/p&gt;&#xA;&lt;h3&gt;Introduction&lt;/h3&gt;&#xA;&lt;p&gt;Netflix라는 미국의 DVD rental 업체가 있다. &lt;a href=&#34;/posts/21&#34;&gt;이전 포스트&lt;/a&gt;에서 다뤘던 기업 중에 하나인데, 다시 한번 간략하게 설명을 하자면 Netflix는 미국의 온라인 DVD rental 업체이다. 1997년 시작한 DVD rental business이며 초기 BM은 간단했다. 한달에 고정적인 비용을 내고 video나 dvd를 빌릴 수 있도록 하며 번거로운 연체료가 없는 모델이었다. 이렇게 하면 return률이 감소하는 단점이 있는데 이런 단점을 새로운 dvd를 빌리려면 다시 return해야 빌릴 수 있는 rule을 만들어 크게 성공하였다. &lt;a href=&#34;http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788963708041&amp;orderClick=LAH&amp;Kc&#34;&gt;디멘드&lt;/a&gt;를 읽어보면 이에 대해서는 자세히 알 수 있을 것이다. 이후 2007년에 &lt;a class=&#34;red tip&#34; title=&#34;internet 상에서 VOD감상이 가능하도록 하는 서비스&#34;&gt;VOD(video on demand)&lt;/a&gt; service를 시작하였고, 2008년 9 million이던 user가 VOD 이후 30 million으로 폭증하였다. 현재 미국 traffic 25%는 Netflix VOD 때문에 발생할 정도로 거대한 기업이 되었다. 이렇게 Netflix가 크게 성장하게 된 배경에는 Recommendation system이 존재하는데, Netflix의 추천 시스템은 User prior video history를 기반으로 새 영화를 추천하고 사용자들이 더 다양하고 많은 비디오를 빌려볼 수 있도록 유도하고 있다. 이런 추천시스템은 Amazon, Youtube, GeoLife in MS 등도 적용하고 있는 많은 기업들에게 중요하게 인식되고 있는 시스템이다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

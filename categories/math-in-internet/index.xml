@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Math-in-Internet on Sanghyuk Chun</title>
+    <link>/categories/math-in-internet/</link>
+    <description>Recent content in Math-in-Internet on Sanghyuk Chun</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 12 Dec 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/math-in-internet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>인터넷 속의 수학 - Can I really reach anyone in 6 steps? (2/2)</title>
+      <link>/posts/34/</link>
+      <pubDate>Thu, 12 Dec 2013 00:00:00 +0000</pubDate>
+      <guid>/posts/34/</guid>
+      <description>&lt;p&gt;본 포스팅은 &lt;a href=&#34;/posts/29&#34;&gt;단기강좌 인터넷 속의 수학&lt;/a&gt;의 강의 들을 요약하는 포스트입니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;34-1-review&#34;&gt;Review of last post&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/32&#34;&gt;지난 포스트&lt;/a&gt;에서는 전반적인 강의의 개요 및 간단한 Network Problem들에 대해 다뤘다. 특히 그 중에서 밀그램의 편지 실험에 대해 다시 한번 살펴보자. 이 실험은 사람과 사람 사이의 사회적 거리를 측정하기 위한 실험이다. 여기에서 사회적 거리 혹은 social distance는 우리가 흔히 &#39;distance&#39;라는 컨셉에서 쉽게 생각할 수 있는 유클리언 distance와는 조금 다른 개념인데, 유클리언 distance가 지리적, 공간적인 거리의 개념이라면 social ditance는 내가 이 사람과 얼마나 가까우냐에 대한 얘기이다. 즉, 내가 미국에 유학가있는 친구와 유클리언 거리는 무지막지 멀지만 사회적거리는 엄청 가깝고, 옆 연구실의 학생분들은 유클리언 거리는 매우 가깝지만 안타깝게도 사회적 거리는 엄청 먼 셈이다. 구체적으로 social distance를 정의해보자. 이 값은 social network 위에서 내 node에서 다른 목표 node로 이동할 때 이동해야하는 총 거리를 의미한다. 즉, 밀그럼의 실험에서 실험 참가자들의 평균적인 사회적 거리는 약 5 정도가 되는 것이다. (이전에도 언급했듯, Facebook에서 같은 실험을 해보면 4.74가 나온다.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>인터넷 속의 수학 - Can I really reach anyone in 6 steps? (1/2)</title>
+      <link>/posts/32/</link>
+      <pubDate>Tue, 03 Dec 2013 00:00:00 +0000</pubDate>
+      <guid>/posts/32/</guid>
+      <description>&lt;p&gt;본 포스팅은 &lt;a href=&#34;/posts/29&#34;&gt;단기강좌 인터넷 속의 수학&lt;/a&gt;의 강의 들을 요약하는 포스트입니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;32-1-intro&#34;&gt;Introduction&lt;/h3&gt;&#xA;&lt;p&gt;흔히 이 세상의 모든 사람들은 나와 6다리 만 건너면 이어져있다고들 말한다. (밀그램의 편지실험) 심지어 나와 상관없어보이는 버락 오바마 대통령도 사회적 거리가 생각보다 가까울 수 있다는 것이다. Facebook의 조사결과에 따르면 Facebook 상에서 연결된 &lt;a href=&#34;http://arxiv.org/abs/1111.4570&#34;&gt;다리의 평균값은 4.74&lt;/a&gt; 정도라고 한다. 근데, 진짜 정말로 모든 사람들과 6 steps로 연결이 가능할까? 이 글에서는 이런 현상에 대해서 설명하고, 실제 사람과 사람 간의 네트워크가 어떤 식으로 구성되고, 그것을 수학적으로 어떻게 모델링하고 있는지를 다루게 될 것이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>인터넷 속의 수학 - How does Netflix recommend movies? (2/2)</title>
+      <link>/posts/31/</link>
+      <pubDate>Mon, 02 Dec 2013 00:00:00 +0000</pubDate>
+      <guid>/posts/31/</guid>
+      <description>&lt;p&gt;본 포스팅은 &lt;a href=&#34;/posts/29&#34;&gt;단기강좌 인터넷 속의 수학&lt;/a&gt;의 강의 들을 요약하는 포스트입니다.&lt;/p&gt;&#xA;&lt;h3&gt;Recall: Machine Learning&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;/posts/21&#34;&gt;이전의&lt;/a&gt; &lt;a href=&#34;/posts/30&#34;&gt;많은&lt;/a&gt; &lt;a href=&#34;/categories/machine-learning&#34;&gt;포스트 들&lt;/a&gt;에서도 설명했듯이 Machine Learning은 데이터를 통해 새로운 시스템을 만드는 것을 의미한다. 그렇다면 굳이 사람이 아니라 기계가 이런 일을 해야하는 이유가 있을까? 무엇보다 기계는 사람보다 단순 계산을 훨씬 빠르게 할 수 있다. 간단한 예를 하나 들어보자. 페르마 숫자라는 문제가 있다.&lt;/p&gt;&#xA;&lt;p&gt;$$ {F_n} = 2^{2^n} +1 $$&lt;/p&gt;&#xA;&lt;p&gt;이 숫자는 위와 같이 표현이 되는데, 페르마는 모든 n에 대해서 이 숫자가 소수라는 주장을 하였다. 그러나 100년 뒤 오일러가 이의 반례를 찾아냈다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>인터넷 속의 수학 - How does Netflix recommend movies? (1/2)</title>
+      <link>/posts/30/</link>
+      <pubDate>Wed, 27 Nov 2013 00:00:00 +0000</pubDate>
+      <guid>/posts/30/</guid>
+      <description>&lt;p&gt;본 포스팅은 &lt;a href=&#34;/posts/29&#34;&gt;단기강좌 인터넷 속의 수학&lt;/a&gt;의 강의 들을 요약하는 포스트입니다.&lt;/p&gt;&#xA;&lt;h3&gt;Introduction&lt;/h3&gt;&#xA;&lt;p&gt;Netflix라는 미국의 DVD rental 업체가 있다. &lt;a href=&#34;/posts/21&#34;&gt;이전 포스트&lt;/a&gt;에서 다뤘던 기업 중에 하나인데, 다시 한번 간략하게 설명을 하자면 Netflix는 미국의 온라인 DVD rental 업체이다. 1997년 시작한 DVD rental business이며 초기 BM은 간단했다. 한달에 고정적인 비용을 내고 video나 dvd를 빌릴 수 있도록 하며 번거로운 연체료가 없는 모델이었다. 이렇게 하면 return률이 감소하는 단점이 있는데 이런 단점을 새로운 dvd를 빌리려면 다시 return해야 빌릴 수 있는 rule을 만들어 크게 성공하였다. &lt;a href=&#34;http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788963708041&amp;orderClick=LAH&amp;Kc&#34;&gt;디멘드&lt;/a&gt;를 읽어보면 이에 대해서는 자세히 알 수 있을 것이다. 이후 2007년에 &lt;a class=&#34;red tip&#34; title=&#34;internet 상에서 VOD감상이 가능하도록 하는 서비스&#34;&gt;VOD(video on demand)&lt;/a&gt; service를 시작하였고, 2008년 9 million이던 user가 VOD 이후 30 million으로 폭증하였다. 현재 미국 traffic 25%는 Netflix VOD 때문에 발생할 정도로 거대한 기업이 되었다. 이렇게 Netflix가 크게 성장하게 된 배경에는 Recommendation system이 존재하는데, Netflix의 추천 시스템은 User prior video history를 기반으로 새 영화를 추천하고 사용자들이 더 다양하고 많은 비디오를 빌려볼 수 있도록 유도하고 있다. 이런 추천시스템은 Amazon, Youtube, GeoLife in MS 등도 적용하고 있는 많은 기업들에게 중요하게 인식되고 있는 시스템이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>인터넷 속의 수학 - 개요</title>
+      <link>/posts/29/</link>
+      <pubDate>Wed, 27 Nov 2013 00:00:00 +0000</pubDate>
+      <guid>/posts/29/</guid>
+      <description>&lt;p&gt;이 포스팅을 해야겠다고 마음을 먹은지 벌써 한 달 가까이 지나갔다. 그간 너무 바쁘고 마음에 여유가 없어서 이런 규모가 큰 글을 적는 것이 크게 부담스러웠기 때문이다. 특히 이 단기강좌 요약글은 나에게 꽤나 중요한 글이기도 해서, 마음에 여유가 생겼을 때 시간을 들여서 작성하고 싶었다.&lt;/p&gt;&#xA;&lt;p&gt;하지만 사람 일이 그렇게 마음대로 되는 것이 아니지않은가 ㅎㅎ 결론적으로 얘기하자면 시간이 가면 갈수록 여유가 생기기는 커녕 점점 더 바빠지고 있어서 더 바빠지기 전에 중요한 몇 개의 강좌라도 빠르게 요약해두는 편이 좋을 것 같다고 결론지었다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

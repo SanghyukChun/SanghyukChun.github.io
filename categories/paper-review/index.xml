@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Paper-Review on Sanghyuk Chun</title>
+    <link>/categories/paper-review/</link>
+    <description>Recent content in Paper-Review on Sanghyuk Chun</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 16 Aug 2016 00:58:00 +0000</lastBuildDate>
+    <atom:link href="/categories/paper-review/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Practical Bayesian Optimization of Machine Learning Algorithms (NIPS 2012)</title>
+      <link>/posts/99/</link>
+      <pubDate>Tue, 16 Aug 2016 00:58:00 +0000</pubDate>
+      <guid>/posts/99/</guid>
+      <description>&lt;h3 id=&#34;들어가며&#34;&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;Machine Learning 모델을 만들다보면 Hyperparameter 라는 녀석을 다뤄야 하는 일이 종종 발생한다.&#xA;예를 들면 Random forest의 forest 개수라거나, Neural network의 layer 개수, learning rate, momentum 값 등등..&#xA;문제는 이런 hyperparameter들을 어떻게 설정하느냐에 따라 그 결과가 크게 바뀌기 때문에 소위 말하는 &amp;lsquo;튜닝&amp;rsquo;에 시간을 매우 많이 쏟아야한다는 점이다.&lt;/p&gt;&#xA;&lt;p&gt;이 논문은 hyperparameter tuning 문제를 Bayesian optimization을 사용해여 해결하는 방법을 제안한다.&#xA;Bayesian optimization은 알려지지 않은 &amp;ldquo;black-box&amp;rdquo; function을 optimization할 때 많이 사용되는 방법이다.&#xA;그러나 Bayesian optimization은 몇 가지 이유로 practical하게 쓰기 어려운데,&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>AlphaGo의 알고리즘과 모델</title>
+      <link>/posts/97/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/posts/97/</guid>
+      <description>&lt;h3 id=&#34;들어가며&#34;&gt;들어가며&lt;/h3&gt;&#xA;&lt;p&gt;근 일주일 동안 가장 뜨거웠던 주제를 하나 꼽으라면 누가 뭐래도 &amp;ldquo;알파고&amp;quot;일 것이다. 글을 쓰고 있는 2016년 3월 13일 기준으로 알파고와 이세돌 사범과의 경기에서 최종 승리를 확정지은 상태이며, 오늘 이세돌 사범이 첫 승을 거둠으로써 5국 중 3대 1의 상황이 되었다. 내일 모레 있을 경기에서 3-2가 될지 4-1이 될지가 최종 결정이 될 것이며, 어느 결과가 나오더라도 AI 분야에서는 기념비적인 사건이 될 것이다.&lt;/p&gt;&#xA;&lt;p&gt;덕분에 AI (정확하게는 딥러닝)이 사람들의 이목을 집중적으로 받게되면서 불분명한 정보가 마구 흘러다니는 것 같아서 제대로 딥마인드에서 어떤 모델과 알고리즘을 사용한 것인지 직접 알아보고 정리해보기로 했다. 이 글에서는 deep learning, CNN &lt;a href=&#34;/posts/75/#75-cnn&#34;&gt;[7]&lt;/a&gt;, deep Q-learning &lt;a href=&#34;/posts/90&#34;&gt;[9]&lt;/a&gt;등의 용어들을 설명없이 사용할 예정이므로, 해당 개념들에 관심이 있다면 내가 쓴 이전 글들 &lt;a href=&#34;/posts75/#75-cnn&#34;&gt;[7]&lt;/a&gt;, &lt;a href=&#34;/posts/90&#34;&gt;[9]&lt;/a&gt; 이나 다른 외부 자료들을 참고하면 좋을 것 같다.&#xA;이 글은 Google Deep Mind에서 2016년 Nature에 발표한 matering the Game of Go with Deep Neural Network and Tree Search &lt;a href=&#34;http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html&#34;&gt;[1]&lt;/a&gt;를 기반으로 작성되었다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Show, Attend and Tell: Neural Image Caption Generation with Visual Attention (ICML2015)</title>
+      <link>/posts/93/</link>
+      <pubDate>Mon, 19 Oct 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/93/</guid>
+      <description>&lt;p&gt;주어진 이미지에 대한 설명을 하는 문장, 혹은 캡션을 생성하는 문제를 image caption 문제라고 한다. 이 문제는 여러 가지 문제들이 복합적으로 얽혀있는 문제라고 할 수 있는데, 먼저 이미지가 어떤 것에 대한 이미지인지 판별하기 위하여 object recognition을 정확하게 할 수 있어야한다. 그 다음에는 detect한 object들 사이의 관계를 추론하여 이미지가 나타내는 event가 무엇인지 알아내어야 하고, 마지막으로 event를 caption으로, 즉 natural language로 재생성해야한다. 얼핏 생각하면 간단한 문제같지만 자그마치 비전과 NLP 분야의 핵심 문제들이 복합적으로 얽혀있는 복잡한 문제인 것이다. &lt;s&gt;방금 너희들이 본 건 간단해 보이지만 자그마치 3개의 퀑 기술이 합쳐진 컴비네이션!&lt;/s&gt; 예를 들어보자.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>고흐의 그림을 따라그리는 Neural Network, A Neural Algorithm of Artistic Style (2015)</title>
+      <link>/posts/92/</link>
+      <pubDate>Wed, 14 Oct 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/92/</guid>
+      <description>&lt;p&gt;얼마 전, &lt;a href=&#34;http://arxiv.org/abs/1508.06576 &#34;&gt;&#39;A Neural Algorithm of Artistic Style &#39;&lt;/a&gt; 이라는 이름의 충격적인 논문이 arXiv에 업로드되었다. 기술 전문 잡지나 신문이 아닌 스브스뉴스 같은 일반적인 기사를 보도하는 매체에서도 보도가 되었을 정도로 요즘 꽤 이슈가 되고 있는 논문이다.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://news.sbs.co.kr/news/endPage.do?news_id=N1003203149&#34;&gt;스브스뉴스: &amp;ldquo;이건 &amp;lsquo;반 고흐&amp;rsquo;의 그림이 아닌 &amp;lsquo;컴퓨터&amp;rsquo;의 그림입니다.&amp;quot;&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://www.dailymail.co.uk/sciencetech/article-3214634/The-algorithm-learn-copy-artist-Neural-network-recreate-snaps-style-Van-Gogh-Picasso.html&#34;&gt;DailyMail: &amp;ldquo;The algorithm that can learn to copy ANY artist: Neural network can recreate your snaps in the style of Van Gogh or Picasso&amp;rdquo;&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://www.theguardian.com/technology/2015/sep/02/computer-algorithm-recreates-van-gogh-painting-picasso&#34;&gt;The Guardian: &amp;ldquo;Computer algorithm recreates Van Gogh painting in one hour&amp;rdquo;&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;자고로 백문이 불여일견이라, 이게 도대체 무슨 contribution이 있길래 사람들의 이목이 쏠리고 있는지 논문에 첨부되어있는 그림을 먼저 보자.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Recurrent Models of Visual Attention (NIPS 2014)</title>
+      <link>/posts/91/</link>
+      <pubDate>Sat, 19 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/91/</guid>
+      <description>&lt;p&gt;이번에 리뷰할 논문은 Google DeepMind가 NIPS 2014에 발표한 Recurrent Neural Networ와 Reinforcement Learning을 결합한 &lt;a href=&#34;http://arxiv.org/abs/1406.6247&#34;&gt;Recurrent Models of Visual Attention&lt;/a&gt; 이라는 논문이다. &lt;a href=&#34;/posts/90&#34;&gt;지난 글&lt;/a&gt;에서 리뷰했던 &lt;a href=&#34;http://arxiv.org/abs/1312.5602&#34;&gt;Playing Atari With Deep Reinforcement Learning&lt;/a&gt;과 같은 연구팀에서 진행한 연구인듯하다. Atari 논문에서는 전통적인 RL 문제인 &#39;게임&#39;을 풀기 위하여 CNN으로 action-value function을 모델링하고 value iteration을 대체하는 새로운 action-value function learning 모델과 알고리즘을 제안했다면, 이 논문은 기존 RL 문제라기보다는 오히려 좀 더 클래식한 classification 문제라고 할 수 있는 image recognition 문제에 RNN 구조와 RL 구조를 결합하여 reward maximization optimization problem을 푸는 모델과 알고리즘을 제안한다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Playing Atari with Deep Reinforcement Learning (NIPS 2013)</title>
+      <link>/posts/90/</link>
+      <pubDate>Tue, 15 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/90/</guid>
+      <description>&lt;p&gt;이번에 리뷰할 논문은 Google DeepMind가 NIPS 2013에 발표한 Deep Learning과 Reinforcement Learning을 결합한 &lt;a href=&#34;http://arxiv.org/abs/1312.5602&#34;&gt;Playing Atari with Deep Reinforcement Learning&lt;/a&gt; 이라는 논문이다. 그 전에도 DNN과 RL을 결합하려는 시도는 있었지만, 거의 사람이 플레이하는 수준으로 의미있는 수준까지 도달한 work은 이 work이 처음인듯 하다. 글을 시작하기 전에 먼저 이 논문에서 한 결과부터 살펴보자. Atari라는 게임 콘솔을 가지고 이 논문의 method를 적용한 결과이다. 2분 5초부터 시작되는 터널링 전략이 진짜 걸작이다.&lt;/p&gt;&#xA;&lt;div style=&#34;text-align: center;&#34;&gt;&lt;iframe width=&#34;420&#34; height=&#34;315&#34; align=&#34;middle&#34; src=&#34;https://www.youtube.com/embed/iqXKQf2BOSE&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&#xA;&lt;p&gt;충격적인 사실은 다른 hand-coding feature나 parameter 튜닝 없이 오직! vision data만 사용해서 이런 결과를 냈다는 사실이다. 빨간 공이 object고  빨간 판이 내가 움직이는거라는 기본적인 hand-craft feature 조차 없이 이런 결과를 냈다는 것이다. Deep leanring이 RL에서 뛰어난 성과를 보이지 못한 이유가 주로 데이터에 관련된 것이었음을 생각해보면 대단한 결과라고 할 수 있다. 최근에는 이 work을 기반으로 &lt;a href=&#34;http://arxiv.org/abs/1406.6247&#34;&gt;Image Attention (NIPS 2015)&lt;/a&gt; 이라고 부르는 work도 나온 것 같다. Image Attention 논문은 다음에 정리해보도록하겠다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Recurrent Neural Network Regularization</title>
+      <link>/posts/89/</link>
+      <pubDate>Mon, 14 Sep 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/89/</guid>
+      <description>&lt;p&gt;이번에 review할 논문은 &lt;a href=&#34;http://arxiv.org/abs/1409.2329&#34;&gt;Recurrent neural network regularization&lt;/a&gt;이라는 논문이다. 아직 학회나 저널에 publish된 논문은 아니지만 ICLR 2015 review를 기다리는 모양. 이 논문은 최근 머신러닝 분야에서 가장 주목받고 있는 분야는 Deep learning, 그 중에서도 요즘 가장 활발하게 연구 중인 Recurrent Neural Network, 혹은 RNN에 관한 논문이다. RNN은 sequencial data를 처리하는데에 적합한 형태로 디자인 되어있으며, 현재 language model, speech recognition, machine translation 등에서 우수한 결과를 성취하고 있는 neural network model 중 하나이다. 이 논문은 popular한 RNN 중 하나인 LSTM 모델을 regularization 시켜서 보다 기존 결과들보다 더 잘 동작하는 결과를 제안한다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Batch Normalization (ICML 2015)</title>
+      <link>/posts/88/</link>
+      <pubDate>Tue, 25 Aug 2015 00:00:00 +0000</pubDate>
+      <guid>/posts/88/</guid>
+      <description>&lt;p&gt;Batch Normalization은 현재 &lt;a href=&#34;http://image-net.org/challenges/LSVRC/2015/&#34;&gt;ImageNet competition&lt;/a&gt;에서 state-of-art (Top-5 error: 4.9%)를 기록하고 있는 Neural Network model의 기본 아이디어이다. 이 글에서는 arXiv에 제출된 (그리고 ICML 2015에 publish된) &lt;a href=&#34;http://arxiv.org/abs/1502.03167&#34;&gt;Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift&lt;/a&gt; 논문을 리뷰하고, batch normalization이 어떤 기술이고, 어떤 원리에 의해 작동하는지 등에 대해 다룰 것이다.&lt;/p&gt;&#xA;&lt;h3&gt;Motivation: Deep learning의 속도를 어떻게 더 빠르게 만들 수 있을까?&lt;/h3&gt;&#xA;&lt;p&gt;Deep learning이 잘 동작하고, 뛰어난 성능을 보인다는 것은 이제 누구나 알고 있다. 그러나 여전히 deep learning은 굉장히 시간이 오래 걸리는 작업이고, 그만큼 computation power도 많이 필요로 한다. 그 동안의 연구 결과를 보면, converge한 것 처럼 보이더라도 더 많이 돌리게 된다면 더 좋은 결과로 수렴한다는 것을 알 수 있는 만큼, deep neural network의 train 속도를 높이는 것은 전체적인 성능 향상에 도움이 될 것이다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>LMNN(Large Margin Nearest Neighbors) (NIPS 2006) LMCA(Large Margin Component Anaylsis) (NIPS 2007)</title>
+      <link>/posts/38/</link>
+      <pubDate>Mon, 03 Mar 2014 00:00:00 +0000</pubDate>
+      <guid>/posts/38/</guid>
+      <description>&lt;p&gt;KNN은 machine learning에서 general하게 많이 쓰이는 알고리듬이다. 이 알고리듬은 아이디어도 매우 간단하고 구현하기도 간단하고 성능도 어느 정도 이상 나오는 꽤나 훌륭한 알고리듬이기 때문이다. &lt;a href=&#34;/posts/37&#34;&gt;이전 글&lt;/a&gt;에서 distance metric learning의 대략적인 컨셉을 설명했었고, 그 중에서도 optimization을 통해 metric을 learning하는 category에 대해 간략하게 언급했었다. 이 글에서는 그런 알고리듬 중에서 LMNN (Large Margin Nearest Neighbors) 그리고 이 방법의 단점을 보완한 LMCA (Large Margin Component Analysis) 라는 알고리듬을 소개할 것이다.&lt;/p&gt;&#xA;&lt;h3&gt;LMNN - Introduction&lt;/h3&gt;&#xA;&lt;p&gt;먼저 LMNN이라는 아이디어는 2006년 &lt;a class=&#34;red tip&#34; title=&#34;Advances in Neural Information Processing Systems&#34;&gt;NIPS&lt;/a&gt;에 발표된 Distance metric learning for large margin nearest neighbor classification이라는 논문에 소개된 기법이다. 이 알고리듬은 distance metric learning에 대해 설명했던 &lt;a href=&#34;/posts/37&#34;&gt;이전 글&lt;/a&gt;에 잠깐 언급했던 Mahalanobis Metric을 직접 학습하는 알고리듬이다. 이 Metric은 지난 번에 설명했기 때문에 자세한 설명은 생략하도록 하겠다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
