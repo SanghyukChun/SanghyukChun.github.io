@@ -1,0 +1,147 @@
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+  background-color: #f8f9fa;
+}
+
+span.archive-title{
+  font-size: 1.1em;
+}
+
+h1 {
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.65em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.35em;
+}
+
+h5 {
+  font-size: 1.17em;
+}
+
+h6 {
+  font-size: 1.0em;
+}
+
+h1.entry-title > a {
+  color: black;
+}
+
+h1.archive-post > a{
+  color: black;
+}
+
+h2#archive-title {
+  font-size: 1.5em;
+  color: #A00000;
+}
+
+.main-card {
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #dee2e6;
+  margin-bottom: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.a-category {
+  color: #A00000;
+}
+
+#blog-title {
+  display: inline-block;
+  margin: 0;
+  color: black;
+  text-decoration: none;
+  color: black;
+  text-align: left;
+  font-size: 1.8em;
+  font-weight: 600;
+}
+
+.post-card {
+  height: 100%;
+  transition: box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.post-card-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.post-card-date {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.page-container {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: justify;
+}
+
+.toc {
+  font-size: 0.9rem;
+}
+
+.toc ul {
+  list-style-type: none;
+  padding-left: 1.25rem;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+.highlight, .chroma {
+  background-color: #f6f8fa !important;
+  border-radius: 0rem;
+  padding: 0.25rem 0.5rem 0rem 0.5rem;
+  overflow-x: auto;
+}
+
+code {
+  background-color: #f6f8fa !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+a.red {
+  color: #A00000;
+}
+
+.codefont {
+  font-family: monospace;
+}
